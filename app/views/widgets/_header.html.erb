@@ -1,5 +1,5 @@
 <div class="menu" id="header">
-  <div class="row center-block container-fluid">
+  <div class="row justify-content-center container-fluid">
     <% months.each_with_index do |month, index| %>
       <% index += 1 %>
 
@@ -8,7 +8,7 @@
     <% end %>
   </div>
 
-  <div class="row center-block container-fluid">
+  <div class="row justify-content-center container-fluid">
     <% (2015..Date.today.year).each do |year| %>
       <%= link_to year, "/#{ year }/#{ '%02d' % current_date.month }",
         class: "btn btn-sm #{ 'btn-primary' if year == current_date.year }", remote: true %>

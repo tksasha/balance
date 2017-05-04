@@ -18,5 +18,5 @@ $(function() {
 
   $('.bootstrap-datepicker').datepicker(BOOTSTRAP_DATEPICKER_DEFAULTS);
 
-  $('select').selectpicker();
+  //$('select').selectpicker();
 });

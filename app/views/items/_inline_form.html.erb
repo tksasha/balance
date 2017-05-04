@@ -5,7 +5,7 @@
     <%= f.text_field :formula, class: 'form-control item-form__formula' %>
 
     <%= f.select :category_id, grouped_options_for_select(Category.group_by_income, resource.category_id), {},
-      class: 'form-control c-select item-form__category-id' %>
+      class: 'form-control item-form__category-id' %>
 
     <%= f.text_field :description, placeholder: t('activerecord.attributes.item.description'),
       class: 'form-control item-form__description' %>

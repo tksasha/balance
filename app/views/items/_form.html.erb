@@ -7,7 +7,8 @@
     <%= f.label :category_id, class: 'form-control-label col-sm-2' %>
     
     <div class="col-sm-10">
-      <%= f.select :category_id, grouped_options_for_select(Category.group_by_income, resource.category_id), {} %>
+      <%= f.select :category_id, grouped_options_for_select(Category.group_by_income, resource.category_id), {},
+        class: 'form-control' %>
 
       <%= f.error :category_id %>
     </div>
