@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html>
   <head>
     <meta charset="utf-8">
@@ -21,6 +21,14 @@
     <div class="container-fluid">
       <%= yield %>
     </div>
+
+    <footer class="footer">
+      <div class="container">
+        <div class="text-muted">
+          <%= link_to 'Головна', :root %>&nbsp; | &nbsp;<%= link_to 'Категорії', :categories %>
+        </div>
+      </div>
+    </footer>
 
     <div id="ajax-loader">
       <%= image_tag 'ajax-loader.gif' %>
