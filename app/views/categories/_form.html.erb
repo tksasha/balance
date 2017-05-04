@@ -1,0 +1,8 @@
+﻿<%= simple_form_for category do |f| %>
+  <%= f.input :name, label: 'Назва' %>
+  <%= f.input :income %>
+  <%= f.input :slug %>
+  <%= f.input :visible, label: 'Видима' %>
+
+  <%= f.submit class: 'btn btn-primary' %>
+<% end %>

@@ -1,0 +1,13 @@
+﻿<div class="container">
+  <div class="card">
+    <div class="card-block">
+      <h4 class="card-title"><%= @category.name %></h4>
+      <p class="card-text">ID: <%= @category.id %></p>
+      <p class="card-text">Income: <%= @category.income ? 'Так' : 'Ні' %></p>
+      <p class="card-text">Slug: <%= @category.slug %></p>
+      <p class="card-text">Видима: <%= @category.visible ? 'Так' : 'Ні' %></p>
+      <%= link_to 'Редагувати', edit_category_path(@category), class: 'btn btn-primary' %>
+      <%= link_to 'Видалити', category_path(@category), class: 'btn btn-danger', data: { method: :delete, confirm: 'Ви впевненні?' } %>
+    </div>
+  </div>
+</div>

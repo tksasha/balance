@@ -1,0 +1,28 @@
+﻿<div class="container">
+  <h3>Категорії:</h3>
+  <table class="table table-bordered">
+    <thead>
+      <tr>
+        <th>ID</th>
+        <th>Назва</th>
+        <th>Income</th>
+        <th>Slug</th>
+        <th>Видима</th>
+        <th></th>
+      </tr>
+    </thead>
+    <tbody>
+      <% @categories.each do |category| %>
+        <tr>
+          <td><%= category.id %></td>
+          <td><%= category.name %></td>
+          <td><%= category.income ? 'Так' : 'Ні' %></td>
+          <td><%= category.slug %></td>
+          <td><%= category.visible ? 'Так' : 'Ні' %></td>
+          <td><%= link_to 'Переглянути', category, class: 'btn btn-primary btn-sm' %></td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+  <%= link_to 'Додати нову категорію', :new_category, class: 'btn btn-primary' %>
+</div>

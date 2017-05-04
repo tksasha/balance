@@ -10,5 +10,7 @@ Balance::Application.routes.draw do
 
   resources :cashes
 
+  resources :categories
+
   root to: 'items#index'
 end
