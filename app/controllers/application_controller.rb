@@ -26,6 +26,10 @@ class ApplicationController < ActionController::Base
       format.json do
         render :errors unless resource.save
       end
+
+      format.js do
+        resource.save!
+      end
     end
   end
 
@@ -42,6 +46,41 @@ class ApplicationController < ActionController::Base
       format.json do
         render :errors unless resource.update resource_params
       end
+
+      format.js do
+        resource.update! resource_params
+      end
     end
+  end
+
+  def destroy
+    resource.destroy
+
+    respond_to do |format|
+      format.html { redirect_to /\A(.*)Controller\z/.match(self.class.name)[1].downcase.to_sym }
+
+      format.js {  }
+    end
+  end
+
+  private
+  def resource_name
+    /\A(.*)Controller\z/.match(self.class.name)[1].singularize.constantize
+  end
+
+  def collection 
+    @collection ||= resource_name.all
+  end
+
+  def resource
+    @resource ||= resource_name.find params[:id]
+  end
+
+  def initialize_resource
+    @resource = resource_name.new
+  end
+
+  def build_resource
+    @resource = resource_name.new resource_params
   end
 end
