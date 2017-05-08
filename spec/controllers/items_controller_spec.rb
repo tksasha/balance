@@ -69,7 +69,7 @@ RSpec.describe ItemsController, type: :controller do
       { item: { date: '2014-04-22', formula: '2+2', category_id: '1', description: 'Buys' }, id: 1 }
     end
 
-    before { subject.instance_variable_set :@item, item }
+    before { subject.instance_variable_set :@resource, item }
 
     before { expect(item).to receive(:update!).with(permit! params[:item]) }
 
@@ -81,7 +81,7 @@ RSpec.describe ItemsController, type: :controller do
   describe '#destroy.js' do
     let(:item) { double }
 
-    before { subject.instance_variable_set :@item, item }
+    before { subject.instance_variable_set :@resource, item }
 
     before { expect(item).to receive(:destroy) }
 

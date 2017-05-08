@@ -6,8 +6,6 @@ class ItemsController < ApplicationController
   #
 
   def create
-    @item = Item.new resource_params
- 
     render :new unless resource.save
   end
 
@@ -15,17 +13,9 @@ class ItemsController < ApplicationController
   # TODO: implement errors.js.erb for update.js
   #
 
-  def destroy
-    resource.destroy
-  end
-
   private
   def collection
     items DateRange.new(DateFactory.build params).month
-  end
-
-  def resource
-    @item ||= Item.find(params[:id])
   end
 
   def items date_range

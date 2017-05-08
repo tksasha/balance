@@ -40,7 +40,7 @@ RSpec.describe CashesController, type: :controller do
 
     let(:params) { { cash: { name: 'Food', formula: '43.28 + 18.03' }, id: 1 } }
 
-    before { subject.instance_variable_set :@cash, cash }
+    before { subject.instance_variable_set :@resource, cash }
 
     before { expect(cash).to receive(:update!).with(permit! params[:cash]) }
 
@@ -52,7 +52,7 @@ RSpec.describe CashesController, type: :controller do
   describe 'destroy.js' do
     let(:cash) { double }
 
-    before { subject.instance_variable_set :@cash, cash }
+    before { subject.instance_variable_set :@resource, cash }
 
     before { expect(cash).to receive(:destroy).and_return(true) }
 
