@@ -1,8 +1,42 @@
-﻿<%= simple_form_for resource do |f| %>
+﻿<%= simple_form_for resource, wrapper: :horizontal_form, remote: true, html: { class: 'form-horizontal' }  do |f| %>
   <%= f.input :name %>
-  <%= f.input :income %>
-  <%= f.input :slug %>
-  <%= f.input :visible %>
 
-  <%= f.submit class: 'btn btn-primary' %>
+  <div class="form-group row">
+    <%= f.label :income, class: 'd-inline-flex custom-checkbox col-sm-12' do |label| %>
+      <div class="col-sm-2">
+        <span class="custom-control-description"><%= label.translation %></span>
+      </div>
+      <div class="col-sm-10 ml-1">
+        <%= f.check_box :income, class: 'custom-control-input' %>
+        <span class="custom-control-indicator"></span>
+      </div>
+    <% end %>
+  </div>
+
+  <%= f.input :slug %>
+  
+  <div class="form-group row">
+    <%= f.label :visible, class: 'd-inline-flex custom-checkbox col-sm-12' do |label| %>
+    <div class="col-sm-2">
+      <span class="custom-control-description"><%= label.translation %></span>
+    </div>
+    <div class="col-sm-10 ml-1">
+      <%= f.check_box :visible, class: 'custom-control-input' %>
+      <span class="custom-control-indicator"></span>
+    </div>
+    <% end %>
+  </div>
+
+  <div class="form-group row">
+    <div class="offset-sm-2 col-sm-10">
+      <div class="float-sm-left">
+        <%= f.button :submit, class: 'btn btn-primary' %>
+      </div>
+
+      <%= content_tag :div, class: 'float-sm-right' do %>
+        <%= link_to 'Видалити', resource,
+          data: { method: :delete, confirm: 'Ви впевнені?', remote: true }, class: 'btn btn-danger' %>
+      <% end unless resource.new_record? %>
+    </div>
+  </div>
 <% end %>

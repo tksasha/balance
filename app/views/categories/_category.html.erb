@@ -1,0 +1,7 @@
+﻿<tr>
+  <td><%= category.name %></td>
+  <td><%= display_boolean category.income %></td>
+  <td><%= category.slug %></td>
+  <td><%= display_boolean category.visible %></td>
+  <td><%= link_to 'Редагувати', [:edit, category], remote: true, class: 'btn btn-secondary btn-block btn-sm' %></td>
+</tr>

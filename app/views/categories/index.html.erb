@@ -1,5 +1,9 @@
 ﻿<div class="container">
-  <h3>Категорії:</h3>
+  <div class="clearfix">
+    <h3 class="float-left">Категорії:</h3>
+    <%= link_to 'Додати нову категорію', :new_category, remote: true, class: 'btn btn-primary float-right' %>
+  </div>
+
   <table class="table table-bordered">
     <thead>
       <tr>
@@ -10,17 +14,14 @@
         <th></th>
       </tr>
     </thead>
-    <tbody>
-      <% collection.each do |category| %>
-        <tr>
-          <td><%= category.name %></td>
-          <td><%= display_boolean category.income %></td>
-          <td><%= category.slug %></td>
-          <td><%= display_boolean category.visible %></td>
-          <td><%= link_to 'Переглянути', category, class: 'btn btn-secondary btn-block btn-sm' %></td>
-        </tr>
+    <tbody id="categories">
+      <% if collection.any? %>
+        <%= render collection %>
+      <% else %>
+        <%= render 'not_found' %>
       <% end %>
     </tbody>
   </table>
-  <%= link_to 'Додати нову категорію', :new_category, class: 'btn btn-primary btn-block' %>
 </div>
+
+<%= render 'widgets/modal' %>
