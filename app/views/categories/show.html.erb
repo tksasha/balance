@@ -2,10 +2,9 @@
   <div class="card">
     <div class="card-block">
       <h4 class="card-title"><%= resource.name %></h4>
-      <p class="card-text">ID: <%= resource.id %></p>
-      <p class="card-text">Income: <%= resource.income ? 'Так' : 'Ні' %></p>
+      <p class="card-text">Income: <%= display_boolean resource.income %></p>
       <p class="card-text">Slug: <%= resource.slug %></p>
-      <p class="card-text">Видима: <%= resource.visible ? 'Так' : 'Ні' %></p>
+      <p class="card-text">Видима: <%= display_boolean resource.visible %></p>
       <%= link_to 'Редагувати', edit_category_path(resource), class: 'btn btn-primary' %>
       <%= link_to 'Видалити', category_path(resource), class: 'btn btn-danger', data: { method: :delete, confirm: 'Ви впевненні?' } %>
     </div>

@@ -3,7 +3,6 @@
   <table class="table table-bordered">
     <thead>
       <tr>
-        <th>ID</th>
         <th>Назва</th>
         <th>Income</th>
         <th>Slug</th>
@@ -14,11 +13,10 @@
     <tbody>
       <% collection.each do |category| %>
         <tr>
-          <td><%= category.id %></td>
           <td><%= category.name %></td>
-          <td><%= category.income ? 'Так' : 'Ні' %></td>
+          <td><%= display_boolean category.income %></td>
           <td><%= category.slug %></td>
-          <td><%= category.visible ? 'Так' : 'Ні' %></td>
+          <td><%= display_boolean category.visible %></td>
           <td><%= link_to 'Переглянути', category, class: 'btn btn-secondary btn-block btn-sm' %></td>
         </tr>
       <% end %>
