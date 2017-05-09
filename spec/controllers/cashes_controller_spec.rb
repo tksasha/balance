@@ -1,32 +1,6 @@
 require 'rails_helper'
 
 RSpec.describe CashesController, type: :controller do
-  describe 'new.js' do
-    before { get :new, xhr: true, format: :js }
-
-    it { should render_template :new }
-  end
-
-  describe 'create.js' do
-    let(:cash) { double }
-
-    let(:params) { { cash: { name: 'Food', formula: '43.28 + 18.02' } } }
-
-    before { expect(Cash).to receive(:new).with(permit! params[:cash]).and_return(cash) }
-
-    before { expect(cash).to receive(:save!) }
-
-    before { post :create, params: params, format: :js }
-
-    it { should render_template :create }
-  end
-
-  describe 'edit.js' do
-    before { get :edit, xhr: true, params: { id: 47 }, format: :js }
-
-    it { should render_template :edit }
-  end
-
   describe '#resource' do
     before { expect(subject).to receive(:params).and_return({ id: 31 }) }
 
@@ -35,29 +9,27 @@ RSpec.describe CashesController, type: :controller do
     its(:resource) { should eq :resource }
   end
 
-  describe 'update.js' do
-    let(:cash) { double }
+  it_behaves_like :new
 
-    let(:params) { { cash: { name: 'Food', formula: '43.28 + 18.03' }, id: 1 } }
+  it_behaves_like :create do
+    let(:resource) { stub_model Cash }
 
-    before { subject.instance_variable_set :@resource, cash }
+    let(:success) { -> { should render_template :create } }
 
-    before { expect(cash).to receive(:update!).with(permit! params[:cash]) }
-
-    before { patch :update, params: params, format: :js }
-
-    it { should render_template :update }
+    let(:failure) { -> { should render_template :errors } }
   end
 
-  describe 'destroy.js' do
-    let(:cash) { double }
+  it_behaves_like :edit
 
-    before { subject.instance_variable_set :@resource, cash }
+  it_behaves_like :update do
+    let(:resource) { stub_model Cash }
 
-    before { expect(cash).to receive(:destroy).and_return(true) }
+    let(:success) { -> { should render_template :update } }
 
-    before { delete :destroy, params: { id: 1 }, format: :js }
+    let(:failure) { -> { should render_template :errors } }
+  end
 
-    it { should render_template :destroy }
+  it_behaves_like :destroy do
+    let(:success) { -> { should render_template :destroy } }
   end
 end

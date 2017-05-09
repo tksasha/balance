@@ -7,32 +7,6 @@ RSpec.describe ItemsController, type: :controller do
     it { should render_template :index }
   end
 
-  describe '#create.js' do
-    let(:item) { double }
-
-    let(:params) do
-      { item: { date: '2014-04-22', formula: '2+2', category_id: '1', description: 'Buys' } }
-    end
-
-    before { expect(Item).to receive(:new).with(permit! params[:item]).and_return(item) }
-
-    context do
-      before { expect(item).to receive(:save).and_return(true) }
-
-      before { post :create, params: params, format: :js }
-
-      it { should render_template :create }
-    end
-
-    context do
-      before { expect(item).to receive(:save).and_return(false) }
-
-      before { post :create, params: params, format: :js }
-
-      it { should render_template :new }
-    end
-  end
-
   describe '#items' do
     let(:item) { stub_model Item }
 
@@ -62,31 +36,27 @@ RSpec.describe ItemsController, type: :controller do
     its(:resource) { should eq :resource }
   end
 
-  describe '#update.js' do
-    let(:item) { double }
+  it_behaves_like :index
 
-    let(:params) do
-      { item: { date: '2014-04-22', formula: '2+2', category_id: '1', description: 'Buys' }, id: 1 }
-    end
+  it_behaves_like :create do
+    let(:resource) { stub_model Item }
 
-    before { subject.instance_variable_set :@resource, item }
+    let(:success) { -> { should render_template :create } }
 
-    before { expect(item).to receive(:update!).with(permit! params[:item]) }
-
-    before { put :update, params: params, format: :js }
-
-    it { should render_template :update }
+    let(:failure) { -> { should render_template :new } }
   end
 
-  describe '#destroy.js' do
-    let(:item) { double }
+  it_behaves_like :edit
 
-    before { subject.instance_variable_set :@resource, item }
+  it_behaves_like :update do
+    let(:resource) { stub_model Item }
 
-    before { expect(item).to receive(:destroy) }
+    let(:success) { -> { should render_template :update } }
 
-    before { delete :destroy, params: { id: 13 }, format: :js }
+    let(:failure) { -> { should render_template :errors } }
+  end
 
-    it { should render_template :destroy }
+  it_behaves_like :destroy do
+    let(:success) { -> { should render_template :destroy } }
   end
 end

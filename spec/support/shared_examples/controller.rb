@@ -1,25 +1,27 @@
 RSpec.shared_examples :index do
   before { @format ||= :html }
+  before { @xhr ||= false }
 
   describe "#index.#{ @format }" do
-    before { get :index, format: @format }
+    before { get :index, xhr: @xhr, format: @format }
 
     it { should render_template :index }
   end
 end
 
 RSpec.shared_examples :new do
-  before { @format ||= :html }
+  before { @format ||= :js }
+  before { @xhr ||= true }
 
   describe "#new.#{ @format }" do
-    before { get :new, format: @format }
+    before { get :new, xhr: @xhr,  format: @format }
 
     it { should render_template :new }
   end
 end
 
 RSpec.shared_examples :create do
-  before { @format ||= :html }
+  before { @format ||= :js }
 
   before { expect(subject).to receive(:build_resource) }
 
@@ -44,26 +46,28 @@ end
 
 RSpec.shared_examples :show do
   before { @format ||= :html }
+  before { @xhr ||= false }
 
   describe "#show.#{ @format }" do
-    before { get :show, params: { id: 1 }, format: @format }
+    before { get :show, xhr: @xhr, params: { id: 1 }, format: @format }
 
     it { should render_template :show }
   end
 end
 
 RSpec.shared_examples :edit do
-  before { @format ||= :html }
+  before { @format ||= :js }
+  before { @xhr ||= true }
 
   describe "#edit.#{ @format }" do
-    before { get :edit, params: { id: 1 }, format: @format }
+    before { get :edit, xhr: @xhr, params: { id: 1 }, format: @format }
 
     it { should render_template :edit }
   end
 end
 
 RSpec.shared_examples :update do
-  before { @format ||= :html }
+  before { @format ||= :js }
 
   before { allow(subject).to receive(:resource).and_return(resource) }
 
@@ -89,7 +93,7 @@ end
 RSpec.shared_examples :destroy do
   let(:resource) { double }
 
-  before { @format ||= :html }
+  before { @format ||= :js }
 
   before { expect(subject).to receive(:resource).and_return(resource) }
 
