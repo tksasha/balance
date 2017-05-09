@@ -6,3 +6,8 @@
  * = require_tree .
  * = require_self
 */
+
+html {
+  position: relative;
+  min-height: 100%;
+}

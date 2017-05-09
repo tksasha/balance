@@ -1,15 +1,28 @@
-<div class="container">
+﻿<div class="container">
+  <h3>Категорії:</h3>
   <table class="table table-bordered">
-    <tr>
-      <th>ID</th>
-      <th>Name</th>
-    </tr>
-
-    <% collection.each do |category| %>
+    <thead>
       <tr>
-        <td><%= category.id %></td>
-        <td><%= category.name %></td>
+        <th>ID</th>
+        <th>Назва</th>
+        <th>Income</th>
+        <th>Slug</th>
+        <th>Видима</th>
+        <th></th>
       </tr>
-    <% end %>
+    </thead>
+    <tbody>
+      <% collection.each do |category| %>
+        <tr>
+          <td><%= category.id %></td>
+          <td><%= category.name %></td>
+          <td><%= category.income ? 'Так' : 'Ні' %></td>
+          <td><%= category.slug %></td>
+          <td><%= category.visible ? 'Так' : 'Ні' %></td>
+          <td><%= link_to 'Переглянути', category, class: 'btn btn-secondary btn-block btn-sm' %></td>
+        </tr>
+      <% end %>
+    </tbody>
   </table>
+  <%= link_to 'Додати нову категорію', :new_category, class: 'btn btn-primary btn-block' %>
 </div>
