@@ -5,13 +5,7 @@ class ApplicationController < ActionController::Base
 
   before_action :build_resource, only: :create
 
-  rescue_from ActiveRecord::RecordInvalid do
-    render :errors, status: :unprocessable_entity
-  end
-
-  def new
-    initialize_resource
-  end
+  before_action :initialize_resource, only: :new
 
   def create
     respond_to do |format|
@@ -28,7 +22,7 @@ class ApplicationController < ActionController::Base
       end
 
       format.js do
-        resource.save!
+        render :errors unless resource.save
       end
     end
   end
@@ -48,7 +42,7 @@ class ApplicationController < ActionController::Base
       end
 
       format.js do
-        resource.update! resource_params
+        render :errors unless resource.update resource_params
       end
     end
   end
@@ -57,30 +51,52 @@ class ApplicationController < ActionController::Base
     resource.destroy
 
     respond_to do |format|
-      format.html { redirect_to /\A(.*)Controller\z/.match(self.class.name)[1].downcase.to_sym }
+      format.html do
+        redirect_to resource_collection_sym
+      end
 
-      format.js {  }
+      format.json {}
+
+      format.js {}
     end
   end
 
   private
+
+  #
+  # CategoriesController => 'Categories'
+  #
   def resource_name
-    /\A(.*)Controller\z/.match(self.class.name)[1].singularize.constantize
+    @resource_name ||= /\A(.*)Controller\z/.match(self.class.name)[1]
+  end
+
+  #
+  # CategoriesController => :categories
+  #
+  def resource_collection_sym
+    @resource_collection_sym ||= resource_name.downcase.to_sym
+  end
+
+  #
+  # CategoriesController => Category
+  #
+  def resource_model
+    @resource_model ||= resource_name.singularize.constantize
   end
 
   def collection 
-    @collection ||= resource_name.all
+    @collection ||= resource_model.all
   end
 
   def resource
-    @resource ||= resource_name.find params[:id]
+    @resource ||= resource_model.find params[:id]
   end
 
   def initialize_resource
-    @resource = resource_name.new
+    @resource = resource_model.new
   end
 
   def build_resource
-    @resource = resource_name.new resource_params
+    @resource = resource_model.new resource_params
   end
 end
