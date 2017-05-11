@@ -9,6 +9,16 @@ RSpec.describe CashesController, type: :controller do
     its(:resource) { should eq :resource }
   end
 
+  describe '#resource_params' do
+    let(:params) do
+      { cash: { name: 'name', formula: 123 } }
+    end
+
+    before { expect(subject).to receive(:params).and_return(acp params) }
+
+    its(:resource_params) { should eq permit! params[:cash] }
+  end
+
   it_behaves_like :new
 
   it_behaves_like :create do

@@ -30,6 +30,16 @@ RSpec.describe ItemsController, type: :controller do
     its(:resource) { should eq :resource }
   end
 
+  describe '#resource_params' do
+    let(:params) do
+      { item: { date: '2017-05-25', formula: 123, category_id: 1, description: 'description' } }
+    end
+
+    before { expect(subject).to receive(:params).and_return(acp params) }
+
+    its(:resource_params) { should eq permit! params[:item] }
+  end
+
   it_behaves_like :index
 
   it_behaves_like :index do
