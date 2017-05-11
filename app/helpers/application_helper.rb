@@ -11,10 +11,6 @@ module ApplicationHelper
     number_with_delimiter '%.2f' % sum
   end
 
-  def display_boolean value
-    value ? 'Так' : 'Ні'
-  end
-
   #
   # TODO: deprecated
   #

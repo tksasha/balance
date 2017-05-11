@@ -30,3 +30,6 @@ ua:
   date:
     formats:
       default: '%d.%m.%Y'
+
+  :true: 'Так'
+  :false: 'Ні'
