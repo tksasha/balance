@@ -66,22 +66,22 @@ class ApplicationController < ActionController::Base
   #
   # CategoriesController => 'Categories'
   #
-  def resource_name
-    @resource_name ||= /\A(.*)Controller\z/.match(self.class.name)[1]
+  def resource_collection_name
+    @resource_collection_name ||= /\A(.*)Controller\z/.match(self.class.name)[1]
   end
 
   #
   # CategoriesController => :categories
   #
   def resource_collection_sym
-    @resource_collection_sym ||= resource_name.downcase.to_sym
+    @resource_collection_sym ||= resource_collection_name.downcase.to_sym
   end
 
   #
   # CategoriesController => Category
   #
   def resource_model
-    @resource_model ||= resource_name.singularize.constantize
+    @resource_model ||= resource_collection_name.singularize.constantize
   end
 
   def collection 
