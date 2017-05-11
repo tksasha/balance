@@ -1,12 +1,6 @@
 require 'rails_helper'
 
 RSpec.describe ItemsController, type: :controller do
-  describe '#index.js' do
-    before { get :index, xhr: true, format: :js }
-
-    it { should render_template :index }
-  end
-
   describe '#items' do
     let(:item) { stub_model Item }
 
@@ -37,6 +31,10 @@ RSpec.describe ItemsController, type: :controller do
   end
 
   it_behaves_like :index
+
+  it_behaves_like :index do
+    before { @format = :js }
+  end
 
   it_behaves_like :create do
     let(:resource) { stub_model Item }
