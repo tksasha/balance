@@ -1,9 +1,8 @@
 RSpec.shared_examples :index do
   before { @format ||= :html }
-  before { @xhr ||= false }
 
   describe "#index.#{ @format }" do
-    before { get :index, xhr: @xhr, format: @format }
+    before { get :index, xhr: (@format == :js), format: @format }
 
     it { should render_template :index }
   end
@@ -11,10 +10,9 @@ end
 
 RSpec.shared_examples :new do
   before { @format ||= :js }
-  before { @xhr ||= true }
 
   describe "#new.#{ @format }" do
-    before { get :new, xhr: @xhr,  format: @format }
+    before { get :new, xhr: (@format == :js),  format: @format }
 
     it { should render_template :new }
   end
@@ -46,10 +44,9 @@ end
 
 RSpec.shared_examples :show do
   before { @format ||= :html }
-  before { @xhr ||= false }
 
   describe "#show.#{ @format }" do
-    before { get :show, xhr: @xhr, params: { id: 1 }, format: @format }
+    before { get :show, xhr: (@format == :js), params: { id: 1 }, format: @format }
 
     it { should render_template :show }
   end
@@ -57,10 +54,9 @@ end
 
 RSpec.shared_examples :edit do
   before { @format ||= :js }
-  before { @xhr ||= true }
 
   describe "#edit.#{ @format }" do
-    before { get :edit, xhr: @xhr, params: { id: 1 }, format: @format }
+    before { get :edit, xhr: (@format == :js), params: { id: 1 }, format: @format }
 
     it { should render_template :edit }
   end
