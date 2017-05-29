@@ -1,0 +1,17 @@
+(function() {
+  $('.modal .modal-title').text('Backoffice');
+
+  $('.modal .modal-body').html('<%= j render 'show' %>');
+
+  /*
+  if(!$('.modal-dialog').hasClass('modal-lg')) {
+    $('.modal-dialog').addClass('modal-lg');
+  }
+
+  $('.modal').on('hidden.bs.modal', function() {
+    $('.modal-dialog').removeClass('modal-lg');
+  });
+  */
+
+  $('.modal').modal();
+}());

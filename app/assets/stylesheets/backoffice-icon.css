@@ -1,6 +1,9 @@
 .backoffice-icon {
-  position: absolute;
-  top: 0px;
-  right: 19px;
-  font-size: 1.2em;
+  display: inline-block;
+  margin: 0 30px;
+}
+
+.backoffice-icon-lg {
+  font-size: 4em;
+  display: block;
 }
