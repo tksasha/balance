@@ -1,0 +1,5 @@
+.icon-sliders {
+  font-family: 'fontello';
+}
+
+.icon-sliders:before { content: '\f1de'; }
