@@ -1,0 +1,13 @@
+<div class="clearfix">
+  <div class="float-left">
+    <h4>Залишки</h4>
+  </div>
+
+  <div class="float-right">
+    <%= link_to 'Додати', [:new, :cash], data: { remote: true }, class: 'btn btn-sm btn-success' %>
+  </div>
+</div>
+
+<table class="table table-cashes">
+  <%= render collection %>
+</table>

@@ -1,5 +1,15 @@
 (function() {
+  $('.modal .modal-header').hide();
+
+  $('.modal .modal-body').html('<%= j render 'index' %>');
+
+  $('.modal').on('hidden.bs.modal', function() {
+    $('.modal .modal-header').show();
+  });
+
+  /*
   $('#cashes').html('<%= j render cashes %>');
 
   $('#at_end').html('<%= number_with_delimiter Cash.at_end %>');
+  */
 }());

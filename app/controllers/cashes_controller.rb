@@ -25,4 +25,8 @@ class CashesController < ApplicationController
   def resource_params
     params.require(:cash).permit(:formula, :name)
   end
+
+  def collection
+    @collection ||= Cash.order :name
+  end
 end

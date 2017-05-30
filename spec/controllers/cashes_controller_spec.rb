@@ -60,4 +60,12 @@ RSpec.describe CashesController, type: :controller do
 
     it { should render_template :destroy }
   end
+
+  it_behaves_like :index
+
+  describe '#collection' do
+    before { expect(Cash).to receive(:order).with(:name).and_return(:collection) }
+
+    its(:collection) { should eq :collection }
+  end
 end
