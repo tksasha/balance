@@ -17,3 +17,13 @@ RSpec.shared_examples :show do
     it { should render_template :show }
   end
 end
+
+RSpec.shared_examples :new do
+  before { @format ||= :js }
+
+  describe "#new.#{ @format }" do
+    before { get :new, xhr: (@format == :js), format: @format }
+
+    it { should render_template :new }
+  end
+end

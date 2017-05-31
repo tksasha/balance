@@ -1,12 +1,6 @@
 require 'rails_helper'
 
 RSpec.describe CashesController, type: :controller do
-  describe 'new.js' do
-    before { get :new, xhr: true, format: :js }
-
-    it { should render_template :new }
-  end
-
   describe 'create.js' do
     let(:cash) { double }
 
@@ -67,5 +61,13 @@ RSpec.describe CashesController, type: :controller do
     before { expect(Cash).to receive(:order).with(:name).and_return(:collection) }
 
     its(:collection) { should eq :collection }
+  end
+
+  it_behaves_like :new
+
+  describe '#initialize_resource' do
+    before { expect(Cash).to receive(:new).and_return(:resource) }
+
+    its(:initialize_resource) { should eq :resource }
   end
 end

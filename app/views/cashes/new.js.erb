@@ -3,9 +3,7 @@
 
   $('.modal .modal-body').html('<%= j render 'form' %>');
 
-  $('.modal').on('shown.bs.modal', function() {
-    $('#cash_name').focus();
-  });
+  $('.modal .modal-header').show();
 
-  $('.modal').modal('show');
+  $('#cash_name').focus();
 }());
