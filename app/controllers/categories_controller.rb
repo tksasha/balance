@@ -3,6 +3,6 @@ class CategoriesController < ApplicationController
 
   private
   def collection
-    @collection ||= Category.order :income, :name
+    @collection ||= Category.order :income
   end
 end
