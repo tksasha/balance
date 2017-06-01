@@ -5,7 +5,7 @@ Balance::Application.routes.draw do
     get '/(:year(/:month)(/:category))' => 'items#index'
   end
 
-  resources :cashes
+  resources :cashes, :categories
 
   resource :backoffice, only: :show, controller: :backoffice
 

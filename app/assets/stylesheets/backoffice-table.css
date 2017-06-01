@@ -1,0 +1,13 @@
+.backoffice-table {
+  margin: 0;
+}
+
+.backoffice-table td,
+.backoffice-table th {
+  border: none;
+  padding: 0.75em 0;
+}
+
+.backoffice-table-badge {
+  font-size: 0.9em;
+}

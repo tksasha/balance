@@ -29,3 +29,6 @@ ua:
       default: '%d.%m.%Y'
 
   destroy_confirmation: 'Чи ви впевнені?'
+
+  :true: Так
+  :false: Ні

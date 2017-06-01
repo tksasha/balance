@@ -1,0 +1,18 @@
+<tr>
+  <td><%= category.name %></td>
+
+  <td class="text-align-center">
+    <div class="badge badge-default backoffice-table-badge <%= category.income? ? 'badge-success' : 'badge-warning' %>">
+      <%= t category.income? %>
+    </div>
+  </td>
+
+  <td class="text-align-right">
+    <%= link_to 'Редагувати', [:edit, category], data: { remote: true }, class: 'btn btn-sm btn-primary' %>
+  </td>
+
+  <td class="text-align-right">
+    <%= link_to 'Видалити', category,
+      data: { remote: true, method: :delete, confirm: t('destroy_confirmation') }, class: 'btn btn-sm btn-danger' %>
+  </td>
+</tr>
