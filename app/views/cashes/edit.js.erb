@@ -6,4 +6,8 @@
   $('.modal').on('shown.bs.modal', function() {
     $('#cash_formula').focus();
   });
+
+  if(!$('.modal').hasClass('show')) {
+    $('.modal').modal();
+  }
 }());

@@ -4,7 +4,9 @@
       <tr>
         <td><%= cash.name %></td>
 
-        <td class="text-align-right"><%= money cash.sum %></td>
+        <td class="text-align-right">
+          <%= link_to money(cash.sum), [:edit, cash], data: { remote: true } %>
+        </td>
       </tr>
     <% end %>
   </tbody>
@@ -12,12 +14,18 @@
   <tbody>
     <tr>
       <td>Залишок на кінець</td>
-      <td id="at_end"><%= money Cash.at_end %></td>
+
+      <td id="at_end" class="text-align-right">
+        <%= money Cash.at_end %>
+      </td>
     </tr>
 
     <tr>
       <td>Баланс</td>
-      <td id="balance"><%= money Cash.balance %></td>
+
+      <td id="balance" class="text-align-right">
+        <%= money Cash.balance %>
+      </td>
     </tr>
   </tbody>
 </table>

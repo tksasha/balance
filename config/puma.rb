@@ -17,6 +17,8 @@ if ENV['RAILS_ENV'] == 'production'
   pidfile '/Users/tksasha/balance/tmp/pids/production.server.pid'
 
   environment 'production'
+else
+  port 3000
 end
 
 # Specifies the number of `workers` to boot in clustered mode.
