@@ -1,9 +1,3 @@
 (function() {
-  $('#cash_<%= resource.id %>').replaceWith('<%= j render resource %>');
-
-  $('#at_end').html('<%= money Cash.at_end %>');
-
-  $('#balance').html('<%= money Cash.balance %>');
-
-  $('.modal').modal('hide');
+  $.getScript('<%= url_for :cashes %>');
 }());

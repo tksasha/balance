@@ -1,5 +1,9 @@
 module Permitter
+  def acp params
+    ActionController::Parameters.new params
+  end
+
   def permit! params
-    ActionController::Parameters.new(params).permit!
+    acp(params).permit!
   end
 end

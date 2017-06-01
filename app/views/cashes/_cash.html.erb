@@ -1,10 +1,7 @@
-<!--<tr id="cash_<%= cash.id %>">
-  <td class="cash__name"><%= cash.name %></td>
-  <td class="cash__sum"><%= link_to money(cash.sum), [:edit, cash], :remote => true %></td>
-</tr>-->
-
 <tr id="<%= dom_id cash %>">
   <td><%= cash.name %></td>
+
+  <td><%= money cash.sum %></td>
 
   <td class="table-cashes-edit">
     <%= link_to 'Редагувати', [:edit, cash], data: { remote: true }, class: 'btn btn-sm btn-primary' %>
