@@ -1,0 +1,23 @@
+<table class="table table-bordered cashes">
+  <tbody>
+    <% collection.each do |cash| %>
+      <tr>
+        <td><%= cash.name %></td>
+
+        <td class="text-align-right"><%= money cash.sum %></td>
+      </tr>
+    <% end %>
+  </tbody>
+
+  <tbody>
+    <tr>
+      <td>Залишок на кінець</td>
+      <td id="at_end"><%= money Cash.at_end %></td>
+    </tr>
+
+    <tr>
+      <td>Баланс</td>
+      <td id="balance"><%= money Cash.balance %></td>
+    </tr>
+  </tbody>
+</table>

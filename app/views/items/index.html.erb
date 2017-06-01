@@ -1,8 +1,6 @@
 <%= render 'inline_form', resource: Item.new %>
 
-<div class="container">
-  <%= render 'cashes/cashes', cashes: cashes %>
-</div>
+<div class="container" id="cashes"></div>
 
 <%= render 'consolidates/consolidates', consolidates: consolidates %>
 
@@ -28,3 +26,11 @@
 </div>
 
 <%= render 'widgets/modal' %>
+
+<%= content_for :javascripts do %>
+  <%= javascript_tag do %>
+    $(function() {
+      $.getScript('<%= url_for [:cashes, { report: true }] %>');
+    });
+  <% end %>
+<% end %>
