@@ -11,6 +11,6 @@
   </td>
 
   <td class="table-cashes-destroy">
-    <%= link_to 'Видалити', cash, data: { remote: true, method: :delete }, class: 'btn btn-sm btn-danger' %>
+    <%= link_to 'Видалити', cash, data: { remote: true, method: :delete, confirm: t(:destroy_confirmation) }, class: 'btn btn-sm btn-danger' %>
   </td>
 </tr>

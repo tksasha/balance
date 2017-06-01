@@ -1,20 +1,6 @@
 require 'rails_helper'
 
 RSpec.describe CashesController, type: :controller do
-  describe 'create.js' do
-    let(:cash) { double }
-
-    let(:params) { { cash: { name: 'Food', formula: '43.28 + 18.02' } } }
-
-    before { expect(Cash).to receive(:new).with(permit! params[:cash]).and_return(cash) }
-
-    before { expect(cash).to receive(:save!) }
-
-    before { post :create, params: params, format: :js }
-
-    it { should render_template :create }
-  end
-
   describe 'edit.js' do
     before { get :edit, xhr: true, params: { id: 47 }, format: :js }
 
@@ -63,11 +49,47 @@ RSpec.describe CashesController, type: :controller do
     its(:collection) { should eq :collection }
   end
 
-  it_behaves_like :new
-
   describe '#initialize_resource' do
     before { expect(Cash).to receive(:new).and_return(:resource) }
 
     its(:initialize_resource) { should eq :resource }
   end
+
+  it_behaves_like :new
+
+  describe '#build_resource' do
+    before { expect(subject).to receive(:resource_params).and_return(:params) }
+
+    before { expect(Cash).to receive(:new).with(:params).and_return(:resource) }
+
+    its(:build_resource) { should eq :resource }
+  end
+
+  it_behaves_like :create do
+    let(:resource) { double }
+
+    let(:success) { -> { render_template :create } }
+
+    let(:failure) { -> { render_template :errors } }
+  end
+
+  it_behaves_like :destroy do
+    let(:callback) { -> { render_template :destroy } }
+  end
 end
+
+__END__
+  describe 'create.js' do
+    let(:cash) { double }
+
+    let(:params) { { cash: { name: 'Food', formula: '43.28 + 18.02' } } }
+
+    before { expect(Cash).to receive(:new).with(permit! params[:cash]).and_return(cash) }
+
+    before { expect(cash).to receive(:save!) }
+
+    before { post :create, params: params, format: :js }
+
+    it { should render_template :create }
+  end
+

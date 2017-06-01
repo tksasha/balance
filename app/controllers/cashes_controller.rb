@@ -5,10 +5,6 @@ class CashesController < ApplicationController
   # reload after change date or change Cash or Item
   #
 
-  def destroy
-    resource.destroy
-  end
-
   private
   def initialize_resource
     @cash = Cash.new

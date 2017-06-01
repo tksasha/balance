@@ -27,3 +27,5 @@ ua:
   date:
     formats:
       default: '%d.%m.%Y'
+
+  destroy_confirmation: 'Чи ви впевнені?'
