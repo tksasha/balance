@@ -3,7 +3,11 @@
 
   $('.modal .modal-body').html('<%= j render 'index' %>');
 
+  $('.modal .modal-dialog').addClass('modal-lg');
+
   $('.modal').on('hidden.bs.modal', function() {
     $('.modal .modal-header').show();
+
+    $('.modal .modal-dialog').removeClass('modal-lg');
   });
 }());

@@ -3,6 +3,8 @@
 
   $('.modal .modal-body').html('<%= j render 'form' %>');
 
+  $('.modal .modal-dialog').removeClass('modal-lg');
+
   $('.modal').on('shown.bs.modal', function() {
     $('#cash_formula').focus();
   });
