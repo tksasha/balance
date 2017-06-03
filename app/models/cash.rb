@@ -1,7 +1,11 @@
 class Cash < ActiveRecord::Base
   include ActsAsHasFormula
 
+  acts_as_paranoid
+
   validates :name, :formula, presence: true
+
+  validates :name, uniqueness: { case_sensitive: false }
 
   class << self
     def at_end

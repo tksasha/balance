@@ -18,6 +18,7 @@ class Item < ActiveRecord::Base
   class << self
     #
     # TODO: rename it to `search_by` and refactor it
+    # TODO: use ItemSearcher instead
     #
     def search date_range, slug=nil
       if slug

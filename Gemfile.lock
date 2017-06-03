@@ -83,6 +83,8 @@ GEM
     nio4r (2.1.0)
     nokogiri (1.7.2)
       mini_portile2 (~> 2.1.0)
+    paranoia (2.3.1)
+      activerecord (>= 4.0, < 5.2)
     puma (3.9.0)
     rack (2.0.3)
     rack-test (0.6.3)
@@ -183,6 +185,7 @@ DEPENDENCIES
   bootstrap-datepicker-rails
   draper
   jquery-rails
+  paranoia
   puma
   rails
   rails-controller-testing

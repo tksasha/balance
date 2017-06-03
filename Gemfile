@@ -12,6 +12,7 @@ gem 'bootstrap'
 gem 'simple_form'
 gem 'bootstrap-datepicker-rails'
 gem 'rake'
+gem 'paranoia'
 
 group :development, :test do
   gem 'rspec-rails'

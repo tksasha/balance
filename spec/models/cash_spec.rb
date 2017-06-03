@@ -1,9 +1,15 @@
 require 'rails_helper'
 
 RSpec.describe Cash, type: :model do
+  subject { Cash.new sum: 0 }
+
+  it { should act_as_paranoid }
+
   it { should be_a ActsAsHasFormula }
 
   it { should validate_presence_of :name }
+
+  it { should validate_uniqueness_of(:name).case_insensitive }
 
   it { should validate_presence_of :formula }
 
@@ -26,16 +32,18 @@ RSpec.describe Cash, type: :model do
       end
     end
 
-    it { expect(Cash.at_end).to eq 3.5 }
+    subject { described_class.at_end }
+
+    it { should eq 3.5 }
   end
 
   describe '.balance' do
-    before do
-      expect(Cash).to receive(:sum).with(:sum) { 24 }
+    before { expect(described_class).to receive(:sum).with(:sum).and_return(24) }
 
-      expect(Cash).to receive(:at_end) { 19.8 }
-    end
+    before { expect(described_class).to receive(:at_end).and_return(19.8) }
 
-    it { expect(Cash.balance).to eq 4.2 }
+    subject { described_class.balance }
+
+    it { should eq 4.2 }
   end
 end
