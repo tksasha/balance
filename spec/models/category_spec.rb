@@ -43,4 +43,10 @@ RSpec.describe Category, type: :model do
         to eq [['Видатки', [['Їжа', 1], ["Дім. Сім'я", 2]]], ['Надходження', [['Зарплата', 3]]]]
     end
   end
+
+  describe '#destroy' do
+    before { expect(subject).to receive(:update).with(visible: false) }
+
+    it { expect { subject.destroy }.to_not raise_error }
+  end
 end

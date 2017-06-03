@@ -9,6 +9,10 @@ class Category < ActiveRecord::Base
 
   before_save :assign_slug
 
+  def destroy
+    update visible: false
+  end
+
   private
   #
   # TODO: BUG
