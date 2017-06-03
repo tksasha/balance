@@ -51,3 +51,43 @@ RSpec.shared_examples :destroy do |params|
     it { success.call }
   end
 end
+
+RSpec.shared_examples :new do |params|
+  before { @format = (params && params[:format]) || :js }
+
+  describe "#new.#{ @format }" do
+    before { expect(subject).to receive(:initialize_resource) }
+
+    before { get :new, xhr: (@format == :js), format: @format }
+
+    it { should render_template :new }
+  end
+end
+
+RSpec.shared_examples :create do |params|
+  before { @format = (params && params[:format]) || :js }
+
+  describe "#update.#{ @format }" do
+    let(:resource) { double }
+
+    before { expect(subject).to receive(:build_resource).and_return(resource) }
+
+    before { expect(subject).to receive(:resource).and_return(resource) }
+
+    context do
+      before { expect(resource).to receive(:save).and_return(true) }
+
+      before { post :create, format: @format }
+
+      it { success.call }
+    end
+
+    context do
+      before { expect(resource).to receive(:save).and_return(false) }
+
+      before { patch :create, format: @format }
+
+      it { failure.call }
+    end
+  end
+end

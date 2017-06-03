@@ -33,4 +33,12 @@ RSpec.describe CategoriesController, type: :controller do
   it_behaves_like :destroy do
     let(:success) { -> { render_template :destroy } }
   end
+
+  it_behaves_like :new
+
+  it_behaves_like :create do
+    let(:success) { -> { render_template :create } }
+
+    let(:failure) { -> { render_template :errors } }
+  end
 end
