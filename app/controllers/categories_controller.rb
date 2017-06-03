@@ -5,4 +5,8 @@ class CategoriesController < ApplicationController
   def collection
     @collection ||= Category.order :income
   end
+
+  def resource_params
+    params.require(:category).permit(:name, :income)
+  end
 end

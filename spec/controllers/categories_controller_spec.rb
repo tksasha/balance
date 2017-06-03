@@ -8,4 +8,18 @@ RSpec.describe CategoriesController, type: :controller do
 
     its(:collection) { should eq :collection }
   end
+
+  it_behaves_like :edit
+
+  describe '#resource_params' do
+    before { expect(subject).to receive(:params).and_return(acp category: { name: 'Drinks', income: true }) }
+
+    its(:resource_params) { should eq permit! name: 'Drinks', income: true }
+  end
+
+  it_behaves_like :update, format: :js do
+    let(:success) { -> { render_template :update } }
+
+    let(:failure) { -> { render_template :errors } }
+  end
 end

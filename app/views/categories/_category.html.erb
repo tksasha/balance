@@ -2,17 +2,17 @@
   <td><%= category.name %></td>
 
   <td class="text-align-center">
-    <div class="badge badge-default backoffice-table-badge <%= category.income? ? 'badge-success' : 'badge-warning' %>">
+    <div class="<%= category.income? ? 'text-success' : 'text-warning' %>">
       <%= t category.income? %>
     </div>
   </td>
 
   <td class="text-align-right">
-    <%= link_to 'Редагувати', [:edit, category], data: { remote: true }, class: 'btn btn-sm btn-primary' %>
+    <%= link_to 'Редагувати', [:edit, category], data: { remote: true } %>
   </td>
 
   <td class="text-align-right">
     <%= link_to 'Видалити', category,
-      data: { remote: true, method: :delete, confirm: t('destroy_confirmation') }, class: 'btn btn-sm btn-danger' %>
+      data: { remote: true, method: :delete, confirm: t('destroy_confirmation') }, class: 'text-danger' %>
   </td>
 </tr>

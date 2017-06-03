@@ -9,6 +9,9 @@ ua:
         formula: 'Сума'
         category_id: 'Категорія'
         description: 'Примітка'
+      category:
+        name: 'Назва'
+        income: 'Надходження'
 
   errors:
     messages:

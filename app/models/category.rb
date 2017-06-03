@@ -1,4 +1,6 @@
 class Category < ActiveRecord::Base
+  validates :name, presence: true, uniqueness: { case_sensitive: false }
+
   scope :income, -> { where('income IN(?)', [1, true]) }
 
   scope :expense, -> { where('income IN(?)', [0, false]) }
