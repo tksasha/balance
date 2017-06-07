@@ -1,4 +1,6 @@
 <%= simple_form_for resource, remote: true, wrapper: :horizontal_form do |f| %>
+  <%= hidden_field_tag :report, params[:report] %>
+
   <%= f.input :name %>
 
   <%= f.input :formula %>

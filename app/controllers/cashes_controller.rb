@@ -1,7 +1,7 @@
 class CashesController < ApplicationController
   include ActsAsRESTController
 
-  before_action :set_variant, only: :index
+  before_action :set_variant, only: [:index, :update]
 
   private
   def collection
