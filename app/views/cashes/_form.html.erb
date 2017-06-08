@@ -1,5 +1,5 @@
 <%= simple_form_for resource, remote: true, wrapper: :horizontal_form do |f| %>
-  <%= hidden_field_tag :report, params[:report] %>
+  <%= hidden_field_tag :report, true if params[:report].present? %>
 
   <%= f.input :name %>
 

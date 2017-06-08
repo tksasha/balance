@@ -13,6 +13,6 @@ class CashesController < ApplicationController
   end
 
   def set_variant
-    request.variant = :report if params[:report]
+    request.variant = :report if params[:report].present?
   end
 end

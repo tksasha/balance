@@ -5,7 +5,7 @@
         <td><%= cash.name %></td>
 
         <td class="text-align-right">
-          <%= link_to money(cash.sum), [:edit, cash], data: { remote: true } %>
+          <%= link_to money(cash.sum), [:edit, cash, { report: true }], data: { remote: true } %>
         </td>
       </tr>
     <% end %>
