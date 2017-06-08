@@ -21,4 +21,12 @@ module ApplicationHelper
   def decorated
     resource.decorate
   end
+
+  def breadcrumbs
+    content_tag :nav, class: :breadcrumb do
+      concat link_to('Backoffice', :backoffice, class: 'breadcrumb-item', data: { remote: true })
+
+      yield if block_given?
+    end
+  end
 end
