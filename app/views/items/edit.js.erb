@@ -1,6 +1,4 @@
 $(function() {
-  $('.modal .modal-title').text('Змінити запис');
-
   $('.modal .modal-body').html('<%= j render 'form' %>');
 
   $('.modal').on('shown.bs.modal', function() {
@@ -10,6 +8,4 @@ $(function() {
   $('.modal input[name="item[date]"]').datepicker(BOOTSTRAP_DATEPICKER_DEFAULTS);
 
   $('.modal').modal();
-
-  //$('.modal select').selectpicker();
 }());

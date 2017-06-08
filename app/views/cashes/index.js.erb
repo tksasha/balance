@@ -1,13 +1,9 @@
 (function() {
-  $('.modal-header').hide();
-
   $('.modal-body').html('<%= j render 'index' %>');
 
   $('.modal-dialog').addClass('modal-lg');
 
   $('.modal').on('hidden.bs.modal', function() {
-    $('.modal-header').show();
-
     $('.modal-dialog').removeClass('modal-lg');
   });
 }());
