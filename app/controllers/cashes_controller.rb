@@ -1,7 +1,7 @@
 class CashesController < ApplicationController
   include ActsAsRESTController
 
-  before_action :set_variant, only: :index
+  before_action :set_variant, only: [:index, :update]
 
   private
   def collection
@@ -13,6 +13,6 @@ class CashesController < ApplicationController
   end
 
   def set_variant
-    request.variant = :report if params[:report]
+    request.variant = :report if params[:report].present?
   end
 end

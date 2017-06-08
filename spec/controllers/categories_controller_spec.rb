@@ -25,20 +25,20 @@ RSpec.describe CategoriesController, type: :controller do
   end
 
   it_behaves_like :update do
-    let(:success) { -> { render_template :update } }
+    let(:success) { -> { should render_template :update } }
 
-    let(:failure) { -> { render_template :errors } }
+    let(:failure) { -> { should render_template :edit } }
   end
 
   it_behaves_like :destroy do
-    let(:success) { -> { render_template :destroy } }
+    let(:success) { -> { should render_template :destroy } }
   end
 
   it_behaves_like :new
 
   it_behaves_like :create do
-    let(:success) { -> { render_template :create } }
+    let(:success) { -> { should render_template :create } }
 
-    let(:failure) { -> { render_template :errors } }
+    let(:failure) { -> { should render_template :new } }
   end
 end

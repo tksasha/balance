@@ -1,7 +1,5 @@
 (function() {
-  $('.modal .modal-header').show();
+  $('.modal-body').html('<%= j render 'edit' %>');
 
-  $('.modal .modal-title').text('Редагувати Категорію');
-
-  $('.modal .modal-body').html('<%= j render 'form' %>');
+  $('#category_name').focus();
 }());

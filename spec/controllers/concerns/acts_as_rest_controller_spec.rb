@@ -42,7 +42,7 @@ RSpec.describe ActsAsRESTController do
 
     before { expect(resource).to receive(:save).and_return(false) }
 
-    before { expect(subject).to receive(:render).with(:errors) }
+    before { expect(subject).to receive(:render).with(:new) }
 
     it { expect { subject.create }.to_not raise_error }
   end
@@ -56,7 +56,7 @@ RSpec.describe ActsAsRESTController do
 
     before { expect(resource).to receive(:update).with(:params).and_return(false) }
 
-    before { expect(subject).to receive(:render).with(:errors) }
+    before { expect(subject).to receive(:render).with(:edit) }
 
     it { expect { subject.update }.to_not raise_error }
   end

@@ -13,11 +13,11 @@ module ActsAsRESTController
   end
 
   def create
-    render :errors unless resource.save
+    render :new unless resource.save
   end
 
   def update
-    render :errors unless resource.update resource_params
+    render :edit unless resource.update resource_params
   end
 
   def destroy

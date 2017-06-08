@@ -1,11 +1,9 @@
 (function() {
-  $('.modal .modal-title').text('Backoffice');
+  $('.modal-body').html('<%= j render 'show' %>');
 
-  $('.modal .modal-body').html('<%= j render 'show' %>');
+  $('.modal-dialog').removeClass('modal-lg');
 
-  $('.modal .modal-header').show();
-
-  $('.modal .modal-dialog').removeClass('modal-lg');
-
-  $('.modal').modal();
+  if(!$('.modal').hasClass('show')) {
+    $('.modal').modal();
+  }
 }());

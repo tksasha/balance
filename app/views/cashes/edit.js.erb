@@ -1,13 +1,9 @@
 (function() {
-  $('.modal .modal-title').text('Змінити залишок');
+  $('.modal-body').html('<%= j render 'edit' %>');
 
-  $('.modal .modal-body').html('<%= j render 'form' %>');
+  $('.modal-dialog').removeClass('modal-lg');
 
-  $('.modal .modal-dialog').removeClass('modal-lg');
-
-  $('.modal').on('shown.bs.modal', function() {
-    $('#cash_formula').focus();
-  });
+  $('#cash_formula').focus();
 
   if(!$('.modal').hasClass('show')) {
     $('.modal').modal();
