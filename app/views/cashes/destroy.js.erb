@@ -1,3 +1,5 @@
 (function() {
   $.getScript('<%= url_for :cashes %>');
+
+  $.getScript('<%= url_for [:cashes, { report: true }] %>');
 }());
