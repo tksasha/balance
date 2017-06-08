@@ -14,4 +14,16 @@ RSpec.describe CashesController, type: :controller do
 
     its(:resource_params) { should eq permit! formula: '', name: '' }
   end
+
+  it_behaves_like :update do
+    let(:success) { -> { should render_template :update } }
+
+    let(:failure) { -> { should render_template :edit } }
+  end
+
+  it_behaves_like :create do
+    let(:success) { -> { should render_template :create } }
+
+    let(:failure) { -> { should render_template :new } }
+  end
 end
