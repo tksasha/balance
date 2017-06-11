@@ -4,11 +4,11 @@
   <td><%= money cash.sum %></td>
 
   <td class="text-align-right">
-    <%= link_to 'Редагувати', [:edit, cash], data: { remote: true } %>
+    <%= link_to 'Редагувати', [:edit, cash], data: { remote: true }, class: 'btn btn-sm btn-primary' %>
   </td>
 
   <td class="text-align-right">
     <%= link_to 'Видалити', cash,
-      data: { remote: true, method: :delete, confirm: t(:destroy_confirmation) }, class: 'text-danger' %>
+      data: { remote: true, method: :delete, confirm: t(:destroy_confirmation) }, class: 'btn btn-sm btn-danger' %>
   </td>
 </tr>
