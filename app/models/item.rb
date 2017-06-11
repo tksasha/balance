@@ -6,14 +6,14 @@ class Item < ActiveRecord::Base
   validates :date, :category_id, :formula, presence: true
 
   #
-  # TODO: tiny refactoring needed
+  # do not use `acts_as_paranoid` for joins(:category)
   #
-  scope :income, -> { includes(:category).where('categories.income' => true) }
+  scope :income, -> { joins('categories ON categories.id=items.category_id').where({ categories: { income: true } }) }
 
   #
-  # TODO: tiny refactoring needed
+  # do not use `acts_as_paranoid` for joins(:category)
   #
-  scope :expense, -> { includes(:category).where('categories.income' => false) }
+  scope :expense, -> { joins('categories ON categories.id=items.category_id').where({ categories: { income: false } }) }
 
   acts_as_paranoid
 

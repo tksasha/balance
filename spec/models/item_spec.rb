@@ -58,26 +58,32 @@ RSpec.describe Item, type: :model do
   describe '.income' do
     before do
       #
-      # stub: Item.includes(:category).where('categories.income' => true)
+      # described_class.
+      #   joins('categories ON categories.id=items.category_id').where({ categories: { income: true } }) -> :collection
       #
-      expect(Item).to receive(:includes).with(:category) do
-        double.tap { |a| expect(a).to receive(:where).with('categories.income' => true) }
+      expect(described_class).to receive(:joins).with('categories ON categories.id=items.category_id') do
+        double.tap { |a| expect(a).to receive(:where).with({ categories: { income: true } }).and_return(:collection) }
       end
     end
 
-    it { expect { Item.income }.to_not raise_error }
+    subject { described_class.income }
+
+    it { should eq :collection }
   end
 
   describe '.expense' do
     before do
       #
-      # stub: Item.includes(:category).where('categories.income' => false)
+      # described_class.
+      #   joins('categories ON categories.id=items.category_id').where({ categories: { income: false } }) -> :collection
       #
-      expect(Item).to receive(:includes).with(:category) do
-        double.tap { |a| expect(a).to receive(:where).with('categories.income' => false) }
+      expect(described_class).to receive(:joins).with('categories ON categories.id=items.category_id') do
+        double.tap { |a| expect(a).to receive(:where).with({ categories: { income: false } }).and_return(:collection) }
       end
     end
 
-    it { expect { Item.expense }.to_not raise_error }
+    subject { described_class.expense }
+
+    it { should eq :collection }
   end
 end
