@@ -3,7 +3,7 @@
 
   $('.modal-dialog').removeClass('modal-lg');
 
-  $('#cash_formula').focus();
+  setTimeout(function() { $('#cash_formula').focus() }, 400);
 
   if(!$('.modal').hasClass('show')) {
     $('.modal').modal();
