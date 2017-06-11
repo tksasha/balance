@@ -59,9 +59,10 @@ RSpec.describe Item, type: :model do
     before do
       #
       # described_class.
-      #   joins('categories ON categories.id=items.category_id').where({ categories: { income: true } }) -> :collection
+      #   joins('INNER JOIN categories ON categories.id=items.category_id').
+      #   where({ categories: { income: true } }) -> :collection
       #
-      expect(described_class).to receive(:joins).with('categories ON categories.id=items.category_id') do
+      expect(described_class).to receive(:joins).with('INNER JOIN categories ON categories.id=items.category_id') do
         double.tap { |a| expect(a).to receive(:where).with({ categories: { income: true } }).and_return(:collection) }
       end
     end
@@ -75,9 +76,10 @@ RSpec.describe Item, type: :model do
     before do
       #
       # described_class.
-      #   joins('categories ON categories.id=items.category_id').where({ categories: { income: false } }) -> :collection
+      #   joins('INNER JOIN categories ON categories.id=items.category_id').
+      #   where({ categories: { income: false } }) -> :collection
       #
-      expect(described_class).to receive(:joins).with('categories ON categories.id=items.category_id') do
+      expect(described_class).to receive(:joins).with('INNER JOIN categories ON categories.id=items.category_id') do
         double.tap { |a| expect(a).to receive(:where).with({ categories: { income: false } }).and_return(:collection) }
       end
     end

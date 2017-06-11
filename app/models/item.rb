@@ -8,12 +8,16 @@ class Item < ActiveRecord::Base
   #
   # do not use `acts_as_paranoid` for joins(:category)
   #
-  scope :income, -> { joins('categories ON categories.id=items.category_id').where({ categories: { income: true } }) }
+  scope :income, -> do
+    joins('INNER JOIN categories ON categories.id=items.category_id').where({ categories: { income: true } })
+  end
 
   #
   # do not use `acts_as_paranoid` for joins(:category)
   #
-  scope :expense, -> { joins('categories ON categories.id=items.category_id').where({ categories: { income: false } }) }
+  scope :expense, -> do
+    joins('INNER JOIN categories ON categories.id=items.category_id').where({ categories: { income: false } })
+  end
 
   acts_as_paranoid
 
