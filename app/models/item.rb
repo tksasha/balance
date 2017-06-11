@@ -5,19 +5,9 @@ class Item < ActiveRecord::Base
 
   validates :date, :category_id, :formula, presence: true
 
-  #
-  # do not use `acts_as_paranoid` for joins(:category)
-  #
-  scope :income, -> do
-    joins('INNER JOIN categories ON categories.id=items.category_id').where({ categories: { income: true } })
-  end
+  scope :income, -> { joins(:category).where({ categories: { income: true } }) }
 
-  #
-  # do not use `acts_as_paranoid` for joins(:category)
-  #
-  scope :expense, -> do
-    joins('INNER JOIN categories ON categories.id=items.category_id').where({ categories: { income: false } })
-  end
+  scope :expense, -> { joins(:category).where({ categories: { income: false } }) }
 
   acts_as_paranoid
 
