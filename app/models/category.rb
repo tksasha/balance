@@ -5,13 +5,9 @@ class Category < ActiveRecord::Base
 
   scope :expense, -> { where('income IN(?)', [0, false]) }
 
-  scope :visible, -> { where visible: true }
-
   before_save :assign_slug
 
-  def destroy
-    update visible: false
-  end
+  acts_as_paranoid
 
   private
   #
@@ -24,8 +20,8 @@ class Category < ActiveRecord::Base
   class << self
     def group_by_income
       [
-        ['Видатки', visible.expense.pluck(:name, :id)],
-        ['Надходження', visible.income.pluck(:name, :id)]
+        ['Видатки', expense.pluck(:name, :id)],
+        ['Надходження', income.pluck(:name, :id)]
       ]
     end
   end

@@ -3,7 +3,7 @@ class CategoriesController < ApplicationController
 
   private
   def collection
-    @collection ||= Category.visible.order :income
+    @collection ||= Category.order :income
   end
 
   def resource_params

@@ -4,14 +4,7 @@ RSpec.describe CategoriesController, type: :controller do
   it { should be_an ActsAsRESTController }
 
   describe '#collection' do
-    before do
-      #
-      # Category.visible.order(:income)
-      #
-      expect(Category).to receive(:visible) do
-        double.tap { |a| expect(a).to receive(:order).with(:income).and_return(:collection) }
-      end
-    end
+    before { expect(Category).to receive(:order).with(:income).and_return(:collection) }
 
     its(:collection) { should eq :collection }
   end
