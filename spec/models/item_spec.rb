@@ -11,6 +11,8 @@ RSpec.describe Item, type: :model do
 
   it { should belong_to :category }
 
+  it { should act_as_paranoid }
+
   describe '.search' do
     let(:date_range) { DateRange.new Date.today }
 

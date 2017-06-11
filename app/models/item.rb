@@ -15,6 +15,8 @@ class Item < ActiveRecord::Base
   #
   scope :expense, -> { includes(:category).where('categories.income' => false) }
 
+  acts_as_paranoid
+
   class << self
     #
     # TODO: rename it to `search_by` and refactor it
