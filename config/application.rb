@@ -22,5 +22,8 @@ module Balance
     config.i18n.default_locale = :ua
 
     config.eager_load_paths += [config.root.join('lib')]
+
+    # Initialize configuration defaults for originally generated Rails version.
+    config.load_defaults 5.1
   end
 end
