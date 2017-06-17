@@ -14,6 +14,10 @@ gem 'bootstrap-datepicker-rails'
 gem 'rake'
 gem 'paranoia'
 
+group :development do
+  gem 'listen'
+end
+
 group :development, :test do
   gem 'rspec-rails'
 end
