@@ -1,5 +1,6 @@
-@import "variables";
+@import "bootstrap/functions";
+@import "bootstrap/variables";
 
 .simple_form .has-error .help-block {
-  color: $brand-danger;
+  color: $red;
 }

@@ -1,13 +1,3 @@
-$brand-primary: adjust_hue(green, 55);
-$brand-danger: #d9534f;
+$blue: adjust_hue(green, 55);
 
-$link-color: $brand-primary !default;
-$link-hover-color: darken($link-color, 9);
-
-$input-border-focus: #ccc !default;
-
-//$font-family-sans-serif: 'Open Sans', sans-serif;
 $font-size-base: 0.9rem;
-
-//$btn-padding-x-sm:               .75rem !default;
-//$btn-padding-y-sm:               .20rem !default;
