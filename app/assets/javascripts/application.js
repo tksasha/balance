@@ -1,11 +1,10 @@
 // = require jquery
 // = require jquery_ujs
-// = require bootstrap/util
-// = require bootstrap/modal
-// = require bootstrap/dropdown
+// = require popper
+// = require bootstrap-sprockets
+//
 // = require bootstrap-datepicker/core
 // = require bootstrap-datepicker/locales/bootstrap-datepicker.ua
-// = require bootstrap-select.min
 //
 // = require_self
 
