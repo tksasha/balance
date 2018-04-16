@@ -1,11 +1,13 @@
 class Category < ActiveRecord::Base
   validates :name, presence: true, uniqueness: { case_sensitive: false }
 
+  # TODO: spec me
   scope :income, -> { where('income IN(?)', [1, true]) }
 
+  # TODO: spec me
   scope :expense, -> { where('income IN(?)', [0, false]) }
 
-  scope :visible, -> { where visible: true }
+  scope :visible, -> { where visible: 1 }
 
   before_save :assign_slug
 

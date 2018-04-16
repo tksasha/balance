@@ -55,7 +55,7 @@ RSpec.describe Item, type: :model do
     end
   end
 
-  describe '.income' do
+  pending '.income' do
     before do
       #
       # described_class.joins(:category).where({ categories: { income: true } }) -> :collection
@@ -70,13 +70,13 @@ RSpec.describe Item, type: :model do
     it { should eq :collection }
   end
 
-  describe '.expense' do
+  pending '.expense' do
     before do
       #
       # described_class.joins(:category).where({ categories: { income: false } }) -> :collection
       #
       expect(described_class).to receive(:joins).with(:category) do
-        double.tap { |a| expect(a).to receive(:where).with({ categories: { income: false } }).and_return(:collection) }
+        double.tap { |a| expect(a).to receive(:where).with({ categories: { income: 0 } }).and_return(:collection) }
       end
     end
 
