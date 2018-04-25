@@ -5,9 +5,9 @@ class Item < ActiveRecord::Base
 
   validates :date, :category_id, :formula, presence: true
 
-  scope :income, -> { joins(:category).where({ categories: { income: true } }) }
+  scope :income, -> { joins(:category).merge(Category.income) }
 
-  scope :expense, -> { joins(:category).where({ categories: { income: false } }) }
+  scope :expense, -> { joins(:category).merge(Category.expense) }
 
   acts_as_paranoid
 

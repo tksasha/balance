@@ -43,11 +43,27 @@ RSpec.describe Category, type: :model do
     it { expect { subject.destroy }.to_not raise_error }
   end
 
-  pending '.visible' do
-    before { expect(described_class).to receive(:where).with(visible: true).and_return(:collection) }
+  describe '.visible' do
+    let(:sql) { described_class.where(visible: true).to_sql }
 
-    subject { described_class.visible }
+    subject { described_class.visible.to_sql }
 
-    it { should eq :collection }
+    it { should eq sql }
+  end
+
+  describe '.income' do
+    let(:sql) { described_class.where(income: true).to_sql }
+
+    subject { described_class.income.to_sql }
+
+    it { should eq sql }
+  end
+
+  describe '.expense' do
+    let(:sql) { described_class.where(income: false).to_sql }
+
+    subject { described_class.expense.to_sql }
+
+    it { should eq sql }
   end
 end

@@ -55,33 +55,19 @@ RSpec.describe Item, type: :model do
     end
   end
 
-  pending '.income' do
-    before do
-      #
-      # described_class.joins(:category).where({ categories: { income: true } }) -> :collection
-      #
-      expect(described_class).to receive(:joins).with(:category) do
-        double.tap { |a| expect(a).to receive(:where).with({ categories: { income: true } }).and_return(:collection) }
-      end
-    end
+  describe '.income' do
+    let(:sql) { described_class.joins(:category).merge(Category.income).to_sql }
 
-    subject { described_class.income }
+    subject { described_class.income.to_sql }
 
-    it { should eq :collection }
+    it { should eq sql }
   end
 
-  pending '.expense' do
-    before do
-      #
-      # described_class.joins(:category).where({ categories: { income: false } }) -> :collection
-      #
-      expect(described_class).to receive(:joins).with(:category) do
-        double.tap { |a| expect(a).to receive(:where).with({ categories: { income: 0 } }).and_return(:collection) }
-      end
-    end
+  describe '.expense' do
+    let(:sql) { described_class.joins(:category).merge(Category.expense).to_sql }
 
-    subject { described_class.expense }
+    subject { described_class.expense.to_sql }
 
-    it { should eq :collection }
+    it { should eq sql }
   end
 end
