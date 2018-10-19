@@ -2,7 +2,7 @@ source 'http://rubygems.org'
 
 gem 'rails'
 gem 'jquery-rails'
-gem 'sass-rails'
+gem 'sassc'
 gem 'uglifier'
 gem 'sqlite3'
 gem 'draper'
