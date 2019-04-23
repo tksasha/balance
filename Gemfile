@@ -4,7 +4,7 @@ gem 'rails'
 gem 'jquery-rails'
 gem 'sassc'
 gem 'uglifier'
-gem 'sqlite3', '1.3.13'
+gem 'sqlite3'
 gem 'draper'
 gem 'puma'
 gem 'bootstrap'
@@ -23,7 +23,7 @@ group :development, :test do
 end
 
 group :test do
-  gem 'shoulda-matchers', '4.0.0.rc1'
+  gem 'shoulda-matchers'
   gem 'rspec-activemodel-mocks'
   gem 'rspec-its'
   gem 'rails-controller-testing'
