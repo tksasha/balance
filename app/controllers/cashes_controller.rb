@@ -1,5 +1,5 @@
 class CashesController < ApplicationController
-  before_action :set_variant, only: [:index, :update]
+  before_action :set_variant, only: %i(index update)
 
   def create
     render :new, status: 422 unless resource.save

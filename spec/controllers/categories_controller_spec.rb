@@ -49,11 +49,55 @@ RSpec.describe CategoriesController, type: :controller do
     let(:failure) { -> { should render_template(:edit).with_status(422) } }
   end
 
+  describe '#initialize_resource' do
+    before { expect(Category).to receive(:new).and_return(:resource) }
+
+    before { subject.send :initialize_resource }
+
+    its(:resource) { should eq :resource }
+  end
+
   it_behaves_like :new
+
+  describe '#build_resource' do
+    before { expect(subject).to receive(:resource_params).and_return(:resource_params) }
+
+    before { expect(Category).to receive(:new).with(:resource_params).and_return(:resource) }
+
+    before { subject.send :build_resource }
+
+    its(:resource) { should eq :resource }
+  end
 
   it_behaves_like :create do
     let(:success) { -> { should render_template(:create).with_status(201) } }
 
     let(:failure) { -> { should render_template(:new).with_status(422) } }
+  end
+
+  describe '#set_variant' do
+    context do
+      before { expect(subject).to receive(:params).and_return({}) }
+
+      it { expect(subject).to_not receive(:request) }
+
+      after { subject.send :set_variant }
+    end
+
+    context do
+      before { expect(subject).to receive(:params).and_return({ widget: '' }) }
+
+      it { expect(subject).to_not receive(:request) }
+
+      after { subject.send :set_variant }
+    end
+
+    context do
+      before { expect(subject).to receive(:params).and_return({ widget: '1' }) }
+
+      it { expect(subject).to receive_message_chain('request.variant=').with(:widget) }
+
+      after { subject.send :set_variant }
+    end
   end
 end
