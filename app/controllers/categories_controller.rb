@@ -1,12 +1,22 @@
 class CategoriesController < ApplicationController
-  include ActsAsRESTController
+  def create
+    render :new, status: 422 unless resource.save
+  end
+
+  def update
+    render :edit, status: 422 unless resource.update resource_params
+  end
 
   private
   def collection
-    @collection ||= Category.visible.order :income
+    @collection ||= Category.order :income
   end
 
   def resource_params
-    params.require(:category).permit(:name, :income)
+    params.require(:category).permit(:name, :income, :visible)
+  end
+
+  def resource
+    @resource ||= Category.find params[:id]
   end
 end

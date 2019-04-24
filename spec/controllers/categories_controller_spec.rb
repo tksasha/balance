@@ -1,44 +1,59 @@
 require 'rails_helper'
 
 RSpec.describe CategoriesController, type: :controller do
-  it { should be_an ActsAsRESTController }
-
   describe '#collection' do
-    before do
-      #
-      # Category.visible.order(:income) -> :collection
-      #
-      expect(Category).to receive(:visible) do
-        double.tap { |a| expect(a).to receive(:order).with(:income).and_return(:collection) }
-      end
+    context do
+      before { subject.instance_variable_set :@collection, :collection }
+
+      its(:collection) { should eq :collection }
     end
 
-    its(:collection) { should eq :collection }
+    context do
+      before { expect(Category).to receive(:order).with(:income).and_return(:collection) }
+
+      its(:collection) { should eq :collection }
+    end
+  end
+
+  describe '#resource' do
+    context do
+      before { subject.instance_variable_set :@resource, :resource }
+
+      its(:resource) { should eq :resource }
+    end
+
+    context do
+      before { expect(subject).to receive(:params).and_return({ id: 27 }) }
+
+      before { expect(Category).to receive(:find).with(27).and_return(:resource) }
+
+      its(:resource) { should eq :resource }
+    end
   end
 
   it_behaves_like :edit
 
   describe '#resource_params' do
-    before { expect(subject).to receive(:params).and_return(acp category: { name: 'Drinks', income: true }) }
+    let :params do
+      acp category: { name: nil, income: nil, visible: nil }
+    end
 
-    its(:resource_params) { should eq permit! name: 'Drinks', income: true }
+    before { expect(subject).to receive(:params).and_return(params) }
+
+    its(:resource_params) { should eq params[:category].permit! }
   end
 
   it_behaves_like :update do
-    let(:success) { -> { should render_template :update } }
+    let(:success) { -> { should render_template(:update).with_status(200) } }
 
-    let(:failure) { -> { should render_template :edit } }
-  end
-
-  it_behaves_like :destroy do
-    let(:success) { -> { should render_template :destroy } }
+    let(:failure) { -> { should render_template(:edit).with_status(422) } }
   end
 
   it_behaves_like :new
 
   it_behaves_like :create do
-    let(:success) { -> { should render_template :create } }
+    let(:success) { -> { should render_template(:create).with_status(201) } }
 
-    let(:failure) { -> { should render_template :new } }
+    let(:failure) { -> { should render_template(:new).with_status(422) } }
   end
 end

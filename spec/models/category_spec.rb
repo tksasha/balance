@@ -37,12 +37,6 @@ RSpec.describe Category, type: :model do
     it { should eq [['Видатки', [['Їжа', 1], ["Дім. Сім'я", 2]]], ['Надходження', [['Зарплата', 3]]]] }
   end
 
-  describe '#destroy' do
-    before { expect(subject).to receive(:update).with(visible: false) }
-
-    it { expect { subject.destroy }.to_not raise_error }
-  end
-
   describe '.visible' do
     let(:sql) { described_class.where(visible: true).to_sql }
 

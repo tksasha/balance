@@ -3,6 +3,7 @@ module Permitter
     ActionController::Parameters.new params
   end
 
+  # TODO: delme
   def permit! params
     acp(params).permit!
   end

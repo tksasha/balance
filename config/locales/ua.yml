@@ -12,6 +12,7 @@ ua:
       category:
         name: 'Назва'
         income: 'Надходження'
+        visible: 'Відображається'
 
   errors:
     messages:
