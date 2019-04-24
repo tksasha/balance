@@ -1,8 +1,6 @@
 require 'rails_helper'
 
 RSpec.describe CashesController, type: :controller do
-  it { should be_a ActsAsRESTController }
-
   describe '#collection' do
     before { expect(Cash).to receive(:order).with(:name).and_return(:collection) }
 
@@ -15,16 +13,52 @@ RSpec.describe CashesController, type: :controller do
     its(:resource_params) { should eq permit! formula: '', name: '' }
   end
 
-  it_behaves_like :update do
-    let(:success) { -> { should render_template :update } }
+  describe '#resource' do
+    context do
+      before { subject.instance_variable_set :@resource, :resource }
 
-    let(:failure) { -> { should render_template :edit } }
+      its(:resource) { should eq :resource }
+    end
+
+    context do
+      before { expect(subject).to receive(:params).and_return({ id: 11 }) }
+
+      before { expect(Cash).to receive(:find).with(11).and_return(:resource) }
+
+      its(:resource) { should eq :resource }
+    end
+  end
+
+  it_behaves_like :update do
+    let(:success) { -> { should render_template(:update).with_status(200) } }
+
+    let(:failure) { -> { should render_template(:edit).with_status(422) } }
+  end
+
+  describe '#initialize_resource' do
+    before { expect(Cash).to receive(:new).and_return(:resource) }
+
+    before { subject.send :initialize_resource }
+
+    its(:resource) { should eq :resource }
+  end
+
+  it_behaves_like :new, format: :js
+
+  describe '#build_resource' do
+    before { expect(subject).to receive(:resource_params).and_return(:resource_params) }
+
+    before { expect(Cash).to receive(:new).with(:resource_params).and_return(:resource) }
+
+    before { subject.send :build_resource }
+
+    its(:resource) { should eq :resource }
   end
 
   it_behaves_like :create do
-    let(:success) { -> { should render_template :create } }
+    let(:success) { -> { should render_template(:create).with_status(201) } }
 
-    let(:failure) { -> { should render_template :new } }
+    let(:failure) { -> { should render_template(:new).with_status(422) } }
   end
 
   describe '#set_variant' do
@@ -58,5 +92,9 @@ RSpec.describe CashesController, type: :controller do
 
       it { expect { subject.send :set_variant }.to_not raise_error }
     end
+  end
+
+  it_behaves_like :destroy, format: :js do
+    let(:success) { -> { should render_template(:destroy).with_status(200) } }
   end
 end
