@@ -11,6 +11,8 @@ $(function() {
   $(document).ajaxStart(function() { $('#ajax-loader').show() });
   $(document).ajaxStop(function() { $('#ajax-loader').hide() });
 
+  $('.datepicker').datepicker(DatepickerDefaultOptions);
+
   $('body').on('created.category', CreateOrUpdateCategoryCallback);
 
   $('body').on('updated.category', CreateOrUpdateCategoryCallback);
