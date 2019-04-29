@@ -162,6 +162,12 @@ GEM
     sassc (2.0.1)
       ffi (~> 1.9)
       rake
+    sassc-rails (2.1.1)
+      railties (>= 4.0.0)
+      sassc (>= 2.0)
+      sprockets (> 3.0)
+      sprockets-rails
+      tilt
     shoulda-matchers (4.0.1)
       activesupport (>= 4.2.0)
     simple_form (4.1.0)
@@ -177,6 +183,7 @@ GEM
     sqlite3 (1.4.0)
     thor (0.20.3)
     thread_safe (0.3.6)
+    tilt (2.0.9)
     tzinfo (1.2.5)
       thread_safe (~> 0.1)
     uglifier (4.1.20)
@@ -202,7 +209,7 @@ DEPENDENCIES
   rspec-activemodel-mocks
   rspec-its
   rspec-rails
-  sassc
+  sassc-rails
   shoulda-matchers
   simple_form
   sqlite3

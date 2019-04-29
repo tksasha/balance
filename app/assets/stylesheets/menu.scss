@@ -1,5 +1,3 @@
-@import "variables";
-
 .menu {
   border-radius: 0;
   box-shadow: 0 0 3px 1px #eee;
@@ -13,5 +11,19 @@
   .row + .row {
     padding-top: 0;
     padding-bottom: 10px;
+  }
+}
+
+.menu .item {
+  @extend .btn-small;
+  @extend .btn-flat;
+
+  &.active,
+  &.active:hover {
+    background-color: color("teal", "lighten-4");
+  }
+
+  &:hover {
+    background-color: color("teal", "lighten-5");
   }
 }
