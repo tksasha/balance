@@ -13,6 +13,8 @@ $(function() {
 
   $('.datepicker').datepicker(DatepickerDefaultOptions);
 
+  $('select').formSelect();
+
   $('body').on('created.category', CreateOrUpdateCategoryCallback);
 
   $('body').on('updated.category', CreateOrUpdateCategoryCallback);
