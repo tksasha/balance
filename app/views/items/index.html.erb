@@ -1,28 +1,30 @@
 <%= render 'inline_form', resource: Item.new %>
 
-<div class="container" id="cashes"></div>
+<div class="row">
+  <div class="col s4 offset-s4" id="cashes"></div>
+</div>
 
-<%= render 'consolidates/consolidates', consolidates: consolidates %>
+<div class="row">
+  <div class="col s10 offset-s1">
+    <table class="highlight">
+      <thead>
+        <tr>
+          <th class="center-align">Дата</th>
+          <th class="right-align">Сума</th>
+          <th class="center-align">Категорія</th>
+          <th>Примітка</th>
+        </tr>
+      </thead>
 
-<div class="container">
-  <table class="table table-bordered table-hover">
-    <thead>
-      <tr>
-        <th class="item__date">Дата</th>
-        <th class="item__sum">Сума</th>
-        <th class="item__category">Категорія</th>
-        <th>Примітка</th>
-      </tr>
-    </thead>
-
-    <tbody id="items">
-      <% if collection.any? %>
-        <%= render collection %>
-      <% else %>
-        <%= render 'not_found' %>
-      <% end %>
-    </tbody>
-  </table>
+      <tbody id="items">
+        <% if collection.any? %>
+          <%= render collection %>
+        <% else %>
+          <%= render 'not_found' %>
+        <% end %>
+      </tbody>
+    </table>
+  </div>
 </div>
 
 <%= render 'widgets/modal' %>
