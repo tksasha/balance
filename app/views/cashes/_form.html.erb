@@ -3,17 +3,21 @@
 
   <div class="row">
     <div class="input-field col s12">
-      <%= f.input_field :name %>
+      <%= f.input_field :name, class: (:invalid if f.error(:name).present?) %>
 
       <%= f.label :name %>
+
+      <%= f.error :name %>
     </div>
   </div>
 
   <div class="row">
     <div class="input-field col s12">
-      <%= f.input_field :formula %>
+      <%= f.input_field :formula, class: (:invalid if f.error(:formula).present?) %>
 
       <%= f.label :formula %>
+
+      <%= f.error :formula %>
     </div>
   </div>
 

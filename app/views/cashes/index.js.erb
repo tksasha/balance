@@ -3,10 +3,6 @@
     Modal.el.style.width = '55%';
   };
 
-  Modal.options.onCloseStart = function() {
-    Modal.options.onOpenStart = null;
-  }
-
   $(Modal.el).children('.modal-content').html('<%= j render 'index' %>');
 
   Modal.open();
