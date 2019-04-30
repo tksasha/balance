@@ -1,11 +1,18 @@
 (function() {
-  $('.modal-body').html('<%= j render 'edit' %>');
+  var $modal = $('#modal');
 
-  $('.modal-dialog').removeClass('modal-lg');
+  $modal.modal({
+    onOpenStart: function() {
+      $modal.width('40%');
+    },
+    onOpenEnd: function() {
+      $('#cash_name').focus();
 
-  setTimeout(function() { $('#cash_formula').focus() }, 400);
+      $('#cash_formula').focus();
+    }
+  });
 
-  if(!$('.modal').hasClass('show')) {
-    $('.modal').modal();
-  }
+  $modal.find('.modal-content').html('<%= j render 'edit' %>');
+
+  $modal.modal('open');
 }());

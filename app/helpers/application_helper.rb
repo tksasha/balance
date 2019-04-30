@@ -11,22 +11,19 @@ module ApplicationHelper
     number_with_delimiter '%.2f' % sum
   end
 
-  #
-  # TODO: deprecated
-  #
-  def cashes
-    Cash.order(:name)
-  end
-
   def decorated
     resource.decorate
   end
 
   def breadcrumbs
-    content_tag :nav, class: :breadcrumb do
-      concat link_to('Backoffice', :backoffice, class: 'breadcrumb-item', data: { remote: true })
+    content_tag :nav, class: :breadcrumbs do
+      content_tag :div, class: 'nav-wrapper' do
+        content_tag :div, class: 'col s12' do
+          concat link_to('Backoffice', :backoffice, class: 'breadcrumb', data: { remote: true })
 
-      yield if block_given?
+          yield if block_given?
+        end
+      end
     end
   end
 end
