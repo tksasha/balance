@@ -18,4 +18,6 @@ $(function() {
   $('body').on('created.category', CreateOrUpdateCategoryCallback);
 
   $('body').on('updated.category', CreateOrUpdateCategoryCallback);
+
+  window.Modal = M.Modal.init(document.getElementById('modal'));
 });

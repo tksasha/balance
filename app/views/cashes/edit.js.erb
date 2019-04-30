@@ -1,18 +1,21 @@
 (function() {
-  var $modal = $('#modal');
+  Modal.options.onOpenStart = function() {
+    Modal.el.style.width = '40%';
+  };
 
-  $modal.modal({
-    onOpenStart: function() {
-      $modal.width('40%');
-    },
-    onOpenEnd: function() {
-      $('#cash_name').focus();
+  Modal.options.onOpenEnd = function() {
+    $('#cash_name').focus();
 
-      $('#cash_formula').focus();
-    }
-  });
+    $('#cash_formula').focus();
+  };
 
-  $modal.find('.modal-content').html('<%= j render 'edit' %>');
+  Modal.options.onCloseStart = function() {
+    Modal.options.onOpenStart = null;
 
-  $modal.modal('open');
+    Modal.options.onOpenEnd = null;
+  };
+
+  $(Modal.el).children('.modal-content').html('<%= j render 'edit' %>');
+
+  Modal.open();
 }());

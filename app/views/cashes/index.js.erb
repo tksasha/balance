@@ -1,9 +1,13 @@
 (function() {
-  $('.modal-body').html('<%= j render 'index' %>');
+  Modal.options.onOpenStart = function() {
+    Modal.el.style.width = '55%';
+  };
 
-  $('.modal-dialog').addClass('modal-lg');
+  Modal.options.onCloseStart = function() {
+    Modal.options.onOpenStart = null;
+  }
 
-  $('.modal').on('hidden.bs.modal', function() {
-    $('.modal-dialog').removeClass('modal-lg');
-  });
+  $(Modal.el).children('.modal-content').html('<%= j render 'index' %>');
+
+  Modal.open();
 }());

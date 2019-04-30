@@ -40,4 +40,3 @@ RSpec.describe ApplicationHelper, type: :helper do
     it { should eq :decorated }
   end
 end
-
