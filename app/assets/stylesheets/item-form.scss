@@ -1,49 +1,5 @@
-.item-form-container {
-  margin: 2rem auto 0;
-  width: 80%;
-
-  .input-field {
-    float: left;
-    margin-right: 1rem;
-
-    &:last-child {
-      float: right;
-      margin-right: 0;
-    }
-  }
-}
-
-.item-form-submit {
-  height: 45px;
-}
-
-.item-form-formula {
-  label {
-    right: 0.75rem;
-    left: auto;
-  }
-
-  input {
-    text-align: right;
-  }
-}
-
-.item-form-description {
-  width: 34%;
-}
-
-.item-form-category {
-  input.select-dropdown {
-    text-indent: 1px;
-  }
-
-  .select-wrapper {
-    span {
-      line-height: 0;
-    }
-
-    li {
-      min-height: 30px;
-    }
+.item-form {
+  .row {
+    margin-bottom: 0;
   }
 }

@@ -1,30 +1,50 @@
-<%= simple_form_for decorated, wrapper: :horizontal_form, remote: true, html: { class: 'form-horizontal' } do |f| %>
-  <%= f.input :date, as: :string, input_html: { class: 'bootstrap-datepicker' } %>
+<%= simple_form_for decorated, remote: true, html: { class: 'item-form' } do |f| %>
+  <div class="row">
+    <div class="input-field col s12">
+      <%= f.input_field :date, as: :string, class: "datepicker #{ 'invalid' if f.error(:date).present? }" %>
 
-  <%= f.input :formula, as: :string %>
+      <%= f.label :date, required: false %>
 
-  <div class="form-group row">
-    <%= f.label :category_id, class: 'form-control-label col-sm-2' %>
-    
-    <div class="col-sm-10">
-      <%= f.select :category_id, grouped_options_for_select(Category.group_by_income, resource.category_id), {},
-        class: 'form-control' %>
-
-      <%= f.error :category_id %>
+      <%= f.error :date %>
     </div>
   </div>
 
-  <%= f.input :description %>
+  <div class="row">
+    <div class="input-field col s12">
+      <%= f.input_field :formula, as: :string, class: (:invalid if f.error(:formula).present?) %>
 
-  <div class="form-group row">
-    <div class="offset-sm-2 col-sm-10">
-      <div class="float-sm-left">
-        <%= f.button :submit, class: 'btn btn-primary' %>
+      <%= f.label :formula, required: false %>
+
+      <%= f.error :formula %>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="input-field col s12 item-form-category">
+      <%= f.select :category_id, grouped_options_for_select(Category.group_by_income, resource.category_id), {} %>
+
+      <%= f.label :category_id, required: false %>
+    </div>
+  </div>
+
+
+  <div class="row">
+    <div class="input-field col s12">
+      <%= f.input_field :description %>
+
+      <%= f.label :description %>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="input-field col s12">
+      <div class="left">
+        <%= f.button :submit, class: 'btn' %>
       </div>
 
-      <%= content_tag :div, class: 'float-sm-right' do %>
+      <%= content_tag :div, class: 'right' do %>
         <%= link_to 'Видалити', resource,
-          data: { method: :delete, confirm: 'Ви впевнені?', remote: true }, class: 'btn btn-danger' %>
+          data: { method: :delete, confirm: 'Ви впевнені?', remote: true }, class: 'btn red darken-2' %>
       <% end unless resource.new_record? %>
     </div>
   </div>

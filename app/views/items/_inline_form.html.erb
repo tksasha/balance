@@ -1,29 +1,23 @@
-<div class="item-form-container">
+<div class="item-inline-form-container">
   <%= simple_form_for resource, remote: true do |f| %>
-    <div class="input-field item-form-date">
-      <%= f.text_field :date, class: 'datepicker' %>
-
-      <%= f.label :date, required: false %>
+    <div class="input-field item-inline-form-date">
+      <%= f.text_field :date, class: 'datepicker', placeholder: t('activerecord.attributes.item.date') %>
     </div>
 
-    <div class="input-field item-form-formula">
-      <%= f.text_field :formula %>
-
-      <%= f.label :formula, required: false %>
+    <div class="input-field item-inline-form-formula">
+      <%= f.text_field :formula, placeholder: t('activerecord.attributes.item.formula') %>
     </div>
 
-    <div class="input-field item-form-category">
+    <div class="input-field item-inline-form-category">
       <%= f.select :category_id, grouped_options_for_select(Category.group_by_income, resource.category_id), {} %>
     </div>
 
-    <div class="input-field item-form-description">
-      <%= f.text_field :description %>
-
-      <%= f.label :description %>
+    <div class="input-field item-inline-form-description">
+      <%= f.text_field :description, placeholder: t('activerecord.attributes.item.description') %>
     </div>
 
     <div class="input-field">
-      <%= f.button :submit, class: 'btn item-form-submit' %>
+      <%= f.button :submit, class: 'btn item-inline-form-submit' %>
     </div>
   <% end %>
 </div>

@@ -1,0 +1,49 @@
+.item-inline-form-container {
+  margin: 2rem auto 1rem;
+  width: 80%;
+  //outline: 1px solid #26a;
+  overflow: hidden;
+
+  .input-field {
+    float: left;
+    margin-right: 2rem;
+
+    &:last-child {
+      float: right;
+      margin-right: 0;
+    }
+  }
+}
+
+.item-inline-form-date {
+  width: 10%;
+
+  input {
+    text-align: center;
+  }
+}
+
+.item-inline-form-submit {
+  height: 45px;
+}
+
+.item-inline-form-formula {
+  width: 10%;
+
+  input {
+    text-align: right;
+  }
+}
+
+.item-inline-form-description {
+  width: 44%;
+}
+
+.item-inline-form-category {
+  width: 15%;
+
+  input.select-dropdown {
+    text-indent: 1px;
+  }
+
+}

@@ -1,13 +1,24 @@
 (function() {
-  $('.item-form').trigger('reset');                     //
-  //$('.item-form__category-id').selectpicker('refresh'); // Full Reload Form
-  $('.item-form__date').datepicker('clearDates');       //
+  Modal.options.onOpenStart = function() {
+    Modal.el.style.width = '30%';
+  }
 
-  $('.modal .modal-body').html('<%= j render 'form' %>');
+  Modal.options.onCloseStart = function() {
+    var select = $('#modal .modal-content select').first();
 
-  $('.bootstrap-datepicker').datepicker(BOOTSTRAP_DATEPICKER_DEFAULTS);
+    M.FormSelect.getInstance(select).destroy();
+  }
 
-  $('.modal').modal();
+  $(Modal.el).
+    children('.modal-content').
+    html('<%= j render 'form' %>').
+    custom(function() {
+      $('.datepicker').datepicker(DatepickerDefaultOptions);
 
-  //$('.modal select').selectpicker();
+      $('#modal .modal-content select').formSelect(FormSelectDefaultOptions);
+
+      M.updateTextFields();
+    });
+
+  Modal.open();
 }());
