@@ -1,11 +1,24 @@
 $(function() {
-  $('.modal .modal-body').html('<%= j render 'form' %>');
+  Modal.options.onOpenStart = function() {
+    Modal.el.style.width = '30%';
+  }
 
-  $('.modal').on('shown.bs.modal', function() {
-    $('.modal input[name="item[formula]"]').focus();
-  });
+  Modal.options.onCloseStart = function() {
+    var select = $('#modal .modal-content select').first();
 
-  $('.modal input[name="item[date]"]').datepicker(BOOTSTRAP_DATEPICKER_DEFAULTS);
+    M.FormSelect.getInstance(select).destroy();
+  }
 
-  $('.modal').modal();
+  $(Modal.el).
+    children('.modal-content').
+    html('<%= j render 'form' %>').
+    custom(function() {
+      $('.datepicker').datepicker(DatepickerDefaultOptions);
+
+      $('#modal .modal-content select').formSelect(FormSelectDefaultOptions);
+
+      M.updateTextFields();
+    });
+
+  Modal.open();
 }());
