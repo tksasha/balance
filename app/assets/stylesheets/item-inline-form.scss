@@ -1,8 +1,8 @@
 .item-inline-form-container {
   margin: 2rem auto 1rem;
   width: 80%;
-  //outline: 1px solid #26a;
   overflow: hidden;
+  background-color: color("shades", "white");
 
   .input-field {
     float: left;

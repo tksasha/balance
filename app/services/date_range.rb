@@ -6,4 +6,10 @@ class DateRange
   def month
     @date.beginning_of_month..@date.end_of_month
   end
+
+  class << self
+    def month *args
+      new(*args).month
+    end
+  end
 end

@@ -34,5 +34,8 @@ ua:
 
   destroy_confirmation: 'Чи ви впевнені?'
 
+  consolidation:
+    sum: 'Сума витрат'
+
   :true: Так
   :false: Ні

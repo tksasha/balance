@@ -1,6 +1,6 @@
 jQuery.fn.custom = function(f) {
   if(typeof f === 'function') {
-    f.call();
+    f.call(this);
   }
 
   return(this);

@@ -23,6 +23,8 @@
 
     <%= yield %>
 
+    <%= render 'widgets/footer' %>
+
     <div id="ajax-loader">
       <%= image_tag 'ajax-loader.gif' %>
     </div>
@@ -32,7 +34,5 @@
     <% end %>
 
     <%= javascript_include_tag :application %>
-
-    <%= yield :javascripts %>
   </body>
 </html>

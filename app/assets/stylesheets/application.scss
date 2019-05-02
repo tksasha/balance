@@ -1,3 +1,7 @@
+@import "materialize/components/color-variables";
+
+$link-color: color("green", "darken-1") !default;
+
 @import "materialize";
 
 @import "menu";
@@ -9,3 +13,7 @@
 @import "categories-widget";
 @import "modal";
 @import "item-form";
+@import "items";
+@import "footer";
+@import "body";
+@import "consolidations";

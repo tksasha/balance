@@ -20,4 +20,6 @@ $(function() {
   $('body').on('updated.category', CreateOrUpdateCategoryCallback);
 
   window.Modal = M.Modal.init(document.getElementById('modal'));
+
+  $.getScript('/consolidations');
 });

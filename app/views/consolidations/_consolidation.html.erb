@@ -1,0 +1,8 @@
+<td>
+  <div>
+    <%= consolidation.name %>
+  </div>
+
+  <%= link_to_if consolidation.slug,
+    money(consolidation.sum), "/#{ consolidation.year }/#{ consolidation.month }/#{ consolidation.slug }", remote: true %>
+</td>

@@ -9,5 +9,7 @@ Rails.application.routes.draw do
 
   resource :backoffice, only: :show, controller: :backoffice
 
+  resources :consolidations, only: :index
+
   root to: 'items#index'
 end

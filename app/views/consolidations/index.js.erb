@@ -1,0 +1,5 @@
+(function() {
+  $('#consolidations').html('<%= j render collection %>').custom(function() {
+    $(this).append('<%= j render partial: 'consolidation', locals: { consolidation: ConsolidationExpensesSum.new } %>');
+  });
+}());
