@@ -1,0 +1,9 @@
+input {
+  color: $off-black;
+  border-bottom-color: color("grey", "lighten-2") !important;
+
+  &:focus {
+    border-bottom-color: color("grey", "base") !important;
+    box-shadow: none !important;
+  }
+}

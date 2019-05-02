@@ -1,6 +1,8 @@
 @import "materialize/components/color-variables";
 
-$link-color: color("green", "darken-1") !default;
+$link-color: color("blue-grey", "darken-4") !default;
+$secondary_color: color("blue-grey", "darken-2") !default;
+$off-black: color("blue-grey", "darken-1") !default;
 
 @import "materialize";
 
@@ -19,3 +21,4 @@ $link-color: color("green", "darken-1") !default;
 @import "main";
 @import "cashes";
 @import "body";
+@import "input";

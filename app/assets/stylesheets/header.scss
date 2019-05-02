@@ -1,18 +1,18 @@
 header {
   .row {
     text-align: center;
-    padding: 5px 0;
+    padding: 9px 0;
     margin: 0;
   }
 
   .row + .row {
     padding-top: 0;
-    padding-bottom: 5px;
+    padding-bottom: 9px;
   }
 
   nav {
     background-color: white;
-    box-shadow: 0 0 3px 1px color("teal", "darken-3");
+    box-shadow: 0 0 3px 1px color("blue-grey", "darken-1");
     height: auto;
     line-height: inherit;
   }
@@ -29,10 +29,12 @@ header .item {
 
   &.active,
   &.active:hover {
-    background-color: color("teal", "lighten-4");
+    background-color: color("blue-grey", "darken-1");
+    color: color("blue-grey", "lighten-5");
   }
 
   &:hover {
-    background-color: color("teal", "lighten-5");
+    background-color: color("blue-grey", "lighten-3");
+    color: color("blue-grey", "darken-4");
   }
 }

@@ -3,7 +3,7 @@
   width: 80%;
   overflow: hidden;
   background-color: color("shades", "white");
-  padding: 0 10px;
+  padding: 10px 20px;
 
   .input-field {
     float: left;
@@ -18,12 +18,6 @@
       font-size: 14px;
       height: auto;
       line-height: 32px;
-      border-bottom-color: #eee;
-
-      &:focus {
-        border-bottom-color: color("teal", "lighten-4") !important;
-        box-shadow: none !important;
-      }
     }
 
     .btn {
