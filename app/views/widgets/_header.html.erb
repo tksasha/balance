@@ -1,21 +1,23 @@
-<div class="menu">
-  <div class="row center-align">
-    <div class="col s12">
-      <% months.each_with_index do |month, index| %>
-        <% index += 1 %>
+<header class="navbar-fixed">
+  <nav>
+    <div class="row center-align">
+      <div class="col s12">
+        <% months.each_with_index do |month, index| %>
+          <% index += 1 %>
 
-        <%= link_to month, "/#{ current_date.year }/#{ '%02d' % index  }",
-          class: "item #{ 'active' if index == current_date.month }", remote: true %>
-      <% end %>
+          <%= link_to month, "/#{ current_date.year }/#{ '%02d' % index  }",
+            class: "item #{ 'active' if index == current_date.month }", remote: true %>
+        <% end %>
+      </div>
     </div>
-  </div>
 
-  <div class="row center-align">
-    <div class="col s12">
-      <% (2015..Date.today.year).each do |year| %>
-        <%= link_to year, "/#{ year }/#{ '%02d' % current_date.month }",
-          class: "item #{ 'active' if year == current_date.year }", remote: true %>
-      <% end %>
+    <div class="row center-align">
+      <div class="col s12">
+        <% (2015..Date.today.year).each do |year| %>
+          <%= link_to year, "/#{ year }/#{ '%02d' % current_date.month }",
+            class: "item #{ 'active' if year == current_date.year }", remote: true %>
+        <% end %>
+      </div>
     </div>
-  </div>
-</div>
+  </nav>
+</header>

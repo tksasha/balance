@@ -4,7 +4,7 @@ $link-color: color("green", "darken-1") !default;
 
 @import "materialize";
 
-@import "menu";
+@import "header";
 @import "datepicker";
 @import "item-inline-form";
 @import "breadcrumbs";
@@ -15,5 +15,5 @@ $link-color: color("green", "darken-1") !default;
 @import "item-form";
 @import "items";
 @import "footer";
-@import "body";
 @import "consolidations";
+@import "main";

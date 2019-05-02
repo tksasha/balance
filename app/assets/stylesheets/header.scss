@@ -1,0 +1,42 @@
+header {
+  &.navbar-fixed {
+    height: auto;
+  }
+
+  .row {
+    text-align: center;
+    padding: 5px 0;
+    margin: 0;
+  }
+
+  .row + .row {
+    padding-top: 0;
+    padding-bottom: 5px;
+  }
+
+  nav {
+    background-color: white;
+    box-shadow: 0 0 3px 2px color("teal", "darken-3");
+    height: auto;
+    line-height: inherit;
+  }
+}
+
+header .item {
+  @extend .btn-small;
+  @extend .btn-flat;
+  font-size: 12px;
+  padding: 0 10px;
+  height: 25px;
+  line-height: 25px;
+  letter-spacing: 0;
+
+  &.active,
+  &.active:hover {
+    background-color: color("teal", "lighten-4");
+  }
+
+  &:hover {
+    background-color: color("teal", "lighten-5");
+  }
+}
