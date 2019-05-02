@@ -18,6 +18,12 @@
       font-size: 14px;
       height: auto;
       line-height: 32px;
+      border-bottom-color: #eee;
+
+      &:focus {
+        border-bottom-color: color("teal", "lighten-4") !important;
+        box-shadow: none !important;
+      }
     }
 
     .btn {
