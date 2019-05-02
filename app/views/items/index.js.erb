@@ -1,5 +1,5 @@
 (function() {
-  $('#header').replaceWith('<%= j render 'widgets/header' %>');
+  $('header').replaceWith('<%= j render 'widgets/header' %>');
 
   <% if collection.any? %>
     $('#items').html('<%= j render collection %>');
