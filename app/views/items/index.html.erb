@@ -16,13 +16,7 @@
         </tr>
       </thead>
 
-      <tbody id="items">
-        <% if collection.any? %>
-          <%= render collection %>
-        <% else %>
-          <%= render 'not_found' %>
-        <% end %>
-      </tbody>
+      <tbody id="items"></tbody>
     </table>
   </div>
 </div>
@@ -30,11 +24,3 @@
 <%= render 'widgets/modal' %>
 
 <div id="categories-widget"></div>
-
-<%= content_for :javascripts do %>
-  <%= javascript_tag do %>
-    $(function() {
-      $.getScript('<%= url_for [:cashes, { report: true }] %>');
-    });
-  <% end %>
-<% end %>

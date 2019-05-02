@@ -6,4 +6,6 @@
   <% else %>
     $('#items').html('<%= j render 'not_found' %>');
   <% end %>
+
+  $.getScript('<%= url_for [:consolidations, year: params[:year], month: params[:month]] %>');
 }());

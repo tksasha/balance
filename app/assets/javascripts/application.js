@@ -21,5 +21,7 @@ $(function() {
 
   window.Modal = M.Modal.init(document.getElementById('modal'));
 
-  $.getScript('/consolidations');
+  $.getScript('/cashes?report=true');
+
+  $.getScript('/items');
 });
