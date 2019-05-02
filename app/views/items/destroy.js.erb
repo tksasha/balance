@@ -5,9 +5,9 @@
 
   $('#balance').html('<%= money Cash.balance %>');
 
-  $('#consolidates').html('<%= j render consolidates %>');
-
   $('#item_<%= resource.id %>').remove();
+
+  $.getScript('<%= url_for [:consolidations, year: params[:year], month: params[:month]] %>');
 
   Modal.close();
 }());

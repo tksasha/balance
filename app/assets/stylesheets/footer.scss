@@ -1,6 +1,7 @@
 footer {
-  background-color: color("shades", "white");
   position: fixed;
   bottom: 0;
   width: 100%;
+  background-color: white;
+  box-shadow: 0 0 3px 2px color("teal", "darken-3");
 }

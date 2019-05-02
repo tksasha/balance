@@ -5,7 +5,7 @@
 
   $('#balance').html('<%= money Cash.balance %>');
 
-  $('#consolidates').html('<%= j render consolidates %>');
+  $.getScript('<%= url_for [:consolidations, year: params[:year], month: params[:month]] %>');
 
   Modal.close();
 }());
