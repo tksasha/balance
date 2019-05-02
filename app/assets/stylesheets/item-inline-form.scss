@@ -3,14 +3,26 @@
   width: 80%;
   overflow: hidden;
   background-color: color("shades", "white");
+  padding: 0 10px;
 
   .input-field {
     float: left;
-    margin-right: 2rem;
+    margin: 15px 20px 10px 0;
 
     &:last-child {
       float: right;
       margin-right: 0;
+    }
+
+    input {
+      font-size: 14px;
+      height: auto;
+      line-height: 32px;
+    }
+
+    .btn {
+      @extend .btn-small;
+      line-height: 32px;
     }
   }
 }
@@ -36,7 +48,7 @@
 }
 
 .item-inline-form-description {
-  width: 44%;
+  width: 48%;
 }
 
 .item-inline-form-category {
