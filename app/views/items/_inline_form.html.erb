@@ -1,23 +1,25 @@
-<div class="item-inline-form-container card">
-  <%= simple_form_for resource, remote: true do |f| %>
-    <div class="input-field item-inline-form-date">
-      <%= f.text_field :date, class: 'datepicker', placeholder: t('activerecord.attributes.item.date') %>
-    </div>
+<div class="card item-inline-form-container">
+  <div class="card-content">
+    <%= simple_form_for resource, remote: true do |f| %>
+      <div class="item-inline-form-date">
+        <%= f.text_field :date, class: 'datepicker', placeholder: t('activerecord.attributes.item.date') %>
+      </div>
 
-    <div class="input-field item-inline-form-formula">
-      <%= f.text_field :formula, placeholder: t('activerecord.attributes.item.formula') %>
-    </div>
+      <div class="item-inline-form-formula">
+        <%= f.text_field :formula, placeholder: t('activerecord.attributes.item.formula') %>
+      </div>
 
-    <div class="input-field item-inline-form-category">
-      <%= f.select :category_id, grouped_options_for_select(Category.group_by_income, resource.category_id), {} %>
-    </div>
+      <div class="item-inline-form-category">
+        <%= f.select :category_id, grouped_options_for_select(Category.group_by_income, resource.category_id), {} %>
+      </div>
 
-    <div class="input-field item-inline-form-description">
-      <%= f.text_field :description, placeholder: t('activerecord.attributes.item.description') %>
-    </div>
+      <div class="item-inline-form-description">
+        <%= f.text_field :description, placeholder: t('activerecord.attributes.item.description') %>
+      </div>
 
-    <div class="input-field">
-      <%= f.button :submit, class: 'btn item-inline-form-submit' %>
-    </div>
-  <% end %>
+      <div class="item-inline-form-submit">
+        <%= f.button :submit %>
+      </div>
+    <% end %>
+  </div>
 </div>

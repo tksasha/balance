@@ -1,26 +1,20 @@
 <%= render 'inline_form', resource: Item.new %>
 
-<div class="row">
-  <div class="col s4 offset-s4" id="cashes"></div>
-</div>
+<div id="cashes"></div>
 
-<div class="row">
-  <div class="col s10 offset-s1">
-    <div class="card items">
-      <table class="highlight">
-        <thead>
-          <tr>
-            <th class="center-align items-date">Дата</th>
-            <th class="right-align items-sum">Сума</th>
-            <th class="center-align items-category">Категорія</th>
-            <th class="left-align">Примітка</th>
-          </tr>
-        </thead>
+<div class="card items">
+  <table class="highlight">
+    <thead>
+      <tr>
+        <th class="center-align items-date">Дата</th>
+        <th class="right-align items-sum">Сума</th>
+        <th class="center-align items-category">Категорія</th>
+        <th class="left-align">Примітка</th>
+      </tr>
+    </thead>
 
-        <tbody id="items"></tbody>
-      </table>
-    </div>
-  </div>
+    <tbody id="items"></tbody>
+  </table>
 </div>
 
 <%= render 'widgets/modal' %>

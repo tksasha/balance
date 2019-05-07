@@ -1,28 +1,8 @@
 .items {
-  padding-bottom: 10px;
+  margin: 3% auto 7%;
+  width: 90%;
 
   tr {
-    border: none;
+    border-bottom-color: color("grey", "lighten-5");
   }
-
-  th {
-    padding: 10px 0;
-    font-size: 13px;
-  }
-
-  td {
-    padding: 8px 0;
-  }
-}
-
-.items-date {
-  width: 15%;
-}
-
-.items-sum {
-  width: 10%;
-}
-
-.items-category {
-  width: 25%;
 }

@@ -12,7 +12,7 @@ header {
 
   nav {
     background-color: white;
-    box-shadow: 0 0 3px 1px color("blue-grey", "darken-1");
+    box-shadow: 0 0 3px 1px color("grey", "base");
     height: auto;
     line-height: inherit;
   }
@@ -21,10 +21,6 @@ header {
 header .item {
   @extend .btn-small;
   @extend .btn-flat;
-  font-size: 12px;
-  padding: 0 10px;
-  height: 25px;
-  line-height: 25px;
   letter-spacing: 0;
 
   &.active,

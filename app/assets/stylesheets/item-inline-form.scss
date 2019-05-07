@@ -1,30 +1,19 @@
 .item-inline-form-container {
-  margin: 0 auto 1rem;
-  width: 80%;
-  overflow: hidden;
-  background-color: color("shades", "white");
-  padding: 10px 20px;
+  margin: 2% auto 0;
+  width: 92%;
 
-  .input-field {
-    float: left;
-    margin: 15px 20px 10px 0;
-
-    &:last-child {
-      float: right;
-      margin-right: 0;
-    }
-
-    input {
-      font-size: 14px;
-      height: auto;
-      line-height: 32px;
-    }
-
-    .btn {
-      @extend .btn-small;
-      line-height: 32px;
-    }
+  .card-content {
+    overflow: hidden;
+    padding: 2%;
   }
+}
+
+.item-inline-form-date,
+.item-inline-form-formula,
+.item-inline-form-category,
+.item-inline-form-description {
+  float: left;
+  margin: 0 2% 0 0;
 }
 
 .item-inline-form-date {
@@ -35,20 +24,12 @@
   }
 }
 
-.item-inline-form-submit {
-  height: 45px;
-}
-
 .item-inline-form-formula {
-  width: 10%;
+  width: 20%;
 
   input {
     text-align: right;
   }
-}
-
-.item-inline-form-description {
-  width: 48%;
 }
 
 .item-inline-form-category {
@@ -57,5 +38,13 @@
   input.select-dropdown {
     text-indent: 1px;
   }
+}
 
+.item-inline-form-description {
+  width: 38%;
+}
+
+.item-inline-form-submit {
+  float: right;
+  line-height: 3rem;
 }

@@ -1,28 +1,13 @@
 .cashes {
-  margin-top: 15px;
-  margin-bottom: 0;
-  padding-bottom: 15px;
+  margin: 3% auto 0;
+  width: 33%;
 
   tr {
-    border: none;
-
-    &:first-child {
-      td {
-        padding-top: 15px;
-      }
-    }
-
-    &:last-child {
-      td {
-        padding-bottom: 15px;
-      }
-    }
+    border-bottom-color: color("grey", "lighten-5");
   }
 
   td {
-    padding: 10px 15px 0 20px;
-
-    &:last-child {
-    }
+    padding-left: 20px;
+    padding-right: 10px;
   }
 }
