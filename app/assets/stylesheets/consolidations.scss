@@ -1,6 +1,6 @@
 #consolidations {
-  font-size: 12px;
   overflow: hidden;
+  text-align: right;
 
   margin: 2% auto 0;
   width: 99%;
@@ -8,7 +8,7 @@
 
 .consolidations-item {
   float: left;
-  padding: 10px;
+  padding: 10px 15px;
 
   &:last-child {
     float: right;
@@ -18,4 +18,8 @@
 
 .consolidations-item-income {
   background-color: color("grey", "lighten-5");
+}
+
+.consolidations-item-label {
+  font-size: 12px;
 }
