@@ -28,12 +28,12 @@ header .item {
 
   &.active,
   &.active:hover {
-    background-color: color("blue-grey", "darken-1");
-    color: color("blue-grey", "lighten-5");
+    background-color: color("blue-grey", "lighten-4");
+    color: color("blue-grey", "darken-1");
   }
 
   &:hover {
-    background-color: color("blue-grey", "lighten-3");
-    color: color("blue-grey", "darken-4");
+    background-color: color("blue-grey", "lighten-5");
+    color: color("blue-grey", "base");
   }
 }
