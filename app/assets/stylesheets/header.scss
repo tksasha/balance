@@ -1,13 +1,13 @@
 header {
   .row {
     text-align: center;
-    padding: 9px 0;
+    padding: 5px 0px 0px;
     margin: 0;
   }
 
   .row + .row {
-    padding-top: 0;
-    padding-bottom: 9px;
+    padding-top: 2px;
+    padding-bottom: 6px;
   }
 
   nav {
@@ -22,6 +22,9 @@ header .item {
   @extend .btn-small;
   @extend .btn-flat;
   letter-spacing: 0;
+  padding: 3px 10px;
+  height: auto;
+  line-height: inherit;
 
   &.active,
   &.active:hover {

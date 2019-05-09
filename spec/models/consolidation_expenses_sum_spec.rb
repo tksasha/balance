@@ -5,6 +5,8 @@ RSpec.describe ConsolidationExpensesSum do
 
   its(:sum) { should eq 0 }
 
+  its(:income?) { should be false }
+
   context do
     before { described_class.sum = 42.69 }
 

@@ -1,11 +1,21 @@
 #consolidations {
   font-size: 12px;
+  overflow: hidden;
 
-  td:first-child {
-    padding-left: 10px;
-  }
+  margin: 2% auto 0;
+  width: 99%;
+}
 
-  td:last-child {
+.consolidations-item {
+  float: left;
+  padding: 10px;
+
+  &:last-child {
+    float: right;
     font-weight: bold;
   }
+}
+
+.consolidations-item-income {
+  background-color: color("grey", "lighten-5");
 }

@@ -9,6 +9,10 @@ class ConsolidationExpensesSum < Struct.new(:name, :sum, :slug, :year, :month)
     @@sum
   end
 
+  def income?
+    false
+  end
+
   class << self
     def sum= sum
       @@sum = sum
