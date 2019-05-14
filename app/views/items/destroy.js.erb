@@ -9,5 +9,5 @@
 
   $.getScript('<%= url_for [:consolidations, year: params[:year], month: params[:month]] %>');
 
-  Modal.close();
+  $('.modal').modal('hide');
 }());

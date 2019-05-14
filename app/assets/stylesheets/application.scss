@@ -1,27 +1,19 @@
-@import "materialize/components/color-variables";
+@import "materialize-color-variables";
+@import "bootstrap-color-variables";
 
-$link-color: color("blue-grey", "darken-4") !default;
-$secondary_color: color("blue-grey", "darken-2") !default;
-$off-black: color("blue-grey", "darken-1") !default;
+@import "bootstrap";
 
-@import "materialize";
+@import "bootstrap-select";
+@import "bootstrap-select-customized";
+@import "bootstrap-datepicker";
+@import "bootstrap-datepicker-customized";
 
+@import "a";
 @import "header";
-@import "datepicker";
-@import "item-inline-form";
-@import "breadcrumbs";
-@import "cash-form";
-@import "error";
-@import "categories-widget";
-@import "modal";
-@import "item-form";
-@import "items";
-@import "footer";
-@import "consolidations";
-@import "cashes";
 @import "body";
-@import "input";
-
-.datepicker-calendar .is-today button {
-  color: red;
-}
+@import "cashes";
+@import "consolidations";
+@import "items";
+@import "item-inline-form";
+@import "backoffice-menu-button";
+@import "has-error"

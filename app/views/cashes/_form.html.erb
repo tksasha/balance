@@ -1,35 +1,17 @@
-<%= simple_form_for resource, remote: true, html: { class: 'cash-form' } do |f| %>
+<%= simple_form_for resource, remote: true do |f| %>
   <%= hidden_field_tag :report, true if params[:report].present? %>
 
-  <div class="row">
-    <div class="input-field col s12">
-      <%= f.input_field :name, class: (:invalid if f.error(:name).present?) %>
+  <%= f.input :name %>
 
-      <%= f.label :name %>
+  <%= f.input :formula %>
 
-      <%= f.error :name %>
+  <div class="form-group">
+    <div class="float-left">
+      <%= f.button :submit, class: 'btn btn-primary' %>
     </div>
-  </div>
 
-  <div class="row">
-    <div class="input-field col s12">
-      <%= f.input_field :formula, class: (:invalid if f.error(:formula).present?) %>
-
-      <%= f.label :formula %>
-
-      <%= f.error :formula %>
-    </div>
-  </div>
-
-  <div class="row">
-    <div class="input-field col s12">
-      <div class="left">
-        <%= f.button :submit, class: 'btn' %>
-      </div>
-
-      <div class="right">
-        <%= link_to 'Повернутися', :cashes, data: { remote: true } %>
-      </div>
+    <div class="float-right">
+      <%= link_to 'Повернутися', :cashes, data: { remote: true } %>
     </div>
   </div>
 <% end %>

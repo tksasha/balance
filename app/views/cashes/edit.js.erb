@@ -1,20 +1,7 @@
 (function() {
-  Modal.options.onOpenStart = function() {
-    Modal.el.style.width = '40%';
-  };
+  $('.modal-body').html('<%= j render 'edit' %>');
 
-  Modal.options.onOpenEnd = function() {
+  $('.modal').on('shown.bs.modal', function() {
     $('#cash_formula').focus();
-  };
-
-  Modal.options.onCloseStart = function() {
-    Modal.options.onOpenEnd = null;
-  };
-
-  $(Modal.el).
-    children('.modal-content').
-    html('<%= j render 'edit' %>').
-    custom(function() { M.updateTextFields() });
-
-  Modal.open();
+  }).modal();
 }());

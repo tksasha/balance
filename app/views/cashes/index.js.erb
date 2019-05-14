@@ -1,9 +1,3 @@
 (function() {
-  Modal.options.onOpenStart = function() {
-    Modal.el.style.width = '55%';
-  };
-
-  $(Modal.el).children('.modal-content').html('<%= j render 'index' %>');
-
-  Modal.open();
+  $('.modal-body').html('<%= j render 'index' %>');
 }());

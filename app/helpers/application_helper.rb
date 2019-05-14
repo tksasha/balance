@@ -16,13 +16,13 @@ module ApplicationHelper
   end
 
   def breadcrumbs
-    content_tag :nav, class: :breadcrumbs do
-      content_tag :div, class: 'nav-wrapper' do
-        content_tag :div, class: 'col s12' do
-          concat link_to('Backoffice', :backoffice, class: 'breadcrumb', data: { remote: true })
+    content_tag :div, class: :breadcrumb do
+      if block_given?
+        concat link_to('Backoffice', :backoffice, class: 'breadcrumb-item', data: { remote: true })
 
-          yield if block_given?
-        end
+        yield
+      else
+        concat content_tag(:span, 'Backoffice', class: 'breadcrumb-item active')
       end
     end
   end

@@ -5,9 +5,11 @@
 
   $('#balance').html('<%= money Cash.balance %>');
 
-  $('.item-inline-form-container form').trigger('reset');
-
   $.getScript('<%= url_for [:consolidations, year: params[:year], month: params[:month]] %>');
 
-  Modal.close();
+  $('#item-inline-form').find('form').trigger('reset');
+
+  $('#item-inline-form').find('select').selectpicker('render');
+
+  $('.modal').modal('hide');
 }());

@@ -1,29 +1,33 @@
-<table class="card cashes">
-  <tbody>
-    <% collection.each do |cash| %>
-      <tr>
-        <td><%= cash.name %></td>
+<div class="card cashes">
+  <div class="card-body">
+    <table class="table table-borderless">
+      <tbody>
+        <% collection.each do |cash| %>
+          <tr>
+            <td><%= cash.name %></td>
 
-        <td class="right-align">
-          <%= link_to money(cash.sum), [:edit, cash, { report: true }], data: { remote: true } %>
-        </td>
-      </tr>
-    <% end %>
+            <td class="text-right">
+              <%= link_to money(cash.sum), [:edit, cash, { report: true }], data: { remote: true } %>
+            </td>
+          </tr>
+        <% end %>
 
-    <tr>
-      <td>Залишок на кінець</td>
+        <tr>
+          <td>Залишок на кінець</td>
 
-      <td id="at_end" class="right-align">
-        <%= money Cash.at_end %>
-      </td>
-    </tr>
+          <td id="at_end" class="text-right">
+            <%= money Cash.at_end %>
+          </td>
+        </tr>
 
-    <tr>
-      <td>Баланс</td>
+        <tr>
+          <td>Баланс</td>
 
-      <td id="balance" class="right-align">
-        <%= money Cash.balance %>
-      </td>
-    </tr>
-  </tbody>
-</table>
+          <td id="balance" class="text-right">
+            <%= money Cash.balance %>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>

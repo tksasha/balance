@@ -1,39 +1,27 @@
 header {
-  .row {
-    text-align: center;
-    padding: 5px 0px 0px;
-    margin: 0;
+  text-align: center;
+  box-shadow: 0 0 3px 1px mcolor("grey", "base");
+  background-color: white;
+
+  div {
+    padding: 5px 0;
   }
 
-  .row + .row {
-    padding-top: 2px;
-    padding-bottom: 6px;
+  div + div {
+    padding-top: 0;
   }
 
-  nav {
-    background-color: white;
-    box-shadow: 0 0 3px 1px color("grey", "base");
-    height: auto;
-    line-height: inherit;
-  }
-}
+  a {
+    @extend .btn;
+    @extend .btn-sm;
+    padding: 2px 8px;
+    text-transform: uppercase;
+    color: mcolor("blue-grey", "base");
+    font-size: 12px;
 
-header .item {
-  @extend .btn-small;
-  @extend .btn-flat;
-  letter-spacing: 0;
-  padding: 3px 10px;
-  height: auto;
-  line-height: inherit;
-
-  &.active,
-  &.active:hover {
-    background-color: color("blue-grey", "lighten-4");
-    color: color("blue-grey", "darken-1");
-  }
-
-  &:hover {
-    background-color: color("blue-grey", "lighten-5");
-    color: color("blue-grey", "base");
+    &.active {
+      background-color: mcolor("blue-grey", "base");
+      color: mcolor("shades", "white");
+    }
   }
 }

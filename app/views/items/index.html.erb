@@ -2,23 +2,25 @@
 
 <div id="cashes"></div>
 
-<div class="card" id="consolidations"></div>
+<div class="card consolidations">
+  <div class="card-body" id="consolidations"></div>
+</div>
 
 <div class="card items">
-  <table class="highlight">
-    <thead>
-      <tr>
-        <th class="center-align items-date">Дата</th>
-        <th class="right-align items-sum">Сума</th>
-        <th class="center-align items-category">Категорія</th>
-        <th class="left-align items-description">Примітка</th>
-      </tr>
-    </thead>
+  <div class="card-body">
+    <table class="table table-hover table-borderless">
+      <thead>
+        <tr>
+          <th class="items-date">Дата</th>
+          <th class="items-sum">Сума</th>
+          <th class="items-category">Категорія</th>
+          <th>Примітка</th>
+        </tr>
+      </thead>
 
-    <tbody id="items"></tbody>
-  </table>
+      <tbody id="items"></tbody>
+    </table>
+  </div>
 </div>
 
 <%= render 'widgets/modal' %>
-
-<div id="categories-widget"></div>

@@ -1,51 +1,23 @@
-<%= simple_form_for decorated, remote: true, html: { class: 'item-form' } do |f| %>
-  <div class="row">
-    <div class="input-field col s12">
-      <%= f.input_field :date, as: :string, class: "datepicker #{ 'invalid' if f.error(:date).present? }" %>
+<%= simple_form_for decorated, remote: true do |f| %>
+  <%= f.input :date, as: :string, input_html: { class: 'datepicker' } %>
 
-      <%= f.label :date, required: false %>
+  <%= f.input :formula, as: :string %>
 
-      <%= f.error :date %>
-    </div>
+  <div class="form-group">
+    <%= f.select :category_id, grouped_options_for_select(Category.group_by_income, resource.category_id), {},
+      { class: 'form-control', data: { width: '100%' } } %>
   </div>
 
-  <div class="row">
-    <div class="input-field col s12">
-      <%= f.input_field :formula, as: :string, class: (:invalid if f.error(:formula).present?) %>
+  <%= f.input :description %>
 
-      <%= f.label :formula, required: false %>
-
-      <%= f.error :formula %>
+  <div class="form-group">
+    <div class="float-left">
+      <%= f.button :submit, class: 'btn btn-primary' %>
     </div>
-  </div>
 
-  <div class="row">
-    <div class="input-field col s12 item-form-category">
-      <%= f.select :category_id, grouped_options_for_select(Category.group_by_income, resource.category_id), {} %>
-
-      <%= f.label :category_id, required: false %>
-    </div>
-  </div>
-
-
-  <div class="row">
-    <div class="input-field col s12">
-      <%= f.input_field :description %>
-
-      <%= f.label :description %>
-    </div>
-  </div>
-
-  <div class="row">
-    <div class="input-field col s12">
-      <div class="left">
-        <%= f.button :submit, class: 'btn' %>
-      </div>
-
-      <%= content_tag :div, class: 'right' do %>
-        <%= link_to 'Видалити', resource,
-          data: { method: :delete, confirm: 'Ви впевнені?', remote: true }, class: 'btn red darken-2' %>
-      <% end unless resource.new_record? %>
-    </div>
+    <%= content_tag :div, class: 'float-right' do %>
+      <%= link_to 'Видалити', resource,
+        data: { method: :delete, confirm: t(:destroy_confirmation), remote: true }, class: 'btn text-danger' %>
+    <% end unless resource.new_record? %>
   </div>
 <% end %>

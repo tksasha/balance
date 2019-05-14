@@ -1,9 +1,13 @@
-#consolidations {
+.consolidations {
   overflow: hidden;
   text-align: right;
 
-  margin: 1% auto 0;
+  margin: 2% auto 0;
   width: 99%;
+
+  .card-body {
+    padding: 0;
+  }
 }
 
 .consolidations-item {
@@ -17,7 +21,7 @@
 }
 
 .consolidations-item-income {
-  background-color: color("grey", "lighten-5");
+  background-color: mcolor("grey", "lighten-5");
 }
 
 .consolidations-item-label {

@@ -1,25 +1,30 @@
 // = require jquery
 // = require jquery_ujs
-// = require materialize
+// = require popper
+// = require bootstrap-sprockets
+//
+// = require bootstrap-select
+// = require bootstrap-datepicker
+// = require bootstrap-datepicker.uk.min
 //
 // = require_tree .
 //
 // = require_self
+
+var BOOTSTRAP_DATEPICKER_DEFAULTS = { format: 'dd.mm.yyyy', autoclose: true, language: 'uk', todayHighlight: true };
 
 $(function() {
   // Global AJAX-events
   $(document).ajaxStart(function() { $('#ajax-loader').show() });
   $(document).ajaxStop(function() { $('#ajax-loader').hide() });
 
-  $('.datepicker').datepicker(DatepickerDefaultOptions);
+  $('.datepicker').datepicker(BOOTSTRAP_DATEPICKER_DEFAULTS);
 
-  $('select').formSelect(FormSelectDefaultOptions);
+  $('select').selectpicker();
 
   $('body').on('created.category', CreateOrUpdateCategoryCallback);
 
   $('body').on('updated.category', CreateOrUpdateCategoryCallback);
-
-  window.Modal = M.Modal.init(document.getElementById('modal'));
 
   $.getScript('/cashes?report=true');
 

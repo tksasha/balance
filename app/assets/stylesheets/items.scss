@@ -1,24 +1,27 @@
 .items {
-  margin: 1% auto 2%;
+  margin: 2% auto 2%;
   width: 90%;
 
+  .card-body {
+    padding: 0;
+  }
+
   tr {
-    border-bottom-color: color("grey", "lighten-5");
+    border-bottom: 1px solid mcolor("grey", "lighten-5");
   }
 
   .items-date {
     width: 15%;
+    text-align: center;
   }
 
   .items-sum {
     width: 10%;
+    text-align: right;
   }
 
   .items-category {
     width: 25%;
-  }
-
-  .items-description {
-    width: 50%;
+    text-align: center;
   }
 }

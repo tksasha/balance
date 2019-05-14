@@ -1,6 +1,4 @@
-<%= content_tag :nav, class: :breadcrumb do %>
-  <%= content_tag :span, 'Backoffice', class: 'breadcrumb-item active' %>
-<% end %>
+<%= breadcrumbs %>
 
 <%= link_to 'Залишки', :cashes, data: { remote: true }, class: 'btn btn-primary backoffice-menu-button' %>
 

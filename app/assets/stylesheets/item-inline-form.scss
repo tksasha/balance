@@ -1,4 +1,4 @@
-.item-inline-form-container {
+#item-inline-form {
   margin: 1% auto 0;
   width: 92%;
 
@@ -13,7 +13,7 @@
 .item-inline-form-category,
 .item-inline-form-description {
   float: left;
-  margin: 0 2% 0 0;
+  margin: 0 1% 0 0;
 }
 
 .item-inline-form-date {
@@ -33,7 +33,7 @@
 }
 
 .item-inline-form-category {
-  width: 15%;
+  width: 17%;
 
   input.select-dropdown {
     text-indent: 1px;
@@ -41,10 +41,5 @@
 }
 
 .item-inline-form-description {
-  width: 38%;
-}
-
-.item-inline-form-submit {
-  float: right;
-  line-height: 3rem;
+  width: 41%;
 }

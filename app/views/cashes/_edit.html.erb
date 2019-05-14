@@ -1,7 +1,7 @@
 <%= breadcrumbs do %>
-  <%= link_to 'Залишки', :cashes, class: 'breadcrumb', data: { remote: true } %>
+  <%= link_to 'Залишки', :cashes, class: 'breadcrumb-item', data: { remote: true } %>
 
-  <%= content_tag :span, 'Редагування залишку', class: 'breadcrumb' %>
+  <%= content_tag :span, 'Редагування залишку', class: 'breadcrumb-item active' %>
 <% end %>
 
 <%= render 'form' %>

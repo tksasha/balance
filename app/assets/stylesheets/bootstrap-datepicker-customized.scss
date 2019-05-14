@@ -1,0 +1,17 @@
+.datepicker.datepicker-dropdown {
+  font-size: 14px;
+  color: mcolor("blue-grey", "base");
+
+  table {
+    tr {
+      td {
+        padding: 5px 10px;
+      }
+
+      td.active.day {
+        background-image: none;
+        background-color: mcolor("blue-grey", "base");
+      }
+    }
+  }
+}
