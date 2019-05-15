@@ -1,19 +1,17 @@
 <tr>
-  <td><%= category.name %></td>
+  <td>
+    <%= link_to category.name, [:edit, category], data: { remote: true } %>
+  </td>
 
-  <td class="text-align-center">
+  <td class="text-center">
     <div class="<%= category.income? ? 'text-success' : 'text-warning' %>">
       <%= t category.income? %>
     </div>
   </td>
 
-  <td class="text-align-center">
+  <td class="text-center">
     <div class="<%= category.visible? ? 'text-success' : 'text-warning' %>">
       <%= t category.visible? %>
     </div>
-  </td>
-
-  <td class="text-align-right">
-    <%= link_to 'Редагувати', [:edit, category], data: { remote: true }, class: 'btn btn-sm btn-primary' %>
   </td>
 </tr>

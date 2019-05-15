@@ -1,33 +1,29 @@
-<%= simple_form_for resource, data: { remote: true }, wrapper: :horizontal_form_with_label_3 do |f| %>
+<%= simple_form_for resource, data: { remote: true } do |f| %>
   <%= f.input :name %>
 
-  <div class="form-group row">
-    <%= f.label :income, class: 'col-sm-3 form-control-label' %>
+  <div class="form-group">
+    <div class="form-check">
+      <%= f.check_box :income, class: 'form-check-input' %>
 
-    <div class="col-sm-9">
-      <%= f.check_box :income %>
+      <%= f.label :income, class: 'form-check-label' %>
     </div>
   </div>
 
-  <div class="form-group row">
-    <%= f.label :visible, class: 'col-sm-3 form-control-label' %>
+  <div class="form-group">
+    <div class="form-check">
+      <%= f.check_box :visible, class: 'form-check-input' %>
 
-    <div class="col-sm-9">
-      <%= f.check_box :visible %>
+      <%= f.label :visible, class: 'form-check-label' %>
     </div>
   </div>
 
-  <div class="form-group row">
-    <div class="col-sm-9 offset-sm-3">
-      <div class="clearfix">
-        <div class="float-left">
-          <%= f.button :submit, class: 'btn btn-primary' %>
-        </div>
+  <div class="clearfix">
+    <div class="float-left">
+      <%= f.button :submit, class: 'btn btn-primary' %>
+    </div>
 
-        <div class="float-right">
-          <%= link_to 'Повернутися', :categories, data: { remote: true } %>
-        </div>
-      </div>
+    <div class="float-right">
+      <%= link_to 'Повернутися', :categories, data: { remote: true } %>
     </div>
   </div>
 <% end %>

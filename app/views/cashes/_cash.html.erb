@@ -2,7 +2,11 @@
   <td><%= cash.name %></td>
 
   <td class="text-right">
-    <%= link_to money(cash.sum), [:edit, cash], data: { remote: true } %>
+    <%= money cash.sum %>
+  </td>
+
+  <td class="text-right">
+    <%= link_to 'Редагувати', [:edit, cash], data: { remote: true } %>
   </td>
 
   <td class="text-right">
