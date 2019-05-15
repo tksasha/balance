@@ -17,14 +17,10 @@ var BOOTSTRAP_DATEPICKER_DEFAULTS = {
 
 $(function() {
   $(document).ajaxStart(function() {
-    $('body').css('position', 'fixed');
-
     $('#ajax-loader').show()
   });
 
   $(document).ajaxStop(function() {
-    $('body').css('position', 'initial');
-
     $('#ajax-loader').hide()
   });
 

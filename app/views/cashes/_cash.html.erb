@@ -1,14 +1,12 @@
 <tr id="<%= dom_id cash %>">
   <td><%= cash.name %></td>
 
-  <td><%= money cash.sum %></td>
-
-  <td class="text-align-right">
-    <%= link_to 'Редагувати', [:edit, cash], data: { remote: true }, class: 'btn btn-sm btn-primary' %>
+  <td class="text-right">
+    <%= link_to money(cash.sum), [:edit, cash], data: { remote: true } %>
   </td>
 
-  <td class="text-align-right">
+  <td class="text-right">
     <%= link_to 'Видалити', cash,
-      data: { remote: true, method: :delete, confirm: t(:destroy_confirmation) }, class: 'btn btn-sm btn-danger' %>
+      data: { remote: true, method: :delete, confirm: t(:destroy_confirmation) }, class: 'text-danger' %>
   </td>
 </tr>

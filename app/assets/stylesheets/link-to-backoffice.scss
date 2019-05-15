@@ -1,0 +1,13 @@
+.link-to-backoffice {
+  @extend .btn;
+  @extend .btn-info;
+
+  position: absolute;
+  top: 9px;
+  right: 20px;
+  border-radius: 50%;
+
+  &::after {
+    content: 'B';
+  }
+}
