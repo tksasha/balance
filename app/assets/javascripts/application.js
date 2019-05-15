@@ -11,12 +11,22 @@
 //
 // = require_self
 
-var BOOTSTRAP_DATEPICKER_DEFAULTS = { format: 'dd.mm.yyyy', autoclose: true, language: 'uk', todayHighlight: true };
+var BOOTSTRAP_DATEPICKER_DEFAULTS = {
+  format: 'dd.mm.yyyy', autoclose: true, language: 'uk', todayHighlight: true
+};
 
 $(function() {
-  // Global AJAX-events
-  $(document).ajaxStart(function() { $('#ajax-loader').show() });
-  $(document).ajaxStop(function() { $('#ajax-loader').hide() });
+  $(document).ajaxStart(function() {
+    $('body').css('position', 'fixed');
+
+    $('#ajax-loader').show()
+  });
+
+  $(document).ajaxStop(function() {
+    $('body').css('position', 'initial');
+
+    $('#ajax-loader').hide()
+  });
 
   $('.datepicker').datepicker(BOOTSTRAP_DATEPICKER_DEFAULTS);
 
