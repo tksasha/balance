@@ -1,9 +1,9 @@
 .link-to-backoffice {
   @extend .btn;
-  @extend .btn-info;
+  @extend .btn-outline-primary;
 
-  position: absolute;
-  top: 9px;
+  position: fixed;
+  top: 10px;
   right: 20px;
   border-radius: 50%;
 

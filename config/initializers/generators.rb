@@ -1,4 +1,4 @@
-Balance::Application.configure do 
+Rails.application.configure do
   config.generators do |g|
     g.orm :active_record, :migration => true
     g.test_framework :rspec, :fixtures => false

@@ -1,13 +1,13 @@
-@import "materialize-color-variables";
-@import "bootstrap-color-variables";
+@import "bootstrap-variables";
 
 @import "bootstrap";
-
 @import "bootstrap-select";
-@import "bootstrap-select-customized";
 @import "bootstrap-datepicker";
-@import "bootstrap-datepicker-customized";
 
+@import "colors";
+
+@import "bootstrap-select-customized";
+@import "bootstrap-datepicker-customized";
 @import "a";
 @import "header";
 @import "body";

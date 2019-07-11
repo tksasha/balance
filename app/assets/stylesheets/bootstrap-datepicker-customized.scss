@@ -1,6 +1,6 @@
 .datepicker.datepicker-dropdown {
   font-size: 14px;
-  color: mcolor("blue-grey", "base");
+  color: color("primary");
 
   table {
     tr {
@@ -10,7 +10,7 @@
 
       td.active.day {
         background-image: none;
-        background-color: mcolor("blue-grey", "base");
+        background-color: color("primary");
       }
     }
   }

@@ -1,6 +1,6 @@
 header {
   text-align: center;
-  box-shadow: 0 0 3px 1px mcolor("grey", "base");
+  box-shadow: 0 0 3px 1px color("grey-base");
   background-color: white;
 
   div {
@@ -9,6 +9,7 @@ header {
 
   div + div {
     padding-top: 0;
+    padding-bottom: 7px;
   }
 
   a {
@@ -16,12 +17,12 @@ header {
     @extend .btn-sm;
     padding: 2px 8px;
     text-transform: uppercase;
-    color: mcolor("blue-grey", "base");
+    color: color("primary");
     font-size: 12px;
 
     &.active {
-      background-color: mcolor("blue-grey", "base");
-      color: mcolor("shades", "white");
+      background-color: color("primary");
+      color: color("light");
     }
   }
 }
