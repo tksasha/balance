@@ -1,20 +1,23 @@
-source 'http://rubygems.org'
+# frozen_string_literal: true
 
-gem 'rails'
-gem 'jquery-rails'
-gem 'sassc-rails'
-gem 'uglifier'
-gem 'sqlite3'
-gem 'draper'
-gem 'puma'
-gem 'bootstrap'
-gem 'simple_form'
-gem 'rake'
-gem 'paranoia'
+source 'https://rubygems.org'
+
 gem 'bootsnap', require: false
+gem 'bootstrap'
+gem 'draper'
+gem 'jquery-rails'
+gem 'paranoia'
+gem 'puma'
+gem 'rails'
+gem 'rake'
+gem 'sassc-rails'
+gem 'simple_form'
+gem 'sqlite3'
+gem 'uglifier'
 
 group :development do
   gem 'listen'
+  gem 'rubocop', require: false
 end
 
 group :development, :test do
@@ -22,8 +25,8 @@ group :development, :test do
 end
 
 group :test do
-  gem 'shoulda-matchers'
+  gem 'rails-controller-testing'
   gem 'rspec-activemodel-mocks'
   gem 'rspec-its'
-  gem 'rails-controller-testing'
+  gem 'shoulda-matchers'
 end

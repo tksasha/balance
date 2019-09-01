@@ -1,0 +1,39 @@
+AllCops:
+  Exclude:
+    - tmp/**/*
+    - db/schema.rb
+    - db/migrate/*.rb
+    - bin/*
+
+Documentation:
+  Enabled: false
+
+Layout/DotPosition:
+  EnforcedStyle: trailing
+
+Metrics/LineLength:
+  Max: 120
+
+Security/Eval:
+  Exclude:
+  - app/services/formula.rb
+
+Metrics/BlockLength:
+  Exclude:
+  - spec/**/*
+  - config/initializers/simple_form_bootstrap.rb
+
+Style/AsciiComments:
+  Exclude:
+    - spec/models/category_spec.rb
+
+Layout/SpaceInsideStringInterpolation:
+  EnforcedStyle: space
+
+Style/BlockComments:
+  Exclude:
+    - spec/spec_helper.rb
+
+Style/UnneededPercentQ:
+  Exclude:
+    - lib/tasks/categories.rake

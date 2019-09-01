@@ -1,4 +1,4 @@
-require 'rails_helper'
+# frozen_string_literal: true
 
 RSpec.describe Formula do
   describe '.calculate' do
@@ -61,25 +61,25 @@ RSpec.describe Formula do
     context do
       let(:string) { '-12.75*2.0+++' }
 
-      it { should eq -25.5 }
+      it { should eq(-25.5) }
     end
 
     context do
       let(:string) { '-12.75*2.0----' }
 
-      it { should eq -25.5 }
+      it { should eq(-25.5) }
     end
 
     context do
       let(:string) { '-12.75*2.0***' }
 
-      it { should eq -25.5 }
+      it { should eq(-25.5) }
     end
 
     context do
       let(:string) { '-12.75*2.0...' }
 
-      it { should eq -25.5 }
+      it { should eq(-25.5) }
     end
   end
 end

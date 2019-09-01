@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 namespace :categories do
   task fix_boolean: :environment do
     # income

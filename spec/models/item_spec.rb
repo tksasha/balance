@@ -1,4 +1,4 @@
-require 'rails_helper'
+# frozen_string_literal: true
 
 RSpec.describe Item, type: :model do
   it { should be_a ActsAsHasFormula }
@@ -36,9 +36,9 @@ RSpec.describe Item, type: :model do
     context do
       before do
         #
-        # Item.where('categories.slug' => 'food').includes(:category).where(date: date_range).order('date DESC')
+        # Item.where(categories: { slug: 'food' }).includes(:category).where(date: date_range).order('date DESC')
         #
-        expect(Item).to receive(:where).with('categories.slug' => 'food') do
+        expect(Item).to receive(:where).with(categories: { slug: 'food' }) do
           double.tap do |a|
             expect(a).to receive(:includes).with(:category) do
               double.tap do |b|

@@ -1,4 +1,4 @@
-require 'rails_helper'
+# frozen_string_literal: true
 
 RSpec.describe ItemsController, type: :controller do
   describe '#index.js' do
@@ -46,7 +46,7 @@ RSpec.describe ItemsController, type: :controller do
     end
 
     context do
-      before { expect(subject).to receive(:params).and_return({ id: 26 }) }
+      before { expect(subject).to receive(:params).and_return(id: 26) }
 
       before { expect(Item).to receive(:find).with(26).and_return(:resource) }
 

@@ -1,4 +1,4 @@
-require 'rails_helper'
+# frozen_string_literal: true
 
 RSpec.describe ActsAsHasFormula do
   let(:klass) do
@@ -9,7 +9,7 @@ RSpec.describe ActsAsHasFormula do
 
       attr_accessor :sum, :formula
 
-      def initialize formula: nil
+      def initialize(formula: nil)
         @formula = formula
       end
     end

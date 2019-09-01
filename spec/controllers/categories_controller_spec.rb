@@ -1,4 +1,4 @@
-require 'rails_helper'
+# frozen_string_literal: true
 
 RSpec.describe CategoriesController, type: :controller do
   describe '#collection' do
@@ -23,7 +23,7 @@ RSpec.describe CategoriesController, type: :controller do
     end
 
     context do
-      before { expect(subject).to receive(:params).and_return({ id: 27 }) }
+      before { expect(subject).to receive(:params).and_return(id: 27) }
 
       before { expect(Category).to receive(:find).with(27).and_return(:resource) }
 
@@ -85,7 +85,7 @@ RSpec.describe CategoriesController, type: :controller do
     end
 
     context do
-      before { expect(subject).to receive(:params).and_return({ widget: '' }) }
+      before { expect(subject).to receive(:params).and_return(widget: '') }
 
       it { expect(subject).to_not receive(:request) }
 
@@ -93,7 +93,7 @@ RSpec.describe CategoriesController, type: :controller do
     end
 
     context do
-      before { expect(subject).to receive(:params).and_return({ widget: '1' }) }
+      before { expect(subject).to receive(:params).and_return(widget: '1') }
 
       it { expect(subject).to receive_message_chain('request.variant=').with(:widget) }
 

@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class Cash < ActiveRecord::Base
   include ActsAsHasFormula
 

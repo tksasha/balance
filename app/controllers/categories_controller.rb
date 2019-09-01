@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class CategoriesController < ApplicationController
   before_action :set_variant, only: :index
 
@@ -10,6 +12,7 @@ class CategoriesController < ApplicationController
   end
 
   private
+
   def collection
     @collection ||= Category.order :income
   end

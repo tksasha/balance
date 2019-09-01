@@ -1,4 +1,4 @@
-require 'rails_helper'
+# frozen_string_literal: true
 
 RSpec.describe ConsolidationDecorator do
   let(:consolidation) { stub_model Consolidation }

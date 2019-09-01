@@ -1,10 +1,10 @@
-require 'rails_helper'
+# frozen_string_literal: true
 
 RSpec.describe ApplicationHelper, type: :helper do
   describe '#months' do
     subject { helper.months }
 
-    it { should eq %w(Січень Лютий Березень Квітень Травень Червень Липень Серпень Вересень Жовтень Листопад Грудень) }
+    it { should eq %w[Січень Лютий Березень Квітень Травень Червень Липень Серпень Вересень Жовтень Листопад Грудень] }
   end
 
   describe '#current_date' do

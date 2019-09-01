@@ -1,20 +1,22 @@
+# frozen_string_literal: true
+
 module Shoulda
   module Matchers
     module ActionController
       class RenderTemplateMatcher
-        def with_status status
+        def with_status(status)
           RenderTemplateWithStatusMatcher.new @options, status, @message, @context
         end
       end
 
       class RenderTemplateWithStatusMatcher
-        def initialize template, status, message, context
+        def initialize(template, status, message, context)
           @render_template = RenderTemplateMatcher.new template, message, context
 
           @respond_with = RespondWithMatcher.new status
         end
 
-        def matches? controller
+        def matches?(controller)
           @controller = controller
 
           renders_template? && responds_with?
@@ -33,6 +35,7 @@ module Shoulda
         end
 
         private
+
         def renders_template?
           @render_template.matches? @controller
         end

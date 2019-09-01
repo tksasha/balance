@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module ActsAsHasFormula
   extend ActiveSupport::Concern
 
@@ -6,6 +8,7 @@ module ActsAsHasFormula
   end
 
   private
+
   def calculate_formula
     self.sum = Formula.calculate formula
   end

@@ -1,7 +1,9 @@
-Rails.application.routes.draw do
-  resources :items, only: %i(index create edit update destroy)
+# frozen_string_literal: true
 
-  constraints :year => /\d{4}/, :month => /\d{1,2}/, :day => /\d{1,2}/, :category => /[a-z_-]+/ do
+Rails.application.routes.draw do
+  resources :items, only: %i[index create edit update destroy]
+
+  constraints year: /\d{4}/, month: /\d{1,2}/, day: /\d{1,2}/, category: /[a-z_-]+/ do
     get '/(:year(/:month)(/:category))' => 'items#index'
   end
 

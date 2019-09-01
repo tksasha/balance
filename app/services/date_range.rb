@@ -1,5 +1,7 @@
+# frozen_string_literal: true
+
 class DateRange
-  def initialize date
+  def initialize(date)
     @date = date
   end
 
@@ -8,7 +10,7 @@ class DateRange
   end
 
   class << self
-    def month *args
+    def month(*args)
       new(*args).month
     end
   end

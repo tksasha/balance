@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class Item < ActiveRecord::Base
   include ActsAsHasFormula
 
@@ -16,9 +18,9 @@ class Item < ActiveRecord::Base
     # TODO: rename it to `search_by` and refactor it
     # TODO: use ItemSearcher instead
     #
-    def search date_range, slug=nil
+    def search(date_range, slug = nil)
       if slug
-        where 'categories.slug' => slug
+        where categories: { slug: slug }
       else
         self
       end.includes(:category).where(date: date_range).order('date DESC')

@@ -1,4 +1,4 @@
-require 'rails_helper'
+# frozen_string_literal: true
 
 RSpec.describe Cash, type: :model do
   subject { Cash.new sum: 0 }

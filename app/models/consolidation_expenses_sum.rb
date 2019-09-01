@@ -1,12 +1,10 @@
-class ConsolidationExpensesSum < Struct.new(:name, :sum, :slug, :year, :month)
-  @@sum = 0
+# frozen_string_literal: true
+
+ConsolidationExpensesSum = Struct.new(:name, :sum, :slug, :year, :month) do
+  delegate :sum, to: :class
 
   def name
     I18n.translate 'consolidation.sum'
-  end
-
-  def sum
-    @@sum
   end
 
   def income?
@@ -14,8 +12,10 @@ class ConsolidationExpensesSum < Struct.new(:name, :sum, :slug, :year, :month)
   end
 
   class << self
-    def sum= sum
-      @@sum = sum
+    attr_writer :sum
+
+    def sum
+      @sum || 0
     end
   end
 end

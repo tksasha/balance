@@ -1,4 +1,4 @@
-require 'rails_helper'
+# frozen_string_literal: true
 
 RSpec.describe CashesController, type: :controller do
   describe '#collection' do
@@ -8,9 +8,11 @@ RSpec.describe CashesController, type: :controller do
   end
 
   describe '#resource_params' do
-    before { expect(subject).to receive(:params).and_return(acp cash: { formula: '', name: '' }) }
+    let(:params) { acp cash: { formula: nil, name: nil } }
 
-    its(:resource_params) { should eq permit! formula: '', name: '' }
+    before { expect(subject).to receive(:params).and_return(params) }
+
+    its(:resource_params) { should eq params[:cash].permit! }
   end
 
   describe '#resource' do
@@ -21,7 +23,7 @@ RSpec.describe CashesController, type: :controller do
     end
 
     context do
-      before { expect(subject).to receive(:params).and_return({ id: 11 }) }
+      before { expect(subject).to receive(:params).and_return(id: 11) }
 
       before { expect(Cash).to receive(:find).with(11).and_return(:resource) }
 
@@ -71,7 +73,7 @@ RSpec.describe CashesController, type: :controller do
     end
 
     context do
-      before { expect(subject).to receive(:params).and_return({ report: '' }) }
+      before { expect(subject).to receive(:params).and_return(report: '') }
 
       it { expect(subject).to_not receive(:request) }
 
@@ -79,7 +81,7 @@ RSpec.describe CashesController, type: :controller do
     end
 
     context do
-      before { expect(subject).to receive(:params).and_return({ report: '1' }) }
+      before { expect(subject).to receive(:params).and_return(report: '1') }
 
       it { expect(subject).to receive_message_chain('request.variant=').with(:report) }
 

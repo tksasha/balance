@@ -1,7 +1,10 @@
+# frozen_string_literal: true
+
 class Formula
   class << self
-    def calculate string
-      string = string.to_s.
+    def calculate(string)
+      string = \
+        string.to_s.
         gsub(/[^0-9\+\-\.\*]+/, ''). # only digits, dots, pluses, multiple sign and minuses allowed
         gsub(/\+{2,}/, '+').         # replaces '+++' with '+'
         gsub(/\-{2,}/, '-').         # replaces '---' with '-'

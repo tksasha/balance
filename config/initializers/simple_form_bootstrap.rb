@@ -1,4 +1,6 @@
 # Use this setup block to configure all options available in SimpleForm.
+# frozen_string_literal: true
+
 SimpleForm.setup do |config|
   config.error_notification_class = 'alert alert-danger'
 
@@ -40,5 +42,5 @@ SimpleForm.setup do |config|
     time: :multi_select
   }
 
-  config.label_text = lambda { |label, required, explicit_label| label }
+  config.label_text = ->(label, _required, _explicit_label) { label }
 end

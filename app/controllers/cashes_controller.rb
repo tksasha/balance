@@ -1,5 +1,7 @@
+# frozen_string_literal: true
+
 class CashesController < ApplicationController
-  before_action :set_variant, only: %i(index update)
+  before_action :set_variant, only: %i[index update]
 
   def create
     render :new, status: 422 unless resource.save
@@ -14,6 +16,7 @@ class CashesController < ApplicationController
   end
 
   private
+
   def collection
     @collection ||= Cash.order :name
   end

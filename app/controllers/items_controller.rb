@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class ItemsController < ApplicationController
   helper_method :items, :consolidates
 
@@ -14,18 +16,19 @@ class ItemsController < ApplicationController
   end
 
   private
+
   # TODO: spec me
   def collection
-    items DateRange.new(DateFactory.build params).month
+    items DateRange.new(DateFactory.build(params)).month
   end
 
-  def items date_range
+  def items(date_range)
     @items ||= Item.search(date_range, params[:category]).includes(:category)
   end
 
   # TODO: spec me
   def consolidates
-    @consolidates ||= Consolidate.by DateRange.new(DateFactory.build params).month
+    @consolidates ||= Consolidate.by DateRange.new(DateFactory.build(params)).month
   end
 
   def resource_params

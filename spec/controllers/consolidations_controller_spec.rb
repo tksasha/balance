@@ -1,4 +1,4 @@
-require 'rails_helper'
+# frozen_string_literal: true
 
 RSpec.describe ConsolidationsController, type: :controller do
   describe '#date' do

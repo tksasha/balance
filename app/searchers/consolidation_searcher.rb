@@ -1,5 +1,7 @@
+# frozen_string_literal: true
+
 class ConsolidationSearcher
-  def initialize relation, params
+  def initialize(relation, params)
     @relation = relation
 
     @date = params[:date]
@@ -12,12 +14,13 @@ class ConsolidationSearcher
   end
 
   private
+
   def date_range
     DateRange.month @date
   end
 
   class << self
-    def search *args
+    def search(*args)
       new(*args).search
     end
   end

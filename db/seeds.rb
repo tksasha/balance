@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 [
   ['Зарплата', true],
   ['%% в банці', true],
@@ -9,7 +11,7 @@
   ['Автомобіль', false],
   ['Телефон', false],
   ['Квартира', false],
-  ['Інтернет', false],
+  ['Інтернет', false]
 ].each do |name, income|
   Category.create! name: name, income: income
 end
