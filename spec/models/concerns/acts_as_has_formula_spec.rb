@@ -5,27 +5,20 @@ RSpec.describe ActsAsHasFormula do
     Class.new do
       include ActiveModel::Validations
       include ActiveModel::Validations::Callbacks
-      include ActsAsHasFormula
+
+      prepend ActsAsHasFormula
 
       attr_accessor :sum, :formula
-
-      def initialize(formula: nil)
-        @formula = formula
-      end
     end
   end
 
-  subject { klass.new formula: '2+2' }
+  subject { klass.new }
 
-  describe '#calculate_formula' do
-    before { subject.send :calculate_formula }
+  describe '#formula=' do
+    before { subject.formula = '2+2' }
 
     its(:sum) { should eq 4.0 }
-  end
 
-  context 'run callback `#calculate_formula` before validation' do
-    before { expect(subject).to receive(:calculate_formula) }
-
-    it { expect { subject.valid? }.to_not raise_error }
+    its(:formula) { should eq '2+2' }
   end
 end

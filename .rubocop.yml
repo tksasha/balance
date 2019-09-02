@@ -20,7 +20,7 @@ Metrics/LineLength:
 
 Security/Eval:
   Exclude:
-  - app/services/formula.rb
+  - app/services/formula_service.rb
 
 Metrics/BlockLength:
   Exclude:

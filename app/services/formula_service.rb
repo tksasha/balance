@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-class Formula
+class FormulaService
   class << self
     def calculate(string)
       string = \

@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-RSpec.describe Formula do
+RSpec.describe FormulaService do
   describe '.calculate' do
     let(:string) { nil }
 
