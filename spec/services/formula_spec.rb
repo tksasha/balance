@@ -4,7 +4,7 @@ RSpec.describe Formula do
   describe '.calculate' do
     let(:string) { nil }
 
-    subject { Formula.calculate string }
+    subject { described_class.calculate string }
 
     it { should eq 0.0 }
 

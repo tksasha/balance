@@ -79,25 +79,25 @@ RSpec.describe CategoriesController, type: :controller do
     context do
       before { expect(subject).to receive(:params).and_return({}) }
 
-      it { expect(subject).to_not receive(:request) }
-
       after { subject.send :set_variant }
+
+      it { expect(subject).to_not receive(:request) }
     end
 
     context do
       before { expect(subject).to receive(:params).and_return(widget: '') }
 
-      it { expect(subject).to_not receive(:request) }
-
       after { subject.send :set_variant }
+
+      it { expect(subject).to_not receive(:request) }
     end
 
     context do
       before { expect(subject).to receive(:params).and_return(widget: '1') }
 
-      it { expect(subject).to receive_message_chain('request.variant=').with(:widget) }
-
       after { subject.send :set_variant }
+
+      it { expect(subject).to receive_message_chain('request.variant=').with(:widget) }
     end
   end
 end

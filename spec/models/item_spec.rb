@@ -19,9 +19,9 @@ RSpec.describe Item, type: :model do
     context do
       before do
         #
-        # Item.includes(:category).where(date: date_range).order('date DESC')
+        # described_class.includes(:category).where(date: date_range).order('date DESC')
         #
-        expect(Item).to receive(:includes).with(:category) do
+        expect(described_class).to receive(:includes).with(:category) do
           double.tap do |a|
             expect(a).to receive(:where).with(date: date_range) do
               double.tap { |b| expect(b).to receive(:order).with('date DESC') }
@@ -30,15 +30,18 @@ RSpec.describe Item, type: :model do
         end
       end
 
-      it { expect { Item.search date_range }.to_not raise_error }
+      it { expect { described_class.search date_range }.to_not raise_error }
     end
 
     context do
       before do
         #
-        # Item.where(categories: { slug: 'food' }).includes(:category).where(date: date_range).order('date DESC')
+        # described_class.
+        #   where(categories: { slug: 'food' }).
+        #   includes(:category).where(date: date_range).
+        #   order('date DESC')
         #
-        expect(Item).to receive(:where).with(categories: { slug: 'food' }) do
+        expect(described_class).to receive(:where).with(categories: { slug: 'food' }) do
           double.tap do |a|
             expect(a).to receive(:includes).with(:category) do
               double.tap do |b|
@@ -51,7 +54,7 @@ RSpec.describe Item, type: :model do
         end
       end
 
-      it { expect { Item.search date_range, 'food' }.to_not raise_error }
+      it { expect { described_class.search date_range, 'food' }.to_not raise_error }
     end
   end
 

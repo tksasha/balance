@@ -1,8 +1,6 @@
 # frozen_string_literal: true
 
 RSpec.describe Cash, type: :model do
-  subject { Cash.new sum: 0 }
-
   it { should act_as_paranoid }
 
   it { should be_a ActsAsHasFormula }
@@ -19,7 +17,7 @@ RSpec.describe Cash, type: :model do
       # Item.income.sum(:sum) -> 10
       #
       expect(Item).to receive(:income) do
-        double.tap { |a| expect(a).to receive(:sum).with(:sum) { 10 } }
+        double.tap { |a| expect(a).to receive(:sum).with(:sum).and_return(10) }
       end
     end
 
@@ -28,7 +26,7 @@ RSpec.describe Cash, type: :model do
       # Item.expense.sum(:sum) -> 6.5
       #
       expect(Item).to receive(:expense) do
-        double.tap { |b| expect(b).to receive(:sum).with(:sum) { 6.5 } }
+        double.tap { |b| expect(b).to receive(:sum).with(:sum).and_return(6.5) }
       end
     end
 

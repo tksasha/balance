@@ -1,3 +1,7 @@
+require:
+  - rubocop-performance
+  - rubocop-rspec
+
 AllCops:
   Exclude:
     - tmp/**/*
@@ -37,3 +41,55 @@ Style/BlockComments:
 Style/UnneededPercentQ:
   Exclude:
     - lib/tasks/categories.rake
+
+RSpec/InstanceVariable:
+  Exclude:
+    - spec/support/shared_examples/controller.rb
+
+RSpec/MessageSpies:
+  EnforcedStyle: receive
+
+RSpec/ExpectInHook:
+  Enabled: false
+
+RSpec/MissingExampleGroupArgument:
+  Enabled: false
+
+RSpec/ScatteredSetup:
+  Enabled: false
+
+RSpec/ImplicitExpect:
+  EnforcedStyle: should
+
+RSpec/SharedExamples:
+  Enabled: false
+
+RSpec/MultipleExpectations:
+  Enabled: false
+
+RSpec/ExampleLength:
+  Enabled: false
+
+RSpec/NamedSubject:
+  Enabled: false
+
+RSpec/SubjectStub:
+  Enabled: false
+
+RSpec/VerifiedDoubles:
+  Enabled: false
+
+RSpec/NotToNot:
+  EnforcedStyle: to_not
+
+RSpec/ContextWording:
+  Enabled: false
+
+RSpec/LeadingSubject:
+  Enabled: false
+
+RSpec/ImplicitSubject:
+  Enabled: false
+
+RSpec/MessageChain:
+  Enabled: false

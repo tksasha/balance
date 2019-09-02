@@ -67,25 +67,25 @@ RSpec.describe CashesController, type: :controller do
     context do
       before { expect(subject).to receive(:params).and_return({}) }
 
-      it { expect(subject).to_not receive(:request) }
-
       after { subject.send :set_variant }
+
+      it { expect(subject).to_not receive(:request) }
     end
 
     context do
       before { expect(subject).to receive(:params).and_return(report: '') }
 
-      it { expect(subject).to_not receive(:request) }
-
       after { subject.send :set_variant }
+
+      it { expect(subject).to_not receive(:request) }
     end
 
     context do
       before { expect(subject).to receive(:params).and_return(report: '1') }
 
-      it { expect(subject).to receive_message_chain('request.variant=').with(:report) }
-
       after { subject.send :set_variant }
+
+      it { expect(subject).to receive_message_chain('request.variant=').with(:report) }
     end
   end
 

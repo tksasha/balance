@@ -30,6 +30,8 @@ RSpec.describe ConsolidationSearcher do
 
     before { expect(ConsolidationExpensesSum).to receive(:sum=).with(9.42) }
 
+    after { subject.search }
+
     it do
       #
       # relation.
@@ -47,11 +49,11 @@ RSpec.describe ConsolidationSearcher do
         end
       end
     end
-
-    after { subject.search }
   end
 
   describe '.search' do
+    after { described_class.search :relation, date: :date }
+
     it do
       #
       # described_class.new(:relation, date: :date).search
@@ -60,7 +62,5 @@ RSpec.describe ConsolidationSearcher do
         double.tap { |a| expect(a).to receive(:search) }
       end
     end
-
-    after { described_class.search :relation, date: :date }
   end
 end

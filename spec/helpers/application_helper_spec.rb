@@ -10,9 +10,9 @@ RSpec.describe ApplicationHelper, type: :helper do
   describe '#current_date' do
     let(:date) { Date.new 2013, 6, 27 }
 
-    before { allow(helper).to receive(:params) { { year: '2013', month: '06', day: '27' } } }
+    before { allow(helper).to receive(:params).and_return(year: '2013', month: '06', day: '27') }
 
-    before { expect(DateFactory).to receive(:build).with(year: '2013', month: '06', day: '27') { date } }
+    before { expect(DateFactory).to receive(:build).with(year: '2013', month: '06', day: '27').and_return(date) }
 
     subject { helper.current_date }
 

@@ -16,8 +16,12 @@ gem 'sqlite3'
 gem 'uglifier'
 
 group :development do
+  gem 'brakeman', require: false
+  gem 'fasterer', require: false
   gem 'listen'
   gem 'rubocop', require: false
+  gem 'rubocop-performance', require: false
+  gem 'rubocop-rspec', require: false
 end
 
 group :development, :test do
