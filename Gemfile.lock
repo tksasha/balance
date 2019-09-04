@@ -71,6 +71,12 @@ GEM
       sassc-rails (>= 2.0.0)
     brakeman (4.6.1)
     builder (3.2.3)
+    bundler-audit (0.6.1)
+      bundler (>= 1.2.0, < 3)
+      thor (~> 0.18)
+    bundler-leak (0.1.0)
+      bundler (>= 1.2.0, < 3)
+      thor (~> 0.18)
     colorize (0.8.1)
     concurrent-ruby (1.1.5)
     crass (1.0.4)
@@ -245,6 +251,8 @@ DEPENDENCIES
   bootsnap
   bootstrap
   brakeman
+  bundler-audit
+  bundler-leak
   draper
   fasterer
   jquery-rails
