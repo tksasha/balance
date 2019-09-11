@@ -128,7 +128,7 @@ GEM
     parser (2.6.4.0)
       ast (~> 2.4.0)
     popper_js (1.14.5)
-    puma (4.1.0)
+    puma (4.1.1)
       nio4r (~> 2.0)
     rack (2.0.7)
     rack-test (1.1.0)
