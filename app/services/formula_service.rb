@@ -1,5 +1,6 @@
 # frozen_string_literal: true
 
+# rubocop:disable Security/Eval:
 class FormulaService
   class << self
     def calculate(string)
@@ -16,3 +17,4 @@ class FormulaService
     end
   end
 end
+# rubocop:enable Security/Eval:

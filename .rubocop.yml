@@ -18,10 +18,6 @@ Layout/DotPosition:
 Metrics/LineLength:
   Max: 120
 
-Security/Eval:
-  Exclude:
-  - app/services/formula_service.rb
-
 Metrics/BlockLength:
   Exclude:
   - spec/**/*
@@ -29,14 +25,6 @@ Metrics/BlockLength:
 
 Layout/SpaceInsideStringInterpolation:
   EnforcedStyle: space
-
-Style/BlockComments:
-  Exclude:
-    - spec/spec_helper.rb
-
-Style/UnneededPercentQ:
-  Exclude:
-    - lib/tasks/categories.rake
 
 RSpec/InstanceVariable:
   Exclude:
