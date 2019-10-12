@@ -6,35 +6,24 @@ RSpec.describe Category, type: :model do
   it { should validate_uniqueness_of(:name).case_insensitive }
 
   describe '.group_by_income' do
+    subject { described_class }
+
     before do
-      #
-      # described_class.visible.expense.pluck(:name, :id) -> [['Їжа', 1], ["Дім. Сім'я", 2]]
-      #
-      expect(described_class).to receive(:visible) do
-        double.tap do |a|
-          expect(a).to receive(:expense) do
-            double.tap { |b| expect(b).to receive(:pluck).with(:name, :id).and_return([['Їжа', 1], ["Дім. Сім'я", 2]]) }
-          end
-        end
-      end
+      allow(subject).to \
+        receive_message_chain(:visible, :expense, :pluck).with(:name, :id).and_return([['Їжа', 1], ["Дім. Сім'я", 2]])
     end
 
     before do
-      #
-      # described_class.visible.income.pluck(:name, :id) -> [['Зарплата', 3]]
-      #
-      expect(described_class).to receive(:visible) do
-        double.tap do |a|
-          expect(a).to receive(:income) do
-            double.tap { |b| expect(b).to receive(:pluck).with(:name, :id).and_return([['Зарплата', 3]]) }
-          end
-        end
-      end
+      allow(subject).to \
+        receive_message_chain(:visible, :income, :pluck).with(:name, :id).and_return([['Зарплата', 3]])
     end
 
-    subject { described_class.group_by_income }
-
-    it { should eq [['Видатки', [['Їжа', 1], ["Дім. Сім'я", 2]]], ['Надходження', [['Зарплата', 3]]]] }
+    its :group_by_income do
+      should eq [
+        ['Видатки', [['Їжа', 1], ["Дім. Сім'я", 2]]],
+        ['Надходження', [['Зарплата', 3]]]
+      ]
+    end
   end
 
   describe '.visible' do

@@ -9,7 +9,7 @@ AllCops:
     - db/migrate/*.rb
     - bin/*
 
-Documentation:
+Style/Documentation:
   Enabled: false
 
 Layout/DotPosition:
@@ -26,10 +26,6 @@ Metrics/BlockLength:
   Exclude:
   - spec/**/*
   - config/initializers/simple_form_bootstrap.rb
-
-Style/AsciiComments:
-  Exclude:
-    - spec/models/category_spec.rb
 
 Layout/SpaceInsideStringInterpolation:
   EnforcedStyle: space
@@ -93,3 +89,6 @@ RSpec/ImplicitSubject:
 
 RSpec/MessageChain:
   Enabled: false
+
+Style/FormatStringToken:
+  EnforcedStyle: unannotated
