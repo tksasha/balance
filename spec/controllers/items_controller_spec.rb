@@ -1,12 +1,6 @@
 # frozen_string_literal: true
 
 RSpec.describe ItemsController, type: :controller do
-  describe '#index.js' do
-    before { get :index, xhr: true, format: :js }
-
-    it { should render_template :index }
-  end
-
   describe '#items' do
     let(:item) { stub_model Item }
 
