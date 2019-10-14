@@ -26,11 +26,6 @@ class ItemsController < ApplicationController
     @items ||= Item.search(date_range, params[:category]).includes(:category)
   end
 
-  # TODO: spec me
-  def consolidates
-    @consolidates ||= Consolidate.by DateRange.new(DateFactory.build(params)).month
-  end
-
   def resource_params
     params.require(:item).permit(:date, :formula, :category_id, :description)
   end
