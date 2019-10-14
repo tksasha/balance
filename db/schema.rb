@@ -10,10 +10,10 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_08_20_081128) do
+ActiveRecord::Schema.define(version: 2019_10_14_074747) do
 
   create_table "cashes", force: :cascade do |t|
-    t.decimal "sum", precision: 10, scale: 2, null: false
+    t.decimal "sum", precision: 10, scale: 2
     t.string "name"
     t.time "deleted_at"
     t.string "formula"

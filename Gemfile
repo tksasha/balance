@@ -17,6 +17,7 @@ gem 'uglifier'
 
 group :development do
   gem 'brakeman', require: false
+  gem 'bullet'
   gem 'bundler-audit', require: false
   gem 'bundler-leak', require: false
   gem 'fasterer', require: false
