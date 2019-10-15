@@ -1,15 +1,5 @@
 # frozen_string_literal: true
 
-RSpec.shared_examples :edit do |params|
-  before { @format = (params && params[:format]) || :js }
-
-  describe "#edit.#{ @format }" do
-    before { get :edit, params: { id: 1 }, xhr: (@format == :js), format: @format }
-
-    it { should render_template :edit }
-  end
-end
-
 RSpec.shared_examples :update do |params|
   before { @format = (params && params[:format]) || :js }
 

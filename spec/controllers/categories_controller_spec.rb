@@ -31,8 +31,6 @@ RSpec.describe CategoriesController, type: :controller do
     end
   end
 
-  it_behaves_like :edit
-
   describe '#resource_params' do
     let :params do
       acp category: { name: nil, income: nil, visible: nil }
