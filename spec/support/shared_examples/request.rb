@@ -43,6 +43,22 @@ RSpec.shared_examples 'edit' do |params|
   end
 end
 
+RSpec.shared_examples 'destroy' do |params|
+  describe "DELETE #{ params[:uri] }" do
+    include_examples 'format', params
+
+    include_examples 'xhr?'
+
+    before { expect(resource).to receive(:destroy) }
+
+    before { delete params[:uri], xhr: xhr? }
+
+    it { success.call }
+
+    it_behaves_like 'media_type'
+  end
+end
+
 RSpec.shared_context 'format' do |params|
   let :format do
     #

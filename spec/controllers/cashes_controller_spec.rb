@@ -86,8 +86,4 @@ RSpec.describe CashesController, type: :controller do
       it { expect(subject).to receive_message_chain('request.variant=').with(:report) }
     end
   end
-
-  it_behaves_like :destroy, format: :js do
-    let(:success) { -> { should render_template(:destroy).with_status(200) } }
-  end
 end

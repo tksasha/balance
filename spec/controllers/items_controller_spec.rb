@@ -70,8 +70,4 @@ RSpec.describe ItemsController, type: :controller do
 
     let(:failure) { -> { should render_template(:edit).with_status(422) } }
   end
-
-  it_behaves_like :destroy, format: :js do
-    let(:success) { -> { should render_template(:destroy).with_status(200) } }
-  end
 end
