@@ -22,7 +22,7 @@ RSpec.describe 'Categories', type: :request do
   end
 
   it_behaves_like 'create', '/categories.js' do
-    before { expect(Category).to receive(:new).with(resource_params).and_return(resource) }
+    before { expect(CategoryService).to receive(:new).with(resource_params).and_return(resource) }
 
     let(:success) { -> { should render_template :create } }
 

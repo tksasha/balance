@@ -9,17 +9,6 @@ class Category < ActiveRecord::Base
 
   scope :visible, -> { where visible: true }
 
-  before_save :assign_slug
-
-  private
-
-  #
-  # TODO: BUG
-  #
-  def assign_slug
-    # self.slug = Russian::Transliteration.transliterate(self.name).downcase.gsub(/[^a-z]+/, '_')
-  end
-
   class << self
     def group_by_income
       [

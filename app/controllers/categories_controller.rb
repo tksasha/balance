@@ -34,6 +34,6 @@ class CategoriesController < ApplicationController
   end
 
   def build_resource
-    @resource = Category.new resource_params
+    @resource = CategoryService.new resource_params
   end
 end

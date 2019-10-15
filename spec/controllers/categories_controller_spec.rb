@@ -42,7 +42,7 @@ RSpec.describe CategoriesController, type: :controller do
   describe '#build_resource' do
     before { expect(subject).to receive(:resource_params).and_return(:resource_params) }
 
-    before { expect(Category).to receive(:new).with(:resource_params).and_return(:resource) }
+    before { expect(CategoryService).to receive(:new).with(:resource_params).and_return(:resource) }
 
     before { subject.send :build_resource }
 
