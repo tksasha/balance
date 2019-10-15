@@ -54,18 +54,6 @@ RSpec.shared_examples :destroy do |params|
   end
 end
 
-RSpec.shared_examples :new do |params|
-  before { @format = (params && params[:format]) || :js }
-
-  describe "#new.#{ @format }" do
-    before { expect(subject).to receive(:initialize_resource) }
-
-    before { get :new, xhr: (@format == :js), format: @format }
-
-    it { should render_template :new }
-  end
-end
-
 RSpec.shared_examples :create do |params|
   before { @format = (params && params[:format]) || :js }
 

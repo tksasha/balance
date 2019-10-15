@@ -15,6 +15,20 @@ RSpec.shared_examples 'index' do |params|
   end
 end
 
+RSpec.shared_examples 'new' do |params|
+  describe "GET #{ params[:uri] }" do
+    include_examples 'format', params
+
+    include_examples 'xhr?'
+
+    before { get params[:uri], xhr: xhr? }
+
+    it { should render_template :new }
+
+    it_behaves_like 'media_type'
+  end
+end
+
 RSpec.shared_context 'format' do |params|
   let :format do
     #

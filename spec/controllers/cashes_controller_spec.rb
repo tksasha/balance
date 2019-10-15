@@ -45,8 +45,6 @@ RSpec.describe CashesController, type: :controller do
     its(:resource) { should eq :resource }
   end
 
-  it_behaves_like :new, format: :js
-
   describe '#build_resource' do
     before { expect(subject).to receive(:resource_params).and_return(:resource_params) }
 
