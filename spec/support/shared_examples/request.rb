@@ -92,7 +92,39 @@ RSpec.shared_examples 'create' do |uri|
 
       it { failure.call }
 
-      it_behaves_like 'http_status', :unprocessable_entity 
+      it_behaves_like 'http_status', :unprocessable_entity
+
+      it_behaves_like 'media_type'
+    end
+  end
+end
+
+RSpec.shared_examples 'update' do |uri|
+  describe "PATCH #{ uri }" do
+    include_examples 'format', uri
+
+    include_examples 'xhr?'
+
+    context do
+      before { expect(resource).to receive(:update).with(resource_params).and_return(true) }
+
+      before { patch uri, params: params, xhr: xhr? }
+
+      it { success.call }
+
+      it_behaves_like 'http_status', :ok
+
+      it_behaves_like 'media_type'
+    end
+
+    context do
+      before { expect(resource).to receive(:update).with(resource_params).and_return(false) }
+
+      before { patch uri, params: params, xhr: xhr? }
+
+      it { failure.call }
+
+      it_behaves_like 'http_status', :unprocessable_entity
 
       it_behaves_like 'media_type'
     end

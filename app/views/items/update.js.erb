@@ -1,11 +1,11 @@
 (function() {
-  $('#items').html('<%= j render items(DateRange.new(resource.date).month) %>');
-
   $('#at_end').html('<%= money Cash.at_end %>');
 
   $('#balance').html('<%= money Cash.balance %>');
 
-  $.getScript('<%= url_for [:consolidations, year: params[:year], month: params[:month]] %>');
+  $.getScript('<%= url_for [:consolidations, year: resource.date.year, month: resource.date.month] %>');
+
+  $.getScript('<%= url_for [:items, year: resource.date.year, month: resource.date.month] %>');
 
   $('.modal').modal('hide');
 }());

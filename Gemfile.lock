@@ -61,7 +61,7 @@ GEM
       tzinfo (~> 1.1)
       zeitwerk (~> 2.1, >= 2.1.8)
     ast (2.4.0)
-    autoprefixer-rails (9.6.4)
+    autoprefixer-rails (9.6.5)
       execjs
     bootsnap (1.4.5)
       msgpack (~> 1.0)
@@ -196,7 +196,7 @@ GEM
       rspec-mocks (~> 3.8)
       rspec-support (~> 3.8)
     rspec-support (3.9.0)
-    rubocop (0.75.0)
+    rubocop (0.75.1)
       jaro_winkler (~> 1.5.1)
       parallel (~> 1.10)
       parser (>= 2.6)

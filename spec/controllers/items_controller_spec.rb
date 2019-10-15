@@ -23,16 +23,6 @@ RSpec.describe ItemsController, type: :controller do
     end
   end
 
-  describe '#resource_params' do
-    let :params do
-      acp item: { date: nil, formula: nil, category_id: nil, description: nil }
-    end
-
-    before { expect(subject).to receive(:params).and_return(params) }
-
-    its(:resource_params) { should eq params[:item].permit! }
-  end
-
   describe '#resource' do
     context do
       before { subject.instance_variable_set :@resource, :resource }
@@ -57,11 +47,5 @@ RSpec.describe ItemsController, type: :controller do
     before { subject.send :build_resource }
 
     its(:resource) { should eq :resource }
-  end
-
-  it_behaves_like :update, format: :js do
-    let(:success) { -> { should render_template(:update).with_status(200) } }
-
-    let(:failure) { -> { should render_template(:edit).with_status(422) } }
   end
 end

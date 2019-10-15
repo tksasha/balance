@@ -31,22 +31,6 @@ RSpec.describe CategoriesController, type: :controller do
     end
   end
 
-  describe '#resource_params' do
-    let :params do
-      acp category: { name: nil, income: nil, visible: nil }
-    end
-
-    before { expect(subject).to receive(:params).and_return(params) }
-
-    its(:resource_params) { should eq params[:category].permit! }
-  end
-
-  it_behaves_like :update do
-    let(:success) { -> { should render_template(:update).with_status(200) } }
-
-    let(:failure) { -> { should render_template(:edit).with_status(422) } }
-  end
-
   describe '#initialize_resource' do
     before { expect(Category).to receive(:new).and_return(:resource) }
 
