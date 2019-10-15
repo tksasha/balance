@@ -12,18 +12,4 @@ class Item < ActiveRecord::Base
   scope :expense, -> { joins(:category).merge(Category.expense) }
 
   acts_as_paranoid
-
-  class << self
-    #
-    # TODO: rename it to `search_by` and refactor it
-    # TODO: use ItemSearcher instead
-    #
-    def search(date_range, slug = nil)
-      if slug
-        where categories: { slug: slug }
-      else
-        self
-      end.includes(:category).where(date: date_range).order('date DESC')
-    end
-  end
 end

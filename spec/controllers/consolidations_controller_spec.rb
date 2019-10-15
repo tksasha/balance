@@ -33,6 +33,4 @@ RSpec.describe ConsolidationsController, type: :controller do
       its(:collection) { should eq :collection }
     end
   end
-
-  it_behaves_like :index, format: :js
 end

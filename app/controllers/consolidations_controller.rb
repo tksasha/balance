@@ -9,8 +9,8 @@ class ConsolidationsController < ApplicationController
 
   def collection
     @collection ||= \
-      ConsolidationSearcher.
-      search(Consolidation.includes(:category), date: date).
-      decorate(context: { date: date })
+      ConsolidationSearcher
+      .search(Consolidation.includes(:category), date: date)
+      .decorate(context: { date: date })
   end
 end

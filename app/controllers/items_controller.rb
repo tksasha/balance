@@ -1,8 +1,6 @@
 # frozen_string_literal: true
 
 class ItemsController < ApplicationController
-  helper_method :items, :consolidates
-
   def create
     render :new, status: 422 unless resource.save
   end
@@ -17,13 +15,8 @@ class ItemsController < ApplicationController
 
   private
 
-  # TODO: spec me
   def collection
-    items DateRange.new(DateFactory.build(params)).month
-  end
-
-  def items(date_range)
-    @items ||= Item.search(date_range, params[:category]).includes(:category)
+    @collection ||= ItemSearcher.search Item.order(date: :desc), params
   end
 
   def resource_params

@@ -1,25 +1,26 @@
 # frozen_string_literal: true
 
 RSpec.describe ItemsController, type: :controller do
-  describe '#items' do
-    let(:item) { stub_model Item }
+  describe '#collection' do
+    context do
+      before { subject.instance_variable_set :@collection, :collection }
 
-    let(:date) { Date.today }
-
-    let(:date_range) { date.beginning_of_month..date.end_of_month }
-
-    before do
-      #
-      # Item.search(date_range, nil).includes(:category)
-      #
-      expect(Item).to receive(:search).with(date_range, nil) do
-        double.tap do |a|
-          expect(a).to receive(:includes).with(:category)
-        end
-      end
+      its(:collection) { should eq :collection }
     end
 
-    it { expect { subject.send :items, date_range }.to_not raise_error }
+    context do
+      let(:params) { double }
+
+      let(:relation) { double }
+
+      before { expect(subject).to receive(:params).and_return(params) }
+
+      before { expect(Item).to receive(:order).with(date: :desc).and_return(relation) }
+
+      before { expect(ItemSearcher).to receive(:search).with(relation, params).and_return(:collection) }
+
+      its(:collection) { should eq :collection }
+    end
   end
 
   describe '#resource_params' do

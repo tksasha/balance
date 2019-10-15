@@ -1,15 +1,5 @@
 # frozen_string_literal: true
 
-RSpec.shared_examples :index do |params|
-  before { @format = (params && params[:format]) || :js }
-
-  describe "#index.#{ @format }" do
-    before { get :index, xhr: (@format == :js), format: @format }
-
-    it { should render_template :index }
-  end
-end
-
 RSpec.shared_examples :edit do |params|
   before { @format = (params && params[:format]) || :js }
 
