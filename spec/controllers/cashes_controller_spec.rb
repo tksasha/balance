@@ -55,12 +55,6 @@ RSpec.describe CashesController, type: :controller do
     its(:resource) { should eq :resource }
   end
 
-  it_behaves_like :create do
-    let(:success) { -> { should render_template(:create).with_status(201) } }
-
-    let(:failure) { -> { should render_template(:new).with_status(422) } }
-  end
-
   describe '#set_variant' do
     context do
       before { expect(subject).to receive(:params).and_return({}) }

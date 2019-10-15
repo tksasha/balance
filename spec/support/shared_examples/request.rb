@@ -1,65 +1,105 @@
 # frozen_string_literal: true
 
 # rubocop:disable RSpec/HooksBeforeExamples
-RSpec.shared_examples 'index' do |params|
-  describe "GET #{ params[:uri] }" do
-    include_examples 'format', params
+RSpec.shared_examples 'index' do |uri|
+  describe "GET #{ uri }" do
+    include_examples 'format', uri
 
     include_examples 'xhr?'
 
-    before { get params[:uri], xhr: xhr? }
+    before { get uri, xhr: xhr? }
 
     it { should render_template :index }
 
+    it_behaves_like 'http_status', :ok
+
     it_behaves_like 'media_type'
   end
 end
 
-RSpec.shared_examples 'new' do |params|
-  describe "GET #{ params[:uri] }" do
-    include_examples 'format', params
+RSpec.shared_examples 'new' do |uri|
+  describe "GET #{ uri }" do
+    include_examples 'format', uri
 
     include_examples 'xhr?'
 
-    before { get params[:uri], xhr: xhr? }
+    before { get uri, xhr: xhr? }
 
     it { should render_template :new }
 
+    it_behaves_like 'http_status', :ok
+
     it_behaves_like 'media_type'
   end
 end
 
-RSpec.shared_examples 'edit' do |params|
-  describe "GET #{ params[:uri] }" do
-    include_examples 'format', params
+RSpec.shared_examples 'edit' do |uri|
+  describe "GET #{ uri }" do
+    include_examples 'format', uri
 
     include_examples 'xhr?'
 
-    before { get params[:uri], xhr: xhr? }
+    before { get uri, xhr: xhr? }
 
     it { should render_template :edit }
+
+    it_behaves_like 'http_status', :ok
 
     it_behaves_like 'media_type'
   end
 end
 
-RSpec.shared_examples 'destroy' do |params|
-  describe "DELETE #{ params[:uri] }" do
-    include_examples 'format', params
+RSpec.shared_examples 'destroy' do |uri|
+  describe "DELETE #{ uri }" do
+    include_examples 'format', uri
 
     include_examples 'xhr?'
 
     before { expect(resource).to receive(:destroy) }
 
-    before { delete params[:uri], xhr: xhr? }
+    before { delete uri, xhr: xhr? }
 
     it { success.call }
+
+    it_behaves_like 'http_status', :ok
 
     it_behaves_like 'media_type'
   end
 end
 
-RSpec.shared_context 'format' do |params|
+RSpec.shared_examples 'create' do |uri|
+  describe "POST #{ uri }" do
+    include_examples 'format', uri
+
+    include_examples 'xhr?'
+
+    context do
+      before { expect(resource).to receive(:save).and_return(true) }
+
+      before { post uri, params: params, xhr: xhr? }
+
+      it { success.call }
+
+      it_behaves_like 'http_status', :created
+
+      it_behaves_like 'media_type'
+    end
+
+    context do
+      before { expect(resource).to receive(:save).and_return(false) }
+
+      before { post uri, params: params, xhr: xhr? }
+
+      it { failure.call }
+
+      it_behaves_like 'http_status', :unprocessable_entity 
+
+      it_behaves_like 'media_type'
+    end
+  end
+end
+
+RSpec.shared_context 'format' do |uri|
   let :format do
     #
     # '/items.json' -> 'json'
@@ -68,7 +108,7 @@ RSpec.shared_context 'format' do |params|
     #
     # '/items' -> 'html'
     #
-    (md = /\.([[:alpha:]]+)$/.match(params[:uri])) ? md[1] : 'html'
+    (md = /\.([[:alpha:]]+)$/.match(uri)) ? md[1] : 'html'
   end
 end
 
@@ -78,11 +118,17 @@ RSpec.shared_context 'xhr?' do
   end
 end
 
-RSpec.shared_examples 'media_type' do
+RSpec.shared_examples 'http_status' do |status|
   context do
     subject { response }
 
-    it { should have_http_status(:ok) }
+    it { should have_http_status(status) }
+  end
+end
+
+RSpec.shared_examples 'media_type' do
+  context do
+    subject { response }
 
     its :media_type do
       content_type = \
