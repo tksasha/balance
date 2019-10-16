@@ -1,6 +1,8 @@
 <%= simple_form_for resource, data: { remote: true } do |f| %>
   <%= f.input :name %>
 
+  <%= f.input :slug, readonly: true, label: false %>
+
   <div class="form-group">
     <div class="form-check">
       <%= f.check_box :income, class: 'form-check-input' %>
