@@ -35,5 +35,6 @@ group :test do
   gem 'rails-controller-testing'
   gem 'rspec-activemodel-mocks'
   gem 'rspec-its'
+  gem 'shoulda-callback-matchers'
   gem 'shoulda-matchers'
 end

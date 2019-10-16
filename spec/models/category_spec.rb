@@ -5,6 +5,8 @@ RSpec.describe Category, type: :model do
 
   it { should validate_uniqueness_of(:name).case_insensitive }
 
+  it { should callback(:assign_slug).before(:save) }
+
   describe '.group_by_income' do
     subject { described_class }
 
@@ -48,5 +50,13 @@ RSpec.describe Category, type: :model do
     subject { described_class.expense.to_sql }
 
     it { should eq sql }
+  end
+
+  describe '#assign_slug' do
+    subject { stub_model described_class, name: 'Інші надходження' }
+
+    before { subject.send :assign_slug }
+
+    its(:slug) { should eq 'inshi-nadkhodzhennia' }
   end
 end

@@ -9,6 +9,14 @@ class Category < ActiveRecord::Base
 
   scope :visible, -> { where visible: true }
 
+  before_save :assign_slug
+
+  private
+
+  def assign_slug
+    self.slug = SlugService.build name
+  end
+
   class << self
     def group_by_income
       [
