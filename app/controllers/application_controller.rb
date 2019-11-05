@@ -10,4 +10,9 @@ class ApplicationController < ActionController::Base
   before_action -> { response.status = 201 }, only: :create
 
   helper_method :collection, :resource
+
+  # TODO: spec me
+  def default_url_options
+    { currency: CurrencyService.currency(params[:currency]) }
+  end
 end

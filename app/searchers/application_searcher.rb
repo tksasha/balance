@@ -1,8 +1,6 @@
 # frozen_string_literal: true
 
 class ApplicationSearcher
-  attr_writer :results
-
   attr_reader :params
 
   def initialize(relation, params = {})
@@ -17,7 +15,7 @@ class ApplicationSearcher
     params.each do |attribute, value|
       method_name = :"search_by_#{ attribute }"
 
-      self.results = send method_name, value if respond_to?(method_name, true)
+      @results = send method_name, value if respond_to?(method_name, true)
     end
 
     results

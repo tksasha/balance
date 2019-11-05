@@ -4,7 +4,7 @@
       <div class="col-sm">
         <div class="text-center text-uppercase">
           <%= link_to currency, root_path(currency: currency),
-            class: "badge #{ 'badge-primary' if currency == 'uah' }" %>
+            class: "badge #{ 'badge-primary' if currency == CurrencyService.currency(params[:currency]) }" %>
         </div>
       </div>
     <% end %>

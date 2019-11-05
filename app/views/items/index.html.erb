@@ -24,3 +24,11 @@
 </div>
 
 <%= render 'widgets/modal' %>
+
+<%= content_for :javascripts do %>
+  <%= javascript_tag do %>
+    $.getScript('<%= cashes_path(report: true) %>');
+
+    $.getScript('<%= items_path %>');
+  <% end %>
+<% end %>

@@ -17,7 +17,18 @@ RSpec.describe ItemsController, type: :controller do
 
       before { expect(Item).to receive(:order).with(date: :desc).and_return(relation) }
 
-      before { expect(ItemSearcher).to receive(:search).with(relation, params).and_return(:collection) }
+      before do
+        #
+        # ItemSearcher
+        #   .search(relation, params)
+        #   .includes(:category)
+        #
+        expect(ItemSearcher).to receive(:search).with(relation, params) do
+          double.tap do |a|
+            expect(a).to receive(:includes).with(:category).and_return(:collection)
+          end
+        end
+      end
 
       its(:collection) { should eq :collection }
     end

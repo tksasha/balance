@@ -31,8 +31,4 @@ $(function() {
   $('body').on('created.category', CreateOrUpdateCategoryCallback);
 
   $('body').on('updated.category', CreateOrUpdateCategoryCallback);
-
-  $.getScript('/cashes?report=true');
-
-  $.getScript('/items');
 });

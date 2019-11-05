@@ -8,7 +8,13 @@ class ItemSearcher < ApplicationSearcher
   def search_by_category(slug)
     return unless slug.present?
 
-    results.where categories: { slug: slug }
+    results.joins(:category).where(categories: { slug: slug })
+  end
+
+  def search_by_currency(currency)
+    return unless currency.present?
+
+    results.where(currency: currency)
   end
 
   private
@@ -23,9 +29,5 @@ class ItemSearcher < ApplicationSearcher
 
   def params
     @params.tap { |params| params[:date_range] = date_range }
-  end
-
-  def results
-    @results ||= @relation.includes(:category)
   end
 end

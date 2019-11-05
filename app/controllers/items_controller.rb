@@ -16,7 +16,7 @@ class ItemsController < ApplicationController
   private
 
   def collection
-    @collection ||= ItemSearcher.search Item.order(date: :desc), params
+    @collection ||= ItemSearcher.search(Item.order(date: :desc), params).includes(:category)
   end
 
   def resource_params

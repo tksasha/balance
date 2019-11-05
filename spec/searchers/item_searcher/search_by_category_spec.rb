@@ -3,40 +3,32 @@
 RSpec.describe ItemSearcher do
   let(:relation) { double }
 
-  let(:date_range) { double }
-
-  before { allow(subject).to receive(:date_range).and_return(date_range) }
-
-  subject { described_class.new relation, category: slug }
-
   describe '#search_by_category' do
+    subject { described_class.new(relation).search_by_category(category) }
+
     context do
-      let(:slug) { '' }
+      let(:category) { '' }
 
-      before do
-        expect(relation).to \
-          receive_message_chain(:includes, :where)
-          .with(:category)
-          .with(date: date_range)
-          .and_return(:collection)
-      end
-
-      its(:search) { should eq :collection }
+      it { should be_nil }
     end
 
     context do
-      let(:slug) { 'drinks' }
+      let(:category) { 'drinks' }
 
       before do
-        expect(relation).to \
-          receive_message_chain(:includes, :where, :where)
-          .with(:category)
-          .with(categories: { slug: 'drinks' })
-          .with(date: date_range)
-          .and_return(:collection)
+        #
+        # relation
+        #   .joins(:category)
+        #   .where(categories: { slug: 'drinks' }) -> :collection
+        #
+        expect(relation).to receive(:joins).with(:category) do
+          double.tap do |a|
+            expect(a).to receive(:where).with(categories: { slug: 'drinks' }).and_return(:collection)
+          end
+        end
       end
 
-      its(:search) { should eq :collection }
+      it { should eq :collection }
     end
   end
 end
