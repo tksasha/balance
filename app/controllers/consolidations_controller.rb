@@ -3,14 +3,11 @@
 class ConsolidationsController < ApplicationController
   private
 
-  def date
-    DateFactory.build params
+  def relation
+    Consolidation.includes(:category)
   end
 
   def collection
-    @collection ||= \
-      ConsolidationSearcher
-      .search(Consolidation.includes(:category), date: date)
-      .decorate(context: { date: date })
+    @collection ||= ConsolidationSearcher.search(relation, params).decorate(context: params)
   end
 end

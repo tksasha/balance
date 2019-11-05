@@ -3,20 +3,12 @@
 RSpec.describe ConsolidationSearcher do
   let(:relation) { double }
 
-  let(:params) { {} }
+  let(:params) { { currency: 'usd', year: 2019, month: 11 } }
 
   subject { described_class.new relation, params }
 
-  describe '#date_range' do
-    let(:date) { Date.new 2019, 5, 1 }
-
-    let(:params) { { date: date } }
-
-    its(:date_range) { should eq Date.new(2019, 5, 1)..Date.new(2019, 5, 31) }
-  end
-
   describe '#search' do
-    let(:date_range) { double }
+    let(:date_range) { Date.new(2019, 11, 1)..Date.new(2019, 11, 30) }
 
     let(:collection) do
       [
@@ -26,20 +18,16 @@ RSpec.describe ConsolidationSearcher do
       ]
     end
 
-    before { expect(subject).to receive(:date_range).and_return(date_range) }
-
     before { expect(ConsolidationExpensesSum).to receive(:sum=).with(9.42) }
 
-    after { subject.search }
-
-    it do
+    before do
       #
       # relation.
-      #   where(date: date_range).
+      #   where(date: date_range, currency: 'usd').
       #   select('SUM(sum) AS sum, category_id').
       #   group(:category_id) -> collection
       #
-      expect(relation).to receive(:where).with(date: date_range) do
+      expect(relation).to receive(:where).with(date: date_range, currency: 'usd') do
         double.tap do |a|
           expect(a).to receive(:select).with('SUM(sum) AS sum, category_id') do
             double.tap do |b|
@@ -49,6 +37,8 @@ RSpec.describe ConsolidationSearcher do
         end
       end
     end
+
+    its(:search) { should eq collection }
   end
 
   describe '.search' do

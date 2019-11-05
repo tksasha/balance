@@ -8,6 +8,6 @@ class ConsolidationDecorator < Draper::Decorator
   private
 
   def date
-    context[:date]
+    @date ||= DateFactory.build(context)
   end
 end
