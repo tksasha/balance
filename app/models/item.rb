@@ -12,4 +12,6 @@ class Item < ActiveRecord::Base
   scope :expense, -> { joins(:category).merge(Category.expense) }
 
   acts_as_paranoid
+
+  enum currency: CURRENCIES
 end

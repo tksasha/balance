@@ -10,13 +10,14 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_10_14_074747) do
+ActiveRecord::Schema.define(version: 2019_11_05_073359) do
 
   create_table "cashes", force: :cascade do |t|
     t.decimal "sum", precision: 10, scale: 2
     t.string "name"
     t.time "deleted_at"
     t.string "formula"
+    t.integer "currency", default: 0
   end
 
   create_table "categories", force: :cascade do |t|
@@ -35,6 +36,7 @@ ActiveRecord::Schema.define(version: 2019_10_14_074747) do
     t.datetime "updated_at"
     t.text "formula"
     t.time "deleted_at"
+    t.integer "currency", default: 0
     t.index ["date", "category_id"], name: "index_balans_items_on_date_and_category_id"
     t.index ["date"], name: "index_balans_items_on_date"
   end
