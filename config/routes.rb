@@ -13,5 +13,7 @@ Rails.application.routes.draw do
 
   resources :consolidations, only: :index
 
+  resources :currencies, only: :index
+
   root to: 'items#index'
 end

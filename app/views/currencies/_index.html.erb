@@ -1,0 +1,12 @@
+<div class="container currencies">
+  <div class="row">
+    <% CURRENCIES.map do |currency| %>
+      <div class="col-sm">
+        <div class="text-center text-uppercase">
+          <%= link_to currency, root_path(currency: currency),
+            class: "badge #{ 'badge-primary' if currency == 'uah' }" %>
+        </div>
+      </div>
+    <% end %>
+  </div>
+</div>

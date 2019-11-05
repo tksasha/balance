@@ -6,17 +6,19 @@
 
 @import "colors";
 
-@import "bootstrap-select-customized";
-@import "bootstrap-datepicker-customized";
 @import "a";
-@import "header";
+@import "ajax-loader";
+@import "backoffice-menu-button";
 @import "body";
+@import "bootstrap-datepicker-customized";
+@import "bootstrap-select-customized";
 @import "cashes";
 @import "consolidations";
-@import "items";
-@import "item-inline-form";
-@import "backoffice-menu-button";
+@import "currencies";
 @import "has-error";
-@import "ajax-loader";
+@import "header";
+@import "item-inline-form";
+@import "items";
 @import "link-to-backoffice";
+@import "link-to-currencies";
 @import "modal";

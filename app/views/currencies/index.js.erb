@@ -1,0 +1,9 @@
+(function() {
+  $('.modal-body').html('<%= j render 'index' %>');
+
+  $('.modal-dialog').removeClass('modal-lg');
+
+  if(!$('.modal').hasClass('show')) {
+    $('.modal').modal();
+  }
+}())
