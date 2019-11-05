@@ -1,4 +1,4 @@
-require 'rails_helper'
+# frozen_string_literal: true
 
 RSpec.describe AtEndsController, type: :controller do
   describe '#resource' do
