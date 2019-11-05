@@ -12,38 +12,4 @@ RSpec.describe Cash, type: :model do
   it { should validate_presence_of :formula }
 
   it { should define_enum_for(:currency).with_values(%w[uah usd rur]) }
-
-  describe '.at_end' do
-    before do
-      #
-      # Item.income.sum(:sum) -> 10
-      #
-      expect(Item).to receive(:income) do
-        double.tap { |a| expect(a).to receive(:sum).with(:sum).and_return(10) }
-      end
-    end
-
-    before do
-      #
-      # Item.expense.sum(:sum) -> 6.5
-      #
-      expect(Item).to receive(:expense) do
-        double.tap { |b| expect(b).to receive(:sum).with(:sum).and_return(6.5) }
-      end
-    end
-
-    subject { described_class.at_end }
-
-    it { should eq 3.5 }
-  end
-
-  describe '.balance' do
-    before { expect(described_class).to receive(:sum).with(:sum).and_return(24) }
-
-    before { expect(described_class).to receive(:at_end).and_return(19.8) }
-
-    subject { described_class.balance }
-
-    it { should eq 4.2 }
-  end
 end

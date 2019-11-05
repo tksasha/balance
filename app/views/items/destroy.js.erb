@@ -1,8 +1,4 @@
 (function() {
-  $('#at_end').html('<%= money Cash.at_end %>');
-
-  $('#balance').html('<%= money Cash.balance %>');
-
   $('#item_<%= resource.id %>').remove();
 
   $.getScript('<%= url_for [:consolidations, year: resource.date.year, month: resource.date.month] %>');

@@ -17,6 +17,22 @@ RSpec.shared_examples 'index' do |uri|
   end
 end
 
+RSpec.shared_examples 'show' do |uri|
+  describe "GET #{ uri }" do
+    include_examples 'format', uri
+
+    include_examples 'xhr?'
+
+    before { get uri, xhr: xhr? }
+
+    it { should render_template :show }
+
+    it_behaves_like 'http_status', :ok
+
+    it_behaves_like 'media_type'
+  end
+end
+
 RSpec.shared_examples 'new' do |uri|
   describe "GET #{ uri }" do
     include_examples 'format', uri

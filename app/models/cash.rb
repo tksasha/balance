@@ -10,14 +10,4 @@ class Cash < ActiveRecord::Base
   validates :name, uniqueness: { case_sensitive: false }
 
   enum currency: CURRENCIES
-
-  class << self
-    def at_end
-      Item.income.sum(:sum) - Item.expense.sum(:sum)
-    end
-
-    def balance
-      (sum(:sum) - at_end).round(2)
-    end
-  end
 end
