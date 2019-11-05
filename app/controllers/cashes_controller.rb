@@ -18,7 +18,7 @@ class CashesController < ApplicationController
   private
 
   def collection
-    @collection ||= Cash.order :name
+    @collection ||= CashSearcher.search(Cash.order(:name), params)
   end
 
   def resource_params

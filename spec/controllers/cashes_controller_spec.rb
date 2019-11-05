@@ -2,9 +2,25 @@
 
 RSpec.describe CashesController, type: :controller do
   describe '#collection' do
-    before { expect(Cash).to receive(:order).with(:name).and_return(:collection) }
+    context do
+      before { subject.instance_variable_set :@collection, :collection }
 
-    its(:collection) { should eq :collection }
+      its(:collection) { should eq :collection }
+    end
+
+    context do
+      let(:relation) { double }
+
+      let(:params) { double }
+
+      before { expect(subject).to receive(:params).and_return(params) }
+
+      before { expect(Cash).to receive(:order).with(:name).and_return(relation) }
+
+      before { expect(CashSearcher).to receive(:search).with(relation, params).and_return(:collection) }
+
+      its(:collection) { should eq :collection }
+    end
   end
 
   describe '#resource' do
