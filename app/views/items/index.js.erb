@@ -7,5 +7,5 @@
     $('#items').html('<%= j render 'not_found' %>');
   <% end %>
 
-  $.getScript('<%= url_for [:consolidations, year: params[:year], month: params[:month]] %>');
+  $.getScript('<%= consolidations_path year: params[:year], month: params[:month] %>');
 }());
