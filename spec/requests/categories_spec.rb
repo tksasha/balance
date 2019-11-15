@@ -42,4 +42,8 @@ RSpec.describe 'Categories', type: :request do
 
     let(:failure) { -> { should render_template :edit } }
   end
+
+  it_behaves_like 'index', '/categories.js'
+
+  # TODO: need spec for `GET /categories.js?widget=1`
 end

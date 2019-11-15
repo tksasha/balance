@@ -1,5 +1,5 @@
 # frozen_string_literal: true
 
-class CashSearcher < ApplicationSearcher
+class CategorySearcher < ApplicationSearcher
   include ActsAsSearchByCurrency
 end

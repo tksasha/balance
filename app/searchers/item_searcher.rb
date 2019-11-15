@@ -1,6 +1,8 @@
 # frozen_string_literal: true
 
 class ItemSearcher < ApplicationSearcher
+  include ActsAsSearchByCurrency
+
   def search_by_date_range(date_range)
     results.where date: date_range
   end
@@ -9,12 +11,6 @@ class ItemSearcher < ApplicationSearcher
     return unless slug.present?
 
     results.joins(:category).where(categories: { slug: slug })
-  end
-
-  def search_by_currency(currency)
-    return unless currency.present?
-
-    results.where(currency: currency)
   end
 
   private
