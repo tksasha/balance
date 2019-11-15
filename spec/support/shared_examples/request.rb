@@ -71,8 +71,6 @@ RSpec.shared_examples 'destroy' do |uri|
 
     include_examples 'xhr?'
 
-    before { expect(resource).to receive(:destroy) }
-
     before { delete uri, xhr: xhr? }
 
     it { success.call }
@@ -89,10 +87,8 @@ RSpec.shared_examples 'create' do |uri|
 
     include_examples 'xhr?'
 
-    context do
-      before { expect(resource).to receive(:save).and_return(true) }
-
-      before { post uri, params: params, xhr: xhr? }
+    context 'create with valid params' do
+      before { post uri, params: valid_params, xhr: xhr? }
 
       it { success.call }
 
@@ -101,10 +97,8 @@ RSpec.shared_examples 'create' do |uri|
       it_behaves_like 'media_type'
     end
 
-    context do
-      before { expect(resource).to receive(:save).and_return(false) }
-
-      before { post uri, params: params, xhr: xhr? }
+    context 'create with invalid params' do
+      before { post uri, params: invalid_params, xhr: xhr? }
 
       it { failure.call }
 
@@ -121,10 +115,8 @@ RSpec.shared_examples 'update' do |uri|
 
     include_examples 'xhr?'
 
-    context do
-      before { expect(resource).to receive(:update).with(resource_params).and_return(true) }
-
-      before { patch uri, params: params, xhr: xhr? }
+    context 'update with valid params' do
+      before { patch uri, params: valid_params, xhr: xhr? }
 
       it { success.call }
 
@@ -133,10 +125,8 @@ RSpec.shared_examples 'update' do |uri|
       it_behaves_like 'media_type'
     end
 
-    context do
-      before { expect(resource).to receive(:update).with(resource_params).and_return(false) }
-
-      before { patch uri, params: params, xhr: xhr? }
+    context 'update with invalid params' do
+      before { patch uri, params: invalid_params, xhr: xhr? }
 
       it { failure.call }
 

@@ -16,6 +16,7 @@ gem 'sqlite3'
 gem 'uglifier'
 
 group :development do
+  gem 'awesome_print'
   gem 'brakeman', require: false
   gem 'bullet'
   gem 'bundler-audit', require: false
@@ -33,6 +34,8 @@ group :development, :test do
 end
 
 group :test do
+  gem 'database_cleaner'
+  gem 'factory_bot_rails'
   gem 'rails-controller-testing'
   gem 'rspec-activemodel-mocks'
   gem 'rspec-its'

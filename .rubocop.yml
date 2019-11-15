@@ -77,3 +77,6 @@ RSpec/MessageChain:
 
 Style/FormatStringToken:
   EnforcedStyle: unannotated
+
+Style/TrailingCommaInHashLiteral:
+  Enabled: false
