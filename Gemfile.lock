@@ -63,6 +63,7 @@ GEM
     ast (2.4.0)
     autoprefixer-rails (9.7.1)
       execjs
+    awesome_print (1.8.0)
     bootsnap (1.4.5)
       msgpack (~> 1.0)
     bootstrap (4.3.1)
@@ -259,6 +260,7 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
+  awesome_print
   bootsnap
   bootstrap
   brakeman

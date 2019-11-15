@@ -16,6 +16,7 @@ gem 'sqlite3'
 gem 'uglifier'
 
 group :development do
+  gem 'awesome_print'
   gem 'brakeman', require: false
   gem 'bullet'
   gem 'bundler-audit', require: false
