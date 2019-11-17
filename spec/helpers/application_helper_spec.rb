@@ -39,4 +39,24 @@ RSpec.describe ApplicationHelper, type: :helper do
 
     it { should eq :decorated }
   end
+
+  describe '#category_widget_data' do
+    subject { helper }
+
+    context do
+      before { subject.instance_variable_set :@category_widget_data, :category_widget_data }
+
+      its(:category_widget_data) { should eq :category_widget_data }
+    end
+
+    context do
+      let(:params) { double }
+
+      before { expect(subject).to receive(:params).and_return(params) }
+
+      before { expect(CategoryWidgetDataSearcher).to receive(:search).with(params).and_return(:category_widget_data) }
+
+      its(:category_widget_data) { should eq :category_widget_data }
+    end
+  end
 end
