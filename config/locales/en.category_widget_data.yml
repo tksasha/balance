@@ -1,0 +1,4 @@
+en:
+  category_widget_data:
+    :true: Income
+    :false: Expense

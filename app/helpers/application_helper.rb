@@ -28,4 +28,9 @@ module ApplicationHelper
       end
     end
   end
+
+  # TODO: spec me
+  def category_widget_data
+    @category_widget_data ||= CategoryWidgetDataSearcher.search params
+  end
 end

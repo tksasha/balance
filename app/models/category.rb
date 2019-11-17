@@ -1,7 +1,9 @@
 # frozen_string_literal: true
 
 class Category < ActiveRecord::Base
-  validates :name, presence: true, uniqueness: { case_sensitive: false }
+  validates :name, presence: true, uniqueness: { case_sensitive: false, scope: :currency }
+
+  enum currency: CURRENCIES
 
   scope :income, -> { where income: true }
 
@@ -15,14 +17,5 @@ class Category < ActiveRecord::Base
 
   def assign_slug
     self.slug = SlugService.build name
-  end
-
-  class << self
-    def group_by_income
-      [
-        ['Видатки', visible.expense.pluck(:name, :id)],
-        ['Надходження', visible.income.pluck(:name, :id)]
-      ]
-    end
   end
 end

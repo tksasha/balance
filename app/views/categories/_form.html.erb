@@ -1,7 +1,9 @@
 <%= simple_form_for resource, data: { remote: true } do |f| %>
   <%= f.input :name %>
 
-  <%= f.input :slug, readonly: true, label: false %>
+  <%= f.input :slug, disabled: true, label: false unless resource.new_record? %>
+
+  <%= f.input :currency, as: :string, wrapper_html: { class: 'd-none' } %>
 
   <div class="form-group">
     <div class="form-check">

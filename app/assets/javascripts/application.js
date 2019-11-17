@@ -27,8 +27,4 @@ $(function() {
   $('.datepicker').datepicker(BOOTSTRAP_DATEPICKER_DEFAULTS);
 
   $('select').selectpicker();
-
-  $('body').on('created.category', CreateOrUpdateCategoryCallback);
-
-  $('body').on('updated.category', CreateOrUpdateCategoryCallback);
 });

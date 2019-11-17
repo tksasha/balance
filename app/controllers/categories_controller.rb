@@ -1,8 +1,6 @@
 # frozen_string_literal: true
 
 class CategoriesController < ApplicationController
-  before_action :set_variant, only: :index
-
   def create
     render :new, status: 422 unless resource.save
   end
@@ -13,24 +11,24 @@ class CategoriesController < ApplicationController
 
   private
 
+  def relation
+    Category.order :income
+  end
+
   def collection
-    @collection ||= Category.order :income
+    @collection ||= CategorySearcher.search relation, params
   end
 
   def resource_params
-    params.require(:category).permit(:name, :income, :visible)
+    params.require(:category).permit(:name, :income, :visible, :currency)
   end
 
   def resource
     @resource ||= Category.find params[:id]
   end
 
-  def set_variant
-    request.variant = :widget if params[:widget].present?
-  end
-
   def initialize_resource
-    @resource = Category.new
+    @resource = Category.new currency: params[:currency]
   end
 
   def build_resource

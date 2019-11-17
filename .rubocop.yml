@@ -80,3 +80,6 @@ Style/FormatStringToken:
 
 Style/TrailingCommaInHashLiteral:
   Enabled: false
+
+Style/TrailingCommaInArrayLiteral:
+  Enabled: false

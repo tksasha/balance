@@ -4,7 +4,7 @@
   <%= f.input :formula, as: :string %>
 
   <div class="form-group">
-    <%= f.select :category_id, grouped_options_for_select(Category.group_by_income, resource.category_id), {},
+    <%= f.select :category_id, grouped_options_for_select(category_widget_data, resource.category_id), {},
       { class: 'form-control', data: { width: '100%' } } %>
   </div>
 

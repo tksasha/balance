@@ -1,6 +1,12 @@
 # frozen_string_literal: true
 
 RSpec.describe CategoriesController, type: :controller do
+  describe '#relation' do
+    before { expect(Category).to receive(:order).with(:income).and_return(:relation) }
+
+    its(:relation) { should eq :relation }
+  end
+
   describe '#collection' do
     context do
       before { subject.instance_variable_set :@collection, :collection }
@@ -9,7 +15,15 @@ RSpec.describe CategoriesController, type: :controller do
     end
 
     context do
-      before { expect(Category).to receive(:order).with(:income).and_return(:collection) }
+      let(:relation) { double }
+
+      let(:params) { { currency: 'usd' } }
+
+      before { expect(subject).to receive(:relation).and_return(relation) }
+
+      before { allow(subject).to receive(:params).and_return(params) }
+
+      before { expect(CategorySearcher).to receive(:search).with(relation, params).and_return(:collection) }
 
       its(:collection) { should eq :collection }
     end
@@ -32,11 +46,31 @@ RSpec.describe CategoriesController, type: :controller do
   end
 
   describe '#initialize_resource' do
-    before { expect(Category).to receive(:new).and_return(:resource) }
+    let(:params) { { currency: 'usd', foo: 'bar' } }
+
+    before { expect(subject).to receive(:params).and_return(params) }
+
+    before { expect(Category).to receive(:new).with(currency: 'usd').and_return(:resource) }
 
     before { subject.send :initialize_resource }
 
     its(:resource) { should eq :resource }
+  end
+
+  describe '#resource_params' do
+    let :params do
+      acp \
+        category: {
+          name: nil,
+          income: nil,
+          visible: nil,
+          currency: nil
+        }
+    end
+
+    before { expect(subject).to receive(:params).and_return(params) }
+
+    its(:resource_params) { should eq params.require(:category).permit! }
   end
 
   describe '#build_resource' do
@@ -47,31 +81,5 @@ RSpec.describe CategoriesController, type: :controller do
     before { subject.send :build_resource }
 
     its(:resource) { should eq :resource }
-  end
-
-  describe '#set_variant' do
-    context do
-      before { expect(subject).to receive(:params).and_return({}) }
-
-      after { subject.send :set_variant }
-
-      it { expect(subject).to_not receive(:request) }
-    end
-
-    context do
-      before { expect(subject).to receive(:params).and_return(widget: '') }
-
-      after { subject.send :set_variant }
-
-      it { expect(subject).to_not receive(:request) }
-    end
-
-    context do
-      before { expect(subject).to receive(:params).and_return(widget: '1') }
-
-      after { subject.send :set_variant }
-
-      it { expect(subject).to receive_message_chain('request.variant=').with(:widget) }
-    end
   end
 end

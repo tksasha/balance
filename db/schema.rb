@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_11_13_063838) do
+ActiveRecord::Schema.define(version: 2019_11_16_192737) do
 
   create_table "cashes", force: :cascade do |t|
     t.decimal "sum", precision: 10, scale: 2
@@ -25,6 +25,7 @@ ActiveRecord::Schema.define(version: 2019_11_13_063838) do
     t.boolean "income", default: false
     t.string "slug"
     t.boolean "visible", default: true
+    t.integer "currency", default: 0
   end
 
   create_table "items", force: :cascade do |t|

@@ -3,30 +3,11 @@
 RSpec.describe Category, type: :model do
   it { should validate_presence_of :name }
 
-  it { should validate_uniqueness_of(:name).case_insensitive }
+  it { should validate_uniqueness_of(:name).case_insensitive.scoped_to(:currency) }
+
+  it { should define_enum_for(:currency).with_values(%w[uah usd rur]) }
 
   it { should callback(:assign_slug).before(:save) }
-
-  describe '.group_by_income' do
-    subject { described_class }
-
-    before do
-      allow(subject).to \
-        receive_message_chain(:visible, :expense, :pluck).with(:name, :id).and_return([['Їжа', 1], ["Дім. Сім'я", 2]])
-    end
-
-    before do
-      allow(subject).to \
-        receive_message_chain(:visible, :income, :pluck).with(:name, :id).and_return([['Зарплата', 3]])
-    end
-
-    its :group_by_income do
-      should eq [
-        ['Видатки', [['Їжа', 1], ["Дім. Сім'я", 2]]],
-        ['Надходження', [['Зарплата', 3]]]
-      ]
-    end
-  end
 
   describe '.visible' do
     let(:sql) { described_class.where(visible: true).to_sql }
