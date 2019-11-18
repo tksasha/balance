@@ -29,8 +29,6 @@
   <%= javascript_tag do %>
     $.getScript('<%= cashes_path(report: true) %>');
 
-    $.getScript('<%= at_end_path %>');
-
     $.getScript('<%= balance_path %>');
 
     $.getScript('<%= items_path %>');

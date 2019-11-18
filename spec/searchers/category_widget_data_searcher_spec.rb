@@ -38,11 +38,16 @@ RSpec.describe CategoryWidgetDataSearcher do
         #
         # Category
         #   .where(currency: 'usd')
+        #   .order(:income)
         #   .pluck(:name, :id, :income) -> categories
         #
         expect(Category).to receive(:where).with(currency: 'usd') do
           double.tap do |a|
-            expect(a).to receive(:pluck).with(:name, :id, :income).and_return(categories)
+            expect(a).to receive(:order).with(:income) do
+              double.tap do |b|
+                expect(b).to receive(:pluck).with(:name, :id, :income).and_return(categories)
+              end
+            end
           end
         end
       end

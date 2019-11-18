@@ -11,8 +11,6 @@ Rails.application.routes.draw do
 
   resources :currencies, only: :index
 
-  resource :at_end, only: :show
-
   resource :balance, only: :show
 
   root to: 'items#index'

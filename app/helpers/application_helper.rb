@@ -32,4 +32,8 @@ module ApplicationHelper
   def category_widget_data
     @category_widget_data ||= CategoryWidgetDataSearcher.search params
   end
+
+  def at_end
+    @at_end ||= AtEndService.new(params).at_end
+  end
 end

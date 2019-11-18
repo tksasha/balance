@@ -1,0 +1,4 @@
+ua:
+  errors:
+    messages:
+      taken: 'уже існує'

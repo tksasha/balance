@@ -22,7 +22,7 @@ class CashesController < ApplicationController
   end
 
   def resource_params
-    params.require(:cash).permit(:formula, :name)
+    params.require(:cash).permit(:formula, :name, :currency)
   end
 
   def set_variant
@@ -34,7 +34,7 @@ class CashesController < ApplicationController
   end
 
   def initialize_resource
-    @resource = Cash.new
+    @resource = Cash.new currency: params[:currency]
   end
 
   def build_resource

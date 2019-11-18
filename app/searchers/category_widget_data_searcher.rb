@@ -10,6 +10,7 @@ class CategoryWidgetDataSearcher
 
     Category
       .where(currency: @currency)
+      .order(:income)
       .pluck(:name, :id, :income)
       .group_by { |array| array[2] }
       .map do |key, value|

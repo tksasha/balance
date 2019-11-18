@@ -1,5 +1,5 @@
 (function() {
-  $.getScript('<%= url_for [:cashes, { report: true }] %>');
+  $.getScript('<%= cashes_path(report: true) %>');
 
   $('.modal').modal('hide');
 }());

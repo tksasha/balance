@@ -40,11 +40,30 @@ RSpec.describe CashesController, type: :controller do
   end
 
   describe '#initialize_resource' do
-    before { expect(Cash).to receive(:new).and_return(:resource) }
+    let(:params) { { currency: 'usd', foo: 'foo' } }
+
+    before { expect(subject).to receive(:params).and_return(params) }
+
+    before { expect(Cash).to receive(:new).with(currency: 'usd').and_return(:resource) }
 
     before { subject.send :initialize_resource }
 
     its(:resource) { should eq :resource }
+  end
+
+  describe '#resource_params' do
+    let :params do
+      acp \
+        cash: {
+          name: nil,
+          formula: nil,
+          currency: nil,
+        }
+    end
+
+    before { expect(subject).to receive(:params).and_return(params) }
+
+    its(:resource_params) { should eq params.require(:cash).permit! }
   end
 
   describe '#build_resource' do

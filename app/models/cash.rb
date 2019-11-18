@@ -3,11 +3,11 @@
 class Cash < ActiveRecord::Base
   include ActsAsHasFormula
 
-  acts_as_paranoid
-
   validates :name, :formula, presence: true
 
-  validates :name, uniqueness: { case_sensitive: false }
+  validates :name, uniqueness: { case_sensitive: false, scope: :currency }
 
   enum currency: CURRENCIES
+
+  acts_as_paranoid
 end
