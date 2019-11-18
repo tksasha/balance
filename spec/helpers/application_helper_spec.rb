@@ -88,4 +88,14 @@ RSpec.describe ApplicationHelper, type: :helper do
       its(:balance) { should eq 22.15 }
     end
   end
+
+  describe '#new_item_for_inline_form' do
+    let(:params) { { currency: 'usd', foo: 'foo' } }
+
+    before { expect(subject).to receive(:params).and_return(params) }
+
+    before { expect(Item).to receive(:new).with(currency: 'usd').and_return(:item) }
+
+    its(:new_item_for_inline_form) { should eq :item }
+  end
 end

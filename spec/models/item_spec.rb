@@ -9,6 +9,8 @@ RSpec.describe Item, type: :model do
 
   it { should validate_presence_of :formula }
 
+  it { should validate_presence_of :currency }
+
   it { should belong_to :category }
 
   it { should act_as_paranoid }

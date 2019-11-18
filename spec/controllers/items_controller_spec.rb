@@ -1,6 +1,23 @@
 # frozen_string_literal: true
 
 RSpec.describe ItemsController, type: :controller do
+  describe '#relation' do
+    before do
+      #
+      # Item
+      #   .order(date: :desc)
+      #   includes(:category) -> :relation
+      #
+      expect(Item).to receive(:order).with(date: :desc) do
+        double.tap do |a|
+          expect(a).to receive(:includes).with(:category).and_return(:relation)
+        end
+      end
+    end
+
+    its(:relation) { should eq :relation }
+  end
+
   describe '#collection' do
     context do
       before { subject.instance_variable_set :@collection, :collection }
@@ -13,22 +30,11 @@ RSpec.describe ItemsController, type: :controller do
 
       let(:relation) { double }
 
+      before { expect(subject).to receive(:relation).and_return(relation) }
+
       before { expect(subject).to receive(:params).and_return(params) }
 
-      before { expect(Item).to receive(:order).with(date: :desc).and_return(relation) }
-
-      before do
-        #
-        # ItemSearcher
-        #   .search(relation, params)
-        #   .includes(:category)
-        #
-        expect(ItemSearcher).to receive(:search).with(relation, params) do
-          double.tap do |a|
-            expect(a).to receive(:includes).with(:category).and_return(:collection)
-          end
-        end
-      end
+      before { expect(ItemSearcher).to receive(:search).with(relation, params).and_return(:collection) }
 
       its(:collection) { should eq :collection }
     end
@@ -48,6 +54,23 @@ RSpec.describe ItemsController, type: :controller do
 
       its(:resource) { should eq :resource }
     end
+  end
+
+  describe '#resource_params' do
+    let :params do
+      acp \
+        item: {
+          date: nil,
+          formula: nil,
+          category_id: nil,
+          description: nil,
+          currency: nil,
+        }
+    end
+
+    before { expect(subject).to receive(:params).and_return(params) }
+
+    its(:resource_params) { should eq params.require(:item).permit! }
   end
 
   describe '#build_resource' do

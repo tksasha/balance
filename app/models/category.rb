@@ -3,6 +3,8 @@
 class Category < ActiveRecord::Base
   validates :name, presence: true, uniqueness: { case_sensitive: false, scope: :currency }
 
+  validates :currency, presence: true
+
   enum currency: CURRENCIES
 
   scope :income, -> { where income: true }

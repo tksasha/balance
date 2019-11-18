@@ -5,7 +5,7 @@ class Item < ActiveRecord::Base
 
   belongs_to :category
 
-  validates :date, :category_id, :formula, presence: true
+  validates :date, :category_id, :formula, :currency, presence: true
 
   scope :income, -> { joins(:category).merge(Category.income) }
 

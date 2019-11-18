@@ -5,6 +5,8 @@ RSpec.describe Category, type: :model do
 
   it { should validate_uniqueness_of(:name).case_insensitive.scoped_to(:currency) }
 
+  it { should validate_presence_of :currency }
+
   it { should define_enum_for(:currency).with_values(%w[uah usd rur]) }
 
   it { should callback(:assign_slug).before(:save) }

@@ -3,7 +3,7 @@
 class Cash < ActiveRecord::Base
   include ActsAsHasFormula
 
-  validates :name, :formula, presence: true
+  validates :name, :formula, :currency, presence: true
 
   validates :name, uniqueness: { case_sensitive: false, scope: :currency }
 

@@ -40,4 +40,8 @@ module ApplicationHelper
   def balance
     @balance ||= BalanceCalculatorService.calculate params
   end
+
+  def new_item_for_inline_form
+    Item.new currency: params[:currency]
+  end
 end

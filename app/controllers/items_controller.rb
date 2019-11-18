@@ -15,12 +15,16 @@ class ItemsController < ApplicationController
 
   private
 
+  def relation
+    Item.order(date: :desc).includes(:category)
+  end
+
   def collection
-    @collection ||= ItemSearcher.search(Item.order(date: :desc), params).includes(:category)
+    @collection ||= ItemSearcher.search relation, params
   end
 
   def resource_params
-    params.require(:item).permit(:date, :formula, :category_id, :description)
+    params.require(:item).permit(:date, :formula, :category_id, :description, :currency)
   end
 
   def resource
