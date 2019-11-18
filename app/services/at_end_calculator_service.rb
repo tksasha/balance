@@ -1,11 +1,11 @@
 # frozen_string_literal: true
 
-class AtEndService
+class AtEndCalculatorService
   def initialize(params)
     @currency = CurrencyService.currency params[:currency]
   end
 
-  def at_end
+  def calculate
     income - expense
   end
 
@@ -24,8 +24,8 @@ class AtEndService
   end
 
   class << self
-    def at_end(*args)
-      new(*args).at_end
+    def calculate(*args)
+      new(*args).calculate
     end
   end
 end

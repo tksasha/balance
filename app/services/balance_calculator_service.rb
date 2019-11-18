@@ -12,7 +12,7 @@ class BalanceCalculatorService
   private
 
   def at_end
-    AtEndService.at_end currency: @currency
+    AtEndCalculatorService.calculate currency: @currency
   end
 
   def sum

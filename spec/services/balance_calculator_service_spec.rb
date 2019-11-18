@@ -6,7 +6,7 @@ RSpec.describe BalanceCalculatorService do
   subject { described_class.new params }
 
   describe '#at_end' do
-    before { expect(AtEndService).to receive(:at_end).and_return(21.04) }
+    before { expect(AtEndCalculatorService).to receive(:calculate).and_return(21.04) }
 
     its(:at_end) { should eq 21.04 }
   end

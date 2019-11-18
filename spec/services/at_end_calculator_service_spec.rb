@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-RSpec.describe AtEndService do
+RSpec.describe AtEndCalculatorService do
   let(:params) { {} }
 
   subject { described_class.new params }
@@ -61,23 +61,23 @@ RSpec.describe AtEndService do
     end
   end
 
-  describe '#at_end' do
+  describe '#calculate' do
     before { expect(subject).to receive(:income).and_return(10) }
 
     before { expect(subject).to receive(:expense).and_return(6.5) }
 
-    its(:at_end) { should eq 3.5 }
+    its(:calculate) { should eq 3.5 }
   end
 
-  describe '.at_end' do
-    after { described_class.at_end :params }
+  describe '.calculate' do
+    after { described_class.calculate :params }
 
     it do
       #
-      # described_class.new(:params).at_end
+      # described_class.new(:params).calculate
       #
       expect(described_class).to receive(:new).with(:params) do
-        double.tap { |a| expect(a).to receive(:at_end) }
+        double.tap { |a| expect(a).to receive(:calculate) }
       end
     end
   end

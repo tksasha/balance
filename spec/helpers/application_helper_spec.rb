@@ -65,16 +65,7 @@ RSpec.describe ApplicationHelper, type: :helper do
 
       before { expect(subject).to receive(:params).and_return(params) }
 
-      before do
-        #
-        # AtEndService.new(params).at_end -> 21.49
-        #
-        expect(AtEndService).to receive(:new).with(params) do
-          double.tap do |a|
-            expect(a).to receive(:at_end).and_return(21.49)
-          end
-        end
-      end
+      before { expect(AtEndCalculatorService).to receive(:calculate).with(params).and_return(21.49) }
 
       its(:at_end) { should eq 21.49 }
     end
