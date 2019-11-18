@@ -79,4 +79,22 @@ RSpec.describe ApplicationHelper, type: :helper do
       its(:at_end) { should eq 21.49 }
     end
   end
+
+  describe '#balance' do
+    context do
+      before { subject.instance_variable_set :@balance, :balance }
+
+      its(:balance) { should eq :balance }
+    end
+
+    context do
+      let(:params) { double }
+
+      before { expect(subject).to receive(:params).and_return(params) }
+
+      before { expect(BalanceCalculatorService).to receive(:calculate).with(params).and_return(22.15) }
+
+      its(:balance) { should eq 22.15 }
+    end
+  end
 end

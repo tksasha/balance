@@ -1,11 +1,11 @@
 # frozen_string_literal: true
 
-class BalanceService
+class BalanceCalculatorService
   def initialize(params)
     @currency = CurrencyService.currency params[:currency]
   end
 
-  def balance
+  def calculate
     (sum - at_end).round(2)
   end
 
@@ -17,5 +17,11 @@ class BalanceService
 
   def sum
     Cash.where(currency: @currency).sum :sum
+  end
+
+  class << self
+    def calculate(*args)
+      new(*args).calculate
+    end
   end
 end

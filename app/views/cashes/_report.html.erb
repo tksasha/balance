@@ -15,7 +15,7 @@
         <tr>
           <td>Залишок на кінець</td>
 
-          <td class="text-right">
+          <td id="at_end" class="text-right">
             <%= money at_end %>
           </td>
         </tr>
@@ -23,7 +23,9 @@
         <tr>
           <td>Баланс</td>
 
-          <td id="balance" class="text-right"></td>
+          <td id="balance" class="text-right">
+            <%= money balance %>
+          </td>
         </tr>
       </tbody>
     </table>

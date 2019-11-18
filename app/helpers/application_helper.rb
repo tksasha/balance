@@ -36,4 +36,8 @@ module ApplicationHelper
   def at_end
     @at_end ||= AtEndService.new(params).at_end
   end
+
+  def balance
+    @balance ||= BalanceCalculatorService.calculate params
+  end
 end

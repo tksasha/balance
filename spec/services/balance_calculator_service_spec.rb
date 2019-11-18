@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-RSpec.describe BalanceService do
+RSpec.describe BalanceCalculatorService do
   let(:params) { {} }
 
   subject { described_class.new params }
@@ -41,11 +41,26 @@ RSpec.describe BalanceService do
     end
   end
 
-  describe '#balance' do
+  describe '#calculate' do
     before { expect(subject).to receive(:sum).and_return(99.999) }
 
     before { expect(subject).to receive(:at_end).and_return(55.555) }
 
-    its(:balance) { should eq 44.44 }
+    its(:calculate) { should eq 44.44 }
+  end
+
+  describe '.calculate' do
+    after { described_class.calculate :params }
+
+    it do
+      #
+      # described_class.new(:params).calculate
+      #
+      expect(described_class).to receive(:new).with(:params) do
+        double.tap do |a|
+          expect(a).to receive(:calculate)
+        end
+      end
+    end
   end
 end
