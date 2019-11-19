@@ -2,60 +2,57 @@
 
 RSpec.describe CategoryWidgetDataSearcher do
   describe '#search' do
-    context do
-      subject { described_class.search currency: '' }
-
-      it { should eq [] }
+    let :categories do
+      [
+        ['Food', 13, false],
+        ['Drinks', 5, false],
+        ['Salary', 17, true],
+      ]
     end
 
-    context do
-      let :categories do
+    let :collection do
+      [
         [
-          ['Food', 13, false],
-          ['Drinks', 5, false],
-          ['Salary', 17, true],
-        ]
-      end
-
-      let :collection do
+          'Видатки', [
+            ['Food', 13],
+            ['Drinks', 5],
+          ]
+        ],
         [
+          'Надходження',
           [
-            'Видатки', [
-              ['Food', 13],
-              ['Drinks', 5],
-            ]
-          ],
-          [
-            'Надходження',
-            [
-              ['Salary', 17],
-            ]
-          ],
-        ]
-      end
+            ['Salary', 17],
+          ]
+        ],
+      ]
+    end
 
-      before do
-        #
-        # Category
-        #   .where(currency: 'usd')
-        #   .order(:income)
-        #   .pluck(:name, :id, :income) -> categories
-        #
-        expect(Category).to receive(:where).with(currency: 'usd') do
-          double.tap do |a|
-            expect(a).to receive(:order).with(:income) do
-              double.tap do |b|
-                expect(b).to receive(:pluck).with(:name, :id, :income).and_return(categories)
+    before do
+      #
+      # Category
+      #   .visible
+      #   .where(currency: 'usd')
+      #   .order(:income)
+      #   .pluck(:name, :id, :income) -> categories
+      #
+      expect(Category).to receive(:visible) do
+        double.tap do |a|
+          expect(a).to receive(:where).with(currency: 'usd') do
+            double.tap do |b|
+              expect(b).to receive(:order).with(:income) do
+                double.tap do |c|
+                  expect(c).to receive(:pluck).with(:name, :id, :income).and_return(categories)
+                end
               end
             end
           end
         end
       end
-
-      subject { described_class.search currency: 'usd' }
-
-      it { should eq collection }
     end
+
+    subject { described_class.search currency: 'usd' }
+
+    it { should eq collection }
   end
 
   describe '.search' do

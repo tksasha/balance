@@ -2,13 +2,12 @@
 
 class CategoryWidgetDataSearcher
   def initialize(params)
-    @currency = params[:currency]
+    @currency = CurrencyService.currency params[:currency]
   end
 
   def search
-    return [] unless CURRENCIES.include?(@currency)
-
     Category
+      .visible
       .where(currency: @currency)
       .order(:income)
       .pluck(:name, :id, :income)
