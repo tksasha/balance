@@ -27,9 +27,9 @@
       <%= image_tag 'ajax-loader.gif' %>
     </div>
 
-    <%= link_to '', :backoffice, class: 'link-to-backoffice', title: 'BackOffice', data: { remote: true } %>
+    <%= link_to 'B', :backoffice, class: 'link-to-backoffice', title: 'BackOffice', data: { remote: true } %>
 
-    <%= link_to '', :currencies, class: 'link-to-currencies', title: 'Currencies', data: { remote: true } %>
+    <%= link_to CurrencyService.currency(params[:currency]), :currencies, class: 'link-to-currencies', title: 'Currencies', data: { remote: true } %>
 
     <%= javascript_include_tag :application %>
 
