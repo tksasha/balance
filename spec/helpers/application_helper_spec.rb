@@ -90,12 +90,20 @@ RSpec.describe ApplicationHelper, type: :helper do
   end
 
   describe '#new_item_for_inline_form' do
-    let(:params) { { currency: 'usd', foo: 'foo' } }
+    context do
+      let(:params) { { currency: 'usd', foo: 'foo' } }
 
-    before { expect(subject).to receive(:params).and_return(params) }
+      before { expect(subject).to receive(:params).and_return(params) }
 
-    before { expect(Item).to receive(:new).with(currency: 'usd').and_return(:item) }
+      before { expect(Item).to receive(:new).with(currency: 'usd').and_return(:item) }
 
-    its(:new_item_for_inline_form) { should eq :item }
+      its(:new_item_for_inline_form) { should eq :item }
+    end
+
+    context do
+      before { expect(Item).to receive(:new).with(currency: 'uah').and_return(:item) }
+
+      its(:new_item_for_inline_form) { should eq :item }
+    end
   end
 end

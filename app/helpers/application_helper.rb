@@ -42,6 +42,6 @@ module ApplicationHelper
   end
 
   def new_item_for_inline_form
-    Item.new currency: params[:currency]
+    Item.new currency: CurrencyService.currency(params[:currency])
   end
 end
