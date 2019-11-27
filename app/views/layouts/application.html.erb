@@ -29,7 +29,7 @@
 
     <%= link_to 'B', :backoffice, class: 'link-to-backoffice', title: 'BackOffice', data: { remote: true } %>
 
-    <%= link_to CurrencyService.currency(params[:currency]), :currencies, class: 'link-to-currencies', title: 'Currencies', data: { remote: true } %>
+    <%= render 'widgets/currencies-widget' %>
 
     <%= javascript_include_tag :application %>
 

@@ -1,0 +1,19 @@
+<button type="button" id="currencies-widget">
+  <%= CurrencyService.currency(params[:currency]) %>
+</button>
+
+<div id="currencies-widget-content">
+  <div class="container">
+    <div class="row">
+      <% CURRENCIES.map do |currency| %>
+        <% next if currency == CurrencyService.currency(params[:currency]) %>
+
+        <div class="col-sm">
+          <div class="text-center text-uppercase">
+            <%= link_to currency, root_path(currency: currency), class: 'badge currencies-widget-currency' %>
+          </div>
+        </div>
+      <% end %>
+    </div>
+  </div>
+</div>
