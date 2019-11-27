@@ -27,7 +27,7 @@
       <%= image_tag 'ajax-loader.gif' %>
     </div>
 
-    <%= link_to 'B', :backoffice, class: 'link-to-backoffice', title: 'BackOffice', data: { remote: true } %>
+    <%= render 'widgets/link-to-backoffice' %>
 
     <%= render 'widgets/currencies-widget' %>
 
