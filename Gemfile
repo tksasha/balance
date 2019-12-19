@@ -23,6 +23,7 @@ group :development do
   gem 'bundler-leak', require: false
   gem 'fasterer', require: false
   gem 'listen'
+  gem 'pry-rails'
   gem 'rubocop', require: false
   gem 'rubocop-performance', require: false
   gem 'rubocop-rspec', require: false

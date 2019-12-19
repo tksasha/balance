@@ -35,9 +35,9 @@ RSpec.describe CurrencyService do
     end
 
     context do
-      let(:currency) { 'rur' }
+      let(:currency) { 'rub' }
 
-      its(:currency) { should eq 'rur' }
+      its(:currency) { should eq 'rub' }
     end
   end
 

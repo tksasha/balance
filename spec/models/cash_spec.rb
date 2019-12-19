@@ -13,5 +13,5 @@ RSpec.describe Cash, type: :model do
 
   it { should validate_presence_of :currency }
 
-  it { should define_enum_for(:currency).with_values(%w[uah usd rur]) }
+  it { should define_enum_for(:currency).with_values(%w[uah usd rub]) }
 end

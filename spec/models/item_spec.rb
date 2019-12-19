@@ -15,7 +15,7 @@ RSpec.describe Item, type: :model do
 
   it { should act_as_paranoid }
 
-  it { should define_enum_for(:currency).with_values(%w[uah usd rur]) }
+  it { should define_enum_for(:currency).with_values(%w[uah usd rub]) }
 
   describe '.income' do
     let(:sql) { described_class.joins(:category).merge(Category.income).to_sql }

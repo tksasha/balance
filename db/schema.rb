@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_11_16_192737) do
+ActiveRecord::Schema.define(version: 2019_11_27_104857) do
 
   create_table "cashes", force: :cascade do |t|
     t.decimal "sum", precision: 10, scale: 2
@@ -26,6 +26,15 @@ ActiveRecord::Schema.define(version: 2019_11_16_192737) do
     t.string "slug"
     t.boolean "visible", default: true
     t.integer "currency", default: 0
+  end
+
+  create_table "exchange_rates", force: :cascade do |t|
+    t.integer "from", default: 0
+    t.integer "to", default: 0
+    t.decimal "rate", precision: 7, scale: 5
+    t.date "date"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
   end
 
   create_table "items", force: :cascade do |t|
