@@ -35,6 +35,11 @@ class NBUExchangeRateService
 
   def doc
     @doc ||= Nokogiri::HTML URI.parse(url).open.read
+  # TODO: spec me
+  rescue Errno::ECONNRESET
+    sleep 1
+
+    retry
   end
 
   class << self

@@ -60,9 +60,6 @@ RSpec/SubjectStub:
 RSpec/VerifiedDoubles:
   Enabled: false
 
-RSpec/NotToNot:
-  EnforcedStyle: to_not
-
 RSpec/ContextWording:
   Enabled: false
 

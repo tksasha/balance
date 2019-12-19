@@ -82,7 +82,7 @@ RSpec.describe CashesController, type: :controller do
 
       after { subject.send :set_variant }
 
-      it { expect(subject).to_not receive(:request) }
+      it { expect(subject).not_to receive(:request) }
     end
 
     context do
@@ -90,7 +90,7 @@ RSpec.describe CashesController, type: :controller do
 
       after { subject.send :set_variant }
 
-      it { expect(subject).to_not receive(:request) }
+      it { expect(subject).not_to receive(:request) }
     end
 
     context do
