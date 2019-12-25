@@ -1,0 +1,21 @@
+<div class="clearfix">
+  <div class="float-left">
+    <%= breadcrumbs do %>
+      <span class="breadcrumb-item active">Курси валют</span>
+    <% end %>
+  </div>
+</div>
+
+<table class="table table-borderless table-hover">
+  <tr>
+    <th class="text-center">Дата</th>
+
+    <th>Назва</th>
+
+    <th>Курс</th>
+  </tr>
+
+  <%= render collection %>
+</table>
+
+<%= paginate collection, remote: true %>

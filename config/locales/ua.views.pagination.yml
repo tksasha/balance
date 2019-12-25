@@ -1,0 +1,8 @@
+ua:
+  views:
+    pagination:
+      first: "&laquo; Перша"
+      last: "Остання &raquo;"
+      previous: "&lsaquo; Попередня"
+      next: "Наступна &rsaquo;"
+      truncate: "&hellip;"

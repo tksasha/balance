@@ -9,5 +9,9 @@ Rails.application.routes.draw do
 
   resources :consolidations, only: :index
 
+  namespace :backoffice do
+    resources :exchange_rates, only: :index
+  end
+
   root to: 'items#index'
 end

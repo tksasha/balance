@@ -12,4 +12,6 @@ class ExchangeRate < ApplicationRecord
   enum from: CURRENCIES, _suffix: true
 
   enum to: CURRENCIES, _suffix: true
+
+  paginates_per 10
 end

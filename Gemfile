@@ -6,6 +6,7 @@ gem 'bootsnap', require: false
 gem 'bootstrap'
 gem 'draper'
 gem 'jquery-rails'
+gem 'kaminari'
 gem 'paranoia'
 gem 'puma'
 gem 'rails'
@@ -23,14 +24,13 @@ group :development do
   gem 'bundler-leak', require: false
   gem 'fasterer', require: false
   gem 'listen'
-  gem 'pry-rails'
   gem 'rubocop', require: false
   gem 'rubocop-performance', require: false
   gem 'rubocop-rspec', require: false
 end
 
 group :development, :test do
-  gem 'irb'
+  gem 'pry-rails'
   gem 'rspec-rails', '~> 4.0.0.beta2'
 end
 

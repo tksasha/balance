@@ -16,4 +16,10 @@ RSpec.describe ExchangeRate, type: :model do
   it { should define_enum_for(:from).with_values(%w[uah usd rub]).with_suffix }
 
   it { should define_enum_for(:to).with_values(%w[uah usd rub]).with_suffix }
+
+  context do
+    subject { described_class }
+
+    its(:default_per_page) { should eq 10 }
+  end
 end

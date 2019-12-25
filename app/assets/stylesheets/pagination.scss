@@ -1,0 +1,13 @@
+.pagination {
+  .page {
+    margin: 0 3px;
+
+    &:first-child {
+      margin-left: 0;  
+    }
+  }
+
+  .first, .prev, .next, .last {
+    margin: 0 3px;
+  }
+}
