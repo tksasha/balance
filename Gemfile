@@ -30,7 +30,6 @@ group :development do
 end
 
 group :development, :test do
-  gem 'pry-rails'
   gem 'rspec-rails', '~> 4.0.0.beta2'
 end
 
