@@ -80,3 +80,6 @@ Style/TrailingCommaInHashLiteral:
 
 Style/TrailingCommaInArrayLiteral:
   Enabled: false
+
+RSpec/RepeatedDescription:
+  Enabled: false
