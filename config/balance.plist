@@ -4,12 +4,6 @@
 <plist version="1.0">
   <dict>
     <key>EnvironmentVariables</key>
-    <dict>
-      <key>RAILS_ENV</key>
-      <string>production</string>
-      <key>SECRET_KEY_BASE</key>
-      <string>48461d1e449034bd177652b506b20435a342709c451962bb2fedb6bd2ce2f1360d654f65d6a20aa82bfd5fcac48509670632f1270e2b16a075bef4c8fa334ddb</string>
-    </dict>
     <key>KeepAlive</key>
     <false/>
     <key>Label</key>
