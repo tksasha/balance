@@ -9,7 +9,7 @@
       <!-- <key>EXECJS_RUNTIME</key> -->
       <!-- <string>Node</string> -->
       <key>PATH</key>
-      <string>/usr/local/bin</string>
+      <string>/Users/tksasha/.ruby/bin:/usr/local/bin</string>
     </dict>
     <key>KeepAlive</key>
     <false/>
@@ -17,11 +17,9 @@
     <string>balance</string>
     <key>ProgramArguments</key>
     <array>
-      <string>/Users/tksasha/.ruby/bin/ruby</string>
       <string>/Users/tksasha/.ruby/bin/puma</string>
       <string>-C</string>
       <string>config/puma.rb</string>
-      <string>/Users/tksasha/balance/config.ru</string>
     </array>
     <key>RunAtLoad</key>
     <true/>
