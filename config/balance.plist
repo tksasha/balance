@@ -6,6 +6,10 @@
     <dict>
       <key>RAILS_ENV</key>
       <string>production</string>
+      <!-- <key>EXECJS_RUNTIME</key> -->
+      <!-- <string>Node</string> -->
+      <key>PATH</key>
+      <string>/usr/local/bin</string>
     </dict>
     <key>KeepAlive</key>
     <false/>
@@ -24,6 +28,8 @@
     <key>WorkingDirectory</key>
     <string>/Users/tksasha/balance</string>
     <!-- <key>StandardOutPath</key> -->
+    <!-- <string>/Users/tksasha/errors.log</string> -->
+    <!-- <key>StandardErrorPath</key> -->
     <!-- <string>/Users/tksasha/errors.log</string> -->
   </dict>
 </plist>
