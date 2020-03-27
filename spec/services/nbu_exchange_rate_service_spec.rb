@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-RSpec.describe NBUExchangeRateService do
+RSpec.describe NbuExchangeRateService do
   let(:date) { Date.new 2019, 12, 31 }
 
   let(:url) { 'https://www.bank.gov.ua/markets/exchangerates?date=31.12.2019&period=daily' }

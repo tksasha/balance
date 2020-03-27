@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-class UAHExchangeRateService
+class UahExchangeRateService
   attr_reader :date
 
   def initialize(date = Date.today)
@@ -16,7 +16,7 @@ class UAHExchangeRateService
   private
 
   def rates
-    @rates ||= NBUExchangeRateService.rates date
+    @rates ||= NbuExchangeRateService.rates date
   end
 
   def create_usd

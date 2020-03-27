@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-RSpec.describe UAHExchangeRateService do
+RSpec.describe UahExchangeRateService do
   let(:date) { Date.new 2019, 12, 31 }
 
   subject { described_class.new date }
@@ -29,7 +29,7 @@ RSpec.describe UAHExchangeRateService do
     end
 
     context do
-      before { expect(NBUExchangeRateService).to receive(:rates).with(date).and_return(:rates) }
+      before { expect(NbuExchangeRateService).to receive(:rates).with(date).and_return(:rates) }
 
       its(:rates) { should eq :rates }
     end

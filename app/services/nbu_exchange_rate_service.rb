@@ -2,7 +2,7 @@
 
 require 'open-uri'
 
-class NBUExchangeRateService
+class NbuExchangeRateService
   def initialize(date = Date.today)
     @date = date
   end
