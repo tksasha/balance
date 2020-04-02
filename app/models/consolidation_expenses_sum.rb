@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-ConsolidationExpensesSum = Struct.new(:name, :sum, :slug, :year, :month) do
+ConsolidationExpensesSum = Struct.new(:name, :slug, :year, :month) do
   delegate :sum, to: :class
 
   def name
