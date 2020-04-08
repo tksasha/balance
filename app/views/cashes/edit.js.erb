@@ -2,6 +2,8 @@
   $('.modal-body').html('<%= j render 'edit' %>');
 
   $('.modal').on('shown.bs.modal', function() {
-    $('#cash_formula').focus();
+    $('#cash_formula')
+      .focus(function() { $(this).select() })
+      .focus();
   }).modal();
 }());

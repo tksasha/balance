@@ -1,6 +1,6 @@
 <div class="card" id="item-inline-form">
   <div class="card-body">
-    <%= simple_form_for resource, remote: true do |f| %>
+    <%= simple_form_for resource, remote: true, html: { autocomplete: :off } do |f| %>
       <%= f.hidden_field :currency %>
 
       <div class="item-inline-form-date">

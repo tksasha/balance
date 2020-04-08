@@ -1,4 +1,4 @@
-<%= simple_form_for decorated, remote: true do |f| %>
+<%= simple_form_for decorated, remote: true, html: { autocomplete: :off } do |f| %>
   <%= f.input :date, as: :string, input_html: { class: 'datepicker' } %>
 
   <%= f.input :formula, as: :string %>

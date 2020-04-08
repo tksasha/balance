@@ -1,4 +1,4 @@
-<%= simple_form_for resource, data: { remote: true } do |f| %>
+<%= simple_form_for resource, remote: true, html: { autocomplete: :off } do |f| %>
   <%= f.hidden_field :currency %>
 
   <%= f.input :name %>

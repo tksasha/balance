@@ -6,6 +6,11 @@ $(function() {
   $('.modal').find('select').selectpicker();
 
   $('.modal').on('shown.bs.modal', function() {
-    $('.modal').find('#item_formula').focus();
+    $('.modal')
+      .find('#item_formula')
+      .focus(function() { $(this).select() })
+      .focus();
+
+    <%# $('.modal').find('#item_formula').focus(); %>
   }).modal('show');
 }());
