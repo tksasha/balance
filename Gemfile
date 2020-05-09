@@ -2,7 +2,7 @@
 
 source 'https://rubygems.org'
 
-ruby '~> 2.7'
+ruby '~> 2.6'
 
 gem 'bootsnap', require: false
 gem 'bootstrap'
