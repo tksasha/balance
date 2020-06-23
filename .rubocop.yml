@@ -125,5 +125,3 @@ Style/RedundantRegexpEscape:
 
 Style/RedundantFetchBlock:
   Enabled: true
-  Exclude:
-    - config/puma.rb
