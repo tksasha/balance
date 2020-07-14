@@ -169,17 +169,13 @@ RSpec.shared_examples 'media_type' do
     subject { response }
 
     its :media_type do
-      content_type = \
-        case format
-        when 'html'
-          'text/html'
-        when 'json'
-          'application/json'
-        when 'js'
-          'text/javascript'
-        end
+      content_types = {
+        'html' => 'text/html',
+        'json' => 'application/json',
+        'js' => 'text/javascript',
+      }
 
-      should eq content_type
+      should eq content_types[format]
     end
   end
 end
