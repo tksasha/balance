@@ -1,8 +1,6 @@
 # frozen_string_literal: true
 
 RSpec.describe Cash, type: :model do
-  it { should act_as_paranoid }
-
   it { should be_a ActsAsHasFormula }
 
   it { should validate_presence_of :name }
@@ -14,4 +12,8 @@ RSpec.describe Cash, type: :model do
   it { should validate_presence_of :currency }
 
   it { should define_enum_for(:currency).with_values(%w[uah usd rub]) }
+
+  it { should act_as_paranoid }
+
+  it { should be_versioned }
 end

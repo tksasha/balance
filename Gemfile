@@ -9,6 +9,7 @@ gem 'bootstrap'
 gem 'draper'
 gem 'jquery-rails'
 gem 'kaminari'
+gem 'paper_trail'
 gem 'paranoia'
 gem 'puma'
 gem 'rails'
@@ -19,6 +20,7 @@ gem 'sqlite3'
 gem 'uglifier'
 
 group :development do
+  gem 'amazing_print'
   gem 'brakeman', require: false
   gem 'bullet'
   gem 'bundler-audit', require: false
