@@ -10,3 +10,5 @@ config/secrets.yml
 /config/master.key
 
 node_modules/
+
+.env
