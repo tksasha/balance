@@ -62,7 +62,7 @@ GEM
       zeitwerk (~> 2.2, >= 2.2.2)
     amazing_print (1.2.1)
     ast (2.4.1)
-    autoprefixer-rails (10.0.0.1)
+    autoprefixer-rails (10.0.0.2)
       execjs
     bootsnap (1.4.8)
       msgpack (~> 1.0)
@@ -151,7 +151,7 @@ GEM
     parser (2.7.1.4)
       ast (~> 2.4.1)
     popper_js (1.16.0)
-    puma (4.3.6)
+    puma (5.0.0)
       nio4r (~> 2.0)
     rack (2.2.3)
     rack-test (1.1.0)
