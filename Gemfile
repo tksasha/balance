@@ -26,6 +26,7 @@ group :development do
   gem 'bundler-audit', require: false
   gem 'bundler-leak', require: false
   gem 'fasterer', require: false
+  gem 'irb', require: false
   gem 'listen'
   gem 'rubocop', require: false
   gem 'rubocop-performance', require: false
