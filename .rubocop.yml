@@ -84,3 +84,6 @@ Style/TrailingCommaInArrayLiteral:
 
 RSpec/RepeatedDescription:
   Enabled: false
+
+RSpec/StubbedMock:
+  Enabled: false
