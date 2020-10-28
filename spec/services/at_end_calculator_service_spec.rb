@@ -9,7 +9,7 @@ RSpec.describe AtEndCalculatorService do
     context do
       let(:params) { { currency: '' } }
 
-      before { expect(Item).to receive(:where).with(currency: 'uah').and_return(:collection) }
+      before { allow(Item).to receive(:where).with(currency: 'uah').and_return(:collection) }
 
       its(:search_by_currency) { should eq :collection }
     end
@@ -17,68 +17,70 @@ RSpec.describe AtEndCalculatorService do
     context do
       let(:params) { { currency: 'usd' } }
 
-      before { expect(Item).to receive(:where).with(currency: 'usd').and_return(:collection) }
+      before { allow(Item).to receive(:where).with(currency: 'usd').and_return(:collection) }
 
       its(:search_by_currency) { should eq :collection }
     end
   end
 
   describe '#income' do
-    after { subject.send :income }
-
-    it do
+    before do
       #
-      # subject.search_by_currency.income.sum(:sum)
+      # subject.search_by_currency.income.sum(:sum) -> 15
       #
-      expect(subject).to receive(:search_by_currency) do
+      allow(subject).to receive(:search_by_currency) do
         double.tap do |a|
-          expect(a).to receive(:income) do
+          allow(a).to receive(:income) do
             double.tap do |b|
-              expect(b).to receive(:sum).with(:sum)
+              allow(b).to receive(:sum).with(:sum).and_return(15)
             end
           end
         end
       end
     end
+
+    its(:income) { should eq 15 }
   end
 
   describe '#expense' do
-    after { subject.send :expense }
-
-    it do
+    before do
       #
-      # subject.search_by_currency.expense.sum(:sum)
+      # subject.search_by_currency.expense.sum(:sum) -> 16
       #
-      expect(subject).to receive(:search_by_currency) do
+      allow(subject).to receive(:search_by_currency) do
         double.tap do |a|
-          expect(a).to receive(:expense) do
+          allow(a).to receive(:expense) do
             double.tap do |b|
-              expect(b).to receive(:sum).with(:sum)
+              allow(b).to receive(:sum).with(:sum).and_return(16)
             end
           end
         end
       end
     end
+
+    its(:expense) { should eq 16 }
   end
 
   describe '#calculate' do
-    before { expect(subject).to receive(:income).and_return(10) }
+    before { allow(subject).to receive(:income).and_return(10) }
 
-    before { expect(subject).to receive(:expense).and_return(6.5) }
+    before { allow(subject).to receive(:expense).and_return(6.5) }
 
     its(:calculate) { should eq 3.5 }
   end
 
   describe '.calculate' do
-    after { described_class.calculate :params }
-
-    it do
+    before do
       #
-      # described_class.new(:params).calculate
+      # described_class.new(currency: 'uah').calculate -> 19
       #
-      expect(described_class).to receive(:new).with(:params) do
-        double.tap { |a| expect(a).to receive(:calculate) }
+      allow(described_class).to receive(:new).with(currency: 'uah') do
+        double.tap { |a| allow(a).to receive(:calculate).and_return(19) }
       end
     end
+
+    subject { described_class.calculate(currency: 'uah') }
+
+    it { should eq 19 }
   end
 end

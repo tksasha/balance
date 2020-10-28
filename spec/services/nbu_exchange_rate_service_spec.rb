@@ -32,17 +32,19 @@ RSpec.describe NbuExchangeRateService do
   describe '.rates' do
     let(:date) { Date.today }
 
-    after { described_class.rates date }
-
-    it do
+    before do
       #
-      # described_class.new(date).rates
+      # described_class.new(date).rates -> :rates
       #
-      expect(described_class).to receive(:new).with(date) do
+      allow(described_class).to receive(:new).with(date) do
         double.tap do |a|
-          expect(a).to receive(:rates)
+          allow(a).to receive(:rates).and_return(:rates)
         end
       end
     end
+
+    subject { described_class.rates date }
+
+    it { should eq :rates }
   end
 end

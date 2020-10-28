@@ -29,7 +29,7 @@ RSpec.describe UahExchangeRateService do
     end
 
     context do
-      before { expect(NbuExchangeRateService).to receive(:rates).with(date).and_return(:rates) }
+      before { allow(NbuExchangeRateService).to receive(:rates).with(date).and_return(:rates) }
 
       its(:rates) { should eq :rates }
     end
@@ -38,21 +38,21 @@ RSpec.describe UahExchangeRateService do
   describe '#create_usd' do
     let(:rates) { { usd: 23.47, rub: 0.389 } }
 
-    before { expect(subject).to receive(:rates).and_return(rates) }
+    before { allow(subject).to receive(:rates).and_return(rates) }
 
-    after { subject.send :create_usd }
+    before { expect(ExchangeRate).to receive(:create).with(from: :uah, to: :usd, date: date, rate: 23.47) }
 
-    it { expect(ExchangeRate).to receive(:create).with(from: :uah, to: :usd, date: date, rate: 23.47) }
+    it { expect { subject.send(:create_usd) }.not_to raise_error }
   end
 
   describe '#create_rub' do
     let(:rates) { { usd: 23.47, rub: 0.389 } }
 
-    before { expect(subject).to receive(:rates).and_return(rates) }
+    before { allow(subject).to receive(:rates).and_return(rates) }
 
-    after { subject.send :create_rub }
+    before { expect(ExchangeRate).to receive(:create).with(from: :uah, to: :rub, date: date, rate: 0.389) }
 
-    it { expect(ExchangeRate).to receive(:create).with(from: :uah, to: :rub, date: date, rate: 0.389) }
+    it { expect { subject.send(:create_rub) }.not_to raise_error }
   end
 
   describe '#save' do
@@ -64,9 +64,7 @@ RSpec.describe UahExchangeRateService do
   end
 
   describe '.create' do
-    after { described_class.create date }
-
-    it do
+    before do
       #
       # described_class.new(date).save
       #
@@ -76,5 +74,9 @@ RSpec.describe UahExchangeRateService do
         end
       end
     end
+
+    subject { described_class.create date }
+
+    it { expect { subject }.not_to raise_error }
   end
 end

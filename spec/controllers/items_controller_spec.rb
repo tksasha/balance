@@ -8,9 +8,9 @@ RSpec.describe ItemsController, type: :controller do
       #   .order(date: :desc)
       #   includes(:category) -> :relation
       #
-      expect(Item).to receive(:order).with(date: :desc) do
+      allow(Item).to receive(:order).with(date: :desc) do
         double.tap do |a|
-          expect(a).to receive(:includes).with(:category).and_return(:relation)
+          allow(a).to receive(:includes).with(:category).and_return(:relation)
         end
       end
     end
@@ -30,11 +30,11 @@ RSpec.describe ItemsController, type: :controller do
 
       let(:relation) { double }
 
-      before { expect(subject).to receive(:relation).and_return(relation) }
+      before { allow(subject).to receive(:relation).and_return(relation) }
 
-      before { expect(subject).to receive(:params).and_return(params) }
+      before { allow(subject).to receive(:params).and_return(params) }
 
-      before { expect(ItemSearcher).to receive(:search).with(relation, params).and_return(:collection) }
+      before { allow(ItemSearcher).to receive(:search).with(relation, params).and_return(:collection) }
 
       its(:collection) { should eq :collection }
     end
@@ -48,9 +48,9 @@ RSpec.describe ItemsController, type: :controller do
     end
 
     context do
-      before { expect(subject).to receive(:params).and_return(id: 26) }
+      before { allow(subject).to receive(:params).and_return(id: 26) }
 
-      before { expect(Item).to receive(:find).with(26).and_return(:resource) }
+      before { allow(Item).to receive(:find).with(26).and_return(:resource) }
 
       its(:resource) { should eq :resource }
     end
@@ -68,15 +68,15 @@ RSpec.describe ItemsController, type: :controller do
         }
     end
 
-    before { expect(subject).to receive(:params).and_return(params) }
+    before { allow(subject).to receive(:params).and_return(params) }
 
     its(:resource_params) { should eq params.require(:item).permit! }
   end
 
   describe '#build_resource' do
-    before { expect(subject).to receive(:resource_params).and_return(:resource_params) }
+    before { allow(subject).to receive(:resource_params).and_return(:resource_params) }
 
-    before { expect(Item).to receive(:new).with(:resource_params).and_return(:resource) }
+    before { allow(Item).to receive(:new).with(:resource_params).and_return(:resource) }
 
     before { subject.send :build_resource }
 

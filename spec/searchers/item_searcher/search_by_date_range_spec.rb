@@ -13,7 +13,7 @@ RSpec.describe ItemSearcher do
         Date.new(2019, 10, 1)..Date.new(2019, 10, 31)
       end
 
-      before { expect(relation).to receive(:where).with(date: date_range).and_return(:collection) }
+      before { allow(relation).to receive(:where).with(date: date_range).and_return(:collection) }
 
       subject { described_class.new relation }
 
@@ -25,7 +25,7 @@ RSpec.describe ItemSearcher do
         Date.new(2019, 10, 1)..Date.new(2019, 10, 31)
       end
 
-      before { expect(relation).to receive(:where).with(date: date_range).and_return(:collection) }
+      before { allow(relation).to receive(:where).with(date: date_range).and_return(:collection) }
 
       subject { described_class.new relation, year: 2019 }
 
@@ -37,7 +37,7 @@ RSpec.describe ItemSearcher do
         Date.new(2018, 10, 1)..Date.new(2018, 10, 31)
       end
 
-      before { expect(relation).to receive(:where).with(date: date_range).and_return(:collection) }
+      before { allow(relation).to receive(:where).with(date: date_range).and_return(:collection) }
 
       subject { described_class.new relation, year: 2018 }
 
@@ -49,7 +49,7 @@ RSpec.describe ItemSearcher do
         Date.new(2019, 9, 1)..Date.new(2019, 9, 30)
       end
 
-      before { expect(relation).to receive(:where).with(date: date_range).and_return(:collection) }
+      before { allow(relation).to receive(:where).with(date: date_range).and_return(:collection) }
 
       subject { described_class.new relation, year: 2019, month: 9 }
 
@@ -61,7 +61,7 @@ RSpec.describe ItemSearcher do
         Date.new(2018, 9, 1)..Date.new(2018, 9, 30)
       end
 
-      before { expect(relation).to receive(:where).with(date: date_range).and_return(:collection) }
+      before { allow(relation).to receive(:where).with(date: date_range).and_return(:collection) }
 
       subject { described_class.new relation, year: 2018, month: 9 }
 

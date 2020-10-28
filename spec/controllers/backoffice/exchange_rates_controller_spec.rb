@@ -11,15 +11,15 @@ RSpec.describe Backoffice::ExchangeRatesController, type: :controller do
     context do
       let(:params) { { page: 14 } }
 
-      before { expect(subject).to receive(:params).and_return(params) }
+      before { allow(subject).to receive(:params).and_return(params) }
 
       before do
         #
         # ExchangeRate.order(date: :desc).page(14) -> collection
         #
-        expect(ExchangeRate).to receive(:order).with(date: :desc) do
+        allow(ExchangeRate).to receive(:order).with(date: :desc) do
           double.tap do |a|
-            expect(a).to receive(:page).with(14).and_return(:collection)
+            allow(a).to receive(:page).with(14).and_return(:collection)
           end
         end
       end

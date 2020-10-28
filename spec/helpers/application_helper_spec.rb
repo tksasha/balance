@@ -12,11 +12,9 @@ RSpec.describe ApplicationHelper, type: :helper do
 
     before { allow(helper).to receive(:params).and_return(year: '2013', month: '06', day: '27') }
 
-    before { expect(DateFactory).to receive(:build).with(year: '2013', month: '06', day: '27').and_return(date) }
+    before { allow(DateFactory).to receive(:build).with(year: '2013', month: '06', day: '27').and_return(date) }
 
-    subject { helper.current_date }
-
-    it { should eq date }
+    its(:current_date) { should eq date }
   end
 
   describe '#money' do
@@ -26,7 +24,7 @@ RSpec.describe ApplicationHelper, type: :helper do
   end
 
   describe '#decorated' do
-    before { expect(helper).to receive_message_chain(:resource, :decorate).and_return(:decorated) }
+    before { allow(helper).to receive_message_chain(:resource, :decorate).and_return(:decorated) }
 
     subject { helper.decorated }
 
@@ -45,9 +43,9 @@ RSpec.describe ApplicationHelper, type: :helper do
     context do
       let(:params) { double }
 
-      before { expect(subject).to receive(:params).and_return(params) }
+      before { allow(subject).to receive(:params).and_return(params) }
 
-      before { expect(CategoryWidgetDataSearcher).to receive(:search).with(params).and_return(:category_widget_data) }
+      before { allow(CategoryWidgetDataSearcher).to receive(:search).with(params).and_return(:category_widget_data) }
 
       its(:category_widget_data) { should eq :category_widget_data }
     end
@@ -63,9 +61,9 @@ RSpec.describe ApplicationHelper, type: :helper do
     context do
       let(:params) { double }
 
-      before { expect(subject).to receive(:params).and_return(params) }
+      before { allow(subject).to receive(:params).and_return(params) }
 
-      before { expect(AtEndCalculatorService).to receive(:calculate).with(params).and_return(21.49) }
+      before { allow(AtEndCalculatorService).to receive(:calculate).with(params).and_return(21.49) }
 
       its(:at_end) { should eq 21.49 }
     end
@@ -81,9 +79,9 @@ RSpec.describe ApplicationHelper, type: :helper do
     context do
       let(:params) { double }
 
-      before { expect(subject).to receive(:params).and_return(params) }
+      before { allow(subject).to receive(:params).and_return(params) }
 
-      before { expect(BalanceCalculatorService).to receive(:calculate).with(params).and_return(22.15) }
+      before { allow(BalanceCalculatorService).to receive(:calculate).with(params).and_return(22.15) }
 
       its(:balance) { should eq 22.15 }
     end
@@ -93,15 +91,15 @@ RSpec.describe ApplicationHelper, type: :helper do
     context do
       let(:params) { { currency: 'usd', foo: 'foo' } }
 
-      before { expect(subject).to receive(:params).and_return(params) }
+      before { allow(subject).to receive(:params).and_return(params) }
 
-      before { expect(Item).to receive(:new).with(currency: 'usd').and_return(:item) }
+      before { allow(Item).to receive(:new).with(currency: 'usd').and_return(:item) }
 
       its(:new_item_for_inline_form) { should eq :item }
     end
 
     context do
-      before { expect(Item).to receive(:new).with(currency: 'uah').and_return(:item) }
+      before { allow(Item).to receive(:new).with(currency: 'uah').and_return(:item) }
 
       its(:new_item_for_inline_form) { should eq :item }
     end

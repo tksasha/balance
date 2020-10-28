@@ -8,15 +8,17 @@ RSpec.describe DateRange do
   its(:month) { should eq date.beginning_of_month..date.end_of_month }
 
   describe '.month' do
-    after { described_class.month date }
-
-    it do
+    before do
       #
-      # described_class.new(date).month
+      # described_class.new(date).month -> :month
       #
-      expect(described_class).to receive(:new).with(date) do
-        double.tap { |a| expect(a).to receive(:month) }
+      allow(described_class).to receive(:new).with(date) do
+        double.tap { |a| allow(a).to receive(:month).and_return(:month) }
       end
     end
+
+    subject { described_class.month date }
+
+    it { should eq :month }
   end
 end

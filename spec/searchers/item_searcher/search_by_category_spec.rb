@@ -21,9 +21,9 @@ RSpec.describe ItemSearcher do
         #   .joins(:category)
         #   .where(categories: { slug: 'drinks' }) -> :collection
         #
-        expect(relation).to receive(:joins).with(:category) do
+        allow(relation).to receive(:joins).with(:category) do
           double.tap do |a|
-            expect(a).to receive(:where).with(categories: { slug: 'drinks' }).and_return(:collection)
+            allow(a).to receive(:where).with(categories: { slug: 'drinks' }).and_return(:collection)
           end
         end
       end

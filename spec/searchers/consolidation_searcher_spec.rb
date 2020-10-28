@@ -27,11 +27,11 @@ RSpec.describe ConsolidationSearcher do
       #   select('SUM(sum) AS sum, category_id').
       #   group(:category_id) -> collection
       #
-      expect(relation).to receive(:where).with(date: date_range, currency: 'usd') do
+      allow(relation).to receive(:where).with(date: date_range, currency: 'usd') do
         double.tap do |a|
-          expect(a).to receive(:select).with('SUM(sum) AS sum, category_id') do
+          allow(a).to receive(:select).with('SUM(sum) AS sum, category_id') do
             double.tap do |b|
-              expect(b).to receive(:group).with(:category_id).and_return(collection)
+              allow(b).to receive(:group).with(:category_id).and_return(collection)
             end
           end
         end
@@ -42,9 +42,7 @@ RSpec.describe ConsolidationSearcher do
   end
 
   describe '.search' do
-    after { described_class.search :relation, date: :date }
-
-    it do
+    before do
       #
       # described_class.new(:relation, date: :date).search
       #
@@ -52,5 +50,9 @@ RSpec.describe ConsolidationSearcher do
         double.tap { |a| expect(a).to receive(:search) }
       end
     end
+
+    subject { described_class.search :relation, date: :date }
+
+    it { expect { subject }.not_to raise_error }
   end
 end

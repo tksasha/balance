@@ -13,16 +13,16 @@ RSpec.describe ConsolidationsController, type: :controller do
 
       let(:params) { double }
 
-      before { expect(subject).to receive(:params).twice.and_return(params) }
+      before { allow(subject).to receive(:params).and_return(params) }
 
-      before { expect(Consolidation).to receive(:includes).with(:category).and_return(relation) }
+      before { allow(Consolidation).to receive(:includes).with(:category).and_return(relation) }
 
       before do
         #
         # ConsolidationSearcher.search(relation, params).decorate(context: params) -> :collection
         #
-        expect(ConsolidationSearcher).to receive(:search).with(relation, params) do
-          double.tap { |a| expect(a).to receive(:decorate).with(context: params).and_return(:collection) }
+        allow(ConsolidationSearcher).to receive(:search).with(relation, params) do
+          double.tap { |a| allow(a).to receive(:decorate).with(context: params).and_return(:collection) }
         end
       end
 

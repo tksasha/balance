@@ -13,11 +13,11 @@ RSpec.describe CashesController, type: :controller do
 
       let(:params) { double }
 
-      before { expect(subject).to receive(:params).and_return(params) }
+      before { allow(subject).to receive(:params).and_return(params) }
 
-      before { expect(Cash).to receive(:order).with(:name).and_return(relation) }
+      before { allow(Cash).to receive(:order).with(:name).and_return(relation) }
 
-      before { expect(CashSearcher).to receive(:search).with(relation, params).and_return(:collection) }
+      before { allow(CashSearcher).to receive(:search).with(relation, params).and_return(:collection) }
 
       its(:collection) { should eq :collection }
     end
@@ -31,9 +31,9 @@ RSpec.describe CashesController, type: :controller do
     end
 
     context do
-      before { expect(subject).to receive(:params).and_return(id: 11) }
+      before { allow(subject).to receive(:params).and_return(id: 11) }
 
-      before { expect(Cash).to receive(:find).with(11).and_return(:resource) }
+      before { allow(Cash).to receive(:find).with(11).and_return(:resource) }
 
       its(:resource) { should eq :resource }
     end
@@ -42,9 +42,9 @@ RSpec.describe CashesController, type: :controller do
   describe '#initialize_resource' do
     let(:params) { { currency: 'usd', foo: 'foo' } }
 
-    before { expect(subject).to receive(:params).and_return(params) }
+    before { allow(subject).to receive(:params).and_return(params) }
 
-    before { expect(Cash).to receive(:new).with(currency: 'usd').and_return(:resource) }
+    before { allow(Cash).to receive(:new).with(currency: 'usd').and_return(:resource) }
 
     before { subject.send :initialize_resource }
 
@@ -61,15 +61,15 @@ RSpec.describe CashesController, type: :controller do
         }
     end
 
-    before { expect(subject).to receive(:params).and_return(params) }
+    before { allow(subject).to receive(:params).and_return(params) }
 
     its(:resource_params) { should eq params.require(:cash).permit! }
   end
 
   describe '#build_resource' do
-    before { expect(subject).to receive(:resource_params).and_return(:resource_params) }
+    before { allow(subject).to receive(:resource_params).and_return(:resource_params) }
 
-    before { expect(Cash).to receive(:new).with(:resource_params).and_return(:resource) }
+    before { allow(Cash).to receive(:new).with(:resource_params).and_return(:resource) }
 
     before { subject.send :build_resource }
 
@@ -78,27 +78,27 @@ RSpec.describe CashesController, type: :controller do
 
   describe '#set_variant' do
     context do
-      before { expect(subject).to receive(:params).and_return({}) }
+      before { allow(subject).to receive(:params).and_return({}) }
 
-      after { subject.send :set_variant }
+      before { expect(subject).not_to receive(:request) }
 
-      it { expect(subject).not_to receive(:request) }
+      its(:set_variant) { should be_nil }
     end
 
     context do
-      before { expect(subject).to receive(:params).and_return(report: '') }
+      before { allow(subject).to receive(:params).and_return(report: '') }
 
-      after { subject.send :set_variant }
+      before { expect(subject).not_to receive(:request) }
 
-      it { expect(subject).not_to receive(:request) }
+      its(:set_variant) { should be_nil }
     end
 
     context do
-      before { expect(subject).to receive(:params).and_return(report: '1') }
+      before { allow(subject).to receive(:params).and_return(report: '1') }
 
-      after { subject.send :set_variant }
+      before { expect(subject).to receive_message_chain('request.variant=').with(:report) }
 
-      it { expect(subject).to receive_message_chain('request.variant=').with(:report) }
+      it { expect { subject.send(:set_variant) }.not_to raise_error }
     end
   end
 end

@@ -35,13 +35,13 @@ RSpec.describe CategoryWidgetDataSearcher do
       #   .order(:income)
       #   .pluck(:name, :id, :income) -> categories
       #
-      expect(Category).to receive(:visible) do
+      allow(Category).to receive(:visible) do
         double.tap do |a|
-          expect(a).to receive(:where).with(currency: 'usd') do
+          allow(a).to receive(:where).with(currency: 'usd') do
             double.tap do |b|
-              expect(b).to receive(:order).with(:income) do
+              allow(b).to receive(:order).with(:income) do
                 double.tap do |c|
-                  expect(c).to receive(:pluck).with(:name, :id, :income).and_return(categories)
+                  allow(c).to receive(:pluck).with(:name, :id, :income).and_return(categories)
                 end
               end
             end
@@ -56,19 +56,19 @@ RSpec.describe CategoryWidgetDataSearcher do
   end
 
   describe '.search' do
-    let(:params) { double }
-
-    after { described_class.search params }
-
-    it do
+    before do
       #
-      # described_class.new(params).search
+      # described_class.new(currency: 'usd').search
       #
-      expect(described_class).to receive(:new).with(params) do
+      expect(described_class).to receive(:new).with(currency: 'usd') do
         double.tap do |a|
           expect(a).to receive(:search)
         end
       end
     end
+
+    subject { described_class.search currency: 'usd' }
+
+    it { expect { subject }.not_to raise_error }
   end
 end

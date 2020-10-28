@@ -42,17 +42,19 @@ RSpec.describe CurrencyService do
   end
 
   describe '.currency' do
-    after { described_class.currency 'usd' }
-
-    it do
+    before do
       #
-      # described_class.new('usd').currency
+      # described_class.new('usd').currency -> :currency
       #
-      expect(described_class).to receive(:new).with('usd') do
+      allow(described_class).to receive(:new).with('usd') do
         double.tap do |a|
-          expect(a).to receive(:currency)
+          allow(a).to receive(:currency).and_return(:currency)
         end
       end
     end
+
+    subject { described_class.currency('usd') }
+
+    it { should eq :currency }
   end
 end

@@ -6,7 +6,7 @@ RSpec.describe BalanceCalculatorService do
   subject { described_class.new params }
 
   describe '#at_end' do
-    before { expect(AtEndCalculatorService).to receive(:calculate).and_return(21.04) }
+    before { allow(AtEndCalculatorService).to receive(:calculate).and_return(21.04) }
 
     its(:at_end) { should eq 21.04 }
   end
@@ -17,8 +17,8 @@ RSpec.describe BalanceCalculatorService do
         #
         # Cash.where(currency: 'uah').sum(:sum) -> 21.09
         #
-        expect(Cash).to receive(:where).with(currency: 'uah') do
-          double.tap { |a| expect(a).to receive(:sum).with(:sum).and_return(21.09) }
+        allow(Cash).to receive(:where).with(currency: 'uah') do
+          double.tap { |a| allow(a).to receive(:sum).with(:sum).and_return(21.09) }
         end
       end
 
@@ -32,8 +32,8 @@ RSpec.describe BalanceCalculatorService do
         #
         # Cash.where(currency: 'usd').sum(:sum) -> 21.09
         #
-        expect(Cash).to receive(:where).with(currency: 'usd') do
-          double.tap { |a| expect(a).to receive(:sum).with(:sum).and_return(21.09) }
+        allow(Cash).to receive(:where).with(currency: 'usd') do
+          double.tap { |a| allow(a).to receive(:sum).with(:sum).and_return(21.09) }
         end
       end
 
@@ -42,25 +42,27 @@ RSpec.describe BalanceCalculatorService do
   end
 
   describe '#calculate' do
-    before { expect(subject).to receive(:sum).and_return(99.999) }
+    before { allow(subject).to receive(:sum).and_return(99.999) }
 
-    before { expect(subject).to receive(:at_end).and_return(55.555) }
+    before { allow(subject).to receive(:at_end).and_return(55.555) }
 
     its(:calculate) { should eq 44.44 }
   end
 
   describe '.calculate' do
-    after { described_class.calculate :params }
-
-    it do
+    before do
       #
-      # described_class.new(:params).calculate
+      # described_class.new(currency: 'usd').calculate -> 28
       #
-      expect(described_class).to receive(:new).with(:params) do
+      allow(described_class).to receive(:new).with(currency: 'usd') do
         double.tap do |a|
-          expect(a).to receive(:calculate)
+          allow(a).to receive(:calculate).and_return(28)
         end
       end
     end
+
+    subject { described_class.calculate(currency: 'usd') }
+
+    it { should eq 28 }
   end
 end

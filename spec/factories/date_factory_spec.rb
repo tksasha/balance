@@ -2,7 +2,9 @@
 
 RSpec.describe DateFactory do
   describe '#build' do
-    before { allow(Date).to receive(:today) { Date.new(2013, 3, 31) } }
+    before { travel_to Date.new(2013, 3, 31) }
+
+    after { travel_back }
 
     its(:build) { should eq Date.new 2013, 3, 1 }
 
@@ -38,15 +40,17 @@ RSpec.describe DateFactory do
   end
 
   describe '.build' do
-    after { described_class.build(:params) }
+    subject { described_class.build(day: 17) }
 
-    it do
+    before do
       #
-      # described_class.new(:params).build
+      # described_class.new(day: 17).build
       #
-      expect(described_class).to receive(:new).with(:params) do
+      expect(described_class).to receive(:new).with(day: 17) do
         double.tap { |a| expect(a).to receive(:build) }
       end
     end
+
+    it { expect { subject }.not_to raise_error }
   end
 end
