@@ -153,6 +153,7 @@ GEM
       activerecord (>= 4.0, < 6.1)
     parser (2.7.2.0)
       ast (~> 2.4.1)
+    pg (1.2.3)
     popper_js (1.16.0)
     puma (5.0.4)
       nio4r (~> 2.0)
@@ -267,7 +268,6 @@ GEM
       actionpack (>= 4.0)
       activesupport (>= 4.0)
       sprockets (>= 3.0.0)
-    sqlite3 (1.4.2)
     thor (1.0.1)
     thread_safe (0.3.6)
     tilt (2.0.10)
@@ -303,6 +303,7 @@ DEPENDENCIES
   listen
   paper_trail
   paranoia
+  pg
   puma
   rails
   rails-controller-testing
@@ -317,7 +318,6 @@ DEPENDENCIES
   shoulda-callback-matchers
   shoulda-matchers
   simple_form
-  sqlite3
   uglifier
 
 RUBY VERSION

@@ -11,12 +11,12 @@ gem 'jquery-rails'
 gem 'kaminari'
 gem 'paper_trail'
 gem 'paranoia'
+gem 'pg'
 gem 'puma'
 gem 'rails'
 gem 'rake'
 gem 'sassc-rails'
 gem 'simple_form'
-gem 'sqlite3'
 gem 'uglifier'
 
 group :development do
