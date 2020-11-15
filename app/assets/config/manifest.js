@@ -1,4 +1,4 @@
 //= link application.css
-//= link dollar.png
+//= link hryvnia.png
 //= link ajax-loader.gif
 //= link application.js
