@@ -16,6 +16,7 @@ gem 'puma'
 gem 'rails'
 gem 'rake'
 gem 'sassc-rails'
+gem 'scenic'
 gem 'simple_form'
 gem 'uglifier'
 
