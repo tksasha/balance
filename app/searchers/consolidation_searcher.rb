@@ -17,7 +17,7 @@ class ConsolidationSearcher
       .select('SUM(sum) AS sum, category_id')
       .group(:category_id)
       .tap do |items|
-        ConsolidationExpensesSum.sum = items.select { |item| item.income? == false }.map(&:sum).sum
+        ConsolidationExpensesSum.sum = items.select { |item| item.income? == false }.sum(&:sum)
       end
   end
 
