@@ -8,7 +8,7 @@ class CurrencyService
   end
 
   def currency
-    return DEFAULT unless @currency.present?
+    return DEFAULT if @currency.blank?
 
     currency = @currency.downcase
 

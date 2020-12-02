@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-class Category < ActiveRecord::Base
+class Category < ApplicationRecord
   validates :name, presence: true, uniqueness: { case_sensitive: false, scope: :currency }
 
   validates :currency, presence: true

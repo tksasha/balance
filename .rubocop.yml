@@ -1,5 +1,6 @@
 require:
   - rubocop-performance
+  - rubocop-rails
   - rubocop-rspec
 
 AllCops:
@@ -9,6 +10,7 @@ AllCops:
     - db/migrate/*.rb
     - bin/*
   NewCops: enable
+  SuggestExtensions: false
 
 Style/Documentation:
   Enabled: false
@@ -83,4 +85,10 @@ Style/TrailingCommaInArrayLiteral:
   Enabled: false
 
 RSpec/RepeatedDescription:
+  Enabled: false
+
+Rails/FilePath:
+  EnforcedStyle: arguments
+
+Rails/LexicallyScopedActionFilter:
   Enabled: false

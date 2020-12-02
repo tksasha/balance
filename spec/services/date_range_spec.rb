@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 RSpec.describe DateRange do
-  let(:date) { Date.today }
+  let(:date) { Time.zone.today }
 
   subject { described_class.new date }
 

@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-class Cash < ActiveRecord::Base
+class Cash < ApplicationRecord
   include ActsAsHasFormula
 
   validates :name, :formula, :currency, presence: true

@@ -22,7 +22,7 @@ RSpec.describe NbuExchangeRateService do
   end
 
   describe '#rates' do
-    let(:data) { File.open Rails.root.join('spec/support/nbu.html') }
+    let(:data) { File.open Rails.root.join('spec', 'support', 'nbu.html') }
 
     before { expect(URI).to receive_message_chain(:parse, :open).with(url).with(no_args).and_return(data) }
 
@@ -30,7 +30,7 @@ RSpec.describe NbuExchangeRateService do
   end
 
   describe '.rates' do
-    let(:date) { Date.today }
+    let(:date) { Time.zone.today }
 
     before do
       #

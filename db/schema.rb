@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_07_26_101849) do
+ActiveRecord::Schema.define(version: 2020_12_02_075752) do
 
   create_table "cashes", force: :cascade do |t|
     t.decimal "sum", precision: 10, scale: 2
@@ -18,6 +18,7 @@ ActiveRecord::Schema.define(version: 2020_07_26_101849) do
     t.time "deleted_at"
     t.string "formula"
     t.integer "currency", default: 0
+    t.index ["name", "currency"], name: "index_cashes_on_name_and_currency", unique: true
   end
 
   create_table "categories", force: :cascade do |t|
@@ -26,6 +27,7 @@ ActiveRecord::Schema.define(version: 2020_07_26_101849) do
     t.string "slug"
     t.boolean "visible", default: true
     t.integer "currency", default: 0
+    t.index ["name", "currency"], name: "index_categories_on_name_and_currency", unique: true
   end
 
   create_table "exchange_rates", force: :cascade do |t|
@@ -35,6 +37,7 @@ ActiveRecord::Schema.define(version: 2020_07_26_101849) do
     t.date "date"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.index ["date", "from", "to"], name: "index_exchange_rates_on_date_and_from_and_to", unique: true
   end
 
   create_table "items", force: :cascade do |t|

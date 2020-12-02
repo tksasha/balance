@@ -8,7 +8,7 @@ class TransliterateService
   end
 
   def transliterate
-    return unless word.present?
+    return if word.blank?
 
     super word, ''
   end
@@ -16,7 +16,7 @@ class TransliterateService
   private
 
   def word
-    return unless @word.present?
+    return if @word.blank?
 
     @word
       .gsub(/Зг/, 'Zgh')

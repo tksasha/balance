@@ -8,7 +8,7 @@ class ItemSearcher < ApplicationSearcher
   end
 
   def search_by_category(slug)
-    return unless slug.present?
+    return if slug.blank?
 
     results.joins(:category).where(categories: { slug: slug })
   end

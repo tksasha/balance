@@ -4,7 +4,7 @@ ConsolidationExpensesSum = Struct.new(:name, :slug, :year, :month) do
   delegate :sum, to: :class
 
   def name
-    I18n.translate 'consolidation.sum'
+    I18n.t('consolidation.sum')
   end
 
   def income?

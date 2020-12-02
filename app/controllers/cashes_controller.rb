@@ -3,16 +3,14 @@
 class CashesController < ApplicationController
   before_action :set_variant, only: %i[index update]
 
+  delegate :destroy, to: :resource
+
   def create
-    render :new, status: 422 unless resource.save
+    render :new, status: :unprocessable_entity unless resource.save
   end
 
   def update
-    render :edit, status: 422 unless resource.update resource_params
-  end
-
-  def destroy
-    resource.destroy
+    render :edit, status: :unprocessable_entity unless resource.update resource_params
   end
 
   private

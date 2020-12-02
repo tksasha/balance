@@ -5,7 +5,7 @@ require File.expand_path('../config/environment', __dir__)
 require 'rspec/rails'
 require 'paper_trail/frameworks/rspec'
 
-Dir[Rails.root.join('spec/support/**/*.rb')].sort.each { |f| require f }
+Dir[Rails.root.join('spec', 'support', '**', '*.rb')].sort.each { |f| require f }
 
 RSpec.configure do |config|
   config.mock_with :rspec

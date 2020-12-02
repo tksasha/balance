@@ -10,19 +10,19 @@ class DateFactory
   end
 
   def build
-    Date.today.change(year: year, month: month, day: day)
+    Time.zone.today.change(year: year, month: month, day: day)
   rescue ArgumentError
-    Date.today
+    Time.zone.today
   end
 
   private
 
   def year
-    @year.positive? ? @year : Date.today.year
+    @year.positive? ? @year : Time.zone.today.year
   end
 
   def month
-    @month.positive? ? @month : Date.today.month
+    @month.positive? ? @month : Time.zone.today.month
   end
 
   def day

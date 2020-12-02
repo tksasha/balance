@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 RSpec.describe UahExchangeRateService do
-  let(:date) { Date.new 2019, 12, 31 }
+  let(:date) { Date.new(2019, 12, 31) }
 
   subject { described_class.new date }
 
@@ -9,7 +9,7 @@ RSpec.describe UahExchangeRateService do
     its(:date) { should eq date }
 
     context do
-      let(:date) { Date.new 2019, 12, 1 }
+      let(:date) { Date.new(2019, 12, 1) }
 
       before { travel_to date }
 
