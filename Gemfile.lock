@@ -62,7 +62,7 @@ GEM
       zeitwerk (~> 2.2, >= 2.2.2)
     amazing_print (1.2.2)
     ast (2.4.1)
-    autoprefixer-rails (10.0.3.0)
+    autoprefixer-rails (10.1.0.0)
       execjs
     bootsnap (1.5.1)
       msgpack (~> 1.0)
@@ -224,7 +224,7 @@ GEM
       rspec-mocks (~> 3.9)
       rspec-support (~> 3.9)
     rspec-support (3.10.0)
-    rubocop (1.5.2)
+    rubocop (1.6.1)
       parallel (~> 1.10)
       parser (>= 2.7.1.5)
       rainbow (>= 2.2.2, < 4.0)
@@ -308,7 +308,7 @@ DEPENDENCIES
   paper_trail
   paranoia
   puma
-  rails
+  rails (~> 6.0.3)
   rails-controller-testing
   rake
   rspec-activemodel-mocks
