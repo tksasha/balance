@@ -1,7 +1,9 @@
 # frozen_string_literal: true
 
 RSpec.describe Item, type: :model do
-  it { should be_a ActsAsHasFormula }
+  it { should be_an ActsAsHasFormula }
+
+  it { should be_an ActsAsParanoid }
 
   it { should validate_presence_of :date }
 
@@ -12,8 +14,6 @@ RSpec.describe Item, type: :model do
   it { should validate_presence_of :currency }
 
   it { should belong_to :category }
-
-  it { should act_as_paranoid }
 
   it { should define_enum_for(:currency).with_values(%w[uah usd rub]) }
 

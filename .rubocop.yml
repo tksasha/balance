@@ -92,3 +92,6 @@ Rails/FilePath:
 
 Rails/LexicallyScopedActionFilter:
   Enabled: false
+
+Rails/SkipsModelValidations:
+  AllowedMethods: [touch]

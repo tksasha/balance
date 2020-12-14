@@ -3,6 +3,8 @@
 class Item < ApplicationRecord
   include ActsAsHasFormula
 
+  include ActsAsParanoid
+
   belongs_to :category
 
   validates :date, :category_id, :formula, :currency, presence: true
@@ -10,8 +12,6 @@ class Item < ApplicationRecord
   scope :income, -> { joins(:category).merge(Category.income) }
 
   scope :expense, -> { joins(:category).merge(Category.expense) }
-
-  acts_as_paranoid
 
   enum currency: CURRENCIES
 end
