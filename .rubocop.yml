@@ -95,3 +95,6 @@ Rails/LexicallyScopedActionFilter:
 
 Rails/SkipsModelValidations:
   AllowedMethods: [touch]
+
+RSpec/FilePath:
+  SpecSuffixOnly: true
