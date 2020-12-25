@@ -2,7 +2,7 @@
 
 source 'https://rubygems.org'
 
-ruby '~> 2.7'
+ruby '~> 3.0'
 
 gem 'bootsnap', require: false
 gem 'bootstrap'
@@ -34,7 +34,7 @@ group :development do
 end
 
 group :development, :test do
-  gem 'rspec-rails', '~> 4.0.0.beta2'
+  gem 'rspec-rails'
 end
 
 group :test do
