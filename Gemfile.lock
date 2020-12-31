@@ -247,7 +247,7 @@ GEM
     rubocop-rspec (2.1.0)
       rubocop (~> 1.0)
       rubocop-ast (>= 1.1.0)
-    ruby-progressbar (1.10.1)
+    ruby-progressbar (1.11.0)
     ruby_parser (3.15.0)
       sexp_processor (~> 4.9)
     sassc (2.4.0)
