@@ -3,8 +3,6 @@
 RSpec.describe Cash, type: :model do
   it { should be_an ActsAsHasFormula }
 
-  it { should be_an ActsAsParanoid }
-
   it { should validate_presence_of :name }
 
   it { should validate_uniqueness_of(:name).case_insensitive.scoped_to(:currency) }
