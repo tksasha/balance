@@ -10,7 +10,7 @@
   </td>
 
   <td class="text-right">
-    <%= link_to 'Видалити', cash,
+    <%= link_to 'Видалити', [:backoffice, cash],
       data: { remote: true, method: :delete, confirm: t(:destroy_confirmation) }, class: 'text-danger' %>
   </td>
 </tr>
