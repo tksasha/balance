@@ -1,15 +1,33 @@
-<div class="clearfix">
-  <div class="float-left">
-    <%= breadcrumbs do %>
-      <span class="breadcrumb-item active">Залишки</span>
-    <% end %>
-  </div>
+<div class="card cashes">
+  <div class="card-body">
+    <table class="table table-borderless">
+      <tbody>
+        <% collection.each do |cash| %>
+          <tr>
+            <td><%= cash.name %></td>
 
-  <div class="float-right">
-    <%= link_to 'Додати', [:new, :cash], data: { remote: true }, class: 'btn btn-sm btn-success' %>
+            <td class="text-right">
+              <%= link_to money(cash.sum), [:edit, cash, { report: true }], data: { remote: true } %>
+            </td>
+          </tr>
+        <% end %>
+
+        <tr>
+          <td>Залишок на кінець</td>
+
+          <td id="at_end" class="text-right">
+            <%= money at_end %>
+          </td>
+        </tr>
+
+        <tr>
+          <td>Баланс</td>
+
+          <td id="balance" class="text-right">
+            <%= money balance %>
+          </td>
+        </tr>
+      </tbody>
+    </table>
   </div>
 </div>
-
-<table class="table table-borderless table-hover">
-  <%= render collection %>
-</table>

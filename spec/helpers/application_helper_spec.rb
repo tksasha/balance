@@ -3,7 +3,7 @@
 RSpec.describe ApplicationHelper, type: :helper do
   subject { helper }
 
-  its :months do
+  its(:months) do
     should eq %w[Січень Лютий Березень Квітень Травень Червень Липень Серпень Вересень Жовтень Листопад Грудень]
   end
 
@@ -87,11 +87,15 @@ RSpec.describe ApplicationHelper, type: :helper do
     end
   end
 
+  describe '#currency_from_params' do
+    let(:params) { { currency: 'uah' } }
+
+    its(:currency_from_params) { should eq 'uah' }
+  end
+
   describe '#new_item_for_inline_form' do
     context do
-      let(:params) { { currency: 'usd', foo: 'foo' } }
-
-      before { allow(subject).to receive(:params).and_return(params) }
+      before { allow(subject).to receive(:currency_from_params).and_return('usd') }
 
       before { allow(Item).to receive(:new).with(currency: 'usd').and_return(:item) }
 
@@ -99,6 +103,8 @@ RSpec.describe ApplicationHelper, type: :helper do
     end
 
     context do
+      before { allow(subject).to receive(:currency_from_params).and_return('uah') }
+
       before { allow(Item).to receive(:new).with(currency: 'uah').and_return(:item) }
 
       its(:new_item_for_inline_form) { should eq :item }

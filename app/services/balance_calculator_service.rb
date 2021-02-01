@@ -1,8 +1,10 @@
 # frozen_string_literal: true
 
 class BalanceCalculatorService
+  attr_reader :currency
+
   def initialize(params)
-    @currency = CurrencyService.currency params[:currency]
+    self.currency = params[:currency]
   end
 
   def calculate
@@ -11,12 +13,16 @@ class BalanceCalculatorService
 
   private
 
+  def currency=(object)
+    @currency = CurrencyService.call(object)
+  end
+
   def at_end
     AtEndCalculatorService.calculate currency: @currency
   end
 
   def sum
-    Cash.where(currency: @currency).sum :sum
+    Cash.where(currency: @currency).sum(:sum)
   end
 
   class << self

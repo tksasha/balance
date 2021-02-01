@@ -1,8 +1,13 @@
-<%= breadcrumbs %>
+<div class="clearfix">
+  <div class="float-left">
+    <%= breadcrumbs %>
+  </div>
+</div>
 
-<%= link_to 'Залишки', :cashes, data: { remote: true }, class: 'btn btn-primary backoffice-menu-button' %>
+<%= link_to 'Залишки', [:backoffice, :cashes],
+  data: { remote: true }, class: 'btn btn-primary backoffice-menu-button' %>
 
 <%= link_to 'Категорії', :categories, data: { remote: true }, class: 'btn btn-primary backoffice-menu-button' %>
 
-<%= link_to 'Курси валют',
-  [:backoffice, :exchange_rates], data: { remote: true }, class: 'btn btn-primary backoffice-menu-button' %>
+<%= link_to 'Курси валют', [:backoffice, :exchange_rates],
+  data: { remote: true }, class: 'btn btn-primary backoffice-menu-button' %>

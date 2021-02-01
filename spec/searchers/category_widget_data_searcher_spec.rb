@@ -1,6 +1,12 @@
 # frozen_string_literal: true
 
 RSpec.describe CategoryWidgetDataSearcher do
+  let(:params) { { currency: 'usd' } }
+
+  subject { described_class.new params }
+
+  its(:currency) { should eq 'usd' }
+
   describe '#search' do
     let :categories do
       [
@@ -50,7 +56,7 @@ RSpec.describe CategoryWidgetDataSearcher do
       end
     end
 
-    subject { described_class.search currency: 'usd' }
+    subject { described_class.search params }
 
     it { should eq collection }
   end

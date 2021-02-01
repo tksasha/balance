@@ -1,9 +1,11 @@
 # frozen_string_literal: true
 
 RSpec.describe AtEndCalculatorService do
-  let(:params) { {} }
+  let(:params) { { currency: 'usd' } }
 
   subject { described_class.new params }
+
+  its(:currency) { should eq 'usd' }
 
   describe '#search_by_currency' do
     context do

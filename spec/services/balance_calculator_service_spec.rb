@@ -1,9 +1,11 @@
 # frozen_string_literal: true
 
 RSpec.describe BalanceCalculatorService do
-  let(:params) { {} }
+  let(:params) { { currency: 'uah' } }
 
   subject { described_class.new params }
+
+  its(:currency) { should eq 'uah' }
 
   describe '#at_end' do
     before { allow(AtEndCalculatorService).to receive(:calculate).and_return(21.04) }
@@ -18,7 +20,9 @@ RSpec.describe BalanceCalculatorService do
         # Cash.where(currency: 'uah').sum(:sum) -> 21.09
         #
         allow(Cash).to receive(:where).with(currency: 'uah') do
-          double.tap { |a| allow(a).to receive(:sum).with(:sum).and_return(21.09) }
+          double.tap do |a|
+            allow(a).to receive(:sum).with(:sum).and_return(21.09)
+          end
         end
       end
 
@@ -30,14 +34,16 @@ RSpec.describe BalanceCalculatorService do
 
       before do
         #
-        # Cash.where(currency: 'usd').sum(:sum) -> 21.09
+        # Cash.where(currency: 'usd').sum(:sum) -> 42.69
         #
         allow(Cash).to receive(:where).with(currency: 'usd') do
-          double.tap { |a| allow(a).to receive(:sum).with(:sum).and_return(21.09) }
+          double.tap do |a|
+            allow(a).to receive(:sum).with(:sum).and_return(42.69)
+          end
         end
       end
 
-      its(:sum) { should eq 21.09 }
+      its(:sum) { should eq 42.69 }
     end
   end
 

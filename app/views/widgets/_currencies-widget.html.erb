@@ -1,12 +1,12 @@
 <button type="button" id="currencies-widget">
-  <%= CurrencyService.currency(params[:currency]) %>
+  <%= currency_from_params %>
 </button>
 
 <div id="currencies-widget-content">
   <div class="container">
     <div class="row">
       <% CURRENCIES.map do |currency| %>
-        <% next if currency == CurrencyService.currency(params[:currency]) %>
+        <% next if currency == currency_from_params %>
 
         <div class="col-sm">
           <div class="text-center text-uppercase">

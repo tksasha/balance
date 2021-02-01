@@ -2,7 +2,6 @@
 
 class Cash < ApplicationRecord
   include ActsAsHasFormula
-
   include ActsAsParanoid
 
   validates :name, :formula, :currency, presence: true

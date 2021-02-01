@@ -1,0 +1,15 @@
+<div class="clearfix">
+  <div class="float-left">
+    <%= breadcrumbs do %>
+      <span class="breadcrumb-item active">Залишки</span>
+    <% end %>
+  </div>
+
+  <div class="float-right">
+    <%= link_to 'Додати', [:new, :backoffice, :cash], data: { remote: true }, class: 'btn btn-sm btn-success' %>
+  </div>
+</div>
+
+<table class="table table-borderless table-hover">
+  <%= render collection %>
+</table>

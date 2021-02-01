@@ -4,6 +4,7 @@ ua:
       cash:
         formula: 'Сума'
         name: 'Назва'
+        visible: 'Відображається'
       item:
         date: 'Дата'
         formula: 'Сума'

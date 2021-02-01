@@ -18,13 +18,13 @@ module ApplicationHelper
   end
 
   def breadcrumbs
-    tag :div, class: :breadcrumb do
+    tag.div(class: :breadcrumb) do
       if block_given?
         concat link_to('Backoffice', :backoffice, class: 'breadcrumb-item', data: { remote: true })
 
         yield
       else
-        concat tag(:span, 'Backoffice', class: 'breadcrumb-item active')
+        concat tag.span('Backoffice', class: 'breadcrumb-item active')
       end
     end
   end
@@ -41,7 +41,11 @@ module ApplicationHelper
     @balance ||= BalanceCalculatorService.calculate params
   end
 
+  def currency_from_params
+    CurrencyService.call(params[:currency])
+  end
+
   def new_item_for_inline_form
-    Item.new currency: CurrencyService.currency(params[:currency])
+    Item.new(currency: currency_from_params)
   end
 end

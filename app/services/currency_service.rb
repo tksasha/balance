@@ -7,6 +7,12 @@ class CurrencyService
     @currency = currency
   end
 
+  def call
+    currency
+  end
+
+  private
+
   def currency
     return DEFAULT if @currency.blank?
 
@@ -18,8 +24,8 @@ class CurrencyService
   end
 
   class << self
-    def currency(*args)
-      new(*args).currency
+    def call(*args)
+      new(*args).call
     end
   end
 end

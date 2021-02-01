@@ -1,0 +1,16 @@
+<tr id="<%= dom_id cash %>">
+  <td><%= cash.name %></td>
+
+  <td class="text-right">
+    <%= money cash.sum %>
+  </td>
+
+  <td class="text-right">
+    <%= link_to 'Редагувати', [:edit, :backoffice, cash], data: { remote: true } %>
+  </td>
+
+  <td class="text-right">
+    <%= link_to 'Видалити', cash,
+      data: { remote: true, method: :delete, confirm: t(:destroy_confirmation) }, class: 'text-danger' %>
+  </td>
+</tr>

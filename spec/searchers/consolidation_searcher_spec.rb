@@ -7,6 +7,20 @@ RSpec.describe ConsolidationSearcher do
 
   subject { described_class.new relation, params }
 
+  its(:currency) { should eq 'usd' }
+
+  its(:date) { should eq Date.new(2019, 11, 1) }
+
+  describe '#date_range' do
+    its(:date_range) { should eq Date.new(2019, 11, 1)..Date.new(2019, 11, 30) }
+
+    context do
+      before { subject.instance_variable_set :@date_range, :date_range }
+
+      its(:date_range) { should eq :date_range }
+    end
+  end
+
   describe '#search' do
     let(:date_range) { Date.new(2019, 11, 1)..Date.new(2019, 11, 30) }
 

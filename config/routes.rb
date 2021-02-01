@@ -3,7 +3,9 @@
 Rails.application.routes.draw do
   resources :items, only: %i[index create edit update destroy]
 
-  resources :cashes, :categories
+  resources :cashes, only: %i[index edit update]
+
+  resources :categories
 
   resource :backoffice, only: :show, controller: :backoffice
 
@@ -11,6 +13,8 @@ Rails.application.routes.draw do
 
   namespace :backoffice do
     resources :exchange_rates, only: :index
+
+    resources :cashes, except: :show
   end
 
   root to: 'items#index'
