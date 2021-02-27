@@ -1,10 +1,6 @@
 # frozen_string_literal: true
 
 module ApplicationHelper
-  def current_date
-    @current_date ||= DateFactory.build params
-  end
-
   def months
     %w[Січень Лютий Березень Квітень Травень Червень Липень Серпень Вересень Жовтень Листопад Грудень]
   end
@@ -47,5 +43,19 @@ module ApplicationHelper
 
   def new_item_for_inline_form
     Item.new(currency: currency_from_params)
+  end
+
+  def current_year
+    month.year
+  end
+
+  def current_month
+    month.month
+  end
+
+  private
+
+  def month
+    @month ||= (params[:month].present? ? Month.parse(params[:month]) : Month.today)
   end
 end

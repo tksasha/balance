@@ -1,17 +1,17 @@
 <header>
   <div>
-    <% months.each_with_index do |month, index| %>
-      <% index += 1 %>
+    <% months.each_with_index do |month_name, month_number| %>
+      <% month_number += 1 %>
 
-      <%= link_to month, items_path(year: current_date.year, month: index),
-        class: "#{ 'active' if index == current_date.month }", remote: true %>
+      <%= link_to month_name, items_path(month: Month.new(current_year, month_number)),
+        class: "#{ 'active' if month_number == current_month }", remote: true %>
     <% end %>
   </div>
 
   <div>
     <% (2015..Date.today.year).each do |year| %>
-      <%= link_to year, items_path(year: year, month: current_date.month),
-        class: "#{ 'active' if year == current_date.year }", remote: true %>
+      <%= link_to year, items_path(month: Month.new(year, current_month)),
+        class: "#{ 'active' if year == current_year }", remote: true %>
     <% end %>
   </div>
 </header>
