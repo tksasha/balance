@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-RSpec.describe AtEndCalculatorService do
+RSpec.describe CalculateAtEndService do
   let(:params) { { currency: 'usd' } }
 
   subject { described_class.new params }

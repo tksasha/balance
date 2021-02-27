@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-class AtEndCalculatorService
+class CalculateAtEndService
   attr_reader :currency
 
   def initialize(params)

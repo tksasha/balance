@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-class BalanceCalculatorService
+class CalculateBalanceService
   attr_reader :currency
 
   def initialize(params)
@@ -18,7 +18,7 @@ class BalanceCalculatorService
   end
 
   def at_end
-    AtEndCalculatorService.calculate currency: @currency
+    CalculateAtEndService.calculate currency: @currency
   end
 
   def sum

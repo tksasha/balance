@@ -30,11 +30,11 @@ module ApplicationHelper
   end
 
   def at_end
-    @at_end ||= AtEndCalculatorService.calculate params
+    @at_end ||= CalculateAtEndService.calculate params
   end
 
   def balance
-    @balance ||= BalanceCalculatorService.calculate params
+    @balance ||= CalculateBalanceService.calculate params
   end
 
   def currency_from_params

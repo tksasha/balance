@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-RSpec.describe BalanceCalculatorService do
+RSpec.describe CalculateBalanceService do
   let(:params) { { currency: 'uah' } }
 
   subject { described_class.new params }
@@ -8,7 +8,7 @@ RSpec.describe BalanceCalculatorService do
   its(:currency) { should eq 'uah' }
 
   describe '#at_end' do
-    before { allow(AtEndCalculatorService).to receive(:calculate).and_return(21.04) }
+    before { allow(CalculateAtEndService).to receive(:calculate).and_return(21.04) }
 
     its(:at_end) { should eq 21.04 }
   end

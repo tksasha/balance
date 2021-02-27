@@ -15,7 +15,7 @@ RSpec.describe ApplicationHelper, type: :helper do
 
       before { allow(subject).to receive(:params).and_return(params) }
 
-      before { allow(AtEndCalculatorService).to receive(:calculate).with(params).and_return(21.49) }
+      before { allow(CalculateAtEndService).to receive(:calculate).with(params).and_return(21.49) }
 
       its(:at_end) { should eq 21.49 }
     end

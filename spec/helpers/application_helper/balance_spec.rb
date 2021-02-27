@@ -15,7 +15,7 @@ RSpec.describe ApplicationHelper, type: :helper do
 
       before { allow(subject).to receive(:params).and_return(params) }
 
-      before { allow(BalanceCalculatorService).to receive(:calculate).with(params).and_return(22.15) }
+      before { allow(CalculateBalanceService).to receive(:calculate).with(params).and_return(22.15) }
 
       its(:balance) { should eq 22.15 }
     end
