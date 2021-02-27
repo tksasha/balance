@@ -3,27 +3,17 @@
 class ItemSearcher < ApplicationSearcher
   include ActsAsSearchByCurrency
 
-  def search_by_date_range(date_range)
-    results.where date: date_range
+  def search_by_month(month)
+    dates = Month.parse(month).dates
+
+    results.where date: dates
+  rescue ArgumentError
+    nil
   end
 
   def search_by_category(slug)
     return if slug.blank?
 
     results.joins(:category).where(categories: { slug: slug })
-  end
-
-  private
-
-  def date
-    @date ||= DateFactory.build @params
-  end
-
-  def date_range
-    @date_range ||= DateRange.month date
-  end
-
-  def params
-    @params.tap { |params| params[:date_range] = date_range }
   end
 end
