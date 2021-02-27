@@ -14,7 +14,7 @@ class BalanceCalculatorService
   private
 
   def currency=(object)
-    @currency = CurrencyService.call(object)
+    @currency = ParseCurrencyService.call(object)
   end
 
   def at_end

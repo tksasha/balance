@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-RSpec.describe CurrencyService do
+RSpec.describe ParseCurrencyService do
   subject { described_class.new currency }
 
   describe '#currency' do

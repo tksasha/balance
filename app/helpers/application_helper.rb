@@ -38,7 +38,7 @@ module ApplicationHelper
   end
 
   def currency_from_params
-    CurrencyService.call(params[:currency])
+    ParseCurrencyService.call(params[:currency])
   end
 
   def new_item_for_inline_form

@@ -24,7 +24,7 @@ class CategoryWidgetDataSearcher
   private
 
   def currency=(object)
-    @currency = CurrencyService.call(object)
+    @currency = ParseCurrencyService.call(object)
   end
 
   class << self

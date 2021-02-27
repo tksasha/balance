@@ -14,7 +14,7 @@ class AtEndCalculatorService
   private
 
   def currency=(object)
-    @currency = CurrencyService.call(object)
+    @currency = ParseCurrencyService.call(object)
   end
 
   def search_by_currency

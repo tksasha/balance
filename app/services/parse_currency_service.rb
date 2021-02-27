@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-class CurrencyService
+class ParseCurrencyService
   DEFAULT = CURRENCIES.first
 
   def initialize(currency)
