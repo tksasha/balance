@@ -8,6 +8,6 @@ class ConsolidationDecorator < Draper::Decorator
   private
 
   def date
-    @date ||= DateFactory.build(context)
+    @date ||= ParseMonthService.call(context)
   end
 end

@@ -12,34 +12,8 @@ RSpec.describe ConsolidationDecorator do
   it { should delegate_method(:month).to(:date) }
 
   describe '#date' do
-    before { travel_to Date.new(2019, 11, 5) }
+    let(:params) { { month: '2021-03' } }
 
-    after { travel_back }
-
-    its(:date) { should eq Date.new(2019, 11, 1) }
-
-    context do
-      let(:params) { { year: 2018 } }
-
-      its(:date) { should eq Date.new(2018, 11, 1) }
-    end
-
-    context do
-      let(:params) { { month: 10 } }
-
-      its(:date) { should eq Date.new(2019, 10, 1) }
-    end
-
-    context do
-      let(:params) { { year: 2018, month: 10 } }
-
-      its(:date) { should eq Date.new(2018, 10, 1) }
-    end
-
-    context do
-      before { subject.instance_variable_set :@date, Date.new(2019, 1, 1) }
-
-      its(:date) { should eq Date.new(2019, 1, 1) }
-    end
+    its(:date) { should eq Month.new(2021, 3) }
   end
 end

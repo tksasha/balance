@@ -1,19 +1,19 @@
 # frozen_string_literal: true
 
 class ConsolidationSearcher
-  attr_reader :currency, :date
+  attr_reader :currency, :month
 
   def initialize(relation, params)
     @relation = relation
 
     self.currency = params[:currency]
 
-    self.date = params
+    self.month = params
   end
 
   def search
     @relation
-      .where(date: date_range, currency: currency)
+      .where(date: dates, currency: currency)
       .select('SUM(sum) AS sum, category_id')
       .group(:category_id)
       .tap do |items|
@@ -27,12 +27,12 @@ class ConsolidationSearcher
     @currency = CurrencyService.call(object)
   end
 
-  def date=(object)
-    @date = DateFactory.build(object)
+  def month=(object)
+    @month = ParseMonthService.call(object)
   end
 
-  def date_range
-    @date_range ||= DateRange.month(date)
+  def dates
+    @dates ||= month.dates
   end
 
   class << self

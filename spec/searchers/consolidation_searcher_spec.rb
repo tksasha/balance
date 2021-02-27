@@ -3,26 +3,32 @@
 RSpec.describe ConsolidationSearcher do
   let(:relation) { double }
 
-  let(:params) { { currency: 'usd', year: 2019, month: 11 } }
+  let(:params) { { currency: 'usd', month: '2019-11' } }
 
   subject { described_class.new relation, params }
 
   its(:currency) { should eq 'usd' }
 
-  its(:date) { should eq Date.new(2019, 11, 1) }
+  its(:month) { should eq Month.new(2019, 11) }
 
-  describe '#date_range' do
-    its(:date_range) { should eq Date.new(2019, 11, 1)..Date.new(2019, 11, 30) }
+  describe '#dates' do
+    context do
+      let(:dates) { Date.new(2019, 11, 1)..Date.new(2019, 11, 30) }
+
+      its(:dates) { should eq dates }
+    end
 
     context do
-      before { subject.instance_variable_set :@date_range, :date_range }
+      let(:dates) { double }
 
-      its(:date_range) { should eq :date_range }
+      before { subject.instance_variable_set :@dates, dates }
+
+      its(:dates) { should eq dates }
     end
   end
 
   describe '#search' do
-    let(:date_range) { Date.new(2019, 11, 1)..Date.new(2019, 11, 30) }
+    let(:dates) { Date.new(2019, 11, 1)..Date.new(2019, 11, 30) }
 
     let(:collection) do
       [
@@ -37,11 +43,11 @@ RSpec.describe ConsolidationSearcher do
     before do
       #
       # relation.
-      #   where(date: date_range, currency: 'usd').
+      #   where(date: dates, currency: 'usd').
       #   select('SUM(sum) AS sum, category_id').
       #   group(:category_id) -> collection
       #
-      allow(relation).to receive(:where).with(date: date_range, currency: 'usd') do
+      allow(relation).to receive(:where).with(date: dates, currency: 'usd') do
         double.tap do |a|
           allow(a).to receive(:select).with('SUM(sum) AS sum, category_id') do
             double.tap do |b|

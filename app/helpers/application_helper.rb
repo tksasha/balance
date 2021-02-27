@@ -56,6 +56,6 @@ module ApplicationHelper
   private
 
   def month
-    @month ||= (params[:month].present? ? Month.parse(params[:month]) : Month.today)
+    @month ||= ParseMonthService.call(params)
   end
 end
