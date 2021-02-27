@@ -1,6 +1,8 @@
 # frozen_string_literal: true
 
 RSpec.describe CalculateBalanceService do
+  it { should be_an ApplicationService }
+
   let(:params) { { currency: 'uah' } }
 
   subject { described_class.new params }
@@ -8,7 +10,7 @@ RSpec.describe CalculateBalanceService do
   its(:currency) { should eq 'uah' }
 
   describe '#at_end' do
-    before { allow(CalculateAtEndService).to receive(:calculate).and_return(21.04) }
+    before { allow(CalculateAtEndService).to receive(:call).and_return(21.04) }
 
     its(:at_end) { should eq 21.04 }
   end
@@ -47,27 +49,27 @@ RSpec.describe CalculateBalanceService do
     end
   end
 
-  describe '#calculate' do
+  describe '#call' do
     before { allow(subject).to receive(:sum).and_return(99.999) }
 
     before { allow(subject).to receive(:at_end).and_return(55.555) }
 
-    its(:calculate) { should eq 44.44 }
+    its(:call) { should eq 44.44 }
   end
 
-  describe '.calculate' do
+  describe '.call' do
     before do
       #
-      # described_class.new(currency: 'usd').calculate -> 28
+      # described_class.new(currency: 'usd').call -> 28
       #
       allow(described_class).to receive(:new).with(currency: 'usd') do
         double.tap do |a|
-          allow(a).to receive(:calculate).and_return(28)
+          allow(a).to receive(:call).and_return(28)
         end
       end
     end
 
-    subject { described_class.calculate(currency: 'usd') }
+    subject { described_class.call(currency: 'usd') }
 
     it { should eq 28 }
   end

@@ -1,13 +1,13 @@
 # frozen_string_literal: true
 
-class CalculateAtEndService
+class CalculateAtEndService < ApplicationService
   attr_reader :currency
 
   def initialize(params)
     self.currency = params[:currency]
   end
 
-  def calculate
+  def call
     income - expense
   end
 
@@ -27,11 +27,5 @@ class CalculateAtEndService
 
   def expense
     search_by_currency.expense.sum(:sum)
-  end
-
-  class << self
-    def calculate(*args)
-      new(*args).calculate
-    end
   end
 end

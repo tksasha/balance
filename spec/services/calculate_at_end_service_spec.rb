@@ -5,6 +5,8 @@ RSpec.describe CalculateAtEndService do
 
   subject { described_class.new params }
 
+  it { should be_an ApplicationService }
+
   its(:currency) { should eq 'usd' }
 
   describe '#search_by_currency' do
@@ -63,25 +65,25 @@ RSpec.describe CalculateAtEndService do
     its(:expense) { should eq 16 }
   end
 
-  describe '#calculate' do
+  describe '#call' do
     before { allow(subject).to receive(:income).and_return(10) }
 
     before { allow(subject).to receive(:expense).and_return(6.5) }
 
-    its(:calculate) { should eq 3.5 }
+    its(:call) { should eq 3.5 }
   end
 
-  describe '.calculate' do
+  describe '.call' do
     before do
       #
-      # described_class.new(currency: 'uah').calculate -> 19
+      # described_class.new(currency: 'uah').call -> 19
       #
       allow(described_class).to receive(:new).with(currency: 'uah') do
-        double.tap { |a| allow(a).to receive(:calculate).and_return(19) }
+        double.tap { |a| allow(a).to receive(:call).and_return(19) }
       end
     end
 
-    subject { described_class.calculate(currency: 'uah') }
+    subject { described_class.call(currency: 'uah') }
 
     it { should eq 19 }
   end

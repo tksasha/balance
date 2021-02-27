@@ -26,15 +26,15 @@ module ApplicationHelper
   end
 
   def category_widget_data
-    @category_widget_data ||= CategoryWidgetDataSearcher.search params
+    @category_widget_data ||= CategoryWidgetDataSearcher.search(params)
   end
 
   def at_end
-    @at_end ||= CalculateAtEndService.calculate params
+    @at_end ||= CalculateAtEndService.call(params)
   end
 
   def balance
-    @balance ||= CalculateBalanceService.calculate params
+    @balance ||= CalculateBalanceService.call(params)
   end
 
   def currency_from_params
