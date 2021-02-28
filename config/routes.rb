@@ -1,21 +1,23 @@
 # frozen_string_literal: true
 
 Rails.application.routes.draw do
-  resources :items, only: %i[index create edit update destroy]
+  scope '/(:currency)' do
+    resources :items, only: %i[create edit update destroy]
 
-  resources :cashes, only: %i[index edit update]
+    resources :cashes, only: %i[index edit update]
 
-  resources :categories
+    resources :categories
 
-  resource :backoffice, only: :show, controller: :backoffice
+    resource :backoffice, only: :show, controller: :backoffice
 
-  resources :consolidations, only: :index
+    resources :consolidations, only: :index
 
-  namespace :backoffice do
-    resources :exchange_rates, only: :index
+    namespace :backoffice do
+      resources :exchange_rates, only: :index
 
-    resources :cashes, except: :show
+      resources :cashes, except: :show
+    end
+
+    get '(/:month)(/:category_id)', to: 'items#index', as: :root
   end
-
-  root to: 'items#index'
 end

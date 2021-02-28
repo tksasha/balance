@@ -3,14 +3,14 @@
     <% months.each_with_index do |month_name, month_number| %>
       <% month_number += 1 %>
 
-      <%= link_to month_name, items_path(month: Month.new(current_year, month_number)),
+      <%= link_to month_name, root_path(month: Month.new(current_year, month_number)),
         class: "#{ 'active' if month_number == current_month }", remote: true %>
     <% end %>
   </div>
 
   <div>
     <% (2015..Date.today.year).each do |year| %>
-      <%= link_to year, items_path(month: Month.new(year, current_month)),
+      <%= link_to year, root_path(month: Month.new(year, current_month)),
         class: "#{ 'active' if year == current_year }", remote: true %>
     <% end %>
   </div>
