@@ -1,9 +1,9 @@
 # frozen_string_literal: true
 
 # rubocop:disable Security/Eval:
-class FormulaService
+class CalculateFormulaService
   class << self
-    def calculate(string)
+    def call(string)
       string = \
         string
         .to_s

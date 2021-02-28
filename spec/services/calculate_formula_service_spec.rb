@@ -1,10 +1,10 @@
 # frozen_string_literal: true
 
-RSpec.describe FormulaService do
-  describe '.calculate' do
+RSpec.describe CalculateFormulaService do
+  describe '.call' do
     let(:string) { nil }
 
-    subject { described_class.calculate string }
+    subject { described_class.call string }
 
     it { should eq 0.0 }
 

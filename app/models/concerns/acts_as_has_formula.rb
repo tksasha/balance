@@ -4,7 +4,7 @@ module ActsAsHasFormula
   extend ActiveSupport::Concern
 
   def formula=(formula)
-    self.sum = FormulaService.calculate formula
+    self.sum = CalculateFormulaService.call(formula)
 
     super
   end
