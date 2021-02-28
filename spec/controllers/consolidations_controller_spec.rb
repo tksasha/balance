@@ -17,14 +17,7 @@ RSpec.describe ConsolidationsController, type: :controller do
 
       before { allow(Consolidation).to receive(:includes).with(:category).and_return(relation) }
 
-      before do
-        #
-        # ConsolidationSearcher.search(relation, params).decorate(context: params) -> :collection
-        #
-        allow(ConsolidationSearcher).to receive(:search).with(relation, params) do
-          double.tap { |a| allow(a).to receive(:decorate).with(context: params).and_return(:collection) }
-        end
-      end
+      before { allow(ConsolidationSearcher).to receive(:search).with(relation, params).and_return(:collection) }
 
       its(:collection) { should eq :collection }
     end

@@ -27,7 +27,7 @@
 
 <%= content_for :javascripts do %>
   <%= javascript_tag do %>
-    $.getScript('<%= cashes_path(report: true) %>');
+    $.getScript('<%= cashes_path %>');
 
     $.getScript('<%= items_path %>');
   <% end %>

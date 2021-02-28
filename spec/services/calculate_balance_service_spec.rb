@@ -1,11 +1,11 @@
 # frozen_string_literal: true
 
 RSpec.describe CalculateBalanceService do
-  it { should be_an ApplicationService }
-
   let(:params) { { currency: 'uah' } }
 
   subject { described_class.new params }
+
+  it { should be_an ApplicationService }
 
   its(:currency) { should eq 'uah' }
 

@@ -3,7 +3,6 @@
     <%= consolidation.name %>
   </div>
 
-  <% #TODO: refactor me %>
   <%= link_to money(consolidation.sum),
-      items_path(year: consolidation.year, month: consolidation.month, category: consolidation.slug), remote: true %>
+      items_path(month: month, category_id: consolidation.category_id), remote: true %>
 </div>

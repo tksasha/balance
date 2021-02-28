@@ -7,10 +7,10 @@ class ItemSearcher < ApplicationSearcher
     results.where date: month.dates
   end
 
-  def search_by_category(slug)
-    return if slug.blank?
+  def search_by_category_id(category_id)
+    return if category_id.blank?
 
-    results.joins(:category).where(categories: { slug: slug })
+    results.where(category_id: category_id)
   end
 
   private

@@ -9,8 +9,6 @@ RSpec.describe Category, type: :model do
 
   it { should define_enum_for(:currency).with_values(%w[uah usd rub]) }
 
-  it { should callback(:assign_slug).before(:save) }
-
   describe '.visible' do
     let(:sql) { described_class.where(visible: true).to_sql }
 
@@ -33,13 +31,5 @@ RSpec.describe Category, type: :model do
     subject { described_class.expense.to_sql }
 
     it { should eq sql }
-  end
-
-  describe '#assign_slug' do
-    subject { stub_model described_class, name: 'Інші надходження' }
-
-    before { subject.send :assign_slug }
-
-    its(:slug) { should eq 'inshi-nadkhodzhennia' }
   end
 end

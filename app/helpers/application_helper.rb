@@ -45,17 +45,15 @@ module ApplicationHelper
     Item.new(currency: currency_from_params)
   end
 
+  def month
+    @month ||= ParseMonthService.call(params)
+  end
+
   def current_year
     month.year
   end
 
   def current_month
     month.month
-  end
-
-  private
-
-  def month
-    @month ||= ParseMonthService.call(params)
   end
 end

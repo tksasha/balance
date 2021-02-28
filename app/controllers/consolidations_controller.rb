@@ -8,6 +8,6 @@ class ConsolidationsController < ApplicationController
   end
 
   def collection
-    @collection ||= ConsolidationSearcher.search(relation, params).decorate(context: params)
+    @collection ||= ConsolidationSearcher.search(relation, params)
   end
 end

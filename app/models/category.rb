@@ -12,12 +12,4 @@ class Category < ApplicationRecord
   scope :expense, -> { where income: false }
 
   scope :visible, -> { where visible: true }
-
-  before_save :assign_slug
-
-  private
-
-  def assign_slug
-    self.slug = SlugService.build name
-  end
 end

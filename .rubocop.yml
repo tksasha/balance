@@ -98,3 +98,6 @@ Rails/SkipsModelValidations:
 
 RSpec/FilePath:
   SpecSuffixOnly: true
+
+Lint/MissingSuper:
+  Enabled: false
