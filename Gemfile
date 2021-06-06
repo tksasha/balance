@@ -5,7 +5,7 @@ source 'https://rubygems.org'
 ruby '~> 3.0'
 
 gem 'bootsnap', require: false
-gem 'bootstrap'
+gem 'bootstrap', '~> 4.6'
 gem 'draper'
 gem 'jquery-rails'
 gem 'kaminari'
