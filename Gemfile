@@ -9,6 +9,7 @@ gem 'bootstrap', '~> 4.6'
 gem 'draper'
 gem 'jquery-rails'
 gem 'kaminari'
+gem 'mini_racer'
 gem 'month'
 gem 'paper_trail'
 gem 'puma'
@@ -20,7 +21,6 @@ gem 'sqlite3'
 gem 'uglifier'
 
 group :development do
-  gem 'amazing_print'
   gem 'brakeman', require: false
   gem 'bullet'
   gem 'bundler-audit', require: false
