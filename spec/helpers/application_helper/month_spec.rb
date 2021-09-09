@@ -21,8 +21,6 @@ RSpec.describe ApplicationHelper, type: :helper do
 
       before { travel_to Date.new(2021, 4) }
 
-      after { travel_back }
-
       its(:month) { should eq month }
     end
 

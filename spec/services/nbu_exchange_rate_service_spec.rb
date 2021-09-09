@@ -13,8 +13,6 @@ RSpec.describe NbuExchangeRateService do
     context do
       before { travel_to Date.new 2019, 12, 14 }
 
-      after { travel_back }
-
       subject { described_class.new }
 
       its(:date) { should eq '14.12.2019' }

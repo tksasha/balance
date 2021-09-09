@@ -13,8 +13,6 @@ RSpec.describe ParseMonthService do
 
       before { travel_to Date.new(2021, 4, 1) }
 
-      after { travel_back }
-
       its(:month) { should eq Month.new(2021, 4) }
     end
   end

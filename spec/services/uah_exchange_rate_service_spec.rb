@@ -13,8 +13,6 @@ RSpec.describe UahExchangeRateService do
 
       before { travel_to date }
 
-      after { travel_back }
-
       subject { described_class.new }
 
       its(:date) { should eq date }
