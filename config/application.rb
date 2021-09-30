@@ -2,8 +2,6 @@
 
 require_relative 'boot'
 
-require 'rails'
-
 %w[
   active_record/railtie
   action_controller/railtie
