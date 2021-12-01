@@ -3,11 +3,16 @@
 
   $.getScript('<%= items_path(year: resource.date.year, month: resource.date.month) %>');
 
-  $('#item-inline-form').find('form').trigger('reset');
+  $('#item-inline-form').
+    find('form').
+    trigger('reset');
 
-  $('#item-inline-form').find('select').selectpicker('render');
+  const el = document.querySelector('.modal');
 
-  $('.modal').modal('hide');
+  bootstrap.
+    Modal.
+    getInstance(el).
+    hide();
 
   $('#at_end').html('<%= money at_end %>');
 
