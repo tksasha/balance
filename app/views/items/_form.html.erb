@@ -15,7 +15,7 @@
     <%= f.label :category_id %>
 
     <%= f.select :category_id, grouped_options_for_select(category_widget_data, resource.category_id), {},
-      { class: 'form-control', data: { width: '100%' } } %>
+      { class: 'form-select', data: { width: '100%' } } %>
   </div>
 
   <div class="form-group mt-3">
