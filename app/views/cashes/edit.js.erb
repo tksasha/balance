@@ -20,7 +20,7 @@
     classList.
     add('d-none');
 
-  var modal = new bootstrap.Modal(el);
+  var modal = bootstrap.Modal.getOrCreateInstance(el);
 
   modal.show();
 }());

@@ -21,7 +21,7 @@
     classList.
     add('d-none');
 
-  const modal = new bootstrap.Modal(el);
+  const modal = bootstrap.Modal.getOrCreateInstance(el);
 
   modal.show();
 }());
