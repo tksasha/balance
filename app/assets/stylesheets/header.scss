@@ -1,7 +1,7 @@
 header {
   text-align: center;
   box-shadow: 0 0 3px 1px color("grey-base");
-  background-color: white;
+  background-color: color("white");
 
   div {
     padding: 5px 0;
@@ -17,12 +17,10 @@ header {
     @extend .btn-sm;
     padding: 2px 8px;
     text-transform: uppercase;
-    color: color("primary");
     font-size: 12px;
 
     &.active {
-      background-color: color("primary");
-      color: color("light");
+      @extend .btn-primary;
     }
   }
 }

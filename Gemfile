@@ -5,7 +5,7 @@ source 'https://rubygems.org'
 ruby '3.0.3'
 
 gem 'bootsnap', require: false
-gem 'bootstrap', '~> 4.6'
+gem 'bootstrap'
 gem 'draper'
 gem 'jquery-rails'
 gem 'kaminari'
@@ -16,7 +16,6 @@ gem 'puma'
 gem 'rails'
 gem 'rake'
 gem 'sassc-rails'
-gem 'simple_form'
 gem 'sqlite3'
 gem 'uglifier'
 

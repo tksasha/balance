@@ -1,18 +1,30 @@
-<%= simple_form_for decorated, remote: true, html: { autocomplete: :off } do |f| %>
-  <%= f.input :date, as: :string, input_html: { class: 'datepicker' } %>
+<%= form_for decorated, remote: true, html: { autocomplete: :off } do |f| %>
+  <div class="form-group">
+    <%= f.label :date %>
 
-  <%= f.input :formula, as: :string %>
+    <%= f.text_field :date, class: 'form-control datepicker' %>
+  </div>
+
+  <div class="form-group">
+    <%= f.label :formula %>
+
+    <%= f.text_field :formula, class: 'form-control' %>
+  </div>
 
   <div class="form-group">
     <%= f.select :category_id, grouped_options_for_select(category_widget_data, resource.category_id), {},
       { class: 'form-control', data: { width: '100%' } } %>
   </div>
 
-  <%= f.input :description %>
+  <div class="form-group">
+    <%= f.label :description %>
+
+    <%= f.text_field :description, class: 'form-control' %>
+  </div>
 
   <div class="form-group">
     <div class="float-left">
-      <%= f.button :submit, class: 'btn btn-primary' %>
+      <%= f.submit class: 'btn btn-primary' %>
     </div>
 
     <%= content_tag :div, class: 'float-right' do %>

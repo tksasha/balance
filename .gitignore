@@ -8,11 +8,3 @@ public/assets/
 config/secrets.yml
 
 /config/master.key
-
-node_modules/
-
-.env
-
-.DS_Store
-
-tags

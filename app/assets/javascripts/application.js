@@ -3,7 +3,6 @@
 // = require popper
 // = require bootstrap-sprockets
 //
-// = require bootstrap-select
 // = require bootstrap-datepicker
 // = require bootstrap-datepicker.uk.min
 //
@@ -25,6 +24,4 @@ $(function() {
   });
 
   $('.datepicker').datepicker(BOOTSTRAP_DATEPICKER_DEFAULTS);
-
-  $('select').selectpicker();
 });

@@ -1,7 +1,11 @@
-<%= simple_form_for resource, remote: true, html: { autocomplete: :off } do |f| %>
+<%= form_for resource, remote: true, html: { autocomplete: :off } do |f| %>
   <%= f.hidden_field :currency %>
 
-  <%= f.input :name %>
+  <div class="form-group">
+    <%= f.label :name %>
+
+    <%= f.text_field :name, class: 'form-control' %>
+  </div>
 
   <div class="form-group">
     <div class="form-check">
@@ -21,7 +25,7 @@
 
   <div class="clearfix">
     <div class="float-left">
-      <%= f.button :submit, class: 'btn btn-primary' %>
+      <%= f.submit class: 'btn btn-primary' %>
     </div>
 
     <div class="float-right">

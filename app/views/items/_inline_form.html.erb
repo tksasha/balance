@@ -1,6 +1,6 @@
 <div class="card" id="item-inline-form">
   <div class="card-body">
-    <%= simple_form_for resource, remote: true, html: { autocomplete: :off } do |f| %>
+    <%= form_for resource, remote: true, html: { autocomplete: :off } do |f| %>
       <%= f.hidden_field :currency %>
 
       <div class="item-inline-form-date">
@@ -13,8 +13,8 @@
       </div>
 
       <div class="item-inline-form-category">
-        <%= f.select :category_id, grouped_options_for_select(category_widget_data, resource.category_id),
-          {}, { class: 'selectpicker', data: { width: '100%' } } %>
+        <%= f.select :category_id,
+          grouped_options_for_select(category_widget_data, resource.category_id), {}, { class: 'form-select' } %>
       </div>
 
       <div class="item-inline-form-description">
@@ -23,7 +23,7 @@
       </div>
 
       <div class="float-right">
-        <%= f.button :submit, class: 'btn btn-primary' %>
+        <%= f.submit class: 'btn btn-primary' %>
       </div>
     <% end %>
   </div>

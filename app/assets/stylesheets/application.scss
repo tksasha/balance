@@ -1,7 +1,6 @@
 @import "bootstrap-variables";
 
 @import "bootstrap";
-@import "bootstrap-select";
 @import "bootstrap-datepicker";
 
 @import "colors";
@@ -11,7 +10,7 @@
 @import "backoffice-menu-button";
 @import "body";
 @import "bootstrap-datepicker-customized";
-@import "bootstrap-select-customized";
+@import "btn";
 @import "cashes";
 @import "consolidations";
 @import "currencies-widget";
@@ -22,3 +21,4 @@
 @import "link-to-backoffice";
 @import "modal";
 @import "pagination";
+@import "text-right";

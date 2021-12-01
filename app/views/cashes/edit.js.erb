@@ -1,9 +1,26 @@
 (function() {
-  $('.modal-body').html('<%= j render 'edit' %>');
+  const el = document.querySelector('.modal');
 
-  $('.modal').on('shown.bs.modal', function() {
-    $('#cash_formula')
-      .focus(function() { $(this).select() })
-      .focus();
-  }).modal();
+  el.addEventListener('shown.bs.modal', function() {
+    document.
+      querySelector('.modal-footer').
+      classList.
+      add('d-none');
+
+    document.
+      querySelector('#cash_formula').
+      focus();
+  });
+
+  document.
+    querySelector('.modal-title').
+    innerText = 'Редагування залишку';
+
+  document.
+    querySelector('.modal-body').
+    innerHTML = '<%= j render 'form' %>';
+
+  var modal = new bootstrap.Modal(el);
+
+  modal.show();
 }());
