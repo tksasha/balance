@@ -1,16 +1,31 @@
-$(function() {
-  $('.modal-body').html('<%= j render 'form' %>');
+(function() {
+  const el = document.querySelector('.modal');
 
-  $('.modal').find('.datepicker').datepicker(BOOTSTRAP_DATEPICKER_DEFAULTS);
+  el.addEventListener('shown.bs.modal', function() {
+    $('.modal').
+      find('.datepicker').
+      datepicker(BOOTSTRAP_DATEPICKER_DEFAULTS);
 
-  $('.modal').find('select').selectpicker();
-
-  $('.modal').on('shown.bs.modal', function() {
     $('.modal')
       .find('#item_formula')
-      .focus(function() { $(this).select() })
       .focus();
+  });
 
-    <%# $('.modal').find('#item_formula').focus(); %>
-  }).modal('show');
+  document.
+    querySelector('.modal-header').
+    classList.
+    add('d-none');
+
+  document.
+    querySelector('.modal-body').
+    innerHTML = '<%= j render 'form' %>';
+
+  document.
+    querySelector('.modal-footer').
+    classList.
+    add('d-none');
+
+  const modal = new bootstrap.Modal(el);
+
+  modal.show();
 }());

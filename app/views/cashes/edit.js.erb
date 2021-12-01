@@ -3,11 +3,6 @@
 
   el.addEventListener('shown.bs.modal', function() {
     document.
-      querySelector('.modal-footer').
-      classList.
-      add('d-none');
-
-    document.
       querySelector('#cash_formula').
       focus();
   });
@@ -19,6 +14,11 @@
   document.
     querySelector('.modal-body').
     innerHTML = '<%= j render 'form' %>';
+
+  document.
+    querySelector('.modal-footer').
+    classList.
+    add('d-none');
 
   var modal = new bootstrap.Modal(el);
 
