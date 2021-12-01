@@ -5,7 +5,12 @@
 
   $.getScript('<%= items_path(year: resource.date.year, month: resource.date.month) %>');
 
-  $('.modal').modal('hide');
+  const el = document.querySelector('.modal');
+
+  bootstrap.
+    Modal.
+    getInstance(el).
+    hide();
 
   $('#at_end').html('<%= money at_end %>');
 
