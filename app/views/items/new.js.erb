@@ -1,9 +1,27 @@
 (function() {
-  $('.modal-body').html('<%= j render 'form' %>');
+  const el = document.querySelector('.modal');
 
-  $('.modal').find('.datepicker').datepicker(BOOTSTRAP_DATEPICKER_DEFAULTS);
+  el.addEventListener('shown.bs.modal', function() {
+    $('.modal').
+      find('.datepicker').
+      datepicker(BOOTSTRAP_DATEPICKER_DEFAULTS);
+  });
 
-  $('.modal').find('select').selectpicker();
+  document.
+    querySelector('.modal-header').
+    classList.
+    add('d-none');
 
-  $('.modal').modal('show');
+  document.
+    querySelector('.modal-body').
+    innerHTML = '<%= j render 'form' %>';
+
+  document.
+    querySelector('.modal-footer').
+    classList.
+    add('d-none');
+
+  const modal = new bootstrap.Modal(el);
+
+  modal.show();
 }());
