@@ -10,7 +10,9 @@
 
   font-weight: bold;
 
-  background: color("white");
+  &:hover {
+    color: color("white");
+  }
 }
 
 #currencies-widget-content {
@@ -18,5 +20,10 @@
 }
 
 .currencies-widget-currency {
+  @extend .badge;
+  @extend .text-primary;
+
   font-size: 100%;
+
+  padding: 0px;
 }

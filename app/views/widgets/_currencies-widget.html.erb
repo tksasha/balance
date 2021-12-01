@@ -8,9 +8,9 @@
       <% CURRENCIES.map do |currency| %>
         <% next if currency == currency_from_params %>
 
-        <div class="col-sm">
+        <div class="col">
           <div class="text-center text-uppercase">
-            <%= link_to currency, root_path(currency: currency), class: 'badge currencies-widget-currency' %>
+            <%= link_to currency, root_path(currency: currency), class: 'currencies-widget-currency' %>
           </div>
         </div>
       <% end %>

@@ -1,9 +1,11 @@
 $(function() {
-  // $('#currencies-widget').popover({
-  //   placement: 'bottom',
-  //   html: true,
-  //   content: function() {
-  //     return $('#currencies-widget-content').html();
-  //   }
-  // });
+  const el = document.querySelector('#currencies-widget');
+
+  bootstrap.Popover.getOrCreateInstance(el, {
+    placement: 'bottom',
+    html: true,
+    content: function() {
+      return $('#currencies-widget-content').html();
+    }
+  });
 });
