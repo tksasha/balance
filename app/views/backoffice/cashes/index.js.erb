@@ -7,12 +7,14 @@
     add('modal-lg');
 
   document.
-    querySelector('.modal-title').
-    innerHTML = '<%= j render 'breadcrumbs' %>';
-
-  document.
     querySelector('.modal-body').
     innerHTML = '<%= j render 'index' %>';
+
+  const breadcrumbs = document.getElementById('breadcrumbs');
+
+  document.
+    querySelector('.modal-title').
+    innerHTML = breadcrumbs.innerHTML;
 
   const modal = bootstrap.Modal.getOrCreateInstance(el);
 

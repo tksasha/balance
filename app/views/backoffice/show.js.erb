@@ -7,12 +7,14 @@
     remove('modal-lg');
 
   document.
-    querySelector('.modal-title').
-    innerHTML = '<%= breadcrumbs %>';
-
-  document.
     querySelector('.modal-body').
     innerHTML = '<%= j render 'show' %>';
+
+  const breadcrumbs = document.getElementById('breadcrumbs');
+
+  document.
+    querySelector('.modal-title').
+    innerHTML = breadcrumbs.innerHTML;
 
   document.
     querySelector('.modal-footer').

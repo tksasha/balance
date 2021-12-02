@@ -1,5 +1,21 @@
 (function() {
-  $('.modal .modal-body').html('<%= j render 'new' %>');
+  const el = document.querySelector('.modal');
 
-  $('#cash_name').focus();
+  document.
+    querySelector('.modal-body').
+    innerHTML = '<%= j render 'new' %>';
+
+  const breadcrumbs = document.getElementById('breadcrumbs');
+
+  document.
+    querySelector('.modal-title').
+    innerHTML = breadcrumbs.innerHTML;
+
+  el.
+    querySelector('#cash_name').
+    focus();
+
+  const modal = bootstrap.Modal.getOrCreateInstance(el);
+
+  modal.show();
 }());
