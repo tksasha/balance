@@ -1,13 +1,5 @@
-<div class="clearfix">
-  <div class="float-left">
-    <%= breadcrumbs do %>
-      <span class="breadcrumb-item active">Категорії</span>
-    <% end %>
-  </div>
-
-  <div class="float-right">
-    <%= link_to 'Додати', [:new, :category], data: { remote: true }, class: 'btn btn-success' %>
-  </div>
+<div class="mb-3 float-end">
+  <%= link_to 'Додати', [:new, :category], data: { remote: true }, class: 'btn btn-outline-success' %>
 </div>
 
 <table class="table table-borderless table-hover">
