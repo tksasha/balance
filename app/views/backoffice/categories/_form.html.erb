@@ -7,7 +7,7 @@
     <%= f.text_field :name, class: 'form-control' %>
   </div>
 
-  <div class="form-group">
+  <div class="form-group mt-3">
     <div class="form-check">
       <%= f.check_box :income, class: 'form-check-input' %>
 
@@ -15,7 +15,7 @@
     </div>
   </div>
 
-  <div class="form-group">
+  <div class="form-group mt-3">
     <div class="form-check">
       <%= f.check_box :visible, class: 'form-check-input' %>
 
@@ -23,13 +23,7 @@
     </div>
   </div>
 
-  <div class="clearfix">
-    <div class="float-left">
-      <%= f.submit class: 'btn btn-primary' %>
-    </div>
-
-    <div class="float-right">
-      <%= link_to 'Повернутися', [:backoffice, :categories], data: { remote: true } %>
-    </div>
+  <div class="form-group mt-4">
+    <%= f.submit class: 'btn btn-primary' %>
   </div>
 <% end %>

@@ -1,6 +1,4 @@
 (function() {
-  const el = document.querySelector('.modal');
-
   document.
     querySelector('.modal-title').
     innerHTML = '<%= j render 'breadcrumbs' %>';
@@ -8,8 +6,4 @@
   document.
     querySelector('.modal-body').
     innerHTML = '<%= j render 'index' %>';
-
-  const modal = bootstrap.Modal.getOrCreateInstance(el);
-
-  modal.show();
 }());
