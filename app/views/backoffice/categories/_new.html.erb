@@ -1,5 +1,5 @@
 <%= breadcrumbs do %>
-  <%= link_to 'Категорії', :categories, class: 'breadcrumb-item', data: { remote: true } %>
+  <%= link_to 'Категорії', [:backoffice, :categories], class: 'breadcrumb-item', data: { remote: true } %>
 
   <span class="breadcrumb-item active">Додавання категорії</span>
 <% end %>

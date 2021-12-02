@@ -8,3 +8,5 @@ public/assets/
 config/secrets.yml
 
 /config/master.key
+
+.byebug_history

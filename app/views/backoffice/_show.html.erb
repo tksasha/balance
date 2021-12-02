@@ -1,7 +1,8 @@
 <%= link_to 'Залишки', [:backoffice, :cashes],
   data: { remote: true }, class: 'btn btn-primary backoffice-menu-button' %>
 
-<%= link_to 'Категорії', :categories, data: { remote: true }, class: 'btn btn-primary backoffice-menu-button' %>
+<%= link_to 'Категорії', [:backoffice, :categories],
+  data: { remote: true }, class: 'btn btn-primary backoffice-menu-button' %>
 
 <%= link_to 'Курси валют', [:backoffice, :exchange_rates],
   data: { remote: true }, class: 'btn btn-primary backoffice-menu-button' %>

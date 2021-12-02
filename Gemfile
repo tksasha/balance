@@ -7,6 +7,7 @@ ruby '3.0.3'
 gem 'bootsnap', require: false
 gem 'bootstrap'
 gem 'draper'
+gem 'faker'
 gem 'jquery-rails'
 gem 'kaminari'
 gem 'mini_racer'
@@ -34,6 +35,7 @@ group :development do
 end
 
 group :development, :test do
+  gem 'byebug'
   gem 'rspec-rails'
 end
 

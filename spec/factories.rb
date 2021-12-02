@@ -2,7 +2,9 @@
 
 FactoryBot.define do
   factory :category do
-    name { 'Food' }
+    name { Faker::Commerce.department }
+
+    currency { 'uah' }
   end
 
   factory :item do

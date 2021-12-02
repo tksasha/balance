@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-RSpec.describe CategoriesController, type: :controller do
+RSpec.describe Backoffice::CategoriesController, type: :controller do
   describe '#relation' do
     before { allow(Category).to receive(:order).with(:income).and_return(:relation) }
 
