@@ -1,11 +1,9 @@
-<div class="clearfix">
-  <div class="float-left">
-    <%= breadcrumbs do %>
-      <%= link_to 'Залишки', [:backoffice, :cashes], remote: true, class: 'breadcrumb-item' %>
-
-      <div class="breadcrumb-item active">Редагування залишку</div>
-    <% end %>
-  </div>
-</div>
-
 <%= render 'form' %>
+
+<div class="d-none" id="breadcrumbs">
+  <%= breadcrumbs do %>
+    <%= link_to 'Залишки', [:backoffice, :cashes], remote: true, class: 'breadcrumb-item' %>
+
+    <div class="breadcrumb-item active">Редагування залишку</div>
+  <% end %>
+</div>

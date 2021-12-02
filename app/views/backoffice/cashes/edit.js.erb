@@ -1,7 +1,15 @@
 (function() {
-  $('.modal-body').html('<%= j render 'edit' %>');
+  document.
+    querySelector('.modal-body').
+    innerHTML = '<%= j render 'edit' %>';
 
-  $('#cash_formula')
-    .focus(function() { $(this).select() })
-    .focus();
+  const breadcrumbs = document.getElementById('breadcrumbs');
+
+  document.
+    querySelector('.modal-title').
+    innerHTML = breadcrumbs.innerHTML;
+
+  document.
+    getElementById('cash_formula').
+    focus();
 }());
