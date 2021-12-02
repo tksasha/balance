@@ -1,6 +1,4 @@
 (function() {
-  const el = document.querySelector('.modal');
-
   document.
     querySelector('.modal-body').
     innerHTML = '<%= j render 'new' %>';
@@ -11,11 +9,8 @@
     querySelector('.modal-title').
     innerHTML = breadcrumbs.innerHTML;
 
-  el.
+  document.
+    querySelector('.modal').
     querySelector('#cash_name').
     focus();
-
-  const modal = bootstrap.Modal.getOrCreateInstance(el);
-
-  modal.show();
 }());
