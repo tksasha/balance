@@ -1,5 +1,20 @@
 (function() {
-  $('.modal-body').html('<%= j render 'index' %>');
+  const el = document.querySelector('.modal');
 
-  $('.modal-dialog').addClass('modal-lg');
+  document.
+    querySelector('.modal-dialog').
+    classList.
+    add('modal-lg');
+
+  document.
+    querySelector('.modal-title').
+    innerHTML = '<%= j render 'breadcrumbs' %>';
+
+  document.
+    querySelector('.modal-body').
+    innerHTML = '<%= j render 'index' %>';
+
+  const modal = bootstrap.Modal.getOrCreateInstance(el);
+
+  modal.show();
 }());
