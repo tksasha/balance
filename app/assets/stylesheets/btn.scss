@@ -7,3 +7,10 @@
     background: shade-color(color("primary"), 20);
   }
 }
+
+.btn-outline-primary {
+  &:hover {
+    color: color("white");
+    background: shade-color(color("primary"), 20);
+  }
+}

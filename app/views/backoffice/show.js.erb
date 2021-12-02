@@ -1,9 +1,25 @@
 (function() {
-  $('.modal-body').html('<%= j render 'show' %>');
+  const el = document.querySelector('.modal');
 
-  $('.modal-dialog').removeClass('modal-lg');
+  document.
+    querySelector('.modal-dialog').
+    classList.
+    remove('modal-lg');
 
-  if(!$('.modal').hasClass('show')) {
-    $('.modal').modal();
-  }
+  document.
+    querySelector('.modal-title').
+    innerHTML = '<%= breadcrumbs %>';
+
+  document.
+    querySelector('.modal-body').
+    innerHTML = '<%= j render 'show' %>';
+
+  document.
+    querySelector('.modal-footer').
+    classList.
+    add('d-none');
+
+  const modal = bootstrap.Modal.getOrCreateInstance(el);
+
+  modal.show();
 }());
