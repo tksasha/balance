@@ -1,6 +1,6 @@
 #ajax-loader {
   @extend .modal-backdrop;
-  @extend .modal-backdrop.show;
+  @extend .modal-backdrop, .show;
 
   text-align: center;
   padding-top: 30%;
