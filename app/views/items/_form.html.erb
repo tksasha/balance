@@ -1,14 +1,10 @@
 <%= form_for decorated, remote: true, html: { autocomplete: :off } do |f| %>
   <div class="form-group">
-    <%= f.label :date %>
-
-    <%= f.text_field :date, class: 'form-control datepicker' %>
+    <%= input(f, :date, input_html: { class: 'datepicker' }) %>
   </div>
 
   <div class="form-group mt-3">
-    <%= f.label :formula %>
-
-    <%= f.text_field :formula, class: 'form-control' %>
+    <%= input(f, :formula) %>
   </div>
 
   <div class="form-group mt-3">

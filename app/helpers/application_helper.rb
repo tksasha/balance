@@ -56,4 +56,34 @@ module ApplicationHelper
   def current_month
     month.month
   end
+
+  # rubocop:disable Metrics/AbcSize
+  # rubocop:disable Metrics/MethodLength
+  # rubocop:disable Naming/MethodParameterName
+  def input(f, attribute, options = {})
+    input_html_class = ['form-control']
+
+    input_html_class.push(options.fetch(:input_html, {}).fetch(:class, ''))
+
+    if f.object.errors[attribute].present?
+      input_html_class.push('is-invalid')
+
+      concat f.label(attribute, class: 'text-danger')
+
+      concat f.text_field(attribute, class: input_html_class.join(' '))
+
+      content_tag :div, class: 'invalid-feedback' do
+        f.object.errors[attribute].each do |error|
+          concat content_tag :div, error
+        end
+      end
+    else
+      concat f.label(attribute)
+
+      f.text_field(attribute, class: input_html_class.join(' '))
+    end
+  end
+  # rubocop:enable Metrics/AbcSize
+  # rubocop:enable Metrics/MethodLength
+  # rubocop:enable Naming/MethodParameterName
 end
