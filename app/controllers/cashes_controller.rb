@@ -20,6 +20,6 @@ class CashesController < ApplicationController
   end
 
   def resource
-    @resource ||= Cash.find params[:id]
+    @resource ||= ::Cashes::GetResourceService.call(params)
   end
 end
