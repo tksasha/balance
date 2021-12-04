@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 module Cashes
-  class InitializeResourceService < ApplicationService
+  class InitializeService < ApplicationService
     def call
       Success.new(cash)
     end

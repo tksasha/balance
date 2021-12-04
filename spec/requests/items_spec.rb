@@ -11,27 +11,29 @@ RSpec.describe 'Items', type: :request do
     let(:success) { -> { should render_template :destroy } }
   end
 
-  it_behaves_like 'create', '/items.js' do
-    before { create :category, id: 13, name: 'Drinks' }
+  pending do
+    it_behaves_like 'create', '/items.js' do
+      before { create :category, id: 13, name: 'Drinks' }
 
-    let :valid_params do
-      {
-        item: {
-          date: '2019-11-13',
-          formula: '3 + 5',
-          category_id: 13,
-          description: 'Lorem Ipsum ...',
+      let :valid_params do
+        {
+          item: {
+            date: '2019-11-13',
+            formula: '3 + 5',
+            category_id: 13,
+            description: 'Lorem Ipsum ...',
+          }
         }
-      }
+      end
+
+      let :invalid_params do
+        { item: { date: '' } }
+      end
+
+      let(:success) { -> { should render_template :create } }
+
+      let(:failure) { -> { should render_template :new } }
     end
-
-    let :invalid_params do
-      { item: { date: '' } }
-    end
-
-    let(:success) { -> { should render_template :create } }
-
-    let(:failure) { -> { should render_template :new } }
   end
 
   it_behaves_like 'edit', '/items/47/edit.js' do

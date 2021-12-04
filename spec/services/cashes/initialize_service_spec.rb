@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-RSpec.describe Cashes::InitializeResourceService do
+RSpec.describe Cashes::InitializeService do
   subject { described_class.new }
 
   its(:cash) { should be_a Cash }

@@ -11,7 +11,9 @@ module Cashes
     def call
       return ::Cashes::UpdateService.call(@params) if update?
 
-      return ::Cashes::InitializeResourceService.call if new?
+      return ::Cashes::InitializeService.call if new?
+
+      return ::Cashes::CreateService.call(@params) if create?
 
       ::Cashes::GetResourceService.call(@params)
     end
@@ -24,6 +26,10 @@ module Cashes
 
     def new?
       @action_name == 'new'
+    end
+
+    def create?
+      @action_name == 'create'
     end
   end
 end

@@ -2,27 +2,6 @@
 
 RSpec.describe 'Backoffice::Cashes', type: :request do
   pending do
-    it_behaves_like 'create', '/backoffice/cashes.js' do
-      let :valid_params do
-        {
-          cash: {
-            name: 'Bank',
-            formula: '4 + 5',
-          }
-        }
-      end
-
-      let :invalid_params do
-        { cash: { name: '' } }
-      end
-
-      let(:success) { -> { should render_template :create } }
-
-      let(:failure) { -> { should render_template :new } }
-    end
-  end
-
-  pending do
     it_behaves_like 'update', '/backoffice/cashes/49.js' do
       let :valid_params do
         { cash: { name: 'Bank' } }
@@ -60,5 +39,23 @@ RSpec.describe 'Backoffice::Cashes', type: :request do
     before { get '/backoffice/cashes/new', xhr: true }
 
     it_behaves_like 'new.js'
+  end
+
+  describe 'POST /create.js' do
+    before { post '/backoffice/cashes', params: params, xhr: true }
+
+    context 'with valid params' do
+      let(:params) { { cash: { name: 'Bank', formula: '4 + 5' } } }
+
+      it_behaves_like 'create.js'
+    end
+
+    context 'with invalid params' do
+      let(:params) { { cash: { name: '' } } }
+
+      it_behaves_like 'new.js'
+
+      it { expect(response).to have_http_status(:unprocessable_entity) }
+    end
   end
 end

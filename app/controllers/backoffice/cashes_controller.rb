@@ -4,10 +4,6 @@ module Backoffice
   class CashesController < ApplicationController
     delegate :destroy, to: :resource
 
-    def create
-      render :new, status: :unprocessable_entity unless resource.save
-    end
-
     def update
       render :edit, status: :unprocessable_entity unless resource.update(resource_params)
     end

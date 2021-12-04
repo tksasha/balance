@@ -7,6 +7,16 @@ module ActsAsController
     helper_method :result
 
     delegate :resource, :success?, :failure?, to: :result
+
+    before_action -> { response.status = 201 }, only: :create
+  end
+
+  def create
+    respond_to do |format|
+      format.js do
+        render :new, status: :unprocessable_entity if failure?
+      end
+    end
   end
 
   def update
