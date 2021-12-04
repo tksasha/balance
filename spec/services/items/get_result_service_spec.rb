@@ -13,5 +13,13 @@ RSpec.describe Items::GetResultService do
 
       its(:call) { should eq :result }
     end
+
+    context do
+      let(:action_name) { 'edit' }
+
+      before { allow(Items::GetResourceService).to receive(:call).with(params).and_return(:result) }
+
+      its(:call) { should eq :result }
+    end
   end
 end

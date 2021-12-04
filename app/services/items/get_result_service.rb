@@ -9,7 +9,15 @@ module Items
     end
 
     def call
+      return ::Items::GetResourceService.call(@params) if edit?
+
       "::Items::#{ @action_name.camelize }Service".constantize.call(@params)
+    end
+
+    private
+
+    def edit?
+      @action_name == 'edit'
     end
   end
 end

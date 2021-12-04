@@ -10,12 +10,6 @@ RSpec.describe 'Items', type: :request do
   end
 
   pending do
-    it_behaves_like 'edit', '/items/47/edit.js' do
-      before { create :item, id: 47 }
-    end
-  end
-
-  pending do
     it_behaves_like 'update', '/items/47.js' do
       let :valid_params do
         { item: { date: '2019-11-13' } }
@@ -74,5 +68,13 @@ RSpec.describe 'Items', type: :request do
 
       it { expect(response).to have_http_status(:unprocessable_entity) }
     end
+  end
+
+  describe 'GET /edit.js' do
+    let(:item) { create :item }
+
+    before { get "/items/#{ item.id }/edit", xhr: true }
+
+    it_behaves_like 'edit.js'
   end
 end
