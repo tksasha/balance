@@ -7,19 +7,15 @@ class CashesController < ApplicationController
 
   private
 
-  def cashes
-    Cash.order(:name)
-  end
-
   def collection
-    @collection ||= CashSearcher.search(cashes, params)
-  end
-
-  def resource_params
-    params.require(:cash).permit(:formula, :name, :currency)
+    @collection ||= ::Cashes::GetCollectionService.call(params)
   end
 
   def resource
     @resource ||= ::Cashes::GetResourceService.call(params)
+  end
+
+  def resource_params
+    params.require(:cash).permit(:formula, :name, :currency)
   end
 end

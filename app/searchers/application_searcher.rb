@@ -31,5 +31,7 @@ class ApplicationSearcher
     def search(*args)
       new(*args).search
     end
+
+    alias call search
   end
 end
