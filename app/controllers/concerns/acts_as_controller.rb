@@ -26,4 +26,12 @@ module ActsAsController
       end
     end
   end
+
+  def destroy
+    respond_to do |format|
+      format.js do
+        head status: :unprocessable_entity if failure?
+      end
+    end
+  end
 end

@@ -45,5 +45,13 @@ RSpec.describe Cashes::GetResultService, type: :service do
 
       its(:call) { should eq :result }
     end
+
+    context do
+      let(:action_name) { 'destroy' }
+
+      before { allow(Cashes::DestroyService).to receive(:call).with(params).and_return(:result) }
+
+      its(:call) { should eq :result }
+    end
   end
 end

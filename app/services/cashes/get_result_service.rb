@@ -9,27 +9,25 @@ module Cashes
     end
 
     def call
-      return ::Cashes::UpdateService.call(@params) if update?
-
       return ::Cashes::InitializeService.call if new?
 
-      return ::Cashes::CreateService.call(@params) if create?
+      return ::Cashes::GetResourceService.call(@params) if show? || edit?
 
-      ::Cashes::GetResourceService.call(@params)
+      "::Cashes::#{ @action_name.camelize }Service".constantize.call(@params)
     end
 
     private
-
-    def update?
-      @action_name == 'update'
-    end
 
     def new?
       @action_name == 'new'
     end
 
-    def create?
-      @action_name == 'create'
+    def show?
+      @action_name == 'show'
+    end
+
+    def edit?
+      @action_name == 'edit'
     end
   end
 end

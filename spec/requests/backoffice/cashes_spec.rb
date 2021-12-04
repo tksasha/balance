@@ -1,14 +1,6 @@
 # frozen_string_literal: true
 
 RSpec.describe 'Backoffice::Cashes', type: :request do
-  pending do
-    it_behaves_like 'destroy', '/backoffice/cashes/49.js' do
-      before { create :cash, id: 49 }
-
-      let(:success) { -> { should render_template :destroy } }
-    end
-  end
-
   describe 'GET /index.js' do
     before { create_list :cash, 2 }
 
@@ -67,5 +59,15 @@ RSpec.describe 'Backoffice::Cashes', type: :request do
 
       it { expect(response).to have_http_status(:unprocessable_entity) }
     end
+  end
+
+  describe 'DELETE /destroy.js' do
+    let(:cash) { create :cash }
+
+    before { delete "/backoffice/cashes/#{ cash.id }", xhr: true }
+
+    it_behaves_like 'destroy.js'
+
+    it { expect { cash.reload }.to raise_error(ActiveRecord::RecordNotFound) }
   end
 end

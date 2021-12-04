@@ -2,8 +2,6 @@
 
 module Backoffice
   class CashesController < ApplicationController
-    delegate :destroy, to: :resource
-
     private
 
     def collection
