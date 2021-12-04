@@ -1,12 +1,6 @@
 # frozen_string_literal: true
 
 RSpec.describe Backoffice::CategoriesController, type: :controller do
-  describe '#relation' do
-    before { allow(Category).to receive(:order).with(:income).and_return(:relation) }
-
-    its(:relation) { should eq :relation }
-  end
-
   describe '#collection' do
     context do
       before { subject.instance_variable_set :@collection, :collection }
@@ -15,15 +9,9 @@ RSpec.describe Backoffice::CategoriesController, type: :controller do
     end
 
     context do
-      let(:relation) { double }
+      before { allow(subject).to receive(:params).and_return(:params) }
 
-      let(:params) { { currency: 'usd' } }
-
-      before { allow(subject).to receive(:relation).and_return(relation) }
-
-      before { allow(subject).to receive(:params).and_return(params) }
-
-      before { allow(CategorySearcher).to receive(:search).with(relation, params).and_return(:collection) }
+      before { allow(Categories::GetCollectionService).to receive(:call).with(:params).and_return(:collection) }
 
       its(:collection) { should eq :collection }
     end

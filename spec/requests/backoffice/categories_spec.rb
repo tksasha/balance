@@ -47,8 +47,6 @@ RSpec.describe 'Backoffice::Categories', type: :request do
     let(:failure) { -> { should render_template :edit } }
   end
 
-  it_behaves_like 'index', '/backoffice/categories.js'
-
   describe 'GET /index.js' do
     before { create_list :category, 2 }
 
@@ -56,6 +54,4 @@ RSpec.describe 'Backoffice::Categories', type: :request do
 
     it_behaves_like 'index.js'
   end
-
-  # TODO: need spec for `GET /categories.js?widget=1`
 end

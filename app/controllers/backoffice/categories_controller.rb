@@ -12,12 +12,8 @@ module Backoffice
 
     private
 
-    def relation
-      Category.order :income
-    end
-
     def collection
-      @collection ||= CategorySearcher.search relation, params
+      @collection ||= Categories::GetCollectionService.call(params)
     end
 
     def resource_params
