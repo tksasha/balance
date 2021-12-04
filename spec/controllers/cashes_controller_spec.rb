@@ -33,13 +33,5 @@ RSpec.describe CashesController, type: :controller do
 
       its(:result) { should eq :result }
     end
-
-    its(:_helper_methods) { should include :result }
   end
-
-  it { should delegate_method(:resource).to(:result) }
-
-  it { should delegate_method(:success?).to(:result) }
-
-  it { should delegate_method(:failure?).to(:result) }
 end

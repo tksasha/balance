@@ -1,6 +1,8 @@
 # frozen_string_literal: true
 
 class ApplicationController < ActionController::Base
+  include ActsAsController
+
   protect_from_forgery
 
   before_action :initialize_resource, only: :new
