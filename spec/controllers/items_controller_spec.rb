@@ -1,23 +1,6 @@
 # frozen_string_literal: true
 
 RSpec.describe ItemsController, type: :controller do
-  describe '#relation' do
-    before do
-      #
-      # Item
-      #   .order(date: :desc)
-      #   includes(:category) -> :relation
-      #
-      allow(Item).to receive(:order).with(date: :desc) do
-        double.tap do |a|
-          allow(a).to receive(:includes).with(:category).and_return(:relation)
-        end
-      end
-    end
-
-    its(:relation) { should eq :relation }
-  end
-
   describe '#collection' do
     context do
       before { subject.instance_variable_set :@collection, :collection }
@@ -26,15 +9,9 @@ RSpec.describe ItemsController, type: :controller do
     end
 
     context do
-      let(:params) { double }
+      before { allow(subject).to receive(:params).and_return(:params) }
 
-      let(:relation) { double }
-
-      before { allow(subject).to receive(:relation).and_return(relation) }
-
-      before { allow(subject).to receive(:params).and_return(params) }
-
-      before { allow(ItemSearcher).to receive(:search).with(relation, params).and_return(:collection) }
+      before { allow(Items::GetCollectionService).to receive(:call).with(:params).and_return(:collection) }
 
       its(:collection) { should eq :collection }
     end

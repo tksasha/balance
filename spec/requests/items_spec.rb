@@ -1,10 +1,6 @@
 # frozen_string_literal: true
 
 RSpec.describe 'Items', type: :request do
-  it_behaves_like 'index', '/items'
-
-  it_behaves_like 'index', '/items.js'
-
   it_behaves_like 'destroy', '/items/47.js' do
     before { create :item, id: 47 }
 
@@ -54,5 +50,19 @@ RSpec.describe 'Items', type: :request do
     let(:success) { -> { should render_template :update } }
 
     let(:failure) { -> { should render_template :edit } }
+  end
+
+  describe 'GET /index' do
+    before { get '/items' }
+
+    it_behaves_like 'index.html'
+  end
+
+  describe 'GET /index.js' do
+    before { create_list :item, 2 }
+
+    before { get '/items', xhr: true }
+
+    it_behaves_like 'index.js'
   end
 end

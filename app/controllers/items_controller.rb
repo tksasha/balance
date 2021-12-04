@@ -13,12 +13,8 @@ class ItemsController < ApplicationController
 
   private
 
-  def relation
-    Item.order(date: :desc).includes(:category)
-  end
-
   def collection
-    @collection ||= ItemSearcher.search relation, params
+    @collection ||= Items::GetCollectionService.call(params)
   end
 
   def resource_params
