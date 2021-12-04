@@ -1,14 +1,6 @@
 # frozen_string_literal: true
 
 RSpec.describe 'Items', type: :request do
-  pending do
-    it_behaves_like 'destroy', '/items/47.js' do
-      before { create :item, id: 47 }
-
-      let(:success) { -> { should render_template :destroy } }
-    end
-  end
-
   describe 'GET /index' do
     before { get '/items' }
 
@@ -78,5 +70,15 @@ RSpec.describe 'Items', type: :request do
 
       it { expect(response).to have_http_status(:unprocessable_entity) }
     end
+  end
+
+  describe 'DELETE /destroy.js' do
+    let(:item) { create :item }
+
+    before { delete "/items/#{ item.id }", xhr: true }
+
+    it_behaves_like 'destroy.js'
+
+    it { expect(item.reload.deleted_at).not_to be_nil }
   end
 end

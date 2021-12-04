@@ -1,8 +1,6 @@
 # frozen_string_literal: true
 
 class ItemsController < ApplicationController
-  delegate :destroy, to: :resource
-
   private
 
   def collection
