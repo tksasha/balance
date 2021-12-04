@@ -17,34 +17,29 @@ RSpec.describe CashesController, type: :controller do
     end
   end
 
-  describe '#resource' do
+  describe '#result' do
     context do
-      before { subject.instance_variable_set :@resource, :resource }
+      before { subject.instance_variable_set :@result, :result }
 
-      its(:resource) { should eq :resource }
+      its(:result) { should eq :result }
     end
 
     context do
+      before { allow(subject).to receive(:action_name).and_return(:action_name) }
+
       before { allow(subject).to receive(:params).and_return(:params) }
 
-      before { allow(Cashes::GetResourceService).to receive(:call).with(:params).and_return(:resource) }
+      before { allow(Cashes::GetResultService).to receive(:call).with(:action_name, :params).and_return(:result) }
 
-      its(:resource) { should eq :resource }
-    end
-  end
-
-  describe '#resource_params' do
-    let :params do
-      acp \
-        cash: {
-          name: nil,
-          formula: nil,
-          currency: nil,
-        }
+      its(:result) { should eq :result }
     end
 
-    before { allow(subject).to receive(:params).and_return(params) }
-
-    its(:resource_params) { should eq params.require(:cash).permit! }
+    its(:_helper_methods) { should include :result }
   end
+
+  it { should delegate_method(:resource).to(:result) }
+
+  it { should delegate_method(:success?).to(:result) }
+
+  it { should delegate_method(:failure?).to(:result) }
 end

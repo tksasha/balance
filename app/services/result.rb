@@ -3,6 +3,8 @@
 class Result
   attr_reader :object
 
+  alias resource object
+
   def initialize(object)
     @object = object
   end

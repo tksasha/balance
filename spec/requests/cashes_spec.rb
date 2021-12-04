@@ -1,22 +1,6 @@
 # frozen_string_literal: true
 
 RSpec.describe 'Cashes', type: :request do
-  it_behaves_like 'update', '/cashes/49.js' do
-    let :valid_params do
-      { cash: { name: 'Bank' } }
-    end
-
-    let :invalid_params do
-      { cash: { name: '' } }
-    end
-
-    before { create :cash, id: 49 }
-
-    let(:success) { -> { should render_template :update } }
-
-    let(:failure) { -> { should render_template :edit } }
-  end
-
   describe 'GET /index.js' do
     before { create_list :cash, 2 }
 
@@ -31,5 +15,25 @@ RSpec.describe 'Cashes', type: :request do
     before { get "/cashes/#{ cash.id }/edit", xhr: true }
 
     it_behaves_like 'edit.js'
+  end
+
+  describe 'PATCH /update.js' do
+    let(:cash) { create :cash }
+
+    before { patch "/cashes/#{ cash.id }", params: params, xhr: true }
+
+    context 'with valid params' do
+      let(:params) { { cash: { name: Faker::Lorem.word } } }
+
+      it_behaves_like 'update.js'
+    end
+
+    context 'with invalid params' do
+      let(:params) { { cash: { name: '' } } }
+
+      it_behaves_like 'edit.js'
+
+      it { expect(response).to have_http_status(:unprocessable_entity) }
+    end
   end
 end

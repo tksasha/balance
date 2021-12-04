@@ -2,7 +2,7 @@
 
 class CashesController < ApplicationController
   def update
-    render :edit, status: :unprocessable_entity unless resource.update(resource_params)
+    render :edit, status: :unprocessable_entity if failure?
   end
 
   private
@@ -11,11 +11,11 @@ class CashesController < ApplicationController
     @collection ||= ::Cashes::GetCollectionService.call(params)
   end
 
-  def resource
-    @resource ||= ::Cashes::GetResourceService.call(params)
+  def result
+    @result ||= ::Cashes::GetResultService.call(action_name, params)
   end
 
-  def resource_params
-    params.require(:cash).permit(:formula, :name, :currency)
-  end
+  helper_method :result
+
+  delegate :resource, :success?, :failure?, to: :result
 end

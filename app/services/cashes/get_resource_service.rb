@@ -7,6 +7,12 @@ module Cashes
     end
 
     def call
+      Success.new(cash)
+    end
+
+    private
+
+    def cash
       Cash.find(@cash_id)
     end
   end
