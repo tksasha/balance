@@ -58,4 +58,12 @@ RSpec.describe 'Backoffice::Cashes', type: :request do
       it { expect(response).to have_http_status(:unprocessable_entity) }
     end
   end
+
+  describe 'GET /edit.js' do
+    let(:cash) { create :cash }
+
+    before { get "/backoffice/cashes/#{ cash.id }/edit", xhr: true }
+
+    it_behaves_like 'edit.js'
+  end
 end

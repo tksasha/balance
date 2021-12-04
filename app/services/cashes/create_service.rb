@@ -15,7 +15,7 @@ module Cashes
     private
 
     def resource_params
-      @params.require(:cash).permit(:name, :formula)
+      @params.require(:cash).permit(:name, :formula, :currency)
     end
 
     def cash

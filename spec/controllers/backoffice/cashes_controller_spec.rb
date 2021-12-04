@@ -34,29 +34,4 @@ RSpec.describe Backoffice::CashesController, type: :controller do
       its(:result) { should eq :result }
     end
   end
-
-  describe '#resource_params' do
-    let :params do
-      acp \
-        cash: {
-          name: nil,
-          formula: nil,
-          currency: nil,
-        }
-    end
-
-    before { allow(subject).to receive(:params).and_return(params) }
-
-    its(:resource_params) { should eq params.require(:cash).permit! }
-  end
-
-  pending '#build_resource' do
-    before { allow(subject).to receive(:resource_params).and_return(:resource_params) }
-
-    before { allow(Cash).to receive(:new).with(:resource_params).and_return(:resource) }
-
-    before { subject.send :build_resource }
-
-    its(:resource) { should eq :resource }
-  end
 end

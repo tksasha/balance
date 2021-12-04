@@ -3,7 +3,7 @@
 RSpec.describe Cashes::CreateService do
   subject { described_class.new params }
 
-  let(:params) { acp({ cash: { name: nil, formula: nil } }) }
+  let(:params) { acp({ cash: { name: nil, formula: nil, currency: nil } }) }
 
   its(:resource_params) { should eq params.require(:cash).permit! }
 
