@@ -1,8 +1,6 @@
 # frozen_string_literal: true
 
 RSpec.describe 'Backoffice::Cashes', type: :request do
-  it_behaves_like 'index', '/backoffice/cashes.js'
-
   it_behaves_like 'new', '/backoffice/cashes/new.js'
 
   it_behaves_like 'create', '/backoffice/cashes.js' do
@@ -44,5 +42,13 @@ RSpec.describe 'Backoffice::Cashes', type: :request do
     before { create :cash, id: 49 }
 
     let(:success) { -> { should render_template :destroy } }
+  end
+
+  describe 'GET /index.js' do
+    before { create_list :cash, 2 }
+
+    before { get '/backoffice/cashes', xhr: true }
+
+    it_behaves_like 'index.js'
   end
 end

@@ -1,35 +1,19 @@
 # frozen_string_literal: true
 
 RSpec.describe Backoffice::CashesController, type: :controller do
-  describe '#cashes' do
-    let(:cashes) { double }
-
-    before { allow(Cash).to receive(:order).with(:name).and_return(cashes) }
-
-    its(:cashes) { should eq cashes }
-  end
-
   describe '#collection' do
-    let(:collection) { double }
-
     context do
-      before { subject.instance_variable_set :@collection, collection }
+      before { subject.instance_variable_set :@collection, :collection }
 
-      its(:collection) { should eq collection }
+      its(:collection) { should eq :collection }
     end
 
     context do
-      let(:cashes) { double }
+      before { allow(subject).to receive(:params).and_return(:params) }
 
-      let(:params) { double }
+      before { allow(Cashes::GetCollectionService).to receive(:call).with(:params).and_return(:collection) }
 
-      before { allow(subject).to receive(:cashes).and_return(cashes) }
-
-      before { allow(subject).to receive(:params).and_return(params) }
-
-      before { allow(CashSearcher).to receive(:search).with(cashes, params).and_return(collection) }
-
-      its(:collection) { should eq collection }
+      its(:collection) { should eq :collection }
     end
   end
 

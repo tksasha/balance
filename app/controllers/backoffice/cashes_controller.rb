@@ -14,12 +14,8 @@ module Backoffice
 
     private
 
-    def cashes
-      Cash.order(:name)
-    end
-
     def collection
-      @collection ||= CashSearcher.search(cashes, params)
+      @collection ||= ::Cashes::GetCollectionService.call(params)
     end
 
     def resource
