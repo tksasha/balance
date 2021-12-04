@@ -9,24 +9,6 @@ RSpec.describe 'Items', type: :request do
     end
   end
 
-  pending do
-    it_behaves_like 'update', '/items/47.js' do
-      let :valid_params do
-        { item: { date: '2019-11-13' } }
-      end
-
-      let :invalid_params do
-        { item: { date: '' } }
-      end
-
-      before { create :item, id: 47 }
-
-      let(:success) { -> { should render_template :update } }
-
-      let(:failure) { -> { should render_template :edit } }
-    end
-  end
-
   describe 'GET /index' do
     before { get '/items' }
 
@@ -76,5 +58,25 @@ RSpec.describe 'Items', type: :request do
     before { get "/items/#{ item.id }/edit", xhr: true }
 
     it_behaves_like 'edit.js'
+  end
+
+  describe 'PATCH /update.js' do
+    let(:item) { create :item }
+
+    before { patch "/items/#{ item.id }", params: params, xhr: true }
+
+    context 'with valid params' do
+      let(:params) { { item: { date: '2019-11-13' } } }
+
+      it_behaves_like 'update.js'
+    end
+
+    context 'with invalid params' do
+      let(:params) { { item: { date: '' } } }
+
+      it_behaves_like 'edit.js'
+
+      it { expect(response).to have_http_status(:unprocessable_entity) }
+    end
   end
 end

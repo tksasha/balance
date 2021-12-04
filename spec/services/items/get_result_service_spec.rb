@@ -21,5 +21,13 @@ RSpec.describe Items::GetResultService do
 
       its(:call) { should eq :result }
     end
+
+    context do
+      let(:action_name) { 'update' }
+
+      before { allow(Items::UpdateService).to receive(:call).with(params).and_return(:result) }
+
+      its(:call) { should eq :result }
+    end
   end
 end
