@@ -18,12 +18,8 @@ module Backoffice
       @collection ||= ::Cashes::GetCollectionService.call(params)
     end
 
-    def resource
-      @resource ||= Cash.find(params[:id])
-    end
-
-    def initialize_resource
-      @resource = Cash.new(currency: params[:currency])
+    def result
+      @result ||= ::Cashes::GetResultService.call(action_name, params)
     end
 
     def resource_params

@@ -9,15 +9,21 @@ module Cashes
     end
 
     def call
-      return ::Cashes::GetResourceService.call(@params) if show_or_edit?
+      return ::Cashes::UpdateService.call(@params) if update?
 
-      ::Cashes::UpdateService.call(@params)
+      return ::Cashes::InitializeResourceService.call if new?
+
+      ::Cashes::GetResourceService.call(@params)
     end
 
     private
 
-    def show_or_edit?
-      %w[show edit].include?(@action_name)
+    def update?
+      @action_name == 'update'
+    end
+
+    def new?
+      @action_name == 'new'
     end
   end
 end
