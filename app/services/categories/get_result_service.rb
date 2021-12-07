@@ -9,7 +9,9 @@ module Categories
     end
 
     def call
-      ::Categories::InitializeService.call
+      return ::Categories::InitializeService.call if new?
+
+      "::Categories::#{ @action_name.camelize }Service".constantize.call(@params)
     end
 
     private

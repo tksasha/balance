@@ -34,20 +34,4 @@ RSpec.describe Backoffice::CategoriesController, type: :controller do
       its(:result) { should eq :result }
     end
   end
-
-  describe '#resource_params' do
-    let :params do
-      acp \
-        category: {
-          name: nil,
-          income: nil,
-          visible: nil,
-          currency: nil
-        }
-    end
-
-    before { allow(subject).to receive(:params).and_return(params) }
-
-    its(:resource_params) { should eq params.require(:category).permit! }
-  end
 end
