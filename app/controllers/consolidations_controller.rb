@@ -3,11 +3,7 @@
 class ConsolidationsController < ApplicationController
   private
 
-  def relation
-    Consolidation.includes(:category)
-  end
-
   def collection
-    @collection ||= ConsolidationSearcher.search(relation, params)
+    @collection ||= ::Consolidations::GetCollectionService.call(params)
   end
 end

@@ -9,15 +9,9 @@ RSpec.describe ConsolidationsController, type: :controller do
     end
 
     context do
-      let(:relation) { double }
+      before { allow(subject).to receive(:params).and_return(:params) }
 
-      let(:params) { double }
-
-      before { allow(subject).to receive(:params).and_return(params) }
-
-      before { allow(Consolidation).to receive(:includes).with(:category).and_return(relation) }
-
-      before { allow(ConsolidationSearcher).to receive(:search).with(relation, params).and_return(:collection) }
+      before { allow(Consolidations::GetCollectionService).to receive(:call).with(:params).and_return(:collection) }
 
       its(:collection) { should eq :collection }
     end
