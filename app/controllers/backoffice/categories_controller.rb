@@ -2,10 +2,6 @@
 
 module Backoffice
   class CategoriesController < ApplicationController
-    def update
-      render :edit, status: :unprocessable_entity unless resource.update resource_params
-    end
-
     private
 
     def collection

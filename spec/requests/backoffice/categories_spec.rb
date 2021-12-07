@@ -1,24 +1,6 @@
 # frozen_string_literal: true
 
 RSpec.describe 'Backoffice::Categories', type: :request do
-  pending do
-    it_behaves_like 'update', '/backoffice/categories/54.js' do
-      let :valid_params do
-        { category: { name: 'Drinks' } }
-      end
-
-      let :invalid_params do
-        { category: { name: '' } }
-      end
-
-      before { create :category, id: 54 }
-
-      let(:success) { -> { should render_template :update } }
-
-      let(:failure) { -> { should render_template :edit } }
-    end
-  end
-
   describe 'GET /index.js' do
     before { create_list :category, 2 }
 
@@ -57,5 +39,25 @@ RSpec.describe 'Backoffice::Categories', type: :request do
     before { get "/backoffice/categories/#{ category.id }/edit", xhr: true }
 
     it_behaves_like 'edit.js'
+  end
+
+  describe 'PATCH /update.js' do
+    let(:category) { create :category }
+
+    before { patch "/backoffice/categories/#{ category.id }", params: params, xhr: true }
+
+    context do
+      let(:params) { { category: { name: 'Drinks' } } }
+
+      it_behaves_like 'update.js'
+    end
+
+    context do
+      let(:params) { { category: { name: '' } } }
+
+      it_behaves_like 'edit.js'
+
+      it { expect(response).to have_http_status(:unprocessable_entity) }
+    end
   end
 end
