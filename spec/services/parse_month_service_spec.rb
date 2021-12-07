@@ -1,9 +1,9 @@
 # frozen_string_literal: true
 
 RSpec.describe ParseMonthService do
-  let(:params) { { month: '2021-03' } }
-
   subject { described_class.new params }
+
+  let(:params) { { month: '2021-03' } }
 
   describe '#month' do
     its(:month) { should eq Month.new(2021, 3) }

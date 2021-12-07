@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 RSpec.describe ActsAsHasFormula do
-  let(:klass) do
+  let(:described_class) do
     Class.new do
       include ActiveModel::Validations
       include ActiveModel::Validations::Callbacks
@@ -11,8 +11,6 @@ RSpec.describe ActsAsHasFormula do
       attr_accessor :sum, :formula
     end
   end
-
-  subject { klass.new }
 
   describe '#formula=' do
     before { subject.formula = '2+2' }

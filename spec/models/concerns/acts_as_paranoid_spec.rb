@@ -16,9 +16,9 @@ RSpec.describe ActsAsParanoid, type: :model do
   end
 
   describe '.default_scope' do
-    let(:sql) { described_class.unscoped.where(deleted_at: nil).to_sql }
-
     subject { described_class.all }
+
+    let(:sql) { described_class.unscoped.where(deleted_at: nil).to_sql }
 
     its(:to_sql) { should eq sql }
   end

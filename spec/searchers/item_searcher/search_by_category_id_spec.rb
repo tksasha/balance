@@ -2,9 +2,9 @@
 
 RSpec.describe ItemSearcher do
   describe '#search_by_category_id' do
-    let(:relation) { double }
-
     subject { described_class.new(relation).search_by_category_id(category_id) }
+
+    let(:relation) { double }
 
     context do
       let(:category_id) { '' }

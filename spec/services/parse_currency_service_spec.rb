@@ -50,6 +50,8 @@ RSpec.describe ParseCurrencyService do
   end
 
   describe '.call' do
+    subject { described_class.call('usd') }
+
     before do
       #
       # described_class.new('usd').call
@@ -60,8 +62,6 @@ RSpec.describe ParseCurrencyService do
         end
       end
     end
-
-    subject { described_class.call('usd') }
 
     it { expect { subject }.not_to raise_error }
   end

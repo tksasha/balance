@@ -18,17 +18,17 @@ RSpec.describe Item, type: :model do
   it { should define_enum_for(:currency).with_values(%w[uah usd rub]) }
 
   describe '.income' do
-    let(:sql) { described_class.joins(:category).merge(Category.income).to_sql }
-
     subject { described_class.income.to_sql }
+
+    let(:sql) { described_class.joins(:category).merge(Category.income).to_sql }
 
     it { should eq sql }
   end
 
   describe '.expense' do
-    let(:sql) { described_class.joins(:category).merge(Category.expense).to_sql }
-
     subject { described_class.expense.to_sql }
+
+    let(:sql) { described_class.joins(:category).merge(Category.expense).to_sql }
 
     it { should eq sql }
   end

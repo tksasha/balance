@@ -1,18 +1,20 @@
 # frozen_string_literal: true
 
 RSpec.describe CategoryWidgetDataSearcher do
-  let(:params) { { currency: 'usd' } }
-
   subject { described_class.new params }
+
+  let(:params) { { currency: 'usd' } }
 
   its(:currency) { should eq 'usd' }
 
   describe '#search' do
+    subject { described_class.search params }
+
     let :categories do
       [
         ['Food', 13, false],
         ['Drinks', 5, false],
-        ['Salary', 17, true],
+        ['Salary', 17, true]
       ]
     end
 
@@ -21,15 +23,15 @@ RSpec.describe CategoryWidgetDataSearcher do
         [
           'Видатки', [
             ['Food', 13],
-            ['Drinks', 5],
+            ['Drinks', 5]
           ]
         ],
         [
           'Надходження',
           [
-            ['Salary', 17],
+            ['Salary', 17]
           ]
-        ],
+        ]
       ]
     end
 
@@ -56,12 +58,12 @@ RSpec.describe CategoryWidgetDataSearcher do
       end
     end
 
-    subject { described_class.search params }
-
     it { should eq collection }
   end
 
   describe '.search' do
+    subject { described_class.search currency: 'usd' }
+
     before do
       #
       # described_class.new(currency: 'usd').search
@@ -72,8 +74,6 @@ RSpec.describe CategoryWidgetDataSearcher do
         end
       end
     end
-
-    subject { described_class.search currency: 'usd' }
 
     it { expect { subject }.not_to raise_error }
   end

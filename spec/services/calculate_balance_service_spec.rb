@@ -1,9 +1,9 @@
 # frozen_string_literal: true
 
 RSpec.describe CalculateBalanceService do
-  let(:params) { { currency: 'uah' } }
-
   subject { described_class.new params }
+
+  let(:params) { { currency: 'uah' } }
 
   it { should be_an ApplicationService }
 
@@ -58,6 +58,8 @@ RSpec.describe CalculateBalanceService do
   end
 
   describe '.call' do
+    subject { described_class.call(currency: 'usd') }
+
     before do
       #
       # described_class.new(currency: 'usd').call -> 28
@@ -68,8 +70,6 @@ RSpec.describe CalculateBalanceService do
         end
       end
     end
-
-    subject { described_class.call(currency: 'usd') }
 
     it { should eq 28 }
   end

@@ -1,9 +1,9 @@
 # frozen_string_literal: true
 
 RSpec.describe CalculateAtEndService do
-  let(:params) { { currency: 'usd' } }
-
   subject { described_class.new params }
+
+  let(:params) { { currency: 'usd' } }
 
   it { should be_an ApplicationService }
 
@@ -74,6 +74,8 @@ RSpec.describe CalculateAtEndService do
   end
 
   describe '.call' do
+    subject { described_class.call(currency: 'uah') }
+
     before do
       #
       # described_class.new(currency: 'uah').call -> 19
@@ -82,8 +84,6 @@ RSpec.describe CalculateAtEndService do
         double.tap { |a| allow(a).to receive(:call).and_return(19) }
       end
     end
-
-    subject { described_class.call(currency: 'uah') }
 
     it { should eq 19 }
   end

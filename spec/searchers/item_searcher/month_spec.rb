@@ -2,11 +2,11 @@
 
 RSpec.describe ItemSearcher do
   describe '#month' do
+    subject { described_class.new relation, params }
+
     let(:relation) { double }
 
     let(:params) { { month: '2021-03' } }
-
-    subject { described_class.new relation, params }
 
     context do
       let(:month) { Month.today }

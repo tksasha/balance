@@ -1,11 +1,11 @@
 # frozen_string_literal: true
 
 RSpec.describe ConsolidationSearcher do
+  subject { described_class.new relation, params }
+
   let(:relation) { double }
 
   let(:params) { { currency: 'usd', month: '2019-11' } }
-
-  subject { described_class.new relation, params }
 
   its(:currency) { should eq 'usd' }
 
@@ -62,6 +62,8 @@ RSpec.describe ConsolidationSearcher do
   end
 
   describe '.search' do
+    subject { described_class.search :relation, date: :date }
+
     before do
       #
       # described_class.new(:relation, date: :date).search
@@ -70,8 +72,6 @@ RSpec.describe ConsolidationSearcher do
         double.tap { |a| expect(a).to receive(:search) }
       end
     end
-
-    subject { described_class.search :relation, date: :date }
 
     it { expect { subject }.not_to raise_error }
   end

@@ -2,9 +2,9 @@
 
 RSpec.describe CalculateFormulaService do
   describe '.call' do
-    let(:string) { nil }
-
     subject { described_class.call string }
+
+    let(:string) { nil }
 
     it { should eq 0.0 }
 

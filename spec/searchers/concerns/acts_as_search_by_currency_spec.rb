@@ -17,9 +17,9 @@ RSpec.describe ActsAsSearchByCurrency do
     end
 
     context do
-      before { allow(relation).to receive(:where).with(currency: 'usd').and_return(:collection) }
-
       subject { described_class.search relation, currency: 'usd' }
+
+      before { allow(relation).to receive(:where).with(currency: 'usd').and_return(:collection) }
 
       it { should eq :collection }
     end

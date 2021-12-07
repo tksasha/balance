@@ -27,7 +27,7 @@ RSpec.describe 'Items', type: :request do
             date: '2019-11-13',
             formula: '3 + 5',
             category_id: category.id,
-            description: 'Lorem Ipsum ...',
+            description: 'Lorem Ipsum ...'
           }
         }
       end

@@ -10,13 +10,18 @@ AllCops:
     - db/migrate/*.rb
     - bin/*
   NewCops: enable
-  SuggestExtensions: false
+  SuggestExtensions: true
 
-Style/Documentation:
-  Enabled: false
-
+# Layout
 Layout/LineLength:
   Max: 120
+
+Layout/SpaceInsideStringInterpolation:
+  EnforcedStyle: space
+
+# Lint
+Lint/MissingSuper:
+  Enabled: false
 
 # Metrics
 Metrics/BlockLength:
@@ -24,13 +29,7 @@ Metrics/BlockLength:
   - lib/tasks/auto_annotate_models.rake
   - spec/**/*
 
-Layout/SpaceInsideStringInterpolation:
-  EnforcedStyle: space
-
-RSpec/InstanceVariable:
-  Exclude:
-    - spec/support/shared_examples/controller.rb
-
+# RSpec
 RSpec/MessageSpies:
   EnforcedStyle: receive
 
@@ -46,15 +45,6 @@ RSpec/ScatteredSetup:
 RSpec/ImplicitExpect:
   EnforcedStyle: should
 
-RSpec/SharedExamples:
-  Enabled: false
-
-RSpec/MultipleExpectations:
-  Enabled: false
-
-RSpec/ExampleLength:
-  Enabled: false
-
 RSpec/NamedSubject:
   Enabled: false
 
@@ -64,41 +54,19 @@ RSpec/SubjectStub:
 RSpec/VerifiedDoubles:
   Enabled: false
 
-RSpec/ContextWording:
-  Enabled: false
-
-RSpec/LeadingSubject:
-  Enabled: false
-
-RSpec/ImplicitSubject:
-  Enabled: false
-
 RSpec/MessageChain:
   Enabled: false
-
-Style/FormatStringToken:
-  EnforcedStyle: unannotated
-
-Style/TrailingCommaInHashLiteral:
-  Enabled: false
-
-Style/TrailingCommaInArrayLiteral:
-  Enabled: false
-
-RSpec/RepeatedDescription:
-  Enabled: false
-
-Rails/FilePath:
-  EnforcedStyle: arguments
-
-Rails/LexicallyScopedActionFilter:
-  Enabled: false
-
-Rails/SkipsModelValidations:
-  AllowedMethods: [touch]
 
 RSpec/FilePath:
   SpecSuffixOnly: true
 
-Lint/MissingSuper:
+# Rails
+Rails/SkipsModelValidations:
+  AllowedMethods: [touch]
+
+Rails/FilePath:
+  EnforcedStyle: arguments
+
+# Style
+Style/Documentation:
   Enabled: false
