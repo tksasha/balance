@@ -1,10 +1,6 @@
 # frozen_string_literal: true
 
 RSpec.describe 'Backoffice::Categories', type: :request do
-  pending do
-    it_behaves_like 'new', '/backoffice/categories/new.js'
-  end
-
   it_behaves_like 'edit', '/backoffice/categories/54/edit.js' do
     before { create :category, id: 54 }
   end
@@ -53,5 +49,11 @@ RSpec.describe 'Backoffice::Categories', type: :request do
     before { get '/backoffice/categories', xhr: true }
 
     it_behaves_like 'index.js'
+  end
+
+  describe 'GET /new.js' do
+    before { get '/backoffice/categories/new', xhr: true }
+
+    it_behaves_like 'new.js'
   end
 end

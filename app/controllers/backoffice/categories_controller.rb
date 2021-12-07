@@ -13,23 +13,15 @@ module Backoffice
     private
 
     def collection
-      @collection ||= Categories::GetCollectionService.call(params)
+      @collection ||= ::Categories::GetCollectionService.call(params)
+    end
+
+    def result
+      @result ||= ::Categories::GetResultService.call(action_name, params)
     end
 
     def resource_params
       params.require(:category).permit(:name, :income, :visible, :currency)
-    end
-
-    def resource
-      @resource ||= Category.find params[:id]
-    end
-
-    def initialize_resource
-      @resource = Category.new currency: params[:currency]
-    end
-
-    def build_resource
-      @resource = Category.new resource_params
     end
   end
 end

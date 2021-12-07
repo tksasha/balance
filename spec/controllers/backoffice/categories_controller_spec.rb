@@ -17,32 +17,22 @@ RSpec.describe Backoffice::CategoriesController, type: :controller do
     end
   end
 
-  describe '#resource' do
+  describe '#result' do
     context do
-      before { subject.instance_variable_set :@resource, :resource }
+      before { subject.instance_variable_set :@result, :result }
 
-      its(:resource) { should eq :resource }
+      its(:result) { should eq :result }
     end
 
     context do
-      before { allow(subject).to receive(:params).and_return(id: 27) }
+      before { allow(subject).to receive(:action_name).and_return(:action_name) }
 
-      before { allow(Category).to receive(:find).with(27).and_return(:resource) }
+      before { allow(subject).to receive(:params).and_return(:params) }
 
-      its(:resource) { should eq :resource }
+      before { allow(Categories::GetResultService).to receive(:call).with(:action_name, :params).and_return(:result) }
+
+      its(:result) { should eq :result }
     end
-  end
-
-  describe '#initialize_resource' do
-    let(:params) { { currency: 'usd', foo: 'bar' } }
-
-    before { allow(subject).to receive(:params).and_return(params) }
-
-    before { allow(Category).to receive(:new).with(currency: 'usd').and_return(:resource) }
-
-    before { subject.send :initialize_resource }
-
-    its(:resource) { should eq :resource }
   end
 
   describe '#resource_params' do
@@ -59,15 +49,5 @@ RSpec.describe Backoffice::CategoriesController, type: :controller do
     before { allow(subject).to receive(:params).and_return(params) }
 
     its(:resource_params) { should eq params.require(:category).permit! }
-  end
-
-  describe '#build_resource' do
-    before { allow(subject).to receive(:resource_params).and_return(:resource_params) }
-
-    before { allow(Category).to receive(:new).with(:resource_params).and_return(:resource) }
-
-    before { subject.send :build_resource }
-
-    its(:resource) { should eq :resource }
   end
 end
