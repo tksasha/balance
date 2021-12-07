@@ -1,5 +1,19 @@
 # frozen_string_literal: true
 
+# == Schema Information
+#
+# Table name: categories
+#
+#  id       :integer          not null, primary key
+#  currency :integer          default("uah")
+#  income   :boolean          default(FALSE)
+#  name     :string
+#  visible  :boolean          default(TRUE)
+#
+# Indexes
+#
+#  index_categories_on_name_and_currency  (name,currency) UNIQUE
+#
 class Category < ApplicationRecord
   validates :name, presence: true, uniqueness: { case_sensitive: false, scope: :currency }
 

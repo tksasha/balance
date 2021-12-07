@@ -4,12 +4,12 @@ source 'https://rubygems.org'
 
 ruby '3.0.3'
 
+gem 'annotate'
 gem 'bootsnap', require: false
 gem 'bootstrap'
 gem 'draper'
 gem 'faker'
 gem 'jquery-rails'
-gem 'kaminari'
 gem 'mini_racer'
 gem 'month'
 gem 'paper_trail'

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_02_27_094421) do
+ActiveRecord::Schema.define(version: 2021_12_07_074539) do
 
   create_table "cashes", force: :cascade do |t|
     t.decimal "sum", precision: 10, scale: 2
@@ -29,16 +29,6 @@ ActiveRecord::Schema.define(version: 2021_02_27_094421) do
     t.index ["name", "currency"], name: "index_categories_on_name_and_currency", unique: true
   end
 
-  create_table "exchange_rates", force: :cascade do |t|
-    t.integer "from", default: 0
-    t.integer "to", default: 0
-    t.decimal "rate", precision: 7, scale: 5
-    t.date "date"
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
-    t.index ["date", "from", "to"], name: "index_exchange_rates_on_date_and_from_and_to", unique: true
-  end
-
   create_table "items", force: :cascade do |t|
     t.date "date"
     t.decimal "sum", precision: 10, scale: 2, null: false
@@ -51,20 +41,6 @@ ActiveRecord::Schema.define(version: 2021_02_27_094421) do
     t.integer "currency", default: 0
     t.index ["date", "category_id"], name: "index_balans_items_on_date_and_category_id"
     t.index ["date"], name: "index_balans_items_on_date"
-  end
-
-  create_table "user_identities", force: :cascade do |t|
-    t.integer "user_id"
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
-  end
-
-  create_table "users", force: :cascade do |t|
-    t.string "email"
-    t.string "name"
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
-    t.string "password_digest"
   end
 
   create_table "versions", force: :cascade do |t|
