@@ -11,6 +11,8 @@ module Categories
     def call
       return ::Categories::InitializeService.call if new?
 
+      return ::Categories::GetResourceService.call(@params) if edit?
+
       "::Categories::#{ @action_name.camelize }Service".constantize.call(@params)
     end
 
@@ -18,6 +20,10 @@ module Categories
 
     def new?
       @action_name == 'new'
+    end
+
+    def edit?
+      @action_name == 'edit'
     end
   end
 end

@@ -21,5 +21,13 @@ RSpec.describe Categories::GetResultService do
 
       its(:call) { should eq :result }
     end
+
+    context do
+      let(:action_name) { 'edit' }
+
+      before { allow(Categories::GetResourceService).to receive(:call).and_return(:result) }
+
+      its(:call) { should eq :result }
+    end
   end
 end

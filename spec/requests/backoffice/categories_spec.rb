@@ -2,12 +2,6 @@
 
 RSpec.describe 'Backoffice::Categories', type: :request do
   pending do
-    it_behaves_like 'edit', '/backoffice/categories/54/edit.js' do
-      before { create :category, id: 54 }
-    end
-  end
-
-  pending do
     it_behaves_like 'update', '/backoffice/categories/54.js' do
       let :valid_params do
         { category: { name: 'Drinks' } }
@@ -55,5 +49,13 @@ RSpec.describe 'Backoffice::Categories', type: :request do
 
       it { expect(response).to have_http_status(:unprocessable_entity) }
     end
+  end
+
+  describe 'GET /edit.js' do
+    let(:category) { create :category }
+
+    before { get "/backoffice/categories/#{ category.id }/edit", xhr: true }
+
+    it_behaves_like 'edit.js'
   end
 end
