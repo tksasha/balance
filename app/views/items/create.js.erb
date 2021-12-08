@@ -14,7 +14,9 @@
     getInstance(el).
     hide();
 
-  $('#at_end').html('<%= money at_end %>');
+  setTimeout(function() {
+    $('#at_end').html('<%= money at_end %>');
 
-  $('#balance').html('<%= money balance %>');
+    $('#balance').html('<%= money balance %>');
+  }, 100);
 }());
