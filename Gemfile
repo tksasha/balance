@@ -14,7 +14,7 @@ gem 'mini_racer'
 gem 'month'
 gem 'paper_trail'
 gem 'puma'
-gem 'rails'
+gem 'rails', '~> 7.0.0rc3'
 gem 'rake'
 gem 'sassc-rails'
 gem 'sqlite3'
@@ -22,7 +22,7 @@ gem 'uglifier'
 
 group :development do
   gem 'brakeman', require: false
-  gem 'bullet'
+  # gem 'bullet'
   gem 'bundler-audit', require: false
   gem 'bundler-leak', require: false
   gem 'fasterer', require: false
