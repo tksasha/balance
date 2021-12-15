@@ -306,7 +306,7 @@ DEPENDENCIES
   month
   paper_trail
   puma
-  rails (~> 7.0.0rc1)
+  rails (~> 7.0.0rc3)
   rails-controller-testing
   rake
   rspec-activemodel-mocks
