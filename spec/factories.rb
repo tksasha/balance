@@ -16,7 +16,7 @@ FactoryBot.define do
   end
 
   factory :cash do
-    name { Faker::Lorem.word }
+    name { Faker::Company.industry }
 
     formula { '7 + 8' }
   end
