@@ -4,7 +4,7 @@ source 'https://rubygems.org'
 
 ruby '3.0.3'
 
-# gem 'annotate'
+gem 'annotate'
 gem 'bootsnap', require: false
 gem 'bootstrap'
 gem 'draper'
@@ -22,7 +22,7 @@ gem 'uglifier'
 
 group :development do
   gem 'brakeman', require: false
-  # gem 'bullet'
+  gem 'bullet'
   gem 'bundler-audit', require: false
   gem 'bundler-leak', require: false
   gem 'fasterer', require: false
