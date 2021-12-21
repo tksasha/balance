@@ -2,7 +2,7 @@
 
 FactoryBot.define do
   factory :category do
-    name { Faker::Commerce.department }
+    name { Faker::Commerce.department(max: 6) }
 
     currency { 'uah' }
   end

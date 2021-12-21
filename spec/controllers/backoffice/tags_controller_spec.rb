@@ -36,4 +36,29 @@ RSpec.describe Backoffice::TagsController, type: :controller do
       its(:collection) { should eq :collection }
     end
   end
+
+  describe '#result' do
+    context do
+      before { subject.instance_variable_set :@result, :result }
+
+      its(:result) { should eq :result }
+    end
+
+    context do
+      before { allow(subject).to receive(:action_name).and_return(:action_name) }
+
+      before { allow(subject).to receive(:category).and_return(:category) }
+
+      before { allow(subject).to receive(:params).and_return(:params) }
+
+      before do
+        allow(Tags::GetResultService)
+          .to receive(:call)
+          .with(:action_name, :category, :params)
+          .and_return(:result)
+      end
+
+      its(:result) { should eq :result }
+    end
+  end
 end

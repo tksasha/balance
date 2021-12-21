@@ -1,0 +1,13 @@
+<%= render 'form' %>
+
+<div class="d-none" id="breadcrumbs">
+  <%= breadcrumbs do %>
+    <%= link_to 'Категорії', [:backoffice, :categories], class: 'breadcrumb-item', data: { remote: true } %>
+
+    <span class="breadcrumb-item active"><%= category.name %></span>
+
+    <%= link_to 'Теги', [:backoffice, category, :tags], class: 'breadcrumb-item', data: { remote: true } %>
+
+    <span class="breadcrumb-item active">Додавання тегу</span>
+  <% end %>
+</div>

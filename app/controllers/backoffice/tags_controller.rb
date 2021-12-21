@@ -13,5 +13,9 @@ module Backoffice
     def collection
       @collection ||= ::Tags::GetCollectionService.call(category)
     end
+
+    def result
+      @result ||= ::Tags::GetResultService.call(action_name, category, params)
+    end
   end
 end

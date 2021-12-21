@@ -1,3 +1,8 @@
+<div class="mb-4">
+  <%= link_to 'Додати', [:new, :backoffice, category, :tag],
+    class: 'btn btn-sm btn-outline-success', data: { remote: true } %>
+</div>
+
 <% if collection.any? %>
   <%= render collection %>
 <% else %>

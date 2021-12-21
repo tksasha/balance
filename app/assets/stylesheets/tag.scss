@@ -1,8 +1,12 @@
 .tag {
-  @extend .border, .rounded-pill, .clearfix, .d-inline-block, .p-1, .text-muted;
+  @extend .border, .rounded-pill, .clearfix, .d-inline-block, .p-1, .text-dark, .border-secondary;
+
+  opacity: 0.6;
+  font-size: 12px;
 
   &:hover {
     cursor: pointer;
+    opacity: 1.0;
   }
 }
 
@@ -12,10 +16,4 @@
 
 .tag-close {
   @extend .btn-close, .float-end, .ps-2, .pe-2;
-
-  opacity: 0.1;
-
-  &:hover {
-    opacity: 0.5;
-  }
 }
