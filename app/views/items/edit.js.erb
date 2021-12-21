@@ -17,6 +17,11 @@
     add('d-none');
 
   document.
+    querySelector('.modal-dialog').
+    classList.
+    remove('modal-lg');
+
+  document.
     querySelector('.modal-body').
     innerHTML = '<%= j render 'form' %>';
 

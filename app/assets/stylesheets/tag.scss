@@ -1,19 +1,13 @@
 .tag {
-  @extend .border, .rounded-pill, .clearfix, .d-inline-block, .p-1, .text-dark, .border-secondary;
+  @extend .border, .rounded, .clearfix, .d-inline-block, .p-1, .ps-2, .pe-2, .m-1, .text-dark, .border-light;
 
-  opacity: 0.6;
   font-size: 12px;
 
   &:hover {
     cursor: pointer;
-    opacity: 1.0;
   }
-}
 
-.tag-name {
-  @extend .float-start, .ps-2;
-}
-
-.tag-close {
-  @extend .btn-close, .float-end, .ps-2, .pe-2;
+  &.active {
+    @extend .text-light, .bg-secondary;
+  }
 }
