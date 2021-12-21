@@ -24,6 +24,7 @@
 #
 #  category_id  (category_id => categories.id)
 #
+
 class Consolidation < Item
   delegate :name, :income?, to: :category
 

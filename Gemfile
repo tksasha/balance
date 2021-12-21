@@ -4,7 +4,7 @@ source 'https://rubygems.org'
 
 ruby '3.0.3'
 
-gem 'annotate'
+gem 'annotate', git: 'git@github.com:sebyx07/annotate_models.git'
 gem 'bootsnap', require: false
 gem 'bootstrap'
 gem 'draper'

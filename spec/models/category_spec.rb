@@ -1,6 +1,8 @@
 # frozen_string_literal: true
 
 RSpec.describe Category, type: :model do
+  it { should have_many(:tags).dependent(:restrict_with_exception) }
+
   it { should validate_presence_of :name }
 
   it { should validate_uniqueness_of(:name).case_insensitive.scoped_to(:currency) }

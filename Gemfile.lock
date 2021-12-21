@@ -1,3 +1,11 @@
+GIT
+  remote: git@github.com:sebyx07/annotate_models.git
+  revision: dd57d470f074f4f9cccd4909ac4a038d4ee7f915
+  specs:
+    annotate (3.1.1)
+      activerecord (>= 3.2, < 8.0)
+      rake (>= 10.4, < 14.0)
+
 GEM
   remote: https://rubygems.org/
   specs:
@@ -64,9 +72,6 @@ GEM
       i18n (>= 1.6, < 2)
       minitest (>= 5.1)
       tzinfo (~> 2.0)
-    annotate (2.6.5)
-      activerecord (>= 2.3.0)
-      rake (>= 0.8.7)
     ast (2.4.2)
     autoprefixer-rails (10.3.3.0)
       execjs (~> 2)
@@ -288,7 +293,7 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
-  annotate
+  annotate!
   bootsnap
   bootstrap
   brakeman

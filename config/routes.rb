@@ -13,7 +13,9 @@ Rails.application.routes.draw do
     namespace :backoffice do
       resources :cashes, except: :show
 
-      resources :categories
+      resources :categories do
+        resources :tags, only: :index
+      end
     end
 
     get '(/:month)(/:category_id)', to: 'items#index', as: :root

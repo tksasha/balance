@@ -20,4 +20,10 @@ FactoryBot.define do
 
     formula { '7 + 8' }
   end
+
+  factory :tag do
+    name { Faker::Commerce.color }
+
+    category
+  end
 end

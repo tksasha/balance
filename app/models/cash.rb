@@ -15,6 +15,7 @@
 #
 #  index_cashes_on_name_and_currency  (name,currency) UNIQUE
 #
+
 class Cash < ApplicationRecord
   include ActsAsHasFormula
 

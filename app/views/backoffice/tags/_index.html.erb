@@ -1,0 +1,17 @@
+<% if collection.any? %>
+  <%= render collection %>
+<% else %>
+  <div class="alert alert-warning">
+    Немає тегів для відображення
+  </div>
+<% end %>
+
+<div class="d-none" id="breadcrumbs">
+  <%= breadcrumbs do %>
+    <%= link_to 'Категорії', [:backoffice, :categories], class: 'breadcrumb-item', data: { remote: true } %>
+
+    <span class="breadcrumb-item active"><%= category.name %></span>
+
+    <span class="breadcrumb-item active">Теги</span>
+  <% end %>
+</div>
