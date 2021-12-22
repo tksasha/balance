@@ -14,7 +14,7 @@
       { class: 'form-select', data: { width: '100%' } } %>
   </div>
 
-  <div class="form-group mt-3 clearfix">
+  <div class="form-group mt-3">
     <%= render partial: 'backoffice/tags/tag', collection: resource.category.tags %>
   </div>
 
@@ -26,12 +26,12 @@
 
   <div class="form-group mt-4">
     <div class="float-start">
-      <%= f.submit class: 'btn btn-primary' %>
+      <%= f.submit class: 'btn btn-outline-primary' %>
     </div>
 
     <%= content_tag :div, class: 'float-end' do %>
       <%= link_to 'Видалити', resource,
-        data: { method: :delete, confirm: t(:destroy_confirmation), remote: true }, class: 'btn text-danger' %>
+        data: { method: :delete, confirm: t(:destroy_confirmation), remote: true }, class: 'btn btn-outline-danger' %>
     <% end unless resource.new_record? %>
   </div>
 <% end %>

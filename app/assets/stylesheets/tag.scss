@@ -1,13 +1,3 @@
 .tag {
-  @extend .border, .rounded, .clearfix, .d-inline-block, .p-1, .ps-2, .pe-2, .m-1, .text-dark, .border-light;
-
-  font-size: 12px;
-
-  &:hover {
-    cursor: pointer;
-  }
-
-  &.active {
-    @extend .text-light, .bg-secondary;
-  }
+  @extend .btn, .btn-sm, .btn-outline-light, .mt-2, .me-1, .text-secondary;
 }
