@@ -1,3 +1,7 @@
 .tag {
-  @extend .btn, .btn-sm, .btn-outline-light, .mt-2, .me-1, .text-secondary;
+  @extend .btn, .btn-sm, .btn-outline-light, .me-1, .text-secondary;
+}
+
+#tags-list .tag {
+  @extend .mt-2;
 }

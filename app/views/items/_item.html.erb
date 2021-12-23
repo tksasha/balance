@@ -12,6 +12,8 @@
   </td>
 
   <td>
+    <%= render item.tags if item.tags.any? %>
+
     <%= item.description %>
   </td>
 </tr>

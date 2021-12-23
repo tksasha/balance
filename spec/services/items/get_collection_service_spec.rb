@@ -10,11 +10,11 @@ RSpec.describe Items::GetCollectionService do
       #
       # Item
       # .order(date: :desc)
-      # .includes(:category) -> :items
+      # .includes(:category, :tags) -> :items
       #
       allow(Item).to receive(:order).with(date: :desc) do
         double.tap do |a|
-          allow(a).to receive(:includes).with(:category).and_return(:items)
+          allow(a).to receive(:includes).with(:category, :tags).and_return(:items)
         end
       end
     end
