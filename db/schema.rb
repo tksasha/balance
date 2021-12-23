@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_12_20_074913) do
+ActiveRecord::Schema.define(version: 2021_12_22_120942) do
 
   create_table "cashes", force: :cascade do |t|
     t.decimal "sum", precision: 10, scale: 2
@@ -41,6 +41,11 @@ ActiveRecord::Schema.define(version: 2021_12_20_074913) do
     t.integer "currency", default: 0
     t.index ["date", "category_id"], name: "index_balans_items_on_date_and_category_id"
     t.index ["date"], name: "index_balans_items_on_date"
+  end
+
+  create_table "items_tags", id: false, force: :cascade do |t|
+    t.integer "item_id", null: false
+    t.integer "tag_id", null: false
   end
 
   create_table "tags", force: :cascade do |t|

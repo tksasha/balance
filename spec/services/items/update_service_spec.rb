@@ -11,7 +11,8 @@ RSpec.describe Items::UpdateService do
         formula: nil,
         category_id: nil,
         description: nil,
-        currency: nil
+        currency: nil,
+        tag_ids: []
       }
     )
   end

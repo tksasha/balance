@@ -11,3 +11,9 @@ RSpec.shared_examples 'index.html' do
 
   it { expect(response.content_type).to eq 'text/html; charset=utf-8' }
 end
+
+RSpec.shared_examples 'index.json' do
+  it { should render_template :index }
+
+  it { expect(response.content_type).to eq 'application/json; charset=utf-8' }
+end

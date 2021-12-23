@@ -5,7 +5,7 @@ class ApplicationController < ActionController::Base
 
   protect_from_forgery
 
-  helper_method :collection, :resource
+  helper_method :collection, :resource, :serializer
 
   # TODO: spec me
   def default_url_options

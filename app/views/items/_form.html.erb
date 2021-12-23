@@ -15,7 +15,13 @@
   </div>
 
   <div class="form-group mt-1">
-    <%= render partial: 'backoffice/tags/tag', collection: resource.category.tags %>
+    <div class="d-flex justify-content-center mt-2" id="tags-spinner">
+      <div class="spinner-border spinner-border-sm text-primary"></div>
+    </div>
+
+    <div id="tags-list"></div>
+
+    <div id="tags-to-send"></div>
   </div>
 
   <div class="form-group mt-3">

@@ -67,6 +67,9 @@ Rails/SkipsModelValidations:
 Rails/FilePath:
   EnforcedStyle: arguments
 
+Rails/HasAndBelongsToMany:
+  Enabled: false
+
 # Style
 Style/Documentation:
   Enabled: false

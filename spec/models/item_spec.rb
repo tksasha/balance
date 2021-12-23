@@ -15,6 +15,8 @@ RSpec.describe Item, type: :model do
 
   it { should belong_to :category }
 
+  it { should have_and_belong_to_many :tags }
+
   it { should define_enum_for(:currency).with_values(%w[uah usd rub]) }
 
   describe '.income' do

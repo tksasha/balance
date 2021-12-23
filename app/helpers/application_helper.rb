@@ -86,4 +86,8 @@ module ApplicationHelper
   # rubocop:enable Metrics/AbcSize
   # rubocop:enable Metrics/MethodLength
   # rubocop:enable Naming/MethodParameterName
+
+  def serialized_collection
+    collection.map { |item| serializer(item) }
+  end
 end

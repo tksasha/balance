@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-RSpec.describe Tags::InitializeService do
+RSpec.describe Backoffice::Tags::InitializeService do
   subject { described_class.new category }
 
   let(:category) { build :category }

@@ -2,7 +2,7 @@
 
 FactoryBot.define do
   factory :category do
-    name { Faker::Commerce.department(max: 6) }
+    name { SecureRandom.uuid }
 
     currency { 'uah' }
   end
@@ -16,13 +16,13 @@ FactoryBot.define do
   end
 
   factory :cash do
-    name { Faker::Company.industry }
+    name { SecureRandom.uuid }
 
     formula { '7 + 8' }
   end
 
   factory :tag do
-    name { Faker::Commerce.color }
+    name { SecureRandom.uuid }
 
     category
   end

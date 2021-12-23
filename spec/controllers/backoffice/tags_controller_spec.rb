@@ -31,7 +31,12 @@ RSpec.describe Backoffice::TagsController, type: :controller do
     context do
       before { allow(subject).to receive(:category).and_return(:category) }
 
-      before { allow(Tags::GetCollectionService).to receive(:call).with(:category).and_return(:collection) }
+      before do
+        allow(Backoffice::Tags::GetCollectionService)
+          .to receive(:call)
+          .with(:category)
+          .and_return(:collection)
+      end
 
       its(:collection) { should eq :collection }
     end
@@ -52,7 +57,7 @@ RSpec.describe Backoffice::TagsController, type: :controller do
       before { allow(subject).to receive(:params).and_return(:params) }
 
       before do
-        allow(Tags::GetResultService)
+        allow(Backoffice::Tags::GetResultService)
           .to receive(:call)
           .with(:action_name, :category, :params)
           .and_return(:result)

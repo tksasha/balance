@@ -1,16 +1,6 @@
 (function() {
   const el = document.querySelector('.modal');
 
-  el.addEventListener('shown.bs.modal', function() {
-    $('.modal').
-      find('.datepicker').
-      datepicker(BOOTSTRAP_DATEPICKER_DEFAULTS);
-
-    $('.modal')
-      .find('#item_formula')
-      .focus();
-  });
-
   document.
     querySelector('.modal-header').
     classList.
@@ -22,13 +12,96 @@
     remove('modal-lg');
 
   document.
+    querySelector('.modal-footer').
+    classList.
+    add('d-none');
+
+  document.
     querySelector('.modal-body').
     innerHTML = '<%= j render 'form' %>';
 
   document.
-    querySelector('.modal-footer').
+    getElementById('tags-spinner').
     classList.
-    add('d-none');
+    remove('d-none');
+
+  document.
+    getElementById('tags-list').
+    innerHTML = '';
+
+  // load tags
+  (function() {
+    const tag_ids = JSON.parse('<%= resource.tag_ids %>');
+
+    const url = '<%= url_for [resource.category, :tags] %>';
+
+    const render_tags_to_send = function() {
+      let html = '';
+
+      for(const tag of document.querySelectorAll('#tags-list .tag.active')) {
+        html += '<input type="hidden" name="item[tag_ids][]" value="' + tag.dataset.id + '">'
+      }
+
+      document.
+        getElementById('tags-to-send').
+        innerHTML = html;
+    };
+
+    const success = function(tags) {
+      let html = '';
+
+      for(const tag of tags) {
+        let classes = 'tag';
+
+        if(tag_ids.includes(tag.id)) {
+          classes += ' active';
+        }
+
+        html += '<div data-id="' + tag.id + '" class="' + classes + '">' + tag.name + '</div>';
+      }
+
+      document.
+        getElementById('tags-spinner').
+        classList.
+        add('d-none');
+
+      document.
+        getElementById('tags-list').
+        innerHTML = html;
+
+      render_tags_to_send();
+
+      for(const tag of document.querySelectorAll('#tags-list .tag')) {
+        tag.addEventListener('click', function() {
+          this.classList.toggle('active');
+
+          render_tags_to_send();
+        });
+      }
+    };
+
+    $.getJSON(url, success)
+  }());
+
+  const show = function() {
+    $('.modal').
+      find('.datepicker').
+      datepicker(BOOTSTRAP_DATEPICKER_DEFAULTS);
+
+    $('.modal')
+      .find('#item_formula')
+      .focus();
+  };
+
+  const hide = function() {
+    el.removeEventListener('shown.bs.modal', show);
+
+    el.removeEventListener('hide.bs.modal', hide);
+  }
+
+  el.addEventListener('shown.bs.modal', show);
+
+  el.addEventListener('hide.bs.modal', hide);
 
   const modal = bootstrap.Modal.getOrCreateInstance(el);
 

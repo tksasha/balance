@@ -11,11 +11,11 @@ module Backoffice
     helper_method :category
 
     def collection
-      @collection ||= ::Tags::GetCollectionService.call(category)
+      @collection ||= ::Backoffice::Tags::GetCollectionService.call(category)
     end
 
     def result
-      @result ||= ::Tags::GetResultService.call(action_name, category, params)
+      @result ||= ::Backoffice::Tags::GetResultService.call(action_name, category, params)
     end
   end
 end
