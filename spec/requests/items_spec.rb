@@ -8,9 +8,11 @@ RSpec.describe 'Items', type: :request do
   end
 
   describe 'GET /index.js' do
-    before { create_list :item, 2 }
+    let(:tag) { create :tag }
 
-    before { get '/items', xhr: true }
+    before { create_list :item, 2, tags: [tag] }
+
+    before { get '/uah/items', xhr: true }
 
     it_behaves_like 'index.js'
   end

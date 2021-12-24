@@ -8,7 +8,7 @@ FactoryBot.define do
   end
 
   factory :item do
-    date { Date.new 2019, 11, 13 }
+    date { Time.zone.today }
 
     category
 
