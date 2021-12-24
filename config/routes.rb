@@ -10,7 +10,7 @@ Rails.application.routes.draw do
 
     resources :cashes, only: %i[index edit update]
 
-    resource :backoffice, only: :show, controller: :backoffice
+    resource :backoffice, only: :show, controller: 'backoffice/dashboard'
 
     resources :consolidations, only: :index
 
