@@ -36,4 +36,30 @@ RSpec.describe 'Backoffice::Tags', type: :request do
       it_behaves_like 'new.js'
     end
   end
+
+  describe 'GET /edit.js' do
+    let(:tag) { create :tag }
+
+    before { get "/backoffice/tags/#{ tag.id }/edit", xhr: true }
+
+    it_behaves_like 'edit.js'
+  end
+
+  describe 'PATCH /update.js' do
+    let(:tag) { create :tag }
+
+    before { patch "/backoffice/tags/#{ tag.id }", params: params, xhr: true }
+
+    context 'with valid params' do
+      let(:params) { { tag: { name: SecureRandom.uuid } } }
+
+      it_behaves_like 'update.js'
+    end
+
+    context 'with invalid params' do
+      let(:params) { { tag: { name: '' } } }
+
+      it_behaves_like 'edit.js'
+    end
+  end
 end

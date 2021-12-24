@@ -18,6 +18,14 @@ RSpec.describe Backoffice::TagsController, type: :controller do
       its(:category) { should eq :category }
     end
 
+    context do
+      let(:params) { {} }
+
+      before { allow(subject).to receive(:params).and_return(params) }
+
+      its(:category) { should be_nil }
+    end
+
     its(:_helper_methods) { should include :category }
   end
 

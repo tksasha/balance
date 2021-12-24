@@ -14,6 +14,10 @@ module Backoffice
       def call
         return ::Backoffice::Tags::InitializeService.call(@category) if new?
 
+        return ::Backoffice::Tags::GetResourceService.call(@params) if edit?
+
+        return ::Backoffice::Tags::UpdateService.call(@params) if update?
+
         "::Backoffice::Tags::#{ @action_name.camelize }Service".constantize.call(@category, @params)
       end
 
@@ -21,6 +25,14 @@ module Backoffice
 
       def new?
         @action_name == 'new'
+      end
+
+      def edit?
+        @action_name == 'edit'
+      end
+
+      def update?
+        @action_name == 'update'
       end
     end
   end

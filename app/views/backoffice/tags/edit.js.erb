@@ -1,0 +1,15 @@
+(function(){
+  document.
+    querySelector('.modal-body').
+    innerHTML = '<%= j render 'edit' %>';
+
+  const breadcrumbs = document.getElementById('breadcrumbs');
+
+  document.
+    querySelector('.modal-title').
+    innerHTML = breadcrumbs.innerHTML;
+
+  document.
+    getElementById('tag_name').
+    focus();
+}());

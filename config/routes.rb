@@ -18,7 +18,7 @@ Rails.application.routes.draw do
       resources :cashes, except: :show
 
       resources :categories do
-        resources :tags, only: %i[index new create]
+        resources :tags, only: %i[index new create edit update], shallow: true
       end
     end
 

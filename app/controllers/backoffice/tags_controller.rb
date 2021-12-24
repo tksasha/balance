@@ -5,7 +5,7 @@ module Backoffice
     private
 
     def category
-      @category ||= Category.find(params[:category_id])
+      @category ||= (Category.find(params[:category_id]) if params[:category_id].present?)
     end
 
     helper_method :category

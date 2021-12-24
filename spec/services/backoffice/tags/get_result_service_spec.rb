@@ -23,5 +23,21 @@ RSpec.describe Backoffice::Tags::GetResultService do
 
       its(:call) { should eq :result }
     end
+
+    context do
+      let(:action_name) { 'edit' }
+
+      before { allow(Backoffice::Tags::GetResourceService).to receive(:call).with(params).and_return(:result) }
+
+      its(:call) { should eq :result }
+    end
+
+    context do
+      let(:action_name) { 'update' }
+
+      before { allow(Backoffice::Tags::UpdateService).to receive(:call).with(params).and_return(:result) }
+
+      its(:call) { should eq :result }
+    end
   end
 end
