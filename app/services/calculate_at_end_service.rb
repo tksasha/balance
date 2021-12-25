@@ -1,10 +1,8 @@
 # frozen_string_literal: true
 
 class CalculateAtEndService < ApplicationService
-  attr_reader :currency
-
-  def initialize(params)
-    self.currency = params[:currency]
+  def initialize(currency)
+    @currency = ParseCurrencyService.call(currency)
   end
 
   def call
@@ -12,10 +10,6 @@ class CalculateAtEndService < ApplicationService
   end
 
   private
-
-  def currency=(object)
-    @currency = ParseCurrencyService.call(object)
-  end
 
   def search_by_currency
     Item.where(currency: @currency)

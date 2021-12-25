@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-RSpec.describe ApplicationHelper, type: :helper do
+RSpec.describe MoneyHelper, type: :helper do
   subject { helper }
 
   describe '#money' do

@@ -5,10 +5,6 @@ module ApplicationHelper
     %w[Січень Лютий Березень Квітень Травень Червень Липень Серпень Вересень Жовтень Листопад Грудень]
   end
 
-  def money(sum)
-    number_with_delimiter format('%.2f', sum)
-  end
-
   def decorated
     resource.decorate
   end
@@ -27,14 +23,6 @@ module ApplicationHelper
 
   def category_widget_data
     @category_widget_data ||= CategoryWidgetDataSearcher.search(params)
-  end
-
-  def at_end
-    @at_end ||= CalculateAtEndService.call(params)
-  end
-
-  def balance
-    @balance ||= CalculateBalanceService.call(params)
   end
 
   def currency_from_params

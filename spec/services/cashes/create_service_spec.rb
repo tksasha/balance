@@ -5,6 +5,8 @@ RSpec.describe Cashes::CreateService do
 
   let(:params) { acp({ cash: { name: nil, formula: nil, currency: nil } }) }
 
+  it { should be_an ActsAsUpdateBalanceViaWebsocketService }
+
   its(:resource_params) { should eq params.require(:cash).permit! }
 
   describe '#cash' do
@@ -23,6 +25,8 @@ RSpec.describe Cashes::CreateService do
     end
   end
 
+  it { should delegate_method(:currency).to(:cash) }
+
   describe '#call' do
     let(:cash) { stub_model Cash }
 
@@ -30,6 +34,8 @@ RSpec.describe Cashes::CreateService do
 
     context do
       before { allow(cash).to receive(:save).and_return(true) }
+
+      before { expect(subject).to receive(:update_balance_via_websocket) }
 
       its(:call) { should be_success }
 

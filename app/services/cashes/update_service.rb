@@ -2,14 +2,18 @@
 
 module Cashes
   class UpdateService < ApplicationService
+    include ActsAsUpdateBalanceViaWebsocketService
+
     def initialize(params)
       @params = params
     end
 
     def call
-      return Success.new(cash) if cash.update(resource_params)
+      return Failure.new(cash) unless cash.update(resource_params)
 
-      Failure.new(cash)
+      update_balance_via_websocket
+
+      Success.new(cash)
     end
 
     private
@@ -21,5 +25,7 @@ module Cashes
     def cash
       @cash ||= Cash.find(@params[:id])
     end
+
+    delegate :currency, to: :cash
   end
 end

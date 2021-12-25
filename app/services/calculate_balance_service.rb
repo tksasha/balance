@@ -1,10 +1,8 @@
 # frozen_string_literal: true
 
 class CalculateBalanceService < ApplicationService
-  attr_reader :currency
-
-  def initialize(params)
-    self.currency = params[:currency]
+  def initialize(currency)
+    @currency = ParseCurrencyService.call(currency)
   end
 
   def call
@@ -13,12 +11,8 @@ class CalculateBalanceService < ApplicationService
 
   private
 
-  def currency=(object)
-    @currency = ParseCurrencyService.call(object)
-  end
-
   def at_end
-    CalculateAtEndService.call(currency: @currency)
+    CalculateAtEndService.call(@currency)
   end
 
   def sum

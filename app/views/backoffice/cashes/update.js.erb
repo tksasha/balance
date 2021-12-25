@@ -1,5 +1,5 @@
 (function() {
-  $.getScript('<%= url_for :cashes %>');
+  $.getScript('<%= backoffice_cashes_path %>');
 
-  $.getScript('<%= url_for [:backoffice, :cashes] %>');
+  $.getScript('<%= cashes_path %>');
 }());

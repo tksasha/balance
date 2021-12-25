@@ -5,6 +5,8 @@ RSpec.describe Cashes::DestroyService do
 
   let(:params) { { id: 16 } }
 
+  it { should be_an ActsAsUpdateBalanceViaWebsocketService }
+
   describe '#cash' do
     context do
       before { subject.instance_variable_set :@cash, :cash }
@@ -19,6 +21,8 @@ RSpec.describe Cashes::DestroyService do
     end
   end
 
+  it { should delegate_method(:currency).to(:cash) }
+
   describe '#call' do
     let(:cash) { stub_model Cash }
 
@@ -26,6 +30,8 @@ RSpec.describe Cashes::DestroyService do
 
     context do
       before { allow(cash).to receive(:destroy).and_return(true) }
+
+      before { expect(subject).to receive(:update_balance_via_websocket) }
 
       its(:call) { should be_success }
 

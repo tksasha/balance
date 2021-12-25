@@ -3,9 +3,10 @@
 require_relative 'boot'
 
 %w[
-  active_record/railtie
+  action_cable/engine
   action_controller/railtie
   action_view/railtie
+  active_record/railtie
   sprockets/railtie
 ].each do |railtie|
   require railtie

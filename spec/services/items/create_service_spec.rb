@@ -15,6 +15,10 @@ RSpec.describe Items::CreateService do
     )
   end
 
+  it { should be_an ActsAsUpdateAtEndViaWebsocketService }
+
+  it { should be_an ActsAsUpdateBalanceViaWebsocketService }
+
   its(:resource_params) { should eq params.require(:item).permit! }
 
   describe '#item' do
@@ -33,6 +37,8 @@ RSpec.describe Items::CreateService do
     end
   end
 
+  it { should delegate_method(:currency).to(:item) }
+
   describe '#call' do
     let(:item) { stub_model Item }
 
@@ -40,6 +46,8 @@ RSpec.describe Items::CreateService do
 
     context do
       before { allow(item).to receive(:save).and_return(true) }
+
+      before { expect(subject).to receive_message_chain(:update_at_end_via_websocket, :update_balance_via_websocket) }
 
       its(:call) { should be_success }
 

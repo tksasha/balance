@@ -2,14 +2,20 @@
 
 module Items
   class UpdateService < ApplicationService
+    include ActsAsUpdateAtEndViaWebsocketService
+    include ActsAsUpdateBalanceViaWebsocketService
+
     def initialize(params)
       @params = params
     end
 
     def call
-      return Success.new(item) if item.update(resource_params)
+      return Failure.new(item) unless item.update(resource_params)
 
-      Failure.new(item)
+      update_at_end_via_websocket
+        .update_balance_via_websocket
+
+      Success.new(item)
     end
 
     private
@@ -21,5 +27,7 @@ module Items
     def item
       @item ||= Item.find(@params[:id])
     end
+
+    delegate :currency, to: :item
   end
 end

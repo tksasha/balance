@@ -2,14 +2,18 @@
 
 module Cashes
   class DestroyService < ApplicationService
+    include ActsAsUpdateBalanceViaWebsocketService
+
     def initialize(params)
       @id = params[:id]
     end
 
     def call
-      return Success.new(cash) if cash.destroy
+      return Failure.new(cash) unless cash.destroy
 
-      Failure.new(cash)
+      update_balance_via_websocket
+
+      Success.new(cash)
     end
 
     private
@@ -17,5 +21,7 @@ module Cashes
     def cash
       @cash ||= Cash.find(@id)
     end
+
+    delegate :currency, to: :cash
   end
 end

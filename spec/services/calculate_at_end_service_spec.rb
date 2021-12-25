@@ -1,17 +1,13 @@
 # frozen_string_literal: true
 
 RSpec.describe CalculateAtEndService do
-  subject { described_class.new params }
+  subject { described_class.new currency }
 
-  let(:params) { { currency: 'usd' } }
-
-  it { should be_an ApplicationService }
-
-  its(:currency) { should eq 'usd' }
+  let(:currency) { 'usd' }
 
   describe '#search_by_currency' do
     context do
-      let(:params) { { currency: '' } }
+      let(:currency) { '' }
 
       before { allow(Item).to receive(:where).with(currency: 'uah').and_return(:collection) }
 
@@ -19,7 +15,7 @@ RSpec.describe CalculateAtEndService do
     end
 
     context do
-      let(:params) { { currency: 'usd' } }
+      let(:currency) { 'usd' }
 
       before { allow(Item).to receive(:where).with(currency: 'usd').and_return(:collection) }
 
@@ -74,13 +70,13 @@ RSpec.describe CalculateAtEndService do
   end
 
   describe '.call' do
-    subject { described_class.call(currency: 'uah') }
+    subject { described_class.call('uah') }
 
     before do
       #
-      # described_class.new(currency: 'uah').call -> 19
+      # described_class.new('uah').call -> 19
       #
-      allow(described_class).to receive(:new).with(currency: 'uah') do
+      allow(described_class).to receive(:new).with('uah') do
         double.tap { |a| allow(a).to receive(:call).and_return(19) }
       end
     end
