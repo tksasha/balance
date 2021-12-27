@@ -2,9 +2,9 @@
 
 source 'https://rubygems.org'
 
-ruby '3.0.3'
+ruby '~> 3.0.0'
 
-gem 'annotate', git: 'git@github.com:sebyx07/annotate_models.git'
+gem 'annotate', github: 'dabit/annotate_models', branch: 'rails-7'
 gem 'bootsnap', require: false
 gem 'bootstrap'
 gem 'draper'
