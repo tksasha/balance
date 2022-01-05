@@ -9,11 +9,5 @@
 }
 
 #item-inline-form #tags-list {
-  @extend .d-inline-block;
-
   margin-left: 32%;
-
-  & .tag {
-    @extend .mt-1;
-  }
 }
