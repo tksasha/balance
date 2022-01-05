@@ -2,15 +2,11 @@
   <%= f.hidden_field :currency %>
 
   <div class="form-group">
-    <%= f.label :name %>
-
-    <%= f.text_field :name, class: 'form-control' %>
+    <%= input(f, :name) %>
   </div>
 
   <div class="form-group mt-3">
-    <%= f.label :formula %>
-
-    <%= f.text_field :formula, class: 'form-control' %>
+    <%= input(f, :formula) %>
   </div>
 
   <div class="form-group mt-4">

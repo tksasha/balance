@@ -33,7 +33,7 @@ RSpec.describe Cashes::GetResultService, type: :service do
     context do
       let(:action_name) { 'new' }
 
-      before { allow(Cashes::InitializeService).to receive(:call).and_return(:result) }
+      before { allow(Cashes::InitializeService).to receive(:call).with(params).and_return(:result) }
 
       its(:call) { should eq :result }
     end

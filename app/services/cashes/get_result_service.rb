@@ -9,7 +9,7 @@ module Cashes
     end
 
     def call
-      return ::Cashes::InitializeService.call if new?
+      return ::Cashes::InitializeService.call(@params) if new?
 
       return ::Cashes::GetResourceService.call(@params) if show? || edit?
 

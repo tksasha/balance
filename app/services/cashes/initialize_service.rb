@@ -2,6 +2,10 @@
 
 module Cashes
   class InitializeService < ApplicationService
+    def initialize(params)
+      @currency = ParseCurrencyService.call(params.fetch(:currency, nil))
+    end
+
     def call
       Success.new(cash)
     end
@@ -9,7 +13,7 @@ module Cashes
     private
 
     def cash
-      Cash.new
+      Cash.new(currency: @currency)
     end
   end
 end
