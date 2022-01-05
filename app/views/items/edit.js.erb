@@ -20,20 +20,22 @@
     querySelector('.modal-body').
     innerHTML = '<%= j render 'form' %>';
 
-  document.
-    getElementById('tags-spinner').
+  const form = el.querySelector('form');
+
+  form.
+    querySelector('#tags-spinner').
     classList.
     remove('d-none');
 
-  document.
-    getElementById('tags-list').
+  form.
+    querySelector('#tags-list').
     innerHTML = '';
 
   const tag_ids = JSON.parse('<%= resource.tag_ids %>');
 
   const url = '<%= url_for [resource.category, :tags] %>';
 
-  items.tags.Load(url, tag_ids);
+  items.tags.Load(form, url, tag_ids);
 
   const show = function() {
     $('.modal').
@@ -46,15 +48,7 @@
 
     document.
       querySelector('.modal-body #item_category_id').
-      addEventListener('change', function() {
-        const category_id = this.value;
-
-        const url = '/categories/' + category_id + '/tags';
-
-        <%# items.tags.Clear(); %>
-
-        items.tags.Load(url, tag_ids);
-      });
+      addEventListener('change', function() { items.category.OnChange(form) });
   };
 
   const hide = function() {

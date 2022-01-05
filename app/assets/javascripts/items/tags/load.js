@@ -1,20 +1,4 @@
-items.tags.Load = function(url, tag_ids) {
-  const render_tags_to_send = function() {
-    let html = '';
-
-    for(const tag of document.querySelectorAll('#tags-list .tag.active')) {
-      html += '<input type="hidden" name="item[tag_ids][]" value="' + tag.dataset.id + '">'
-    }
-
-    if(0 == html.length) {
-      html = '<input type="hidden" name="item[tag_ids][]">';
-    }
-
-    document.
-      getElementById('tags-to-send').
-      innerHTML = html;
-  };
-
+items.tags.Load = function(form, url, tag_ids) {
   const success = function(tags) {
     let html = '';
 
@@ -28,24 +12,18 @@ items.tags.Load = function(url, tag_ids) {
       html += '<div data-id="' + tag.id + '" class="' + classes + '">' + tag.name + '</div>';
     }
 
-    document.
-      getElementById('tags-spinner').
+    form.
+      querySelector('#tags-spinner').
       classList.
       add('d-none');
 
-    document.
-      getElementById('tags-list').
+    form.
+      querySelector('#tags-list').
       innerHTML = html;
 
-    render_tags_to_send();
+    items.tags.Render(form);
 
-    for(const tag of document.querySelectorAll('#tags-list .tag')) {
-      tag.addEventListener('click', function() {
-        this.classList.toggle('active');
-
-        render_tags_to_send();
-      });
-    }
+    items.tags.OnClick(form);
   };
 
   $.getJSON(url, success)

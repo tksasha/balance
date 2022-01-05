@@ -21,7 +21,7 @@ module Items
     private
 
     def resource_params
-      @params.require(:item).permit(:date, :formula, :category_id, :description, :currency)
+      @params.require(:item).permit(:date, :formula, :category_id, :description, :currency, tag_ids: [])
     end
 
     def item

@@ -1,7 +1,19 @@
 .tag {
   @extend .btn, .btn-sm, .btn-outline-light, .me-1, .text-secondary;
+
+  font-size: 0.75rem;
 }
 
 #tags-list .tag {
-  @extend .mt-2;
+  @extend .mt-1;
+}
+
+#item-inline-form #tags-list {
+  @extend .d-inline-block;
+
+  margin-left: 32%;
+
+  & .tag {
+    @extend .mt-1;
+  }
 }
