@@ -27,9 +27,7 @@
     classList.
     remove('d-none');
 
-  form.
-    querySelector('#tags-list').
-    innerHTML = '';
+  items.tags.Reset(form);
 
   const tag_ids = JSON.parse('<%= resource.tag_ids %>');
 

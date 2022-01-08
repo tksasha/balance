@@ -27,5 +27,5 @@ $(function() {
 
   document.
     getElementById('item-inline-form').
-    addEventListener('reset', function() { items.InlineForm(); });
+    addEventListener('reset', function() { items.InlineForm.Initialize(); });
 });
