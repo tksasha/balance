@@ -5,17 +5,15 @@ RSpec.describe Item, type: :model do
 
   it { should be_an ActsAsParanoid }
 
-  it { should validate_presence_of :date }
+  it { should belong_to(:category).required }
 
-  it { should validate_presence_of :category_id }
+  it { should have_and_belong_to_many :tags }
+
+  it { should validate_presence_of :date }
 
   it { should validate_presence_of :formula }
 
   it { should validate_presence_of :currency }
-
-  it { should belong_to :category }
-
-  it { should have_and_belong_to_many :tags }
 
   it { should define_enum_for(:currency).with_values(%w[uah usd rub]) }
 
