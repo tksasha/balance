@@ -24,8 +24,4 @@ $(function() {
   });
 
   $('.datepicker').datepicker(BOOTSTRAP_DATEPICKER_DEFAULTS);
-
-  document.
-    getElementById('item-inline-form').
-    addEventListener('reset', function() { items.InlineForm.Initialize(); });
 });
