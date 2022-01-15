@@ -6,9 +6,9 @@ RSpec.describe 'Tags', type: :request do
   describe 'GET /index.json' do
     let(:category) { create :category }
 
-    before { create_list :tag, 2, category: category }
+    before { create_list :tag, 2, category: }
 
-    before { get "/categories/#{ category.id }/tags", headers: headers }
+    before { get "/categories/#{ category.id }/tags", headers: }
 
     it_behaves_like 'index.json'
   end

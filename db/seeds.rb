@@ -13,5 +13,5 @@
   ['Квартира', false],
   ['Інтернет', false]
 ].each do |name, income|
-  Category.create! name: name, income: income
+  Category.create! name:, income:
 end

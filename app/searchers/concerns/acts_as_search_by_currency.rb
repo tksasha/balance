@@ -6,6 +6,6 @@ module ActsAsSearchByCurrency
   def search_by_currency(currency)
     return if currency.blank?
 
-    results.where(currency: currency)
+    results.where(currency:)
   end
 end

@@ -6,7 +6,7 @@ RSpec.describe Tag, type: :model do
   it { should validate_presence_of(:name) }
 
   describe 'validations' do
-    subject { described_class.new name: Faker::Commerce.color, category: category }
+    subject { described_class.new name: Faker::Commerce.color, category: }
 
     let(:category) { build :category }
 

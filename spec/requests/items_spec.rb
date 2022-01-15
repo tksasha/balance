@@ -20,7 +20,7 @@ RSpec.describe 'Items', type: :request do
   describe 'POST /create.js' do
     let(:category) { create :category }
 
-    before { post '/items', params: params, xhr: true }
+    before { post '/items', params:, xhr: true }
 
     context 'with valid params' do
       let(:params) do
@@ -57,7 +57,7 @@ RSpec.describe 'Items', type: :request do
   describe 'PATCH /update.js' do
     let(:item) { create :item }
 
-    before { patch "/items/#{ item.id }", params: params, xhr: true }
+    before { patch "/items/#{ item.id }", params:, xhr: true }
 
     context 'with valid params' do
       let(:params) { { item: { date: '2019-11-13' } } }

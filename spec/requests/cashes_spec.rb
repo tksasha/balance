@@ -20,7 +20,7 @@ RSpec.describe 'Cashes', type: :request do
   describe 'PATCH /update.js' do
     let(:cash) { create :cash }
 
-    before { patch "/cashes/#{ cash.id }", params: params, xhr: true }
+    before { patch "/cashes/#{ cash.id }", params:, xhr: true }
 
     context 'with valid params' do
       let(:params) { { cash: { name: Faker::Lorem.word } } }

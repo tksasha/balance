@@ -10,7 +10,7 @@ class CategoryWidgetDataSearcher
   def search
     Category
       .visible
-      .where(currency: currency)
+      .where(currency:)
       .order(:income)
       .pluck(:name, :id, :income)
       .group_by { |array| array[2] }

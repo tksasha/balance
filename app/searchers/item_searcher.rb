@@ -10,7 +10,7 @@ class ItemSearcher < ApplicationSearcher
   def search_by_category_id(category_id)
     return if category_id.blank?
 
-    results.where(category_id: category_id)
+    results.where(category_id:)
   end
 
   private

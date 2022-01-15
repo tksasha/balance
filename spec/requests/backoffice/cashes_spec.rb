@@ -16,7 +16,7 @@ RSpec.describe 'Backoffice::Cashes', type: :request do
   end
 
   describe 'POST /create.js' do
-    before { post '/backoffice/cashes', params: params, xhr: true }
+    before { post '/backoffice/cashes', params:, xhr: true }
 
     context 'with valid params' do
       let(:params) { { cash: { name: 'Bank', formula: '4 + 5' } } }
@@ -44,7 +44,7 @@ RSpec.describe 'Backoffice::Cashes', type: :request do
   describe 'PATCH /update.js' do
     let(:cash) { create :cash }
 
-    before { patch "/backoffice/cashes/#{ cash.id }", params: params, xhr: true }
+    before { patch "/backoffice/cashes/#{ cash.id }", params:, xhr: true }
 
     context 'with valid params' do
       let(:params) { { cash: { name: Faker::Lorem.word } } }

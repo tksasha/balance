@@ -13,7 +13,7 @@ class ConsolidationSearcher
 
   def search
     @relation
-      .where(date: dates, currency: currency)
+      .where(date: dates, currency:)
       .select('SUM(sum) AS sum, category_id')
       .group(:category_id)
       .tap do |items|

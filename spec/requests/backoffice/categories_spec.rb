@@ -16,7 +16,7 @@ RSpec.describe 'Backoffice::Categories', type: :request do
   end
 
   describe 'POST /create.js' do
-    before { post '/backoffice/categories', params: params, xhr: true }
+    before { post '/backoffice/categories', params:, xhr: true }
 
     context 'with valid params' do
       let(:params) { { category: { name: 'Drinks', income: true, visible: true } } }
@@ -44,7 +44,7 @@ RSpec.describe 'Backoffice::Categories', type: :request do
   describe 'PATCH /update.js' do
     let(:category) { create :category }
 
-    before { patch "/backoffice/categories/#{ category.id }", params: params, xhr: true }
+    before { patch "/backoffice/categories/#{ category.id }", params:, xhr: true }
 
     context do
       let(:params) { { category: { name: 'Drinks' } } }
