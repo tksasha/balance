@@ -25,5 +25,5 @@ class Cash < ApplicationRecord
 
   enum currency: CURRENCIES
 
-  # has_paper_trail
+  has_paper_trail
 end
