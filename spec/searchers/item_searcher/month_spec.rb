@@ -9,7 +9,7 @@ RSpec.describe ItemSearcher do
     let(:params) { { month: '2021-03' } }
 
     context do
-      let(:month) { Month.today }
+      let(:month) { Month.now }
 
       before { subject.instance_variable_set :@month, month }
 

@@ -1,6 +1,6 @@
 GIT
   remote: https://github.com/dabit/annotate_models.git
-  revision: f38741d005052045e4d4c2c26b009d3ade0864f3
+  revision: aa767e19fb3bea5e42304f54802f41924ac4e363
   branch: rails-7
   specs:
     annotate (3.1.1)
@@ -159,7 +159,7 @@ GEM
     mini_racer (0.6.2)
       libv8-node (~> 16.10.0.0)
     minitest (5.15.0)
-    month (1.7.1)
+    month (2.0.0)
     msgpack (1.4.4)
     net-imap (0.2.3)
       digest
@@ -187,7 +187,7 @@ GEM
     parser (3.1.0.0)
       ast (~> 2.4.1)
     popper_js (2.9.3)
-    puma (5.5.2)
+    puma (5.6.0)
       nio4r (~> 2.0)
     racc (1.6.0)
     rack (2.2.3)
@@ -277,7 +277,7 @@ GEM
       activesupport (>= 4.2.0)
       rack (>= 1.1)
       rubocop (>= 1.7.0, < 2.0)
-    rubocop-rspec (2.7.0)
+    rubocop-rspec (2.8.0)
       rubocop (~> 1.19)
     ruby-progressbar (1.11.0)
     ruby2_keywords (0.0.5)

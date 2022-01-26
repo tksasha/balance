@@ -8,7 +8,7 @@ RSpec.describe ItemSearcher do
 
     let(:params) { { currency: 'usd' } }
 
-    let(:month) { Month.today }
+    let(:month) { Month.now }
 
     before { allow(subject).to receive(:month).and_return(month) }
 

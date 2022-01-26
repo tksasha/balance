@@ -7,7 +7,7 @@ RSpec.describe ApplicationHelper, type: :helper do
     before { allow(subject).to receive(:params).and_return(params) }
 
     context do
-      let(:month) { Month.today }
+      let(:month) { Month.now }
 
       before { subject.instance_variable_set :@month, month }
 

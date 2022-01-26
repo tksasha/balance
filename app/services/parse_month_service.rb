@@ -18,7 +18,7 @@ class ParseMonthService
       begin
         Month.parse(object)
       rescue ArgumentError
-        Month.today
+        Month.now
       end
   end
 
