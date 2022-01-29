@@ -62,13 +62,13 @@ RSpec.describe CategoryWidgetDataSearcher do
   end
 
   describe '.search' do
-    subject { described_class.search currency: 'usd' }
+    subject { described_class.search({ currency: 'usd' }) }
 
     before do
       #
       # described_class.new(currency: 'usd').search
       #
-      expect(described_class).to receive(:new).with(currency: 'usd') do
+      expect(described_class).to receive(:new).with({ currency: 'usd' }) do
         double.tap do |a|
           expect(a).to receive(:search)
         end

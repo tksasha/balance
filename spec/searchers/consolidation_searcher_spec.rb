@@ -62,13 +62,13 @@ RSpec.describe ConsolidationSearcher do
   end
 
   describe '.search' do
-    subject { described_class.search :relation, date: :date }
+    subject { described_class.search(:relation, { date: :date }) }
 
     before do
       #
       # described_class.new(:relation, date: :date).search
       #
-      expect(described_class).to receive(:new).with(:relation, date: :date) do
+      expect(described_class).to receive(:new).with(:relation, { date: :date }) do
         double.tap { |a| expect(a).to receive(:search) }
       end
     end
