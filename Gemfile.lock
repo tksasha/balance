@@ -154,7 +154,7 @@ GEM
       libv8-node (~> 16.10.0.0)
     minitest (5.15.0)
     month (2.0.0)
-    msgpack (1.4.4)
+    msgpack (1.4.5)
     net-imap (0.2.3)
       digest
       net-protocol
