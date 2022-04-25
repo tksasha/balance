@@ -13,7 +13,7 @@ threads threads_count, threads_count
 #
 # port        ENV.fetch("PORT") { 3000 }
 
-if ENV['RAILS_ENV'] == 'production'
+if ENV.fetch('RAILS_ENV') == 'production'
   bind 'unix:///Users/tksasha/balance/tmp/sockets/server.sock'
 
   pidfile '/Users/tksasha/balance/tmp/pids/production.server.pid'
