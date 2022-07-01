@@ -2,7 +2,7 @@
   $('header').replaceWith('<%= j render 'widgets/header' %>');
 
   <% if collection.any? %>
-    $('#items').html('<%= j render collection %>');
+    $('#items').html('<%= j render collection.decorate %>');
   <% else %>
     $('#items').html('<%= j render 'not_found' %>');
   <% end %>

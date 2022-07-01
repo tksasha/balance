@@ -20,21 +20,6 @@
     querySelector('.modal-body').
     innerHTML = '<%= j render 'form' %>';
 
-  const form = el.querySelector('form');
-
-  form.
-    querySelector('#tags-spinner').
-    classList.
-    remove('d-none');
-
-  items.tags.Reset(form);
-
-  const tag_ids = JSON.parse('<%= resource.tag_ids %>');
-
-  const url = '<%= url_for [resource.category, :tags] %>';
-
-  items.tags.Load(form, url, tag_ids);
-
   const show = function() {
     $('.modal').
       find('.datepicker').
@@ -43,10 +28,6 @@
     $('.modal')
       .find('#item_formula')
       .focus();
-
-    document.
-      querySelector('.modal-body #item_category_id').
-      addEventListener('change', function() { items.category.OnChange(form) });
   };
 
   const hide = function() {

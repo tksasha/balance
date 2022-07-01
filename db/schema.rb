@@ -10,8 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_12_22_120942) do
-
+ActiveRecord::Schema[7.0].define(version: 2022_07_01_072133) do
   create_table "cashes", force: :cascade do |t|
     t.decimal "sum", precision: 10, scale: 2
     t.string "name"
@@ -34,27 +33,13 @@ ActiveRecord::Schema.define(version: 2021_12_22_120942) do
     t.decimal "sum", precision: 10, scale: 2, null: false
     t.integer "category_id"
     t.string "description"
-    t.datetime "created_at"
-    t.datetime "updated_at"
+    t.datetime "created_at", precision: nil
+    t.datetime "updated_at", precision: nil
     t.text "formula"
     t.time "deleted_at"
     t.integer "currency", default: 0
     t.index ["date", "category_id"], name: "index_balans_items_on_date_and_category_id"
     t.index ["date"], name: "index_balans_items_on_date"
-  end
-
-  create_table "items_tags", id: false, force: :cascade do |t|
-    t.integer "item_id", null: false
-    t.integer "tag_id", null: false
-  end
-
-  create_table "tags", force: :cascade do |t|
-    t.integer "category_id", null: false
-    t.string "name", null: false
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
-    t.index ["category_id", "name"], name: "index_tags_on_category_id_and_name", unique: true
-    t.index ["category_id"], name: "index_tags_on_category_id"
   end
 
   create_table "versions", force: :cascade do |t|
@@ -63,11 +48,10 @@ ActiveRecord::Schema.define(version: 2021_12_22_120942) do
     t.string "event", null: false
     t.string "whodunnit"
     t.text "object", limit: 1073741823
-    t.datetime "created_at"
+    t.datetime "created_at", precision: nil
     t.text "object_changes", limit: 1073741823
     t.index ["item_type", "item_id"], name: "index_versions_on_item_type_and_item_id"
   end
 
   add_foreign_key "items", "categories"
-  add_foreign_key "tags", "categories"
 end

@@ -1,6 +1,6 @@
 <tr id="<%= dom_id item %>">
   <td class="items-date">
-    <%= l item.date %>
+    <%= item.date %>
   </td>
 
   <td class="items-sum">
@@ -12,8 +12,6 @@
   </td>
 
   <td>
-    <%= render item.tags if item.tags.any? %>
-
-    <%= item.description %>
+    <%= sanitize item.description %>
   </td>
 </tr>

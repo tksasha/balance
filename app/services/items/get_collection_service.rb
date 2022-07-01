@@ -13,7 +13,7 @@ module Items
     private
 
     def items
-      Item.order(date: :desc).includes(:category, :tags)
+      Item.order(date: :desc).includes(:category)
     end
   end
 end

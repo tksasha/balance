@@ -16,8 +16,6 @@
 #
 
 class Category < ApplicationRecord
-  has_many :tags, dependent: :restrict_with_exception
-
   validates :name, presence: true, uniqueness: { case_sensitive: false, scope: :currency }
 
   validates :currency, presence: true
