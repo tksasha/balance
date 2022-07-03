@@ -43,5 +43,11 @@ RSpec.describe ItemDecorator do
 
       its(:description) { should be_nil }
     end
+
+    context "when #description contains `'`" do
+      let(:item) { build(:item, description: "[імперія м'яса] ковбаски") }
+
+      its(:description) { should eq %q(<div class="tag">імперія м'яса</div> ковбаски) }
+    end
   end
 end
