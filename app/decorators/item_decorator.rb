@@ -18,6 +18,6 @@ class ItemDecorator < Draper::Decorator
     #
     model
       .description
-      .gsub(/\[([[[:alnum:]][[:blank:]]']+)\]/, '<div class="tag">\1</div>')
+      .gsub(/\[([[[:alnum:]][[:blank:]]'-]+)\]/, '<div class="tag">\1</div>')
   end
 end
