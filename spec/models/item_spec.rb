@@ -13,7 +13,7 @@ RSpec.describe Item, type: :model do
 
   it { should validate_presence_of :currency }
 
-  it { should define_enum_for(:currency).with_values(%w[uah usd rub]) }
+  it { should define_enum_for(:currency).with_values(%w[uah usd rub eur]) }
 
   describe '.income' do
     subject { described_class.income.to_sql }

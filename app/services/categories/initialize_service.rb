@@ -2,6 +2,10 @@
 
 module Categories
   class InitializeService < ApplicationService
+    def initialize(params)
+      @currency = params[:currency]
+    end
+
     def call
       Success.new(category)
     end
@@ -9,7 +13,7 @@ module Categories
     private
 
     def category
-      Category.new
+      Category.new(currency: @currency)
     end
   end
 end

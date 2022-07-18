@@ -9,7 +9,7 @@ RSpec.describe Categories::GetResultService do
     context do
       let(:action_name) { 'new' }
 
-      before { allow(Categories::InitializeService).to receive(:call).and_return(:result) }
+      before { allow(Categories::InitializeService).to receive(:call).with(params).and_return(:result) }
 
       its(:call) { should eq :result }
     end

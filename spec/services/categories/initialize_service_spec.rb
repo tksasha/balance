@@ -1,12 +1,14 @@
 # frozen_string_literal: true
 
 RSpec.describe Categories::InitializeService do
-  subject { described_class.new }
+  subject { described_class.new(params) }
+
+  let(:params) { { currency: 'eur' } }
 
   describe '#category' do
-    before { allow(Category).to receive(:new).and_return(:category) }
+    its(:category) { should be_a Category }
 
-    its(:category) { should eq :category }
+    its('category.currency') { should eq 'eur' }
   end
 
   describe '#call' do

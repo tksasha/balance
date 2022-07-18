@@ -9,7 +9,7 @@ module Categories
     end
 
     def call
-      return ::Categories::InitializeService.call if new?
+      return ::Categories::InitializeService.call(@params) if new?
 
       return ::Categories::GetResourceService.call(@params) if edit?
 
