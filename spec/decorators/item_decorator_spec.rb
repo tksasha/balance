@@ -55,5 +55,11 @@ RSpec.describe ItemDecorator do
 
       its(:description) { should eq '<div class="tag">а-банк</div> відсотки за депозитом' }
     end
+
+    context 'when #description contains `.`' do
+      let(:item) { build(:item, description: '[flowers.ua] доставка квітів') }
+
+      its(:description) { should eq '<div class="tag">flowers.ua</div> доставка квітів' }
+    end
   end
 end
