@@ -152,7 +152,7 @@ GEM
     mini_portile2 (2.8.0)
     mini_racer (0.6.3)
       libv8-node (~> 16.10.0.0)
-    minitest (5.16.2)
+    minitest (5.16.3)
     month (2.0.0)
     msgpack (1.5.4)
     net-imap (0.2.3)
