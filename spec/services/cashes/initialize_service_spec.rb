@@ -5,17 +5,17 @@ RSpec.describe Cashes::InitializeService do
 
   let(:params) { { currency: 'usd' } }
 
-  its(:cash) { should be_a Cash }
+  its(:cash) { is_expected.to be_a Cash }
 
-  its('cash.currency') { should eq 'usd' }
+  its('cash.currency') { is_expected.to eq 'usd' }
 
   describe '#call' do
     let(:cash) { stub_model Cash }
 
     before { allow(subject).to receive(:cash).and_return(cash) }
 
-    its(:call) { should be_success }
+    its(:call) { is_expected.to be_success }
 
-    its('call.object') { should eq cash }
+    its('call.object') { is_expected.to eq cash }
   end
 end

@@ -12,6 +12,6 @@ RSpec.describe ItemSearcher do
 
     before { allow(subject).to receive(:month).and_return(month) }
 
-    its(:params) { should eq currency: 'usd', month: }
+    its(:params) { is_expected.to eq currency: 'usd', month: }
   end
 end

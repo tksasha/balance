@@ -14,6 +14,6 @@ RSpec.describe ActsAsUpdateBalanceViaWebsocketService do
   describe '#update_balance_via_websocket' do
     before { expect(Websockets::UpdateBalanceService).to receive(:call).with('uah') }
 
-    its(:update_balance_via_websocket) { should eq subject }
+    its(:update_balance_via_websocket) { is_expected.to eq subject }
   end
 end

@@ -11,7 +11,7 @@ RSpec.describe Items::GetResultService do
 
       before { allow(Items::CreateService).to receive(:call).with(params).and_return(:result) }
 
-      its(:call) { should eq :result }
+      its(:call) { is_expected.to eq :result }
     end
 
     context do
@@ -19,7 +19,7 @@ RSpec.describe Items::GetResultService do
 
       before { allow(Items::GetResourceService).to receive(:call).with(params).and_return(:result) }
 
-      its(:call) { should eq :result }
+      its(:call) { is_expected.to eq :result }
     end
 
     context do
@@ -27,7 +27,7 @@ RSpec.describe Items::GetResultService do
 
       before { allow(Items::UpdateService).to receive(:call).with(params).and_return(:result) }
 
-      its(:call) { should eq :result }
+      its(:call) { is_expected.to eq :result }
     end
 
     context do
@@ -35,7 +35,7 @@ RSpec.describe Items::GetResultService do
 
       before { allow(Items::DestroyService).to receive(:call).with(params).and_return(:result) }
 
-      its(:call) { should eq :result }
+      its(:call) { is_expected.to eq :result }
     end
   end
 end

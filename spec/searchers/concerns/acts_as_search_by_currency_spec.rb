@@ -13,7 +13,7 @@ RSpec.describe ActsAsSearchByCurrency do
     context do
       subject { described_class.search relation, currency: '' }
 
-      it { should eq relation }
+      it { is_expected.to eq relation }
     end
 
     context do
@@ -21,7 +21,7 @@ RSpec.describe ActsAsSearchByCurrency do
 
       before { allow(relation).to receive(:where).with(currency: 'usd').and_return(:collection) }
 
-      it { should eq :collection }
+      it { is_expected.to eq :collection }
     end
   end
 end

@@ -11,7 +11,7 @@ RSpec.describe ApplicationHelper, type: :helper do
 
       before { subject.instance_variable_set :@month, month }
 
-      its(:month) { should eq month }
+      its(:month) { is_expected.to eq month }
     end
 
     context do
@@ -21,7 +21,7 @@ RSpec.describe ApplicationHelper, type: :helper do
 
       before { travel_to Date.new(2021, 4) }
 
-      its(:month) { should eq month }
+      its(:month) { is_expected.to eq month }
     end
 
     context do
@@ -29,7 +29,7 @@ RSpec.describe ApplicationHelper, type: :helper do
 
       let(:month) { Month.new(2021, 3) }
 
-      its(:month) { should eq month }
+      its(:month) { is_expected.to eq month }
     end
   end
 end

@@ -9,7 +9,7 @@ RSpec.describe ItemSearcher do
     context do
       let(:category_id) { '' }
 
-      it { should be_nil }
+      it { is_expected.to be_nil }
     end
 
     context do
@@ -19,7 +19,7 @@ RSpec.describe ItemSearcher do
 
       before { allow(relation).to receive(:where).with(category_id: 9053).and_return(collection) }
 
-      it { should eq collection }
+      it { is_expected.to eq collection }
     end
   end
 end

@@ -14,6 +14,6 @@ RSpec.describe ItemSearcher do
 
     before { allow(relation).to receive(:where).with(date: dates).and_return(collection) }
 
-    it { should eq collection }
+    it { is_expected.to eq collection }
   end
 end

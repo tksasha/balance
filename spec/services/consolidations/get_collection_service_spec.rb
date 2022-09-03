@@ -8,7 +8,7 @@ RSpec.describe Consolidations::GetCollectionService do
   describe '#scope' do
     before { allow(Consolidation).to receive(:includes).with(:category).and_return(:scope) }
 
-    its(:scope) { should eq :scope }
+    its(:scope) { is_expected.to eq :scope }
   end
 
   describe '#call' do
@@ -16,6 +16,6 @@ RSpec.describe Consolidations::GetCollectionService do
 
     before { allow(ConsolidationSearcher).to receive(:search).with(:scope, params).and_return(:collection) }
 
-    its(:call) { should eq :collection }
+    its(:call) { is_expected.to eq :collection }
   end
 end

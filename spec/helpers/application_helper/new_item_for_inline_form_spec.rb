@@ -9,7 +9,7 @@ RSpec.describe ApplicationHelper, type: :helper do
 
       before { allow(Item).to receive(:new).with(currency: 'usd').and_return(:item) }
 
-      its(:new_item_for_inline_form) { should eq :item }
+      its(:new_item_for_inline_form) { is_expected.to eq :item }
     end
 
     context do
@@ -17,7 +17,7 @@ RSpec.describe ApplicationHelper, type: :helper do
 
       before { allow(Item).to receive(:new).with(currency: 'uah').and_return(:item) }
 
-      its(:new_item_for_inline_form) { should eq :item }
+      its(:new_item_for_inline_form) { is_expected.to eq :item }
     end
   end
 end

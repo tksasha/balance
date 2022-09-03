@@ -9,13 +9,13 @@ RSpec.describe Items::GetResourceService do
     context do
       before { subject.instance_variable_set :@item, :item }
 
-      its(:item) { should eq :item }
+      its(:item) { is_expected.to eq :item }
     end
 
     context do
       before { allow(Item).to receive(:find).with(36).and_return(:item) }
 
-      its(:item) { should eq :item }
+      its(:item) { is_expected.to eq :item }
     end
   end
 
@@ -24,8 +24,8 @@ RSpec.describe Items::GetResourceService do
 
     before { allow(subject).to receive(:item).and_return(item) }
 
-    its(:call) { should be_success }
+    its(:call) { is_expected.to be_success }
 
-    its('call.object') { should eq item }
+    its('call.object') { is_expected.to eq item }
   end
 end

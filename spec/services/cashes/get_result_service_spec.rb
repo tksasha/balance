@@ -11,7 +11,7 @@ RSpec.describe Cashes::GetResultService, type: :service do
 
       before { allow(Cashes::GetResourceService).to receive(:call).with(params).and_return(:result) }
 
-      its(:call) { should eq :result }
+      its(:call) { is_expected.to eq :result }
     end
 
     context do
@@ -19,7 +19,7 @@ RSpec.describe Cashes::GetResultService, type: :service do
 
       before { allow(Cashes::GetResourceService).to receive(:call).with(params).and_return(:result) }
 
-      its(:call) { should eq :result }
+      its(:call) { is_expected.to eq :result }
     end
 
     context do
@@ -27,7 +27,7 @@ RSpec.describe Cashes::GetResultService, type: :service do
 
       before { allow(Cashes::UpdateService).to receive(:call).with(params).and_return(:result) }
 
-      its(:call) { should eq :result }
+      its(:call) { is_expected.to eq :result }
     end
 
     context do
@@ -35,7 +35,7 @@ RSpec.describe Cashes::GetResultService, type: :service do
 
       before { allow(Cashes::InitializeService).to receive(:call).with(params).and_return(:result) }
 
-      its(:call) { should eq :result }
+      its(:call) { is_expected.to eq :result }
     end
 
     context do
@@ -43,7 +43,7 @@ RSpec.describe Cashes::GetResultService, type: :service do
 
       before { allow(Cashes::CreateService).to receive(:call).with(params).and_return(:result) }
 
-      its(:call) { should eq :result }
+      its(:call) { is_expected.to eq :result }
     end
 
     context do
@@ -51,7 +51,7 @@ RSpec.describe Cashes::GetResultService, type: :service do
 
       before { allow(Cashes::DestroyService).to receive(:call).with(params).and_return(:result) }
 
-      its(:call) { should eq :result }
+      its(:call) { is_expected.to eq :result }
     end
   end
 end

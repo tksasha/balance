@@ -42,11 +42,6 @@ RSpec/MissingExampleGroupArgument:
 RSpec/ScatteredSetup:
   Enabled: false
 
-RSpec/ImplicitExpect:
-  EnforcedStyle: should
-  Exclude:
-    - spec/models/frontend/dashboard_spec.rb
-
 RSpec/NamedSubject:
   Enabled: false
 

@@ -19,7 +19,7 @@ RSpec.describe Items::GetCollectionService do
       end
     end
 
-    its(:items) { should eq :items }
+    its(:items) { is_expected.to eq :items }
   end
 
   describe '#call' do
@@ -27,6 +27,6 @@ RSpec.describe Items::GetCollectionService do
 
     before { allow(ItemSearcher).to receive(:call).with(:items, params).and_return(:collection) }
 
-    its(:call) { should eq :collection }
+    its(:call) { is_expected.to eq :collection }
   end
 end

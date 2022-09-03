@@ -20,6 +20,6 @@ RSpec.describe ActsAsParanoid, type: :model do
 
     let(:sql) { described_class.unscoped.where(deleted_at: nil).to_sql }
 
-    its(:to_sql) { should eq sql }
+    its(:to_sql) { is_expected.to eq sql }
   end
 end

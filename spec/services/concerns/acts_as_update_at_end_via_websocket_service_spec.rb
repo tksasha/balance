@@ -14,6 +14,6 @@ RSpec.describe ActsAsUpdateAtEndViaWebsocketService do
   describe '#update_at_end_via_websocket' do
     before { expect(Websockets::UpdateAtEndService).to receive(:call).with('uah') }
 
-    its(:update_at_end_via_websocket) { should eq subject }
+    its(:update_at_end_via_websocket) { is_expected.to eq subject }
   end
 end

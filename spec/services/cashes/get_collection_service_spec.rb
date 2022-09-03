@@ -8,7 +8,7 @@ RSpec.describe Cashes::GetCollectionService, type: :cashe do
   describe '#cashes' do
     before { allow(Cash).to receive(:order).with(:name).and_return(:cashes) }
 
-    its(:cashes) { should eq :cashes }
+    its(:cashes) { is_expected.to eq :cashes }
   end
 
   describe '#call' do
@@ -16,6 +16,6 @@ RSpec.describe Cashes::GetCollectionService, type: :cashe do
 
     before { allow(CashSearcher).to receive(:call).with(:cashes, params).and_return(:collection) }
 
-    its(:call) { should eq :collection }
+    its(:call) { is_expected.to eq :collection }
   end
 end

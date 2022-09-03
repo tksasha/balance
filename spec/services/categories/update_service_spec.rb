@@ -5,19 +5,19 @@ RSpec.describe Categories::UpdateService do
 
   let(:params) { acp(id: 11, category: { name: nil, income: nil, visible: nil, currency: nil }) }
 
-  its(:resource_params) { should eq params.require(:category).permit! }
+  its(:resource_params) { is_expected.to eq params.require(:category).permit! }
 
   describe '#category' do
     context do
       before { subject.instance_variable_set :@category, :category }
 
-      its(:category) { should eq :category }
+      its(:category) { is_expected.to eq :category }
     end
 
     context do
       before { allow(Category).to receive(:find).with(11).and_return(:category) }
 
-      its(:category) { should eq :category }
+      its(:category) { is_expected.to eq :category }
     end
   end
 
@@ -31,17 +31,17 @@ RSpec.describe Categories::UpdateService do
     context do
       before { allow(category).to receive(:update).with(:resource_params).and_return(true) }
 
-      its(:call) { should be_success }
+      its(:call) { is_expected.to be_success }
 
-      its('call.object') { should eq category }
+      its('call.object') { is_expected.to eq category }
     end
 
     context do
       before { allow(category).to receive(:update).with(:resource_params).and_return(false) }
 
-      its(:call) { should be_failure }
+      its(:call) { is_expected.to be_failure }
 
-      its('call.object') { should eq category }
+      its('call.object') { is_expected.to eq category }
     end
   end
 end

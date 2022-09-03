@@ -6,9 +6,9 @@ RSpec.describe Categories::InitializeService do
   let(:params) { { currency: 'eur' } }
 
   describe '#category' do
-    its(:category) { should be_a Category }
+    its(:category) { is_expected.to be_a Category }
 
-    its('category.currency') { should eq 'eur' }
+    its('category.currency') { is_expected.to eq 'eur' }
   end
 
   describe '#call' do
@@ -16,8 +16,8 @@ RSpec.describe Categories::InitializeService do
 
     before { allow(subject).to receive(:category).and_return(category) }
 
-    its(:call) { should be_success }
+    its(:call) { is_expected.to be_success }
 
-    its('call.object') { should eq category }
+    its('call.object') { is_expected.to eq category }
   end
 end

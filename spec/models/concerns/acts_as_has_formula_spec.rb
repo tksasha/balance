@@ -15,8 +15,8 @@ RSpec.describe ActsAsHasFormula do
   describe '#formula=' do
     before { subject.formula = '2+2' }
 
-    its(:sum) { should eq 4.0 }
+    its(:sum) { is_expected.to eq 4.0 }
 
-    its(:formula) { should eq '2+2' }
+    its(:formula) { is_expected.to eq '2+2' }
   end
 end
