@@ -14,7 +14,7 @@ RSpec.describe ActsAsUpdateAtEndViaWebsocketService do
   describe '#update_at_end_via_websocket' do
     before { allow(Websockets::UpdateAtEndService).to receive(:call).with('uah') }
 
-    it do
+    it 'updates at_end via websocket', :aggregate_failures do
       expect(subject.update_at_end_via_websocket).to eq subject
 
       expect(Websockets::UpdateAtEndService).to have_received(:call).with('uah')
