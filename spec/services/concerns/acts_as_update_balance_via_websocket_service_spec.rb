@@ -12,8 +12,12 @@ RSpec.describe ActsAsUpdateBalanceViaWebsocketService do
   end
 
   describe '#update_balance_via_websocket' do
-    before { expect(Websockets::UpdateBalanceService).to receive(:call).with('uah') }
+    before { allow(Websockets::UpdateBalanceService).to receive(:call).with('uah') }
 
-    its(:update_balance_via_websocket) { is_expected.to eq subject }
+    it do
+      expect(subject.update_balance_via_websocket).to eq subject
+
+      expect(Websockets::UpdateBalanceService).to have_received(:call).with('uah')
+    end
   end
 end

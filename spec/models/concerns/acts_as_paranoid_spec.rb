@@ -10,9 +10,11 @@ RSpec.describe ActsAsParanoid, type: :model do
   end
 
   describe '#destroy' do
-    before { expect(subject).to receive(:touch).with(:deleted_at) }
+    before { allow(subject).to receive(:touch).with(:deleted_at) }
 
-    it { expect { subject.destroy }.not_to raise_error }
+    before { subject.destroy }
+
+    it { is_expected.to have_received(:touch).with(:deleted_at) }
   end
 
   describe '.default_scope' do

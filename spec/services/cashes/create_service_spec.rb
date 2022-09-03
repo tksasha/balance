@@ -35,11 +35,17 @@ RSpec.describe Cashes::CreateService do
     context do
       before { allow(cash).to receive(:save).and_return(true) }
 
-      before { expect(subject).to receive(:update_balance_via_websocket) }
+      before { allow(subject).to receive(:update_balance_via_websocket) }
 
       its(:call) { is_expected.to be_success }
 
       its('call.object') { is_expected.to eq cash }
+
+      it do
+        subject.call
+
+        expect(subject).to have_received(:update_balance_via_websocket)
+      end
     end
 
     context do

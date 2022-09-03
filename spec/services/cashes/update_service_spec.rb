@@ -32,14 +32,20 @@ RSpec.describe Cashes::UpdateService, type: :service do
 
     before { allow(subject).to receive(:resource_params).and_return(:resource_params) }
 
+    before { allow(subject).to receive(:update_balance_via_websocket) }
+
     context do
       before { allow(cash).to receive(:update).with(:resource_params).and_return(true) }
-
-      before { expect(subject).to receive(:update_balance_via_websocket) }
 
       its(:call) { is_expected.to be_success }
 
       its('call.object') { is_expected.to eq cash }
+
+      it do
+        subject.call
+
+        expect(subject).to have_received(:update_balance_via_websocket)
+      end
     end
 
     context do

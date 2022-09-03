@@ -30,9 +30,6 @@ Metrics/BlockLength:
   - spec/**/*
 
 # RSpec
-RSpec/MessageSpies:
-  EnforcedStyle: receive
-
 RSpec/ExpectInHook:
   Enabled: false
 
