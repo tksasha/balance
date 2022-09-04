@@ -64,16 +64,16 @@ RSpec.describe CategoryWidgetDataSearcher do
   xdescribe '.search' do
     subject { described_class.search({ currency: 'usd' }) }
 
-    before do
-      #
-      # described_class.new(currency: 'usd').search
-      #
-      expect(described_class).to have_received(:new).with({ currency: 'usd' }) do
-        double.tap do |a|
-          expect(a).to have_received(:search)
-        end
-      end
-    end
+    # before do
+    #   #
+    #   # described_class.new(currency: 'usd').search
+    #   #
+    #   expect(described_class).to have_received(:new).with({ currency: 'usd' }) do
+    #     double.tap do |a|
+    #       expect(a).to have_received(:search)
+    #     end
+    #   end
+    # end
 
     it { expect { subject }.not_to raise_error }
   end

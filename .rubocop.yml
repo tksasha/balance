@@ -30,33 +30,23 @@ Metrics/BlockLength:
   - spec/**/*
 
 # RSpec
-RSpec/ExpectInHook:
+RSpec/ScatteredSetup: # delme
   Enabled: false
 
-RSpec/MissingExampleGroupArgument:
+RSpec/SubjectStub: # delme
   Enabled: false
 
-RSpec/ScatteredSetup:
+RSpec/NamedSubject: # delme
   Enabled: false
 
-RSpec/NamedSubject:
+RSpec/MissingExampleGroupArgument: # delme
   Enabled: false
 
-RSpec/SubjectStub:
+RSpec/VerifiedDoubles: # ???
   Enabled: false
 
-RSpec/VerifiedDoubles:
+RSpec/MessageChain: # ???
   Enabled: false
-
-RSpec/MessageChain:
-  Enabled: false
-
-RSpec/FilePath:
-  SpecSuffixOnly: true
-
-RSpec/MultipleMemoizedHelpers:
-  Exclude:
-    - spec/models/frontend/dashboard_spec.rb
 
 # Rails
 Rails/SkipsModelValidations:

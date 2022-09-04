@@ -12,8 +12,10 @@ module Websockets
 
     private
 
+    attr_reader :currency
+
     def balance
-      balance = CalculateBalanceService.call(@currency)
+      balance = CalculateBalanceService.call(currency)
 
       MoneyDecorator.new(balance).to_s
     end

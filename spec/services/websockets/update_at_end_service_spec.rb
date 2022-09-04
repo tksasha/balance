@@ -1,25 +1,19 @@
 # frozen_string_literal: true
 
 RSpec.describe Websockets::UpdateAtEndService do
-  subject { described_class.new currency }
+  describe '.call' do
+    before { allow(CalculateAtEndService).to receive(:call).with('uah').and_return(241_516) }
 
-  let(:currency) { 'uah' }
+    before { allow(ActionCable).to receive_message_chain(:server, :broadcast) }
 
-  describe '#at_end' do
-    before { allow(CalculateAtEndService).to receive(:call).with('uah').and_return(241_513) }
+    before { described_class.call('uah') }
 
-    its(:at_end) { is_expected.to eq '241 513.00' }
-  end
+    it 'broadcasts to NotificationChannel', :aggregate_failures do
+      expect(ActionCable).to have_received(:server)
 
-  describe '#call' do
-    before { allow(subject).to receive(:at_end).and_return('241 516.00') }
-
-    before do
-      expect(ActionCable)
-        .to receive_message_chain(:server, :broadcast)
+      expect(ActionCable.server)
+        .to have_received(:broadcast)
         .with('NotificationsChannel', { type: :at_end, value: '241 516.00' })
     end
-
-    it { expect { subject.call }.not_to raise_error }
   end
 end

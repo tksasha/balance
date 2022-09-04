@@ -23,13 +23,13 @@ RSpec.describe Items::CreateService do
   its(:resource_params) { is_expected.to eq params.require(:item).permit! }
 
   describe '#item' do
-    context do
+    context 'when @item is set' do
       before { subject.instance_variable_set :@item, :item }
 
       its(:item) { is_expected.to eq :item }
     end
 
-    context do
+    context 'when @item is not set' do
       before { allow(subject).to receive(:resource_params).and_return(:resource_params) }
 
       before { allow(Item).to receive(:new).with(:resource_params).and_return(:item) }
@@ -45,17 +45,25 @@ RSpec.describe Items::CreateService do
 
     before { allow(subject).to receive(:item).and_return(item) }
 
-    context do
+    context 'when success' do
       before { allow(item).to receive(:save).and_return(true) }
 
-      before { expect(subject).to receive_message_chain(:update_at_end_via_websocket, :update_balance_via_websocket) }
+      before { allow(subject).to receive_message_chain(:update_at_end_via_websocket, :update_balance_via_websocket) }
 
       its(:call) { is_expected.to be_success }
 
       its('call.object') { is_expected.to eq item }
+
+      it 'updates via websocket', :aggregate_failures do
+        subject.call
+
+        expect(subject).to have_received(:update_at_end_via_websocket)
+
+        expect(subject.update_at_end_via_websocket).to have_received(:update_balance_via_websocket)
+      end
     end
 
-    context do
+    context 'when failure' do
       before { allow(item).to receive(:save).and_return(false) }
 
       its(:call) { is_expected.to be_failure }

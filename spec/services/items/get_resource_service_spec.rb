@@ -6,13 +6,13 @@ RSpec.describe Items::GetResourceService do
   let(:params) { { id: 36 } }
 
   describe '#item' do
-    context do
+    context 'when @item is set' do
       before { subject.instance_variable_set :@item, :item }
 
       its(:item) { is_expected.to eq :item }
     end
 
-    context do
+    context 'when @item is not set' do
       before { allow(Item).to receive(:find).with(36).and_return(:item) }
 
       its(:item) { is_expected.to eq :item }
