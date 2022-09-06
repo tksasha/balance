@@ -9,9 +9,11 @@ RSpec.describe ConsolidationsController, type: :controller do
     end
 
     context do
-      before { allow(subject).to receive(:params).and_return(:params) }
+      before do
+        allow(subject).to receive(:params).and_return(:params)
 
-      before { allow(Consolidations::GetCollectionService).to receive(:call).with(:params).and_return(:collection) }
+        allow(Consolidations::GetCollectionService).to receive(:call).with(:params).and_return(:collection)
+      end
 
       its(:collection) { is_expected.to eq :collection }
     end

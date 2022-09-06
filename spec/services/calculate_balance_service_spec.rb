@@ -46,9 +46,11 @@ RSpec.describe CalculateBalanceService do
   end
 
   describe '#call' do
-    before { allow(subject).to receive(:sum).and_return(99.999) }
+    before do
+      allow(subject).to receive(:sum).and_return(99.999)
 
-    before { allow(subject).to receive(:at_end).and_return(55.555) }
+      allow(subject).to receive(:at_end).and_return(55.555)
+    end
 
     its(:call) { is_expected.to eq 44.44 }
   end

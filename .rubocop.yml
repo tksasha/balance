@@ -30,9 +30,6 @@ Metrics/BlockLength:
   - spec/**/*
 
 # RSpec
-RSpec/ScatteredSetup: # delme
-  Enabled: false
-
 RSpec/SubjectStub: # delme
   Enabled: false
 

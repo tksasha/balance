@@ -28,11 +28,13 @@ RSpec.describe Items::DestroyService do
   describe '#call' do
     let(:item) { stub_model Item }
 
-    before { allow(subject).to receive(:item).and_return(item) }
+    before do
+      allow(subject).to receive(:item).and_return(item)
 
-    before { allow(item).to receive(:destroy).and_return(true) }
+      allow(item).to receive(:destroy).and_return(true)
 
-    before { allow(subject).to receive_message_chain(:update_at_end_via_websocket, :update_balance_via_websocket) }
+      allow(subject).to receive_message_chain(:update_at_end_via_websocket, :update_balance_via_websocket)
+    end
 
     its(:call) { is_expected.to be_success }
 

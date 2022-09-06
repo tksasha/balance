@@ -2,9 +2,11 @@
 
 RSpec.describe 'Consolidations', type: :request do
   describe 'GET /index.js' do
-    before { create_list :item, 2 }
+    before do
+      create_list :item, 2
 
-    before { get '/consolidations', xhr: true }
+      get '/consolidations', xhr: true
+    end
 
     it_behaves_like 'index.js'
   end

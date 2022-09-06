@@ -12,9 +12,11 @@ RSpec.describe Categories::GetCollectionService do
   end
 
   describe '#call' do
-    before { allow(subject).to receive(:categories).and_return(:categories) }
+    before do
+      allow(subject).to receive(:categories).and_return(:categories)
 
-    before { allow(CategorySearcher).to receive(:call).with(:categories, params).and_return(:collection) }
+      allow(CategorySearcher).to receive(:call).with(:categories, params).and_return(:collection)
+    end
 
     its(:call) { is_expected.to eq :collection }
   end

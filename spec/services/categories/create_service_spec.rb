@@ -15,9 +15,11 @@ RSpec.describe Categories::CreateService do
     end
 
     context do
-      before { allow(subject).to receive(:resource_params).and_return(:resource_params) }
+      before do
+        allow(subject).to receive(:resource_params).and_return(:resource_params)
 
-      before { allow(Category).to receive(:new).with(:resource_params).and_return(:category) }
+        allow(Category).to receive(:new).with(:resource_params).and_return(:category)
+      end
 
       its(:category) { is_expected.to eq :category }
     end

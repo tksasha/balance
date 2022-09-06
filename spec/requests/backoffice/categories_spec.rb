@@ -2,9 +2,11 @@
 
 RSpec.describe 'Backoffice::Categories', type: :request do
   describe 'GET /index.js' do
-    before { create_list :category, 2 }
+    before do
+      create_list :category, 2
 
-    before { get '/backoffice/categories', xhr: true }
+      get '/backoffice/categories', xhr: true
+    end
 
     it_behaves_like 'index.js'
   end

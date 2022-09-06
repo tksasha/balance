@@ -9,9 +9,11 @@ RSpec.describe ItemsController, type: :controller do
     end
 
     context do
-      before { allow(subject).to receive(:params).and_return(:params) }
+      before do
+        allow(subject).to receive(:params).and_return(:params)
 
-      before { allow(Items::GetCollectionService).to receive(:call).with(:params).and_return(:collection) }
+        allow(Items::GetCollectionService).to receive(:call).with(:params).and_return(:collection)
+      end
 
       its(:collection) { is_expected.to eq :collection }
     end
@@ -25,11 +27,13 @@ RSpec.describe ItemsController, type: :controller do
     end
 
     context do
-      before { allow(subject).to receive(:action_name).and_return(:action_name) }
+      before do
+        allow(subject).to receive(:action_name).and_return(:action_name)
 
-      before { allow(subject).to receive(:params).and_return(:params) }
+        allow(subject).to receive(:params).and_return(:params)
 
-      before { allow(Items::GetResultService).to receive(:call).with(:action_name, :params).and_return(:result) }
+        allow(Items::GetResultService).to receive(:call).with(:action_name, :params).and_return(:result)
+      end
 
       its(:result) { is_expected.to eq :result }
     end

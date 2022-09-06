@@ -17,9 +17,11 @@ RSpec.describe Cashes::CreateService do
     end
 
     context do
-      before { allow(subject).to receive(:resource_params).and_return(:resource_params) }
+      before do
+        allow(subject).to receive(:resource_params).and_return(:resource_params)
 
-      before { allow(Cash).to receive(:new).with(:resource_params).and_return(:cash) }
+        allow(Cash).to receive(:new).with(:resource_params).and_return(:cash)
+      end
 
       its(:cash) { is_expected.to eq :cash }
     end
@@ -33,9 +35,11 @@ RSpec.describe Cashes::CreateService do
     before { allow(subject).to receive(:cash).and_return(cash) }
 
     context do
-      before { allow(cash).to receive(:save).and_return(true) }
+      before do
+        allow(cash).to receive(:save).and_return(true)
 
-      before { allow(subject).to receive(:update_balance_via_websocket) }
+        allow(subject).to receive(:update_balance_via_websocket)
+      end
 
       its(:call) { is_expected.to be_success }
 

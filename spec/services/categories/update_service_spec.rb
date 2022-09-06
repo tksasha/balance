@@ -24,9 +24,11 @@ RSpec.describe Categories::UpdateService do
   describe '#call' do
     let(:category) { stub_model Category }
 
-    before { allow(subject).to receive(:category).and_return(category) }
+    before do
+      allow(subject).to receive(:category).and_return(category)
 
-    before { allow(subject).to receive(:resource_params).and_return(:resource_params) }
+      allow(subject).to receive(:resource_params).and_return(:resource_params)
+    end
 
     context do
       before { allow(category).to receive(:update).with(:resource_params).and_return(true) }

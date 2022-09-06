@@ -28,11 +28,13 @@ RSpec.describe Cashes::UpdateService, type: :service do
   describe '#call' do
     let(:cash) { stub_model Cash }
 
-    before { allow(subject).to receive(:cash).and_return(cash) }
+    before do
+      allow(subject).to receive(:cash).and_return(cash)
 
-    before { allow(subject).to receive(:resource_params).and_return(:resource_params) }
+      allow(subject).to receive(:resource_params).and_return(:resource_params)
 
-    before { allow(subject).to receive(:update_balance_via_websocket) }
+      allow(subject).to receive(:update_balance_via_websocket)
+    end
 
     context do
       before { allow(cash).to receive(:update).with(:resource_params).and_return(true) }

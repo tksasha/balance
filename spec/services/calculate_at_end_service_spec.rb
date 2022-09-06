@@ -62,9 +62,11 @@ RSpec.describe CalculateAtEndService do
   end
 
   describe '#call' do
-    before { allow(subject).to receive(:income).and_return(10) }
+    before do
+      allow(subject).to receive(:income).and_return(10)
 
-    before { allow(subject).to receive(:expense).and_return(6.5) }
+      allow(subject).to receive(:expense).and_return(6.5)
+    end
 
     its(:call) { is_expected.to eq 3.5 }
   end

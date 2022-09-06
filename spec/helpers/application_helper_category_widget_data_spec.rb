@@ -15,9 +15,11 @@ RSpec.describe ApplicationHelper, type: :helper do
     context do
       let(:params) { double }
 
-      before { allow(subject).to receive(:params).and_return(params) }
+      before do
+        allow(subject).to receive(:params).and_return(params)
 
-      before { allow(CategoryWidgetDataSearcher).to receive(:search).with(params).and_return(:category_widget_data) }
+        allow(CategoryWidgetDataSearcher).to receive(:search).with(params).and_return(:category_widget_data)
+      end
 
       its(:category_widget_data) { is_expected.to eq :category_widget_data }
     end

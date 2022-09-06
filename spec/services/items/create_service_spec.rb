@@ -30,9 +30,11 @@ RSpec.describe Items::CreateService do
     end
 
     context 'when @item is not set' do
-      before { allow(subject).to receive(:resource_params).and_return(:resource_params) }
+      before do
+        allow(subject).to receive(:resource_params).and_return(:resource_params)
 
-      before { allow(Item).to receive(:new).with(:resource_params).and_return(:item) }
+        allow(Item).to receive(:new).with(:resource_params).and_return(:item)
+      end
 
       its(:item) { is_expected.to eq :item }
     end
@@ -46,9 +48,11 @@ RSpec.describe Items::CreateService do
     before { allow(subject).to receive(:item).and_return(item) }
 
     context 'when success' do
-      before { allow(item).to receive(:save).and_return(true) }
+      before do
+        allow(item).to receive(:save).and_return(true)
 
-      before { allow(subject).to receive_message_chain(:update_at_end_via_websocket, :update_balance_via_websocket) }
+        allow(subject).to receive_message_chain(:update_at_end_via_websocket, :update_balance_via_websocket)
+      end
 
       its(:call) { is_expected.to be_success }
 

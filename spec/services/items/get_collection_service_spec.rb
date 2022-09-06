@@ -23,9 +23,11 @@ RSpec.describe Items::GetCollectionService do
   end
 
   describe '#call' do
-    before { allow(subject).to receive(:items).and_return(:items) }
+    before do
+      allow(subject).to receive(:items).and_return(:items)
 
-    before { allow(ItemSearcher).to receive(:call).with(:items, params).and_return(:collection) }
+      allow(ItemSearcher).to receive(:call).with(:items, params).and_return(:collection)
+    end
 
     its(:call) { is_expected.to eq :collection }
   end

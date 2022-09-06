@@ -12,9 +12,11 @@ RSpec.describe Cashes::GetCollectionService, type: :cashe do
   end
 
   describe '#call' do
-    before { allow(subject).to receive(:cashes).and_return(:cashes) }
+    before do
+      allow(subject).to receive(:cashes).and_return(:cashes)
 
-    before { allow(CashSearcher).to receive(:call).with(:cashes, params).and_return(:collection) }
+      allow(CashSearcher).to receive(:call).with(:cashes, params).and_return(:collection)
+    end
 
     its(:call) { is_expected.to eq :collection }
   end

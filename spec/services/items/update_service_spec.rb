@@ -42,11 +42,13 @@ RSpec.describe Items::UpdateService do
   describe '#call' do
     let(:item) { stub_model Item }
 
-    before { allow(subject).to receive(:item).and_return(item) }
+    before do
+      allow(subject).to receive(:item).and_return(item)
 
-    before { allow(subject).to receive(:resource_params).and_return(:resource_params) }
+      allow(subject).to receive(:resource_params).and_return(:resource_params)
 
-    before { allow(subject).to receive_message_chain(:update_at_end_via_websocket, :update_balance_via_websocket) }
+      allow(subject).to receive_message_chain(:update_at_end_via_websocket, :update_balance_via_websocket)
+    end
 
     context 'when success' do
       before { allow(item).to receive(:update).with(:resource_params).and_return(true) }

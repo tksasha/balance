@@ -2,9 +2,11 @@
 
 RSpec.describe 'Cashes', type: :request do
   describe 'GET /index.js' do
-    before { create_list :cash, 2 }
+    before do
+      create_list :cash, 2
 
-    before { get '/cashes', xhr: true }
+      get '/cashes', xhr: true
+    end
 
     it_behaves_like 'index.js'
   end
