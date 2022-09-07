@@ -33,11 +33,5 @@ RSpec.describe ParseCurrencyService do
 
       it { is_expected.to eq 'uah' }
     end
-
-    context 'with "rur"' do
-      let(:currency) { 'rub' }
-
-      it { is_expected.to eq 'rub' }
-    end
   end
 end

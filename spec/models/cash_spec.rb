@@ -11,7 +11,7 @@ RSpec.describe Cash, type: :model do
 
   it { is_expected.to validate_presence_of :currency }
 
-  it { is_expected.to define_enum_for(:currency).with_values(%w[uah usd rub eur]) }
+  it { is_expected.to define_enum_for(:currency).with_values(%w[uah usd eur]) }
 
   it { is_expected.to be_versioned }
 end
