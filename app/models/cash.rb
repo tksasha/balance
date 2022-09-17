@@ -26,7 +26,7 @@ class Cash < ApplicationRecord
 
   enum currency: CURRENCIES
 
-  enum :supercategory, { cash: 1, bonds: 2 }, default: :cash, scopes: false
+  enum :supercategory, { cash: 1, bonds: 2, deposits: 3 }, default: :cash, scopes: false
 
   has_paper_trail
 

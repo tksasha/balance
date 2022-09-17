@@ -3,3 +3,4 @@ ua:
     supercategory:
       cash: 'Готівка'
       bonds: 'Облігації'
+      deposits: 'Депозити'

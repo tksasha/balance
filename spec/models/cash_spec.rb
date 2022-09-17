@@ -13,7 +13,7 @@ RSpec.describe Cash, type: :model do
 
   it { is_expected.to define_enum_for(:currency).with_values(%w[uah usd eur]) }
 
-  it { expect(subject.defined_enums).to include 'supercategory' => { 'cash' => 1, 'bonds' => 2 } }
+  it { expect(subject.defined_enums).to include 'supercategory' => { 'cash' => 1, 'bonds' => 2, 'deposits' => 3 } }
 
   it { is_expected.to be_versioned }
 
@@ -22,13 +22,13 @@ RSpec.describe Cash, type: :model do
 
     it do
       I18n.with_locale(:en) do
-        expect(subject).to eq 'Cash' => 'cash', 'Bonds' => 'bonds'
+        expect(subject).to eq 'Cash' => 'cash', 'Bonds' => 'bonds', 'Deposits' => 'deposits'
       end
     end
 
     it do
       I18n.with_locale(:ua) do
-        expect(subject).to eq 'Готівка' => 'cash', 'Облігації' => 'bonds'
+        expect(subject).to eq 'Готівка' => 'cash', 'Облігації' => 'bonds', 'Депозити' => 'deposits'
       end
     end
   end
