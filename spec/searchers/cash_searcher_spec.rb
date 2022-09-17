@@ -3,5 +3,5 @@
 RSpec.describe CashSearcher do
   subject { described_class.new :relation, :params }
 
-  it { should be_an ActsAsSearchByCurrency }
+  it { is_expected.to be_an ActsAsSearchByCurrency }
 end

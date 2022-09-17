@@ -1,0 +1,13 @@
+ua:
+  activerecord:
+    attributes:
+      category:
+        name: 'Назва'
+        supercategory: 'Суперкатегорія'
+        income: 'Надходження'
+        visible: 'Відображається'
+  category:
+    supercategory:
+      first: 'Перша'
+      second: 'Друга'
+      third: 'Третя'

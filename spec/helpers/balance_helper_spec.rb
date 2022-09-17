@@ -10,6 +10,6 @@ RSpec.describe BalanceHelper, type: :helper do
 
     before { allow(CalculateBalanceService).to receive(:call).with('usd').and_return(22.15) }
 
-    its(:balance) { should eq 22.15 }
+    its(:balance) { is_expected.to eq 22.15 }
   end
 end

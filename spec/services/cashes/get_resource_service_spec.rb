@@ -8,7 +8,7 @@ RSpec.describe Cashes::GetResourceService do
   describe '#cash' do
     before { allow(Cash).to receive(:find).with(27).and_return(:cash) }
 
-    its(:cash) { should eq :cash }
+    its(:cash) { is_expected.to eq :cash }
   end
 
   describe '#call' do
@@ -16,8 +16,8 @@ RSpec.describe Cashes::GetResourceService do
 
     before { allow(subject).to receive(:cash).and_return(cash) }
 
-    its(:call) { should be_success }
+    its(:call) { is_expected.to be_success }
 
-    its('call.object') { should eq cash }
+    its('call.object') { is_expected.to eq cash }
   end
 end

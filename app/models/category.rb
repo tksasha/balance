@@ -4,11 +4,12 @@
 #
 # Table name: categories
 #
-#  id       :integer          not null, primary key
-#  currency :integer          default("uah")
-#  income   :boolean          default(FALSE)
-#  name     :string
-#  visible  :boolean          default(TRUE)
+#  id            :integer          not null, primary key
+#  currency      :integer          default("uah")
+#  income        :boolean          default(FALSE)
+#  name          :string
+#  supercategory :integer          default("first"), not null
+#  visible       :boolean          default(TRUE)
 #
 # Indexes
 #
@@ -21,6 +22,8 @@ class Category < ApplicationRecord
   validates :currency, presence: true
 
   enum currency: CURRENCIES
+
+  enum :supercategory, { first: 1, second: 2, third: 3 }, default: :first, scopes: false
 
   scope :income, -> { where income: true }
 

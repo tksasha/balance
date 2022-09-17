@@ -13,11 +13,11 @@ RSpec.describe ActsAsController do
     end
   end
 
-  its(:_helper_methods) { should include :result }
+  its(:_helper_methods) { is_expected.to include :result }
 
-  it { should delegate_method(:resource).to(:result) }
+  it { is_expected.to delegate_method(:resource).to(:result) }
 
-  it { should delegate_method(:success?).to(:result) }
+  it { is_expected.to delegate_method(:success?).to(:result) }
 
-  it { should delegate_method(:failure?).to(:result) }
+  it { is_expected.to delegate_method(:failure?).to(:result) }
 end

@@ -11,7 +11,7 @@ RSpec.describe CalculateAtEndService do
 
       before { allow(Item).to receive(:where).with(currency: 'uah').and_return(:collection) }
 
-      its(:search_by_currency) { should eq :collection }
+      its(:search_by_currency) { is_expected.to eq :collection }
     end
 
     context do
@@ -19,7 +19,7 @@ RSpec.describe CalculateAtEndService do
 
       before { allow(Item).to receive(:where).with(currency: 'usd').and_return(:collection) }
 
-      its(:search_by_currency) { should eq :collection }
+      its(:search_by_currency) { is_expected.to eq :collection }
     end
   end
 
@@ -39,7 +39,7 @@ RSpec.describe CalculateAtEndService do
       end
     end
 
-    its(:income) { should eq 15 }
+    its(:income) { is_expected.to eq 15 }
   end
 
   describe '#expense' do
@@ -58,7 +58,7 @@ RSpec.describe CalculateAtEndService do
       end
     end
 
-    its(:expense) { should eq 16 }
+    its(:expense) { is_expected.to eq 16 }
   end
 
   describe '#call' do
@@ -66,7 +66,7 @@ RSpec.describe CalculateAtEndService do
 
     before { allow(subject).to receive(:expense).and_return(6.5) }
 
-    its(:call) { should eq 3.5 }
+    its(:call) { is_expected.to eq 3.5 }
   end
 
   describe '.call' do
@@ -81,6 +81,6 @@ RSpec.describe CalculateAtEndService do
       end
     end
 
-    it { should eq 19 }
+    it { is_expected.to eq 19 }
   end
 end

@@ -6,6 +6,6 @@ RSpec.describe ApplicationHelper, type: :helper do
   describe '#currency_from_params' do
     let(:params) { { currency: 'uah' } }
 
-    its(:currency_from_params) { should eq 'uah' }
+    its(:currency_from_params) { is_expected.to eq 'uah' }
   end
 end

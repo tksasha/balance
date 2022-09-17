@@ -7,15 +7,15 @@ RSpec.describe ConsolidationSearcher do
 
   let(:params) { { currency: 'usd', month: '2019-11' } }
 
-  its(:currency) { should eq 'usd' }
+  its(:currency) { is_expected.to eq 'usd' }
 
-  its(:month) { should eq Month.new(2019, 11) }
+  its(:month) { is_expected.to eq Month.new(2019, 11) }
 
   describe '#dates' do
     context do
       let(:dates) { Date.new(2019, 11, 1)..Date.new(2019, 11, 30) }
 
-      its(:dates) { should eq dates }
+      its(:dates) { is_expected.to eq dates }
     end
 
     context do
@@ -23,7 +23,7 @@ RSpec.describe ConsolidationSearcher do
 
       before { subject.instance_variable_set :@dates, dates }
 
-      its(:dates) { should eq dates }
+      its(:dates) { is_expected.to eq dates }
     end
   end
 
@@ -58,7 +58,7 @@ RSpec.describe ConsolidationSearcher do
       end
     end
 
-    its(:search) { should eq collection }
+    its(:search) { is_expected.to eq collection }
   end
 
   describe '.search' do

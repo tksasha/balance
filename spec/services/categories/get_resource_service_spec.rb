@@ -9,13 +9,13 @@ RSpec.describe Categories::GetResourceService do
     context do
       before { subject.instance_variable_set :@category, :category }
 
-      its(:category) { should eq :category }
+      its(:category) { is_expected.to eq :category }
     end
 
     context do
       before { allow(Category).to receive(:find).with(9).and_return(:category) }
 
-      its(:category) { should eq :category }
+      its(:category) { is_expected.to eq :category }
     end
   end
 
@@ -24,8 +24,8 @@ RSpec.describe Categories::GetResourceService do
 
     before { allow(subject).to receive(:category).and_return(category) }
 
-    its(:call) { should be_success }
+    its(:call) { is_expected.to be_success }
 
-    its('call.object') { should eq category }
+    its('call.object') { is_expected.to eq category }
   end
 end

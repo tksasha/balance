@@ -8,6 +8,6 @@ RSpec.describe ApplicationHelper, type: :helper do
 
     before { allow(helper).to receive_message_chain(:resource, :decorate).and_return(:decorated) }
 
-    it { should eq :decorated }
+    it { is_expected.to eq :decorated }
   end
 end

@@ -5,25 +5,25 @@ RSpec.describe Items::DestroyService do
 
   let(:params) { { id: 25 } }
 
-  it { should be_an ActsAsUpdateAtEndViaWebsocketService }
+  it { is_expected.to be_an ActsAsUpdateAtEndViaWebsocketService }
 
-  it { should be_an ActsAsUpdateBalanceViaWebsocketService }
+  it { is_expected.to be_an ActsAsUpdateBalanceViaWebsocketService }
 
   describe '#item' do
     context do
       before { subject.instance_variable_set :@item, :item }
 
-      its(:item) { should eq :item }
+      its(:item) { is_expected.to eq :item }
     end
 
     context do
       before { allow(Item).to receive(:find).with(25).and_return(:item) }
 
-      its(:item) { should eq :item }
+      its(:item) { is_expected.to eq :item }
     end
   end
 
-  it { should delegate_method(:currency).to(:item) }
+  it { is_expected.to delegate_method(:currency).to(:item) }
 
   describe '#call' do
     let(:item) { stub_model Item }
@@ -34,8 +34,8 @@ RSpec.describe Items::DestroyService do
 
     before { expect(subject).to receive_message_chain(:update_at_end_via_websocket, :update_balance_via_websocket) }
 
-    its(:call) { should be_success }
+    its(:call) { is_expected.to be_success }
 
-    its('call.object') { should eq item }
+    its('call.object') { is_expected.to eq item }
   end
 end

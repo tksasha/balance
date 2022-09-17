@@ -13,11 +13,11 @@ RSpec.describe ItemSearcher do
 
       before { subject.instance_variable_set :@month, month }
 
-      its(:month) { should eq month }
+      its(:month) { is_expected.to eq month }
     end
 
     context do
-      its(:month) { should eq Month.new(2021, 3) }
+      its(:month) { is_expected.to eq Month.new(2021, 3) }
     end
   end
 end

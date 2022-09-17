@@ -42,9 +42,6 @@ RSpec/MissingExampleGroupArgument:
 RSpec/ScatteredSetup:
   Enabled: false
 
-RSpec/ImplicitExpect:
-  EnforcedStyle: should
-
 RSpec/NamedSubject:
   Enabled: false
 

@@ -7,37 +7,37 @@ RSpec.describe ParseCurrencyService do
     context do
       let(:currency) { 'usd' }
 
-      its(:currency) { should eq 'usd' }
+      its(:currency) { is_expected.to eq 'usd' }
     end
 
     context do
       let(:currency) { 'USD' }
 
-      its(:currency) { should eq 'usd' }
+      its(:currency) { is_expected.to eq 'usd' }
     end
 
     context do
       let(:currency) { nil }
 
-      its(:currency) { should eq 'uah' }
+      its(:currency) { is_expected.to eq 'uah' }
     end
 
     context do
       let(:currency) { 'unsupported currency' }
 
-      its(:currency) { should eq 'uah' }
+      its(:currency) { is_expected.to eq 'uah' }
     end
 
     context do
       let(:currency) { 'uah' }
 
-      its(:currency) { should eq 'uah' }
+      its(:currency) { is_expected.to eq 'uah' }
     end
 
     context do
       let(:currency) { 'rub' }
 
-      its(:currency) { should eq 'rub' }
+      its(:currency) { is_expected.to eq 'rub' }
     end
   end
 
@@ -46,7 +46,7 @@ RSpec.describe ParseCurrencyService do
 
     before { allow(subject).to receive(:currency).and_return(currency) }
 
-    its(:call) { should eq currency }
+    its(:call) { is_expected.to eq currency }
   end
 
   describe '.call' do

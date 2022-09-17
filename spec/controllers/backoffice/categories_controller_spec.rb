@@ -5,7 +5,7 @@ RSpec.describe Backoffice::CategoriesController, type: :controller do
     context do
       before { subject.instance_variable_set :@collection, :collection }
 
-      its(:collection) { should eq :collection }
+      its(:collection) { is_expected.to eq :collection }
     end
 
     context do
@@ -13,7 +13,7 @@ RSpec.describe Backoffice::CategoriesController, type: :controller do
 
       before { allow(Categories::GetCollectionService).to receive(:call).with(:params).and_return(:collection) }
 
-      its(:collection) { should eq :collection }
+      its(:collection) { is_expected.to eq :collection }
     end
   end
 
@@ -21,7 +21,7 @@ RSpec.describe Backoffice::CategoriesController, type: :controller do
     context do
       before { subject.instance_variable_set :@result, :result }
 
-      its(:result) { should eq :result }
+      its(:result) { is_expected.to eq :result }
     end
 
     context do
@@ -31,7 +31,7 @@ RSpec.describe Backoffice::CategoriesController, type: :controller do
 
       before { allow(Categories::GetResultService).to receive(:call).with(:action_name, :params).and_return(:result) }
 
-      its(:result) { should eq :result }
+      its(:result) { is_expected.to eq :result }
     end
   end
 end

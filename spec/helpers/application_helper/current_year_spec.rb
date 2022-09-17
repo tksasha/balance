@@ -8,6 +8,6 @@ RSpec.describe ApplicationHelper, type: :helper do
 
     before { allow(subject).to receive(:month).and_return(month) }
 
-    its(:current_year) { should eq 2021 }
+    its(:current_year) { is_expected.to eq 2021 }
   end
 end

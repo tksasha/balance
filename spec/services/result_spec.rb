@@ -5,7 +5,7 @@ RSpec.describe Result, type: :service do
 
   let(:object) { double }
 
-  its(:object) { should eq object }
+  its(:object) { is_expected.to eq object }
 
-  its(:resource) { should eq object }
+  its(:resource) { is_expected.to eq object }
 end

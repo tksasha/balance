@@ -8,7 +8,7 @@ RSpec.describe Websockets::UpdateAtEndService do
   describe '#at_end' do
     before { allow(CalculateAtEndService).to receive(:call).with('uah').and_return(241_513) }
 
-    its(:at_end) { should eq '241 513.00' }
+    its(:at_end) { is_expected.to eq '241 513.00' }
   end
 
   describe '#call' do

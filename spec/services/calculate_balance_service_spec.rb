@@ -8,7 +8,7 @@ RSpec.describe CalculateBalanceService do
   describe '#at_end' do
     before { allow(CalculateAtEndService).to receive(:call).with('uah').and_return(21.04) }
 
-    its(:at_end) { should eq 21.04 }
+    its(:at_end) { is_expected.to eq 21.04 }
   end
 
   describe '#sum' do
@@ -24,7 +24,7 @@ RSpec.describe CalculateBalanceService do
         end
       end
 
-      its(:sum) { should eq 21.09 }
+      its(:sum) { is_expected.to eq 21.09 }
     end
 
     context do
@@ -41,7 +41,7 @@ RSpec.describe CalculateBalanceService do
         end
       end
 
-      its(:sum) { should eq 42.69 }
+      its(:sum) { is_expected.to eq 42.69 }
     end
   end
 
@@ -50,7 +50,7 @@ RSpec.describe CalculateBalanceService do
 
     before { allow(subject).to receive(:at_end).and_return(55.555) }
 
-    its(:call) { should eq 44.44 }
+    its(:call) { is_expected.to eq 44.44 }
   end
 
   describe '.call' do
@@ -67,6 +67,6 @@ RSpec.describe CalculateBalanceService do
       end
     end
 
-    it { should eq 28 }
+    it { is_expected.to eq 28 }
   end
 end

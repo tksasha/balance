@@ -8,7 +8,7 @@ RSpec.describe Websockets::UpdateBalanceService do
   describe '#balance' do
     before { allow(CalculateBalanceService).to receive(:call).with('uah').and_return(241_513) }
 
-    its(:balance) { should eq '241 513.00' }
+    its(:balance) { is_expected.to eq '241 513.00' }
   end
 
   describe '#call' do

@@ -5,7 +5,7 @@ RSpec.describe CategoryWidgetDataSearcher do
 
   let(:params) { { currency: 'usd' } }
 
-  its(:currency) { should eq 'usd' }
+  its(:currency) { is_expected.to eq 'usd' }
 
   describe '#search' do
     subject { described_class.search params }
@@ -58,7 +58,7 @@ RSpec.describe CategoryWidgetDataSearcher do
       end
     end
 
-    it { should eq collection }
+    it { is_expected.to eq collection }
   end
 
   describe '.search' do

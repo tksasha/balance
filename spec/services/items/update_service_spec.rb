@@ -17,27 +17,27 @@ RSpec.describe Items::UpdateService do
     )
   end
 
-  it { should be_an ActsAsUpdateAtEndViaWebsocketService }
+  it { is_expected.to be_an ActsAsUpdateAtEndViaWebsocketService }
 
-  it { should be_an ActsAsUpdateBalanceViaWebsocketService }
+  it { is_expected.to be_an ActsAsUpdateBalanceViaWebsocketService }
 
-  its(:resource_params) { should eq params.require(:item).permit! }
+  its(:resource_params) { is_expected.to eq params.require(:item).permit! }
 
   describe '#item' do
     context do
       before { subject.instance_variable_set :@item, :item }
 
-      its(:item) { should eq :item }
+      its(:item) { is_expected.to eq :item }
     end
 
     context do
       before { allow(Item).to receive(:find).with(15).and_return(:item) }
 
-      its(:item) { should eq :item }
+      its(:item) { is_expected.to eq :item }
     end
   end
 
-  it { should delegate_method(:currency).to(:item) }
+  it { is_expected.to delegate_method(:currency).to(:item) }
 
   describe '#call' do
     let(:item) { stub_model Item }
@@ -51,17 +51,17 @@ RSpec.describe Items::UpdateService do
 
       before { expect(subject).to receive_message_chain(:update_at_end_via_websocket, :update_balance_via_websocket) }
 
-      its(:call) { should be_success }
+      its(:call) { is_expected.to be_success }
 
-      its('call.object') { should eq item }
+      its('call.object') { is_expected.to eq item }
     end
 
     context do
       before { allow(item).to receive(:update).with(:resource_params).and_return(false) }
 
-      its(:call) { should be_failure }
+      its(:call) { is_expected.to be_failure }
 
-      its('call.object') { should eq item }
+      its('call.object') { is_expected.to eq item }
     end
   end
 end

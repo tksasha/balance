@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2022_07_01_072133) do
+ActiveRecord::Schema[7.0].define(version: 2022_08_31_160731) do
   create_table "cashes", force: :cascade do |t|
     t.decimal "sum", precision: 10, scale: 2
     t.string "name"
@@ -25,6 +25,7 @@ ActiveRecord::Schema[7.0].define(version: 2022_07_01_072133) do
     t.boolean "income", default: false
     t.boolean "visible", default: true
     t.integer "currency", default: 0
+    t.integer "supercategory", default: 1, null: false
     t.index ["name", "currency"], name: "index_categories_on_name_and_currency", unique: true
   end
 

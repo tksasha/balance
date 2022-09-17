@@ -5,7 +5,7 @@ RSpec.describe Success do
 
   let(:object) { double }
 
-  it { should be_success }
+  it { is_expected.to be_success }
 
-  it { should_not be_failure }
+  it { is_expected.not_to be_failure }
 end

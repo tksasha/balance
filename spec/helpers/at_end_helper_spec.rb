@@ -10,6 +10,6 @@ RSpec.describe AtEndHelper, type: :helper do
 
     before { allow(CalculateAtEndService).to receive(:call).with('uah').and_return(21.49) }
 
-    its(:at_end) { should eq 21.49 }
+    its(:at_end) { is_expected.to eq 21.49 }
   end
 end

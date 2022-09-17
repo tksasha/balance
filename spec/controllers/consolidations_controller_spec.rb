@@ -5,7 +5,7 @@ RSpec.describe ConsolidationsController, type: :controller do
     context do
       before { subject.instance_variable_set :@collection, :collection }
 
-      its(:collection) { should eq :collection }
+      its(:collection) { is_expected.to eq :collection }
     end
 
     context do
@@ -13,7 +13,7 @@ RSpec.describe ConsolidationsController, type: :controller do
 
       before { allow(Consolidations::GetCollectionService).to receive(:call).with(:params).and_return(:collection) }
 
-      its(:collection) { should eq :collection }
+      its(:collection) { is_expected.to eq :collection }
     end
   end
 end
