@@ -2,7 +2,7 @@
 
 module ApplicationHelper
   def months
-    %w[Січень Лютий Березень Квітень Травень Червень Липень Серпень Вересень Жовтень Листопад Грудень]
+    I18n.t('date.month_names')[1..]
   end
 
   def decorated
