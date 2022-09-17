@@ -4,6 +4,10 @@
   </td>
 
   <td class="text-center">
+    <%= I18n.t(category.supercategory, scope: %i[category supercategory]) %>
+  </td>
+
+  <td class="text-center">
     <div class="<%= category.income? ? 'text-success' : 'text-warning' %>">
       <%= t category.income? %>
     </div>

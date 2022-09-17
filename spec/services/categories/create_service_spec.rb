@@ -3,7 +3,7 @@
 RSpec.describe Categories::CreateService do
   subject { described_class.new params }
 
-  let(:params) { acp(category: { name: nil, income: nil, visible: nil, currency: nil }) }
+  let(:params) { acp(category: { name: nil, supercategory: nil, income: nil, visible: nil, currency: nil }) }
 
   its(:resource_params) { is_expected.to eq params.require(:category).permit! }
 

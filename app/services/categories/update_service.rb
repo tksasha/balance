@@ -15,7 +15,7 @@ module Categories
     private
 
     def resource_params
-      @params.require(:category).permit(:name, :income, :visible, :currency)
+      @params.require(:category).permit(:name, :supercategory, :income, :visible, :currency)
     end
 
     def category
