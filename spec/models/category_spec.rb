@@ -9,7 +9,7 @@ RSpec.describe Category, type: :model do
 
   it { is_expected.to define_enum_for(:currency).with_values(%w[uah usd eur]) }
 
-  it { is_expected.to define_enum_for(:supercategory).with_values(first: 1, second: 2, third: 3) }
+  it { expect(subject.defined_enums).to include 'supercategory' => { 'one' => 1, 'two' => 2, 'three' => 3 } }
 
   describe '.visible' do
     subject { described_class.visible.to_sql }
@@ -33,5 +33,21 @@ RSpec.describe Category, type: :model do
     let(:sql) { described_class.where(income: false).to_sql }
 
     it { is_expected.to eq sql }
+  end
+
+  describe '.supercategories' do
+    subject { described_class.supercategories }
+
+    it do
+      I18n.with_locale(:en) do
+        expect(subject).to eq 'First' => 'one', 'Second' => 'two', 'Third' => 'three'
+      end
+    end
+
+    it do
+      I18n.with_locale(:ua) do
+        expect(subject).to eq 'Перша' => 'one', 'Друга' => 'two', 'Третя' => 'three'
+      end
+    end
   end
 end

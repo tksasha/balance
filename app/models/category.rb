@@ -8,7 +8,7 @@
 #  currency      :integer          default("uah")
 #  income        :boolean          default(FALSE)
 #  name          :string
-#  supercategory :integer          default("first"), not null
+#  supercategory :integer          default("one"), not null
 #  visible       :boolean          default(TRUE)
 #
 # Indexes
@@ -23,11 +23,22 @@ class Category < ApplicationRecord
 
   enum currency: CURRENCIES
 
-  enum :supercategory, { first: 1, second: 2, third: 3 }, default: :first, scopes: false
+  enum :supercategory, { one: 1, two: 2, three: 3 }, default: :one, scopes: false
 
   scope :income, -> { where income: true }
 
   scope :expense, -> { where income: false }
 
   scope :visible, -> { where visible: true }
+
+  class << self
+    def supercategories
+      defined_enums['supercategory']
+        .each_with_object({}) do |i, res|
+          name, = i
+
+          res[I18n.t(name, scope: 'category.supercategory')] = name
+        end
+    end
+  end
 end

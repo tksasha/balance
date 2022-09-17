@@ -1,0 +1,5 @@
+ua:
+  activerecord:
+    attributes:
+      cash:
+        supercategory: 'Суперкатегорія'

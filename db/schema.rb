@@ -10,13 +10,14 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2022_08_31_160731) do
+ActiveRecord::Schema[7.0].define(version: 2022_09_17_122950) do
   create_table "cashes", force: :cascade do |t|
     t.decimal "sum", precision: 10, scale: 2
     t.string "name"
     t.time "deleted_at"
     t.string "formula"
     t.integer "currency", default: 0
+    t.integer "supercategory", default: 1, null: false
     t.index ["name", "currency"], name: "index_cashes_on_name_and_currency", unique: true
   end
 

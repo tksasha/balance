@@ -8,6 +8,6 @@ ua:
         visible: 'Відображається'
   category:
     supercategory:
-      first: 'Перша'
-      second: 'Друга'
-      third: 'Третя'
+      one: 'Перша'
+      two: 'Друга'
+      three: 'Третя'

@@ -1,0 +1,5 @@
+ua:
+  cash:
+    supercategory:
+      cash: 'Готівка'
+      bonds: 'Облігації'

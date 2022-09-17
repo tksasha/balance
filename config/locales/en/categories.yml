@@ -1,6 +1,6 @@
 en:
   category:
     supercategory:
-      first: 'First'
-      second: 'Second'
-      third: 'Third'
+      one: 'First'
+      two: 'Second'
+      three: 'Third'

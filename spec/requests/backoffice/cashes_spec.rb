@@ -21,9 +21,13 @@ RSpec.describe 'Backoffice::Cashes', type: :request do
     before { post '/backoffice/cashes', params:, xhr: true }
 
     context 'with valid params' do
-      let(:params) { { cash: { name: 'Bank', formula: '4 + 5' } } }
+      let(:params) { { cash: { name: 'Bank', formula: '4 + 5', supercategory: 'bonds' } } }
+
+      let(:cash) { Cash.last }
 
       it_behaves_like 'create.js'
+
+      it { expect(cash.supercategory).to eq 'bonds' }
     end
 
     context 'with invalid params' do
@@ -49,9 +53,13 @@ RSpec.describe 'Backoffice::Cashes', type: :request do
     before { patch "/backoffice/cashes/#{ cash.id }", params:, xhr: true }
 
     context 'with valid params' do
-      let(:params) { { cash: { name: Faker::Lorem.word } } }
+      before { cash.reload }
+
+      let(:params) { { cash: { name: Faker::Lorem.word, supercategory: 'bonds' } } }
 
       it_behaves_like 'update.js'
+
+      it { expect(cash.supercategory).to eq 'bonds' }
     end
 
     context 'with invalid params' do

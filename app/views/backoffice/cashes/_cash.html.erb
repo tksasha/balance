@@ -1,5 +1,13 @@
 <tr id="<%= dom_id cash %>">
-  <td><%= cash.name %></td>
+  <td>
+    <%= cash.name %>
+  </td>
+
+  <td>
+    <div class="supercategory">
+      <%= I18n.t(cash.supercategory, scope: 'cash.supercategory') %>
+    </div>
+  </td>
 
   <td class="text-right">
     <%= money cash.sum %>

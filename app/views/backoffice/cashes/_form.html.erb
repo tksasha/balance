@@ -6,6 +6,12 @@
   </div>
 
   <div class="form-group mt-3">
+    <%= f.label :supercategory %>
+
+    <%= f.select :supercategory, Cash.supercategories, { include_blank: false }, { class: 'form-select' } %>
+  </div>
+
+  <div class="form-group mt-3">
     <%= input(f, :formula) %>
   </div>
 

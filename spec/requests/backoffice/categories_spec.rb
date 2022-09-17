@@ -21,13 +21,13 @@ RSpec.describe 'Backoffice::Categories', type: :request do
     before { post '/backoffice/categories', params:, xhr: true }
 
     context 'with valid params' do
-      let(:params) { { category: { name: 'Drinks', supercategory: 'second', income: true, visible: true } } }
+      let(:params) { { category: { name: 'Drinks', supercategory: 'two', income: true, visible: true } } }
 
       let(:category) { Category.last }
 
       it_behaves_like 'create.js'
 
-      it { expect(category).to be_second }
+      it { expect(category).to be_two }
     end
 
     context 'with invalid params' do
@@ -53,7 +53,7 @@ RSpec.describe 'Backoffice::Categories', type: :request do
     before { patch "/backoffice/categories/#{ category.id }", params:, xhr: true }
 
     context 'with valid params' do
-      let(:params) { { category: { name: 'Drinks', supercategory: 'third' } } }
+      let(:params) { { category: { name: 'Drinks', supercategory: 'three' } } }
 
       before { category.reload }
 
@@ -61,7 +61,7 @@ RSpec.describe 'Backoffice::Categories', type: :request do
 
       it { expect(category.name).to eq 'Drinks' }
 
-      it { expect(category).to be_third }
+      it { expect(category).to be_three }
     end
 
     context 'with invalid params' do
