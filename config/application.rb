@@ -35,5 +35,7 @@ module Balance
     config.load_defaults 7.0
 
     config.active_record.sqlite3_production_warning = false
+
+    config.autoload_paths << 'lib'
   end
 end

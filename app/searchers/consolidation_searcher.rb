@@ -24,7 +24,7 @@ class ConsolidationSearcher
   private
 
   def currency=(object)
-    @currency = ParseCurrencyService.call(object)
+    @currency = Currency(object)
   end
 
   def month=(object)

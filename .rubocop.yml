@@ -29,6 +29,11 @@ Metrics/BlockLength:
   - lib/tasks/auto_annotate_models.rake
   - spec/**/*
 
+# Naming
+Naming/MethodName:
+  Exclude:
+    - lib/currency.rb
+
 # RSpec
 RSpec/SubjectStub: # delme
   Enabled: false

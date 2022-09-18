@@ -1,8 +1,8 @@
 # frozen_string_literal: true
 
-RSpec.describe ParseCurrencyService do
-  describe '.call' do
-    subject { described_class.call(currency) }
+RSpec.describe Currency do
+  describe '.parse' do
+    subject { described_class.parse(currency) }
 
     context 'with "usd"' do
       let(:currency) { 'usd' }
@@ -33,5 +33,11 @@ RSpec.describe ParseCurrencyService do
 
       it { is_expected.to eq 'uah' }
     end
+  end
+
+  describe 'Currency' do
+    subject { Currency('USD') }
+
+    it { is_expected.to eq 'usd' }
   end
 end

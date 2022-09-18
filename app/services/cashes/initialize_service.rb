@@ -3,7 +3,7 @@
 module Cashes
   class InitializeService < ApplicationService
     def initialize(params)
-      @currency = ParseCurrencyService.call(params.fetch(:currency, nil))
+      @currency = Currency(params.fetch(:currency, nil))
     end
 
     def call
