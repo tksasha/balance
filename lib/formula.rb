@@ -1,9 +1,9 @@
 # frozen_string_literal: true
 
 # rubocop:disable Security/Eval:
-class CalculateFormulaService
+class Formula
   class << self
-    def call(string)
+    def calculate(string)
       string = \
         string
         .to_s
@@ -19,3 +19,7 @@ class CalculateFormulaService
   end
 end
 # rubocop:enable Security/Eval:
+
+def Formula(*args)
+  Formula.calculate(*args)
+end

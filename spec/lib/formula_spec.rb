@@ -1,8 +1,8 @@
 # frozen_string_literal: true
 
-RSpec.describe CalculateFormulaService do
-  describe '.call' do
-    subject { described_class.call string }
+RSpec.describe Formula do
+  describe '.calculate' do
+    subject { described_class.calculate(string) }
 
     let(:string) { nil }
 
@@ -81,5 +81,11 @@ RSpec.describe CalculateFormulaService do
 
       it { is_expected.to eq(-25.5) }
     end
+  end
+
+  describe 'Formula()' do
+    subject { Formula('2+2') }
+
+    it { is_expected.to eq(4) }
   end
 end
