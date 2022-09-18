@@ -36,6 +36,6 @@ module Balance
 
     config.active_record.sqlite3_production_warning = false
 
-    config.autoload_paths << 'lib'
+    config.eager_load_paths << Rails.root.join('lib')
   end
 end
