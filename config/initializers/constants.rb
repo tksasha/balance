@@ -1,3 +1,3 @@
 # frozen_string_literal: true
 
-CURRENCIES = %w[uah usd eur].freeze
+CURRENCIES = { 'uah' => 0, 'usd' => 1, 'eur' => 3 }.freeze

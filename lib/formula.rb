@@ -19,7 +19,3 @@ class Formula
   end
 end
 # rubocop:enable Security/Eval:
-
-def Formula(*args)
-  Formula.calculate(*args)
-end

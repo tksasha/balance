@@ -9,6 +9,6 @@ class ApplicationController < ActionController::Base
 
   # TODO: spec me
   def default_url_options
-    { currency: Currency(params[:currency]) }
+    { currency: Currency.parse(params[:currency]) }
   end
 end

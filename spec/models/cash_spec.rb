@@ -11,7 +11,7 @@ RSpec.describe Cash, type: :model do
 
   it { is_expected.to validate_presence_of :currency }
 
-  it { is_expected.to define_enum_for(:currency).with_values(%w[uah usd eur]) }
+  it { is_expected.to define_enum_for(:currency).with_values(uah: 0, usd: 1, eur: 3) }
 
   it { expect(subject.defined_enums).to include 'supercategory' => { 'cash' => 1, 'bonds' => 2, 'deposits' => 3 } }
 

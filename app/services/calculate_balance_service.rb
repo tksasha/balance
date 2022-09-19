@@ -2,7 +2,7 @@
 
 class CalculateBalanceService < ApplicationService
   def initialize(currency)
-    @currency = Currency(currency)
+    @currency = Currency.parse(currency)
   end
 
   def call

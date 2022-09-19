@@ -5,7 +5,7 @@
 <div id="currencies-widget-content">
   <div class="container">
     <div class="row">
-      <% CURRENCIES.map do |currency| %>
+      <% CURRENCIES.keys.map do |currency| %>
         <% next if currency == currency_from_params %>
 
         <div class="col">

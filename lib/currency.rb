@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 class Currency
-  DEFAULT = CURRENCIES.first
+  DEFAULT = CURRENCIES.keys.first
 
   class << self
     def parse(currency)
@@ -9,13 +9,9 @@ class Currency
 
       currency = currency.downcase
 
-      return DEFAULT unless CURRENCIES.include? currency
+      return DEFAULT unless CURRENCIES.key?(currency)
 
       currency
     end
   end
-end
-
-def Currency(*args)
-  Currency.parse(*args)
 end

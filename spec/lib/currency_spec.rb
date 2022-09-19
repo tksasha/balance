@@ -34,10 +34,4 @@ RSpec.describe Currency do
       it { is_expected.to eq 'uah' }
     end
   end
-
-  describe 'Currency' do
-    subject { Currency('USD') }
-
-    it { is_expected.to eq 'usd' }
-  end
 end

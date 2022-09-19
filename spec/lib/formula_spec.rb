@@ -82,10 +82,4 @@ RSpec.describe Formula do
       it { is_expected.to eq(-25.5) }
     end
   end
-
-  describe 'Formula()' do
-    subject { Formula('2+2') }
-
-    it { is_expected.to eq(4) }
-  end
 end
