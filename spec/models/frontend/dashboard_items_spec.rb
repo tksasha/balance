@@ -1,15 +1,13 @@
 # frozen_string_literal: true
 
-RSpec.describe Frontend::Dashboard, type: :model do
-  subject { described_class.new(currency:, year:, month:) }
+RSpec.describe Frontend::Dashboard do
+  subject { described_class.new(currency:, month:, year:) }
 
   let(:currency) { 'uah' }
 
-  let(:year) { 2022 }
-
   let(:month) { 10 }
 
-  its(:date) { is_expected.to eq Date.new(2022, 10, 1)..Date.new(2022, 10, 31) }
+  let(:year) { 2022 }
 
   describe '#items' do
     before do
