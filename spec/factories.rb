@@ -13,6 +13,26 @@ FactoryBot.define do
     category
 
     formula { '2 + 3' }
+
+    trait :uah do
+      currency { 'uah' }
+    end
+
+    trait :usd do
+      currency { 'usd' }
+    end
+
+    trait :eur do
+      currency { 'eur' }
+    end
+
+    trait :income do
+      association :category, income: true
+    end
+
+    trait :expense do
+      association :category, income: false
+    end
   end
 
   factory :cash do

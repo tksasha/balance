@@ -20,6 +20,12 @@ module Frontend
         .sum(:sum)
     end
 
+    def expense
+      scope
+        .expense
+        .sum(:sum)
+    end
+
     private
 
     attr_reader :currency, :date
