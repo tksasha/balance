@@ -21,6 +21,9 @@ header {
 
     &.active {
       @extend .btn-primary;
+
+      --bs-btn-active-color: #{color("light")};
+      --bs-btn-active-bg: #{color("primary")};
     }
   }
 }
