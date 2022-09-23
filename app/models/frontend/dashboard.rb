@@ -26,6 +26,10 @@ module Frontend
         .sum(:sum)
     end
 
+    def at_end
+      (income - expense).round(2)
+    end
+
     private
 
     attr_reader :currency, :date
