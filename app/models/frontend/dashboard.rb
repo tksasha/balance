@@ -2,10 +2,10 @@
 
 module Frontend
   class Dashboard
-    def initialize(params)
+    def initialize(params = {})
       @currency = Currency.parse(params[:currency])
 
-      @date = Date.new(params[:year], params[:month], 1).all_month
+      @date = DateRange.parse(params)
     end
 
     def items
