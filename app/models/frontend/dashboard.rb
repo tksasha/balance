@@ -14,6 +14,26 @@ module Frontend
         .order(date: :desc)
     end
 
+    def at_end
+      income - expense
+    end
+
+    def balance
+      cashes.sum(:sum) - at_end
+    end
+
+    private
+
+    attr_reader :currency, :date
+
+    def scope
+      Item.where(currency:)
+    end
+
+    def cashes
+      Cash.where(currency:)
+    end
+
     def income
       scope
         .income
@@ -24,18 +44,6 @@ module Frontend
       scope
         .expense
         .sum(:sum)
-    end
-
-    def at_end
-      (income - expense).round(2)
-    end
-
-    private
-
-    attr_reader :currency, :date
-
-    def scope
-      Item.where(currency:)
     end
   end
 end
