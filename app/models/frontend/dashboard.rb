@@ -22,6 +22,10 @@ module Frontend
       cashes.sum(:sum) - at_end
     end
 
+    def item
+      Item.new(currency:)
+    end
+
     private
 
     attr_reader :currency, :date

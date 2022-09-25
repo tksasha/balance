@@ -174,4 +174,18 @@ RSpec.describe Frontend::Dashboard do
 
     it { is_expected.to eq(-0.01) }
   end
+
+  describe '#item' do
+    subject { described_class.new(params).item }
+
+    context 'when currency is `uah`' do
+      let(:params) { { currency: 'uah' } }
+
+      it { is_expected.to be_a_new_record }
+
+      it { is_expected.to be_a(Item) }
+
+      it { expect(subject.currency).to eq 'uah' }
+    end
+  end
 end
