@@ -6,4 +6,10 @@ RSpec.describe 'Frontend/Dashboard', type: :request do
 
     it_behaves_like 'show.html'
   end
+
+  describe 'GET /frontend/dashboard.js' do
+    before { get '/frontend/dashboard', xhr: true }
+
+    it_behaves_like 'show.js'
+  end
 end
