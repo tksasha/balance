@@ -5,3 +5,7 @@ RSpec.shared_examples 'show.js' do
 
   it { expect(response.content_type).to eq 'text/javascript; charset=utf-8' }
 end
+
+RSpec.shared_examples 'show.html' do
+  it { is_expected.to render_template :show }
+end

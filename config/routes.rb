@@ -1,6 +1,10 @@
 # frozen_string_literal: true
 
 Rails.application.routes.draw do
+  namespace :frontend do
+    resource :dashboard, only: :show, controller: :dashboard
+  end
+
   scope '/(:currency)' do
     resources :items, only: %i[create edit update destroy]
 
