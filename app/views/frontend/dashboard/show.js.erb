@@ -1,0 +1,11 @@
+(function() {
+  const form = document.createElement('div');
+
+  form.innerHTML = '<%= j render 'item_form' %>';
+
+  document
+    .querySelector('main')
+    .appendChild(form);
+
+  $('.datepicker').datepicker(BOOTSTRAP_DATEPICKER_DEFAULTS);
+}());
