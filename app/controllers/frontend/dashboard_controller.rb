@@ -4,6 +4,8 @@ module Frontend
   class DashboardController < ApplicationController
     before_action :initialize_resource, only: :show
 
+    def show; end
+
     private
 
     attr_reader :resource
