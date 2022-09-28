@@ -19,7 +19,7 @@ module Frontend
     end
 
     def balance
-      cashes.sum(:sum) - at_end
+      cashes_sum - at_end
     end
 
     def item
@@ -30,12 +30,14 @@ module Frontend
 
     attr_reader :currency, :date
 
+    delegate :sum, to: :cashes, prefix: true
+
     def scope
       Item.where(currency:)
     end
 
     def cashes
-      Cash.where(currency:)
+      ::Frontend::Dashboard::Cashes.new(currency:)
     end
 
     def income

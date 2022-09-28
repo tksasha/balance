@@ -132,32 +132,6 @@ RSpec.describe Frontend::Dashboard do
     it { is_expected.to eq 50.11 }
   end
 
-  describe '#cashes' do
-    subject { described_class.new(params).send(:cashes) }
-
-    let!(:cash_n1) { create(:cash, :uah) }
-    let!(:cash_n2) { create(:cash, :usd) }
-    let!(:cash_n3) { create(:cash, :eur) }
-
-    context 'when currency is `uah`' do
-      let(:params) { { currency: 'uah' } }
-
-      it { is_expected.to eq [cash_n1] }
-    end
-
-    context 'when currency is `usd`' do
-      let(:params) { { currency: 'usd' } }
-
-      it { is_expected.to eq [cash_n2] }
-    end
-
-    context 'when currency is `eur`' do
-      let(:params) { { currency: 'eur' } }
-
-      it { is_expected.to eq [cash_n3] }
-    end
-  end
-
   describe '#balance' do
     subject { described_class.new(params).balance }
 
