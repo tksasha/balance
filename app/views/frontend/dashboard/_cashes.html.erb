@@ -1,0 +1,41 @@
+<div class="container-fluid">
+  <div class="cashes frontend">
+    <% resource.cashes_all.each do |supercategory, cashes| %>
+      <div class="cash-wrapper">
+        <% cashes.each do |cash| %>
+          <div class="cash">
+            <div class="cash-name">
+              <%= cash.name %>
+            </div>
+
+            <div class="cash-sum">
+              <%= link_to money(cash.sum), edit_cash_path(cash) %>
+            </div>
+          </div>
+        <% end %>
+      </div>
+    <% end %>
+
+    <div class="cash-wrapper">
+      <div class="cash">
+        <div class="cash-name">
+          Залишок на кінець
+        </div>
+
+        <div class="cash-sum">
+          <%= money(resource.at_end) %>
+        </div>
+      </div>
+
+      <div class="cash">
+        <div class="cash-name">
+          Баланс
+        </div>
+
+        <div class="cash-sum">
+          <%= money(resource.balance) %>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

@@ -3,7 +3,13 @@
 RSpec.describe Frontend::Dashboard do
   subject { described_class.new(params) }
 
-  let(:params) { {} }
+  let(:params) { { currency: 'uah' } }
+
+  it { expect(subject.send(:cashes)).to be_a(Frontend::Dashboard::Cashes) }
+
+  it { is_expected.to delegate_method(:sum).to(:cashes).with_prefix }
+
+  it { is_expected.to delegate_method(:all).to(:cashes).with_prefix }
 
   describe '#income' do
     subject { described_class.new(params).send(:income) }

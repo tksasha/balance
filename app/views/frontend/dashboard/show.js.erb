@@ -1,11 +1,29 @@
 (function() {
-  const form = document.createElement('div');
+  //
+  // render '_inline_form'
+  //
+  (function() {
+    const form = document.createElement('div');
 
-  form.innerHTML = '<%= j render 'item_form' %>';
+    form.innerHTML = '<%= j render 'item_form' %>';
 
-  document
-    .querySelector('main')
-    .appendChild(form);
+    document
+      .querySelector('main')
+      .appendChild(form);
 
-  $('.datepicker').datepicker(BOOTSTRAP_DATEPICKER_DEFAULTS);
+    $('.datepicker').datepicker(BOOTSTRAP_DATEPICKER_DEFAULTS);
+  }());
+
+  //
+  // render '_cashes'
+  //
+  (function() {
+    const el = document.createElement('div');
+
+    el.innerHTML = '<%= j render 'cashes' %>';
+
+    document
+      .querySelector('main')
+      .appendChild(el);
+  }());
 }());

@@ -11,6 +11,10 @@ module Frontend
         scope.sum(:sum)
       end
 
+      def all
+        scope.group_by(&:supercategory)
+      end
+
       private
 
       attr_reader :currency

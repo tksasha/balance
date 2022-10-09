@@ -19,3 +19,33 @@
     }
   }
 }
+
+.cashes.frontend {
+  @extend .row, .mt-3;
+
+  width: 100%;
+  margin: auto;
+  font-size: $font-size-sm;
+
+  .cash-wrapper {
+    @extend .col, .rounded, .me-2, .py-1, .ps-3, .pe-2;
+
+    background: $white;
+
+    &:last-child {
+      margin: 0 !important;
+    }
+  }
+
+  .cash {
+    @extend .clearfix, .py-1;
+  }
+
+  .cash-name {
+    @extend .float-start;
+  }
+
+  .cash-sum {
+    @extend .float-end;
+  }
+}

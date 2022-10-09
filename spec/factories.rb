@@ -39,6 +39,18 @@ FactoryBot.define do
     name { SecureRandom.uuid }
 
     formula { '7 + 8' }
+
+    trait :cash do
+      supercategory { :cash }
+    end
+
+    trait :bonds do
+      supercategory { :bonds }
+    end
+
+    trait :deposits do
+      supercategory { :deposits }
+    end
   end
 
   factory :tag do
