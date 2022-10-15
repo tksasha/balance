@@ -14,6 +14,10 @@ Rails.application.routes.draw do
 
     resources :consolidations, only: :index
 
+    namespace :frontend do
+      resources :cashes, only: :index
+    end
+
     namespace :backoffice do
       resources :cashes, except: :show
 

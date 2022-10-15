@@ -1,0 +1,17 @@
+.cash {
+  @extend .clearfix, .mb-2;
+
+  &:last-child {
+    @extend .mb-0;
+  }
+}
+
+.cash-name {
+  @extend .float-start;
+
+  color: $gray-700;
+}
+
+.cash-sum {
+  @extend .float-end;
+}

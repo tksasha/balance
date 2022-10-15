@@ -12,7 +12,13 @@ module Frontend
       end
 
       def all
-        scope.group_by(&:supercategory)
+        scope.order(:name)
+      end
+
+      def summary
+        scope
+          .group(:supercategory)
+          .sum(:sum)
       end
 
       private
@@ -20,7 +26,13 @@ module Frontend
       attr_reader :currency
 
       def scope
-        Cash.where(currency:)
+        ::Cash.where(currency:)
+      end
+
+      class << self
+        def all(*args)
+          new(*args).all
+        end
       end
     end
   end

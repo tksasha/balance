@@ -30,7 +30,7 @@ module Frontend
 
     attr_reader :currency, :date
 
-    delegate :sum, :all, to: :cashes, prefix: true
+    delegate :sum, :all, :summary, to: :cashes, prefix: true
 
     def scope
       Item.where(currency:)

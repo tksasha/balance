@@ -1,39 +1,39 @@
-<div class="container-fluid">
-  <div class="cashes frontend">
-    <% resource.cashes_all.each do |supercategory, cashes| %>
-      <div class="cash-wrapper">
-        <% cashes.each do |cash| %>
+<div class="container mt-4">
+  <div class="row justify-content-center">
+    <div class="col-4">
+      <div class="card">
+        <div class="card-body">
+          <% resource.cashes_summary.each do |supercategory, sum| %>
+            <div class="cash">
+              <div class="cash-name">
+                <%= t(supercategory, scope: 'cash.supercategory') %>
+              </div>
+
+              <div class="cash-sum">
+                <%= link_to money(sum), frontend_cashes_path(supercategory:), data: { remote: true } %>
+              </div>
+            </div>
+          <% end %>
+
           <div class="cash">
             <div class="cash-name">
-              <%= cash.name %>
+              <%= t(:at_end) %>
             </div>
 
-            <div class="cash-sum">
-              <%= link_to money(cash.sum), edit_cash_path(cash) %>
+            <div class="cash-sum" id="at_end">
+              <%= money(resource.at_end) %>
             </div>
           </div>
-        <% end %>
-      </div>
-    <% end %>
 
-    <div class="cash-wrapper">
-      <div class="cash">
-        <div class="cash-name">
-          Залишок на кінець
-        </div>
+          <div class="cash">
+            <div class="cash-name">
+              <%= t(:balance) %>
+            </div>
 
-        <div class="cash-sum">
-          <%= money(resource.at_end) %>
-        </div>
-      </div>
-
-      <div class="cash">
-        <div class="cash-name">
-          Баланс
-        </div>
-
-        <div class="cash-sum">
-          <%= money(resource.balance) %>
+            <div class="cash-sum" id="balance">
+              <%= money(resource.balance) %>
+            </div>
+          </div>
         </div>
       </div>
     </div>

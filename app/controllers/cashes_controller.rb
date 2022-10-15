@@ -10,4 +10,12 @@ class CashesController < ApplicationController
   def result
     @result ||= ::Cashes::GetResultService.call(action_name, params)
   end
+
+  # TODO: spec me
+  def dashboard
+    @dashboard ||= ::Frontend::Dashboard.new(params)
+  end
+
+  # TODO: spec me
+  helper_method :dashboard
 end

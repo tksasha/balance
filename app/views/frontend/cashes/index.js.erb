@@ -1,0 +1,7 @@
+(function() {
+  document
+    .querySelector('.modal-body')
+    .innerHTML = '<%= j render partial: 'cash', collection: %>';
+
+  bootstrap.Modal.Show();
+}());

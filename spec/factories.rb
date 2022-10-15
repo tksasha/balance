@@ -2,7 +2,7 @@
 
 FactoryBot.define do
   factory :category do
-    name { SecureRandom.uuid }
+    name { Faker::Commerce.product_name }
 
     currency { 'uah' }
   end
