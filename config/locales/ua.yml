@@ -45,3 +45,9 @@ ua:
 
   at_end: 'Залишок на кінець'
   balance: 'Баланс'
+
+  modal:
+    title:
+      cashes:
+        index: 'Залишки'
+        edit: 'Редагування залишку'

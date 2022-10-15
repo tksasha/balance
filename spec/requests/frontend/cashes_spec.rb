@@ -10,4 +10,16 @@ RSpec.describe 'Frontend/Cashes', type: :request do
       end
     end
   end
+
+  describe 'GET /frontend/cashes/:id/edit.js' do
+    %w[uah usd eur].map do |currency|
+      context "when currency is `#{ currency }`" do
+        let!(:cash) { create(:cash, currency:) }
+
+        before { get "/#{ currency }/frontend/cashes/#{ cash.id }/edit", xhr: true }
+
+        it_behaves_like 'edit.js'
+      end
+    end
+  end
 end

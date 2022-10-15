@@ -20,4 +20,24 @@ RSpec.describe Frontend::CashesController do
       its(:collection) { is_expected.to eq :collection }
     end
   end
+
+  describe '#resource' do
+    context 'when @resource is set' do
+      before { subject.instance_variable_set :@resource, :resource }
+
+      its(:resource) { is_expected.to eq :resource }
+    end
+
+    context 'when @resource is not set' do
+      let(:params) { { id: 57 } }
+
+      before do
+        allow(subject).to receive(:params).and_return(params)
+
+        allow(Cash).to receive(:find).with(57).and_return(:resource)
+      end
+
+      its(:resource) { is_expected.to eq :resource }
+    end
+  end
 end

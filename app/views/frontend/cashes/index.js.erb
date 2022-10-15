@@ -1,5 +1,14 @@
 (function() {
   document
+    .querySelector('.modal-dialog')
+    .classList
+    .remove('modal-lg');
+
+  document.
+    querySelector('.modal-title').
+    innerText = '<%= t('modal.title.cashes.index') %>';
+
+  document
     .querySelector('.modal-body')
     .innerHTML = '<%= j render partial: 'cash', collection: %>';
 

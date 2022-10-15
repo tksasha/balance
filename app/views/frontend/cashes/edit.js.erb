@@ -1,0 +1,13 @@
+(function() {
+  document.
+    querySelector('.modal-title').
+    innerText = '<%= t('modal.title.cashes.edit') %>';
+
+  document
+    .querySelector('.modal-body')
+    .innerHTML = '<%= j render 'form' %>';
+
+  document.
+    querySelector('#cash_formula').
+    focus();
+}());

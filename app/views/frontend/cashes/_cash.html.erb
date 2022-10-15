@@ -4,6 +4,6 @@
   </div>
 
   <div class="cash-sum">
-    <%= money(cash.sum) %>
+    <%= link_to money(cash.sum), edit_frontend_cash_path(cash), data: { remote: true } %>
   </div>
 </div>

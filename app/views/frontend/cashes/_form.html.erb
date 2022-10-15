@@ -1,0 +1,19 @@
+<%= form_for resource, remote: true, html: { autocomplete: :off } do |f| %>
+  <%= f.hidden_field :currency %>
+
+  <div class="form-group">
+    <%= f.label :name %>
+
+    <%= f.text_field :name, class: 'form-control' %>
+  </div>
+
+  <div class="form-group mt-3">
+    <%= f.label :formula %>
+
+    <%= f.text_field :formula, class: 'form-control' %>
+  </div>
+
+  <div class="form-group mt-3">
+    <%= f.submit class: 'btn btn-primary' %>
+  </div>
+<% end %>

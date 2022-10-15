@@ -11,5 +11,9 @@ module Frontend
     def collection
       @collection ||= ::CashSearcher.search(cashes, params)
     end
+
+    def resource
+      @resource ||= Cash.find(params[:id])
+    end
   end
 end
