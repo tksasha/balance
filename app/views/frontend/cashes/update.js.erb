@@ -1,3 +1,5 @@
 (function(){
   $.getScript('<%= frontend_cashes_path(supercategory: resource.supercategory) %>');
+
+  $('#balance').text('<%= money(dashboard.balance) %>');
 }())

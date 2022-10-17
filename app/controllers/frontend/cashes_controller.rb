@@ -23,5 +23,11 @@ module Frontend
     def resource_params
       params.require(:cash).permit(:name, :formula)
     end
+
+    def dashboard
+      ::Frontend::Dashboard.new(params)
+    end
+
+    helper_method :dashboard
   end
 end
