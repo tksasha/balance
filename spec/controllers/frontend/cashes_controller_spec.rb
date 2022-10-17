@@ -40,4 +40,12 @@ RSpec.describe Frontend::CashesController do
       its(:resource) { is_expected.to eq :resource }
     end
   end
+
+  describe '#resource_params' do
+    let(:params) { acp(cash: { name: nil, formula: nil }) }
+
+    before { allow(subject).to receive(:params).and_return(params) }
+
+    its(:resource_params) { is_expected.to eq params.require(:cash).permit! }
+  end
 end

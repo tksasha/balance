@@ -1,19 +1,17 @@
-<%= form_for resource, remote: true, html: { autocomplete: :off } do |f| %>
-  <%= f.hidden_field :currency %>
-
+<%= form_for resource, url: frontend_cash_path(resource), remote: true, html: { autocomplete: :off } do |f| %>
   <div class="form-group">
-    <%= f.label :name %>
-
-    <%= f.text_field :name, class: 'form-control' %>
+    <%= input(f, :name) %>
   </div>
 
   <div class="form-group mt-3">
-    <%= f.label :formula %>
-
-    <%= f.text_field :formula, class: 'form-control' %>
+    <%= input(f, :formula) %>
   </div>
 
   <div class="form-group mt-3">
     <%= f.submit class: 'btn btn-primary' %>
+
+    <%= t(:or) %>
+
+    <%= link_to t(:back), frontend_cashes_path(supercategory: resource.supercategory), data: { remote: true } %>
   </div>
 <% end %>

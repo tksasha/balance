@@ -2,6 +2,10 @@
 
 module Frontend
   class CashesController < ApplicationController
+    def update
+      render :edit unless resource.update(resource_params)
+    end
+
     private
 
     def cashes
@@ -14,6 +18,10 @@ module Frontend
 
     def resource
       @resource ||= Cash.find(params[:id])
+    end
+
+    def resource_params
+      params.require(:cash).permit(:name, :formula)
     end
   end
 end

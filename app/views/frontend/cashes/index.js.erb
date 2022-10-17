@@ -6,7 +6,7 @@
 
   document.
     querySelector('.modal-title').
-    innerText = '<%= t('modal.title.cashes.index') %>';
+    innerText = '<%= t(params[:supercategory], scope: 'cash.supercategory') %>';
 
   document
     .querySelector('.modal-body')
