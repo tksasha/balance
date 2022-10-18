@@ -3,7 +3,7 @@
     <div class="col-4">
       <div class="card">
         <div class="card-body">
-          <%= render partial: 'frontend/cashes/cash', collection: resource.cashes_favorite %>
+          <%= render partial: 'frontend/dashboard/cash', collection: resource.cashes_favorite %>
 
           <% resource.cashes_summary.each do |supercategory, sum| %>
             <div class="cash">

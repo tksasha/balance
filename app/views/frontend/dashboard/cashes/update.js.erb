@@ -1,0 +1,7 @@
+(function(){
+  $('#<%= dom_id(resource) %>').replaceWith('<%= j render 'frontend/dashboard/cash', cash: resource %>');
+
+  $('#balance').text('<%= money(dashboard.balance) %>');
+
+  $('.modal').modal('hide');
+}());

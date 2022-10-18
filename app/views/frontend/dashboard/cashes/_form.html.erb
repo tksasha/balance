@@ -1,0 +1,13 @@
+<%= form_for resource, url: frontend_dashboard_cash_path(resource), remote: true, html: { autocomplete: :off } do |f| %>
+  <div class="form-group">
+    <%= input(f, :name) %>
+  </div>
+
+  <div class="form-group mt-3">
+    <%= input(f, :formula) %>
+  </div>
+
+  <div class="form-group mt-3">
+    <%= f.submit class: 'btn btn-primary' %>
+  </div>
+<% end %>
