@@ -21,6 +21,8 @@ module Frontend
           .sum(:sum)
       end
 
+      delegate :favorite, to: :all
+
       private
 
       attr_reader :currency

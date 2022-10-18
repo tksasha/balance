@@ -3,7 +3,20 @@
 RSpec.describe Cashes::UpdateService, type: :service do
   subject { described_class.new params }
 
-  let(:params) { acp({ id: 15, cash: { name: nil, formula: nil, currency: nil, supercategory: nil } }) }
+  let(:params) do
+    acp(
+      {
+        id: 15,
+        cash: {
+          name: nil,
+          formula: nil,
+          currency: nil,
+          supercategory: nil,
+          favorite: true
+        }
+      }
+    )
+  end
 
   it { is_expected.to be_an ActsAsUpdateBalanceViaWebsocketService }
 

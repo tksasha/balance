@@ -13,6 +13,8 @@ RSpec.describe Frontend::Dashboard do
 
   it { is_expected.to delegate_method(:summary).to(:cashes).with_prefix }
 
+  it { is_expected.to delegate_method(:favorite).to(:cashes).with_prefix }
+
   describe '#income' do
     subject { described_class.new(params).send(:income) }
 

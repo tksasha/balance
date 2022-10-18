@@ -5,6 +5,7 @@ ua:
         formula: 'Сума'
         name: 'Назва'
         visible: 'Відображається'
+        favorite: 'Обране'
       item:
         date: 'Дата'
         formula: 'Сума'

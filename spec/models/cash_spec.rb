@@ -32,4 +32,16 @@ RSpec.describe Cash, type: :model do
       end
     end
   end
+
+  describe '.favorite' do
+    subject { described_class.favorite.ids }
+
+    before do
+      create(:cash, id: 1, favorite: true)
+      create(:cash, id: 2, favorite: false)
+      create(:cash, id: 3, favorite: true)
+    end
+
+    it { is_expected.to eq [1, 3] }
+  end
 end

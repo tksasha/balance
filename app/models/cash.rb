@@ -7,6 +7,7 @@
 #  id            :integer          not null, primary key
 #  currency      :integer          default("uah")
 #  deleted_at    :time
+#  favorite      :boolean          default(FALSE)
 #  formula       :string
 #  name          :string
 #  sum           :decimal(10, 2)
@@ -27,6 +28,8 @@ class Cash < ApplicationRecord
   enum currency: CURRENCIES
 
   enum :supercategory, { cash: 1, bonds: 2, deposits: 3 }, default: :cash, scopes: false
+
+  scope :favorite, -> { where(favorite: true) }
 
   has_paper_trail
 

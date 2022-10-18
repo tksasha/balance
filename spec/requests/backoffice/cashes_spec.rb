@@ -21,13 +21,28 @@ RSpec.describe 'Backoffice::Cashes', type: :request do
     before { post '/backoffice/cashes', params:, xhr: true }
 
     context 'with valid params' do
-      let(:params) { { cash: { name: 'Bank', formula: '4 + 5', supercategory: 'bonds' } } }
+      let(:params) do
+        {
+          cash: {
+            name: 'Bank',
+            formula: '4 + 5',
+            supercategory: 'bonds',
+            favorite: true
+          }
+        }
+      end
 
       let(:cash) { Cash.last }
 
       it_behaves_like 'create.js'
 
+      it { expect(cash.name).to eq 'Bank' }
+
+      it { expect(cash.sum).to eq 9 }
+
       it { expect(cash.supercategory).to eq 'bonds' }
+
+      it { expect(cash.favorite).to be_truthy }
     end
 
     context 'with invalid params' do
@@ -55,11 +70,21 @@ RSpec.describe 'Backoffice::Cashes', type: :request do
     context 'with valid params' do
       before { cash.reload }
 
-      let(:params) { { cash: { name: Faker::Lorem.word, supercategory: 'bonds' } } }
+      let(:params) do
+        {
+          cash: {
+            name: Faker::Lorem.word,
+            supercategory: 'bonds',
+            favorite: true
+          }
+        }
+      end
 
       it_behaves_like 'update.js'
 
       it { expect(cash.supercategory).to eq 'bonds' }
+
+      it { expect(cash.favorite).to be_truthy }
     end
 
     context 'with invalid params' do

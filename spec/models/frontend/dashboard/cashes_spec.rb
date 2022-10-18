@@ -125,4 +125,38 @@ RSpec.describe Frontend::Dashboard::Cashes do
       its(:summary) { is_expected.to eq 'cash' => 3.12, 'bonds' => 3.34, 'deposits' => 3.56 }
     end
   end
+
+  describe '#favorite' do
+    before do
+      create(:cash, id: 1, name: 'uah cde', currency: 'uah', favorite: true)
+      create(:cash, id: 2, name: 'uah bcd', currency: 'uah', favorite: false)
+      create(:cash, id: 3, name: 'uah abc', currency: 'uah', favorite: true)
+
+      create(:cash, id: 4, name: 'usd cde', currency: 'usd', favorite: true)
+      create(:cash, id: 5, name: 'usd bcd', currency: 'usd', favorite: false)
+      create(:cash, id: 6, name: 'usd abc', currency: 'usd', favorite: true)
+
+      create(:cash, id: 7, name: 'eur cde', currency: 'eur', favorite: true)
+      create(:cash, id: 8, name: 'eur bcd', currency: 'eur', favorite: false)
+      create(:cash, id: 9, name: 'eur abc', currency: 'eur', favorite: true)
+    end
+
+    context 'when currency is `uah`' do
+      let(:currency) { 'uah' }
+
+      its('favorite.ids') { is_expected.to eq [3, 1] }
+    end
+
+    context 'when currency is `usd`' do
+      let(:currency) { 'usd' }
+
+      its('favorite.ids') { is_expected.to eq [6, 4] }
+    end
+
+    context 'when currency is `eur`' do
+      let(:currency) { 'eur' }
+
+      its('favorite.ids') { is_expected.to eq [9, 7] }
+    end
+  end
 end

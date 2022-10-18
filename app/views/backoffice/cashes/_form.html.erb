@@ -15,6 +15,12 @@
     <%= input(f, :formula) %>
   </div>
 
+  <div class="form-check mt-3">
+    <%= f.check_box :favorite, class: 'form-check-input' %>
+
+    <%= f.label :favorite, class: 'form-check-label' %>
+  </div>
+
   <div class="form-group mt-4">
     <%= f.submit class: 'btn btn-primary' %>
   </div>

@@ -19,7 +19,7 @@ module Cashes
     private
 
     def resource_params
-      @params.require(:cash).permit(:name, :formula, :currency, :supercategory)
+      @params.require(:cash).permit(:name, :formula, :currency, :supercategory, :favorite)
     end
 
     def cash
