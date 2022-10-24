@@ -2,7 +2,7 @@
 
 RSpec.describe 'Frontend/Dashboard/Cashes', type: :request do
   %w[uah usd eur].map do |currency|
-    describe 'GET /frontend/dashboard/cashes/:id/edit.js' do
+    describe 'GET edit.js' do
       let!(:cash) { create(:cash, currency:) }
 
       before { get "/#{ currency }/frontend/dashboard/cashes/#{ cash.id }/edit", xhr: true }
@@ -10,7 +10,7 @@ RSpec.describe 'Frontend/Dashboard/Cashes', type: :request do
       it_behaves_like 'edit.js'
     end
 
-    describe 'PUT /frontend/dashboard/cashes/:id' do
+    describe 'PUT update.js' do
       let!(:cash) { create(:cash, currency:) }
 
       before { put "/#{ currency }/frontend/dashboard/cashes/#{ cash.id }", params:, xhr: true }
@@ -36,6 +36,16 @@ RSpec.describe 'Frontend/Dashboard/Cashes', type: :request do
 
         it_behaves_like 'edit.js'
       end
+    end
+
+    describe 'GET index.js' do
+      before do
+        create_list(:cash, 2, currency:)
+
+        get "/#{ currency }/frontend/dashboard/cashes", xhr: true
+      end
+
+      it_behaves_like 'index.js'
     end
   end
 end

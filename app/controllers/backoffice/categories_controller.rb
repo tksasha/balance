@@ -2,14 +2,45 @@
 
 module Backoffice
   class CategoriesController < ApplicationController
-    private
+    def create
+      respond_to :js
 
-    def collection
-      @collection ||= ::Categories::GetCollectionService.call(params)
+      render :new unless resource.save
     end
 
-    def result
-      @result ||= ::Categories::GetResultService.call(action_name, params)
+    def update
+      respond_to :js
+
+      render :edit unless resource.update(resource_params)
+    end
+
+    private
+
+    def scope
+      Category.order(:name)
+    end
+
+    def collection
+      @collection ||= ::CategorySearcher.search(scope, params)
+    end
+
+    def resource
+      @resource ||= Category.find(params[:id])
+    end
+
+    def initialize_resource
+      @resource = Category.new
+    end
+
+    def resource_params
+      params
+        .require(:category)
+        .permit(:name, :supercategory, :income, :visible)
+        .merge(currency: params[:currency])
+    end
+
+    def build_resource
+      @resource = Category.new(resource_params)
     end
   end
 end

@@ -1,8 +1,6 @@
 <div class="card" id="item-inline-form">
   <div class="card-body">
     <%= form_for resource, remote: true, html: { autocomplete: :off } do |f| %>
-      <%= f.hidden_field :currency %>
-
       <div class="item-inline-form-date">
         <%= f.text_field :date,
           class: 'form-control datepicker', placeholder: t('activerecord.attributes.item.date') %>

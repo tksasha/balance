@@ -12,30 +12,66 @@ RSpec.describe Backoffice::CashesController, type: :controller do
       before do
         allow(subject).to receive(:params).and_return(:params)
 
-        allow(Cashes::GetCollectionService).to receive(:call).with(:params).and_return(:collection)
+        allow(Cash).to receive(:order).with(:name).and_return(:scope)
+
+        allow(CashSearcher).to receive(:search).with(:scope, :params).and_return(:collection)
       end
 
       its(:collection) { is_expected.to eq :collection }
     end
   end
 
-  describe '#result' do
-    context do
-      before { subject.instance_variable_set :@result, :result }
+  describe '#resource' do
+    context 'when @resource is set' do
+      before { subject.instance_variable_set(:@resource, :resource) }
 
-      its(:result) { is_expected.to eq :result }
+      its(:resource) { is_expected.to eq :resource }
     end
 
-    context do
+    context 'when @resource is not set' do
+      let(:params) { { id: 52 } }
+
       before do
-        allow(subject).to receive(:action_name).and_return(:action_name)
+        allow(subject).to receive(:params).and_return(params)
 
-        allow(subject).to receive(:params).and_return(:params)
-
-        allow(Cashes::GetResultService).to receive(:call).with(:action_name, :params).and_return(:result)
+        allow(Cash).to receive(:find).with(52).and_return(:resource)
       end
 
-      its(:result) { is_expected.to eq :result }
+      its(:resource) { is_expected.to eq :resource }
     end
+  end
+
+  describe '#initialize_resource' do
+    before do
+      allow(Cash).to receive(:new).and_return(:resource)
+
+      subject.send(:initialize_resource)
+    end
+
+    its(:resource) { is_expected.to eq :resource }
+  end
+
+  describe '#resource_params' do
+    before { allow(subject).to receive(:params).and_return(params) }
+
+    %w[uah usd eur].each do |currency|
+      context "when currency is `#{ currency }`" do
+        let(:params) { acp(currency:, cash: { name: nil, formula: nil, supercategory: nil, favorite: nil }) }
+
+        its(:resource_params) { is_expected.to eq params.require(:cash).permit!.merge(currency:) }
+      end
+    end
+  end
+
+  describe '#build_resource' do
+    before do
+      allow(subject).to receive(:resource_params).and_return(:resource_params)
+
+      allow(Cash).to receive(:new).with(:resource_params).and_return(:resource)
+
+      subject.send(:build_resource)
+    end
+
+    its(:resource) { is_expected.to eq :resource }
   end
 end

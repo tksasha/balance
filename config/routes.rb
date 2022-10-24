@@ -4,8 +4,6 @@ Rails.application.routes.draw do
   scope '/(:currency)' do
     resources :items, only: %i[create edit update destroy]
 
-    resources :cashes, only: %i[index edit update]
-
     resource :backoffice, only: :show, controller: 'backoffice/dashboard'
 
     resources :consolidations, only: :index
@@ -14,7 +12,7 @@ Rails.application.routes.draw do
       resources :cashes, only: %i[index edit update]
 
       namespace :dashboard do
-        resources :cashes, only: %i[edit update]
+        resources :cashes, only: %i[edit update index]
       end
     end
 

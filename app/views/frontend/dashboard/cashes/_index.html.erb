@@ -3,9 +3,9 @@
     <div class="col-4">
       <div class="card">
         <div class="card-body">
-          <%= render partial: 'frontend/dashboard/cash', collection: resource.cashes_favorite %>
+          <%= render partial: 'cash', collection: dashboard.cashes_favorite %>
 
-          <% resource.cashes_summary.each do |supercategory, sum| %>
+          <% dashboard.cashes_summary.each do |supercategory, sum| %>
             <div class="cash">
               <div class="cash-name">
                 <%= t(supercategory, scope: 'cash.supercategory') %>
@@ -23,7 +23,7 @@
             </div>
 
             <div class="cash-sum" id="at_end">
-              <%= money(resource.at_end) %>
+              <%= money(dashboard.at_end) %>
             </div>
           </div>
 
@@ -33,7 +33,7 @@
             </div>
 
             <div class="cash-sum" id="balance">
-              <%= money(resource.balance) %>
+              <%= money(dashboard.balance) %>
             </div>
           </div>
         </div>

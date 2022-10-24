@@ -12,7 +12,7 @@
     getInstance(el).
     hide();
 
-  $('#at_end').html('<%= money at_end %>');
+  $('#at_end').html('<%= money(dashboard.at_end) %>');
 
-  $('#balance').html('<%= money balance %>');
+  $('#balance').html('<%= money(dashboard.balance) %>');
 }());

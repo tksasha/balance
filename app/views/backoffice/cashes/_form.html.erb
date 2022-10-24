@@ -1,6 +1,4 @@
 <%= form_for [:backoffice, resource], remote: true, html: { autocomplete: :off } do |f| %>
-  <%= f.hidden_field :currency %>
-
   <div class="form-group">
     <%= input(f, :name) %>
   </div>

@@ -1,10 +1,6 @@
 <%= form_for [:backoffice, resource], remote: true, html: { autocomplete: :off } do |f| %>
-  <%= f.hidden_field :currency %>
-
   <div class="form-group">
-    <%= f.label :name %>
-
-    <%= f.text_field :name, class: 'form-control' %>
+    <%= input(f, :name) %>
   </div>
 
   <div class="form-group mt-3">
