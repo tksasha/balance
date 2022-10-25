@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-RSpec.describe 'Backoffice::Categories', type: :request do
+RSpec.describe 'Backoffice::Categories' do
   %w[uah usd eur].each do |currency|
     describe 'GET index.js' do
       before do

@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-RSpec.describe 'Backoffice::Dashboard', type: :request do
+RSpec.describe 'Backoffice::Dashboard' do
   describe 'GET /show.js' do
     before { get '/backoffice', xhr: true }
 

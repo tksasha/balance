@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-RSpec.describe Frontend::Dashboard::CashesController, type: :controller do
+RSpec.describe Frontend::Dashboard::CashesController do
   describe '#resource' do
     context 'when @resource is set' do
       before { subject.instance_variable_set :@resource, :resource }

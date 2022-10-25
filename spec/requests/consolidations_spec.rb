@@ -1,9 +1,9 @@
 # frozen_string_literal: true
 
-RSpec.describe 'Consolidations', type: :request do
+RSpec.describe 'Consolidations' do
   describe 'GET /index.js' do
     before do
-      create_list :item, 2
+      create_list(:item, 2)
 
       get '/consolidations', xhr: true
     end

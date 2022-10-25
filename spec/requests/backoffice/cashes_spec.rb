@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-RSpec.describe 'Backoffice::Cashes', type: :request do
+RSpec.describe 'Backoffice::Cashes' do
   %w[uah usd eur].each do |currency|
     describe 'GET index.js' do
       before do
@@ -56,7 +56,7 @@ RSpec.describe 'Backoffice::Cashes', type: :request do
     end
 
     describe 'GET edit.js' do
-      let(:cash) { create :cash }
+      let(:cash) { create(:cash) }
 
       before { get "/#{ currency }/backoffice/cashes/#{ cash.id }/edit", xhr: true }
 
@@ -102,7 +102,7 @@ RSpec.describe 'Backoffice::Cashes', type: :request do
     end
 
     describe 'DELETE destroy.js' do
-      let(:cash) { create :cash }
+      let(:cash) { create(:cash) }
 
       before { delete "/#{ currency }/backoffice/cashes/#{ cash.id }", xhr: true }
 

@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-RSpec.describe 'Frontend/Dashboard/Cashes', type: :request do
+RSpec.describe 'Frontend/Dashboard/Cashes' do
   %w[uah usd eur].map do |currency|
     describe 'GET edit.js' do
       let!(:cash) { create(:cash, currency:) }

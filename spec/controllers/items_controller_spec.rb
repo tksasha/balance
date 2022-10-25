@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-RSpec.describe ItemsController, type: :controller do
+RSpec.describe ItemsController do
   describe '#scope' do
     before do
       allow(Item).to receive(:includes).with(:category) do

@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-RSpec.describe 'Items', type: :request do
+RSpec.describe 'Items' do
   %w[uah usd eur].each do |currency|
     describe 'GET index.html' do
       before { get "/#{ currency }/items" }
@@ -10,7 +10,7 @@ RSpec.describe 'Items', type: :request do
 
     describe 'GET index.js' do
       before do
-        create_list :item, 2
+        create_list(:item, 2)
 
         get "/#{ currency }/uah/items", xhr: true
       end

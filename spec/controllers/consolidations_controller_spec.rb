@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-RSpec.describe ConsolidationsController, type: :controller do
+RSpec.describe ConsolidationsController do
   describe '#collection' do
     context do
       before { subject.instance_variable_set :@collection, :collection }

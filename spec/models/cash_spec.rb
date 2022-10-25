@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-RSpec.describe Cash, type: :model do
+RSpec.describe Cash do
   it { is_expected.to be_an ActsAsHasFormula }
 
   it { is_expected.to validate_presence_of :name }

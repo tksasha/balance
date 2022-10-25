@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-RSpec.describe Category, type: :model do
+RSpec.describe Category do
   it { is_expected.to validate_presence_of :name }
 
   it { is_expected.to validate_uniqueness_of(:name).case_insensitive.scoped_to(:currency) }

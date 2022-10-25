@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-RSpec.describe Backoffice::CategoriesController, type: :controller do
+RSpec.describe Backoffice::CategoriesController do
   describe '#collection' do
     context do
       before { subject.instance_variable_set :@collection, :collection }

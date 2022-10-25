@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 # rubocop:disable RSpec/NestedGroups
-RSpec.describe 'Frontend/Cashes', type: :request do
+RSpec.describe 'Frontend/Cashes' do
   %w[uah usd eur].map do |currency|
     context "when currency is `#{ currency }`" do
       describe 'GET /frontend/cashes.js' do

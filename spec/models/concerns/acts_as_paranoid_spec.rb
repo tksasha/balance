@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-RSpec.describe ActsAsParanoid, type: :model do
+RSpec.describe ActsAsParanoid do
   let(:described_class) do
     Class.new(ApplicationRecord) do
       include ActsAsParanoid

@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-RSpec.describe Item, type: :model do
+RSpec.describe Item do
   it { is_expected.to be_an ActsAsHasFormula }
 
   it { is_expected.to be_an ActsAsParanoid }
