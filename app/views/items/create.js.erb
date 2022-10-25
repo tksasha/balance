@@ -13,4 +13,8 @@
     Modal.
     getInstance(el).
     hide();
+
+  $('#at_end').html('<%= money(dashboard.at_end) %>');
+
+  $('#balance').html('<%= money(dashboard.balance) %>');
 }());
