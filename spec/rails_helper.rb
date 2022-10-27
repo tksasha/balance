@@ -25,6 +25,8 @@ RSpec.configure do |config|
   end
 
   config.include ActiveSupport::Testing::TimeHelpers
+
+  config.infer_spec_type_from_file_location!
 end
 
 Shoulda::Matchers.configure do |config|
