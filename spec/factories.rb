@@ -5,6 +5,34 @@ FactoryBot.define do
     name { Faker::Commerce.product_name }
 
     currency { 'uah' }
+
+    trait :usd do
+      currency { 'usd' }
+    end
+
+    trait :uah do
+      currency { 'uah' }
+    end
+
+    trait :eur do
+      currency { 'eur' }
+    end
+
+    trait :visible do
+      visible { true }
+    end
+
+    trait :invisible do
+      visible { false }
+    end
+
+    trait :income do
+      income { true }
+    end
+
+    trait :expense do
+      income { false }
+    end
   end
 
   factory :item do

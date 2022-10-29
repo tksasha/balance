@@ -1,80 +1,107 @@
 # frozen_string_literal: true
 
 RSpec.describe CategoryWidgetDataSearcher do
-  subject { described_class.new params }
+  subject { described_class.new(currency:) }
 
-  let(:params) { { currency: 'usd' } }
-
-  its(:currency) { is_expected.to eq 'usd' }
+  let(:currency) { 'usd' }
 
   describe '#search' do
-    subject { described_class.search params }
+    before do
+      create(:category, :usd, :income, :visible, id: 1, name: 'Один')
+      create(:category, :usd, :income, :invisible, id: 2, name: 'Два')
 
-    let :categories do
-      [
-        ['Food', 13, false],
-        ['Drinks', 5, false],
-        ['Salary', 17, true]
-      ]
+      create(:category, :usd, :expense, :visible, id: 3, name: 'Три')
+      create(:category, :usd, :expense, :invisible, id: 4, name: 'Чотири')
+
+      create(:category, :uah, :income, :visible, id: 5, name: "П'ять")
+      create(:category, :uah, :expense, :visible, id: 6, name: 'Шість')
+
+      create(:category, :eur, :income, :visible, id: 7, name: 'Сім')
+      create(:category, :eur, :expense, :visible, id: 8, name: 'Вісім')
     end
 
-    let :collection do
-      [
+    context 'when currency is `usd`' do
+      let(:categories) do
         [
-          'Видатки', [
-            ['Food', 13],
-            ['Drinks', 5]
-          ]
-        ],
-        [
-          'Надходження',
           [
-            ['Salary', 17]
+            'Видатки', [
+              ['Три', 3]
+            ]
+          ],
+          [
+            'Надходження',
+            [
+              ['Один', 1]
+            ]
           ]
         ]
-      ]
-    end
+      end
 
-    before do
-      #
-      # Category
-      #   .visible
-      #   .where(currency: 'usd')
-      #   .order(:income)
-      #   .pluck(:name, :id, :income) -> categories
-      #
-      allow(Category).to receive(:visible) do
-        double.tap do |a|
-          allow(a).to receive(:where).with(currency: 'usd') do
-            double.tap do |b|
-              allow(b).to receive(:order).with(:income) do
-                double.tap do |c|
-                  allow(c).to receive(:pluck).with(:name, :id, :income).and_return(categories)
-                end
-              end
-            end
-          end
-        end
+      I18n.with_locale(:ua) do
+        its(:search) { is_expected.to eq categories }
       end
     end
 
-    it { is_expected.to eq collection }
+    context 'when currency is `uah`' do
+      let(:currency) { 'uah' }
+
+      let(:categories) do
+        [
+          [
+            'Видатки', [
+              ['Шість', 6]
+            ]
+          ],
+          [
+            'Надходження', [
+              ["П'ять", 5]
+            ]
+          ]
+        ]
+      end
+
+      I18n.with_locale(:ua) do
+        its(:search) { is_expected.to eq categories }
+      end
+    end
+
+    context 'when currency is `eur`' do
+      let(:currency) { 'eur' }
+
+      let(:categories) do
+        [
+          [
+            'Видатки', [
+              ['Вісім', 8]
+            ]
+          ],
+          [
+            'Надходження', [
+              ['Сім', 7]
+            ]
+          ]
+        ]
+      end
+
+      I18n.with_locale(:ua) do
+        its(:search) { is_expected.to eq categories }
+      end
+    end
   end
 
-  xdescribe '.search' do
-    subject { described_class.search({ currency: 'usd' }) }
+  describe '.search' do
+    let(:instance) { double }
 
-    # before do
-    #   #
-    #   # described_class.new(currency: 'usd').search
-    #   #
-    #   expect(described_class).to have_received(:new).with({ currency: 'usd' }) do
-    #     double.tap do |a|
-    #       expect(a).to have_received(:search)
-    #     end
-    #   end
-    # end
+    before do
+      allow(described_class).to receive(:new).and_return(instance)
 
-    it { expect { subject }.not_to raise_error }
+      allow(instance).to receive(:search)
+
+      described_class.search(currency:)
+    end
+
+    it { expect(described_class).to have_received(:new).with(currency:) }
+
+    it { expect(instance).to have_received(:search) }
   end
 end
