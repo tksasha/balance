@@ -28,16 +28,4 @@ RSpec.describe Frontend::Dashboard::CashesController do
 
     its(:resource_params) { is_expected.to eq params.require(:cash).permit! }
   end
-
-  describe '#dashboard' do
-    before do
-      allow(subject).to receive(:params).and_return(:params)
-
-      allow(Frontend::Dashboard).to receive(:new).with(:params).and_return(:dashboard)
-    end
-
-    its(:dashboard) { is_expected.to eq :dashboard }
-
-    its(:_helper_methods) { is_expected.to include :dashboard }
-  end
 end

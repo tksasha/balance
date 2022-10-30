@@ -17,4 +17,10 @@ class ApplicationController < ActionController::Base
   def default_url_options
     { currency: Currency.parse(params[:currency]) }
   end
+
+  def dashboard
+    ::Frontend::Dashboard.new(params)
+  end
+
+  helper_method :dashboard
 end

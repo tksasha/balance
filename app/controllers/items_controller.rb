@@ -49,10 +49,4 @@ class ItemsController < ApplicationController
   def build_resource
     @resource = Item.new(resource_params)
   end
-
-  def dashboard
-    ::Frontend::Dashboard.new(params)
-  end
-
-  helper_method :dashboard
 end
