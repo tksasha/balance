@@ -19,9 +19,9 @@ RSpec.configure do |config|
   config.include Permitter
 
   %i[controller view request].each do |type|
-    config.include ::Rails::Controller::Testing::TestProcess, type: type
-    config.include ::Rails::Controller::Testing::TemplateAssertions, type: type
-    config.include ::Rails::Controller::Testing::Integration, type:
+    config.include(Rails::Controller::Testing::TestProcess, type:)
+    config.include(Rails::Controller::Testing::TemplateAssertions, type:)
+    config.include(Rails::Controller::Testing::Integration, type:)
   end
 
   config.include ActiveSupport::Testing::TimeHelpers
