@@ -27,7 +27,7 @@ RSpec.describe ConsolidationSearcher do
     end
   end
 
-  xdescribe '#search' do
+  describe '#search', skip: 'fix it later' do
     let(:dates) { Date.new(2019, 11, 1)..Date.new(2019, 11, 30) }
 
     let(:collection) do
@@ -61,7 +61,7 @@ RSpec.describe ConsolidationSearcher do
     its(:search) { is_expected.to eq collection }
   end
 
-  xdescribe '.search' do
+  describe '.search', skip: 'fix it later' do
     subject { described_class.search(:relation, { date: :date }) }
 
     # before do
