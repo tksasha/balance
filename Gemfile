@@ -4,6 +4,7 @@ source 'https://rubygems.org'
 
 ruby '~> 3.2'
 
+gem 'activeadmin'
 gem 'annotate'
 gem 'bootsnap', require: false
 gem 'bootstrap'

@@ -1,4 +1,4 @@
-ua:
+uk:
   activerecord:
     attributes:
       cash:
@@ -35,6 +35,11 @@ ua:
   date:
     formats:
       default: '%d.%m.%Y'
+      long: '%d.%m.%Y'
+
+  time:
+    formats:
+      long: '%d.%m.%Y %H:%M'
 
   destroy_confirmation: 'Чи ви впевнені?'
 
@@ -55,3 +60,12 @@ ua:
 
   or: 'або'
   back: 'Повернутися'
+
+  category_widget_data:
+    :true: Надходження
+    :false: Видатки
+
+  active_admin:
+    items: 'Записи'
+    cashes: 'Залишки'
+    categories: 'Категорії'
