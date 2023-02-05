@@ -2,7 +2,7 @@
 
 module Frontend
   class Dashboard
-    class CashesController < ApplicationController
+    class CashesController < BaseController
       def update
         render :edit unless resource.update(resource_params)
       end

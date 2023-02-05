@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-class ItemsController < ApplicationController
+class ItemsController < BaseController
   def index
     respond_to :html, :js
   end

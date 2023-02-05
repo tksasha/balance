@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-RSpec.describe ApplicationController do
+RSpec.describe BaseController do
   describe '#dashboard' do
     before do
       allow(subject).to receive(:params).and_return(:params)

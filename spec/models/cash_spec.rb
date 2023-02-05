@@ -27,7 +27,7 @@ RSpec.describe Cash do
     end
 
     it do
-      I18n.with_locale(:ua) do
+      I18n.with_locale(:uk) do
         expect(subject).to eq 'Готівка' => 'cash', 'Облігації' => 'bonds', 'Депозити' => 'deposits'
       end
     end

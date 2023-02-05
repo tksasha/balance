@@ -1,6 +1,8 @@
 # frozen_string_literal: true
 
 RSpec.describe Frontend::Dashboard::CashesController do
+  it { is_expected.to be_a(BaseController) }
+
   describe '#resource' do
     context 'when @resource is set' do
       before { subject.instance_variable_set :@resource, :resource }

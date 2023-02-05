@@ -37,7 +37,7 @@ RSpec.describe CategoryWidgetDataSearcher do
         ]
       end
 
-      I18n.with_locale(:ua) do
+      I18n.with_locale(:uk) do
         its(:search) { is_expected.to eq categories }
       end
     end
@@ -60,7 +60,7 @@ RSpec.describe CategoryWidgetDataSearcher do
         ]
       end
 
-      I18n.with_locale(:ua) do
+      I18n.with_locale(:uk) do
         its(:search) { is_expected.to eq categories }
       end
     end
@@ -83,7 +83,7 @@ RSpec.describe CategoryWidgetDataSearcher do
         ]
       end
 
-      I18n.with_locale(:ua) do
+      I18n.with_locale(:uk) do
         its(:search) { is_expected.to eq categories }
       end
     end

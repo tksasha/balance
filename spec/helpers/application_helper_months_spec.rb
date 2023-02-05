@@ -4,9 +4,9 @@ RSpec.describe ApplicationHelper do
   describe '#months' do
     subject { helper.months }
 
-    context 'when locale is :ua' do
+    context 'when locale is :uk' do
       it do
-        I18n.with_locale(:ua) do
+        I18n.with_locale(:uk) do
           expect(subject).to eq \
             %w[Січень Лютий Березень Квітень Травень Червень Липень Серпень Вересень Жовтень Листопад Грудень]
         end

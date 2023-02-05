@@ -8,6 +8,7 @@
 // = require bootstrap-datepicker.uk.min
 //
 // app/assets/javascripts
+// = require bootstrap/modal
 // = require currencies-widget
 //
 // = require_self

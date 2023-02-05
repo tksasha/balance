@@ -1,6 +1,8 @@
 # frozen_string_literal: true
 
 RSpec.describe ConsolidationsController do
+  it { is_expected.to be_a(BaseController) }
+
   describe '#collection' do
     context do
       before { subject.instance_variable_set :@collection, :collection }

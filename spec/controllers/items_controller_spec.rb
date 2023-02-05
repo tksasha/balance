@@ -1,6 +1,8 @@
 # frozen_string_literal: true
 
 RSpec.describe ItemsController do
+  it { is_expected.to be_a(BaseController) }
+
   describe '#scope' do
     before do
       allow(Item).to receive(:includes).with(:category) do

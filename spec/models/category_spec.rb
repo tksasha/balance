@@ -45,7 +45,7 @@ RSpec.describe Category do
     end
 
     it do
-      I18n.with_locale(:ua) do
+      I18n.with_locale(:uk) do
         expect(subject).to eq 'Перша' => 'one', 'Друга' => 'two', 'Третя' => 'three'
       end
     end

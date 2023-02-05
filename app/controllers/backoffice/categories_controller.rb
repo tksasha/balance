@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 module Backoffice
-  class CategoriesController < ApplicationController
+  class CategoriesController < BaseController
     def create
       respond_to :js
 

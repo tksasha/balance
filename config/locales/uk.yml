@@ -1,11 +1,14 @@
 uk:
   activerecord:
+    models:
+      cash: 'Залишок'
     attributes:
       cash:
         formula: 'Сума'
         name: 'Назва'
         visible: 'Відображається'
         favorite: 'Обране'
+        supercategory: 'Суперкатегорія'
       item:
         date: 'Дата'
         formula: 'Сума'
