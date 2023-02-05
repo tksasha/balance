@@ -8,6 +8,8 @@ ActiveAdmin.register Item do
 
   actions :all, except: %i[destroy new create]
 
+  permit_params %i[date]
+
   controller do
     def scoped_collection
       super.includes(:category)

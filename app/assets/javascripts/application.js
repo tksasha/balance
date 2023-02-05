@@ -3,10 +3,12 @@
 // = require popper
 // = require bootstrap-sprockets
 //
+// vendor/assets/javascripts
 // = require bootstrap-datepicker
 // = require bootstrap-datepicker.uk.min
 //
-// = require_tree .
+// app/assets/javascripts
+// = require currencies-widget
 //
 // = require_self
 
