@@ -1,0 +1,14 @@
+.tag {
+  @extend .status_tag;
+
+  $tag-default-color: darken($secondary-color, 25%);
+
+  background: inherit;
+  color: $tag-default-color;
+
+  border: 1px solid $tag-default-color;
+
+  display: inline-block;
+
+  margin-right: 2px;
+}

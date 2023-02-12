@@ -26,6 +26,7 @@ Lint/MissingSuper:
 # Metrics
 Metrics/BlockLength:
   Exclude:
+  - app/admin/**/*
   - lib/tasks/auto_annotate_models.rake
   - spec/**/*
 

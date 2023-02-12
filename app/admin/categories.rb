@@ -10,4 +10,17 @@ ActiveAdmin.register Category do
   permit_params :name, :currency, :supercategory, :visible, :income
 
   filter :name
+
+  controller do
+    private
+
+    def collection
+      @collection ||= \
+        if request.format.json?
+          Category.ransack(params[:q]).result.page(params[:page])
+        else
+          super
+        end
+    end
+  end
 end

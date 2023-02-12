@@ -1,0 +1,7 @@
+uk:
+  helpers:
+    submit:
+      create: 'Створити'
+      update: 'Зберегти'
+      submit: 'Зберегти'
+

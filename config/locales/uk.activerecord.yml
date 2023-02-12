@@ -1,0 +1,26 @@
+uk:
+  activerecord:
+    models:
+      cash: 'Залишок'
+      item: 'Запис'
+    attributes:
+      cash:
+        favorite: 'Обране'
+        formula: 'Сума'
+        name: 'Назва'
+        supercategory: 'Суперкатегорія'
+        visible: 'Відображається'
+      item:
+        category: 'Категорія'
+        category_id: 'Категорія'
+        date: 'Дата'
+        description: 'Примітка'
+        formula: 'Сума'
+        sum: 'Сума'
+      category:
+        income: 'Надходження'
+        name: 'Назва'
+        supercategory: 'Суперкатегорія'
+        visible: 'Відображається'
+      tag:
+        name: 'Назва'

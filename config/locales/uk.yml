@@ -1,67 +1,5 @@
 uk:
-  activerecord:
-    models:
-      cash: 'Залишок'
-    attributes:
-      cash:
-        formula: 'Сума'
-        name: 'Назва'
-        visible: 'Відображається'
-        favorite: 'Обране'
-        supercategory: 'Суперкатегорія'
-      item:
-        date: 'Дата'
-        formula: 'Сума'
-        category_id: 'Категорія'
-        description: 'Примітка'
-      category:
-        name: 'Назва'
-        income: 'Надходження'
-        visible: 'Відображається'
-      tag:
-        name: 'Назва'
-
-  errors:
-    messages:
-      blank: 'не може бути порожнім'
-
-  helpers:
-    submit:
-      create: 'Створити'
-      update: 'Зберегти'
-      submit: 'Зберегти'
-
-  number:
-    format:
-      delimiter: ' '
-
-  date:
-    formats:
-      default: '%d.%m.%Y'
-      long: '%d.%m.%Y'
-    month_names:
-      - nil
-      - Січень
-      - Лютий
-      - Березень
-      - Квітень
-      - Травень
-      - Червень
-      - Липень
-      - Серпень
-      - Вересень
-      - Жовтень
-      - Листопад
-      - Грудень
-
-  time:
-    formats:
-      long: '%d.%m.%Y %H:%M'
-
   destroy_confirmation: 'Чи ви впевнені?'
-
-  consolidation:
-    sum: 'Сума витрат'
 
   :true: Так
   :false: Ні
@@ -69,20 +7,5 @@ uk:
   at_end: 'Залишок на кінець'
   balance: 'Баланс'
 
-  modal:
-    title:
-      cashes:
-        index: 'Залишки'
-        edit: 'Редагування залишку'
-
   or: 'або'
   back: 'Повернутися'
-
-  category_widget_data:
-    :true: Надходження
-    :false: Видатки
-
-  active_admin:
-    items: 'Записи'
-    cashes: 'Залишки'
-    categories: 'Категорії'

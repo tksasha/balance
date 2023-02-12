@@ -39,4 +39,28 @@ RSpec.describe 'Admin/Categories' do
       it { expect(category.visible).to be_truthy }
     end
   end
+
+  describe 'GET index.json' do
+    let(:headers) { { accept: 'application/json' } }
+
+    before do
+      CURRENCIES.keys.map do |currency|
+        create_list(:category, 2, currency:)
+      end
+
+      get '/admin/categories', params:, headers:
+    end
+
+    CURRENCIES.map do |currency_name, currency_id|
+      context "when currency is `#{ currency_name }`" do
+        let(:params) { { q: { currency_eq: currency_id } } }
+
+        let(:categories) { Category.where(currency: currency_name).as_json(only: %i[id name]) }
+
+        it { is_expected.to render_template :index }
+
+        it { expect(response.parsed_body).to match_array categories }
+      end
+    end
+  end
 end

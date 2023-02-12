@@ -16,26 +16,7 @@
 //
 //   .status_tag { background: #6090DB; }
 
-.item {
-  .sum {
-    text-align: right;
-    white-space: nowrap;
-  }
-}
-
-.tag {
-  @extend .status_tag;
-
-  $tag-default-color: darken($secondary-color, 25%);
-
-  background: inherit;
-  color: $tag-default-color;
-
-  border: 1px solid $tag-default-color;
-
-  display: inline-block;
-
-  border-radius: 3px;
-
-  margin-right: 2px;
-}
+@import "active_admin/item";
+@import "active_admin/scopes";
+@import "active_admin/status_tag";
+@import "active_admin/tag";

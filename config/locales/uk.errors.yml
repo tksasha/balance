@@ -2,3 +2,5 @@ uk:
   errors:
     messages:
       taken: 'уже існує'
+      blank: 'не може бути порожнім'
+

@@ -20,10 +20,25 @@ ActiveAdmin.register Item do
     column :sum, class: 'sum' do |item|
       money(item.sum)
     end
-    column :category
+    column :category, class: 'category'
     column :description do |item|
       sanitize(item.description)
     end
     actions
+  end
+
+  show title: :id do
+    attributes_table do
+      row :date
+      row :sum do |item|
+        money(item.sum)
+      end
+      row :category
+      row :description
+      row :currency
+      row :created_at
+      row :updated_at
+      row :deleted_at if resource.deleted_at.present?
+    end
   end
 end
