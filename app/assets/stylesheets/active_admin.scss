@@ -26,7 +26,7 @@
 .tag {
   @extend .status_tag;
 
-  $tag-default-color: darken($secondary-color, 15%);
+  $tag-default-color: darken($secondary-color, 25%);
 
   background: inherit;
   color: $tag-default-color;
