@@ -1,3 +1,3 @@
-//= require active_admin/base
+// = require active_admin/base
 //
-//= require_tree ./active_admin
+// = require_tree ./active_admin
