@@ -22,5 +22,6 @@ ActiveAdmin.register Cash do
       input :formula
       input :currency
     end
+    actions
   end
 end
