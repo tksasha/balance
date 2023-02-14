@@ -9,7 +9,14 @@ ActiveAdmin.register Cash do
 
   filter :name
 
-  form do |f|
+  index row_class: proc { 'cash' } do
+    column :name
+    column(:sum, class: 'sum') { |cash| money(cash.sum) }
+    column :favorite
+    actions
+  end
+
+  form do |_|
     inputs do
       input :name
       input :formula

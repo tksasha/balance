@@ -1,3 +1,9 @@
 select[name="cash[currency]"] {
   text-transform: uppercase;
 }
+
+.cash {
+  .sum {
+    text-align: right;
+  }
+}
