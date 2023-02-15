@@ -16,7 +16,7 @@ class ItemSearcher < ApplicationSearcher
   private
 
   def month
-    @month ||= ParseMonthService.call(@params)
+    @month ||= Month.parse(@params[:month])
   end
 
   def params

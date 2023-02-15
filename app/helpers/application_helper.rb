@@ -34,7 +34,7 @@ module ApplicationHelper
   end
 
   def month
-    @month ||= ParseMonthService.call(params)
+    @month ||= Month.parse(params[:month])
   end
 
   def current_year

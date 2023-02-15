@@ -8,7 +8,7 @@ class ConsolidationSearcher
 
     self.currency = params[:currency]
 
-    self.month = params
+    self.month = params[:month]
   end
 
   def search
@@ -28,7 +28,7 @@ class ConsolidationSearcher
   end
 
   def month=(object)
-    @month = ParseMonthService.call(object)
+    @month = Month.parse(object)
   end
 
   def dates

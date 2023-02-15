@@ -1,0 +1,9 @@
+# frozen_string_literal: true
+
+panel currency.upcase do
+  table do
+    tbody do
+      render partial: 'cash', collection:
+    end
+  end
+end
