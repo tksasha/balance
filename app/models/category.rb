@@ -30,15 +30,4 @@ class Category < ApplicationRecord
   scope :expense, -> { where income: false }
 
   scope :visible, -> { where visible: true }
-
-  class << self
-    def supercategories
-      defined_enums['supercategory']
-        .each_with_object({}) do |i, res|
-          name, = i
-
-          res[I18n.t(name, scope: 'category.supercategory')] = name
-        end
-    end
-  end
 end

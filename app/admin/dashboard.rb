@@ -13,7 +13,24 @@ ActiveAdmin.register_page 'Dashboard' do
         .group_by(&:first)
         .map do |currency, collection|
           column do
-            render 'currency', currency:, collection:
+            render 'admin/dashboard/cashes/currency', currency:, collection:
+          end
+        end
+    end
+
+    h2 'Витрати по категоріям'
+    columns do
+      Item
+        .joins(:category)
+        .where(items: { currency: CURRENCIES.keys })
+        .group('items.currency, categories.supercategory')
+        .pluck('items.currency, categories.supercategory, SUM(items.sum) AS sum')
+        .group_by(&:first)
+        .map do |currency, collection|
+          column do
+            h3 currency.upcase
+
+            render 'admin/dashboard/items/currency', currency:, collection:
           end
         end
     end

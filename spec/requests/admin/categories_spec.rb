@@ -38,6 +38,12 @@ RSpec.describe 'Admin/Categories' do
       it { expect(category.income).to be_truthy }
       it { expect(category.visible).to be_truthy }
     end
+
+    context 'with invalid params' do
+      let(:params) { { category: { name: '' } } }
+
+      it { is_expected.to render_template :edit }
+    end
   end
 
   describe 'GET index.json' do
@@ -61,6 +67,40 @@ RSpec.describe 'Admin/Categories' do
 
         it { expect(response.parsed_body).to match_array categories }
       end
+    end
+  end
+
+  describe 'POST create' do
+    before { post '/admin/categories', params: }
+
+    context 'with valid params' do
+      let(:params) do
+        {
+          category: {
+            name: 'Category #1',
+            currency: 'usd',
+            supercategory: 'two',
+            income: true,
+            visible: true
+          }
+        }
+      end
+
+      let(:category) { Category.last }
+
+      it { is_expected.to redirect_to "/admin/categories/#{ category.id }" }
+
+      it { expect(category.name).to eq 'Category #1' }
+      it { expect(category.currency).to eq 'usd' }
+      it { expect(category.supercategory).to eq 'two' }
+      it { expect(category.income).to be_truthy }
+      it { expect(category.visible).to be_truthy }
+    end
+
+    context 'with invalid params' do
+      let(:params) { { category: { name: '' } } }
+
+      it { is_expected.to render_template :new }
     end
   end
 end

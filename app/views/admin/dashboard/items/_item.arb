@@ -1,0 +1,8 @@
+# frozen_string_literal: true
+
+tr class: 'item' do
+  _, supercategory, sum = item
+
+  td t(Category.supercategories.key(supercategory), scope: 'item.supercategory')
+  td(class: 'sum') { money(sum) }
+end

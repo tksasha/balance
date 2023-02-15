@@ -1,0 +1,9 @@
+# frozen_string_literal: true
+
+panel currency.upcase do
+  table do
+    tbody do
+      render partial: 'admin/dashboard/items/item', collection:
+    end
+  end
+end

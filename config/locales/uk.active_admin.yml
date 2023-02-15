@@ -3,3 +3,6 @@ uk:
     items: 'Записи'
     cashes: 'Залишки'
     categories: 'Категорії'
+    buttons:
+      categories:
+        create: 'Створити Категорію'

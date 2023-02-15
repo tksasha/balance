@@ -1,8 +1,15 @@
 uk:
   activerecord:
     models:
-      cash: 'Залишок'
-      item: 'Запис'
+      cash:
+        one: 'Залишок'
+        other: 'Залишки'
+      category:
+        one: 'Категорія'
+        other: 'Категорії'
+      item:
+        one: 'Запис'
+        other: 'Записи'
     attributes:
       cash:
         favorite: 'Обране'

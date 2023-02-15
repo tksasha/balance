@@ -34,20 +34,4 @@ RSpec.describe Category do
 
     it { is_expected.to eq sql }
   end
-
-  describe '.supercategories' do
-    subject { described_class.supercategories }
-
-    it do
-      I18n.with_locale(:en) do
-        expect(subject).to eq 'First' => 'one', 'Second' => 'two', 'Third' => 'three'
-      end
-    end
-
-    it do
-      I18n.with_locale(:uk) do
-        expect(subject).to eq 'Перша' => 'one', 'Друга' => 'two', 'Третя' => 'three'
-      end
-    end
-  end
 end

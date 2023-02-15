@@ -5,7 +5,7 @@ ActiveAdmin.register Category do
 
   menu priority: 3, label: proc { I18n.t('active_admin.categories') }
 
-  actions :all, except: %i[destroy new create]
+  actions :all, except: %i[destroy]
 
   permit_params :name, :currency, :supercategory, :visible, :income
 
@@ -22,5 +22,11 @@ ActiveAdmin.register Category do
           super
         end
     end
+  end
+
+  config.remove_action_item :new
+
+  action_item :new, only: :index do
+    link_to t(:create, scope: 'active_admin.buttons.categories'), new_admin_category_path
   end
 end
