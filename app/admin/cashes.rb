@@ -5,7 +5,7 @@ ActiveAdmin.register Cash do
 
   menu priority: 4, label: proc { I18n.t('active_admin.cashes') }
 
-  permit_params :name, :formula, :currency, :favorite
+  permit_params :name, :formula, :currency, :favorite, :supercategory
 
   filter :name
 
@@ -21,6 +21,8 @@ ActiveAdmin.register Cash do
       input :name
       input :formula
       input :currency
+      input :favorite
+      input :supercategory
     end
     actions
   end
