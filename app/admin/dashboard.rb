@@ -7,9 +7,9 @@ ActiveAdmin.register_page 'Dashboard' do
     h2 'Залишки'
     columns do
       Cash
+        .where(currency: CURRENCIES.keys)
         .group(:currency, :supercategory)
-        .select('currency, supercategory, SUM(sum)')
-        .pluck(:currency, :supercategory, :sum)
+        .pluck('currency, supercategory, SUM(sum) AS sum')
         .group_by(&:first)
         .map do |currency, collection|
           column do
