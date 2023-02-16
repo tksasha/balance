@@ -39,4 +39,15 @@ class Item < ApplicationRecord
   scope :expense, -> { joins(:category).merge(Category.expense) }
 
   enum currency: CURRENCIES
+
+  class << self
+    def for_dashboard
+      expense
+        .joins(:category)
+        .where(items: { currency: CURRENCIES.keys, date: Month.now.dates })
+        .group('items.currency, categories.supercategory')
+        .pluck('items.currency, categories.supercategory, SUM(items.sum) AS sum')
+        .group_by(&:first)
+    end
+  end
 end

@@ -17,22 +17,6 @@ RSpec.describe Cash do
 
   it { is_expected.to be_versioned }
 
-  describe '.supercategories' do
-    subject { described_class.supercategories }
-
-    it do
-      I18n.with_locale(:en) do
-        expect(subject).to eq 'Cash' => 'cash', 'Bonds' => 'bonds', 'Deposits' => 'deposits'
-      end
-    end
-
-    it do
-      I18n.with_locale(:uk) do
-        expect(subject).to eq 'Готівка' => 'cash', 'Облігації' => 'bonds', 'Депозити' => 'deposits'
-      end
-    end
-  end
-
   describe '.favorite' do
     subject { described_class.favorite.ids }
 
@@ -43,5 +27,43 @@ RSpec.describe Cash do
     end
 
     it { is_expected.to eq [1, 3] }
+  end
+
+  describe '.for_dashboard' do
+    subject { described_class.for_dashboard }
+
+    let(:currencies) { CURRENCIES.keys }
+
+    let(:supercategories) { described_class.supercategories.keys }
+
+    let(:cashes) do
+      {
+        'uah' => [
+          ['uah', 'cash', 11.11],
+          ['uah', 'bonds', 11.11],
+          ['uah', 'deposits', 11.11]
+        ],
+        'usd' => [
+          ['usd', 'cash', 11.11],
+          ['usd', 'bonds', 11.11],
+          ['usd', 'deposits', 11.11]
+        ],
+        'eur' => [
+          ['eur', 'cash', 11.11],
+          ['eur', 'bonds', 11.11],
+          ['eur', 'deposits', 11.11]
+        ]
+      }
+    end
+
+    before do
+      currencies.map do |currency|
+        supercategories.map do |supercategory|
+          create(:cash, currency:, supercategory:, sum: 11.11)
+        end
+      end
+    end
+
+    it { is_expected.to eq cashes }
   end
 end

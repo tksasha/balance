@@ -1,6 +1,7 @@
 uk:
   category:
     supercategory:
-      one: 'Перша'
-      two: 'Друга'
-      three: 'Третя'
+      one: 'Загальні'
+      two: 'Дітям'
+      three: 'Business'
+      four: 'Благодійність'

@@ -34,13 +34,11 @@ class Cash < ApplicationRecord
   has_paper_trail
 
   class << self
-    def supercategories
-      defined_enums['supercategory']
-        .each_with_object({}) do |i, res|
-          name, = i
-
-          res[I18n.t(name, scope: 'cash.supercategory')] = name
-        end
+    def for_dashboard
+      where(currency: CURRENCIES.keys)
+        .group(:currency, :supercategory)
+        .pluck('currency, supercategory, SUM(sum) AS sum')
+        .group_by(&:first)
     end
   end
 end

@@ -9,7 +9,10 @@ RSpec.describe Category do
 
   it { is_expected.to define_enum_for(:currency).with_values(uah: 0, usd: 1, eur: 3) }
 
-  it { expect(subject.defined_enums).to include 'supercategory' => { 'one' => 1, 'two' => 2, 'three' => 3 } }
+  it do
+    expect(subject.defined_enums)
+      .to include 'supercategory' => { 'one' => 1, 'two' => 2, 'three' => 3, 'four' => 4 }
+  end
 
   describe '.visible' do
     subject { described_class.visible.to_sql }
