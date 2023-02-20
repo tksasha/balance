@@ -3,7 +3,7 @@
 panel currency.upcase do
   table do
     tbody do
-      render partial: 'admin/dashboard/items/item', collection:
+      render partial: 'backoffice/dashboard/cashes/cash', collection:
     end
   end
 end

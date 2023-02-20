@@ -2,7 +2,7 @@
 
 RSpec.describe 'Admin/Cashes' do
   describe 'POST create' do
-    before { post '/admin/cashes', params: }
+    before { post '/backoffice/cashes', params: }
 
     context 'when params are valid' do
       let(:params) do
@@ -19,7 +19,7 @@ RSpec.describe 'Admin/Cashes' do
 
       let(:cash) { Cash.last }
 
-      it { is_expected.to redirect_to admin_cash_path(cash) }
+      it { is_expected.to redirect_to backoffice_cash_path(cash) }
 
       it { expect(cash.name).to eq 'Cash #1' }
       it { expect(cash.sum).to eq 11.1 }

@@ -1,5 +1,5 @@
 $(function() {
-  if(location.pathname != '/admin/items') {
+  if(location.pathname != '/backoffice/items') {
     return false;
   }
 
@@ -15,7 +15,7 @@ $(function() {
   }();
 
   $.getJSON(
-    '/admin/categories',
+    '/backoffice/categories',
     { q: { currency_eq: currency } },
     function(categories) {
       $.each(categories, function(idx, category) {

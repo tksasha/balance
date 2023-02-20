@@ -10,7 +10,7 @@ ActiveAdmin.register_page 'Dashboard' do
         .for_dashboard
         .map do |currency, collection|
           column do
-            render 'admin/dashboard/cashes/currency', currency:, collection:
+            render 'backoffice/dashboard/cashes/currency', currency:, collection:
           end
         end
     end
@@ -23,7 +23,7 @@ ActiveAdmin.register_page 'Dashboard' do
           column do
             h3 currency.upcase
 
-            render 'admin/dashboard/items/currency', currency:, collection:
+            render 'backoffice/dashboard/items/currency', currency:, collection:
           end
         end
     end

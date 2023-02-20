@@ -13,7 +13,7 @@ RSpec.describe 'Admin/Categories' do
       )
     end
 
-    before { patch "/admin/categories/#{ category.id }", params: }
+    before { patch "/backoffice/categories/#{ category.id }", params: }
 
     context 'with valid params' do
       let(:params) do
@@ -30,7 +30,7 @@ RSpec.describe 'Admin/Categories' do
 
       before { category.reload }
 
-      it { is_expected.to redirect_to "/admin/categories/#{ category.id }" }
+      it { is_expected.to redirect_to "/backoffice/categories/#{ category.id }" }
 
       it { expect(category.name).to eq 'Category #2' }
       it { expect(category.currency).to eq 'usd' }
@@ -54,7 +54,7 @@ RSpec.describe 'Admin/Categories' do
         create_list(:category, 2, currency:)
       end
 
-      get '/admin/categories', params:, headers:
+      get '/backoffice/categories', params:, headers:
     end
 
     CURRENCIES.map do |currency_name, currency_id|
@@ -71,7 +71,7 @@ RSpec.describe 'Admin/Categories' do
   end
 
   describe 'POST create' do
-    before { post '/admin/categories', params: }
+    before { post '/backoffice/categories', params: }
 
     context 'with valid params' do
       let(:params) do
@@ -88,7 +88,7 @@ RSpec.describe 'Admin/Categories' do
 
       let(:category) { Category.last }
 
-      it { is_expected.to redirect_to "/admin/categories/#{ category.id }" }
+      it { is_expected.to redirect_to "/backoffice/categories/#{ category.id }" }
 
       it { expect(category.name).to eq 'Category #1' }
       it { expect(category.currency).to eq 'usd' }
