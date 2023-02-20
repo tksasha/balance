@@ -7,7 +7,6 @@
 #  id            :integer          not null, primary key
 #  currency      :integer          default("uah")
 #  deleted_at    :time
-#  favorite      :boolean          default(FALSE)
 #  formula       :string
 #  name          :string
 #  sum           :decimal(10, 2)

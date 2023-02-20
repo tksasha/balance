@@ -8,7 +8,7 @@
 #  currency      :integer          default("uah")
 #  income        :boolean          default(FALSE)
 #  name          :string
-#  supercategory :integer          default("one"), not null
+#  supercategory :integer          default("common"), not null
 #  visible       :boolean          default(TRUE)
 #
 # Indexes

@@ -17,18 +17,6 @@ RSpec.describe Cash do
 
   it { is_expected.to be_versioned }
 
-  describe '.favorite' do
-    subject { described_class.favorite.ids }
-
-    before do
-      create(:cash, id: 1, favorite: true)
-      create(:cash, id: 2, favorite: false)
-      create(:cash, id: 3, favorite: true)
-    end
-
-    it { is_expected.to eq [1, 3] }
-  end
-
   describe '.for_dashboard' do
     subject { described_class.for_dashboard }
 

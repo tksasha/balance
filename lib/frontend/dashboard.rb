@@ -30,14 +30,16 @@ module Frontend
 
     attr_reader :currency, :date
 
-    delegate :sum, :all, :summary, :favorite, to: :cashes, prefix: true
-
     def scope
       Item.where(currency:)
     end
 
     def cashes
-      ::Frontend::Dashboard::Cashes.new(currency:)
+      CashSearcher.search(Cash.all, currency:)
+    end
+
+    def cashes_sum
+      cashes.sum(:sum)
     end
 
     def income
