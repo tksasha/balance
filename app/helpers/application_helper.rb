@@ -9,18 +9,6 @@ module ApplicationHelper
     resource.decorate
   end
 
-  def breadcrumbs
-    tag.div(class: :breadcrumb) do
-      if block_given?
-        concat link_to('Backoffice', :backoffice, class: 'breadcrumb-item', data: { remote: true })
-
-        yield
-      else
-        concat tag.span('Backoffice', class: 'breadcrumb-item active')
-      end
-    end
-  end
-
   def category_widget_data
     @category_widget_data ||= CategoryWidgetDataSearcher.search(params)
   end

@@ -6,8 +6,6 @@ Rails.application.routes.draw do
   scope '/(:currency)' do
     resources :items, only: %i[create edit update destroy]
 
-    resource :backoffice, only: :show, controller: 'backoffice/dashboard'
-
     resources :consolidations, only: :index
 
     namespace :frontend do
@@ -16,12 +14,6 @@ Rails.application.routes.draw do
       namespace :dashboard do
         resources :cashes, only: %i[edit update index]
       end
-    end
-
-    namespace :backoffice do
-      resources :cashes, except: :show
-
-      resources :categories
     end
 
     get '(/:month)(/:category_id)', to: 'items#index', as: :root

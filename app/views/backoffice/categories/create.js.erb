@@ -1,5 +1,0 @@
-(function(){
-  $.getScript('<%= url_for [:backoffice, :categories] %>');
-
-  $('#item_category_id').html('<%= j grouped_options_for_select category_widget_data %>');
-}());
