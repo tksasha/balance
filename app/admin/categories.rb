@@ -27,6 +27,6 @@ ActiveAdmin.register Category do
   config.remove_action_item :new
 
   action_item :new, only: :index do
-    link_to t(:create, scope: 'active_admin.buttons.categories'), new_admin_category_path
+    link_to t(:create, scope: 'active_admin.buttons.categories'), new_backoffice_category_path
   end
 end
