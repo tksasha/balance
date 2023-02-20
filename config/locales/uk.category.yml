@@ -1,7 +1,8 @@
 uk:
   category:
     supercategory:
-      one: 'Загальні'
-      two: 'Дітям'
-      three: 'Business'
-      four: 'Благодійність'
+      common: 'Загальні'
+      children: 'Дітям'
+      business: 'Business'
+      charity: 'Благодійність'
+      currency: 'Валюта'

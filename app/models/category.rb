@@ -23,7 +23,10 @@ class Category < ApplicationRecord
 
   enum currency: CURRENCIES
 
-  enum :supercategory, { one: 1, two: 2, three: 3, four: 4 }, default: :one, scopes: false
+  enum \
+    :supercategory,
+    { common: 1, children: 2, business: 3, charity: 4, currency: 5 },
+    default: :common, scopes: false
 
   scope :income, -> { where income: true }
 

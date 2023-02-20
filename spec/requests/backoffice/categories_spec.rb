@@ -26,7 +26,7 @@ RSpec.describe 'Backoffice::Categories' do
           {
             category: {
               name: 'Drinks',
-              supercategory: 'two',
+              supercategory: 'children',
               income: true,
               visible: true
             }
@@ -37,7 +37,7 @@ RSpec.describe 'Backoffice::Categories' do
 
         it_behaves_like 'create.js'
 
-        it { expect(category.supercategory).to eq 'two' }
+        it { expect(category.supercategory).to eq 'children' }
 
         it { expect(category.name).to eq 'Drinks' }
 
@@ -66,7 +66,7 @@ RSpec.describe 'Backoffice::Categories' do
         create(
           :category,
           name: 'First',
-          supercategory: 'one',
+          supercategory: 'common',
           income: false,
           visible: false
         )
@@ -79,7 +79,7 @@ RSpec.describe 'Backoffice::Categories' do
           {
             category: {
               name: 'Second',
-              supercategory: 'two',
+              supercategory: 'children',
               income: true,
               visible: true
             }
@@ -92,7 +92,7 @@ RSpec.describe 'Backoffice::Categories' do
 
         it { expect(category.name).to eq 'Second' }
 
-        it { expect(category.supercategory).to eq 'two' }
+        it { expect(category.supercategory).to eq 'children' }
 
         it { expect(category.income).to be_truthy }
 

@@ -7,7 +7,7 @@ RSpec.describe 'Admin/Categories' do
         :category,
         name: 'Category #1',
         currency: 'uah',
-        supercategory: 'one',
+        supercategory: 'common',
         income: false,
         visible: false
       )
@@ -21,7 +21,7 @@ RSpec.describe 'Admin/Categories' do
           category: {
             name: 'Category #2',
             currency: 'usd',
-            supercategory: 'two',
+            supercategory: 'children',
             income: true,
             visible: true
           }
@@ -34,7 +34,7 @@ RSpec.describe 'Admin/Categories' do
 
       it { expect(category.name).to eq 'Category #2' }
       it { expect(category.currency).to eq 'usd' }
-      it { expect(category.supercategory).to eq 'two' }
+      it { expect(category.supercategory).to eq 'children' }
       it { expect(category.income).to be_truthy }
       it { expect(category.visible).to be_truthy }
     end
@@ -79,7 +79,7 @@ RSpec.describe 'Admin/Categories' do
           category: {
             name: 'Category #1',
             currency: 'usd',
-            supercategory: 'two',
+            supercategory: 'children',
             income: true,
             visible: true
           }
@@ -92,7 +92,7 @@ RSpec.describe 'Admin/Categories' do
 
       it { expect(category.name).to eq 'Category #1' }
       it { expect(category.currency).to eq 'usd' }
-      it { expect(category.supercategory).to eq 'two' }
+      it { expect(category.supercategory).to eq 'children' }
       it { expect(category.income).to be_truthy }
       it { expect(category.visible).to be_truthy }
     end

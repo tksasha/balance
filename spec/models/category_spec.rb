@@ -11,7 +11,9 @@ RSpec.describe Category do
 
   it do
     expect(subject.defined_enums)
-      .to include 'supercategory' => { 'one' => 1, 'two' => 2, 'three' => 3, 'four' => 4 }
+      .to include 'supercategory' => {
+        'common' => 1, 'children' => 2, 'business' => 3, 'charity' => 4, 'currency' => 5
+      }
   end
 
   describe '.visible' do
