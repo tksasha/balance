@@ -3,19 +3,7 @@
     <div class="col-4">
       <div class="card">
         <div class="card-body">
-          <%= render partial: 'cash', collection: dashboard.cashes_favorite %>
-
-          <% dashboard.cashes_summary.each do |supercategory, sum| %>
-            <div class="cash">
-              <div class="cash-name">
-                <%= t(supercategory, scope: 'cash.supercategory') %>
-              </div>
-
-              <div class="cash-sum">
-                <%= link_to money(sum), frontend_cashes_path(supercategory:), data: { remote: true } %>
-              </div>
-            </div>
-          <% end %>
+          <%= render partial: 'cash', collection: %>
 
           <div class="cash">
             <div class="cash-name">

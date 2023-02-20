@@ -63,7 +63,13 @@ module ApplicationHelper
   # rubocop:enable Metrics/MethodLength
   # rubocop:enable Naming/MethodParameterName
 
+  # TODO: delme
   def serialized_collection
     collection.map { |item| serializer(item) }
+  end
+
+  # TODO: spec me
+  def dashboard
+    ::Frontend::Dashboard.new(params)
   end
 end

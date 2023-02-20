@@ -34,7 +34,7 @@ ActiveAdmin.register Item do
         money(item.sum)
       end
       row :category
-      row :description
+      row(:description) { sanitize(item.description) }
       row :currency
       row :created_at
       row :updated_at
