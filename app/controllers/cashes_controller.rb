@@ -14,4 +14,9 @@ class CashesController < InheritedResources::Base
   def resource_params
     params.require(:cash).permit(:name, :formula)
   end
+
+  # TODO: spec me?
+  def collection
+    @collection ||= CashSearcher.search(Cash.order(:name), params)
+  end
 end
