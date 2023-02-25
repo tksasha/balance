@@ -10,9 +10,10 @@ ActiveAdmin.register Cash do
   filter :name
 
   index row_class: proc { 'cash' } do
-    column :name
+    column(:name)
     column(:sum, class: 'sum') { |cash| money(cash.sum) }
-    column :favorite
+    column(:supercategory) { |cash| t(cash.supercategory, scope: 'cash.supercategory') }
+    column(:favorite)
     actions
   end
 
@@ -21,8 +22,8 @@ ActiveAdmin.register Cash do
       input :name
       input :formula
       input :currency
-      input :favorite
       input :supercategory
+      input :favorite
     end
     actions
   end

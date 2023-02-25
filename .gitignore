@@ -1,6 +1,7 @@
 .bundle
 db/*.sqlite3
 db/*.sqlite3-journal
+db/dbs.tar.bz2
 log/*.log
 tmp/
 vendor/bundle

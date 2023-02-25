@@ -17,6 +17,11 @@ class CashesController < InheritedResources::Base
 
   # TODO: spec me?
   def collection
-    @collection ||= CashSearcher.search(Cash.order(:name), params)
+    @collection ||= CashSearcher.search(Cash.order(:name), params).decorate
+  end
+
+  # TODO: spec me?
+  def resource
+    @resource ||= Cash.find(params[:id]).decorate
   end
 end

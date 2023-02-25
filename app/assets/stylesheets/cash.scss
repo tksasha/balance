@@ -9,9 +9,15 @@
 .cash-name {
   @extend .float-start;
 
-  color: $gray-700;
+  color: $gray-400;
 }
 
 .cash-sum {
   @extend .float-end;
+}
+
+.cash-favorite {
+  .cash-name {
+    color: $gray-700;
+  }
 }
