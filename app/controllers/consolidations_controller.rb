@@ -4,6 +4,6 @@ class ConsolidationsController < BaseController
   private
 
   def collection
-    @collection ||= ::Consolidations::GetCollectionService.call(params)
+    @collection ||= dashboard.consolidations
   end
 end

@@ -1,31 +1,5 @@
 (function() {
-  $('#consolidations').
-    html('<%= j render collection %>').
-    append('<%= j render partial: 'consolidation', locals: { consolidation: ConsolidationExpensesSum.new } %>');
-
-  var size = $('#consolidations').children().size();
-
-  if(size > 15) {
-    $('.consolidations-item').css('padding-left', '8px');
-
-    $('.consolidations-item').css('padding-right', '8px');
-
-    $('#consolidations').find('.consolidations-item-label').css('font-size', '11px');
-  } else if(size > 14) {
-    $('.consolidations-item').css('padding-left', '10px');
-
-    $('.consolidations-item').css('padding-right', '10px');
-
-    $('#consolidations').find('.consolidations-item-label').css('font-size', '12px');
-  } else if(size > 13) {
-    $('.consolidations-item').css('padding-left', '12px');
-
-    $('.consolidations-item').css('padding-right', '12px');
-
-    $('#consolidations').find('.consolidations-item-label').css('font-size', '12px');
-  }
-
-  if(size > 13) {
-    $('#consolidations').find('a').css('font-size', '15px');
-  }
+  $('#consolidations')
+    .empty();
+    .html('<%= j render partial: 'consolidations/consolidations', collection: %>');
 }());

@@ -11,11 +11,7 @@ RSpec.describe ConsolidationsController do
     end
 
     context do
-      before do
-        allow(subject).to receive(:params).and_return(:params)
-
-        allow(Consolidations::GetCollectionService).to receive(:call).with(:params).and_return(:collection)
-      end
+      before { allow(subject).to receive_message_chain(:dashboard, :consolidations).and_return(:collection) }
 
       its(:collection) { is_expected.to eq :collection }
     end

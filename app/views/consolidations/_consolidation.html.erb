@@ -1,8 +1,11 @@
-<div class="consolidations-item <%= 'consolidations-item-income' if consolidation.income? %>">
-  <div class="consolidations-item-label">
-    <%= consolidation.name %>
+<% _, category_name, category_id, sum = consolidation %>
+
+<div class="row mb-1">
+  <div class="col">
+    <%= category_name %>
   </div>
 
-  <%= link_to money(consolidation.sum),
-      root_path(month: month, category_id: consolidation.category_id), remote: true %>
+  <div class="col text-end">
+    <%= link_to money(sum), root_path(month: month, category_id:), remote: true %>
+  </div>
 </div>

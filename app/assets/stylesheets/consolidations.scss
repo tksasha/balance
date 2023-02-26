@@ -1,26 +1,7 @@
-.consolidations {
-  overflow: hidden;
-  text-align: right;
+#consolidations {
+  font-size: 13px;
 
-  .card-body {
-    padding: 0;
+  & > .col {
+    max-width: 288px;
   }
-}
-
-.consolidations-item {
-  float: left;
-  padding: 10px 15px;
-
-  &:last-child {
-    float: right;
-    font-weight: bold;
-  }
-}
-
-.consolidations-item-income {
-  background-color: color("grey-lighten-5");
-}
-
-.consolidations-item-label {
-  font-size: 12px;
 }

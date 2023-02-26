@@ -3,15 +3,13 @@
 module Frontend
   class Dashboard
     def initialize(params = {})
-      @currency = Currency.parse(params[:currency])
+      self.currency = params[:currency]
 
-      @date = DateRange.parse(params)
+      self.month = params[:month]
     end
 
-    def items
-      scope
-        .where(date:)
-        .order(date: :desc)
+    def cashes
+      CashSearcher.search(Cash.all, currency:)
     end
 
     def at_end
@@ -26,16 +24,24 @@ module Frontend
       Item.new(currency:)
     end
 
+    def consolidations
+      Frontend::Reports::Consolidations.call(currency:, month:)
+    end
+
     private
 
-    attr_reader :currency, :date
+    attr_reader :currency, :month
+
+    def currency=(currency)
+      @currency = Currency.parse(currency)
+    end
+
+    def month=(month)
+      @month = Month.parse(month)
+    end
 
     def scope
       Item.where(currency:)
-    end
-
-    def cashes
-      CashSearcher.search(Cash.all, currency:)
     end
 
     def cashes_sum

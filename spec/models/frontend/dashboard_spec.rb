@@ -3,7 +3,29 @@
 RSpec.describe Frontend::Dashboard do
   subject { described_class.new(params) }
 
-  let(:params) { { currency: 'uah' } }
+  let(:params) { { currency: 'uah', month: '2023-05' } }
+
+  describe '#currency' do
+    its(:currency) { is_expected.to eq 'uah' }
+
+    context 'when currency is nil' do
+      let(:params) { {} }
+
+      its(:currency) { is_expected.to eq 'uah' }
+    end
+  end
+
+  describe '#month' do
+    its(:month) { is_expected.to eq Month.new(2023, 5) }
+
+    context 'when month is nil' do
+      let(:params) { {} }
+
+      before { travel_to '2023-12-31' }
+
+      its(:month) { is_expected.to eq Month.new(2023, 12) }
+    end
+  end
 
   describe '#income' do
     subject { described_class.new(params).send(:income) }
@@ -81,42 +103,6 @@ RSpec.describe Frontend::Dashboard do
     end
   end
 
-  describe '#items' do
-    subject { described_class.new(params).items }
-
-    before do
-      create(:item, date: '2022-01-01', currency: 'uah')
-      create(:item, date: '2022-01-01', currency: 'usd')
-    end
-
-    context 'when date is `October, 2022` and currency is `uah`' do
-      let(:params) { { currency: 'uah', year: 2022, month: 10 } }
-
-      let!(:item_n1) { create(:item, currency: 'uah', date: '2022-10-03') }
-      let!(:item_n2) { create(:item, currency: 'uah', date: '2022-10-30') }
-
-      it { is_expected.to eq [item_n2, item_n1] }
-    end
-
-    context 'when date is `October, 2022` and currency is `usd`' do
-      let(:params) { { currency: 'usd', year: 2022, month: 10 } }
-
-      let!(:item_n3) { create(:item, currency: 'usd', date: '2022-10-03') }
-      let!(:item_n4) { create(:item, currency: 'usd', date: '2022-10-30') }
-
-      it { is_expected.to eq [item_n4, item_n3] }
-    end
-
-    context 'when date is `September, 2022` and currency is `uah`' do
-      let(:params) { { currency: 'uah', year: 2022, month: 9 } }
-
-      let!(:item_n5) { create(:item, currency: 'uah', date: '2022-09-03') }
-      let!(:item_n6) { create(:item, currency: 'uah', date: '2022-09-30') }
-
-      it { is_expected.to eq [item_n6, item_n5] }
-    end
-  end
-
   describe '#at_end' do
     subject { described_class.new(params).at_end }
 
@@ -161,5 +147,19 @@ RSpec.describe Frontend::Dashboard do
 
       it { expect(subject.currency).to eq 'uah' }
     end
+  end
+
+  describe '#consolidations' do
+    let(:currency) { 'uah' }
+
+    let(:month) { Month.new(2023, 5) }
+
+    before do
+      allow(Frontend::Reports::Consolidations).to receive(:call)
+
+      subject.consolidations
+    end
+
+    it { expect(Frontend::Reports::Consolidations).to have_received(:call).with(currency:, month:) }
   end
 end

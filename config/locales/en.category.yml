@@ -1,0 +1,8 @@
+en:
+  category:
+    supercategory:
+      common: 'Common'
+      children: 'Children'
+      business: 'Business'
+      charity: 'Charity'
+      currency: 'Currency'

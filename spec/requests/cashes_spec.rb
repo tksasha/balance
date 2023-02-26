@@ -2,12 +2,6 @@
 
 RSpec.describe 'Cashes' do
   Item.currencies.keys.map do |currency|
-    describe 'GET /cashes.js' do
-      before { get "/#{ currency }/cashes", xhr: true }
-
-      it_behaves_like 'index.js'
-    end
-
     describe 'GET edit.js' do
       let!(:cash) { create(:cash, currency:) }
 
@@ -16,7 +10,7 @@ RSpec.describe 'Cashes' do
       it_behaves_like 'edit.js'
     end
 
-    describe 'PUT /frontend/cashes/:id.js' do
+    describe 'PUT /cashes/:id.js' do
       let!(:cash) { create(:cash, currency:) }
 
       before { put "/#{ currency }/cashes/#{ cash.id }", params:, xhr: true }

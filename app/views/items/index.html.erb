@@ -6,15 +6,13 @@
   </div>
 </div>
 
-<div id="cashes"></div>
+<div id="cashes">
+  <%= render partial: 'cashes/index', locals: { collection: dashboard.cashes.decorate } %>
+</div>
 
 <div class="container-fluid">
-  <div class="row mt-4">
-    <div class="col">
-      <div class="card consolidations">
-        <div class="card-body" id="consolidations"></div>
-      </div>
-    </div>
+  <div class="row mt-4" id="consolidations">
+    <%= render partial: 'consolidations/consolidations', collection: dashboard.consolidations %>
   </div>
 </div>
 
@@ -45,8 +43,6 @@
 
 <%= content_for :javascripts do %>
   <%= javascript_tag do %>
-    $.getScript('<%= cashes_path %>');
-
     $.getScript('<%= root_path %>');
   <% end %>
 <% end %>

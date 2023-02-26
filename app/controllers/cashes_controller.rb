@@ -1,6 +1,10 @@
 # frozen_string_literal: true
 
-class CashesController < InheritedResources::Base
+class CashesController < ApplicationController
+  inherit_resources
+
+  actions :update
+
   respond_to :js
 
   def update
@@ -15,12 +19,6 @@ class CashesController < InheritedResources::Base
     params.require(:cash).permit(:name, :formula)
   end
 
-  # TODO: spec me?
-  def collection
-    @collection ||= CashSearcher.search(Cash.order(:name), params).decorate
-  end
-
-  # TODO: spec me?
   def resource
     @resource ||= Cash.find(params[:id]).decorate
   end
