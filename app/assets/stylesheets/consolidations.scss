@@ -1,7 +1,14 @@
-#consolidations {
+.consolidation {
+  @extend .float-start, .me-2;
+
   font-size: 13px;
 
-  & > .col {
-    max-width: 288px;
-  }
+  white-space: nowrap;
+}
+
+.consolidation-name {
+}
+
+.consolidation-sum {
+  @extend .text-end;
 }

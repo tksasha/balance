@@ -1,11 +1,11 @@
 <% _, category_name, category_id, sum = consolidation %>
 
 <div class="row mb-1">
-  <div class="col">
+  <div class="col consolidation-name">
     <%= category_name %>
   </div>
 
-  <div class="col text-end">
+  <div class="col consolidation-sum">
     <%= link_to money(sum), root_path(month: month, category_id:), remote: true %>
   </div>
 </div>

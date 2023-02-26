@@ -8,12 +8,13 @@ RSpec.describe Frontend::Reports::Consolidations do
   describe '#call' do
     let(:params) { { currency: } }
 
-    let(:category_n1) { create(:category, supercategory: :common, id: 1153, name: 'Food') }
-    let(:category_n2) { create(:category, supercategory: :common, id: 1154, name: 'Drinks') }
-    let(:category_n3) { create(:category, supercategory: :children, id: 1155, name: 'Pocket money') }
-
     before do
       travel_to Time.zone.parse('2023-01-01')
+
+      category_n1 = create(:category, supercategory: :common, id: 1153, name: 'Food')
+      category_n2 = create(:category, supercategory: :common, id: 1154, name: 'Drinks')
+      category_n3 = create(:category, supercategory: :children, id: 1155, name: 'Pocket money')
+      category_n4 = create(:category, id: 1650, name: 'Salary', income: true)
 
       # uah, common
       create(:item, :uah, sum: 10.01, date: '2023-01-01', category: category_n1)
@@ -27,6 +28,7 @@ RSpec.describe Frontend::Reports::Consolidations do
 
       # uah, common, 2023-02-28
       create(:item, :uah, sum: 10.07, date: '2023-02-28', category: category_n1)
+      create(:item, :uah, sum: 10.08, date: '2023-02-28', category: category_n4)
 
       # usd, common
       create(:item, :usd, sum: 20.00, category: category_n1)
@@ -43,9 +45,9 @@ RSpec.describe Frontend::Reports::Consolidations do
         I18n.with_locale(:en) do
           results = subject.call
 
-          expect(results[1]).to match_array([[1, 'Food', 1153, 20.03], [1, 'Drinks', 1154, 20.07]])
+          expect(results[0]).to match_array([1, [[1, 'Drinks', 1154, 20.07], [1, 'Food', 1153, 20.03]]])
 
-          expect(results[2]).to match_array([[2, 'Pocket money', 1155, 20.11]])
+          expect(results[1]).to match_array([2, [[2, 'Pocket money', 1155, 20.11]]])
         end
       end
       # rubocop:enable RSpec/MultipleExpectations
@@ -54,25 +56,41 @@ RSpec.describe Frontend::Reports::Consolidations do
     context 'when currency is uah and custom month' do
       let(:params) { { currency: :uah, month: '2023-02' } }
 
-      its(:call) { is_expected.to eq({ 1 => [[1, 'Food', 1153, 10.07]] }) }
+      # rubocop:disable RSpec/MultipleExpectations
+      it do
+        results = subject.call
+
+        expect(results[0]).to eq([0, [[0, 'Salary', 1650, 10.08]]])
+
+        expect(results[1]).to eq([1, [[1, 'Food', 1153, 10.07]]])
+      end
+      # rubocop:enable RSpec/MultipleExpectations
     end
 
     context 'when currency is usd' do
       let(:currency) { :usd }
 
-      its(:call) { is_expected.to eq({ 1 => [[1, 'Food', 1153, 20.00]] }) }
+      its(:call) { is_expected.to eq([[1, [[1, 'Food', 1153, 20.00]]]]) }
     end
 
     context 'when currency is eur' do
       let(:currency) { :eur }
 
-      its(:call) { is_expected.to eq({ 1 => [[1, 'Food', 1153, 30.00]] }) }
+      its(:call) { is_expected.to eq([[1, [[1, 'Food', 1153, 30.00]]]]) }
     end
 
     context 'when currency was not specified and custom month' do
       let(:params) { { month: '2023-02' } }
 
-      its(:call) { is_expected.to eq({ 1 => [[1, 'Food', 1153, 10.07]] }) }
+      # rubocop:disable RSpec/MultipleExpectations
+      it do
+        results = subject.call
+
+        expect(results[0]).to eq([0, [[0, 'Salary', 1650, 10.08]]])
+
+        expect(results[1]).to eq([1, [[1, 'Food', 1153, 10.07]]])
+      end
+      # rubocop:enable RSpec/MultipleExpectations
     end
   end
 

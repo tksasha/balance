@@ -15,6 +15,7 @@ module Frontend
           .exec_query(sql, 'SQL', bindings)
           .rows
           .group_by(&:first)
+          .sort
       end
 
       private
@@ -32,7 +33,7 @@ module Frontend
       def sql
         <<~SQL.squish
           SELECT
-            categories.supercategory AS supercategory,
+            IIF(categories.income, 0, categories.supercategory) AS supercategory,
             categories.name AS category_name,
             categories.id AS category_id,
             ROUND(SUM(sum), 2) AS sum

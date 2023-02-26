@@ -10,4 +10,16 @@ class BaseController < ApplicationController
   # rubocop:enable Rails/LexicallyScopedActionFilter:
 
   helper_method :collection, :resource, :serializer
+
+  # TODO: spec me
+  def default_url_options
+    { currency: Currency.parse(params[:currency]) }
+  end
+
+  # TODO: spec me
+  def dashboard
+    ::Frontend::Dashboard.new(params)
+  end
+
+  helper_method :dashboard
 end
