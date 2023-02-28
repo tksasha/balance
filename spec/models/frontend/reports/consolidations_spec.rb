@@ -1,16 +1,10 @@
 # frozen_string_literal: true
 
 RSpec.describe Frontend::Reports::Consolidations do
-  subject { described_class.new(params) }
-
-  let(:params) { {} }
-
   describe '#call' do
-    let(:params) { { currency: } }
+    subject { described_class.new(currency:, month:) }
 
     before do
-      travel_to Time.zone.parse('2023-01-01')
-
       category_n1 = create(:category, supercategory: :common, id: 1153, name: 'Food')
       category_n2 = create(:category, supercategory: :common, id: 1154, name: 'Drinks')
       category_n3 = create(:category, supercategory: :children, id: 1155, name: 'Pocket money')
@@ -31,30 +25,30 @@ RSpec.describe Frontend::Reports::Consolidations do
       create(:item, :uah, sum: 10.08, date: '2023-02-28', category: category_n4)
 
       # usd, common
-      create(:item, :usd, sum: 20.00, category: category_n1)
+      create(:item, :usd, sum: 20.00, date: '2023-05-31', category: category_n1)
 
       # eur, common
-      create(:item, :eur, sum: 30.00, category: category_n1)
+      create(:item, :eur, sum: 30.00, date: '2023-06-30', category: category_n1)
     end
 
-    context 'when currency is uah' do
+    context 'when UAH and 2023-01' do
       let(:currency) { :uah }
+      let(:month) { '2023-01' }
 
       # rubocop:disable RSpec/MultipleExpectations
       it do
-        I18n.with_locale(:en) do
-          results = subject.call
+        results = subject.call
 
-          expect(results[0]).to match_array([1, [[1, 'Drinks', 1154, 20.07], [1, 'Food', 1153, 20.03]]])
+        expect(results[0]).to match_array([1, [[1, 'Drinks', 1154, 20.07], [1, 'Food', 1153, 20.03]]])
 
-          expect(results[1]).to match_array([2, [[2, 'Pocket money', 1155, 20.11]]])
-        end
+        expect(results[1]).to match_array([2, [[2, 'Pocket money', 1155, 20.11]]])
       end
       # rubocop:enable RSpec/MultipleExpectations
     end
 
-    context 'when currency is uah and custom month' do
-      let(:params) { { currency: :uah, month: '2023-02' } }
+    context 'when UAH and 2023-02' do
+      let(:currency) { :uah }
+      let(:month) { '2023-02' }
 
       # rubocop:disable RSpec/MultipleExpectations
       it do
@@ -67,20 +61,38 @@ RSpec.describe Frontend::Reports::Consolidations do
       # rubocop:enable RSpec/MultipleExpectations
     end
 
-    context 'when currency is usd' do
+    context 'when USD and 2023-05' do
       let(:currency) { :usd }
+      let(:month) { '2023-05' }
 
       its(:call) { is_expected.to eq([[1, [[1, 'Food', 1153, 20.00]]]]) }
     end
 
-    context 'when currency is eur' do
+    context 'when EUR and 2023-06' do
       let(:currency) { :eur }
+      let(:month) { '2023-06' }
 
       its(:call) { is_expected.to eq([[1, [[1, 'Food', 1153, 30.00]]]]) }
     end
 
-    context 'when currency was not specified and custom month' do
-      let(:params) { { month: '2023-02' } }
+    context 'when GBP and 2023-02' do
+      let(:currency) { :gbp }
+      let(:month) { '2023-02' }
+
+      # rubocop:disable RSpec/MultipleExpectations
+      it do
+        results = subject.call
+
+        expect(results[0]).to eq([0, [[0, 'Salary', 1650, 10.08]]])
+
+        expect(results[1]).to eq([1, [[1, 'Food', 1153, 10.07]]])
+      end
+      # rubocop:enable RSpec/MultipleExpectations
+    end
+
+    context 'when UAH and Month.new(2023, 2)' do
+      let(:currency) { :uah }
+      let(:month) { Month.new(2023, 2) }
 
       # rubocop:disable RSpec/MultipleExpectations
       it do
@@ -95,6 +107,8 @@ RSpec.describe Frontend::Reports::Consolidations do
   end
 
   describe '.call' do
+    let(:currency) { :usd }
+    let(:month) { '2023-05' }
     let(:instance) { double }
 
     before do
@@ -102,10 +116,10 @@ RSpec.describe Frontend::Reports::Consolidations do
 
       allow(instance).to receive(:call)
 
-      described_class.call(params)
+      described_class.call(currency:, month:)
     end
 
-    it { expect(described_class).to have_received(:new) }
+    it { expect(described_class).to have_received(:new).with(currency:, month:) }
 
     it { expect(instance).to have_received(:call) }
   end

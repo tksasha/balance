@@ -6,4 +6,7 @@
   <% else %>
     $('#items').html('<%= j render 'not_found' %>');
   <% end %>
+
+  $('#consolidations')
+    .html('<%= j render partial: 'consolidations/consolidations', collection: dashboard.consolidations %>')
 }());

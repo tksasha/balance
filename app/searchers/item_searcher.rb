@@ -4,6 +4,8 @@ class ItemSearcher < ApplicationSearcher
   include ActsAsSearchByCurrency
 
   def search_by_month(month)
+    month = Month.parse(month)
+
     results.where date: month.dates
   end
 
@@ -15,11 +17,11 @@ class ItemSearcher < ApplicationSearcher
 
   private
 
-  def month
-    @month ||= Month.parse(@params[:month])
-  end
+  def relation
+    return @relation if params[:month].present?
 
-  def params
-    @params.tap { |params| params[:month] = month }
+    date = Month.now.dates
+
+    @relation.where(date:)
   end
 end

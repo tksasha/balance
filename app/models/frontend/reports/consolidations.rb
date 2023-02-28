@@ -3,10 +3,9 @@
 module Frontend
   module Reports
     class Consolidations
-      def initialize(params)
-        self.currency = params[:currency]
-
-        self.month = params[:month]
+      def initialize(currency:, month:)
+        self.currency = currency
+        self.month    = month
       end
 
       def call
@@ -27,7 +26,13 @@ module Frontend
       end
 
       def month=(month)
-        @month = Month.parse(month)
+        @month = \
+          case month
+          when String
+            Month.parse(month)
+          when Month
+            month
+          end
       end
 
       def sql
@@ -58,8 +63,8 @@ module Frontend
       end
 
       class << self
-        def call(*args)
-          new(*args).call
+        def call(**kwargs)
+          new(**kwargs).call
         end
       end
     end

@@ -1,8 +1,6 @@
 # frozen_string_literal: true
 
 class ApplicationSearcher
-  attr_reader :params
-
   def initialize(relation, params = {})
     @relation = relation
 
@@ -23,8 +21,10 @@ class ApplicationSearcher
 
   private
 
+  attr_reader :params, :relation
+
   def results
-    @results ||= @relation
+    @results ||= relation
   end
 
   class << self
