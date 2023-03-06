@@ -6,10 +6,12 @@ class Table {
   summarize() {
     let sum = 0;
 
-    for(let row of this.table.rows) {
-      const value = row.querySelector('td.sum');
+    if(this.table.rows.length <= 1) { return }
 
-      sum += parseFloat(value.innerHTML.replace(/[^0-9\.]/, ''));
+    for(let row of this.table.rows) {
+      const value = (row.querySelector('td.sum a') || row.querySelector('td.sum')).innerHTML;
+
+      sum += parseFloat(value.replace(/[^0-9\.]/, ''));
     }
 
     const tr = document.createElement('tr');

@@ -11,6 +11,9 @@
 // = require bootstrap/modal
 // = require currencies-widget
 //
+// = require money
+// = require table
+//
 // = require_self
 
 var BOOTSTRAP_DATEPICKER_DEFAULTS = {

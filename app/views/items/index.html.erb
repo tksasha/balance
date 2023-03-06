@@ -12,7 +12,7 @@
 
 <div class="container-fluid">
   <div class="clearfix mt-4" id="consolidations">
-    <%= render partial: 'consolidations/consolidations', collection: dashboard.consolidations %>
+    <%# <%= render partial: 'consolidations/consolidations', collection: dashboard.consolidations %1> %>
   </div>
 </div>
 
@@ -43,6 +43,7 @@
 
 <%= content_for :javascripts do %>
   <%= javascript_tag do %>
+    // TODO: delme
     $.getScript('<%= root_path %>');
   <% end %>
 <% end %>
