@@ -22,13 +22,13 @@ RSpec.describe ItemSearcher do
     context 'when month was not specified' do
       let(:params) { {} }
 
-      its(:ids) { is_expected.to match_array [2, 3] }
+      its(:ids) { is_expected.to contain_exactly(2, 3) }
     end
 
     context 'when month was specified' do
       let(:params) { { month: '2023-01' } }
 
-      its(:ids) { is_expected.to match_array [1, 4] }
+      its(:ids) { is_expected.to contain_exactly(1, 4) }
     end
   end
 
@@ -46,19 +46,19 @@ RSpec.describe ItemSearcher do
     context 'when category_id was not specified' do
       let(:params) { {} }
 
-      its(:ids) { is_expected.to match_array [1, 2, 3, 4] }
+      its(:ids) { is_expected.to contain_exactly(1, 2, 3, 4) }
     end
 
     context 'when category_id is blank' do
       let(:params) { { category_id: '' } }
 
-      its(:ids) { is_expected.to match_array [1, 2, 3, 4] }
+      its(:ids) { is_expected.to contain_exactly(1, 2, 3, 4) }
     end
 
     context 'when category_id is specified' do
       let(:params) { { category_id: 2 } }
 
-      its(:ids) { is_expected.to match_array [3, 4] }
+      its(:ids) { is_expected.to contain_exactly(3, 4) }
     end
   end
 end

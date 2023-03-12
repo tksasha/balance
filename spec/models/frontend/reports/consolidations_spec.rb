@@ -39,9 +39,9 @@ RSpec.describe Frontend::Reports::Consolidations do
       it do
         results = subject.call
 
-        expect(results[0]).to match_array([1, [[1, 'Drinks', 1154, 20.07], [1, 'Food', 1153, 20.03]]])
+        expect(results[0]).to contain_exactly(1, [[1, 'Drinks', 1154, 20.07], [1, 'Food', 1153, 20.03]])
 
-        expect(results[1]).to match_array([2, [[2, 'Pocket money', 1155, 20.11]]])
+        expect(results[1]).to contain_exactly(2, [[2, 'Pocket money', 1155, 20.11]])
       end
       # rubocop:enable RSpec/MultipleExpectations
     end
