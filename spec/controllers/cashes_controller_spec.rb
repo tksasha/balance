@@ -19,17 +19,13 @@ RSpec.describe CashesController do
     context 'when @resource is not set' do
       let(:params) { { id: 21 } }
 
-      let(:cash) { build(:cash) }
-
       before do
         allow(subject).to receive(:params).and_return(params)
 
-        allow(Cash).to receive(:find).with(21).and_return(cash)
+        allow(Cash).to receive(:find).with(21).and_return(:resource)
       end
 
-      its(:resource) { is_expected.to be_a CashDecorator }
-
-      its('resource.model') { is_expected.to eq cash }
+      its(:resource) { is_expected.to eq :resource }
     end
   end
 end

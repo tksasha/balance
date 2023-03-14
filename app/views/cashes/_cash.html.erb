@@ -1,9 +1,9 @@
-<div class="<%= cash.css_class %>" id="<%= dom_id(cash) %>">
-  <div class="cash-name">
+<tr id="<%= dom_id(cash) %>">
+  <td>
     <%= cash.name %>
-  </div>
+  </td>
 
-  <div class="cash-sum">
+  <td class="sum">
     <%= link_to money(cash.sum), edit_cash_path(cash), data: { remote: true } %>
-  </div>
-</div>
+  </td>
+</tr>

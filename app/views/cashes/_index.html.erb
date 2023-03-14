@@ -1,31 +1,3 @@
-<div class="container mt-4">
-  <div class="row justify-content-center">
-    <div class="col-4">
-      <div class="card">
-        <div class="card-body">
-          <%= render partial: 'cashes/cash', collection: %>
+<% _, cashes = cashes %>
 
-          <div class="cash cash-favorite">
-            <div class="cash-name">
-              <%= t(:at_end) %>
-            </div>
-
-            <div class="cash-sum" id="at_end">
-              <%= money(dashboard.at_end) %>
-            </div>
-          </div>
-
-          <div class="cash cash-favorite">
-            <div class="cash-name">
-              <%= t(:balance) %>
-            </div>
-
-            <div class="cash-sum" id="balance">
-              <%= money(dashboard.balance) %>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-</div>
+<%= render partial: 'cashes/cashes', locals: { cashes:, summarize: true } %>

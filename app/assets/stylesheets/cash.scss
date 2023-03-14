@@ -1,23 +1,21 @@
 .cash {
-  @extend .clearfix, .mb-2;
+  font-size: 14px;
 
-  &:last-child {
-    @extend .mb-0;
+  white-space: nowrap;
+
+  tr {
+    line-height: 24px;
   }
-}
 
-.cash-name {
-  @extend .float-start;
+  .sum {
+    @extend .text-end;
+  }
 
-  color: $gray-400;
-}
+  .summary {
+    font-weight: bold;
 
-.cash-sum {
-  @extend .float-end;
-}
-
-.cash-favorite {
-  .cash-name {
-    color: $gray-700;
+    .sum {
+      @extend .text-end;
+    }
   }
 }

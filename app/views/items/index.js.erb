@@ -11,6 +11,8 @@
     .html('<%= j render partial: 'consolidations/consolidations', collection: dashboard.consolidations %>');
 
   $('#consolidations table').each(function(_, element) {
-    const table = new Table(element); table.summarize()
+    const table = new Table(element);
+
+    table.summarize();
   });
 }());

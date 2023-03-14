@@ -3,10 +3,12 @@
 RSpec.describe Frontend::Dashboard do
   subject { described_class.new(params) }
 
-  let(:params) { { currency: 'uah', month: '2023-05' } }
+  let(:currency) { 'usd' }
+  let(:month) { '2023-05' }
+  let(:params) { { currency:, month: } }
 
   describe '#currency' do
-    its(:currency) { is_expected.to eq 'uah' }
+    its(:currency) { is_expected.to eq 'usd' }
 
     context 'when currency is nil' do
       let(:params) { {} }
@@ -150,9 +152,9 @@ RSpec.describe Frontend::Dashboard do
   end
 
   describe '#consolidations' do
-    let(:currency) { 'uah' }
-
+    let(:currency) { 'eur' }
     let(:month) { Month.new(2023, 5) }
+    let(:params) { { currency:, month: '2023-05' } }
 
     before do
       allow(Frontend::Reports::Consolidations).to receive(:call)
@@ -161,5 +163,30 @@ RSpec.describe Frontend::Dashboard do
     end
 
     it { expect(Frontend::Reports::Consolidations).to have_received(:call).with(currency:, month:) }
+  end
+
+  describe '#cashes' do
+    let(:currency) { 'eur' }
+
+    before do
+      allow(Frontend::Reports::Cashes).to receive(:call)
+
+      subject.cashes
+    end
+
+    it { expect(Frontend::Reports::Cashes).to have_received(:call).with(currency:) }
+  end
+
+  describe '#cashes_sum' do
+    let(:currency) { 'eur' }
+
+    before do
+      create(:cash, currency: 'uah', sum: 11.11)
+      create(:cash, currency: 'usd', sum: 22.22)
+      create(:cash, currency: 'eur', sum: 33.33)
+      create(:cash, currency: 'eur', sum: 44.44)
+    end
+
+    its(:cashes_sum) { is_expected.to eq 77.77 }
   end
 end

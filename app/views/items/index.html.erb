@@ -6,14 +6,16 @@
   </div>
 </div>
 
-<div id="cashes">
-  <%= render partial: 'cashes/index', locals: { collection: dashboard.cashes.decorate } %>
+<div class="container-fluid">
+  <div class="row mt-4" id="cashes">
+    <%= render partial: 'cashes/at_end_and_balance' %>
+
+    <%= render partial: 'cashes/index', collection: dashboard.cashes, as: :cashes %>
+  </div>
 </div>
 
 <div class="container-fluid">
-  <div class="clearfix mt-4" id="consolidations">
-    <%# <%= render partial: 'consolidations/consolidations', collection: dashboard.consolidations %1> %>
-  </div>
+  <div class="clearfix mt-4" id="consolidations"></div>
 </div>
 
 <div class="container">
@@ -45,5 +47,7 @@
   <%= javascript_tag do %>
     // TODO: delme
     $.getScript('<%= root_path %>');
+
+    SummarizeCashTables();
   <% end %>
 <% end %>

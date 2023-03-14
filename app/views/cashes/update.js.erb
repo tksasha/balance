@@ -4,4 +4,8 @@
   $('#balance').text('<%= money(dashboard.balance) %>');
 
   $('.modal').modal('hide');
+
+  SummarizeCashTables();
+
+  $('#balance').trigger('balance.changed');
 }());

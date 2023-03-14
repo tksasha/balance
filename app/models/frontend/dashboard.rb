@@ -9,7 +9,7 @@ module Frontend
     end
 
     def cashes
-      CashSearcher.search(Cash.all, currency:)
+      Frontend::Reports::Cashes.call(currency:)
     end
 
     def at_end
@@ -45,7 +45,7 @@ module Frontend
     end
 
     def cashes_sum
-      cashes.sum(:sum)
+      Cash.where(currency:).sum(:sum)
     end
 
     def income

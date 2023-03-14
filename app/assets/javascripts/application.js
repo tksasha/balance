@@ -12,6 +12,7 @@
 // = require currencies-widget
 //
 // = require money
+// = require summarize_cash_tables
 // = require table
 //
 // = require_self
@@ -30,4 +31,20 @@ $(function() {
   });
 
   $('.datepicker').datepicker(BOOTSTRAP_DATEPICKER_DEFAULTS);
+
+  $('#balance').on('balance.changed', function() {
+    const value = parseFloat(this.innerHTML);
+
+    if(value > 0) {
+      this.classList.add('fw-bold');
+      this.classList.add('text-success');
+    } else if(value < 0) {
+      this.classList.add('fw-bold');
+      this.classList.add('text-danger');
+    } else {
+      this.classList = ['sum'];
+    }
+  });
+
+  $('#balance').trigger('balance.changed');
 });

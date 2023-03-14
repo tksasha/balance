@@ -1,0 +1,29 @@
+<div class="col-3">
+  <div class="card cash">
+    <div class="card-body">
+      <table class="w-100">
+        <tbody>
+          <tr class="at_end">
+            <td>
+              <%= t(:at_end) %>
+            </td>
+
+            <td class="sum" id="at_end">
+              <%= money(dashboard.at_end) %>
+            </td>
+          </tr>
+
+          <tr class="balance">
+            <td>
+              <%= t(:balance) %>
+            </td>
+
+            <td class="sum" id="balance">
+              <%= money(dashboard.balance) %>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>

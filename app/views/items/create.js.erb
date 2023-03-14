@@ -17,4 +17,6 @@
   $('#at_end').html('<%= money(dashboard.at_end) %>');
 
   $('#balance').html('<%= money(dashboard.balance) %>');
+
+  $('#balance').trigger('balance.changed');
 }());

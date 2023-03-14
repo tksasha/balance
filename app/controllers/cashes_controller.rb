@@ -20,6 +20,6 @@ class CashesController < ApplicationController
   end
 
   def resource
-    @resource ||= Cash.find(params[:id]).decorate
+    @resource ||= Cash.find(params[:id])
   end
 end

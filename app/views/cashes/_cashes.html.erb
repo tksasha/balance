@@ -1,0 +1,21 @@
+<div class="col">
+  <div class="card cash">
+    <div class="card-body">
+      <table class="w-100 summarize">
+        <tbody>
+          <% cashes.each do |_, id, name, sum| %>
+            <tr id="cash_<%= id %>">
+              <td>
+                <%= name %>
+              </td>
+
+              <td class="sum">
+                <%= link_to money(sum), edit_cash_path(id:), data: { remote: true } %>
+              </td>
+            </tr>
+          <% end %>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>

@@ -6,6 +6,14 @@ class Table {
   summarize() {
     let sum = 0;
 
+    (function(table) {
+      const summary = table.querySelector('tr.summary');
+
+      if(summary != null) {
+        summary.remove();
+      }
+    }(this.table));
+
     if(this.table.rows.length <= 1) { return }
 
     for(let row of this.table.rows) {
