@@ -1,6 +1,8 @@
 # frozen_string_literal: true
 
 RSpec.describe CashesController do
+  its(:default_url_options) { is_expected.to eq currency: 'uah' }
+
   describe '#resource_params' do
     let(:params) { acp(cash: { name: nil, formula: nil }) }
 

@@ -3,6 +3,8 @@
 RSpec.describe ItemsController do
   it { is_expected.to be_a(BaseController) }
 
+  its(:default_url_options) { is_expected.to eq currency: 'uah' }
+
   describe '#scope' do
     before do
       allow(Item).to receive(:includes).with(:category) do

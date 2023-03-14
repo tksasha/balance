@@ -1,11 +1,11 @@
 (function(){
   $('#<%= dom_id(resource) %>').replaceWith('<%= j render 'cash', cash: resource %>');
 
-  $('#balance').text('<%= money(dashboard.balance) %>');
-
   $('.modal').modal('hide');
 
   SummarizeCashTables();
 
-  $('#balance').trigger('balance.changed');
+  $('#balance')
+    .text('<%= money(dashboard.balance) %>')
+    .trigger('balance.changed');
 }());

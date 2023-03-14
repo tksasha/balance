@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-class CashesController < ApplicationController
+class CashesController < Frontend::ApplicationController
   inherit_resources
 
   actions :update
