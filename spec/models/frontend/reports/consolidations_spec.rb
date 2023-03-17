@@ -29,6 +29,13 @@ RSpec.describe Frontend::Reports::Consolidations do
 
       # eur, common
       create(:item, :eur, sum: 30.00, date: '2023-06-30', category: category_n1)
+
+      # uah, deleted
+      create(:item, :uah, sum: 100.0, date: '2023-01-01', deleted_at: Time.zone.today)
+      # usd, deleted
+      create(:item, :usd, sum: 200.0, date: '2023-01-01', deleted_at: Time.zone.today)
+      # eur, deleted
+      create(:item, :eur, sum: 300.0, date: '2023-01-01', deleted_at: Time.zone.today)
     end
 
     context 'when UAH and 2023-01' do

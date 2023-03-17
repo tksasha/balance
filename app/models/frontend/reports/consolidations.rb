@@ -49,6 +49,8 @@ module Frontend
             items.currency=$1
           AND
             date BETWEEN $2 AND $3
+          AND
+            items.deleted_at IS NULL
           GROUP BY
             supercategory, category_name, category_id
         SQL
