@@ -19,8 +19,8 @@ module Frontend
       attr_reader :currency
 
       class << self
-        def call(**kwargs)
-          new(**kwargs).call
+        def call(**)
+          new(**).call
         end
       end
     end

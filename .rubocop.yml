@@ -30,6 +30,9 @@ Metrics/BlockLength:
   - lib/tasks/auto_annotate_models.rake
   - spec/**/*
 
+Metrics/MethodLength:
+  CountAsOne: ['array', 'heredoc', 'method_call']
+
 # RSpec
 RSpec/SubjectStub: # delme
   Enabled: false

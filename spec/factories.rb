@@ -55,11 +55,11 @@ FactoryBot.define do
     end
 
     trait :income do
-      association :category, income: true
+      category factory: :category, income: true
     end
 
     trait :expense do
-      association :category, income: false
+      category factory: :category, income: false
     end
   end
 

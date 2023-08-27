@@ -4,7 +4,7 @@
 class Formula
   class << self
     def calculate(string)
-      string = \
+      string =
         string
         .to_s
         .gsub(/[^0-9+\-.*]+/, '') # only digits, dots, pluses, multiple sign and minuses allowed

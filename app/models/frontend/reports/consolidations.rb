@@ -65,8 +65,8 @@ module Frontend
       end
 
       class << self
-        def call(**kwargs)
-          new(**kwargs).call
+        def call(**)
+          new(**).call
         end
       end
     end

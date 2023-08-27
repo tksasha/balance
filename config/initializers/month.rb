@@ -4,8 +4,8 @@ class Month
   class << self
     alias original parse
 
-    def parse(*args)
-      original(*args)
+    def parse(*)
+      original(*)
     rescue ArgumentError
       now
     end

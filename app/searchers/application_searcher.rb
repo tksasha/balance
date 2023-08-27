@@ -28,8 +28,8 @@ class ApplicationSearcher
   end
 
   class << self
-    def search(*args)
-      new(*args).search
+    def search(*)
+      new(*).search
     end
 
     alias call search

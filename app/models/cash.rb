@@ -40,5 +40,10 @@ class Cash < ApplicationRecord
         .pluck('currency, supercategory, SUM(sum) AS sum')
         .group_by(&:first)
     end
+
+    # TODO: spec me
+    def ransackable_attributes(*)
+      %w[currency deleted_at favorite formula id name sum supercategory]
+    end
   end
 end

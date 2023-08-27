@@ -33,4 +33,11 @@ class Category < ApplicationRecord
   scope :expense, -> { where income: false }
 
   scope :visible, -> { where visible: true }
+
+  class << self
+    # TODO: spec me
+    def ransackable_attributes(*)
+      %w[currency id income name supercategory visible]
+    end
+  end
 end

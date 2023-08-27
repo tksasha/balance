@@ -36,8 +36,8 @@ class ConsolidationSearcher
   end
 
   class << self
-    def search(*args)
-      new(*args).search
+    def search(*)
+      new(*).search
     end
   end
 end

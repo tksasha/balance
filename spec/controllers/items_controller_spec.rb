@@ -26,9 +26,7 @@ RSpec.describe ItemsController do
 
     context do
       before do
-        allow(subject).to receive(:params).and_return(:params)
-
-        allow(subject).to receive(:scope).and_return(:scope)
+        allow(subject).to receive_messages(params: :params, scope: :scope)
 
         allow(ItemSearcher).to receive(:search).with(:scope, :params).and_return(:collection)
       end
