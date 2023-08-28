@@ -5,12 +5,7 @@
 
   $.getScript('<%= items_path(year: resource.date.year, month: resource.date.month) %>');
 
-  const el = document.querySelector('.modal');
-
-  bootstrap.
-    Modal.
-    getInstance(el).
-    hide();
+  $('.modal').modal('hide');
 
   $('#at_end').html('<%= money(dashboard.at_end) %>');
 
