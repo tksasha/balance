@@ -1,7 +1,7 @@
 (function() {
   $.getScript('<%= consolidations_path(year: resource.date.year, month: resource.date.month) %>');
 
-  $('#<%= dom_id(resource) %>').replaceWith('<%= j render resource %>');
+  $('#<%= dom_id(resource) %>').replaceWith('<%= j render decorated %>');
 
   $('.modal').modal('hide');
 
