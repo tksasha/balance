@@ -3,8 +3,6 @@
 
   $.getScript('<%= consolidations_path(year: resource.date.year, month: resource.date.month) %>');
 
-  $.getScript('<%= items_path(year: resource.date.year, month: resource.date.month) %>');
-
   $('.modal').modal('hide');
 
   $('#at_end').html('<%= money(dashboard.at_end) %>');
