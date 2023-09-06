@@ -6,8 +6,6 @@ Rails.application.routes.draw do
   scope '/(:currency)' do
     resources :items, only: %i[create edit update destroy]
 
-    resources :consolidations, only: :index
-
     resources :cashes, only: %i[index edit update]
 
     get '(/:month)(/:category_id)', to: 'items#index', as: :root

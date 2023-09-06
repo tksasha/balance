@@ -8,11 +8,6 @@
   <% end %>
 
   $('#consolidations')
-    .html('<%= j render partial: 'consolidations/consolidations', collection: dashboard.consolidations %>');
-
-  $('#consolidations table').each(function(_, element) {
-    const table = new Table(element);
-
-    table.summarize();
-  });
+    .html('<%= j render partial: 'consolidations/consolidations', collection: dashboard.consolidations %>')
+    .trigger('consolidations.changed');
 }());

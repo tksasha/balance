@@ -1,6 +1,4 @@
 (function() {
-  $.getScript('<%= consolidations_path(year: resource.date.year, month: resource.date.month) %>');
-
   $.getScript('<%= items_path(year: resource.date.year, month: resource.date.month) %>');
 
   $('#item-inline-form').
@@ -11,7 +9,11 @@
 
   $('#at_end').html('<%= money(dashboard.at_end) %>');
 
-  $('#balance').html('<%= money(dashboard.balance) %>');
+  $('#balance')
+    .html('<%= money(dashboard.balance) %>')
+    .trigger('balance.changed');
 
-  $('#balance').trigger('balance.changed');
+  $('#consolidations')
+    .html('<%= j render partial: 'consolidations/consolidations', collection: dashboard.consolidations %>')
+    .trigger('consolidations.changed');
 }());

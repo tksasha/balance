@@ -13,6 +13,7 @@
 //
 // = require balance
 // = require cashes
+// = require consolidations
 // = require money
 // = require table
 //
