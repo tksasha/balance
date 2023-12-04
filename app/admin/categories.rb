@@ -15,7 +15,7 @@ ActiveAdmin.register Category do
     private
 
     def collection
-      @collection ||= \
+      @collection ||=
         if request.format.json?
           Category.ransack(params[:q]).result.page(params[:page])
         else

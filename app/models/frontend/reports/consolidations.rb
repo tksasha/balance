@@ -26,7 +26,7 @@ module Frontend
       end
 
       def month=(month)
-        @month = \
+        @month =
           case month
           when String
             Month.parse(month)
