@@ -3,7 +3,7 @@ db/*.sqlite3
 db/*.sqlite3-journal
 db/*.sqlite3-shm
 db/*.sqlite3-wal
-db/dbs.tar.bz2
+db/*.bz2
 log/*.log
 tmp/
 vendor/bundle
