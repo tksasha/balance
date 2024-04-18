@@ -1,7 +1,10 @@
 require:
+  - rubocop-factory_bot
   - rubocop-performance
   - rubocop-rails
+  - rubocop-rake
   - rubocop-rspec
+  - rubocop-rspec_rails
 
 AllCops:
   Exclude:
@@ -9,6 +12,7 @@ AllCops:
     - db/schema.rb
     - db/migrate/*.rb
     - bin/*
+    - lib/tasks/auto_annotate_models.rake
   NewCops: enable
   SuggestExtensions: true
 
@@ -27,7 +31,6 @@ Lint/MissingSuper:
 Metrics/BlockLength:
   Exclude:
   - app/admin/**/*
-  - lib/tasks/auto_annotate_models.rake
   - spec/**/*
 
 Metrics/MethodLength:

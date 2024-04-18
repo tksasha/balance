@@ -217,7 +217,7 @@ GEM
     net-smtp (0.5.0)
       net-protocol
     nio4r (2.7.1)
-    nokogiri (1.16.3-arm64-darwin)
+    nokogiri (1.16.4-arm64-darwin)
       racc (~> 1.4)
     paper_trail (15.1.0)
       activerecord (>= 6.1)
@@ -274,7 +274,7 @@ GEM
       thor (~> 1.0, >= 1.2.2)
       zeitwerk (~> 2.6)
     rainbow (3.1.1)
-    rake (13.2.0)
+    rake (13.2.1)
     ransack (4.1.1)
       activerecord (>= 6.1.5)
       activesupport (>= 6.1.5)
@@ -285,7 +285,7 @@ GEM
     rdoc (6.6.3.1)
       psych (>= 4.0.0)
     regexp_parser (2.9.0)
-    reline (0.5.0)
+    reline (0.5.2)
       io-console (~> 0.5)
     request_store (1.6.0)
       rack (>= 1.4)
@@ -317,7 +317,7 @@ GEM
       rspec-mocks (~> 3.13)
       rspec-support (~> 3.13)
     rspec-support (3.13.1)
-    rubocop (1.62.1)
+    rubocop (1.63.1)
       json (~> 2.3)
       language_server-protocol (>= 3.17.0)
       parallel (~> 1.10)
@@ -342,12 +342,14 @@ GEM
       rack (>= 1.1)
       rubocop (>= 1.33.0, < 2.0)
       rubocop-ast (>= 1.31.1, < 2.0)
+    rubocop-rake (0.6.0)
+      rubocop (~> 1.0)
     rubocop-rspec (2.29.1)
       rubocop (~> 1.40)
       rubocop-capybara (~> 2.17)
       rubocop-factory_bot (~> 2.22)
       rubocop-rspec_rails (~> 2.28)
-    rubocop-rspec_rails (2.28.2)
+    rubocop-rspec_rails (2.28.3)
       rubocop (~> 1.40)
     ruby-progressbar (1.13.0)
     ruby2_keywords (0.0.5)
@@ -392,7 +394,6 @@ GEM
     zeitwerk (2.6.13)
 
 PLATFORMS
-  arm64-darwin-22
   arm64-darwin-23
 
 DEPENDENCIES
@@ -422,14 +423,15 @@ DEPENDENCIES
   rspec-activemodel-mocks
   rspec-its
   rspec-rails
-  rubocop
+  rubocop (= 1.63.1)
   rubocop-performance
   rubocop-rails
+  rubocop-rake
   rubocop-rspec
   sassc-rails
   shoulda-callback-matchers
   shoulda-matchers
-  sqlite3
+  sqlite3 (~> 1.4)
   uglifier
 
 RUBY VERSION

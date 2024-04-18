@@ -18,7 +18,7 @@ gem 'puma'
 gem 'rails'
 gem 'rake'
 gem 'sassc-rails'
-gem 'sqlite3'
+gem 'sqlite3', '~> 1.4' # TODO: remove it after updating ActiveRecord
 gem 'uglifier'
 
 group :development do
@@ -27,9 +27,10 @@ group :development do
   gem 'bundler-leak', require: false
   gem 'fasterer', require: false
   gem 'listen'
-  gem 'rubocop', require: false
+  gem 'rubocop', '1.63.1', require: false # TODO: there is a problem with 1.63.2
   gem 'rubocop-performance', require: false
   gem 'rubocop-rails', require: false
+  gem 'rubocop-rake', require: false
   gem 'rubocop-rspec', require: false
 end
 
