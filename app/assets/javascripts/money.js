@@ -8,6 +8,6 @@ class Money {
   }
 
   toString() {
-    return this.Value().replace('$', '').replace(/,/g, ' ');
+    return this.Value().replace('\$', '').replace(/,/g, ' ');
   }
 }
