@@ -2,7 +2,7 @@
 
 source 'https://rubygems.org'
 
-ruby '~> 3.2'
+ruby '~> 3.3'
 
 gem 'activeadmin'
 gem 'annotate'
@@ -18,6 +18,7 @@ gem 'puma'
 gem 'rails'
 gem 'rake'
 gem 'sassc-rails'
+# https://github.com/rails/rails/blob/747a03ba7722b6f0a7ce42e86cea83cf07a2e6ef/activerecord/lib/active_record/connection_adapters/sqlite3_adapter.rb#L14
 gem 'sqlite3', '~> 1.4' # TODO: remove it after updating ActiveRecord
 gem 'uglifier'
 
