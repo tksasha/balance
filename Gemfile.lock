@@ -151,7 +151,7 @@ GEM
       i18n (>= 1.8.11, < 2)
     fasterer (0.11.0)
       ruby_parser (>= 3.19.1)
-    ffi (1.16.3)
+    ffi (1.17.0-arm64-darwin)
     formtastic (5.0.0)
       actionpack (>= 6.0.0)
     formtastic_i18n (0.7.0)
