@@ -31,10 +31,12 @@ group :development do
   gem 'fasterer', require: false
   gem 'listen'
   gem 'rubocop', '1.63.1', require: false # TODO: there is a problem with 1.63.2
+  gem 'rubocop-factory_bot', require: false
   gem 'rubocop-performance', require: false
   gem 'rubocop-rails', require: false
   gem 'rubocop-rake', require: false
   gem 'rubocop-rspec', require: false
+  gem 'rubocop-rspec_rails', require: false
 end
 
 group :development, :test do
