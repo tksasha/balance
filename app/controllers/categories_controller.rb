@@ -1,9 +1,15 @@
 # frozen_string_literal: true
 
-class CategoriesController < BaseController
+class CategoriesController < ApplicationController
+  before_action :initialize_resource, only: :new
+
   def new; end
 
   private
+
+  attr_reader :resource
+
+  helper_method :collection, :resource
 
   def scope
     Category.order(:name)
@@ -11,5 +17,9 @@ class CategoriesController < BaseController
 
   def collection
     @collection ||= ::CategorySearcher.search(scope, params)
+  end
+
+  def initialize_resource
+    @resource = Category.new
   end
 end

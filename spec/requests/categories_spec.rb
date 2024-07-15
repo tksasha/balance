@@ -11,5 +11,11 @@ RSpec.describe 'Categories' do
 
       it_behaves_like 'index.js'
     end
+
+    describe 'GET new.js' do
+      before { get "/#{ currency }/categories/new", xhr: true }
+
+      it_behaves_like 'new.js'
+    end
   end
 end

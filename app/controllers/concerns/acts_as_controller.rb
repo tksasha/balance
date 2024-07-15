@@ -4,9 +4,9 @@ module ActsAsController
   extend ActiveSupport::Concern
 
   included do
-    helper_method :result
+    helper_method :result # TODO: WTF?!
 
-    delegate :resource, :success?, :failure?, to: :result
+    delegate :resource, :success?, :failure?, to: :result # TODO: WTF?!
 
     before_action -> { response.status = 201 }, only: :create
   end
