@@ -23,6 +23,14 @@ class CategoriesController < ApplicationController
     end
   end
 
+  def destroy
+    respond_to do |format|
+      format.js do
+        resource.destroy
+      end
+    end
+  end
+
   private
 
   helper_method :collection, :resource

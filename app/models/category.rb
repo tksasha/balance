@@ -6,6 +6,7 @@
 #
 #  id            :integer          not null, primary key
 #  currency      :integer          default("uah")
+#  deleted_at    :datetime
 #  income        :boolean          default(FALSE)
 #  name          :string
 #  supercategory :integer          default("common"), not null
@@ -33,6 +34,12 @@ class Category < ApplicationRecord
   scope :expense, -> { where income: false }
 
   scope :visible, -> { where visible: true }
+
+  default_scope -> { where(deleted_at: nil) }
+
+  def destroy
+    touch(:deleted_at)
+  end
 
   class << self
     # TODO: spec me

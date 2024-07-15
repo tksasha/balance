@@ -73,5 +73,19 @@ RSpec.describe 'Categories' do
         it { expect(category.currency).to eq(currency) }
       end
     end
+
+    describe 'DELETE destroy.js' do
+      let(:category) { create(:category, currency:) }
+
+      before do
+        delete "/#{ currency }/categories/#{ category.id }", xhr: true
+
+        category.reload
+      end
+
+      it_behaves_like 'destroy.js'
+
+      it { expect { Category.find(category.id) }.to raise_error(ActiveRecord::RecordNotFound) }
+    end
   end
 end

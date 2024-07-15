@@ -8,7 +8,7 @@ Rails.application.routes.draw do
 
     resources :cashes, only: %i[index edit update]
 
-    resources :categories, only: %i[index new create edit update]
+    resources :categories
 
     get '(/:month)(/:category_id)', to: 'items#index', as: :root
   end

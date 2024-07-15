@@ -1,5 +1,22 @@
 # frozen_string_literal: true
 
+# == Schema Information
+#
+# Table name: cashes
+#
+#  id            :integer          not null, primary key
+#  currency      :integer          default("uah")
+#  deleted_at    :time
+#  favorite      :boolean          default(FALSE)
+#  formula       :string
+#  name          :string
+#  sum           :decimal(10, 2)
+#  supercategory :integer          default("cash"), not null
+#
+# Indexes
+#
+#  index_cashes_on_name_and_currency  (name,currency) UNIQUE
+#
 RSpec.describe Cash do
   it { is_expected.to be_an ActsAsHasFormula }
 
