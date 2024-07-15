@@ -7,8 +7,6 @@ class CategoriesController < ApplicationController
 
   before_action -> { response.status = :created }, only: :create
 
-  def new; end
-
   def create
     respond_to do |format|
       format.js do
@@ -17,9 +15,15 @@ class CategoriesController < ApplicationController
     end
   end
 
-  private
+  def update
+    respond_to do |format|
+      format.js do
+        render :edit, status: :unprocessable_entity unless resource.update(resource_params)
+      end
+    end
+  end
 
-  attr_reader :resource
+  private
 
   helper_method :collection, :resource
 
@@ -41,5 +45,9 @@ class CategoriesController < ApplicationController
 
   def build_resource
     @resource = Category.new(resource_params)
+  end
+
+  def resource
+    @resource ||= Category.find(params[:id])
   end
 end

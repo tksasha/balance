@@ -43,5 +43,35 @@ RSpec.describe 'Categories' do
         it { expect(category.currency).to eq currency }
       end
     end
+
+    describe 'GET edit.js' do
+      let(:category) { create(:category, currency:) }
+
+      before { get "/#{ currency }/categories/#{ category.id }/edit", xhr: true }
+
+      it_behaves_like 'edit.js'
+    end
+
+    describe 'PATCH update.js' do
+      let(:category) { create(:category, currency:) }
+
+      context 'when params are valid' do
+        let(:name) { Faker::Commerce.product_name }
+
+        let(:params) { { category: { name: } } }
+
+        before do
+          patch "/#{ currency }/categories/#{ category.id }", params:, xhr: true
+
+          category.reload
+        end
+
+        it_behaves_like 'update.js'
+
+        it { expect(category.name).to eq(name) }
+
+        it { expect(category.currency).to eq(currency) }
+      end
+    end
   end
 end
