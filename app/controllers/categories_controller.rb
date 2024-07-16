@@ -7,6 +7,8 @@ class CategoriesController < ApplicationController
 
   before_action -> { response.status = :created }, only: :create
 
+  def new; end
+
   def create
     respond_to do |format|
       format.js do

@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 class CashesController < Frontend::ApplicationController
-  inherit_resources # TODO !!! delme !!!
+  inherit_resources # TODO: !!! delme !!!
 
   actions :update
 

@@ -59,15 +59,15 @@ RSpec.describe Category do
   describe '#destroy' do
     subject { described_class.new }
 
-    before { expect(subject).to receive(:touch).with(:deleted_at) }
+    before { allow(subject).to receive(:touch).with(:deleted_at) }
 
-    it { expect { subject.destroy }.not_to raise_error }
+    it { expect { subject.destroy }.to have_received(:touch).with(:deleted_at) }
   end
 
   describe 'default scope' do
     let!(:category_one) { create(:category, deleted_at: nil) }
 
-    let!(:category_two) { create(:category, deleted_at: Time.now()) }
+    let!(:category_two) { create(:category, deleted_at: Time.zone.now) }
 
     let(:collection) { described_class.all }
 
