@@ -59,9 +59,13 @@ RSpec.describe Category do
   describe '#destroy' do
     subject { described_class.new }
 
-    before { allow(subject).to receive(:touch).with(:deleted_at) }
+    before do
+      allow(subject).to receive(:touch).with(:deleted_at)
 
-    it { expect { subject.destroy }.to have_received(:touch).with(:deleted_at) }
+      subject.destroy
+    end
+
+    it { expect(subject).to have_received(:touch).with(:deleted_at) }
   end
 
   describe 'default scope' do
