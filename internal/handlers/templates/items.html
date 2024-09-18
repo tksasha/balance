@@ -1,0 +1,21 @@
+{{ define "item-list" }}
+	<table class="table">
+		<thead>
+			<tr>
+				<th>ID</th>
+				<th>Name</th>
+				<th>Age</th>
+			</tr>
+
+			{{ range . }}
+				{{ block "item-list-element" . }}
+					<tr>
+						<td>{{ .ID }}</td>
+						<td>{{ .Name }}</td>
+						<td>{{ .Age }}</td>
+					</tr>
+				{{ end }}
+			{{ end }}
+		</thead>
+	</table>
+{{ end }}

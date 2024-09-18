@@ -7,17 +7,17 @@ import (
 )
 
 type IndexHandler struct {
-	applicationTemplate *template.Template
+	tmpl *template.Template
 }
 
-func NewIndexHandler(applicationTemplate *template.Template) http.Handler {
+func NewIndexHandler(tmpl *template.Template) http.Handler {
 	return &IndexHandler{
-		applicationTemplate: applicationTemplate,
+		tmpl: tmpl,
 	}
 }
 
 func (h *IndexHandler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
-	if err := h.applicationTemplate.Execute(w, nil); err != nil {
+	if err := h.tmpl.Execute(w, nil); err != nil {
 		slog.Error(err.Error())
 	}
 }

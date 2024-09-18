@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Balance</title>
+    <link href="/assets/bootstrap.min.css" rel="stylesheet">
+    <link href="/assets/application.css" rel="stylesheet">
+  </head>
+  <body>
+    <div class="container mt-3 mb-3">
+      <div id="items" hx-get="/items" hx-trigger="load"></div>
+    </div>
+
+    <div class="container mt-3 mb-3">
+      {{ template "init-ping-button" }} <span id="ping-message"></span>
+    </div>
+
+    <script src="/assets/htmx.min.js"></script>
+    <script src="/assets/bootstrap.bundle.min.js"></script>
+    <script src="/assets/application.js"></script>
+  </body>
+</html>
+
+{{ define "init-pong-button" }}
+  <button class="btn btn-success" hx-get="/pong" hx-swap="outerHTML">pong</button>
+{{ end }}
+
+{{ define "init-ping-button" }}
+  <button class="btn btn-primary" hx-get="/ping" hx-swap="outerHTML">ping</button>
+{{ end }}
+
+{{ define "pong-button" }}
+  {{ template "pong-message" }}
+  {{ template "init-pong-button" }}
+{{ end }}
+
+{{ define "ping-button" }}
+  {{ template "ping-message" }}
+  {{ template "init-ping-button" }}
+{{ end }}
+
+{{ define "ping-message" }}
+  <span class="text-success" id="ping-message" hx-swap-oob="true">ping sent</span>
+{{ end }}
+
+{{ define "pong-message" }}
+  <span class="text-success" id="ping-message" hx-swap-oob="true">pong sent</span>
+{{ end }}
