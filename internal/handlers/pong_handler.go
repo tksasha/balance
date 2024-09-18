@@ -4,6 +4,7 @@ import (
 	"html/template"
 	"log/slog"
 	"net/http"
+	"time"
 )
 
 type PongHandler struct {
@@ -17,6 +18,8 @@ func NewPongHandler(tmpl *template.Template) http.Handler {
 }
 
 func (h *PongHandler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
+	time.Sleep(2 * time.Second)
+
 	if err := h.tmpl.ExecuteTemplate(w, "ping-button", nil); err != nil {
 		slog.Error(err.Error())
 	}
