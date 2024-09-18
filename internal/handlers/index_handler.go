@@ -17,7 +17,7 @@ func NewIndexHandler(tmpl *template.Template) http.Handler {
 }
 
 func (h *IndexHandler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
-	if err := h.tmpl.Execute(w, nil); err != nil {
+	if err := h.tmpl.ExecuteTemplate(w, "index-page", nil); err != nil {
 		slog.Error(err.Error())
 	}
 }

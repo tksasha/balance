@@ -1,28 +1,18 @@
 package handlers
 
 import (
-	"embed"
 	"html/template"
-	"log"
 	"log/slog"
 	"net/http"
 
 	"github.com/tksasha/balance/internal/models"
 )
 
-//go:embed templates/items.html
-var itemsFS embed.FS
-
 type GetItemsHandler struct {
 	tmpl *template.Template
 }
 
-func NewGetItemsHandler() http.Handler {
-	tmpl, err := template.ParseFS(itemsFS, "templates/items.html")
-	if err != nil {
-		log.Fatalf("parse items.html error: %v", err)
-	}
-
+func NewGetItemsHandler(tmpl *template.Template) http.Handler {
 	return &GetItemsHandler{
 		tmpl: tmpl,
 	}
