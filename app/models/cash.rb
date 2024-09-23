@@ -25,7 +25,7 @@ class Cash < ApplicationRecord
 
   validates :name, uniqueness: { case_sensitive: false, scope: :currency }
 
-  enum currency: CURRENCIES
+  enum :currency, CURRENCIES
 
   enum :supercategory, { cash: 1, bonds: 2, deposits: 3 }, default: :cash, scopes: false
 

@@ -38,7 +38,7 @@ class Item < ApplicationRecord
 
   scope :expense, -> { joins(:category).merge(Category.expense) }
 
-  enum currency: CURRENCIES
+  enum :currency, CURRENCIES
 
   class << self
     def for_dashboard

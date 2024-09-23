@@ -22,7 +22,7 @@ class Category < ApplicationRecord
 
   validates :currency, presence: true
 
-  enum currency: CURRENCIES
+  enum :currency, CURRENCIES
 
   enum \
     :supercategory,

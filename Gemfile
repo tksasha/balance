@@ -11,16 +11,17 @@ gem 'bootstrap'
 gem 'draper'
 gem 'faker'
 gem 'jquery-rails'
+gem 'logger'
 gem 'mini_racer'
 gem 'month'
+gem 'ostruct'
 gem 'paper_trail'
 gem 'puma'
 gem 'rails'
 gem 'rake'
 gem 'sassc-rails'
 gem 'sprockets-rails'
-# https://github.com/rails/rails/blob/747a03ba7722b6f0a7ce42e86cea83cf07a2e6ef/activerecord/lib/active_record/connection_adapters/sqlite3_adapter.rb#L14
-gem 'sqlite3', '~> 1.4' # TODO: remove it after updating ActiveRecord
+gem 'sqlite3'
 gem 'uglifier'
 
 group :development do

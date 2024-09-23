@@ -33,7 +33,5 @@ module Balance
 
     # Initialize configuration defaults for originally generated Rails version.
     config.load_defaults 7.0
-
-    config.active_record.sqlite3_production_warning = false
   end
 end
