@@ -12,11 +12,11 @@ func New() (string, error) {
 		return "", err
 	}
 
-	workDir := userHomeDir + string(os.PathSeparator) + NAME
+	workdir := userHomeDir + string(os.PathSeparator) + NAME
 
-	if err := os.MkdirAll(workDir, 0o750); err != nil { //nolint:mnd
+	if err := os.MkdirAll(workdir, 0o750); err != nil { //nolint:mnd
 		return "", err
 	}
 
-	return workDir, nil
+	return workdir, nil
 }

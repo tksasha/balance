@@ -8,10 +8,10 @@ import (
 	_ "github.com/mattn/go-sqlite3"
 )
 
-func Open(workDir, env string) (*sql.DB, error) {
+func Open(workdir, env string) (*sql.DB, error) {
 	dbName := fmt.Sprintf(
 		"%s%s%s.sqlite3",
-		workDir,
+		workdir,
 		string(os.PathSeparator),
 		env,
 	)
