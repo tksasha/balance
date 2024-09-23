@@ -2,10 +2,10 @@
   <table class="table">
     <thead>
       <tr>
-        <th>Date</th>
-        <th>Sum</th>
-        <th>Category</th>
-        <th>Description</th>
+        <th class="text-center">Date</th>
+        <th class="text-center">Sum</th>
+        <th class="text-center">Category</th>
+        <th class="text-center">Description</th>
       </tr>
     </thead>
 
@@ -13,8 +13,8 @@
       {{ range . }}
         {{ block "item-list-element" . }}
           <tr>
-            <td>{{ .Date }}</td>
-            <td>{{ .Sum }}</td>
+            <td class="text-center">{{ .Date }}</td>
+            <td class="text-end">{{ .Sum }}</td>
             <td>{{ .Category }}</td>
             <td>{{ .Description }}</td>
           </tr>
