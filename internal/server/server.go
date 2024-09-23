@@ -10,6 +10,7 @@ import (
 
 	"github.com/tksasha/balance/internal/config"
 	"github.com/tksasha/balance/internal/handlers"
+	"github.com/tksasha/balance/internal/server/workdir"
 )
 
 //go:embed templates
@@ -25,6 +26,13 @@ func Run(config *config.Config) {
 	if err != nil {
 		log.Fatalf("parse templates/*.html error: %v", err)
 	}
+
+	workDir, err := workdir.New()
+	if err != nil {
+		log.Fatalf("workdir initialize error: %v", err)
+	}
+
+	_ = workDir
 
 	http.Handle("GET /{$}", handlers.NewIndexHandler(tmpl))
 
