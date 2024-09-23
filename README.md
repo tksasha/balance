@@ -2,7 +2,7 @@
 
 ## TODO
 - [ ] add `GET /items`
-- [+] add `workdir.New()`
+- [x] add `workdir.New()`
 - [x] add `GET /application.js`
 - [x] add `GET /application.css`
 - [x] add `GET /htmx.min.js`
