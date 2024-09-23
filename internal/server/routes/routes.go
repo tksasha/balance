@@ -2,26 +2,26 @@ package routes
 
 import (
 	"embed"
-	"html/template"
 	"net/http"
 
 	"github.com/tksasha/balance/internal/handlers"
+	"github.com/tksasha/balance/internal/server/app"
 )
 
-func New(tmpl *template.Template, assets embed.FS) *http.ServeMux {
+func New(app *app.App, assets embed.FS) *http.ServeMux {
 	mux := http.NewServeMux()
 
-	mux.Handle("GET /{$}", handlers.NewIndexHandler(tmpl))
+	mux.Handle("GET /{$}", handlers.NewIndexHandler(app))
 
 	mux.Handle("GET /assets/{$}", http.RedirectHandler("/", http.StatusMovedPermanently))
 
 	mux.Handle("GET /assets/", http.FileServerFS(assets))
 
-	mux.Handle("GET /items", handlers.NewGetItemsHandler(tmpl))
+	mux.Handle("GET /items", handlers.NewGetItemsHandler(app))
 
-	mux.Handle("GET /ping", handlers.NewPingHandler(tmpl))
+	mux.Handle("GET /ping", handlers.NewPingHandler(app))
 
-	mux.Handle("GET /pong", handlers.NewPongHandler(tmpl))
+	mux.Handle("GET /pong", handlers.NewPongHandler(app))
 
 	return mux
 }

@@ -5,15 +5,17 @@ import (
 	"log/slog"
 	"net/http"
 	"time"
+
+	"github.com/tksasha/balance/internal/server/app"
 )
 
 type PingHandler struct {
 	tmpl *template.Template
 }
 
-func NewPingHandler(tmpl *template.Template) http.Handler {
+func NewPingHandler(app *app.App) http.Handler {
 	return &PingHandler{
-		tmpl: tmpl,
+		tmpl: app.T,
 	}
 }
 

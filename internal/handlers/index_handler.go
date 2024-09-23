@@ -4,15 +4,17 @@ import (
 	"html/template"
 	"log/slog"
 	"net/http"
+
+	"github.com/tksasha/balance/internal/server/app"
 )
 
 type IndexHandler struct {
 	tmpl *template.Template
 }
 
-func NewIndexHandler(tmpl *template.Template) http.Handler {
+func NewIndexHandler(app *app.App) http.Handler {
 	return &IndexHandler{
-		tmpl: tmpl,
+		tmpl: app.T,
 	}
 }
 

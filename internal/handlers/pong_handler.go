@@ -5,15 +5,17 @@ import (
 	"log/slog"
 	"net/http"
 	"time"
+
+	"github.com/tksasha/balance/internal/server/app"
 )
 
 type PongHandler struct {
 	tmpl *template.Template
 }
 
-func NewPongHandler(tmpl *template.Template) http.Handler {
+func NewPongHandler(app *app.App) http.Handler {
 	return &PongHandler{
-		tmpl: tmpl,
+		tmpl: app.T,
 	}
 }
 

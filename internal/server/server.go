@@ -9,6 +9,9 @@ import (
 	"time"
 
 	"github.com/tksasha/balance/internal/config"
+	"github.com/tksasha/balance/internal/server/app"
+	"github.com/tksasha/balance/internal/server/db"
+	"github.com/tksasha/balance/internal/server/env"
 	"github.com/tksasha/balance/internal/server/routes"
 	"github.com/tksasha/balance/internal/server/workdir"
 )
@@ -27,14 +30,23 @@ func Run(config *config.Config) {
 		log.Fatalf("parse templates/*.html error: %v", err)
 	}
 
-	workDir, err := workdir.New()
+	workdir, err := workdir.New()
 	if err != nil {
 		log.Fatalf("workdir initialize error: %v", err)
 	}
 
-	_ = workDir
+	db, err := db.Open(workdir, env.Get())
+	if err != nil {
+		log.Fatalf("open db error: %v", err)
+	}
 
-	router := routes.New(tmpl, assets)
+	router := routes.New(
+		&app.App{
+			T:  tmpl,
+			DB: db,
+		},
+		assets,
+	)
 
 	slog.Info("starting server", "address", config.Address)
 
