@@ -2,9 +2,10 @@
   <table class="table">
     <thead>
       <tr>
-      <th>ID</th>
-      <th>Name</th>
-      <th>Age</th>
+        <th>Date</th>
+        <th>Sum</th>
+        <th>Category</th>
+        <th>Description</th>
       </tr>
     </thead>
 
@@ -12,9 +13,10 @@
       {{ range . }}
         {{ block "item-list-element" . }}
           <tr>
-          <td>{{ .ID }}</td>
-          <td>{{ .Name }}</td>
-          <td>{{ .Age }}</td>
+            <td>{{ .Date }}</td>
+            <td>{{ .Sum }}</td>
+            <td>{{ .Category }}</td>
+            <td>{{ .Description }}</td>
           </tr>
         {{ end }}
       {{ end }}

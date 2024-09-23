@@ -20,6 +20,7 @@ linters:
     ### disabled by me
     - depguard
     - exhaustruct
+    - godox
     - varnamelen
     - wrapcheck
 issues:

@@ -5,27 +5,36 @@ import (
 	"log/slog"
 	"net/http"
 
-	"github.com/tksasha/balance/internal/models"
+	"github.com/tksasha/balance/internal/decorators"
+	"github.com/tksasha/balance/internal/repositories"
+	"github.com/tksasha/balance/internal/server/app"
 )
 
 type GetItemsHandler struct {
-	tmpl *template.Template
+	template       *template.Template
+	itemRepository *repositories.ItemRepository
 }
 
-func NewGetItemsHandler(tmpl *template.Template) http.Handler {
+func NewGetItemsHandler(app *app.App) http.Handler {
 	return &GetItemsHandler{
-		tmpl: tmpl,
+		template:       app.T,
+		itemRepository: repositories.NewItemRepository(app.DB),
 	}
 }
 
 func (h *GetItemsHandler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
-	var items []models.Item
+	items, err := h.itemRepository.GetItems(r.Context())
+	if err != nil {
+		slog.Error(err.Error())
+	}
 
-	items = append(items, models.Item{ID: 1, Name: "John McClane", Age: 42})
-	items = append(items, models.Item{ID: 2, Name: "Bruce Wayne", Age: 69})
-	items = append(items, models.Item{ID: 3, Name: "Peter Parker", Age: 18})
+	decoratedItems := make([]*decorators.ItemDecorator, 0, len(items))
 
-	if err := h.tmpl.ExecuteTemplate(w, "item-list", items); err != nil {
+	for _, item := range items {
+		decoratedItems = append(decoratedItems, decorators.NewItemDecorator(&item))
+	}
+
+	if err := h.template.ExecuteTemplate(w, "item-list", decoratedItems); err != nil {
 		slog.Error(err.Error())
 	}
 }

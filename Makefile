@@ -46,3 +46,7 @@ build:
 clear:
 	@echo "go clear"
 	@$(RM) $(OUTPUT)
+
+.PHONY: cli
+cli:
+	go run cmd/cli/main.go

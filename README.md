@@ -1,7 +1,7 @@
 # Balance - personal finance accounting system
 
 ## TODO
-- [ ] add `GET /items`
+- [x] add `GET /items`
 - [x] add `app.New() *App`
 - [x] add `db.Open(workDir, env string)`
 - [x] add `env.Get() string`
