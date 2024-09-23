@@ -21,6 +21,7 @@ linters:
     - depguard
     - exhaustruct
     - varnamelen
+    - wrapcheck
 issues:
   exclude-use-default: false
   exclude:
