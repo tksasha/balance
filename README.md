@@ -2,6 +2,8 @@
 
 ## TODO
 - [ ] add `GET /items`
+- [ ] add `db.New(workDir, env string)`
+- [x] add `env.Get() string`
 - [x] add `routes.New()`
 - [x] add `workdir.New()`
 - [x] add `GET /application.js`
