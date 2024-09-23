@@ -6,6 +6,7 @@ import (
 	"log"
 	"log/slog"
 	"net/http"
+	"time"
 
 	"github.com/tksasha/balance/internal/config"
 	"github.com/tksasha/balance/internal/handlers"
@@ -39,7 +40,12 @@ func Run(config *config.Config) {
 
 	slog.Info("starting server", "address", config.Address)
 
+	server := http.Server{
+		Addr:              config.Address,
+		ReadHeaderTimeout: 1 * time.Second,
+	}
+
 	log.Fatal(
-		http.ListenAndServe(config.Address, nil),
+		server.ListenAndServe(),
 	)
 }

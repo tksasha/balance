@@ -1,0 +1,27 @@
+run:
+  skip-dirs:
+linters-settings:
+  funlen:
+    ignore-comments: true
+  revive:
+    rules:
+      - name: exported
+        disabled: true
+  stylecheck:
+    checks: ["all", "-ST1000"]
+linters:
+  enable-all: true
+  disable:
+    ### deprecated, archived or obsolette by authors
+    - execinquery
+    - exportloopref
+    - gomnd # use mnd instead
+    - paralleltest
+    ### disabled by me
+    - depguard
+    - exhaustruct
+    - varnamelen
+issues:
+  exclude-use-default: false
+  exclude:
+  exclude-files:
