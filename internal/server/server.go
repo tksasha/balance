@@ -9,7 +9,7 @@ import (
 	"time"
 
 	"github.com/tksasha/balance/internal/config"
-	"github.com/tksasha/balance/internal/handlers"
+	"github.com/tksasha/balance/internal/server/routes"
 	"github.com/tksasha/balance/internal/server/workdir"
 )
 
@@ -34,23 +34,14 @@ func Run(config *config.Config) {
 
 	_ = workDir
 
-	http.Handle("GET /{$}", handlers.NewIndexHandler(tmpl))
-
-	http.Handle("GET /assets/{$}", http.RedirectHandler("/", http.StatusMovedPermanently))
-
-	http.Handle("GET /assets/", http.FileServerFS(assets))
-
-	http.Handle("GET /items", handlers.NewGetItemsHandler(tmpl))
-
-	http.Handle("GET /ping", handlers.NewPingHandler(tmpl))
-
-	http.Handle("GET /pong", handlers.NewPongHandler(tmpl))
+	router := routes.New(tmpl, assets)
 
 	slog.Info("starting server", "address", config.Address)
 
 	server := http.Server{
 		Addr:              config.Address,
 		ReadHeaderTimeout: 1 * time.Second,
+		Handler:           router,
 	}
 
 	log.Fatal(

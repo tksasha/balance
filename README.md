@@ -2,6 +2,7 @@
 
 ## TODO
 - [ ] add `GET /items`
+- [x] add `routes.New()`
 - [x] add `workdir.New()`
 - [x] add `GET /application.js`
 - [x] add `GET /application.css`
