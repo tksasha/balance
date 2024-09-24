@@ -30,8 +30,8 @@ func (d *ItemDecorator) Sum() string {
 	return d.printer.Sprintf("%.02f", d.item.Sum)
 }
 
-func (d *ItemDecorator) Category() string {
-	return d.item.Category
+func (d *ItemDecorator) CategoryName() string {
+	return d.item.CategoryName
 }
 
 func (d *ItemDecorator) Description() string {

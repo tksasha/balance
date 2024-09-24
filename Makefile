@@ -6,7 +6,7 @@ OUTPUT=balance
 RM=rm -f
 
 .PHONY: default
-default: vet fix fmt lint #test
+default: vet fix fmt lint test
 
 .PHONY: vet
 vet:

@@ -5,9 +5,9 @@ import (
 )
 
 type Item struct {
-	ID          int
-	Date        time.Time
-	Sum         float32
-	Category    string
-	Description string
+	ID           int
+	Date         time.Time
+	Sum          float32
+	CategoryName string
+	Description  string
 }

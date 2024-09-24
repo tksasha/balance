@@ -52,7 +52,7 @@ func (r *ItemRepository) GetItems(ctx context.Context) ([]models.Item, error) {
 	for rows.Next() {
 		var item models.Item
 
-		if err := rows.Scan(&item.Date, &item.Sum, &item.Category, &item.Description); err != nil {
+		if err := rows.Scan(&item.Date, &item.Sum, &item.CategoryName, &item.Description); err != nil {
 			return nil, err
 		}
 
