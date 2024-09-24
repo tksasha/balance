@@ -3,6 +3,7 @@ package repositories
 import (
 	"context"
 	"database/sql"
+	"log/slog"
 
 	"github.com/tksasha/balance/internal/models"
 )
@@ -44,7 +45,9 @@ func (r *ItemRepository) GetItems(ctx context.Context) ([]models.Item, error) {
 	}
 
 	defer func() {
-		_ = rows.Close() // TODO: need to think //nolint
+		if err := rows.Close(); err != nil {
+			slog.Error(err.Error())
+		}
 	}()
 
 	var items []models.Item
@@ -60,7 +63,7 @@ func (r *ItemRepository) GetItems(ctx context.Context) ([]models.Item, error) {
 	}
 
 	if err := rows.Err(); err != nil {
-		_ = err // TODO: log it
+		slog.Error(err.Error())
 	}
 
 	return items, nil

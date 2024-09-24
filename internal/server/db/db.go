@@ -21,5 +21,9 @@ func Open(workdir, env string) (*sql.DB, error) {
 		return nil, err
 	}
 
+	if _, err := db.Exec("PRAGMA foreign_keys=true"); err != nil {
+		return nil, err
+	}
+
 	return db, nil
 }
