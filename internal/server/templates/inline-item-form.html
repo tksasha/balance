@@ -3,7 +3,7 @@
   <div class="mb-3">
     <label class="form-label">Date</label>
 
-    <input name="date" value="{{ .GetDate }}" class="form-control {{ if .Errors.Check "date" }} is-invalid {{ end }}" type="text">
+    <input name="date" value="{{- .GetDate -}}" class="form-control {{ if .Errors.Check "date" }} is-invalid {{ end }}" type="text">
 
     {{ if .Errors.Check "date" }}
       <div class="invalid-feedback">
@@ -19,7 +19,7 @@
   <div class="mb-3">
     <label class="form-label">Sum</label>
 
-    <input name="formula" value="{{ .Formula }}" class="form-control {{ if .Errors.Check "formula" }} is-invalid {{ end }}" type="text">
+    <input name="formula" value="{{- .Formula -}}" class="form-control {{ if .Errors.Check "formula" }} is-invalid {{ end }}" type="text">
     {{ if .Errors.Check "formula" }}
       <div class="invalid-feedback">
         <ul>
@@ -33,12 +33,23 @@
 
   <div class="mb-3">
     <label class="form-label">Category</label>
-    <input class="form-control" type="text">
+
+    <input name="category-id" value="{{ if ne .CategoryID 0 }} {{- .CategoryID -}} {{ end }}" class="form-control {{ if .Errors.Check "category-id" }} is-invalid {{ end }}" type="text">
+
+    {{ if .Errors.Check "category-id" }}
+      <div class="invalid-feedback">
+        <ul>
+          {{ range .Errors.Get "category-id" }}
+            <li>{{ . }}</li>
+          {{ end }}
+        </ul>
+      </div>
+    {{ end }}
   </div>
 
   <div class="mb-3">
     <label class="form-label">Description</label>
-    <input name="description" value="{{ .Description }}" class="form-control" type="text">
+    <input name="description" value="{{- .Description -}}" class="form-control" type="text">
   </div>
 
   <div>

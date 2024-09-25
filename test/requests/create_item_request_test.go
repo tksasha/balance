@@ -88,6 +88,36 @@ func TestParse(t *testing.T) { //nolint:funlen
 		assert.Equal(t, req.Sum, 11.11)
 	})
 
+	t.Run("when category id is blank it should set an error", func(t *testing.T) {
+		req := requests.NewCreateItemRequest()
+
+		req.Parse("", "", "", "")
+
+		res := req.Errors.Get("category-id")
+
+		assert.Assert(t, is.Contains(res, "is required"))
+	})
+
+	t.Run("when category id is invalid it should set an error", func(t *testing.T) {
+		req := requests.NewCreateItemRequest()
+
+		req.Parse("", "", "abc", "")
+
+		res := req.Errors.Get("category-id")
+
+		assert.Assert(t, is.Contains(res, "is invalid"))
+	})
+
+	t.Run("when category id is zero it should set an error", func(t *testing.T) {
+		req := requests.NewCreateItemRequest()
+
+		req.Parse("", "", "0", "")
+
+		res := req.Errors.Get("category-id")
+
+		assert.Assert(t, is.Contains(res, "cannot be zero"))
+	})
+
 	t.Run("when description is not blank it should set this", func(t *testing.T) {
 		req := requests.NewCreateItemRequest()
 

@@ -1,9 +1,10 @@
 package requests
 
 import (
+	"strconv"
 	"time"
 
-	"github.com/tksasha/formula"
+	calculator "github.com/tksasha/formula"
 	"github.com/tksasha/model"
 	"github.com/tksasha/model/errors/messages"
 )
@@ -14,6 +15,7 @@ type CreateItemRequest struct {
 	Date        time.Time
 	Formula     string
 	Sum         float64
+	CategoryID  int
 	Description string
 }
 
@@ -34,37 +36,45 @@ func (r *CreateItemRequest) GetDate() string {
 }
 
 func (r *CreateItemRequest) Parse(
-	inputDate,
-	inputFormula,
-	inputCategoryID,
-	inputDescription string,
+	date,
+	formula,
+	categoryID,
+	description string,
 ) {
-	var date time.Time
-
 	var err error
 
-	date, err = time.Parse(time.DateOnly, inputDate)
+	r.Date, err = time.Parse(time.DateOnly, date)
 	if err != nil {
 		r.Errors.Set("date", messages.Invalid)
 	}
 
-	if date.IsZero() {
+	if r.Date.IsZero() {
 		r.Errors.Set("date", messages.Required)
 	}
 
-	if inputFormula == "" {
+	r.Formula = formula
+
+	if r.Formula == "" {
 		r.Errors.Set("formula", messages.Required)
 	}
 
-	r.Date = date
-	r.Formula = inputFormula
-
-	r.Sum, err = formula.Calculate(inputFormula)
+	r.Sum, err = calculator.Calculate(r.Formula)
 	if err != nil {
 		r.Errors.Set("formula", messages.Invalid)
 	}
 
-	_ = inputCategoryID
+	if categoryID == "" {
+		r.Errors.Set("category-id", messages.Required)
+	}
 
-	r.Description = inputDescription
+	r.CategoryID, err = strconv.Atoi(categoryID)
+	if err != nil {
+		r.Errors.Set("category-id", messages.Invalid)
+	}
+
+	if r.CategoryID == 0 {
+		r.Errors.Set("category-id", messages.Zero)
+	}
+
+	r.Description = description
 }
