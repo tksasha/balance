@@ -1,11 +1,11 @@
 package requests
 
 import (
-	"github.com/tksasha/balance/pkg/requestvalidator"
+	"github.com/tksasha/model"
 )
 
 type CreateItemRequest struct {
-	*requestvalidator.Base
+	*model.Model
 
 	Date string
 }
@@ -13,15 +13,15 @@ type CreateItemRequest struct {
 func NewCreateItemRequest(date string) *CreateItemRequest {
 	req := new(CreateItemRequest)
 
-	req.Base = requestvalidator.New()
+	req.Model = model.New()
 
 	return req
 }
 
 func (r *CreateItemRequest) Validate() {
 	if r.Date == "" {
-		r.AddError("date", "is required")
+		r.Errors.Set("date", "is required")
 	}
 
-	r.AddError("date", "cannot be blank")
+	r.Errors.Set("date", "cannot be blank")
 }
