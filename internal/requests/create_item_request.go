@@ -63,6 +63,10 @@ func (r *CreateItemRequest) Parse(
 		r.Errors.Set("formula", messages.Invalid)
 	}
 
+	if r.Sum == 0 {
+		r.Errors.Set("formula", messages.Zero)
+	}
+
 	if categoryID == "" {
 		r.Errors.Set("category-id", messages.Required)
 	}

@@ -77,6 +77,16 @@ func TestParse(t *testing.T) { //nolint:funlen
 		assert.Assert(t, is.Contains(res, "is invalid"))
 	})
 
+	t.Run("when formula is zero it should set an error", func(t *testing.T) {
+		req := requests.NewCreateItemRequest()
+
+		req.Parse("", "0", "", "")
+
+		res := req.Errors.Get("formula")
+
+		assert.Assert(t, is.Contains(res, "cannot be zero"))
+	})
+
 	t.Run("when formula is valid it should calculate sum", func(t *testing.T) {
 		req := requests.NewCreateItemRequest()
 

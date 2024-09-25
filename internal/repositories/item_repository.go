@@ -6,6 +6,7 @@ import (
 	"log/slog"
 
 	"github.com/tksasha/balance/internal/models"
+	"github.com/tksasha/balance/internal/requests"
 )
 
 type ItemRepository struct {
@@ -67,4 +68,19 @@ func (r *ItemRepository) GetItems(ctx context.Context) ([]models.Item, error) {
 	}
 
 	return items, nil
+}
+
+func (r *ItemRepository) CreateItem(ctx context.Context, req *requests.CreateItemRequest) error {
+	query := `
+		INSERT INTO
+			items (date, sum, category_id, description)
+		VALUES (?, ?, ?, ?)
+	`
+
+	_, err := r.db.ExecContext(ctx, query, req.Date, req.Sum, req.CategoryID, req.Description)
+	if err != nil {
+		return err
+	}
+
+	return nil
 }

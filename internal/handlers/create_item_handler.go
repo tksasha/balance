@@ -8,6 +8,7 @@ import (
 	"github.com/tksasha/balance/internal/repositories"
 	"github.com/tksasha/balance/internal/requests"
 	"github.com/tksasha/balance/internal/server/app"
+	"github.com/tksasha/balance/internal/services"
 )
 
 type CreateItemHandler struct {
@@ -38,7 +39,32 @@ func (h *CreateItemHandler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 		r.FormValue("description"),
 	)
 
-	if err := h.template.ExecuteTemplate(w, "inline-item-form", createItemRequest); err != nil {
+	if !createItemRequest.Valid() {
+		if err := h.template.ExecuteTemplate(w, "inline-item-form", createItemRequest); err != nil {
+			slog.Error(err.Error())
+		}
+
+		return
+	}
+
+	if err := services.CreateItemService(r.Context(), h.itemRepository, createItemRequest); err != nil {
+		slog.Error(err.Error())
+
+		w.WriteHeader(http.StatusInternalServerError)
+
+		return
+	}
+
+	items, err := h.itemRepository.GetItems(r.Context())
+	if err != nil {
+		slog.Error(err.Error())
+
+		w.WriteHeader(http.StatusInternalServerError)
+
+		return
+	}
+
+	if err := h.template.ExecuteTemplate(w, "create-item", items); err != nil {
 		slog.Error(err.Error())
 	}
 }

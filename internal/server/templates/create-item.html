@@ -1,0 +1,7 @@
+{{ define "create-item" }}
+  {{ template "inline-item-form" }}
+
+  <div id="items" hx-swap-oob="true">
+    {{ template "item-list" . }}
+  </div>
+{{ end }}
