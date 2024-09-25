@@ -1,35 +1,9 @@
-{{ define "item-list" }}
-  <table class="table">
-    <thead>
-      <tr>
-        <th class="text-center">Date</th>
-        <th class="text-center">Sum</th>
-        <th class="text-center">Category</th>
-        <th class="text-center">Description</th>
-      </tr>
-    </thead>
-
-    <tbody>
-      {{ range . }}
-        {{ block "item-list-element" . }}
-          <tr>
-            <td class="text-center">{{ .GetDate }}</td>
-            <td class="text-end">{{ .GetSum }}</td>
-            <td>{{ .CategoryName }}</td>
-            <td>{{ .Description }}</td>
-          </tr>
-        {{ end }}
-      {{ end }}
-    </tbody>
-  </table>
-{{ end }}
-
 {{ define "inline-item-form" }}
 <form hx-post="/items" hx-swap="outerHTML">
   <div class="mb-3">
     <label class="form-label">Date</label>
 
-    <input name="date" value="{{ .Date }}" class="form-control {{ if .Errors.Check "date" }} is-invalid {{ end }}" type="text">
+    <input name="date" value="{{ .GetDate }}" class="form-control {{ if .Errors.Check "date" }} is-invalid {{ end }}" type="text">
 
     {{ if .Errors.Check "date" }}
       <div class="invalid-feedback">
@@ -61,10 +35,12 @@
     <label class="form-label">Category</label>
     <input class="form-control" type="text">
   </div>
+
   <div class="mb-3">
     <label class="form-label">Description</label>
-    <input class="form-control" type="text">
+    <input name="description" value="{{ .Description }}" class="form-control" type="text">
   </div>
+
   <div>
     <button class="btn btn-primary" type="submit">Create Item</button>
   </div>

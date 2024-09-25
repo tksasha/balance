@@ -1,0 +1,25 @@
+{{ define "item-list" }}
+  <table class="table">
+    <thead>
+      <tr>
+        <th class="text-center">Date</th>
+        <th class="text-center">Sum</th>
+        <th class="text-center">Category</th>
+        <th class="text-center">Description</th>
+      </tr>
+    </thead>
+
+    <tbody>
+      {{ range . }}
+        {{ block "item-list-element" . }}
+          <tr>
+            <td class="text-center">{{ .GetDate }}</td>
+            <td class="text-end">{{ .GetSum }}</td>
+            <td>{{ .CategoryName }}</td>
+            <td>{{ .Description }}</td>
+          </tr>
+        {{ end }}
+      {{ end }}
+    </tbody>
+  </table>
+{{ end }}

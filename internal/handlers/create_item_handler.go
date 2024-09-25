@@ -34,6 +34,8 @@ func (h *CreateItemHandler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 	createItemRequest.Parse(
 		r.FormValue("date"),
 		r.FormValue("formula"),
+		"",
+		r.FormValue("description"),
 	)
 
 	if err := h.template.ExecuteTemplate(w, "inline-item-form", createItemRequest); err != nil {

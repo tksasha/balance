@@ -3,14 +3,18 @@ package requests
 import (
 	"time"
 
+	"github.com/tksasha/formula"
 	"github.com/tksasha/model"
+	"github.com/tksasha/model/errors/messages"
 )
 
 type CreateItemRequest struct {
 	*model.Model
 
-	Formula string
-	date    time.Time
+	Date        time.Time
+	Formula     string
+	Sum         float64
+	Description string
 }
 
 func NewCreateItemRequest() *CreateItemRequest {
@@ -21,35 +25,46 @@ func NewCreateItemRequest() *CreateItemRequest {
 	return req
 }
 
-func (r *CreateItemRequest) Date() string {
-	if r.date.IsZero() {
+func (r *CreateItemRequest) GetDate() string {
+	if r.Date.IsZero() {
 		return ""
 	}
 
-	return r.date.Format(time.DateOnly)
-}
-
-func (r *CreateItemRequest) SetDate(date time.Time) {
-	r.date = date
+	return r.Date.Format(time.DateOnly)
 }
 
 func (r *CreateItemRequest) Parse(
 	inputDate,
-	formula string,
+	inputFormula,
+	inputCategoryID,
+	inputDescription string,
 ) {
-	date, err := time.Parse(time.DateOnly, inputDate)
+	var date time.Time
+
+	var err error
+
+	date, err = time.Parse(time.DateOnly, inputDate)
 	if err != nil {
-		r.Errors.Set("date", "is invalid")
+		r.Errors.Set("date", messages.Invalid)
 	}
 
 	if date.IsZero() {
-		r.Errors.Set("date", "is required")
+		r.Errors.Set("date", messages.Required)
 	}
 
-	if formula == "" {
-		r.Errors.Set("formula", "is required")
+	if inputFormula == "" {
+		r.Errors.Set("formula", messages.Required)
 	}
 
-	r.SetDate(date)
-	r.Formula = formula
+	r.Date = date
+	r.Formula = inputFormula
+
+	r.Sum, err = formula.Calculate(inputFormula)
+	if err != nil {
+		r.Errors.Set("formula", messages.Invalid)
+	}
+
+	_ = inputCategoryID
+
+	r.Description = inputDescription
 }
