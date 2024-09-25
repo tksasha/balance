@@ -21,9 +21,5 @@ func New(app *app.App, assets embed.FS) *http.ServeMux {
 
 	mux.Handle("POST /items", handlers.NewCreateItemHandler(app))
 
-	mux.Handle("GET /ping", handlers.NewPingHandler(app))
-
-	mux.Handle("GET /pong", handlers.NewPongHandler(app))
-
 	return mux
 }
