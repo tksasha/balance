@@ -29,7 +29,8 @@
   <div class="mb-3">
     <label class="form-label">Date</label>
 
-    <input class="form-control {{ if .Errors.Check "date" }} is-invalid {{ end }}" type="text" value="{{ .Date }}" name="date">
+    <input name="date" value="{{ .Date }}" class="form-control {{ if .Errors.Check "date" }} is-invalid {{ end }}" type="text">
+
     {{ if .Errors.Check "date" }}
       <div class="invalid-feedback">
         <ul>
@@ -43,7 +44,17 @@
 
   <div class="mb-3">
     <label class="form-label">Sum</label>
-    <input class="form-control" type="text">
+
+    <input name="formula" value="{{ .Formula }}" class="form-control {{ if .Errors.Check "formula" }} is-invalid {{ end }}" type="text">
+    {{ if .Errors.Check "formula" }}
+      <div class="invalid-feedback">
+        <ul>
+          {{ range .Errors.Get "formula" }}
+            <li>{{ . }}</li>
+          {{ end }}
+        </ul>
+      </div>
+    {{ end }}
   </div>
 
   <div class="mb-3">

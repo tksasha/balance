@@ -29,11 +29,12 @@ func (h *CreateItemHandler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	createItemRequest := requests.NewCreateItemRequest(
-		r.FormValue("date"),
-	)
+	createItemRequest := requests.NewCreateItemRequest()
 
-	createItemRequest.Validate()
+	createItemRequest.Parse(
+		r.FormValue("date"),
+		r.FormValue("formula"),
+	)
 
 	if err := h.template.ExecuteTemplate(w, "inline-item-form", createItemRequest); err != nil {
 		slog.Error(err.Error())
