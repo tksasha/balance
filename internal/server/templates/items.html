@@ -23,3 +23,39 @@
     </tbody>
   </table>
 {{ end }}
+
+{{ define "inline-item-form" }}
+<form hx-post="/items" hx-swap="outerHTML">
+  <div class="mb-3">
+    <label class="form-label">Date</label>
+
+    <input class="form-control {{ if .HasErrors "date" }} is-invalid {{ end }}" type="text" value="{{ .Date }}" name="date">
+    {{ if .HasErrors "date" }}
+      <div class="invalid-feedback">
+        <ul>
+          {{ range .GetErrors "date" }}
+            <li>{{ . }}</li>
+          {{ end }}
+        </ul>
+      </div>
+    {{ end }}
+  </div>
+
+  <div class="mb-3">
+    <label class="form-label">Sum</label>
+    <input class="form-control" type="text">
+  </div>
+
+  <div class="mb-3">
+    <label class="form-label">Category</label>
+    <input class="form-control" type="text">
+  </div>
+  <div class="mb-3">
+    <label class="form-label">Description</label>
+    <input class="form-control" type="text">
+  </div>
+  <div>
+    <button class="btn btn-primary" type="submit">Create Item</button>
+  </div>
+</form>
+{{ end }}
