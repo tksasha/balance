@@ -5,7 +5,6 @@ import (
 	"log/slog"
 	"net/http"
 
-	"github.com/tksasha/balance/internal/decorators"
 	"github.com/tksasha/balance/internal/repositories"
 	"github.com/tksasha/balance/internal/server/app"
 )
@@ -28,13 +27,7 @@ func (h *GetItemsHandler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 		slog.Error(err.Error())
 	}
 
-	decoratedItems := make([]*decorators.ItemDecorator, 0, len(items))
-
-	for _, item := range items {
-		decoratedItems = append(decoratedItems, decorators.NewItemDecorator(&item))
-	}
-
-	if err := h.template.ExecuteTemplate(w, "item-list", decoratedItems); err != nil {
+	if err := h.template.ExecuteTemplate(w, "item-list", items); err != nil {
 		slog.Error(err.Error())
 	}
 }
