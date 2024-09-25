@@ -4,7 +4,7 @@ import (
 	"strconv"
 	"time"
 
-	calculator "github.com/tksasha/formula"
+	"github.com/tksasha/calculator"
 	"github.com/tksasha/model"
 	"github.com/tksasha/model/errors/messages"
 )
