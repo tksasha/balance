@@ -29,11 +29,11 @@
   <div class="mb-3">
     <label class="form-label">Date</label>
 
-    <input class="form-control {{ if .HasErrors "date" }} is-invalid {{ end }}" type="text" value="{{ .Date }}" name="date">
-    {{ if .HasErrors "date" }}
+    <input class="form-control {{ if .Errors.Check "date" }} is-invalid {{ end }}" type="text" value="{{ .Date }}" name="date">
+    {{ if .Errors.Check "date" }}
       <div class="invalid-feedback">
         <ul>
-          {{ range .GetErrors "date" }}
+          {{ range .Errors.Get "date" }}
             <li>{{ . }}</li>
           {{ end }}
         </ul>
