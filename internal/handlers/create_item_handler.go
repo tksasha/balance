@@ -1,10 +1,10 @@
 package handlers
 
 import (
-	"html/template"
 	"log/slog"
 	"net/http"
 
+	"github.com/tksasha/balance/internal/components"
 	"github.com/tksasha/balance/internal/repositories"
 	"github.com/tksasha/balance/internal/requests"
 	"github.com/tksasha/balance/internal/server/app"
@@ -12,13 +12,11 @@ import (
 )
 
 type CreateItemHandler struct {
-	template       *template.Template
 	itemRepository *repositories.ItemRepository
 }
 
 func NewCreateItemHandler(app *app.App) http.Handler {
 	return &CreateItemHandler{
-		template:       app.T,
 		itemRepository: repositories.NewItemRepository(app.DB),
 	}
 }
@@ -40,7 +38,7 @@ func (h *CreateItemHandler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 	)
 
 	if !createItemRequest.Valid() {
-		if err := h.template.ExecuteTemplate(w, "inline-item-form", createItemRequest); err != nil {
+		if err := components.ItemForm(createItemRequest).Render(r.Context(), w); err != nil {
 			slog.Error(err.Error())
 		}
 
@@ -55,16 +53,19 @@ func (h *CreateItemHandler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	items, err := h.itemRepository.GetItems(r.Context())
-	if err != nil {
-		slog.Error(err.Error())
+	// items, err := h.itemRepository.GetItems(r.Context())
+	// if err != nil {
+	// 	slog.Error(err.Error())
 
-		w.WriteHeader(http.StatusInternalServerError)
+	// 	w.WriteHeader(http.StatusInternalServerError)
 
-		return
-	}
+	// 	return
+	// }
 
-	if err := h.template.ExecuteTemplate(w, "items-create", items); err != nil {
-		slog.Error(err.Error())
+	// if err := h.template.ExecuteTemplate(w, "items-create", items); err != nil {
+	// 	slog.Error(err.Error())
+	// }
+
+	{
 	}
 }

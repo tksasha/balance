@@ -1,0 +1,111 @@
+package components
+
+import (
+  "github.com/tksasha/balance/internal/requests"
+)
+
+templ ItemForm(req *requests.CreateItemRequest) {
+  <form hx-post="/items" hx-swap="outerHTML">
+    <div class="mb-3">
+      <label class="form-label">Date</label>
+
+      <input
+        name="date"
+
+        if !req.Date.IsZero() {
+          value={ req.GetDate() }
+        }
+
+        if req.Errors.Has("date") {
+          class="form-control is-invalid"
+        } else {
+          class="form-control"
+        }
+
+        type="text">
+
+      if req.Errors.Has("date") {
+        <div class="invalid-feedback">
+          <ul>
+            for _, err := range req.Errors.Get("date") {
+              <li>{ err }</li>
+            }
+          </ul>
+        </div>
+      }
+    </div>
+
+    <div class="mb-3">
+      <label class="form-label">Sum</label>
+
+      <input
+        name="formula"
+
+        value={ req.Formula }
+
+        if req.Errors.Has("formula") {
+          class="form-control is-invalid"
+        } else {
+          class="form-control"
+        }
+
+        type="text">
+
+      if req.Errors.Has("formula") {
+        <div class="invalid-feedback">
+          <ul>
+            for _, err := range req.Errors.Get("formula") {
+              <li>{ err }</li>
+            }
+          </ul>
+        </div>
+      }
+    </div>
+
+    <div class="mb-3">
+      <label class="form-label">Category</label>
+
+      <input
+        name="category_id"
+
+        if req.CategoryID > 0 {
+          value={ req.GetCategoryID() }
+        }
+
+        if req.Errors.Has("category_id") {
+          class="form-control is-invalid"
+        } else {
+          class="form-control"
+        }
+
+        type="text">
+
+      if req.Errors.Has("category_id") {
+        <div class="invalid-feedback">
+          <ul>
+            for _, err := range req.Errors.Get("category_id") {
+              <li>{ err }</li>
+            }
+          </ul>
+        </div>
+      }
+    </div>
+
+    <div class="mb-3">
+      <label class="form-label">Description</label>
+
+      <input
+        name="description"
+
+        value={ req.Description }
+
+        class="form-control"
+
+        type="text">
+    </div>
+
+    <div>
+      <button class="btn btn-primary" type="submit">Create Item</button>
+    </div>
+  </form>
+}

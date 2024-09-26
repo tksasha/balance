@@ -1,5 +1,9 @@
 package components
 
+import (
+  "github.com/tksasha/balance/internal/requests"
+)
+
 templ IndexPage() {
   <!DOCTYPE html>
   <html>
@@ -13,6 +17,7 @@ templ IndexPage() {
         <div class="container mb-3">
           <div class="card">
             <div class="card-body">
+              @ItemForm(requests.NewCreateItemRequest())
             </div>
           </div>
         </div>

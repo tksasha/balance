@@ -35,6 +35,14 @@ func (r *CreateItemRequest) GetDate() string {
 	return r.Date.Format(time.DateOnly)
 }
 
+func (r *CreateItemRequest) GetCategoryID() string {
+	if r.CategoryID == 0 {
+		return ""
+	}
+
+	return strconv.Itoa(r.CategoryID)
+}
+
 func (r *CreateItemRequest) Parse(
 	date,
 	formula,
@@ -68,16 +76,16 @@ func (r *CreateItemRequest) Parse(
 	}
 
 	if categoryID == "" {
-		r.Errors.Set("category-id", messages.Required)
+		r.Errors.Set("category_id", messages.Required)
 	}
 
 	r.CategoryID, err = strconv.Atoi(categoryID)
 	if err != nil {
-		r.Errors.Set("category-id", messages.Invalid)
+		r.Errors.Set("category_id", messages.Invalid)
 	}
 
 	if r.CategoryID == 0 {
-		r.Errors.Set("category-id", messages.Zero)
+		r.Errors.Set("category_id", messages.Zero)
 	}
 
 	r.Description = description

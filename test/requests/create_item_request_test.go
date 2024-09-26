@@ -92,7 +92,7 @@ func TestParse(t *testing.T) { //nolint:funlen
 
 		req.Parse("", "4.21+6.9", "", "")
 
-		res := req.Errors.Check("formula")
+		res := req.Errors.Has("formula")
 
 		assert.Assert(t, !res)
 		assert.Equal(t, req.Sum, 11.11)
@@ -103,7 +103,7 @@ func TestParse(t *testing.T) { //nolint:funlen
 
 		req.Parse("", "", "", "")
 
-		res := req.Errors.Get("category-id")
+		res := req.Errors.Get("category_id")
 
 		assert.Assert(t, is.Contains(res, "is required"))
 	})
@@ -113,7 +113,7 @@ func TestParse(t *testing.T) { //nolint:funlen
 
 		req.Parse("", "", "abc", "")
 
-		res := req.Errors.Get("category-id")
+		res := req.Errors.Get("category_id")
 
 		assert.Assert(t, is.Contains(res, "is invalid"))
 	})
@@ -123,7 +123,7 @@ func TestParse(t *testing.T) { //nolint:funlen
 
 		req.Parse("", "", "0", "")
 
-		res := req.Errors.Get("category-id")
+		res := req.Errors.Get("category_id")
 
 		assert.Assert(t, is.Contains(res, "cannot be zero"))
 	})
