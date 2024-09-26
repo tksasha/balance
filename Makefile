@@ -4,6 +4,7 @@ FORMATTER=mvdan.cc/gofumpt@latest
 MAIN=cmd/balance/main.go
 OUTPUT=balance
 RM=rm -f
+TEMPL=github.com/a-h/templ/cmd/templ@latest
 
 .PHONY: default
 default: vet fix fmt lint test
@@ -47,6 +48,6 @@ clear:
 	@echo "go clear"
 	@$(RM) $(OUTPUT)
 
-.PHONY: cli
-cli:
-	go run cmd/cli/main.go
+.PHONY: gen
+gen:
+	@$(GO) run $(TEMPL) generate
