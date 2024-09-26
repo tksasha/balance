@@ -1,0 +1,29 @@
+package components
+
+import (
+  "github.com/tksasha/balance/internal/models"
+)
+
+templ ItemList(items []models.Item) {
+  <table class="table">
+    <thead>
+      <tr>
+        <th class="text-center">Date</th>
+        <th class="text-center">Sum</th>
+        <th class="text-center">Category</th>
+        <th class="text-center">Description</th>
+      </tr>
+    </thead>
+
+    <tbody>
+      for _, item := range items {
+          <tr>
+            <td class="text-center">{ item.GetDate() }</td>
+            <td class="text-end">{ item.GetSum() }</td>
+            <td>{ item.CategoryName }</td>
+            <td>{ item.Description }</td>
+          </tr>
+      }
+    </tbody>
+  </table>
+}
