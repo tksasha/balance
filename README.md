@@ -1,6 +1,7 @@
 # Balance - personal finance accounting system
 
 ## TODO
+- [ ] log queries
 - [x] add `POST /items`
 - [x] add `GET /items`
 - [x] add `app.New() *App`

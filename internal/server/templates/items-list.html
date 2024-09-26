@@ -1,4 +1,4 @@
-{{ define "item-list" }}
+{{ define "items-list" }}
   <table class="table">
     <thead>
       <tr>
@@ -11,7 +11,7 @@
 
     <tbody>
       {{ range . }}
-        {{ block "item-list-element" . }}
+        {{ block "items-list-element" . }}
           <tr>
             <td class="text-center">{{ .GetDate }}</td>
             <td class="text-end">{{ .GetSum }}</td>

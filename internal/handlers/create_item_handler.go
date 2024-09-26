@@ -64,7 +64,7 @@ func (h *CreateItemHandler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	if err := h.template.ExecuteTemplate(w, "create-item", items); err != nil {
+	if err := h.template.ExecuteTemplate(w, "items-create", items); err != nil {
 		slog.Error(err.Error())
 	}
 }

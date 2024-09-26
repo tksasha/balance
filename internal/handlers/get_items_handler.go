@@ -27,7 +27,7 @@ func (h *GetItemsHandler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 		slog.Error(err.Error())
 	}
 
-	if err := h.template.ExecuteTemplate(w, "item-list", items); err != nil {
+	if err := h.template.ExecuteTemplate(w, "items-list", items); err != nil {
 		slog.Error(err.Error())
 	}
 }
