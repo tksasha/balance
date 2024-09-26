@@ -33,7 +33,7 @@ func (h *CreateItemHandler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 	createItemRequest.Parse(
 		r.FormValue("date"),
 		r.FormValue("formula"),
-		r.FormValue("category-id"),
+		r.FormValue("category_id"),
 		r.FormValue("description"),
 	)
 
@@ -53,19 +53,16 @@ func (h *CreateItemHandler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	// items, err := h.itemRepository.GetItems(r.Context())
-	// if err != nil {
-	// 	slog.Error(err.Error())
+	items, err := h.itemRepository.GetItems(r.Context())
+	if err != nil {
+		slog.Error(err.Error())
 
-	// 	w.WriteHeader(http.StatusInternalServerError)
+		w.WriteHeader(http.StatusInternalServerError)
 
-	// 	return
-	// }
+		return
+	}
 
-	// if err := h.template.ExecuteTemplate(w, "items-create", items); err != nil {
-	// 	slog.Error(err.Error())
-	// }
-
-	{
+	if err := components.ItemCreated(items).Render(r.Context(), w); err != nil {
+		slog.Error(err.Error())
 	}
 }

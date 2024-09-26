@@ -4,8 +4,8 @@ import (
 	"log/slog"
 	"net/http"
 
-	"github.com/tksasha/balance/internal/repositories"
 	"github.com/tksasha/balance/internal/components"
+	"github.com/tksasha/balance/internal/repositories"
 	"github.com/tksasha/balance/internal/server/app"
 )
 

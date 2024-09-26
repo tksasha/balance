@@ -1,0 +1,14 @@
+package components
+
+import (
+  "github.com/tksasha/balance/internal/models"
+  "github.com/tksasha/balance/internal/requests"
+)
+
+templ ItemCreated(items []models.Item) {
+  @ItemForm(requests.NewCreateItemRequest())
+
+  <div id="items" hx-swap-oob="true">
+    @ItemList(items)
+  </div>
+}

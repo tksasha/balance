@@ -2,7 +2,6 @@ package server
 
 import (
 	"embed"
-	"html/template"
 	"log"
 	"log/slog"
 	"net/http"
@@ -16,20 +15,12 @@ import (
 	"github.com/tksasha/balance/internal/server/workdir"
 )
 
-//go:embed templates
-var fs embed.FS
-
 //go:embed assets
 var assets embed.FS
 
 type Server struct{}
 
 func Run(config *config.Config) {
-	tmpl, err := template.ParseFS(fs, "templates/*.html")
-	if err != nil {
-		log.Fatalf("parse templates/*.html error: %v", err)
-	}
-
 	workdir, err := workdir.New()
 	if err != nil {
 		log.Fatalf("workdir initialize error: %v", err)
@@ -42,7 +33,6 @@ func Run(config *config.Config) {
 
 	router := routes.New(
 		&app.App{
-			T:  tmpl,
 			DB: db,
 		},
 		assets,
