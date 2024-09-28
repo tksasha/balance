@@ -41,7 +41,15 @@ func IndexPage() templ.Component {
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
-		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("</div></div></div><div id=\"items\" hx-get=\"/items\" hx-trigger=\"load\"></div></div><script src=\"/assets/htmx.min.js\"></script><script src=\"/assets/bootstrap.bundle.min.js\"></script><script src=\"/assets/application.js\"></script></body></html>")
+		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("</div></div></div><div class=\"container mb-3\"><div class=\"card\"><div class=\"card-body\"><div id=\"items\" hx-get=\"/items\" hx-trigger=\"load\" hx-indicator=\"#get-items-indicator\"></div>")
+		if templ_7745c5c3_Err != nil {
+			return templ_7745c5c3_Err
+		}
+		templ_7745c5c3_Err = GetItemsIndicator().Render(ctx, templ_7745c5c3_Buffer)
+		if templ_7745c5c3_Err != nil {
+			return templ_7745c5c3_Err
+		}
+		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("</div></div></div></div><script src=\"/assets/htmx.min.js\"></script><script src=\"/assets/bootstrap.bundle.min.js\"></script><script src=\"/assets/application.js\"></script></body></html>")
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}

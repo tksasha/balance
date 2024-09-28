@@ -35,7 +35,8 @@ test:
 	@$(GO) test ./test/...
 
 .PHONY: run
-run:
+run: gen vet
+	@echo "go run"
 	@$(GO) run $(MAIN)
 
 .PHONY: build
@@ -50,4 +51,5 @@ clear:
 
 .PHONY: gen
 gen:
+	@echo "go gen"
 	@$(GO) run $(TEMPL) generate
