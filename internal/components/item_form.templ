@@ -105,7 +105,11 @@ templ ItemForm(req *requests.CreateItemRequest) {
     </div>
 
     <div>
-      <button class="btn btn-primary" type="submit">Create Item</button>
+      <button class="btn btn-primary" type="submit">
+        Create Item
+
+        @Spinner()
+      </button>
     </div>
   </form>
 }

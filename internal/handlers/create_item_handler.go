@@ -3,6 +3,7 @@ package handlers
 import (
 	"log/slog"
 	"net/http"
+	"time"
 
 	"github.com/tksasha/balance/internal/components"
 	"github.com/tksasha/balance/internal/repositories"
@@ -22,6 +23,8 @@ func NewCreateItemHandler(app *app.App) http.Handler {
 }
 
 func (h *CreateItemHandler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
+	time.Sleep(time.Second)
+
 	if err := r.ParseForm(); err != nil {
 		w.WriteHeader(http.StatusBadRequest)
 
