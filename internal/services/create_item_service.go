@@ -3,16 +3,16 @@ package services
 import (
 	"context"
 
-	"github.com/tksasha/balance/internal/repositories"
-	"github.com/tksasha/balance/internal/requests"
+	"github.com/tksasha/balance/internal/interfaces"
+	"github.com/tksasha/balance/internal/models"
 )
 
 func CreateItemService(
 	ctx context.Context,
-	repo *repositories.ItemRepository,
-	req *requests.CreateItemRequest,
+	itemCreator interfaces.ItemCreator,
+	item *models.Item,
 ) error {
-	if err := repo.CreateItem(ctx, req); err != nil {
+	if err := itemCreator.CreateItem(ctx, item); err != nil {
 		return err
 	}
 

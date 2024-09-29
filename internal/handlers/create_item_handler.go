@@ -48,7 +48,11 @@ func (h *CreateItemHandler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	if err := services.CreateItemService(r.Context(), h.itemRepository, createItemRequest); err != nil {
+	if err := services.CreateItemService(
+		r.Context(),
+		h.itemRepository,
+		createItemRequest.ToItem(),
+	); err != nil {
 		slog.Error(err.Error())
 
 		w.WriteHeader(http.StatusInternalServerError)

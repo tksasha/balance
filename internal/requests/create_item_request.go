@@ -4,6 +4,7 @@ import (
 	"strconv"
 	"time"
 
+	"github.com/tksasha/balance/internal/models"
 	"github.com/tksasha/calculator"
 	"github.com/tksasha/model"
 	"github.com/tksasha/model/errors/messages"
@@ -12,11 +13,12 @@ import (
 type CreateItemRequest struct {
 	*model.Model
 
-	Date        time.Time
-	Formula     string
-	Sum         float64
-	CategoryID  int
-	Description string
+	Date         time.Time
+	Formula      string
+	Sum          float64
+	CategoryID   int
+	CategoryName string
+	Description  string
 }
 
 func NewCreateItemRequest() *CreateItemRequest {
@@ -89,4 +91,15 @@ func (r *CreateItemRequest) Parse(
 	}
 
 	r.Description = description
+}
+
+func (r *CreateItemRequest) ToItem() *models.Item {
+	return models.NewItem(
+		r.Date,
+		r.Formula,
+		r.Sum,
+		r.CategoryID,
+		r.CategoryName,
+		r.Description,
+	)
 }
