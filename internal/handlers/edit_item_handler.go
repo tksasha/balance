@@ -4,6 +4,7 @@ import (
 	"log/slog"
 	"net/http"
 
+	itemcomponents "github.com/tksasha/balance/internal/components/items"
 	"github.com/tksasha/balance/internal/errors"
 	"github.com/tksasha/balance/internal/server/app"
 	"github.com/tksasha/balance/internal/services"
@@ -45,7 +46,7 @@ func (h *EditItemHandler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 		}
 	}
 
-	if _, err := w.Write([]byte(item.Description)); err != nil {
+	if err := itemcomponents.EditPage(item).Render(r.Context(), w); err != nil {
 		slog.Error(err.Error())
 	}
 }

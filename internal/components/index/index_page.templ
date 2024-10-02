@@ -1,7 +1,8 @@
-package components
+package indexcomponents
 
 import (
   "github.com/tksasha/balance/internal/models"
+   "github.com/tksasha/balance/internal/components/items"
 )
 
 templ IndexPage() {
@@ -17,7 +18,7 @@ templ IndexPage() {
         <div class="container mb-3">
           <div class="card">
             <div class="card-body">
-              @ItemForm(models.NewItem())
+              @itemcomponents.Form(models.NewItem())
             </div>
           </div>
         </div>
@@ -32,7 +33,7 @@ templ IndexPage() {
                         hx-indicator="#get-items-indicator">
                     </div>
 
-                    @GetItemsIndicator()
+                    @itemcomponents.GetItemsIndicator()
                 </div>
             </div>
         </div>

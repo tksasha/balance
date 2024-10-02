@@ -1,10 +1,11 @@
-package components
+package itemcomponents
 
 import (
   "github.com/tksasha/balance/internal/models"
+  "github.com/tksasha/balance/internal/components/helpers"
 )
 
-templ ItemForm(item *models.Item) {
+templ Form(item *models.Item) {
   <form hx-post="/items" hx-swap="outerHTML">
     <div class="mb-3">
       <label class="form-label">Date</label>
@@ -108,7 +109,7 @@ templ ItemForm(item *models.Item) {
       <button class="btn btn-primary" type="submit">
         Create Item
 
-        @Spinner()
+        @helpercomponents.Spinner()
       </button>
     </div>
   </form>

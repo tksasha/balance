@@ -1,11 +1,11 @@
-package components
+package itemcomponents
 
 import (
     "github.com/tksasha/balance/internal/models"
     "github.com/tksasha/balance/internal/helpers"
 )
 
-templ ItemRow(item models.Item) {
+templ Row(item models.Item) {
     <tr>
         <td class="text-center">
             { item.GetDateAsString() }

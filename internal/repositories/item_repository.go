@@ -80,7 +80,7 @@ func (r *ItemRepository) CreateItem(
 		VALUES (?, ?, ?, ?)
 	`
 
-	_, err := r.db.ExecContext(ctx, query, item.GetDateAsString(), item.Sum, item.CategoryID, item.Description)
+	_, err := r.db.ExecContext(ctx, query, item.Date, item.Sum, item.CategoryID, item.Description)
 	if err != nil {
 		return err
 	}

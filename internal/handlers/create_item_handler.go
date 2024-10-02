@@ -5,7 +5,7 @@ import (
 	"net/http"
 	"time"
 
-	"github.com/tksasha/balance/internal/components"
+	itemcomponents "github.com/tksasha/balance/internal/components/items"
 	"github.com/tksasha/balance/internal/models"
 	"github.com/tksasha/balance/internal/repositories"
 	"github.com/tksasha/balance/internal/server/app"
@@ -42,7 +42,7 @@ func (h *CreateItemHandler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 	item.SetDescription(r.FormValue("description"))
 
 	if !item.IsValid() {
-		if err := components.ItemForm(item).Render(r.Context(), w); err != nil {
+		if err := itemcomponents.Form(item).Render(r.Context(), w); err != nil {
 			slog.Error(err.Error())
 		}
 
@@ -66,7 +66,7 @@ func (h *CreateItemHandler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	if err := components.ItemCreated(items).Render(r.Context(), w); err != nil {
+	if err := itemcomponents.CreatePage(items).Render(r.Context(), w); err != nil {
 		slog.Error(err.Error())
 	}
 }

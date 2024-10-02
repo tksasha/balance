@@ -1,10 +1,10 @@
-package components
+package itemcomponents
 
 import (
   "github.com/tksasha/balance/internal/models"
 )
 
-templ ItemTable(items []models.Item) {
+templ Table(items []models.Item) {
   <table class="table">
     <thead>
       <tr>
@@ -17,7 +17,7 @@ templ ItemTable(items []models.Item) {
 
     <tbody>
       for _, item := range items {
-          @ItemRow(item)
+          @Row(item)
       }
     </tbody>
   </table>

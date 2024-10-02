@@ -5,7 +5,7 @@ import (
 	"net/http"
 	"time"
 
-	"github.com/tksasha/balance/internal/components"
+	itemcomponents "github.com/tksasha/balance/internal/components/items"
 	"github.com/tksasha/balance/internal/repositories"
 	"github.com/tksasha/balance/internal/server/app"
 )
@@ -28,7 +28,7 @@ func (h *GetItemsHandler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 		slog.Error(err.Error())
 	}
 
-	if err := components.ItemTable(items).Render(r.Context(), w); err != nil {
+	if err := itemcomponents.Table(items).Render(r.Context(), w); err != nil {
 		slog.Error(err.Error())
 	}
 }

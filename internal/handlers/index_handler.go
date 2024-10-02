@@ -4,7 +4,7 @@ import (
 	"log/slog"
 	"net/http"
 
-	"github.com/tksasha/balance/internal/components"
+	indexcomponents "github.com/tksasha/balance/internal/components/index"
 	"github.com/tksasha/balance/internal/server/app"
 )
 
@@ -15,7 +15,7 @@ func NewIndexHandler(app *app.App) http.Handler {
 }
 
 func (h *IndexHandler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
-	if err := components.IndexPage().Render(r.Context(), w); err != nil {
+	if err := indexcomponents.IndexPage().Render(r.Context(), w); err != nil {
 		slog.Error(err.Error())
 	}
 }
