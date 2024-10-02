@@ -4,7 +4,7 @@ import (
   "github.com/tksasha/balance/internal/models"
 )
 
-templ ItemList(items []models.Item) {
+templ ItemTable(items []models.Item) {
   <table class="table">
     <thead>
       <tr>
@@ -17,12 +17,7 @@ templ ItemList(items []models.Item) {
 
     <tbody>
       for _, item := range items {
-          <tr>
-            <td class="text-center">{ item.GetDate() }</td>
-            <td class="text-end">{ item.GetSum() }</td>
-            <td>{ item.CategoryName }</td>
-            <td>{ item.Description }</td>
-          </tr>
+          @ItemRow(item)
       }
     </tbody>
   </table>

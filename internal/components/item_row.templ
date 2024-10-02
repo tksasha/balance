@@ -1,0 +1,26 @@
+package components
+
+import (
+    "github.com/tksasha/balance/internal/models"
+    "github.com/tksasha/balance/internal/helpers"
+)
+
+templ ItemRow(item models.Item) {
+    <tr>
+        <td class="text-center">
+            { item.GetDateAsString() }
+        </td>
+
+        <td class="text-end">
+            <a href={ templ.URL(helpers.ItemURL(item)) }>{ item.GetSumAsString() }</a>
+        </td>
+
+        <td>
+            { item.CategoryName }
+        </td>
+
+        <td>
+            { item.Description }
+        </td>
+    </tr>
+}

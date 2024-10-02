@@ -9,3 +9,7 @@ import (
 type ItemCreator interface {
 	CreateItem(ctx context.Context, item *models.Item) error
 }
+
+type ItemGetter interface {
+	GetItem(ctx context.Context, id int) (*models.Item, error)
+}

@@ -21,5 +21,7 @@ func New(app *app.App, assets embed.FS) *http.ServeMux {
 
 	mux.Handle("POST /items", handlers.NewCreateItemHandler(app))
 
+	mux.Handle("GET /items/{id}/edit", handlers.NewEditItemHandler(app))
+
 	return mux
 }

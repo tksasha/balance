@@ -1,10 +1,10 @@
 package components
 
 import (
-  "github.com/tksasha/balance/internal/requests"
+  "github.com/tksasha/balance/internal/models"
 )
 
-templ ItemForm(req *requests.CreateItemRequest) {
+templ ItemForm(item *models.Item) {
   <form hx-post="/items" hx-swap="outerHTML">
     <div class="mb-3">
       <label class="form-label">Date</label>
@@ -12,11 +12,11 @@ templ ItemForm(req *requests.CreateItemRequest) {
       <input
         name="date"
 
-        if !req.Date.IsZero() {
-          value={ req.GetDate() }
+        if !item.Date.IsZero() {
+          value={ item.GetDateAsString() }
         }
 
-        if req.Errors.Has("date") {
+        if item.Errors.Has("date") {
           class="form-control is-invalid"
         } else {
           class="form-control"
@@ -24,10 +24,10 @@ templ ItemForm(req *requests.CreateItemRequest) {
 
         type="text">
 
-      if req.Errors.Has("date") {
+      if item.Errors.Has("date") {
         <div class="invalid-feedback">
           <ul>
-            for _, err := range req.Errors.Get("date") {
+            for _, err := range item.Errors.Get("date") {
               <li>{ err }</li>
             }
           </ul>
@@ -41,9 +41,9 @@ templ ItemForm(req *requests.CreateItemRequest) {
       <input
         name="formula"
 
-        value={ req.Formula }
+        value={ item.Formula }
 
-        if req.Errors.Has("formula") {
+        if item.Errors.Has("formula") {
           class="form-control is-invalid"
         } else {
           class="form-control"
@@ -51,10 +51,10 @@ templ ItemForm(req *requests.CreateItemRequest) {
 
         type="text">
 
-      if req.Errors.Has("formula") {
+      if item.Errors.Has("formula") {
         <div class="invalid-feedback">
           <ul>
-            for _, err := range req.Errors.Get("formula") {
+            for _, err := range item.Errors.Get("formula") {
               <li>{ err }</li>
             }
           </ul>
@@ -68,11 +68,11 @@ templ ItemForm(req *requests.CreateItemRequest) {
       <input
         name="category_id"
 
-        if req.CategoryID > 0 {
-          value={ req.GetCategoryID() }
+        if item.CategoryID > 0 {
+          value={ item.GetCategoryIDAsString() }
         }
 
-        if req.Errors.Has("category_id") {
+        if item.Errors.Has("category_id") {
           class="form-control is-invalid"
         } else {
           class="form-control"
@@ -80,10 +80,10 @@ templ ItemForm(req *requests.CreateItemRequest) {
 
         type="text">
 
-      if req.Errors.Has("category_id") {
+      if item.Errors.Has("category_id") {
         <div class="invalid-feedback">
           <ul>
-            for _, err := range req.Errors.Get("category_id") {
+            for _, err := range item.Errors.Get("category_id") {
               <li>{ err }</li>
             }
           </ul>
@@ -97,7 +97,7 @@ templ ItemForm(req *requests.CreateItemRequest) {
       <input
         name="description"
 
-        value={ req.Description }
+        value={ item.Description }
 
         class="form-control"
 

@@ -8,10 +8,8 @@ github.com/mattn/go-sqlite3 v1.14.23 h1:gbShiuAP1W5j9UOksQ06aiiqPMxYecovVGwmTxWt
 github.com/mattn/go-sqlite3 v1.14.23/go.mod h1:Uh1q+B4BYcTPb+yiD3kU8Ct7aC0hY9fxUwlHK0RXw+Y=
 github.com/tksasha/calculator v0.0.6 h1:0TPbSp3+r3f0oZ/PytvI0WugUTkyMbwg0GmHOu7ELPM=
 github.com/tksasha/calculator v0.0.6/go.mod h1:PvIOq95TtBcy4DzozMebqSk06hf92tLeMtp/+5dumWI=
-github.com/tksasha/model v0.1.5 h1:Oy+cyFl2oIPScHNiThVNNi/30bX28vb0MblZyN7nr0I=
-github.com/tksasha/model v0.1.5/go.mod h1:n0jbh5n+/twLl6CI8ufiB16AJpQpTf3g/ZtlYwFGsqI=
-github.com/tksasha/model v0.1.6 h1:wdA2aG/lbkwqk9UP9nu0ikdyZjvsvMGPXFgkBF7Tiy8=
-github.com/tksasha/model v0.1.6/go.mod h1:n0jbh5n+/twLl6CI8ufiB16AJpQpTf3g/ZtlYwFGsqI=
+github.com/tksasha/model v0.1.7 h1:K1Bkztczx3dMszujiHDSwmf/JAYcOGgLCEqb0i9V1XE=
+github.com/tksasha/model v0.1.7/go.mod h1:n0jbh5n+/twLl6CI8ufiB16AJpQpTf3g/ZtlYwFGsqI=
 github.com/tksasha/utils v0.0.2 h1:Qrj+bKZK6GoI6kIgkkoKIWUTHlP5WAKZeti+PS3HFQs=
 github.com/tksasha/utils v0.0.2/go.mod h1:4uFmj/MGfOGUuIEy0xPpoXrOWBQqXzeD544+N3hHvWQ=
 golang.org/x/text v0.18.0 h1:XvMDiNzPAl0jr17s6W9lcaIhGUfUORdGCNsuLmPG224=

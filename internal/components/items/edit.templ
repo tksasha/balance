@@ -1,0 +1,10 @@
+package itemcomponents
+
+import (
+    "github.com/tksasha/balance/internal/models"
+    "github.com/tksasha/balance/internal/components"
+)
+
+templ Edit(item *models.Item) {
+    @components.ItemForm(item)
+}

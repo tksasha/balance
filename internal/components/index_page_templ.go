@@ -9,7 +9,7 @@ import "github.com/a-h/templ"
 import templruntime "github.com/a-h/templ/runtime"
 
 import (
-	"github.com/tksasha/balance/internal/requests"
+	"github.com/tksasha/balance/internal/models"
 )
 
 func IndexPage() templ.Component {
@@ -37,7 +37,7 @@ func IndexPage() templ.Component {
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
-		templ_7745c5c3_Err = ItemForm(requests.NewCreateItemRequest()).Render(ctx, templ_7745c5c3_Buffer)
+		templ_7745c5c3_Err = ItemForm(models.NewItem()).Render(ctx, templ_7745c5c3_Buffer)
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}

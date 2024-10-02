@@ -6,8 +6,8 @@ import (
 	"time"
 
 	"github.com/tksasha/balance/internal/components"
+	"github.com/tksasha/balance/internal/models"
 	"github.com/tksasha/balance/internal/repositories"
-	"github.com/tksasha/balance/internal/requests"
 	"github.com/tksasha/balance/internal/server/app"
 	"github.com/tksasha/balance/internal/services"
 )
@@ -31,28 +31,25 @@ func (h *CreateItemHandler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	createItemRequest := requests.NewCreateItemRequest()
+	item := models.NewItem()
 
-	createItemRequest.Parse(
-		r.FormValue("date"),
-		r.FormValue("formula"),
-		r.FormValue("category_id"),
-		r.FormValue("description"),
-	)
+	item.SetDate(r.FormValue("date"))
 
-	if !createItemRequest.Valid() {
-		if err := components.ItemForm(createItemRequest).Render(r.Context(), w); err != nil {
+	item.SetFormula(r.FormValue("formula"))
+
+	item.SetCategoryID(r.FormValue("category_id"))
+
+	item.SetDescription(r.FormValue("description"))
+
+	if !item.IsValid() {
+		if err := components.ItemForm(item).Render(r.Context(), w); err != nil {
 			slog.Error(err.Error())
 		}
 
 		return
 	}
 
-	if err := services.CreateItemService(
-		r.Context(),
-		h.itemRepository,
-		createItemRequest.ToItem(),
-	); err != nil {
+	if err := services.CreateItemService(r.Context(), h.itemRepository, item); err != nil {
 		slog.Error(err.Error())
 
 		w.WriteHeader(http.StatusInternalServerError)

@@ -9,10 +9,10 @@ import "github.com/a-h/templ"
 import templruntime "github.com/a-h/templ/runtime"
 
 import (
-	"github.com/tksasha/balance/internal/requests"
+	"github.com/tksasha/balance/internal/models"
 )
 
-func ItemForm(req *requests.CreateItemRequest) templ.Component {
+func ItemForm(item *models.Item) templ.Component {
 	return templruntime.GeneratedTemplate(func(templ_7745c5c3_Input templruntime.GeneratedComponentInput) (templ_7745c5c3_Err error) {
 		templ_7745c5c3_W, ctx := templ_7745c5c3_Input.Writer, templ_7745c5c3_Input.Context
 		if templ_7745c5c3_CtxErr := ctx.Err(); templ_7745c5c3_CtxErr != nil {
@@ -37,15 +37,15 @@ func ItemForm(req *requests.CreateItemRequest) templ.Component {
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
-		if !req.Date.IsZero() {
+		if !item.Date.IsZero() {
 			_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(" value=\"")
 			if templ_7745c5c3_Err != nil {
 				return templ_7745c5c3_Err
 			}
 			var templ_7745c5c3_Var2 string
-			templ_7745c5c3_Var2, templ_7745c5c3_Err = templ.JoinStringErrs(req.GetDate())
+			templ_7745c5c3_Var2, templ_7745c5c3_Err = templ.JoinStringErrs(item.GetDateAsString())
 			if templ_7745c5c3_Err != nil {
-				return templ.Error{Err: templ_7745c5c3_Err, FileName: `internal/components/item_form.templ`, Line: 16, Col: 31}
+				return templ.Error{Err: templ_7745c5c3_Err, FileName: `internal/components/item_form.templ`, Line: 16, Col: 40}
 			}
 			_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var2))
 			if templ_7745c5c3_Err != nil {
@@ -56,7 +56,7 @@ func ItemForm(req *requests.CreateItemRequest) templ.Component {
 				return templ_7745c5c3_Err
 			}
 		}
-		if req.Errors.Has("date") {
+		if item.Errors.Has("date") {
 			_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(" class=\"form-control is-invalid\"")
 			if templ_7745c5c3_Err != nil {
 				return templ_7745c5c3_Err
@@ -71,12 +71,12 @@ func ItemForm(req *requests.CreateItemRequest) templ.Component {
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
-		if req.Errors.Has("date") {
+		if item.Errors.Has("date") {
 			_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("<div class=\"invalid-feedback\"><ul>")
 			if templ_7745c5c3_Err != nil {
 				return templ_7745c5c3_Err
 			}
-			for _, err := range req.Errors.Get("date") {
+			for _, err := range item.Errors.Get("date") {
 				_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("<li>")
 				if templ_7745c5c3_Err != nil {
 					return templ_7745c5c3_Err
@@ -105,9 +105,9 @@ func ItemForm(req *requests.CreateItemRequest) templ.Component {
 			return templ_7745c5c3_Err
 		}
 		var templ_7745c5c3_Var4 string
-		templ_7745c5c3_Var4, templ_7745c5c3_Err = templ.JoinStringErrs(req.Formula)
+		templ_7745c5c3_Var4, templ_7745c5c3_Err = templ.JoinStringErrs(item.Formula)
 		if templ_7745c5c3_Err != nil {
-			return templ.Error{Err: templ_7745c5c3_Err, FileName: `internal/components/item_form.templ`, Line: 44, Col: 27}
+			return templ.Error{Err: templ_7745c5c3_Err, FileName: `internal/components/item_form.templ`, Line: 44, Col: 28}
 		}
 		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var4))
 		if templ_7745c5c3_Err != nil {
@@ -117,7 +117,7 @@ func ItemForm(req *requests.CreateItemRequest) templ.Component {
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
-		if req.Errors.Has("formula") {
+		if item.Errors.Has("formula") {
 			_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(" class=\"form-control is-invalid\"")
 			if templ_7745c5c3_Err != nil {
 				return templ_7745c5c3_Err
@@ -132,12 +132,12 @@ func ItemForm(req *requests.CreateItemRequest) templ.Component {
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
-		if req.Errors.Has("formula") {
+		if item.Errors.Has("formula") {
 			_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("<div class=\"invalid-feedback\"><ul>")
 			if templ_7745c5c3_Err != nil {
 				return templ_7745c5c3_Err
 			}
-			for _, err := range req.Errors.Get("formula") {
+			for _, err := range item.Errors.Get("formula") {
 				_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("<li>")
 				if templ_7745c5c3_Err != nil {
 					return templ_7745c5c3_Err
@@ -165,15 +165,15 @@ func ItemForm(req *requests.CreateItemRequest) templ.Component {
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
-		if req.CategoryID > 0 {
+		if item.CategoryID > 0 {
 			_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(" value=\"")
 			if templ_7745c5c3_Err != nil {
 				return templ_7745c5c3_Err
 			}
 			var templ_7745c5c3_Var6 string
-			templ_7745c5c3_Var6, templ_7745c5c3_Err = templ.JoinStringErrs(req.GetCategoryID())
+			templ_7745c5c3_Var6, templ_7745c5c3_Err = templ.JoinStringErrs(item.GetCategoryIDAsString())
 			if templ_7745c5c3_Err != nil {
-				return templ.Error{Err: templ_7745c5c3_Err, FileName: `internal/components/item_form.templ`, Line: 72, Col: 37}
+				return templ.Error{Err: templ_7745c5c3_Err, FileName: `internal/components/item_form.templ`, Line: 72, Col: 46}
 			}
 			_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var6))
 			if templ_7745c5c3_Err != nil {
@@ -184,7 +184,7 @@ func ItemForm(req *requests.CreateItemRequest) templ.Component {
 				return templ_7745c5c3_Err
 			}
 		}
-		if req.Errors.Has("category_id") {
+		if item.Errors.Has("category_id") {
 			_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(" class=\"form-control is-invalid\"")
 			if templ_7745c5c3_Err != nil {
 				return templ_7745c5c3_Err
@@ -199,12 +199,12 @@ func ItemForm(req *requests.CreateItemRequest) templ.Component {
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
-		if req.Errors.Has("category_id") {
+		if item.Errors.Has("category_id") {
 			_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("<div class=\"invalid-feedback\"><ul>")
 			if templ_7745c5c3_Err != nil {
 				return templ_7745c5c3_Err
 			}
-			for _, err := range req.Errors.Get("category_id") {
+			for _, err := range item.Errors.Get("category_id") {
 				_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("<li>")
 				if templ_7745c5c3_Err != nil {
 					return templ_7745c5c3_Err
@@ -233,9 +233,9 @@ func ItemForm(req *requests.CreateItemRequest) templ.Component {
 			return templ_7745c5c3_Err
 		}
 		var templ_7745c5c3_Var8 string
-		templ_7745c5c3_Var8, templ_7745c5c3_Err = templ.JoinStringErrs(req.Description)
+		templ_7745c5c3_Var8, templ_7745c5c3_Err = templ.JoinStringErrs(item.Description)
 		if templ_7745c5c3_Err != nil {
-			return templ.Error{Err: templ_7745c5c3_Err, FileName: `internal/components/item_form.templ`, Line: 100, Col: 31}
+			return templ.Error{Err: templ_7745c5c3_Err, FileName: `internal/components/item_form.templ`, Line: 100, Col: 32}
 		}
 		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var8))
 		if templ_7745c5c3_Err != nil {

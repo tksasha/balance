@@ -3,8 +3,10 @@ package repositories
 import (
 	"context"
 	"database/sql"
+	"errors"
 	"log/slog"
 
+	internalerrors "github.com/tksasha/balance/internal/errors"
 	"github.com/tksasha/balance/internal/models"
 )
 
@@ -21,6 +23,7 @@ func NewItemRepository(db *sql.DB) *ItemRepository {
 func (r *ItemRepository) GetItems(ctx context.Context) ([]models.Item, error) {
 	query := `
 		SELECT
+			items.id,
 			items.date,
 			items.sum,
 			categories.name,
@@ -32,8 +35,6 @@ func (r *ItemRepository) GetItems(ctx context.Context) ([]models.Item, error) {
 		ON
 			categories.id=items.category_id
 		WHERE
-			date BETWEEN "2024-09-01" AND "2024-09-30"
-		AND
 			items.currency=0
 		ORDER BY
 			items.date DESC
@@ -55,7 +56,7 @@ func (r *ItemRepository) GetItems(ctx context.Context) ([]models.Item, error) {
 	for rows.Next() {
 		var item models.Item
 
-		if err := rows.Scan(&item.Date, &item.Sum, &item.CategoryName, &item.Description); err != nil {
+		if err := rows.Scan(&item.ID, &item.Date, &item.Sum, &item.CategoryName, &item.Description); err != nil {
 			return nil, err
 		}
 
@@ -79,10 +80,47 @@ func (r *ItemRepository) CreateItem(
 		VALUES (?, ?, ?, ?)
 	`
 
-	_, err := r.db.ExecContext(ctx, query, item.Date, item.Sum, item.CategoryID, item.Description)
+	_, err := r.db.ExecContext(ctx, query, item.GetDateAsString(), item.Sum, item.CategoryID, item.Description)
 	if err != nil {
 		return err
 	}
 
 	return nil
+}
+
+func (r *ItemRepository) GetItem(ctx context.Context, id int) (*models.Item, error) {
+	query := `
+	SELECT
+		id,
+		date,
+		sum,
+		COALESCE(formula, ""),
+		category_id,
+		description
+	FROM
+		items
+	WHERE
+		id=?
+	`
+
+	var item models.Item
+
+	row := r.db.QueryRowContext(ctx, query, id)
+
+	if err := row.Scan(
+		&item.ID,
+		&item.Date,
+		&item.Sum,
+		&item.Formula,
+		&item.CategoryID,
+		&item.Description,
+	); err != nil {
+		if errors.Is(err, sql.ErrNoRows) {
+			return nil, internalerrors.NewNotFoundError(err)
+		}
+
+		return nil, internalerrors.NewUnknownError(err)
+	}
+
+	return &item, nil
 }

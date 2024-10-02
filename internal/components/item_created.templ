@@ -2,13 +2,12 @@ package components
 
 import (
   "github.com/tksasha/balance/internal/models"
-  "github.com/tksasha/balance/internal/requests"
 )
 
 templ ItemCreated(items []models.Item) {
-  @ItemForm(requests.NewCreateItemRequest())
+  @ItemForm(models.NewItem())
 
   <div id="items" hx-swap-oob="true">
-    @ItemList(items)
+    @ItemTable(items)
   </div>
 }
