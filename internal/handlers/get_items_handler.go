@@ -28,7 +28,7 @@ func (h *GetItemsHandler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 		slog.Error(err.Error())
 	}
 
-	if err := itemcomponents.Table(items).Render(r.Context(), w); err != nil {
+	if err := itemcomponents.IndexPage(items).Render(r.Context(), w); err != nil {
 		slog.Error(err.Error())
 	}
 }
