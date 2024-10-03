@@ -2,7 +2,8 @@
 
 ## TODO
 - [ ] log queries
-- [ ] add spinner to `Create Item` button
+- [ ] add `PATCH /items/{id}`
+- [x] add spinner to `Create Item` button
 - [x] add `POST /items`
 - [x] add `GET /items`
 - [x] add `app.New() *App`
