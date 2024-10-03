@@ -12,7 +12,7 @@ templ Row(item models.Item) {
         </td>
 
         <td class="text-end">
-            <a href={ templ.URL(helpers.ItemURL(item)) }>{ item.GetSumAsString() }</a>
+            <a href={ templ.URL(helpers.EditItemURL(item)) }>{ item.GetSumAsString() }</a>
         </td>
 
         <td>
