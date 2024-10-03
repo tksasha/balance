@@ -1,116 +1,96 @@
 package itemcomponents
 
 import (
-  "github.com/tksasha/balance/internal/models"
-  "github.com/tksasha/balance/internal/components/helpers"
+	helpercomponents "github.com/tksasha/balance/internal/components/helpers"
+	"github.com/tksasha/balance/internal/models"
 )
 
 templ Form(item *models.Item) {
-  <form hx-post="/items" hx-swap="outerHTML">
-    <div class="mb-3">
-      <label class="form-label">Date</label>
-
-      <input
-        name="date"
-
-        if !item.Date.IsZero() {
-          value={ item.GetDateAsString() }
-        }
-
-        if item.Errors.Has("date") {
-          class="form-control is-invalid"
-        } else {
-          class="form-control"
-        }
-
-        type="text">
-
-      if item.Errors.Has("date") {
-        <div class="invalid-feedback">
-          <ul>
-            for _, err := range item.Errors.Get("date") {
-              <li>{ err }</li>
-            }
-          </ul>
-        </div>
-      }
-    </div>
-
-    <div class="mb-3">
-      <label class="form-label">Sum</label>
-
-      <input
-        name="formula"
-
-        value={ item.Formula }
-
-        if item.Errors.Has("formula") {
-          class="form-control is-invalid"
-        } else {
-          class="form-control"
-        }
-
-        type="text">
-
-      if item.Errors.Has("formula") {
-        <div class="invalid-feedback">
-          <ul>
-            for _, err := range item.Errors.Get("formula") {
-              <li>{ err }</li>
-            }
-          </ul>
-        </div>
-      }
-    </div>
-
-    <div class="mb-3">
-      <label class="form-label">Category</label>
-
-      <input
-        name="category_id"
-
-        if item.CategoryID > 0 {
-          value={ item.GetCategoryIDAsString() }
-        }
-
-        if item.Errors.Has("category_id") {
-          class="form-control is-invalid"
-        } else {
-          class="form-control"
-        }
-
-        type="text">
-
-      if item.Errors.Has("category_id") {
-        <div class="invalid-feedback">
-          <ul>
-            for _, err := range item.Errors.Get("category_id") {
-              <li>{ err }</li>
-            }
-          </ul>
-        </div>
-      }
-    </div>
-
-    <div class="mb-3">
-      <label class="form-label">Description</label>
-
-      <input
-        name="description"
-
-        value={ item.Description }
-
-        class="form-control"
-
-        type="text">
-    </div>
-
-    <div>
-      <button class="btn btn-primary" type="submit">
-        Create Item
-
-        @helpercomponents.Spinner()
-      </button>
-    </div>
-  </form>
+	<form hx-post="/items" hx-swap="outerHTML">
+		<div class="mb-3">
+			<label class="form-label">Date</label>
+			<input
+				name="date"
+				if !item.Date.IsZero() {
+					value={ item.GetDateAsString() }
+				}
+				if item.Errors.Has("date") {
+					class="form-control is-invalid"
+				} else {
+					class="form-control"
+				}
+				type="text"
+			/>
+			if item.Errors.Has("date") {
+				<div class="invalid-feedback">
+					<ul>
+						for _, err := range item.Errors.Get("date") {
+							<li>{ err }</li>
+						}
+					</ul>
+				</div>
+			}
+		</div>
+		<div class="mb-3">
+			<label class="form-label">Sum</label>
+			<input
+				name="formula"
+				value={ item.Formula }
+				if item.Errors.Has("formula") {
+					class="form-control is-invalid"
+				} else {
+					class="form-control"
+				}
+				type="text"
+			/>
+			if item.Errors.Has("formula") {
+				<div class="invalid-feedback">
+					<ul>
+						for _, err := range item.Errors.Get("formula") {
+							<li>{ err }</li>
+						}
+					</ul>
+				</div>
+			}
+		</div>
+		<div class="mb-3">
+			<label class="form-label">Category</label>
+			<input
+				name="category_id"
+				if item.CategoryID > 0 {
+					value={ item.GetCategoryIDAsString() }
+				}
+				if item.Errors.Has("category_id") {
+					class="form-control is-invalid"
+				} else {
+					class="form-control"
+				}
+				type="text"
+			/>
+			if item.Errors.Has("category_id") {
+				<div class="invalid-feedback">
+					<ul>
+						for _, err := range item.Errors.Get("category_id") {
+							<li>{ err }</li>
+						}
+					</ul>
+				</div>
+			}
+		</div>
+		<div class="mb-3">
+			<label class="form-label">Description</label>
+			<input
+				name="description"
+				value={ item.Description }
+				class="form-control"
+				type="text"
+			/>
+		</div>
+		<div>
+			<button class="btn btn-primary" type="submit">
+				Create Item
+				@helpercomponents.Spinner()
+			</button>
+		</div>
+	</form>
 }

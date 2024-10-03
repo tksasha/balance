@@ -20,9 +20,7 @@ fix:
 	@$(GO) fix ./...
 
 .PHONY: fmt
-fmt:
-	@echo "go fmt"
-	@$(GO) run $(FORMATTER) -l -w .
+fmt: gofmt templfmt
 
 .PHONY: lint
 lint:
@@ -53,3 +51,12 @@ clear:
 gen:
 	@echo "go gen"
 	@$(GO) run $(TEMPL) generate
+
+.PHONY: gofmt
+gofmt:
+			@echo "go fmt"
+			@$(GO) run $(FORMATTER) -l -w .
+
+.PHONY: templfmt
+templfmt:
+			@$(GO) run $(TEMPL) fmt .

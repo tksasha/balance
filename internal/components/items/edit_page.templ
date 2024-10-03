@@ -1,9 +1,16 @@
 package itemcomponents
 
-import (
-    "github.com/tksasha/balance/internal/models"
-)
+import "github.com/tksasha/balance/internal/models"
 
 templ EditPage(item *models.Item) {
-    @Form(item)
+	<div class="modal-dialog modal-dialog-centered">
+		<div class="modal-content">
+			<div class="modal-header">
+				Edit Item
+			</div>
+			<div class="modal-body">
+				@Form(item)
+			</div>
+		</div>
+	</div>
 }

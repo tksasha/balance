@@ -1,13 +1,10 @@
 package itemcomponents
 
-import (
-  "github.com/tksasha/balance/internal/models"
-)
+import "github.com/tksasha/balance/internal/models"
 
-templ CreatePage(items []models.Item) {
-  @Form(models.NewItem())
-
-  <div id="items" hx-swap-oob="true">
-    @Table(items)
-  </div>
+templ CreatePage(items []*models.Item) {
+	@Form(models.NewItem())
+	<div id="items" hx-swap-oob="true">
+		@Table(items)
+	</div>
 }
