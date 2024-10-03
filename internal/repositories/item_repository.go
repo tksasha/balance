@@ -20,7 +20,7 @@ func NewItemRepository(db *sql.DB) *ItemRepository {
 	}
 }
 
-func (r *ItemRepository) GetItems(ctx context.Context) ([]models.Item, error) {
+func (r *ItemRepository) GetItems(ctx context.Context) ([]*models.Item, error) {
 	query := `
 		SELECT
 			items.id,
@@ -51,10 +51,10 @@ func (r *ItemRepository) GetItems(ctx context.Context) ([]models.Item, error) {
 		}
 	}()
 
-	var items []models.Item
+	var items []*models.Item
 
 	for rows.Next() {
-		var item models.Item
+		item := models.NewItem()
 
 		if err := rows.Scan(&item.ID, &item.Date, &item.Sum, &item.CategoryName, &item.Description); err != nil {
 			return nil, err
@@ -76,11 +76,11 @@ func (r *ItemRepository) CreateItem(
 ) error {
 	query := `
 		INSERT INTO
-			items (date, sum, category_id, description)
-		VALUES (?, ?, ?, ?)
+			items (date, formula, sum, category_id, description)
+		VALUES (?, ?, ?, ?, ?)
 	`
 
-	_, err := r.db.ExecContext(ctx, query, item.Date, item.Sum, item.CategoryID, item.Description)
+	_, err := r.db.ExecContext(ctx, query, item.Date, item.Formula, item.Sum, item.CategoryID, item.Description)
 	if err != nil {
 		return err
 	}
@@ -103,7 +103,7 @@ func (r *ItemRepository) GetItem(ctx context.Context, id int) (*models.Item, err
 		id=?
 	`
 
-	var item models.Item
+	item := models.NewItem()
 
 	row := r.db.QueryRowContext(ctx, query, id)
 
@@ -122,5 +122,5 @@ func (r *ItemRepository) GetItem(ctx context.Context, id int) (*models.Item, err
 		return nil, internalerrors.NewUnknownError(err)
 	}
 
-	return &item, nil
+	return item, nil
 }

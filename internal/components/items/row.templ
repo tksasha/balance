@@ -1,26 +1,31 @@
 package itemcomponents
 
 import (
-    "github.com/tksasha/balance/internal/models"
-    "github.com/tksasha/balance/internal/helpers"
+	h "github.com/tksasha/balance/internal/helpers"
+	"github.com/tksasha/balance/internal/models"
 )
 
-templ Row(item models.Item) {
-    <tr>
-        <td class="text-center">
-            { item.GetDateAsString() }
-        </td>
-
-        <td class="text-end">
-            <a href={ templ.URL(helpers.EditItemURL(item)) }>{ item.GetSumAsString() }</a>
-        </td>
-
-        <td>
-            { item.CategoryName }
-        </td>
-
-        <td>
-            { item.Description }
-        </td>
-    </tr>
+templ Row(item *models.Item) {
+	<tr>
+		<td class="text-center">
+			{ item.GetDateAsString() }
+		</td>
+		<td class="text-end">
+			<a
+				href={ h.EditItemURL(item) }
+				hx-get={ string(h.EditItemURL(item)) }
+				hx-target="#popup"
+				data-bs-toggle="modal"
+				data-bs-target="#popup"
+			>
+				{ item.GetSumAsString() }
+			</a>
+		</td>
+		<td>
+			{ item.CategoryName }
+		</td>
+		<td>
+			{ item.Description }
+		</td>
+	</tr>
 }

@@ -3,7 +3,6 @@ package handlers
 import (
 	"log/slog"
 	"net/http"
-	"time"
 
 	itemcomponents "github.com/tksasha/balance/internal/components/items"
 	"github.com/tksasha/balance/internal/repositories"
@@ -21,8 +20,6 @@ func NewGetItemsHandler(app *app.App) http.Handler {
 }
 
 func (h *GetItemsHandler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
-	time.Sleep(time.Second)
-
 	items, err := h.itemRepository.GetItems(r.Context())
 	if err != nil {
 		slog.Error(err.Error())

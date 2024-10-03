@@ -1,9 +1,7 @@
 package itemcomponents
 
-import (
-    "github.com/tksasha/balance/internal/models"
-)
+import "github.com/tksasha/balance/internal/models"
 
-templ IndexPage(items []models.Item) {
-    @Table(items)
+templ IndexPage(items []*models.Item) {
+	@Table(items)
 }

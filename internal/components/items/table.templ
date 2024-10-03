@@ -1,24 +1,21 @@
 package itemcomponents
 
-import (
-  "github.com/tksasha/balance/internal/models"
-)
+import "github.com/tksasha/balance/internal/models"
 
-templ Table(items []models.Item) {
-  <table class="table">
-    <thead>
-      <tr>
-        <th class="text-center">Date</th>
-        <th class="text-center">Sum</th>
-        <th class="text-center">Category</th>
-        <th class="text-center">Description</th>
-      </tr>
-    </thead>
-
-    <tbody>
-      for _, item := range items {
-          @Row(item)
-      }
-    </tbody>
-  </table>
+templ Table(items []*models.Item) {
+	<table class="table">
+		<thead>
+			<tr>
+				<th class="text-center">Date</th>
+				<th class="text-center">Sum</th>
+				<th class="text-center">Category</th>
+				<th class="text-center">Description</th>
+			</tr>
+		</thead>
+		<tbody>
+			for _, item := range items {
+				@Row(item)
+			}
+		</tbody>
+	</table>
 }
