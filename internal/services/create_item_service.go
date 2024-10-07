@@ -3,18 +3,10 @@ package services
 import (
 	"context"
 
-	"github.com/tksasha/balance/internal/interfaces"
 	"github.com/tksasha/balance/internal/models"
+	"github.com/tksasha/balance/internal/repositories"
 )
 
-func CreateItemService(
-	ctx context.Context,
-	itemCreator interfaces.ItemCreator,
-	item *models.Item,
-) error {
-	if err := itemCreator.CreateItem(ctx, item); err != nil {
-		return err
-	}
-
-	return nil
+func CreateItemService(ctx context.Context, itemCreator repositories.ItemCreator, item *models.Item) error {
+	return itemCreator.CreateItem(ctx, item)
 }

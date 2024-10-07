@@ -14,7 +14,7 @@ templ Table(items []*models.Item) {
 		</thead>
 		<tbody>
 			for _, item := range items {
-				@Row(item)
+				@Row(item, false)
 			}
 		</tbody>
 	</table>

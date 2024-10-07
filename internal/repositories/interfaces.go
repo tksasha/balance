@@ -1,4 +1,4 @@
-package interfaces
+package repositories
 
 import (
 	"context"
@@ -12,4 +12,8 @@ type ItemCreator interface {
 
 type ItemGetter interface {
 	GetItem(ctx context.Context, id int) (*models.Item, error)
+}
+
+type ItemUpdater interface {
+	UpdateItem(ctx context.Context, item *models.Item) error
 }

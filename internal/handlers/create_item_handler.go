@@ -3,7 +3,6 @@ package handlers
 import (
 	"log/slog"
 	"net/http"
-	"time"
 
 	itemcomponents "github.com/tksasha/balance/internal/components/items"
 	"github.com/tksasha/balance/internal/models"
@@ -23,23 +22,17 @@ func NewCreateItemHandler(app *app.App) http.Handler {
 }
 
 func (h *CreateItemHandler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
-	time.Sleep(time.Second)
-
 	if err := r.ParseForm(); err != nil {
 		w.WriteHeader(http.StatusBadRequest)
 
 		return
 	}
 
-	item := models.NewItem()
-
-	item.SetDate(r.FormValue("date"))
-
-	item.SetFormula(r.FormValue("formula"))
-
-	item.SetCategoryID(r.FormValue("category_id"))
-
-	item.SetDescription(r.FormValue("description"))
+	item := models.NewItem().
+		SetDate(r.FormValue("date")).
+		SetFormula(r.FormValue("formula")).
+		SetCategoryID(r.FormValue("category_id")).
+		SetDescription(r.FormValue("description"))
 
 	if !item.IsValid() {
 		if err := itemcomponents.Form(item).Render(r.Context(), w); err != nil {

@@ -1,12 +1,20 @@
 package itemcomponents
 
 import (
-	helpercomponents "github.com/tksasha/balance/internal/components/helpers"
+	commoncomponents "github.com/tksasha/balance/internal/components/common"
+	"github.com/tksasha/balance/internal/helpers"
 	"github.com/tksasha/balance/internal/models"
 )
 
 templ Form(item *models.Item) {
-	<form hx-post="/items" hx-swap="outerHTML">
+	<form
+		if item.ID == 0 {
+			hx-post={ string(helpers.ItemsURL()) }
+		} else {
+			hx-patch={ string(helpers.ItemURL(item)) }
+		}
+		hx-swap="outerHTML"
+	>
 		<div class="mb-3">
 			<label class="form-label">Date</label>
 			<input
@@ -89,7 +97,7 @@ templ Form(item *models.Item) {
 		<div>
 			<button class="btn btn-primary" type="submit">
 				Create Item
-				@helpercomponents.Spinner()
+				@commoncomponents.Spinner()
 			</button>
 		</div>
 	</form>

@@ -1,6 +1,7 @@
 package indexcomponents
 
 import (
+	commoncomponents "github.com/tksasha/balance/internal/components/common"
 	itemcomponents "github.com/tksasha/balance/internal/components/items"
 	"github.com/tksasha/balance/internal/models"
 )
@@ -36,7 +37,7 @@ templ IndexPage() {
 					</div>
 				</div>
 			</div>
-			@Popup()
+			@commoncomponents.Popup()
 			<script src="/assets/htmx.min.js"></script>
 			<script src="/assets/bootstrap.bundle.min.js"></script>
 			<script src="/assets/application.js"></script>

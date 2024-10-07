@@ -1,49 +1,45 @@
 package handlers
 
 import (
+	"errors"
 	"log/slog"
 	"net/http"
 
 	itemcomponents "github.com/tksasha/balance/internal/components/items"
-	"github.com/tksasha/balance/internal/errors"
+	internalerrors "github.com/tksasha/balance/internal/errors"
+	"github.com/tksasha/balance/internal/repositories"
 	"github.com/tksasha/balance/internal/server/app"
 	"github.com/tksasha/balance/internal/services"
 )
 
 type EditItemHandler struct {
-	getItemService *services.GetItemService
+	itemGetter services.ItemGetter
 }
 
 func NewEditItemHandler(
 	app *app.App,
 ) http.Handler {
 	return &EditItemHandler{
-		getItemService: services.NewGetItemService(app),
+		services.NewGetItemService(
+			repositories.NewItemRepository(app.DB),
+		),
 	}
 }
 
 func (h *EditItemHandler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
-	item, err := h.getItemService.GetItem(r.Context(), r.PathValue("id"))
+	item, err := h.itemGetter.GetItem(r.Context(), r.PathValue("id"))
 	if err != nil {
-		var notFoundError *errors.NotFoundError
-
-		if errors.As(err, &notFoundError) {
-			slog.Error(err.Error())
-
+		if errors.Is(err, internalerrors.ErrNotFound) {
 			w.WriteHeader(http.StatusNotFound)
 
 			return
 		}
 
-		var unknownError *errors.UnknownError
+		slog.Error(err.Error())
 
-		if errors.As(err, unknownError) {
-			slog.Error(err.Error())
+		w.WriteHeader(http.StatusInternalServerError)
 
-			w.WriteHeader(http.StatusInternalServerError)
-
-			return
-		}
+		return
 	}
 
 	if err := itemcomponents.EditPage(item).Render(r.Context(), w); err != nil {

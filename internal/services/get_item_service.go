@@ -4,27 +4,25 @@ import (
 	"context"
 	"strconv"
 
-	"github.com/tksasha/balance/internal/errors"
-	"github.com/tksasha/balance/internal/interfaces"
+	internalerrors "github.com/tksasha/balance/internal/errors"
 	"github.com/tksasha/balance/internal/models"
 	"github.com/tksasha/balance/internal/repositories"
-	"github.com/tksasha/balance/internal/server/app"
 )
 
 type GetItemService struct {
-	itemGetter interfaces.ItemGetter
+	itemGetter repositories.ItemGetter
 }
 
-func NewGetItemService(app *app.App) *GetItemService {
+func NewGetItemService(itemGetter repositories.ItemGetter) *GetItemService {
 	return &GetItemService{
-		itemGetter: repositories.NewItemRepository(app.DB),
+		itemGetter: itemGetter,
 	}
 }
 
 func (s *GetItemService) GetItem(ctx context.Context, input string) (*models.Item, error) {
 	id, err := strconv.Atoi(input)
 	if err != nil {
-		return nil, errors.NewNotFoundError(err)
+		return nil, internalerrors.ErrNotFound
 	}
 
 	item, err := s.itemGetter.GetItem(ctx, id)
