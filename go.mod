@@ -8,6 +8,7 @@ require (
 	github.com/mattn/go-sqlite3 v1.14.23
 	github.com/tksasha/calculator v0.0.8
 	github.com/tksasha/model v0.1.7
+	go.uber.org/mock v0.4.0
 	golang.org/x/text v0.18.0
 	gotest.tools/v3 v3.5.1
 )

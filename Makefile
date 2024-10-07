@@ -5,6 +5,7 @@ MAIN=cmd/balance/main.go
 OUTPUT=balance
 RM=rm -f
 TEMPL=github.com/a-h/templ/cmd/templ@latest
+MOCKGEN=go.uber.org/mock/mockgen@latest
 
 .PHONY: default
 default: vet fix fmt lint test
@@ -60,3 +61,10 @@ gofmt:
 .PHONY: templfmt
 templfmt:
 			@$(GO) run $(TEMPL) fmt .
+
+.PHONY: mockgen
+mockgen:
+	@$(GO) run $(MOCKGEN) \
+	-source internal/interfaces/interfaces.go \
+	-package mocks \
+	-destination test/mocks/interfaces.mock.go

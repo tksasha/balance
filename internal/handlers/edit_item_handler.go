@@ -6,6 +6,7 @@ import (
 
 	itemcomponents "github.com/tksasha/balance/internal/components/items"
 	"github.com/tksasha/balance/internal/errors"
+	"github.com/tksasha/balance/internal/repositories"
 	"github.com/tksasha/balance/internal/server/app"
 	"github.com/tksasha/balance/internal/services"
 )
@@ -18,7 +19,9 @@ func NewEditItemHandler(
 	app *app.App,
 ) http.Handler {
 	return &EditItemHandler{
-		getItemService: services.NewGetItemService(app),
+		getItemService: services.NewGetItemService(
+			repositories.NewItemRepository(app.DB),
+		),
 	}
 }
 

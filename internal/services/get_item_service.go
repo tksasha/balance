@@ -7,24 +7,22 @@ import (
 	"github.com/tksasha/balance/internal/errors"
 	"github.com/tksasha/balance/internal/interfaces"
 	"github.com/tksasha/balance/internal/models"
-	"github.com/tksasha/balance/internal/repositories"
-	"github.com/tksasha/balance/internal/server/app"
 )
 
 type GetItemService struct {
 	itemGetter interfaces.ItemGetter
 }
 
-func NewGetItemService(app *app.App) *GetItemService {
+func NewGetItemService(itemGetter interfaces.ItemGetter) *GetItemService {
 	return &GetItemService{
-		itemGetter: repositories.NewItemRepository(app.DB),
+		itemGetter: itemGetter,
 	}
 }
 
 func (s *GetItemService) GetItem(ctx context.Context, input string) (*models.Item, error) {
 	id, err := strconv.Atoi(input)
 	if err != nil {
-		return nil, errors.NewNotFoundError(err)
+		return nil, errors.NewInvalidError()
 	}
 
 	item, err := s.itemGetter.GetItem(ctx, id)

@@ -124,3 +124,33 @@ func (r *ItemRepository) GetItem(ctx context.Context, id int) (*models.Item, err
 
 	return item, nil
 }
+
+func (r *ItemRepository) UpdateItem(ctx context.Context, item *models.Item) error {
+	query := `
+		UPDATE
+			items
+		SET
+			items.date=?,
+			items.formula=?,
+			items.sum=?,
+			items.category_id=?,
+			items.description=?
+		WHERE
+			id=?
+	`
+
+	if _, err := r.db.ExecContext(
+		ctx,
+		query,
+		item.Date,
+		item.Formula,
+		item.Sum,
+		item.CategoryID,
+		item.Description,
+		item.ID,
+	); err != nil {
+		return err
+	}
+
+	return nil
+}

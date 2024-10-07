@@ -7,14 +7,6 @@ import (
 	"github.com/tksasha/balance/internal/models"
 )
 
-func CreateItemService(
-	ctx context.Context,
-	itemCreator interfaces.ItemCreator,
-	item *models.Item,
-) error {
-	if err := itemCreator.CreateItem(ctx, item); err != nil {
-		return err
-	}
-
-	return nil
+func CreateItemService(ctx context.Context, itemCreator interfaces.ItemCreator, item *models.Item) error {
+	return itemCreator.CreateItem(ctx, item)
 }
