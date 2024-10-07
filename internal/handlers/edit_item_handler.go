@@ -30,12 +30,12 @@ func (h *EditItemHandler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 	item, err := h.itemGetter.GetItem(r.Context(), r.PathValue("id"))
 	if err != nil {
 		if errors.Is(err, internalerrors.ErrNotFound) {
-			slog.Error(err.Error())
-
 			w.WriteHeader(http.StatusNotFound)
 
 			return
 		}
+
+		slog.Error(err.Error())
 
 		w.WriteHeader(http.StatusInternalServerError)
 

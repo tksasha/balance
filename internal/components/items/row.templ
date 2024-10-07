@@ -5,8 +5,13 @@ import (
 	"github.com/tksasha/balance/internal/models"
 )
 
-templ Row(item *models.Item) {
-	<tr>
+templ Row(item *models.Item, rerender bool) {
+	<tr
+		id={ h.ItemID(item) }
+		if rerender {
+			hx-swap-oob="true"
+		}
+	>
 		<td class="text-center">
 			{ item.GetDateAsString() }
 		</td>

@@ -1,8 +1,11 @@
 package itemcomponents
 
+import "github.com/tksasha/balance/internal/models"
+
 var handle = templ.NewOnceHandle()
 
-templ UpdatePage() {
+templ UpdatePage(item *models.Item) {
+	@Row(item, true)
 	@handle.Once() {
 		<script type="text/javascript">
             (function() {

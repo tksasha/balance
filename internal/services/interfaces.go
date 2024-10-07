@@ -11,5 +11,5 @@ type ItemGetter interface {
 }
 
 type ItemUpdater interface {
-	UpdateItem(ctx context.Context, id string) error
+	UpdateItem(ctx context.Context, item *models.Item) error
 }

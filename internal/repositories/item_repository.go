@@ -91,16 +91,20 @@ func (r *ItemRepository) CreateItem(
 func (r *ItemRepository) GetItem(ctx context.Context, id int) (*models.Item, error) {
 	query := `
 	SELECT
-		id,
-		date,
-		sum,
-		COALESCE(formula, ""),
-		category_id,
-		description
+		items.id,
+		items.date,
+		items.sum,
+		COALESCE(items.formula, ""),
+		items.category_id,
+		categories.name AS category_name,
+		items.description
 	FROM
 		items
+	INNER JOIN
+		categories
+		ON categories.id=items.category_id
 	WHERE
-		id=?
+		items.id=?
 	`
 
 	item := models.NewItem()
@@ -113,11 +117,14 @@ func (r *ItemRepository) GetItem(ctx context.Context, id int) (*models.Item, err
 		&item.Sum,
 		&item.Formula,
 		&item.CategoryID,
+		&item.CategoryName,
 		&item.Description,
 	); err != nil {
 		if errors.Is(err, sql.ErrNoRows) {
 			return nil, internalerrors.ErrNotFound
 		}
+
+		slog.Error(err.Error())
 
 		return nil, internalerrors.ErrUnknown
 	}
@@ -130,11 +137,11 @@ func (r *ItemRepository) UpdateItem(ctx context.Context, item *models.Item) erro
 		UPDATE
 			items
 		SET
-			items.date=?,
-			items.formula=?,
-			items.sum=?,
-			items.category_id=?,
-			items.description=?
+			date=?,
+			formula=?,
+			sum=?,
+			category_id=?,
+			description=?
 		WHERE
 			id=?
 	`
@@ -149,6 +156,8 @@ func (r *ItemRepository) UpdateItem(ctx context.Context, item *models.Item) erro
 		item.Description,
 		item.ID,
 	); err != nil {
+		slog.Error(err.Error())
+
 		return err
 	}
 

@@ -22,3 +22,7 @@ func EditItemURL(item *models.Item) templ.SafeURL {
 		fmt.Sprintf("%s/edit", ItemURL(item)),
 	)
 }
+
+func ItemID(item *models.Item) string {
+	return fmt.Sprintf("item_%d", item.ID)
+}
