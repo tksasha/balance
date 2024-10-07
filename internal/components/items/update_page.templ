@@ -1,0 +1,13 @@
+package itemcomponents
+
+var handle = templ.NewOnceHandle()
+
+templ UpdatePage() {
+	@handle.Once() {
+		<script type="text/javascript">
+            (function() {
+                bootstrap.Modal.getInstance("#popup").hide();
+            }());
+        </script>
+	}
+}

@@ -23,7 +23,7 @@ func New(app *app.App, assets embed.FS) *http.ServeMux {
 
 	mux.Handle("GET /items/{id}/edit", handlers.NewEditItemHandler(app))
 
-	mux.HandleFunc("PATCH /items/{id}", func(w http.ResponseWriter, r *http.Request) {})
+	mux.Handle("PATCH /items/{id}", handlers.NewUpdateItemHandler())
 
 	return mux
 }

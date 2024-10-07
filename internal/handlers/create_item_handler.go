@@ -31,15 +31,11 @@ func (h *CreateItemHandler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	item := models.NewItem()
-
-	item.SetDate(r.FormValue("date"))
-
-	item.SetFormula(r.FormValue("formula"))
-
-	item.SetCategoryID(r.FormValue("category_id"))
-
-	item.SetDescription(r.FormValue("description"))
+	item := models.NewItem().
+		SetDate(r.FormValue("date")).
+		SetFormula(r.FormValue("formula")).
+		SetCategoryID(r.FormValue("category_id")).
+		SetDescription(r.FormValue("description"))
 
 	if !item.IsValid() {
 		if err := itemcomponents.Form(item).Render(r.Context(), w); err != nil {

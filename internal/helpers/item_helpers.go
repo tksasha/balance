@@ -7,8 +7,18 @@ import (
 	"github.com/tksasha/balance/internal/models"
 )
 
+func ItemsURL() templ.SafeURL {
+	return templ.URL("/items")
+}
+
+func ItemURL(item *models.Item) templ.SafeURL {
+	return templ.URL(
+		fmt.Sprintf("%s/%d", ItemsURL(), item.ID),
+	)
+}
+
 func EditItemURL(item *models.Item) templ.SafeURL {
 	return templ.URL(
-		fmt.Sprintf("/items/%d/edit", item.ID),
+		fmt.Sprintf("%s/edit", ItemURL(item)),
 	)
 }

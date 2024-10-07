@@ -69,7 +69,7 @@ func Row(item *models.Item) templ.Component {
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
-		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("\" hx-target=\"#popup\" data-bs-toggle=\"modal\" data-bs-target=\"#popup\">")
+		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("\" hx-target=\"#popup .modal-content\" data-bs-toggle=\"modal\" data-bs-target=\"#popup\">")
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}

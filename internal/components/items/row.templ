@@ -14,7 +14,7 @@ templ Row(item *models.Item) {
 			<a
 				href={ h.EditItemURL(item) }
 				hx-get={ string(h.EditItemURL(item)) }
-				hx-target="#popup"
+				hx-target="#popup .modal-content"
 				data-bs-toggle="modal"
 				data-bs-target="#popup"
 			>

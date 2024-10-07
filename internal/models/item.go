@@ -30,7 +30,7 @@ func NewItem() *Item {
 	return item
 }
 
-func (i *Item) SetDate(value string) {
+func (i *Item) SetDate(value string) *Item {
 	if value == "" {
 		i.Errors.Set("date", messages.Required)
 	}
@@ -41,13 +41,15 @@ func (i *Item) SetDate(value string) {
 	}
 
 	i.Date = date
+
+	return i
 }
 
 func (i *Item) GetDateAsString() string {
 	return i.Date.Format(time.DateOnly)
 }
 
-func (i *Item) SetFormula(formula string) {
+func (i *Item) SetFormula(formula string) *Item {
 	if formula == "" {
 		i.Errors.Set("formula", messages.Required)
 	}
@@ -60,6 +62,8 @@ func (i *Item) SetFormula(formula string) {
 	i.Formula = formula
 
 	i.Sum = sum
+
+	return i
 }
 
 func (i *Item) GetSumAsString() string {
@@ -68,7 +72,7 @@ func (i *Item) GetSumAsString() string {
 	return printer.Sprintf("%0.2f", i.Sum)
 }
 
-func (i *Item) SetCategoryID(value string) {
+func (i *Item) SetCategoryID(value string) *Item {
 	if value == "" {
 		i.Errors.Set("category_id", messages.Required)
 	}
@@ -79,14 +83,18 @@ func (i *Item) SetCategoryID(value string) {
 	}
 
 	i.CategoryID = categoryID
+
+	return i
 }
 
 func (i *Item) GetCategoryIDAsString() string {
 	return strconv.Itoa(i.CategoryID)
 }
 
-func (i *Item) SetDescription(description string) {
+func (i *Item) SetDescription(description string) *Item {
 	i.Description = description
+
+	return i
 }
 
 func (i *Item) GetDescription() string {
