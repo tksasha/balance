@@ -65,6 +65,11 @@ templfmt:
 .PHONY: mockgen
 mockgen:
 	@$(GO) run $(MOCKGEN) \
-	-source internal/interfaces/interfaces.go \
+	-source internal/repositories/interfaces.go \
 	-package mocks \
-	-destination test/mocks/interfaces.mock.go
+	-destination test/mocks/repositories/interfaces.mock.go
+
+	@$(GO) run $(MOCKGEN) \
+	-source internal/services/interfaces.go \
+	-package mocks \
+	-destination test/mocks/services/interfaces.mock.go

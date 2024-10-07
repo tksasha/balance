@@ -3,20 +3,26 @@ package services
 import (
 	"context"
 
-	"github.com/tksasha/balance/internal/interfaces"
-	"github.com/tksasha/balance/internal/models"
+	"github.com/tksasha/balance/internal/repositories"
 )
 
 type UpdateItemService struct {
-	itemUpdater interfaces.ItemUpdater
+	itemGetter  ItemGetter
+	itemUpdater repositories.ItemUpdater
 }
 
-func NewUpdateItemService(itemUpdater interfaces.ItemUpdater) *UpdateItemService {
+func NewUpdateItemService(itemGetter ItemGetter, itemUpdater repositories.ItemUpdater) *UpdateItemService {
 	return &UpdateItemService{
+		itemGetter:  itemGetter,
 		itemUpdater: itemUpdater,
 	}
 }
 
-func (s *UpdateItemService) UpdateItem(ctx context.Context, item *models.Item) error {
+func (s *UpdateItemService) UpdateItem(ctx context.Context, id string) error {
+	item, err := s.itemGetter.GetItem(ctx, id)
+	if err != nil {
+		return err
+	}
+
 	return s.itemUpdater.UpdateItem(ctx, item)
 }

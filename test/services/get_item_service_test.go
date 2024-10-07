@@ -7,7 +7,7 @@ import (
 
 	"github.com/tksasha/balance/internal/models"
 	"github.com/tksasha/balance/internal/services"
-	"github.com/tksasha/balance/test/mocks"
+	mockedrepositories "github.com/tksasha/balance/test/mocks/repositories"
 	"go.uber.org/mock/gomock"
 	"gotest.tools/v3/assert"
 )
@@ -16,7 +16,7 @@ import (
 func TestGetItem(t *testing.T) {
 	controller := gomock.NewController(t)
 
-	itemGetter := mocks.NewMockItemGetter(controller)
+	itemGetter := mockedrepositories.NewMockItemGetter(controller)
 
 	service := services.NewGetItemService(itemGetter)
 

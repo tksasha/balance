@@ -11,20 +11,29 @@ import (
 )
 
 type UpdateItemHandler struct {
-	getItemService    *services.GetItemService
-	updateItemService *services.UpdateItemService
+	itemUpdater services.ItemUpdater
 }
 
 func NewUpdateItemHandler(app *app.App) http.Handler {
 	itemRepository := repositories.NewItemRepository(app.DB)
 
+	itemGetter := services.NewGetItemService(itemRepository)
+
 	return &UpdateItemHandler{
-		getItemService:    services.NewGetItemService(itemRepository),
-		updateItemService: services.NewUpdateItemService(itemRepository),
+		services.NewUpdateItemService(
+			itemGetter,
+			itemRepository,
+		),
 	}
 }
 
 func (h *UpdateItemHandler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
+	if err := r.ParseForm(); err != nil {
+		w.WriteHeader(http.StatusBadRequest)
+
+		return
+	}
+
 	if err := itemcomponents.UpdatePage().Render(r.Context(), w); err != nil {
 		slog.Error(err.Error())
 	}

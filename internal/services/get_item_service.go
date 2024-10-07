@@ -5,15 +5,15 @@ import (
 	"strconv"
 
 	"github.com/tksasha/balance/internal/errors"
-	"github.com/tksasha/balance/internal/interfaces"
 	"github.com/tksasha/balance/internal/models"
+	"github.com/tksasha/balance/internal/repositories"
 )
 
 type GetItemService struct {
-	itemGetter interfaces.ItemGetter
+	itemGetter repositories.ItemGetter
 }
 
-func NewGetItemService(itemGetter interfaces.ItemGetter) *GetItemService {
+func NewGetItemService(itemGetter repositories.ItemGetter) *GetItemService {
 	return &GetItemService{
 		itemGetter: itemGetter,
 	}
