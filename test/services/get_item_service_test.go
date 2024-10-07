@@ -5,6 +5,7 @@ import (
 	"errors"
 	"testing"
 
+	internalerrors "github.com/tksasha/balance/internal/errors"
 	"github.com/tksasha/balance/internal/models"
 	"github.com/tksasha/balance/internal/services"
 	mockedrepositories "github.com/tksasha/balance/test/mocks/repositories"
@@ -22,10 +23,10 @@ func TestGetItem(t *testing.T) {
 
 	ctx := context.Background()
 
-	t.Run("when input id is invalid it should return an error", func(t *testing.T) {
+	t.Run("when id is invalid it should return an error", func(t *testing.T) {
 		_, err := service.GetItem(ctx, "abc")
 
-		assert.Error(t, err, "is invalid")
+		assert.ErrorIs(t, err, internalerrors.ErrNotFound)
 	})
 
 	t.Run("when item getter returns an error it should return this error", func(t *testing.T) {

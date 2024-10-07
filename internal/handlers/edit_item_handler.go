@@ -1,11 +1,12 @@
 package handlers
 
 import (
+	"errors"
 	"log/slog"
 	"net/http"
 
 	itemcomponents "github.com/tksasha/balance/internal/components/items"
-	"github.com/tksasha/balance/internal/errors"
+	internalerrors "github.com/tksasha/balance/internal/errors"
 	"github.com/tksasha/balance/internal/repositories"
 	"github.com/tksasha/balance/internal/server/app"
 	"github.com/tksasha/balance/internal/services"
@@ -28,9 +29,7 @@ func NewEditItemHandler(
 func (h *EditItemHandler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 	item, err := h.getItemService.GetItem(r.Context(), r.PathValue("id"))
 	if err != nil {
-		var notFoundError *errors.NotFoundError
-
-		if errors.As(err, &notFoundError) {
+		if errors.Is(err, internalerrors.ErrNotFound) {
 			slog.Error(err.Error())
 
 			w.WriteHeader(http.StatusNotFound)
@@ -38,15 +37,9 @@ func (h *EditItemHandler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 			return
 		}
 
-		var unknownError *errors.UnknownError
+		w.WriteHeader(http.StatusInternalServerError)
 
-		if errors.As(err, unknownError) {
-			slog.Error(err.Error())
-
-			w.WriteHeader(http.StatusInternalServerError)
-
-			return
-		}
+		return
 	}
 
 	if err := itemcomponents.EditPage(item).Render(r.Context(), w); err != nil {

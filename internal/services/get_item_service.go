@@ -4,7 +4,7 @@ import (
 	"context"
 	"strconv"
 
-	"github.com/tksasha/balance/internal/errors"
+	internalerrors "github.com/tksasha/balance/internal/errors"
 	"github.com/tksasha/balance/internal/models"
 	"github.com/tksasha/balance/internal/repositories"
 )
@@ -22,7 +22,7 @@ func NewGetItemService(itemGetter repositories.ItemGetter) *GetItemService {
 func (s *GetItemService) GetItem(ctx context.Context, input string) (*models.Item, error) {
 	id, err := strconv.Atoi(input)
 	if err != nil {
-		return nil, errors.NewInvalidError()
+		return nil, internalerrors.ErrNotFound
 	}
 
 	item, err := s.itemGetter.GetItem(ctx, id)

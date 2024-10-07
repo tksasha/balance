@@ -116,10 +116,10 @@ func (r *ItemRepository) GetItem(ctx context.Context, id int) (*models.Item, err
 		&item.Description,
 	); err != nil {
 		if errors.Is(err, sql.ErrNoRows) {
-			return nil, internalerrors.NewNotFoundError(err)
+			return nil, internalerrors.ErrNotFound
 		}
 
-		return nil, internalerrors.NewUnknownError(err)
+		return nil, internalerrors.ErrUnknown
 	}
 
 	return item, nil
