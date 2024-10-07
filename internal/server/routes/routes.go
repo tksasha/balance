@@ -25,5 +25,7 @@ func New(app *app.App, assets embed.FS) *http.ServeMux {
 
 	mux.Handle("PATCH /items/{id}", handlers.NewUpdateItemHandler(app))
 
+	mux.Handle("DELETE /items/{id}", handlers.NewDeleteItemHandler(app))
+
 	return mux
 }

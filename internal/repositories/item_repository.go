@@ -163,3 +163,25 @@ func (r *ItemRepository) UpdateItem(ctx context.Context, item *models.Item) erro
 
 	return nil
 }
+
+func (r *ItemRepository) DeleteItem(ctx context.Context, item *models.Item) error {
+	query := `
+		DELETE
+		FROM
+			items
+		WHERE
+			id=?
+	`
+
+	if _, err := r.db.ExecContext(ctx, query, item.ID); err != nil {
+		slog.Error(err.Error())
+
+		if errors.Is(err, sql.ErrNoRows) {
+			return internalerrors.ErrNotFound
+		}
+
+		return err
+	}
+
+	return nil
+}

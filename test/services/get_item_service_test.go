@@ -8,7 +8,7 @@ import (
 	internalerrors "github.com/tksasha/balance/internal/errors"
 	"github.com/tksasha/balance/internal/models"
 	"github.com/tksasha/balance/internal/services"
-	mockedrepositories "github.com/tksasha/balance/test/mocks/repositories"
+	mockedrepositories "github.com/tksasha/balance/mocks/repositories"
 	"go.uber.org/mock/gomock"
 	"gotest.tools/v3/assert"
 )

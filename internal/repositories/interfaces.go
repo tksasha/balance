@@ -17,3 +17,7 @@ type ItemGetter interface {
 type ItemUpdater interface {
 	UpdateItem(ctx context.Context, item *models.Item) error
 }
+
+type ItemDeleter interface {
+	DeleteItem(ctx context.Context, item *models.Item) error
+}
