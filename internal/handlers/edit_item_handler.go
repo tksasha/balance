@@ -13,21 +13,21 @@ import (
 )
 
 type EditItemHandler struct {
-	getItemService *services.GetItemService
+	itemGetter services.ItemGetter
 }
 
 func NewEditItemHandler(
 	app *app.App,
 ) http.Handler {
 	return &EditItemHandler{
-		getItemService: services.NewGetItemService(
+		services.NewGetItemService(
 			repositories.NewItemRepository(app.DB),
 		),
 	}
 }
 
 func (h *EditItemHandler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
-	item, err := h.getItemService.GetItem(r.Context(), r.PathValue("id"))
+	item, err := h.itemGetter.GetItem(r.Context(), r.PathValue("id"))
 	if err != nil {
 		if errors.Is(err, internalerrors.ErrNotFound) {
 			slog.Error(err.Error())
