@@ -5,6 +5,7 @@ import (
 	"database/sql"
 	"errors"
 	"log/slog"
+	"time"
 
 	internalerrors "github.com/tksasha/balance/internal/errors"
 	"github.com/tksasha/balance/internal/models"
@@ -36,6 +37,8 @@ func (r *ItemRepository) GetItems(ctx context.Context) ([]*models.Item, error) {
 			categories.id=items.category_id
 		WHERE
 			items.currency=0
+		AND
+			items.deleted_at IS NULL
 		ORDER BY
 			items.date DESC
 	`
@@ -166,14 +169,15 @@ func (r *ItemRepository) UpdateItem(ctx context.Context, item *models.Item) erro
 
 func (r *ItemRepository) DeleteItem(ctx context.Context, item *models.Item) error {
 	query := `
-		DELETE
-		FROM
+		UPDATE
 			items
+		SET
+			deleted_at=?
 		WHERE
 			id=?
 	`
 
-	if _, err := r.db.ExecContext(ctx, query, item.ID); err != nil {
+	if _, err := r.db.ExecContext(ctx, query, time.Now(), item.ID); err != nil {
 		slog.Error(err.Error())
 
 		if errors.Is(err, sql.ErrNoRows) {

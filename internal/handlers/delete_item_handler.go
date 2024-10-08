@@ -50,7 +50,7 @@ func (h *DeleteItemHandler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	if err := itemcomponents.DeletePage().Render(r.Context(), w); err != nil {
+	if err := itemcomponents.DeletePage(item).Render(r.Context(), w); err != nil {
 		slog.Error(err.Error())
 	}
 }

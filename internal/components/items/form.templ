@@ -2,16 +2,16 @@ package itemcomponents
 
 import (
 	commoncomponents "github.com/tksasha/balance/internal/components/common"
-	"github.com/tksasha/balance/internal/helpers"
+	h "github.com/tksasha/balance/internal/helpers"
 	"github.com/tksasha/balance/internal/models"
 )
 
 templ Form(item *models.Item) {
 	<form
 		if item.ID == 0 {
-			hx-post={ string(helpers.ItemsURL()) }
+			hx-post={ string(h.ItemsURL()) }
 		} else {
-			hx-patch={ string(helpers.ItemURL(item)) }
+			hx-patch={ string(h.ItemURL(item)) }
 		}
 		hx-swap="outerHTML"
 	>
@@ -94,11 +94,25 @@ templ Form(item *models.Item) {
 				type="text"
 			/>
 		</div>
-		<div>
-			<button class="btn btn-primary" type="submit">
-				Create Item
-				@commoncomponents.Spinner()
-			</button>
+		<div class="clearfix">
+			if item.ID == 0 {
+				<button class="btn btn-primary float-start" type="submit">
+					Create Item
+					@commoncomponents.Spinner()
+				</button>
+			} else {
+				<button class="btn btn-primary float-start" type="submit">
+					Update Item
+					@commoncomponents.Spinner()
+				</button>
+				<button
+					hx-confirm="Are you sure?"
+					hx-delete={ string(h.ItemURL(item)) }
+					class="btn btn-outline-danger float-end"
+				>
+					Delete Item
+				</button>
+			}
 		</div>
 	</form>
 }

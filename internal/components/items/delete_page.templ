@@ -1,4 +1,21 @@
 package itemcomponents
 
-templ DeletePage() {
+import (
+	h "github.com/tksasha/balance/internal/helpers"
+	"github.com/tksasha/balance/internal/models"
+)
+
+templ DeletePage(item *models.Item) {
+	@templ.JSONScript("current-item-id", h.ItemID(item))
+	@handle.Once() {
+		<script type="text/javascript">
+			(function() {
+				const id = JSON.parse(document.getElementById("current-item-id").textContent);
+
+				document.getElementById(id).remove();
+
+				bootstrap.Modal.getInstance("#popup").hide();
+			}())
+		</script>
+	}
 }
