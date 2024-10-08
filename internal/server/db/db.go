@@ -1,11 +1,13 @@
 package db
 
 import (
+	"context"
 	"database/sql"
 	"fmt"
 	"os"
 
 	_ "github.com/mattn/go-sqlite3"
+	"github.com/tksasha/balance/internal/server/db/migrations"
 )
 
 func Open(workdir, env string) (*sql.DB, error) {
@@ -25,5 +27,12 @@ func Open(workdir, env string) (*sql.DB, error) {
 		return nil, err
 	}
 
+	migrate(context.Background(), db)
+
 	return db, nil
+}
+
+func migrate(ctx context.Context, db *sql.DB) {
+	migrations.
+		NewAddItemsCategoryNameMigration(db).Up(ctx)
 }
