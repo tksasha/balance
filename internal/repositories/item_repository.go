@@ -12,12 +12,14 @@ import (
 )
 
 type ItemRepository struct {
-	db *sql.DB
+	db                 *sql.DB
+	categoryRepository *CategoryRepository
 }
 
 func NewItemRepository(db *sql.DB) *ItemRepository {
 	return &ItemRepository{
-		db: db,
+		db:                 db,
+		categoryRepository: NewCategoryRepository(db),
 	}
 }
 
@@ -27,14 +29,10 @@ func (r *ItemRepository) GetItems(ctx context.Context) ([]*models.Item, error) {
 			items.id,
 			items.date,
 			items.sum,
-			categories.name,
+			COALESCE(items.category_name, ""),
 			items.description
 		FROM
 			items
-		INNER JOIN
-			categories
-		ON
-			categories.id=items.category_id
 		WHERE
 			items.currency=0
 		AND
@@ -73,17 +71,30 @@ func (r *ItemRepository) GetItems(ctx context.Context) ([]*models.Item, error) {
 	return items, nil
 }
 
-func (r *ItemRepository) CreateItem(
-	ctx context.Context,
-	item *models.Item,
-) error {
+func (r *ItemRepository) CreateItem(ctx context.Context, item *models.Item) error {
+	var err error
+
+	item.CategoryName, err = r.getCategoryName(ctx, item.CategoryID)
+	if err != nil {
+		return err
+	}
+
 	query := `
 		INSERT INTO
-			items (date, formula, sum, category_id, description)
-		VALUES (?, ?, ?, ?, ?)
+			items (date, formula, sum, category_id, category_name, description)
+		VALUES (?, ?, ?, ?, ?, ?)
 	`
 
-	_, err := r.db.ExecContext(ctx, query, item.Date, item.Formula, item.Sum, item.CategoryID, item.Description)
+	_, err = r.db.ExecContext(
+		ctx,
+		query,
+		item.Date,
+		item.Formula,
+		item.Sum,
+		item.CategoryID,
+		item.CategoryName,
+		item.Description,
+	)
 	if err != nil {
 		return err
 	}
@@ -99,13 +110,10 @@ func (r *ItemRepository) GetItem(ctx context.Context, id int) (*models.Item, err
 		items.sum,
 		COALESCE(items.formula, ""),
 		items.category_id,
-		categories.name AS category_name,
+		COALESCE(items.category_name, ""),
 		items.description
 	FROM
 		items
-	INNER JOIN
-		categories
-		ON categories.id=items.category_id
 	WHERE
 		items.id=?
 	`
@@ -136,6 +144,13 @@ func (r *ItemRepository) GetItem(ctx context.Context, id int) (*models.Item, err
 }
 
 func (r *ItemRepository) UpdateItem(ctx context.Context, item *models.Item) error {
+	var err error
+
+	item.CategoryName, err = r.getCategoryName(ctx, item.CategoryID)
+	if err != nil {
+		return err
+	}
+
 	query := `
 		UPDATE
 			items
@@ -144,6 +159,7 @@ func (r *ItemRepository) UpdateItem(ctx context.Context, item *models.Item) erro
 			formula=?,
 			sum=?,
 			category_id=?,
+			category_name=?,
 			description=?
 		WHERE
 			id=?
@@ -156,6 +172,7 @@ func (r *ItemRepository) UpdateItem(ctx context.Context, item *models.Item) erro
 		item.Formula,
 		item.Sum,
 		item.CategoryID,
+		item.CategoryName,
 		item.Description,
 		item.ID,
 	); err != nil {
@@ -188,4 +205,13 @@ func (r *ItemRepository) DeleteItem(ctx context.Context, item *models.Item) erro
 	}
 
 	return nil
+}
+
+func (r *ItemRepository) getCategoryName(ctx context.Context, id int) (string, error) {
+	category, err := r.categoryRepository.GetCategory(ctx, id)
+	if err != nil {
+		return "", err
+	}
+
+	return category.Name, nil
 }
