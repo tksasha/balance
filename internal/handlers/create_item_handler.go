@@ -5,6 +5,7 @@ import (
 	"net/http"
 
 	itemcomponents "github.com/tksasha/balance/internal/components/items"
+	"github.com/tksasha/balance/internal/decorators"
 	"github.com/tksasha/balance/internal/models"
 	"github.com/tksasha/balance/internal/repositories"
 	"github.com/tksasha/balance/internal/server/app"
@@ -12,12 +13,20 @@ import (
 )
 
 type CreateItemHandler struct {
-	itemRepository *repositories.ItemRepository
+	itemCreator      repositories.ItemCreator
+	itemsGetter      services.ItemsGetter
+	categoriesGetter services.CategoriesGetter
 }
 
 func NewCreateItemHandler(app *app.App) http.Handler {
+	itemRepository := repositories.NewItemRepository(app.DB)
+
 	return &CreateItemHandler{
-		itemRepository: repositories.NewItemRepository(app.DB),
+		itemCreator: itemRepository,
+		itemsGetter: services.NewGetItemsService(itemRepository),
+		categoriesGetter: services.NewGetCategoriesService(
+			repositories.NewCategoryRepository(app.DB),
+		),
 	}
 }
 
@@ -34,23 +43,7 @@ func (h *CreateItemHandler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 		SetCategoryID(r.FormValue("category_id")).
 		SetDescription(r.FormValue("description"))
 
-	if !item.IsValid() {
-		if err := itemcomponents.Form(item).Render(r.Context(), w); err != nil {
-			slog.Error(err.Error())
-		}
-
-		return
-	}
-
-	if err := services.CreateItemService(r.Context(), h.itemRepository, item); err != nil {
-		slog.Error(err.Error())
-
-		w.WriteHeader(http.StatusInternalServerError)
-
-		return
-	}
-
-	items, err := h.itemRepository.GetItems(r.Context())
+	categories, err := h.categoriesGetter.GetCategories(r.Context(), 0) // TODO: use currency instead
 	if err != nil {
 		slog.Error(err.Error())
 
@@ -59,7 +52,33 @@ func (h *CreateItemHandler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	if err := itemcomponents.CreatePage(items).Render(r.Context(), w); err != nil {
+	if !item.IsValid() {
+		if err := itemcomponents.Form(decorators.NewItemDecorator(item), categories).Render(r.Context(), w); err != nil {
+			slog.Error(err.Error())
+		}
+
+		return
+	}
+
+	// TODO: use CreateItemService.CreateItem()
+	if err := services.CreateItemService(r.Context(), h.itemCreator, item); err != nil {
+		slog.Error(err.Error())
+
+		w.WriteHeader(http.StatusInternalServerError)
+
+		return
+	}
+
+	items, err := h.itemsGetter.GetItems(r.Context())
+	if err != nil {
+		slog.Error(err.Error())
+
+		w.WriteHeader(http.StatusInternalServerError)
+
+		return
+	}
+
+	if err := itemcomponents.CreatePage(items, categories).Render(r.Context(), w); err != nil {
 		slog.Error(err.Error())
 	}
 }

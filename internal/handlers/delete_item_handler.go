@@ -42,7 +42,7 @@ func (h *DeleteItemHandler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	if err := h.itemDeleter.DeleteItem(r.Context(), item); err != nil {
+	if err := h.itemDeleter.DeleteItem(r.Context(), item.Item); err != nil {
 		slog.Error(err.Error())
 
 		w.WriteHeader(http.StatusInternalServerError)

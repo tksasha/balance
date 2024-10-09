@@ -1,11 +1,11 @@
 package itemcomponents
 
 import (
+	"github.com/tksasha/balance/internal/decorators"
 	h "github.com/tksasha/balance/internal/helpers"
-	"github.com/tksasha/balance/internal/models"
 )
 
-templ DeletePage(item *models.Item) {
+templ DeletePage(item *decorators.ItemDecorator) {
 	@templ.JSONScript("current-item-id", h.ItemID(item))
 	@handle.Once() {
 		<script type="text/javascript">

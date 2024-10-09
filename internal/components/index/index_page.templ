@@ -3,10 +3,11 @@ package indexcomponents
 import (
 	commoncomponents "github.com/tksasha/balance/internal/components/common"
 	itemcomponents "github.com/tksasha/balance/internal/components/items"
+	"github.com/tksasha/balance/internal/decorators"
 	"github.com/tksasha/balance/internal/models"
 )
 
-templ IndexPage() {
+templ IndexPage(categories *decorators.CategoriesDecorator) {
 	<!DOCTYPE html>
 	<html>
 		<head>
@@ -19,7 +20,7 @@ templ IndexPage() {
 				<div class="container mb-3">
 					<div class="card">
 						<div class="card-body">
-							@itemcomponents.Form(models.NewItem())
+							@itemcomponents.Form(decorators.NewItemDecorator(models.NewItem()), categories)
 						</div>
 					</div>
 				</div>

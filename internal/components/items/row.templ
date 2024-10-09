@@ -1,11 +1,11 @@
 package itemcomponents
 
 import (
+	"github.com/tksasha/balance/internal/decorators"
 	h "github.com/tksasha/balance/internal/helpers"
-	"github.com/tksasha/balance/internal/models"
 )
 
-templ Row(item *models.Item, rerender bool) {
+templ Row(item *decorators.ItemDecorator, rerender bool) {
 	<tr
 		id={ h.ItemID(item) }
 		if rerender {
@@ -13,7 +13,7 @@ templ Row(item *models.Item, rerender bool) {
 		}
 	>
 		<td class="text-center">
-			{ item.GetDateAsString() }
+			{ item.Date }
 		</td>
 		<td class="text-end">
 			<a
@@ -23,7 +23,7 @@ templ Row(item *models.Item, rerender bool) {
 				data-bs-toggle="modal"
 				data-bs-target="#popup"
 			>
-				{ item.GetSumAsString() }
+				{ item.Sum }
 			</a>
 		</td>
 		<td>

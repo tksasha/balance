@@ -66,10 +66,10 @@ templfmt:
 mockgen:
 	@$(GO) run $(MOCKGEN) \
 	-source internal/repositories/interfaces.go \
-	-package mocks \
+	-package mockedrepositories \
 	-destination mocks/repositories/interfaces.mock.go
 
 	@$(GO) run $(MOCKGEN) \
 	-source internal/services/interfaces.go \
-	-package mocks \
+	-package mockedservices \
 	-destination mocks/services/interfaces.mock.go

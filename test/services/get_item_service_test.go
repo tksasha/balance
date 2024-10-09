@@ -5,6 +5,7 @@ import (
 	"errors"
 	"testing"
 
+	"github.com/tksasha/balance/internal/decorators"
 	internalerrors "github.com/tksasha/balance/internal/errors"
 	"github.com/tksasha/balance/internal/models"
 	"github.com/tksasha/balance/internal/services"
@@ -41,16 +42,18 @@ func TestGetItem(t *testing.T) {
 	})
 
 	t.Run("when item getter does not return any error it should return an item", func(t *testing.T) {
-		exp := models.NewItem()
+		decorator := decorators.NewItemDecorator(
+			models.NewItem(),
+		)
 
 		itemGetter.
 			EXPECT().
 			GetItem(ctx, 1346).
-			Return(exp, nil)
+			Return(decorator.Item, nil)
 
-		res, err := service.GetItem(ctx, "1346")
+		item, err := service.GetItem(ctx, "1346")
 
-		assert.Equal(t, res, exp)
+		assert.Equal(t, *item, *decorator)
 		assert.NilError(t, err)
 	})
 }

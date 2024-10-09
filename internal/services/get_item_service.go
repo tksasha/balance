@@ -4,8 +4,8 @@ import (
 	"context"
 	"strconv"
 
+	"github.com/tksasha/balance/internal/decorators"
 	internalerrors "github.com/tksasha/balance/internal/errors"
-	"github.com/tksasha/balance/internal/models"
 	"github.com/tksasha/balance/internal/repositories"
 )
 
@@ -19,7 +19,7 @@ func NewGetItemService(itemGetter repositories.ItemGetter) *GetItemService {
 	}
 }
 
-func (s *GetItemService) GetItem(ctx context.Context, input string) (*models.Item, error) {
+func (s *GetItemService) GetItem(ctx context.Context, input string) (*decorators.ItemDecorator, error) {
 	id, err := strconv.Atoi(input)
 	if err != nil {
 		return nil, internalerrors.ErrNotFound
@@ -30,5 +30,5 @@ func (s *GetItemService) GetItem(ctx context.Context, input string) (*models.Ite
 		return nil, err
 	}
 
-	return item, nil
+	return decorators.NewItemDecorator(item), nil
 }

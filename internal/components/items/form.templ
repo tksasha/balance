@@ -1,12 +1,13 @@
 package itemcomponents
 
 import (
+	categorycomponents "github.com/tksasha/balance/internal/components/categories"
 	commoncomponents "github.com/tksasha/balance/internal/components/common"
+	"github.com/tksasha/balance/internal/decorators"
 	h "github.com/tksasha/balance/internal/helpers"
-	"github.com/tksasha/balance/internal/models"
 )
 
-templ Form(item *models.Item) {
+templ Form(item *decorators.ItemDecorator, categories *decorators.CategoriesDecorator) {
 	<form
 		if item.ID == 0 {
 			hx-post={ string(h.ItemsURL()) }
@@ -19,8 +20,8 @@ templ Form(item *models.Item) {
 			<label class="form-label">Date</label>
 			<input
 				name="date"
-				if !item.Date.IsZero() {
-					value={ item.GetDateAsString() }
+				if item.Date != "" {
+					value={ item.Date }
 				}
 				if item.Errors.Has("date") {
 					class="form-control is-invalid"
@@ -63,18 +64,7 @@ templ Form(item *models.Item) {
 		</div>
 		<div class="mb-3">
 			<label class="form-label">Category</label>
-			<input
-				name="category_id"
-				if item.CategoryID > 0 {
-					value={ item.GetCategoryIDAsString() }
-				}
-				if item.Errors.Has("category_id") {
-					class="form-control is-invalid"
-				} else {
-					class="form-control"
-				}
-				type="text"
-			/>
+			@categorycomponents.Select(categories)
 			if item.Errors.Has("category_id") {
 				<div class="invalid-feedback">
 					<ul>

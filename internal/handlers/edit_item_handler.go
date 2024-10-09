@@ -13,15 +13,19 @@ import (
 )
 
 type EditItemHandler struct {
-	itemGetter services.ItemGetter
+	itemGetter       services.ItemGetter
+	categoriesGetter services.CategoriesGetter
 }
 
 func NewEditItemHandler(
 	app *app.App,
 ) http.Handler {
 	return &EditItemHandler{
-		services.NewGetItemService(
+		itemGetter: services.NewGetItemService(
 			repositories.NewItemRepository(app.DB),
+		),
+		categoriesGetter: services.NewGetCategoriesService(
+			repositories.NewCategoryRepository(app.DB),
 		),
 	}
 }
@@ -42,7 +46,16 @@ func (h *EditItemHandler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	if err := itemcomponents.EditPage(item).Render(r.Context(), w); err != nil {
+	categories, err := h.categoriesGetter.GetCategories(r.Context(), 0)
+	if err != nil {
+		slog.Error(err.Error())
+
+		w.WriteHeader(http.StatusInternalServerError)
+
+		return
+	}
+
+	if err := itemcomponents.EditPage(item, categories).Render(r.Context(), w); err != nil {
 		slog.Error(err.Error())
 	}
 }

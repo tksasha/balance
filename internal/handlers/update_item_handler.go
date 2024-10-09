@@ -13,8 +13,9 @@ import (
 )
 
 type UpdateItemHandler struct {
-	itemGetter  services.ItemGetter
-	itemUpdater services.ItemUpdater
+	itemGetter       services.ItemGetter
+	itemUpdater      services.ItemUpdater
+	categoriesGetter services.CategoriesGetter
 }
 
 func NewUpdateItemHandler(app *app.App) http.Handler {
@@ -23,9 +24,13 @@ func NewUpdateItemHandler(app *app.App) http.Handler {
 	return &UpdateItemHandler{
 		itemGetter:  services.NewGetItemService(itemRepository),
 		itemUpdater: services.NewUpdateItemService(itemRepository),
+		categoriesGetter: services.NewGetCategoriesService(
+			repositories.NewCategoryRepository(app.DB),
+		),
 	}
 }
 
+//nolint:funlen
 func (h *UpdateItemHandler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 	item, err := h.itemGetter.GetItem(r.Context(), r.PathValue("id"))
 	if err != nil {
@@ -54,15 +59,24 @@ func (h *UpdateItemHandler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 		SetCategoryID(r.FormValue("category_id")).
 		SetDescription(r.FormValue("description"))
 
+	categories, err := h.categoriesGetter.GetCategories(r.Context(), 0) // TODO: use currency instead
+	if err != nil {
+		slog.Error(err.Error())
+
+		w.WriteHeader(http.StatusInternalServerError)
+
+		return
+	}
+
 	if !item.IsValid() {
-		if err := itemcomponents.EditPage(item).Render(r.Context(), w); err != nil {
+		if err := itemcomponents.EditPage(item, categories).Render(r.Context(), w); err != nil {
 			slog.Error(err.Error())
 		}
 
 		return
 	}
 
-	if err := h.itemUpdater.UpdateItem(r.Context(), item); err != nil {
+	if err := h.itemUpdater.UpdateItem(r.Context(), item.Item); err != nil {
 		slog.Error(err.Error())
 
 		w.WriteHeader(http.StatusInternalServerError)
