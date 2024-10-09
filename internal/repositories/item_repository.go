@@ -23,7 +23,7 @@ func NewItemRepository(db *sql.DB) *ItemRepository {
 	}
 }
 
-func (r *ItemRepository) GetItems(ctx context.Context) ([]*models.Item, error) {
+func (r *ItemRepository) GetItems(ctx context.Context, currency models.Currency) ([]*models.Item, error) {
 	query := `
 		SELECT
 			items.id,
@@ -34,14 +34,14 @@ func (r *ItemRepository) GetItems(ctx context.Context) ([]*models.Item, error) {
 		FROM
 			items
 		WHERE
-			items.currency=0
+			items.currency=?
 		AND
 			items.deleted_at IS NULL
 		ORDER BY
 			items.date DESC
 	`
 
-	rows, err := r.db.QueryContext(ctx, query)
+	rows, err := r.db.QueryContext(ctx, query, currency.ID)
 	if err != nil {
 		return nil, err
 	}

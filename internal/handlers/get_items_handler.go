@@ -26,7 +26,7 @@ func NewGetItemsHandler(currency models.Currency, app *app.App) http.Handler {
 }
 
 func (h *GetItemsHandler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
-	items, err := h.itemsGetter.GetItems(r.Context())
+	items, err := h.itemsGetter.GetItems(r.Context(), h.currency)
 	if err != nil {
 		slog.Error(err.Error())
 	}

@@ -75,7 +75,7 @@ func (h *CreateItemHandler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	items, err := h.itemsGetter.GetItems(r.Context())
+	items, err := h.itemsGetter.GetItems(r.Context(), h.currency)
 	if err != nil {
 		slog.Error(err.Error())
 

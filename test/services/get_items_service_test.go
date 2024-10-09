@@ -24,13 +24,15 @@ func TestGetItems(t *testing.T) {
 
 	ctx := context.Background()
 
+	currency := models.Currency{}
+
 	t.Run("when items getter returns an error it should return an error", func(t *testing.T) {
 		itemsGetter.
 			EXPECT().
-			GetItems(ctx).
+			GetItems(ctx, currency).
 			Return(nil, errors.New("get items error"))
 
-		_, err := service.GetItems(ctx)
+		_, err := service.GetItems(ctx, currency)
 
 		assert.Error(t, err, "get items error")
 	})
@@ -44,10 +46,10 @@ func TestGetItems(t *testing.T) {
 
 		itemsGetter.
 			EXPECT().
-			GetItems(ctx).
+			GetItems(ctx, currency).
 			Return(items, nil)
 
-		res, err := service.GetItems(ctx)
+		res, err := service.GetItems(ctx, currency)
 
 		assert.Assert(t, is.Contains(res.Items, item))
 		assert.NilError(t, err)

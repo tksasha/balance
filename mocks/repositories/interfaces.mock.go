@@ -41,18 +41,18 @@ func (m *MockItemsGetter) EXPECT() *MockItemsGetterMockRecorder {
 }
 
 // GetItems mocks base method.
-func (m *MockItemsGetter) GetItems(ctx context.Context) ([]*models.Item, error) {
+func (m *MockItemsGetter) GetItems(ctx context.Context, currency models.Currency) ([]*models.Item, error) {
 	m.ctrl.T.Helper()
-	ret := m.ctrl.Call(m, "GetItems", ctx)
+	ret := m.ctrl.Call(m, "GetItems", ctx, currency)
 	ret0, _ := ret[0].([]*models.Item)
 	ret1, _ := ret[1].(error)
 	return ret0, ret1
 }
 
 // GetItems indicates an expected call of GetItems.
-func (mr *MockItemsGetterMockRecorder) GetItems(ctx any) *gomock.Call {
+func (mr *MockItemsGetterMockRecorder) GetItems(ctx, currency any) *gomock.Call {
 	mr.mock.ctrl.T.Helper()
-	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "GetItems", reflect.TypeOf((*MockItemsGetter)(nil).GetItems), ctx)
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "GetItems", reflect.TypeOf((*MockItemsGetter)(nil).GetItems), ctx, currency)
 }
 
 // MockItemCreator is a mock of ItemCreator interface.
