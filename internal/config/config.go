@@ -4,10 +4,12 @@ import (
 	"os"
 
 	_ "github.com/joho/godotenv/autoload"
+	"github.com/tksasha/balance/internal/models"
 )
 
 type Config struct {
-	Address string
+	Address    string
+	Currencies models.Currencies
 }
 
 func New() *Config {
@@ -18,5 +20,19 @@ func New() *Config {
 
 	return &Config{
 		Address: address,
+		Currencies: models.Currencies{
+			models.Currency{
+				ID:   0,
+				Name: "uah",
+			},
+			models.Currency{
+				ID:   1,
+				Name: "usd",
+			},
+			models.Currency{
+				ID:   3, //nolint:mnd
+				Name: "eur",
+			},
+		},
 	}
 }

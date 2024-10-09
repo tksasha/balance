@@ -12,10 +12,15 @@ import (
 	commoncomponents "github.com/tksasha/balance/internal/components/common"
 	itemcomponents "github.com/tksasha/balance/internal/components/items"
 	"github.com/tksasha/balance/internal/decorators"
+	h "github.com/tksasha/balance/internal/helpers"
 	"github.com/tksasha/balance/internal/models"
 )
 
-func IndexPage(categories *decorators.CategoriesDecorator) templ.Component {
+func IndexPage(
+	currency models.Currency,
+	categories *decorators.CategoriesDecorator,
+	item *decorators.ItemDecorator,
+) templ.Component {
 	return templruntime.GeneratedTemplate(func(templ_7745c5c3_Input templruntime.GeneratedComponentInput) (templ_7745c5c3_Err error) {
 		templ_7745c5c3_W, ctx := templ_7745c5c3_Input.Writer, templ_7745c5c3_Input.Context
 		if templ_7745c5c3_CtxErr := ctx.Err(); templ_7745c5c3_CtxErr != nil {
@@ -40,11 +45,24 @@ func IndexPage(categories *decorators.CategoriesDecorator) templ.Component {
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
-		templ_7745c5c3_Err = itemcomponents.Form(decorators.NewItemDecorator(models.NewItem()), categories).Render(ctx, templ_7745c5c3_Buffer)
+		templ_7745c5c3_Err = itemcomponents.Form(currency, item, categories).Render(ctx, templ_7745c5c3_Buffer)
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
-		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("</div></div></div><div class=\"container mb-3\"><div class=\"card\"><div class=\"card-body\"><div id=\"items\" hx-get=\"/items\" hx-trigger=\"load\" hx-indicator=\"#get-items-indicator\"></div>")
+		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("</div></div></div><div class=\"container mb-3\"><div class=\"card\"><div class=\"card-body\"><div id=\"items\" hx-get=\"")
+		if templ_7745c5c3_Err != nil {
+			return templ_7745c5c3_Err
+		}
+		var templ_7745c5c3_Var2 string
+		templ_7745c5c3_Var2, templ_7745c5c3_Err = templ.JoinStringErrs(string(h.ItemsURL(currency)))
+		if templ_7745c5c3_Err != nil {
+			return templ.Error{Err: templ_7745c5c3_Err, FileName: `internal/components/index/index_page.templ`, Line: 37, Col: 45}
+		}
+		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var2))
+		if templ_7745c5c3_Err != nil {
+			return templ_7745c5c3_Err
+		}
+		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("\" hx-trigger=\"load\" hx-indicator=\"#get-items-indicator\"></div>")
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}

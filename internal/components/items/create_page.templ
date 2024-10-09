@@ -5,9 +5,14 @@ import (
 	"github.com/tksasha/balance/internal/models"
 )
 
-templ CreatePage(items *decorators.ItemsDecorator, categories *decorators.CategoriesDecorator) {
-	@Form(decorators.NewItemDecorator(models.NewItem()), categories)
+templ CreatePage(
+	currency models.Currency,
+	items *decorators.ItemsDecorator,
+	categories *decorators.CategoriesDecorator,
+	item *decorators.ItemDecorator,
+) {
+	@Form(currency, item, categories)
 	<div id="items" hx-swap-oob="true">
-		@Table(items)
+		@Table(currency, items)
 	</div>
 }

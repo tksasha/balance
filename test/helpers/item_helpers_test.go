@@ -11,15 +11,20 @@ import (
 )
 
 func TestEditItemURL(t *testing.T) {
+	currency := models.Currency{
+		ID:   3,
+		Name: "eur",
+	}
+
 	decorator := decorators.NewItemDecorator(
 		&models.Item{
 			ID: 1409,
 		},
 	)
 
-	res := helpers.EditItemURL(decorator)
+	res := helpers.EditItemURL(currency, decorator)
 
-	exp := templ.URL("/items/1409/edit")
+	exp := templ.URL("/eur/items/1409/edit")
 
 	assert.Equal(t, res, exp)
 }

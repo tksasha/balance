@@ -1,7 +1,10 @@
 package itemcomponents
 
-import "github.com/tksasha/balance/internal/decorators"
+import (
+	"github.com/tksasha/balance/internal/decorators"
+	"github.com/tksasha/balance/internal/models"
+)
 
-templ IndexPage(items *decorators.ItemsDecorator) {
-	@Table(items)
+templ IndexPage(currency models.Currency, items *decorators.ItemsDecorator) {
+	@Table(currency, items)
 }

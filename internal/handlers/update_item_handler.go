@@ -7,21 +7,24 @@ import (
 
 	itemcomponents "github.com/tksasha/balance/internal/components/items"
 	internalerrors "github.com/tksasha/balance/internal/errors"
+	"github.com/tksasha/balance/internal/models"
 	"github.com/tksasha/balance/internal/repositories"
 	"github.com/tksasha/balance/internal/server/app"
 	"github.com/tksasha/balance/internal/services"
 )
 
 type UpdateItemHandler struct {
+	currency         models.Currency
 	itemGetter       services.ItemGetter
 	itemUpdater      services.ItemUpdater
 	categoriesGetter services.CategoriesGetter
 }
 
-func NewUpdateItemHandler(app *app.App) http.Handler {
+func NewUpdateItemHandler(currency models.Currency, app *app.App) http.Handler {
 	itemRepository := repositories.NewItemRepository(app.DB)
 
 	return &UpdateItemHandler{
+		currency:    currency,
 		itemGetter:  services.NewGetItemService(itemRepository),
 		itemUpdater: services.NewUpdateItemService(itemRepository),
 		categoriesGetter: services.NewGetCategoriesService(
@@ -69,7 +72,7 @@ func (h *UpdateItemHandler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 	}
 
 	if !item.IsValid() {
-		if err := itemcomponents.EditPage(item, categories).Render(r.Context(), w); err != nil {
+		if err := itemcomponents.EditPage(h.currency, item, categories).Render(r.Context(), w); err != nil {
 			slog.Error(err.Error())
 		}
 
@@ -93,7 +96,7 @@ func (h *UpdateItemHandler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	if err := itemcomponents.UpdatePage(item).Render(r.Context(), w); err != nil {
+	if err := itemcomponents.UpdatePage(h.currency, item).Render(r.Context(), w); err != nil {
 		slog.Error(err.Error())
 	}
 }

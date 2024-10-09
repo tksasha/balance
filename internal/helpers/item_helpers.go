@@ -5,21 +5,24 @@ import (
 
 	"github.com/a-h/templ"
 	"github.com/tksasha/balance/internal/decorators"
+	"github.com/tksasha/balance/internal/models"
 )
 
-func ItemsURL() templ.SafeURL {
-	return templ.URL("/items")
-}
-
-func ItemURL(item *decorators.ItemDecorator) templ.SafeURL {
+func ItemsURL(currency models.Currency) templ.SafeURL {
 	return templ.URL(
-		fmt.Sprintf("%s/%d", ItemsURL(), item.ID),
+		fmt.Sprintf("/%s/items", currency.Name),
 	)
 }
 
-func EditItemURL(item *decorators.ItemDecorator) templ.SafeURL {
+func ItemURL(currency models.Currency, item *decorators.ItemDecorator) templ.SafeURL {
 	return templ.URL(
-		fmt.Sprintf("%s/edit", ItemURL(item)),
+		fmt.Sprintf("%s/%d", ItemsURL(currency), item.ID),
+	)
+}
+
+func EditItemURL(currency models.Currency, item *decorators.ItemDecorator) templ.SafeURL {
+	return templ.URL(
+		fmt.Sprintf("%s/edit", ItemURL(currency, item)),
 	)
 }
 

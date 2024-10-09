@@ -1,12 +1,15 @@
 package itemcomponents
 
-import "github.com/tksasha/balance/internal/decorators"
+import (
+	"github.com/tksasha/balance/internal/decorators"
+	"github.com/tksasha/balance/internal/models"
+)
 
-templ EditPage(item *decorators.ItemDecorator, categories *decorators.CategoriesDecorator) {
+templ EditPage(currency models.Currency, item *decorators.ItemDecorator, categories *decorators.CategoriesDecorator) {
 	<div class="modal-header">
 		Edit Item
 	</div>
 	<div class="modal-body">
-		@Form(item, categories)
+		@Form(currency, item, categories)
 	</div>
 }

@@ -13,15 +13,17 @@ import (
 )
 
 type CreateItemHandler struct {
+	currency         models.Currency
 	itemCreator      repositories.ItemCreator
 	itemsGetter      services.ItemsGetter
 	categoriesGetter services.CategoriesGetter
 }
 
-func NewCreateItemHandler(app *app.App) http.Handler {
+func NewCreateItemHandler(currency models.Currency, app *app.App) http.Handler {
 	itemRepository := repositories.NewItemRepository(app.DB)
 
 	return &CreateItemHandler{
+		currency:    currency,
 		itemCreator: itemRepository,
 		itemsGetter: services.NewGetItemsService(itemRepository),
 		categoriesGetter: services.NewGetCategoriesService(
@@ -53,7 +55,11 @@ func (h *CreateItemHandler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 	}
 
 	if !item.IsValid() {
-		if err := itemcomponents.Form(decorators.NewItemDecorator(item), categories).Render(r.Context(), w); err != nil {
+		if err := itemcomponents.Form(
+			h.currency,
+			decorators.NewItemDecorator(item),
+			categories,
+		).Render(r.Context(), w); err != nil {
 			slog.Error(err.Error())
 		}
 
@@ -78,7 +84,14 @@ func (h *CreateItemHandler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	if err := itemcomponents.CreatePage(items, categories).Render(r.Context(), w); err != nil {
+	itemDecorator := decorators.NewItemDecorator(models.NewItem())
+
+	if err := itemcomponents.CreatePage(
+		h.currency,
+		items,
+		categories,
+		itemDecorator,
+	).Render(r.Context(), w); err != nil {
 		slog.Error(err.Error())
 	}
 }

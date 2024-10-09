@@ -4,10 +4,15 @@ import (
 	commoncomponents "github.com/tksasha/balance/internal/components/common"
 	itemcomponents "github.com/tksasha/balance/internal/components/items"
 	"github.com/tksasha/balance/internal/decorators"
+	h "github.com/tksasha/balance/internal/helpers"
 	"github.com/tksasha/balance/internal/models"
 )
 
-templ IndexPage(categories *decorators.CategoriesDecorator) {
+templ IndexPage(
+	currency models.Currency,
+	categories *decorators.CategoriesDecorator,
+	item *decorators.ItemDecorator,
+) {
 	<!DOCTYPE html>
 	<html>
 		<head>
@@ -20,7 +25,7 @@ templ IndexPage(categories *decorators.CategoriesDecorator) {
 				<div class="container mb-3">
 					<div class="card">
 						<div class="card-body">
-							@itemcomponents.Form(decorators.NewItemDecorator(models.NewItem()), categories)
+							@itemcomponents.Form(currency, item, categories)
 						</div>
 					</div>
 				</div>
@@ -29,7 +34,7 @@ templ IndexPage(categories *decorators.CategoriesDecorator) {
 						<div class="card-body">
 							<div
 								id="items"
-								hx-get="/items"
+								hx-get={ string(h.ItemsURL(currency)) }
 								hx-trigger="load"
 								hx-indicator="#get-items-indicator"
 							></div>

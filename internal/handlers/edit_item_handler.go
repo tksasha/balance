@@ -7,20 +7,21 @@ import (
 
 	itemcomponents "github.com/tksasha/balance/internal/components/items"
 	internalerrors "github.com/tksasha/balance/internal/errors"
+	"github.com/tksasha/balance/internal/models"
 	"github.com/tksasha/balance/internal/repositories"
 	"github.com/tksasha/balance/internal/server/app"
 	"github.com/tksasha/balance/internal/services"
 )
 
 type EditItemHandler struct {
+	currency         models.Currency
 	itemGetter       services.ItemGetter
 	categoriesGetter services.CategoriesGetter
 }
 
-func NewEditItemHandler(
-	app *app.App,
-) http.Handler {
+func NewEditItemHandler(currency models.Currency, app *app.App) http.Handler {
 	return &EditItemHandler{
+		currency: currency,
 		itemGetter: services.NewGetItemService(
 			repositories.NewItemRepository(app.DB),
 		),
@@ -55,7 +56,7 @@ func (h *EditItemHandler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	if err := itemcomponents.EditPage(item, categories).Render(r.Context(), w); err != nil {
+	if err := itemcomponents.EditPage(h.currency, item, categories).Render(r.Context(), w); err != nil {
 		slog.Error(err.Error())
 	}
 }

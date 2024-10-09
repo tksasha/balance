@@ -1,11 +1,14 @@
 package itemcomponents
 
-import "github.com/tksasha/balance/internal/decorators"
+import (
+	"github.com/tksasha/balance/internal/decorators"
+	"github.com/tksasha/balance/internal/models"
+)
 
 var handle = templ.NewOnceHandle()
 
-templ UpdatePage(item *decorators.ItemDecorator) {
-	@Row(item, true)
+templ UpdatePage(currency models.Currency, item *decorators.ItemDecorator) {
+	@Row(currency, item, true)
 	@handle.Once() {
 		<script type="text/javascript">
             (function() {

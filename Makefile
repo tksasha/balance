@@ -8,7 +8,7 @@ TEMPL=github.com/a-h/templ/cmd/templ@latest
 MOCKGEN=go.uber.org/mock/mockgen@latest
 
 .PHONY: default
-default: vet fix fmt lint test
+default: gen vet fix fmt lint test
 
 .PHONY: vet
 vet:

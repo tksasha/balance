@@ -5,14 +5,15 @@ import (
 	commoncomponents "github.com/tksasha/balance/internal/components/common"
 	"github.com/tksasha/balance/internal/decorators"
 	h "github.com/tksasha/balance/internal/helpers"
+	"github.com/tksasha/balance/internal/models"
 )
 
-templ Form(item *decorators.ItemDecorator, categories *decorators.CategoriesDecorator) {
+templ Form(currency models.Currency, item *decorators.ItemDecorator, categories *decorators.CategoriesDecorator) {
 	<form
 		if item.ID == 0 {
-			hx-post={ string(h.ItemsURL()) }
+			hx-post={ string(h.ItemsURL(currency)) }
 		} else {
-			hx-patch={ string(h.ItemURL(item)) }
+			hx-patch={ string(h.ItemURL(currency, item)) }
 		}
 		hx-swap="outerHTML"
 	>
@@ -97,7 +98,7 @@ templ Form(item *decorators.ItemDecorator, categories *decorators.CategoriesDeco
 				</button>
 				<button
 					hx-confirm="Are you sure?"
-					hx-delete={ string(h.ItemURL(item)) }
+					hx-delete={ string(h.ItemURL(currency, item)) }
 					class="btn btn-outline-danger float-end"
 				>
 					Delete Item

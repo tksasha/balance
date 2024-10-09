@@ -32,6 +32,7 @@ func Run(config *config.Config) {
 	}
 
 	router := routes.New(
+		config,
 		&app.App{
 			DB: db,
 		},
