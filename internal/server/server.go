@@ -1,6 +1,7 @@
 package server
 
 import (
+	"context"
 	"embed"
 	"log"
 	"log/slog"
@@ -21,12 +22,14 @@ var assets embed.FS
 type Server struct{}
 
 func Run(config *config.Config) {
+	ctx := context.Background()
+
 	workdir, err := workdir.New()
 	if err != nil {
 		log.Fatalf("workdir initialize error: %v", err)
 	}
 
-	db, err := db.Open(workdir, env.Get())
+	db, err := db.Open(ctx, workdir, env.Get())
 	if err != nil {
 		log.Fatalf("open db error: %v", err)
 	}

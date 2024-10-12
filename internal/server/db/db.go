@@ -10,7 +10,7 @@ import (
 	"github.com/tksasha/balance/internal/server/db/migrations"
 )
 
-func Open(workdir, env string) (*sql.DB, error) {
+func Open(ctx context.Context, workdir, env string) (*sql.DB, error) {
 	dbName := fmt.Sprintf(
 		"%s%s%s.sqlite3",
 		workdir,
@@ -23,11 +23,19 @@ func Open(workdir, env string) (*sql.DB, error) {
 		return nil, err
 	}
 
-	if _, err := db.Exec("PRAGMA foreign_keys=true"); err != nil {
+	if err := db.PingContext(ctx); err != nil {
+		if err := db.Close(); err != nil {
+			return nil, err
+		}
+
 		return nil, err
 	}
 
-	migrate(context.Background(), db)
+	if _, err := db.ExecContext(ctx, "PRAGMA foreign_keys=true"); err != nil {
+		return nil, err
+	}
+
+	migrate(ctx, db)
 
 	return db, nil
 }
