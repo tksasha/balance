@@ -10,21 +10,50 @@ import (
 	"gotest.tools/v3/assert"
 )
 
-func TestEditItemURL(t *testing.T) {
-	currency := models.Currency{
-		ID:   3,
-		Name: "eur",
-	}
+func TestItemsURL(t *testing.T) {
+	t.Run("when currency is provided it should return url with currency", func(t *testing.T) {
+		currency := &models.Currency{Code: "EUR"}
 
-	decorator := decorators.NewItemDecorator(
+		res := helpers.ItemsURL(currency)
+
+		exp := templ.URL("/items?currency=eur")
+
+		assert.Equal(t, res, exp)
+	})
+
+	t.Run("when currency is not provided it should return url without currency", func(t *testing.T) {
+		res := helpers.ItemsURL(nil)
+
+		exp := templ.URL("/items")
+
+		assert.Equal(t, res, exp)
+	})
+}
+
+func TestItemURL(t *testing.T) {
+	item := decorators.NewItemDecorator(
+		&models.Item{
+			ID: 1331,
+		},
+	)
+
+	res := helpers.ItemURL(item)
+
+	exp := templ.URL("/items/1331")
+
+	assert.Equal(t, res, exp)
+}
+
+func TestEditItemURL(t *testing.T) {
+	item := decorators.NewItemDecorator(
 		&models.Item{
 			ID: 1409,
 		},
 	)
 
-	res := helpers.EditItemURL(currency, decorator)
+	res := helpers.EditItemURL(item)
 
-	exp := templ.URL("/eur/items/1409/edit")
+	exp := templ.URL("/items/1409/edit")
 
 	assert.Equal(t, res, exp)
 }

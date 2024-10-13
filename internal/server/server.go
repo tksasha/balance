@@ -12,6 +12,7 @@ import (
 	"github.com/tksasha/balance/internal/server/app"
 	"github.com/tksasha/balance/internal/server/db"
 	"github.com/tksasha/balance/internal/server/env"
+	"github.com/tksasha/balance/internal/server/middlewares"
 	"github.com/tksasha/balance/internal/server/routes"
 	"github.com/tksasha/balance/internal/server/workdir"
 )
@@ -34,20 +35,18 @@ func Run(config *config.Config) {
 		log.Fatalf("open db error: %v", err)
 	}
 
-	router := routes.New(
-		config,
-		&app.App{
-			DB: db,
-		},
-		assets,
-	)
+	app := app.New(db)
+
+	router := routes.New(config, app, assets)
+
+	handler := middlewares.NewCurrencyMiddleware(app).Wrap(router)
 
 	slog.Info("starting server", "address", config.Address)
 
 	server := http.Server{
 		Addr:              config.Address,
 		ReadHeaderTimeout: 1 * time.Second,
-		Handler:           router,
+		Handler:           handler,
 	}
 
 	log.Fatal(

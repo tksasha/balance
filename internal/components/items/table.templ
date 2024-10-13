@@ -1,11 +1,8 @@
 package itemcomponents
 
-import (
-	"github.com/tksasha/balance/internal/decorators"
-	"github.com/tksasha/balance/internal/models"
-)
+import "github.com/tksasha/balance/internal/decorators"
 
-templ Table(currency models.Currency, decorator *decorators.ItemsDecorator) {
+templ Table(decorator *decorators.ItemsDecorator) {
 	<table class="table">
 		<thead>
 			<tr>
@@ -17,7 +14,7 @@ templ Table(currency models.Currency, decorator *decorators.ItemsDecorator) {
 		</thead>
 		<tbody>
 			for _, item := range decorator.Items {
-				@Row(currency, item, false)
+				@Row(item, false)
 			}
 		</tbody>
 	</table>

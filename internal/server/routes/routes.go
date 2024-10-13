@@ -16,32 +16,15 @@ func New(config *config.Config, app *app.App, assets embed.FS) *http.ServeMux {
 
 	mux.Handle("GET /assets/", http.FileServerFS(assets))
 
-	for _, currency := range config.Currencies {
-		mux.Handle(
-			"GET /"+currency.Name,
-			handlers.NewIndexHandler(currency, app),
-		)
+	mux.Handle("GET /{$}", handlers.NewIndexHandler(app))
 
-		mux.Handle(
-			"GET /"+currency.Name+"/items",
-			handlers.NewGetItemsHandler(currency, app),
-		)
+	mux.Handle("GET /items", handlers.NewGetItemsHandler(app))
 
-		mux.Handle(
-			"POST /"+currency.Name+"/items",
-			handlers.NewCreateItemHandler(currency, app),
-		)
+	mux.Handle("POST /items", handlers.NewCreateItemHandler(app))
 
-		mux.Handle(
-			"GET /"+currency.Name+"/items/{id}/edit",
-			handlers.NewEditItemHandler(currency, app),
-		)
+	mux.Handle("GET /items/{id}/edit", handlers.NewEditItemHandler(app))
 
-		mux.Handle(
-			"PATCH /"+currency.Name+"/items/{id}",
-			handlers.NewUpdateItemHandler(currency, app),
-		)
-	}
+	mux.Handle("PATCH /items/{id}", handlers.NewUpdateItemHandler(app))
 
 	mux.Handle("DELETE /items/{id}", handlers.NewDeleteItemHandler(app))
 

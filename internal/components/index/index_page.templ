@@ -25,7 +25,7 @@ templ IndexPage(
 				<div class="container mb-3">
 					<div class="card">
 						<div class="card-body">
-							@itemcomponents.Form(currency, item, categories)
+							@itemcomponents.Form(item, categories)
 						</div>
 					</div>
 				</div>
@@ -34,7 +34,7 @@ templ IndexPage(
 						<div class="card-body">
 							<div
 								id="items"
-								hx-get={ string(h.ItemsURL(currency)) }
+								hx-get={ string(h.ItemsURL(&currency)) }
 								hx-trigger="load"
 								hx-indicator="#get-items-indicator"
 							></div>

@@ -3,10 +3,9 @@ package itemcomponents
 import (
 	"github.com/tksasha/balance/internal/decorators"
 	h "github.com/tksasha/balance/internal/helpers"
-	"github.com/tksasha/balance/internal/models"
 )
 
-templ Row(currency models.Currency, item *decorators.ItemDecorator, rerender bool) {
+templ Row(item *decorators.ItemDecorator, rerender bool) {
 	<tr
 		id={ h.ItemID(item) }
 		if rerender {
@@ -18,8 +17,8 @@ templ Row(currency models.Currency, item *decorators.ItemDecorator, rerender boo
 		</td>
 		<td class="text-end">
 			<a
-				href={ h.EditItemURL(currency, item) }
-				hx-get={ string(h.EditItemURL(currency, item)) }
+				href={ h.EditItemURL(item) }
+				hx-get={ string(h.EditItemURL(item)) }
 				hx-target="#popup .modal-content"
 				data-bs-toggle="modal"
 				data-bs-target="#popup"

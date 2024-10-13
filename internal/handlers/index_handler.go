@@ -13,21 +13,28 @@ import (
 )
 
 type IndexHandler struct {
-	currency         models.Currency
 	categoriesGetter services.CategoriesGetter
+	currency         models.Currency
+	currencies       models.Currencies
 }
 
-func NewIndexHandler(currency models.Currency, app *app.App) http.Handler {
+func NewIndexHandler(app *app.App) http.Handler {
 	return &IndexHandler{
-		currency: currency,
 		categoriesGetter: services.NewGetCategoriesService(
 			repositories.NewCategoryRepository(app.DB),
 		),
+		currency:   app.Currency,
+		currencies: app.Currencies,
 	}
 }
 
 func (h *IndexHandler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
-	categories, err := h.categoriesGetter.GetCategories(r.Context(), h.currency.ID)
+	currency, ok := r.Context().Value(models.CurrencyContextValue{}).(models.Currency)
+	if !ok {
+		currency = h.currency
+	}
+
+	categories, err := h.categoriesGetter.GetCategories(r.Context(), currency.ID)
 	if err != nil {
 		slog.Error(err.Error())
 
@@ -36,9 +43,11 @@ func (h *IndexHandler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	itemDecorator := decorators.NewItemDecorator(models.NewItem())
+	itemDecorator := decorators.NewItemDecorator(
+		models.NewItem(h.currencies).SetCurrency(currency.Code),
+	)
 
-	if err := indexcomponents.IndexPage(h.currency, categories, itemDecorator).Render(r.Context(), w); err != nil {
+	if err := indexcomponents.IndexPage(currency, categories, itemDecorator).Render(r.Context(), w); err != nil {
 		slog.Error(err.Error())
 	}
 }

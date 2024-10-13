@@ -8,13 +8,9 @@ package itemcomponents
 import "github.com/a-h/templ"
 import templruntime "github.com/a-h/templ/runtime"
 
-import (
-	"github.com/tksasha/balance/internal/decorators"
-	"github.com/tksasha/balance/internal/models"
-)
+import "github.com/tksasha/balance/internal/decorators"
 
 func CreatePage(
-	currency models.Currency,
 	items *decorators.ItemsDecorator,
 	categories *decorators.CategoriesDecorator,
 	item *decorators.ItemDecorator,
@@ -39,7 +35,7 @@ func CreatePage(
 			templ_7745c5c3_Var1 = templ.NopComponent
 		}
 		ctx = templ.ClearChildren(ctx)
-		templ_7745c5c3_Err = Form(currency, item, categories).Render(ctx, templ_7745c5c3_Buffer)
+		templ_7745c5c3_Err = Form(item, categories).Render(ctx, templ_7745c5c3_Buffer)
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
@@ -47,7 +43,7 @@ func CreatePage(
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
-		templ_7745c5c3_Err = Table(currency, items).Render(ctx, templ_7745c5c3_Buffer)
+		templ_7745c5c3_Err = Table(items).Render(ctx, templ_7745c5c3_Buffer)
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}

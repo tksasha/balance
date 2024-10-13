@@ -13,22 +13,24 @@ import (
 )
 
 type CreateItemHandler struct {
-	currency         models.Currency
 	itemCreator      repositories.ItemCreator
 	itemsGetter      services.ItemsGetter
 	categoriesGetter services.CategoriesGetter
+	currency         models.Currency
+	currencies       models.Currencies
 }
 
-func NewCreateItemHandler(currency models.Currency, app *app.App) http.Handler {
-	itemRepository := repositories.NewItemRepository(app.DB)
+func NewCreateItemHandler(app *app.App) http.Handler {
+	itemRepository := repositories.NewItemRepository(app.DB, app.Currencies)
 
 	return &CreateItemHandler{
-		currency:    currency,
 		itemCreator: itemRepository,
 		itemsGetter: services.NewGetItemsService(itemRepository),
 		categoriesGetter: services.NewGetCategoriesService(
 			repositories.NewCategoryRepository(app.DB),
 		),
+		currency:   app.Currency,
+		currencies: app.Currencies,
 	}
 }
 
@@ -39,13 +41,14 @@ func (h *CreateItemHandler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	item := models.NewItem().
+	item := models.NewItem(h.currencies).
 		SetDate(r.FormValue("date")).
 		SetFormula(r.FormValue("formula")).
 		SetCategoryID(r.FormValue("category_id")).
-		SetDescription(r.FormValue("description"))
+		SetDescription(r.FormValue("description")).
+		SetCurrency(r.FormValue("currency"))
 
-	categories, err := h.categoriesGetter.GetCategories(r.Context(), 0) // TODO: use currency instead
+	categories, err := h.categoriesGetter.GetCategories(r.Context(), item.Currency.ID)
 	if err != nil {
 		slog.Error(err.Error())
 
@@ -56,7 +59,6 @@ func (h *CreateItemHandler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 
 	if !item.IsValid() {
 		if err := itemcomponents.Form(
-			h.currency,
 			decorators.NewItemDecorator(item),
 			categories,
 		).Render(r.Context(), w); err != nil {
@@ -75,7 +77,7 @@ func (h *CreateItemHandler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	items, err := h.itemsGetter.GetItems(r.Context(), h.currency)
+	items, err := h.itemsGetter.GetItems(r.Context(), item.Currency)
 	if err != nil {
 		slog.Error(err.Error())
 
@@ -84,14 +86,11 @@ func (h *CreateItemHandler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	itemDecorator := decorators.NewItemDecorator(models.NewItem())
+	itemDecorator := decorators.NewItemDecorator(
+		models.NewItem(h.currencies),
+	)
 
-	if err := itemcomponents.CreatePage(
-		h.currency,
-		items,
-		categories,
-		itemDecorator,
-	).Render(r.Context(), w); err != nil {
+	if err := itemcomponents.CreatePage(items, categories, itemDecorator).Render(r.Context(), w); err != nil {
 		slog.Error(err.Error())
 	}
 }

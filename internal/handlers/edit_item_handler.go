@@ -14,24 +14,29 @@ import (
 )
 
 type EditItemHandler struct {
-	currency         models.Currency
 	itemGetter       services.ItemGetter
 	categoriesGetter services.CategoriesGetter
+	currency         models.Currency
 }
 
-func NewEditItemHandler(currency models.Currency, app *app.App) http.Handler {
+func NewEditItemHandler(app *app.App) http.Handler {
 	return &EditItemHandler{
-		currency: currency,
 		itemGetter: services.NewGetItemService(
-			repositories.NewItemRepository(app.DB),
+			repositories.NewItemRepository(app.DB, app.Currencies),
 		),
 		categoriesGetter: services.NewGetCategoriesService(
 			repositories.NewCategoryRepository(app.DB),
 		),
+		currency: app.Currency,
 	}
 }
 
 func (h *EditItemHandler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
+	currency, ok := r.Context().Value(models.CurrencyContextValue{}).(models.Currency)
+	if !ok {
+		currency = h.currency
+	}
+
 	item, err := h.itemGetter.GetItem(r.Context(), r.PathValue("id"))
 	if err != nil {
 		if errors.Is(err, internalerrors.ErrNotFound) {
@@ -47,7 +52,7 @@ func (h *EditItemHandler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	categories, err := h.categoriesGetter.GetCategories(r.Context(), 0)
+	categories, err := h.categoriesGetter.GetCategories(r.Context(), currency.ID)
 	if err != nil {
 		slog.Error(err.Error())
 
@@ -56,7 +61,7 @@ func (h *EditItemHandler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	if err := itemcomponents.EditPage(h.currency, item, categories).Render(r.Context(), w); err != nil {
+	if err := itemcomponents.EditPage(item, categories).Render(r.Context(), w); err != nil {
 		slog.Error(err.Error())
 	}
 }

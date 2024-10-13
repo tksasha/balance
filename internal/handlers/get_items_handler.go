@@ -12,26 +12,31 @@ import (
 )
 
 type GetItemsHandler struct {
-	currency    models.Currency
 	itemsGetter services.ItemsGetter
+	currency    models.Currency
 }
 
-func NewGetItemsHandler(currency models.Currency, app *app.App) http.Handler {
+func NewGetItemsHandler(app *app.App) http.Handler {
 	return &GetItemsHandler{
-		currency: currency,
 		itemsGetter: services.NewGetItemsService(
-			repositories.NewItemRepository(app.DB),
+			repositories.NewItemRepository(app.DB, app.Currencies),
 		),
+		currency: app.Currency,
 	}
 }
 
 func (h *GetItemsHandler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
-	items, err := h.itemsGetter.GetItems(r.Context(), h.currency)
+	currency, ok := r.Context().Value(models.CurrencyContextValue{}).(models.Currency)
+	if !ok {
+		currency = h.currency
+	}
+
+	items, err := h.itemsGetter.GetItems(r.Context(), currency)
 	if err != nil {
 		slog.Error(err.Error())
 	}
 
-	if err := itemcomponents.IndexPage(h.currency, items).Render(r.Context(), w); err != nil {
+	if err := itemcomponents.IndexPage(items).Render(r.Context(), w); err != nil {
 		slog.Error(err.Error())
 	}
 }

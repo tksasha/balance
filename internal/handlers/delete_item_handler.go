@@ -18,7 +18,7 @@ type DeleteItemHandler struct {
 }
 
 func NewDeleteItemHandler(app *app.App) http.Handler {
-	itemRepository := repositories.NewItemRepository(app.DB)
+	itemRepository := repositories.NewItemRepository(app.DB, app.Currencies)
 
 	return &DeleteItemHandler{
 		itemGetter:  services.NewGetItemService(itemRepository),

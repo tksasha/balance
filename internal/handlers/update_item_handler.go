@@ -14,27 +14,32 @@ import (
 )
 
 type UpdateItemHandler struct {
-	currency         models.Currency
 	itemGetter       services.ItemGetter
 	itemUpdater      services.ItemUpdater
 	categoriesGetter services.CategoriesGetter
+	currency         models.Currency
 }
 
-func NewUpdateItemHandler(currency models.Currency, app *app.App) http.Handler {
-	itemRepository := repositories.NewItemRepository(app.DB)
+func NewUpdateItemHandler(app *app.App) http.Handler {
+	itemRepository := repositories.NewItemRepository(app.DB, app.Currencies)
 
 	return &UpdateItemHandler{
-		currency:    currency,
 		itemGetter:  services.NewGetItemService(itemRepository),
 		itemUpdater: services.NewUpdateItemService(itemRepository),
 		categoriesGetter: services.NewGetCategoriesService(
 			repositories.NewCategoryRepository(app.DB),
 		),
+		currency: app.Currency,
 	}
 }
 
-//nolint:funlen
+//nolint:funlen,cyclop
 func (h *UpdateItemHandler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
+	currency, ok := r.Context().Value(models.CurrencyContextValue{}).(models.Currency)
+	if !ok {
+		currency = h.currency
+	}
+
 	item, err := h.itemGetter.GetItem(r.Context(), r.PathValue("id"))
 	if err != nil {
 		if errors.Is(err, internalerrors.ErrNotFound) {
@@ -62,7 +67,7 @@ func (h *UpdateItemHandler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 		SetCategoryID(r.FormValue("category_id")).
 		SetDescription(r.FormValue("description"))
 
-	categories, err := h.categoriesGetter.GetCategories(r.Context(), 0) // TODO: use currency instead
+	categories, err := h.categoriesGetter.GetCategories(r.Context(), currency.ID)
 	if err != nil {
 		slog.Error(err.Error())
 
@@ -72,7 +77,7 @@ func (h *UpdateItemHandler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 	}
 
 	if !item.IsValid() {
-		if err := itemcomponents.EditPage(h.currency, item, categories).Render(r.Context(), w); err != nil {
+		if err := itemcomponents.EditPage(item, categories).Render(r.Context(), w); err != nil {
 			slog.Error(err.Error())
 		}
 
@@ -96,7 +101,7 @@ func (h *UpdateItemHandler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	if err := itemcomponents.UpdatePage(h.currency, item).Render(r.Context(), w); err != nil {
+	if err := itemcomponents.UpdatePage(item).Render(r.Context(), w); err != nil {
 		slog.Error(err.Error())
 	}
 }

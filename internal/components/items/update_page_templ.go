@@ -8,14 +8,11 @@ package itemcomponents
 import "github.com/a-h/templ"
 import templruntime "github.com/a-h/templ/runtime"
 
-import (
-	"github.com/tksasha/balance/internal/decorators"
-	"github.com/tksasha/balance/internal/models"
-)
+import "github.com/tksasha/balance/internal/decorators"
 
 var handle = templ.NewOnceHandle()
 
-func UpdatePage(currency models.Currency, item *decorators.ItemDecorator) templ.Component {
+func UpdatePage(item *decorators.ItemDecorator) templ.Component {
 	return templruntime.GeneratedTemplate(func(templ_7745c5c3_Input templruntime.GeneratedComponentInput) (templ_7745c5c3_Err error) {
 		templ_7745c5c3_W, ctx := templ_7745c5c3_Input.Writer, templ_7745c5c3_Input.Context
 		if templ_7745c5c3_CtxErr := ctx.Err(); templ_7745c5c3_CtxErr != nil {
@@ -36,7 +33,7 @@ func UpdatePage(currency models.Currency, item *decorators.ItemDecorator) templ.
 			templ_7745c5c3_Var1 = templ.NopComponent
 		}
 		ctx = templ.ClearChildren(ctx)
-		templ_7745c5c3_Err = Row(currency, item, true).Render(ctx, templ_7745c5c3_Buffer)
+		templ_7745c5c3_Err = Row(item, true).Render(ctx, templ_7745c5c3_Buffer)
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}

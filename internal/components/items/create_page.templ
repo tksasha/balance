@@ -1,18 +1,14 @@
 package itemcomponents
 
-import (
-	"github.com/tksasha/balance/internal/decorators"
-	"github.com/tksasha/balance/internal/models"
-)
+import "github.com/tksasha/balance/internal/decorators"
 
 templ CreatePage(
-	currency models.Currency,
 	items *decorators.ItemsDecorator,
 	categories *decorators.CategoriesDecorator,
 	item *decorators.ItemDecorator,
 ) {
-	@Form(currency, item, categories)
+	@Form(item, categories)
 	<div id="items" hx-swap-oob="true">
-		@Table(currency, items)
+		@Table(items)
 	</div>
 }

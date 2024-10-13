@@ -14,12 +14,14 @@ import (
 type ItemRepository struct {
 	db                 *sql.DB
 	categoryRepository *CategoryRepository
+	currencies         models.Currencies
 }
 
-func NewItemRepository(db *sql.DB) *ItemRepository {
+func NewItemRepository(db *sql.DB, currencies models.Currencies) *ItemRepository {
 	return &ItemRepository{
 		db:                 db,
 		categoryRepository: NewCategoryRepository(db),
+		currencies:         currencies,
 	}
 }
 
@@ -55,7 +57,7 @@ func (r *ItemRepository) GetItems(ctx context.Context, currency models.Currency)
 	var items []*models.Item
 
 	for rows.Next() {
-		item := models.NewItem()
+		item := models.NewItem(r.currencies)
 
 		if err := rows.Scan(&item.ID, &item.Date, &item.Sum, &item.CategoryName, &item.Description); err != nil {
 			return nil, err
@@ -81,8 +83,8 @@ func (r *ItemRepository) CreateItem(ctx context.Context, item *models.Item) erro
 
 	query := `
 		INSERT INTO
-			items (date, formula, sum, category_id, category_name, description)
-		VALUES (?, ?, ?, ?, ?, ?)
+			items (date, formula, sum, category_id, category_name, description, currency)
+		VALUES (?, ?, ?, ?, ?, ?, ?)
 	`
 
 	_, err = r.db.ExecContext(
@@ -94,6 +96,7 @@ func (r *ItemRepository) CreateItem(ctx context.Context, item *models.Item) erro
 		item.CategoryID,
 		item.CategoryName,
 		item.Description,
+		item.Currency.ID,
 	)
 	if err != nil {
 		return err
@@ -111,14 +114,15 @@ func (r *ItemRepository) GetItem(ctx context.Context, id int) (*models.Item, err
 		COALESCE(items.formula, ""),
 		items.category_id,
 		COALESCE(items.category_name, ""),
-		items.description
+		items.description,
+		items.currency
 	FROM
 		items
 	WHERE
 		items.id=?
 	`
 
-	item := models.NewItem()
+	item := models.NewItem(r.currencies)
 
 	row := r.db.QueryRowContext(ctx, query, id)
 
@@ -130,6 +134,7 @@ func (r *ItemRepository) GetItem(ctx context.Context, id int) (*models.Item, err
 		&item.CategoryID,
 		&item.CategoryName,
 		&item.Description,
+		&item.CurrencyID,
 	); err != nil {
 		if errors.Is(err, sql.ErrNoRows) {
 			return nil, internalerrors.ErrNotFound
@@ -139,6 +144,15 @@ func (r *ItemRepository) GetItem(ctx context.Context, id int) (*models.Item, err
 
 		return nil, internalerrors.ErrUnknown
 	}
+
+	currency := r.currencies.GetByID(item.CurrencyID)
+	if currency == nil {
+		slog.Error("currency not found")
+
+		return nil, internalerrors.ErrUnknown
+	}
+
+	item.SetCurrency(currency.Code)
 
 	return item, nil
 }

@@ -43,7 +43,7 @@ func TestGetItem(t *testing.T) {
 
 	t.Run("when item getter does not return any error it should return an item", func(t *testing.T) {
 		decorator := decorators.NewItemDecorator(
-			models.NewItem(),
+			&models.Item{},
 		)
 
 		itemGetter.

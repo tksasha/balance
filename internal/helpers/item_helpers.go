@@ -2,27 +2,31 @@ package helpers
 
 import (
 	"fmt"
+	"strconv"
+	"strings"
 
 	"github.com/a-h/templ"
 	"github.com/tksasha/balance/internal/decorators"
 	"github.com/tksasha/balance/internal/models"
 )
 
-func ItemsURL(currency models.Currency) templ.SafeURL {
+func ItemsURL(currency *models.Currency) templ.SafeURL {
+	if currency == nil {
+		return templ.URL("/items")
+	}
+
+	return templ.URL("/items?currency=" + strings.ToLower(currency.Code))
+}
+
+func ItemURL(item *decorators.ItemDecorator) templ.SafeURL {
 	return templ.URL(
-		fmt.Sprintf("/%s/items", currency.Name),
+		"/items/" + strconv.Itoa(item.ID),
 	)
 }
 
-func ItemURL(currency models.Currency, item *decorators.ItemDecorator) templ.SafeURL {
+func EditItemURL(item *decorators.ItemDecorator) templ.SafeURL {
 	return templ.URL(
-		fmt.Sprintf("%s/%d", ItemsURL(currency), item.ID),
-	)
-}
-
-func EditItemURL(currency models.Currency, item *decorators.ItemDecorator) templ.SafeURL {
-	return templ.URL(
-		fmt.Sprintf("%s/edit", ItemURL(currency, item)),
+		"/items/" + strconv.Itoa(item.ID) + "/edit",
 	)
 }
 

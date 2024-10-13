@@ -39,7 +39,7 @@ func TestGetItems(t *testing.T) {
 
 	t.Run("when items getter does not return an error it should return decorated items", func(t *testing.T) {
 		item := decorators.NewItemDecorator(
-			models.NewItem(),
+			&models.Item{},
 		)
 
 		items := []*models.Item{item.Item}

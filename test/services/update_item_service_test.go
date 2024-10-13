@@ -22,7 +22,7 @@ func TestUpdateItem(t *testing.T) {
 
 	ctx := context.Background()
 
-	item := models.NewItem()
+	item := &models.Item{}
 
 	t.Run("when item updater returns an error it should return an error", func(t *testing.T) {
 		itemUpdater.
