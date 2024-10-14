@@ -48,6 +48,9 @@ clear:
 	@echo "go clear"
 	@$(RM) $(OUTPUT)
 
+.PHONY: clean
+clean: clear
+
 .PHONY: gen
 gen:
 	@echo "go gen"
