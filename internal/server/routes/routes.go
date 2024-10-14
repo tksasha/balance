@@ -16,7 +16,7 @@ func New(config *config.Config, app *app.App, assets embed.FS) *http.ServeMux {
 
 	mux.Handle("GET /assets/", http.FileServerFS(assets))
 
-	mux.Handle("GET /{$}", handlers.NewIndexHandler(app))
+	mux.Handle("GET /", handlers.NewIndexHandler(app))
 
 	mux.Handle("GET /items", handlers.NewGetItemsHandler(app))
 
