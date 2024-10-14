@@ -2,8 +2,6 @@ package server
 
 import (
 	"context"
-	"embed"
-	"log"
 	"log/slog"
 	"net/http"
 	"os"
@@ -13,40 +11,31 @@ import (
 
 	"github.com/tksasha/balance/internal/config"
 	"github.com/tksasha/balance/internal/server/app"
-	"github.com/tksasha/balance/internal/server/db"
-	"github.com/tksasha/balance/internal/server/env"
-	"github.com/tksasha/balance/internal/server/middlewares"
-	"github.com/tksasha/balance/internal/server/routes"
-	"github.com/tksasha/balance/internal/server/workdir"
 )
 
 const shutdownTimeout = 5 * time.Second
 
-//go:embed assets
-var assets embed.FS
+type Server struct {
+	app     *app.App
+	config  *config.Config
+	routes  *http.ServeMux
+	handler http.Handler
+}
 
-type Server struct{}
-
-func Run(config *config.Config) {
-	ctx := context.Background()
-
-	db, err := db.Open(ctx, workdir.New(), env.Get())
-	if err != nil {
-		log.Fatalf("open db error: %v", err)
+func New(app *app.App, config *config.Config, routes *http.ServeMux, handler http.Handler) *Server {
+	return &Server{
+		app:     app,
+		config:  config,
+		routes:  routes,
+		handler: handler,
 	}
+}
 
-	app := app.New(db)
-
-	router := routes.New(config, app, assets)
-
-	handler := middlewares.RecoveryMiddleware(
-		middlewares.NewCurrencyMiddleware(app).Wrap(router),
-	)
-
+func (s *Server) Run() {
 	server := http.Server{
-		Addr:              config.Address,
+		Addr:              s.config.Address,
 		ReadHeaderTimeout: 1 * time.Second,
-		Handler:           handler,
+		Handler:           s.handler,
 	}
 
 	startingServerErrors := make(chan error, 1)

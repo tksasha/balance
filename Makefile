@@ -6,6 +6,7 @@ OUTPUT=balance
 RM=rm -f
 TEMPL=github.com/a-h/templ/cmd/templ@latest
 MOCKGEN=go.uber.org/mock/mockgen@latest
+WIRE=github.com/google/wire/cmd/wire@latest
 
 .PHONY: default
 default: gen vet fix fmt lint test
@@ -52,7 +53,7 @@ clear:
 clean: clear
 
 .PHONY: gen
-gen:
+gen: wiregen
 	@echo "go gen"
 	@$(GO) run $(TEMPL) generate
 
@@ -76,3 +77,7 @@ mockgen:
 	-source internal/services/interfaces.go \
 	-package mockedservices \
 	-destination mocks/services/interfaces.mock.go
+
+.PHONY: wiregen
+wiregen:
+	@$(GO) run $(WIRE) gen internal/server/server.go internal/server/wire.go

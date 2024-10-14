@@ -9,7 +9,10 @@ import (
 	"github.com/tksasha/balance/internal/server/app"
 )
 
-func New(config *config.Config, app *app.App, assets embed.FS) *http.ServeMux {
+//go:embed assets
+var assets embed.FS
+
+func New(config *config.Config, app *app.App) *http.ServeMux {
 	mux := http.NewServeMux()
 
 	mux.Handle("GET /assets/{$}", http.RedirectHandler("/", http.StatusMovedPermanently))
