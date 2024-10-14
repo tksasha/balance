@@ -12,8 +12,8 @@ import (
 )
 
 type GetItemsHandler struct {
-	itemsGetter services.ItemsGetter
-	currency    models.Currency
+	itemsGetter     services.ItemsGetter
+	defaultCurrency *models.Currency
 }
 
 func NewGetItemsHandler(app *app.App) http.Handler {
@@ -21,14 +21,14 @@ func NewGetItemsHandler(app *app.App) http.Handler {
 		itemsGetter: services.NewGetItemsService(
 			repositories.NewItemRepository(app.DB, app.Currencies),
 		),
-		currency: app.Currency,
+		defaultCurrency: app.DefaultCurrency,
 	}
 }
 
 func (h *GetItemsHandler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
-	currency, ok := r.Context().Value(models.CurrencyContextValue{}).(models.Currency)
+	currency, ok := r.Context().Value(models.CurrencyContextValue{}).(*models.Currency)
 	if !ok {
-		currency = h.currency
+		currency = h.defaultCurrency
 	}
 
 	items, err := h.itemsGetter.GetItems(r.Context(), currency)

@@ -26,7 +26,7 @@ func NewItemRepository(db *sql.DB, currencies models.Currencies) *ItemRepository
 	}
 }
 
-func (r *ItemRepository) GetItems(ctx context.Context, currency models.Currency) ([]*models.Item, error) {
+func (r *ItemRepository) GetItems(ctx context.Context, currency *models.Currency) ([]*models.Item, error) {
 	query := `
 		SELECT
 			items.id,

@@ -18,7 +18,7 @@ func NewGetItemsService(itemsGetter repositories.ItemsGetter) ItemsGetter {
 	}
 }
 
-func (s *GetItemsService) GetItems(ctx context.Context, currency models.Currency) (*decorators.ItemsDecorator, error) {
+func (s *GetItemsService) GetItems(ctx context.Context, currency *models.Currency) (*decorators.ItemsDecorator, error) {
 	items, err := s.itemsGetter.GetItems(ctx, currency)
 	if err != nil {
 		return nil, err

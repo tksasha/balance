@@ -16,7 +16,7 @@ type CreateItemHandler struct {
 	itemCreator      repositories.ItemCreator
 	itemsGetter      services.ItemsGetter
 	categoriesGetter services.CategoriesGetter
-	currency         models.Currency
+	defaultCurrency  *models.Currency
 	currencies       models.Currencies
 }
 
@@ -29,8 +29,8 @@ func NewCreateItemHandler(app *app.App) http.Handler {
 		categoriesGetter: services.NewGetCategoriesService(
 			repositories.NewCategoryRepository(app.DB),
 		),
-		currency:   app.Currency,
-		currencies: app.Currencies,
+		defaultCurrency: app.DefaultCurrency,
+		currencies:      app.Currencies,
 	}
 }
 

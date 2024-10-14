@@ -2,13 +2,13 @@
 
 //go:generate go run -mod=mod github.com/google/wire/cmd/wire
 //go:build !wireinject
-// +build !wireinject
 
 package server
 
 import (
 	"github.com/tksasha/balance/internal/config"
 	"github.com/tksasha/balance/internal/handlers"
+	"github.com/tksasha/balance/internal/models"
 	"github.com/tksasha/balance/internal/server/app"
 	"github.com/tksasha/balance/internal/server/db"
 	"github.com/tksasha/balance/internal/server/middlewares"
@@ -20,7 +20,9 @@ import (
 func Initialize() *Server {
 	configConfig := config.New()
 	sqlDB := db.Open()
-	appApp := app.New(sqlDB)
+	currencies := models.NewCurrencies()
+	currency := models.NewDefaultCurrency()
+	appApp := app.New(sqlDB, currencies, currency)
 	handlersHandlers := handlers.New(appApp)
 	serveMux := routes.New(handlersHandlers)
 	handler := middlewares.New(appApp, serveMux)

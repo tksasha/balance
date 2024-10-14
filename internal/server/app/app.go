@@ -7,28 +7,15 @@ import (
 )
 
 type App struct {
-	DB         *sql.DB
-	Currencies models.Currencies
-	Currency   models.Currency
+	DB              *sql.DB
+	Currencies      models.Currencies
+	DefaultCurrency *models.Currency
 }
 
-func New(db *sql.DB) *App {
+func New(db *sql.DB, currencies models.Currencies, defaultCurrency *models.Currency) *App {
 	return &App{
-		DB: db,
-		Currencies: models.Currencies{
-			"UAH": {
-				ID:   0,
-				Code: "UAH",
-			},
-			"USD": {
-				ID:   1,
-				Code: "USD",
-			},
-			"EUR": {
-				ID:   3, //nolint:mnd
-				Code: "EUR",
-			},
-		},
-		Currency: models.Currency{ID: 0, Code: "UAH"}, // default currency
+		DB:              db,
+		Currencies:      currencies,
+		DefaultCurrency: defaultCurrency,
 	}
 }

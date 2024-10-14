@@ -41,7 +41,7 @@ func (m *MockItemsGetter) EXPECT() *MockItemsGetterMockRecorder {
 }
 
 // GetItems mocks base method.
-func (m *MockItemsGetter) GetItems(ctx context.Context, currency models.Currency) ([]*models.Item, error) {
+func (m *MockItemsGetter) GetItems(ctx context.Context, currency *models.Currency) ([]*models.Item, error) {
 	m.ctrl.T.Helper()
 	ret := m.ctrl.Call(m, "GetItems", ctx, currency)
 	ret0, _ := ret[0].([]*models.Item)

@@ -16,7 +16,7 @@ import (
 type EditItemHandler struct {
 	itemGetter       services.ItemGetter
 	categoriesGetter services.CategoriesGetter
-	currency         models.Currency
+	defaultCurrency  *models.Currency
 }
 
 func NewEditItemHandler(app *app.App) http.Handler {
@@ -27,14 +27,14 @@ func NewEditItemHandler(app *app.App) http.Handler {
 		categoriesGetter: services.NewGetCategoriesService(
 			repositories.NewCategoryRepository(app.DB),
 		),
-		currency: app.Currency,
+		defaultCurrency: app.DefaultCurrency,
 	}
 }
 
 func (h *EditItemHandler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
-	currency, ok := r.Context().Value(models.CurrencyContextValue{}).(models.Currency)
+	currency, ok := r.Context().Value(models.CurrencyContextValue{}).(*models.Currency)
 	if !ok {
-		currency = h.currency
+		currency = h.defaultCurrency
 	}
 
 	item, err := h.itemGetter.GetItem(r.Context(), r.PathValue("id"))

@@ -24,7 +24,7 @@ func TestGetItems(t *testing.T) {
 
 	ctx := context.Background()
 
-	currency := models.Currency{}
+	currency := &models.Currency{}
 
 	t.Run("when items getter returns an error it should return an error", func(t *testing.T) {
 		itemsGetter.

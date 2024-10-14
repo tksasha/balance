@@ -6,3 +6,7 @@ type Currency struct {
 }
 
 type CurrencyContextValue struct{}
+
+func NewDefaultCurrency() *Currency {
+	return &Currency{ID: 0, Code: "UAH"}
+}

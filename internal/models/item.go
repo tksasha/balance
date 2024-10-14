@@ -19,7 +19,7 @@ type Item struct {
 	CategoryID   int
 	CategoryName string
 	Description  string
-	Currency     Currency
+	Currency     *Currency
 	currencies   Currencies
 	CurrencyID   int
 }

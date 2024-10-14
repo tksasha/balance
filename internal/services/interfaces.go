@@ -8,7 +8,7 @@ import (
 )
 
 type ItemsGetter interface {
-	GetItems(ctx context.Context, currency models.Currency) (*decorators.ItemsDecorator, error)
+	GetItems(ctx context.Context, currency *models.Currency) (*decorators.ItemsDecorator, error)
 }
 
 type ItemGetter interface {

@@ -17,7 +17,7 @@ type UpdateItemHandler struct {
 	itemGetter       services.ItemGetter
 	itemUpdater      services.ItemUpdater
 	categoriesGetter services.CategoriesGetter
-	currency         models.Currency
+	defaultCurrency  *models.Currency
 }
 
 func NewUpdateItemHandler(app *app.App) http.Handler {
@@ -29,15 +29,15 @@ func NewUpdateItemHandler(app *app.App) http.Handler {
 		categoriesGetter: services.NewGetCategoriesService(
 			repositories.NewCategoryRepository(app.DB),
 		),
-		currency: app.Currency,
+		defaultCurrency: app.DefaultCurrency,
 	}
 }
 
 //nolint:funlen,cyclop
 func (h *UpdateItemHandler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
-	currency, ok := r.Context().Value(models.CurrencyContextValue{}).(models.Currency)
+	currency, ok := r.Context().Value(models.CurrencyContextValue{}).(*models.Currency)
 	if !ok {
-		currency = h.currency
+		currency = h.defaultCurrency
 	}
 
 	item, err := h.itemGetter.GetItem(r.Context(), r.PathValue("id"))

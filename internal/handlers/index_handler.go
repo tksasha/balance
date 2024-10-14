@@ -15,7 +15,7 @@ import (
 
 type IndexHandler struct {
 	categoriesGetter services.CategoriesGetter
-	currency         models.Currency
+	defaultCurrency  *models.Currency
 	currencies       models.Currencies
 }
 
@@ -24,8 +24,8 @@ func NewIndexHandler(app *app.App) http.Handler {
 		categoriesGetter: services.NewGetCategoriesService(
 			repositories.NewCategoryRepository(app.DB),
 		),
-		currency:   app.Currency,
-		currencies: app.Currencies,
+		defaultCurrency: app.DefaultCurrency,
+		currencies:      app.Currencies,
 	}
 }
 
@@ -40,9 +40,9 @@ func (h *IndexHandler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 func (h *IndexHandler) handle(w http.ResponseWriter, r *http.Request) error {
 	ctx := r.Context()
 
-	currency, ok := ctx.Value(models.CurrencyContextValue{}).(models.Currency)
+	currency, ok := ctx.Value(models.CurrencyContextValue{}).(*models.Currency)
 	if !ok {
-		currency = h.currency
+		currency = h.defaultCurrency
 	}
 
 	categories, err := h.categoriesGetter.GetCategories(ctx, currency.ID)

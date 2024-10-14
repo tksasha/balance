@@ -17,7 +17,7 @@ import (
 )
 
 func IndexPage(
-	currency models.Currency,
+	currency *models.Currency,
 	categories *decorators.CategoriesDecorator,
 	item *decorators.ItemDecorator,
 ) templ.Component {
@@ -54,9 +54,9 @@ func IndexPage(
 			return templ_7745c5c3_Err
 		}
 		var templ_7745c5c3_Var2 string
-		templ_7745c5c3_Var2, templ_7745c5c3_Err = templ.JoinStringErrs(string(h.ItemsURL(&currency)))
+		templ_7745c5c3_Var2, templ_7745c5c3_Err = templ.JoinStringErrs(string(h.ItemsURL(currency)))
 		if templ_7745c5c3_Err != nil {
-			return templ.Error{Err: templ_7745c5c3_Err, FileName: `internal/components/index/index_page.templ`, Line: 37, Col: 46}
+			return templ.Error{Err: templ_7745c5c3_Err, FileName: `internal/components/index/index_page.templ`, Line: 37, Col: 45}
 		}
 		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var2))
 		if templ_7745c5c3_Err != nil {

@@ -10,14 +10,14 @@ import (
 )
 
 type CurrencyMiddleware struct {
-	currencies models.Currencies
-	currency   models.Currency
+	currencies      models.Currencies
+	defaultCurrency *models.Currency
 }
 
 func NewCurrencyMiddleware(app *app.App) *CurrencyMiddleware {
 	return &CurrencyMiddleware{
-		currencies: app.Currencies,
-		currency:   app.Currency, // default currency
+		currencies:      app.Currencies,
+		defaultCurrency: app.DefaultCurrency,
 	}
 }
 
@@ -29,7 +29,7 @@ func (m *CurrencyMiddleware) Wrap(next http.Handler) http.Handler {
 
 		currency, ok := m.currencies[currencyCode]
 		if !ok {
-			currency = m.currency // set default currency
+			currency = m.defaultCurrency // set default currency
 		}
 
 		ctx := context.WithValue(r.Context(), models.CurrencyContextValue{}, currency)
