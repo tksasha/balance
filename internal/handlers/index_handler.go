@@ -1,6 +1,8 @@
 package handlers
 
 import (
+	"fmt"
+	"log/slog"
 	"net/http"
 
 	indexcomponents "github.com/tksasha/balance/internal/components/index"
@@ -28,21 +30,33 @@ func NewIndexHandler(app *app.App) http.Handler {
 }
 
 func (h *IndexHandler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
-	currency, ok := r.Context().Value(models.CurrencyContextValue{}).(models.Currency)
+	if err := h.handle(w, r); err != nil {
+		slog.Error("index handler error", "error", err)
+
+		http.Error(w, "Internal Server Error", http.StatusInternalServerError)
+	}
+}
+
+func (h *IndexHandler) handle(w http.ResponseWriter, r *http.Request) error {
+	ctx := r.Context()
+
+	currency, ok := ctx.Value(models.CurrencyContextValue{}).(models.Currency)
 	if !ok {
 		currency = h.currency
 	}
 
-	categories, err := h.categoriesGetter.GetCategories(r.Context(), currency.ID)
+	categories, err := h.categoriesGetter.GetCategories(ctx, currency.ID)
 	if err != nil {
-		panic(err)
+		return fmt.Errorf("failed to get categories: %w", err)
 	}
 
 	itemDecorator := decorators.NewItemDecorator(
 		models.NewItem(h.currencies).SetCurrency(currency.Code),
 	)
 
-	if err := indexcomponents.IndexPage(currency, categories, itemDecorator).Render(r.Context(), w); err != nil {
-		panic(err)
+	if err := indexcomponents.IndexPage(currency, categories, itemDecorator).Render(ctx, w); err != nil {
+		return fmt.Errorf("failed to render index page: %w", err)
 	}
+
+	return nil
 }
