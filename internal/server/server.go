@@ -30,12 +30,7 @@ type Server struct{}
 func Run(config *config.Config) {
 	ctx := context.Background()
 
-	workdir, err := workdir.New()
-	if err != nil {
-		log.Fatalf("workdir initialize error: %v", err)
-	}
-
-	db, err := db.Open(ctx, workdir, env.Get())
+	db, err := db.Open(ctx, workdir.New(), env.Get())
 	if err != nil {
 		log.Fatalf("open db error: %v", err)
 	}

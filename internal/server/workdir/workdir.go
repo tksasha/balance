@@ -6,17 +6,17 @@ import (
 
 const NAME = ".balance"
 
-func New() (string, error) {
+func New() string {
 	userHomeDir, err := os.UserHomeDir()
 	if err != nil {
-		return "", err
+		panic(err)
 	}
 
 	workdir := userHomeDir + string(os.PathSeparator) + NAME
 
 	if err := os.MkdirAll(workdir, 0o750); err != nil { //nolint:mnd
-		return "", err
+		panic(err)
 	}
 
-	return workdir, nil
+	return workdir
 }
