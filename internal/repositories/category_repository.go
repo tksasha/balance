@@ -4,7 +4,6 @@ import (
 	"context"
 	"database/sql"
 	"errors"
-	"log/slog"
 
 	internalerrors "github.com/tksasha/balance/internal/errors"
 	"github.com/tksasha/balance/internal/models"
@@ -40,9 +39,7 @@ func (r *CategoryRepository) GetCategory(ctx context.Context, id int) (*models.C
 			return nil, internalerrors.ErrNotFound
 		}
 
-		slog.Error(err.Error())
-
-		return nil, internalerrors.ErrUnknown
+		panic(err)
 	}
 
 	return &category, nil
@@ -71,7 +68,7 @@ func (r *CategoryRepository) GetCategories(ctx context.Context, currency int) ([
 
 	defer func() {
 		if err := rows.Close(); err != nil {
-			slog.Error(err.Error())
+			panic(err)
 		}
 	}()
 

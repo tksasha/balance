@@ -1,7 +1,6 @@
 package handlers
 
 import (
-	"log/slog"
 	"net/http"
 
 	indexcomponents "github.com/tksasha/balance/internal/components/index"
@@ -36,11 +35,7 @@ func (h *IndexHandler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 
 	categories, err := h.categoriesGetter.GetCategories(r.Context(), currency.ID)
 	if err != nil {
-		slog.Error(err.Error())
-
-		w.WriteHeader(http.StatusInternalServerError)
-
-		return
+		panic(err)
 	}
 
 	itemDecorator := decorators.NewItemDecorator(
@@ -48,6 +43,6 @@ func (h *IndexHandler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 	)
 
 	if err := indexcomponents.IndexPage(currency, categories, itemDecorator).Render(r.Context(), w); err != nil {
-		slog.Error(err.Error())
+		panic(err)
 	}
 }

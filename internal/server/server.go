@@ -44,7 +44,9 @@ func Run(config *config.Config) {
 
 	router := routes.New(config, app, assets)
 
-	handler := middlewares.NewCurrencyMiddleware(app).Wrap(router)
+	handler := middlewares.RecoveryMiddleware(
+		middlewares.NewCurrencyMiddleware(app).Wrap(router),
+	)
 
 	server := http.Server{
 		Addr:              config.Address,
