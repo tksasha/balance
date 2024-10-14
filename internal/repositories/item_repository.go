@@ -4,6 +4,7 @@ import (
 	"context"
 	"database/sql"
 	"errors"
+	"fmt"
 	"log/slog"
 	"time"
 
@@ -50,7 +51,7 @@ func (r *ItemRepository) GetItems(ctx context.Context, currency models.Currency)
 
 	defer func() {
 		if err := rows.Close(); err != nil {
-			slog.Error(err.Error())
+			slog.Error("failed to close rows", "error", err)
 		}
 	}()
 
@@ -67,7 +68,7 @@ func (r *ItemRepository) GetItems(ctx context.Context, currency models.Currency)
 	}
 
 	if err := rows.Err(); err != nil {
-		slog.Error(err.Error())
+		return nil, err
 	}
 
 	return items, nil
@@ -140,16 +141,14 @@ func (r *ItemRepository) GetItem(ctx context.Context, id int) (*models.Item, err
 			return nil, internalerrors.ErrNotFound
 		}
 
-		slog.Error(err.Error())
-
-		return nil, internalerrors.ErrUnknown
+		return nil, err
 	}
 
 	currency := r.currencies.GetByID(item.CurrencyID)
 	if currency == nil {
-		slog.Error("currency not found")
-
-		return nil, internalerrors.ErrUnknown
+		return nil, internalerrors.NewNotFoundError(
+			fmt.Sprintf("currency not found, id: %d", item.CurrencyID),
+		)
 	}
 
 	item.SetCurrency(currency.Code)
@@ -179,7 +178,9 @@ func (r *ItemRepository) UpdateItem(ctx context.Context, item *models.Item) erro
 			id=?
 	`
 
-	if _, err := r.db.ExecContext(
+	var result sql.Result
+
+	result, err = r.db.ExecContext(
 		ctx,
 		query,
 		item.Date,
@@ -189,10 +190,20 @@ func (r *ItemRepository) UpdateItem(ctx context.Context, item *models.Item) erro
 		item.CategoryName,
 		item.Description,
 		item.ID,
-	); err != nil {
-		slog.Error(err.Error())
-
+	)
+	if err != nil {
 		return err
+	}
+
+	var rowsAffected int64
+
+	rowsAffected, err = result.RowsAffected()
+	if err != nil {
+		return err
+	}
+
+	if rowsAffected == 0 {
+		return internalerrors.ErrNotFound
 	}
 
 	return nil
@@ -209,8 +220,6 @@ func (r *ItemRepository) DeleteItem(ctx context.Context, item *models.Item) erro
 	`
 
 	if _, err := r.db.ExecContext(ctx, query, time.Now(), item.ID); err != nil {
-		slog.Error(err.Error())
-
 		if errors.Is(err, sql.ErrNoRows) {
 			return internalerrors.ErrNotFound
 		}
