@@ -10,23 +10,18 @@ import (
 	"time"
 
 	"github.com/tksasha/balance/internal/config"
-	"github.com/tksasha/balance/internal/server/app"
 )
 
 const shutdownTimeout = 5 * time.Second
 
 type Server struct {
-	app     *app.App
 	config  *config.Config
-	routes  *http.ServeMux
 	handler http.Handler
 }
 
-func New(app *app.App, config *config.Config, routes *http.ServeMux, handler http.Handler) *Server {
+func New(config *config.Config, handler http.Handler) *Server {
 	return &Server{
-		app:     app,
 		config:  config,
-		routes:  routes,
 		handler: handler,
 	}
 }

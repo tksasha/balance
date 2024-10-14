@@ -2,7 +2,6 @@
 
 //go:generate go run -mod=mod github.com/google/wire/cmd/wire
 //go:build !wireinject
-// +build !wireinject
 
 package server
 
@@ -17,11 +16,11 @@ import (
 // Injectors from wire.go:
 
 func Initialize() *Server {
+	configConfig := config.New()
 	sqlDB := db.Open()
 	appApp := app.New(sqlDB)
-	configConfig := config.New()
 	serveMux := routes.New(configConfig, appApp)
 	handler := middlewares.New(appApp, serveMux)
-	server := New(appApp, configConfig, serveMux, handler)
+	server := New(configConfig, handler)
 	return server
 }
