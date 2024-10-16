@@ -65,4 +65,7 @@ mockgen:
 
 .PHONY: wiregen
 wiregen:
-	@$(GO) run $(WIRE) gen internal/server/server.go internal/server/wire.go
+	@$(GO) run $(WIRE) gen \
+		internal/server/router.go \
+		internal/server/server.go \
+		internal/server/wire.go \

@@ -6,12 +6,11 @@ import (
 	"strings"
 
 	"github.com/tksasha/balance/internal/models"
-	"github.com/tksasha/balance/internal/server/app"
 )
 
 type CurrencyMiddleware struct{}
 
-func NewCurrencyMiddleware(app *app.App) *CurrencyMiddleware {
+func NewCurrencyMiddleware() *CurrencyMiddleware {
 	return &CurrencyMiddleware{}
 }
 

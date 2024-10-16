@@ -9,7 +9,7 @@ import (
 
 type IndexPageHandler struct{}
 
-func NewIndexPageHandler() http.Handler {
+func NewIndexPageHandler() *IndexPageHandler {
 	return &IndexPageHandler{}
 }
 

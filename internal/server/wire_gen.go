@@ -8,10 +8,10 @@ package server
 
 import (
 	"github.com/tksasha/balance/internal/config"
+	"github.com/tksasha/balance/internal/handlers"
+	"github.com/tksasha/balance/internal/middlewares"
 	"github.com/tksasha/balance/internal/server/app"
 	"github.com/tksasha/balance/internal/server/db"
-	"github.com/tksasha/balance/internal/server/middlewares"
-	"github.com/tksasha/balance/internal/server/routes"
 )
 
 // Injectors from wire.go:
@@ -20,8 +20,10 @@ func InitializeServer() *Server {
 	configConfig := config.New()
 	sqlDB := db.Open()
 	appApp := app.New(sqlDB)
-	routesRoutes := routes.New()
-	middlewaresMiddlewares := middlewares.New(appApp, routesRoutes)
-	server := New(configConfig, middlewaresMiddlewares)
+	indexPageHandler := handlers.NewIndexPageHandler(appApp)
+	recoveryMiddleware := middlewares.NewRecoveryMiddleware()
+	currencyMiddleware := middlewares.NewCurrencyMiddleware(appApp)
+	router := NewRouter(indexPageHandler, recoveryMiddleware, currencyMiddleware)
+	server := New(configConfig, router)
 	return server
 }

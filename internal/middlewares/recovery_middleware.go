@@ -7,7 +7,13 @@ import (
 	"runtime/debug"
 )
 
-func RecoveryMiddleware(next http.Handler) http.Handler {
+type RecoveryMiddleware struct{}
+
+func NewRecoveryMiddleware() *RecoveryMiddleware {
+	return &RecoveryMiddleware{}
+}
+
+func (m *RecoveryMiddleware) Wrap(next http.Handler) http.Handler {
 	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 		defer func() {
 			if err := recover(); err != nil {

@@ -10,7 +10,6 @@ import (
 	"time"
 
 	"github.com/tksasha/balance/internal/config"
-	"github.com/tksasha/balance/internal/server/middlewares"
 )
 
 const shutdownTimeout = 5 * time.Second
@@ -20,10 +19,10 @@ type Server struct {
 	handler http.Handler
 }
 
-func New(config *config.Config, middlewares *middlewares.Middlewares) *Server {
+func New(config *config.Config, router *Router) *Server {
 	return &Server{
 		config:  config,
-		handler: middlewares.GetHandler(),
+		handler: router.GetHandler(),
 	}
 }
 

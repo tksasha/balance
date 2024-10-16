@@ -5,20 +5,18 @@ package server
 import (
 	"github.com/google/wire"
 	"github.com/tksasha/balance/internal/config"
-	"github.com/tksasha/balance/internal/server/app"
-	"github.com/tksasha/balance/internal/server/db"
-	"github.com/tksasha/balance/internal/server/middlewares"
-	"github.com/tksasha/balance/internal/server/routes"
+	"github.com/tksasha/balance/internal/handlers"
+	"github.com/tksasha/balance/internal/middlewares"
 )
 
 func InitializeServer() *Server {
 	wire.Build(
 		New,
-		app.New,
 		config.New,
-		db.Open,
-		middlewares.New,
-		routes.New,
+		handlers.NewIndexPageHandler,
+		middlewares.NewCurrencyMiddleware,
+		middlewares.NewRecoveryMiddleware,
+		NewRouter,
 	)
 
 	return &Server{}
