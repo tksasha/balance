@@ -4,12 +4,11 @@ FORMATTER=mvdan.cc/gofumpt@latest
 MAIN=cmd/balance/main.go
 OUTPUT=balance
 RM=rm -f
-TEMPL=github.com/a-h/templ/cmd/templ@latest
 MOCKGEN=go.uber.org/mock/mockgen@latest
 WIRE=github.com/google/wire/cmd/wire@latest
 
 .PHONY: default
-default: gen vet fix fmt lint test
+default: vet fix fmt lint test
 
 .PHONY: vet
 vet:
@@ -22,7 +21,9 @@ fix:
 	@$(GO) fix ./...
 
 .PHONY: fmt
-fmt: gofmt templfmt
+fmt:
+	@echo "go fmt"
+	@$(GO) run $(FORMATTER) -l -w .
 
 .PHONY: lint
 lint:
@@ -35,7 +36,7 @@ test:
 	@$(GO) test ./test/...
 
 .PHONY: run
-run: gen vet
+run:
 	@echo "go run"
 	@$(GO) run $(MAIN)
 
@@ -53,30 +54,14 @@ clear:
 clean: clear
 
 .PHONY: gen
-gen: wiregen
-	@echo "go gen"
-	@$(GO) run $(TEMPL) generate
-
-.PHONY: gofmt
-gofmt:
-			@echo "go fmt"
-			@$(GO) run $(FORMATTER) -l -w .
-
-.PHONY: templfmt
-templfmt:
-			@$(GO) run $(TEMPL) fmt .
+gen: mockgen wiregen
 
 .PHONY: mockgen
 mockgen:
 	@$(GO) run $(MOCKGEN) \
-	-source internal/repositories/interfaces.go \
-	-package mockedrepositories \
-	-destination mocks/repositories/interfaces.mock.go
-
-	@$(GO) run $(MOCKGEN) \
-	-source internal/services/interfaces.go \
-	-package mockedservices \
-	-destination mocks/services/interfaces.mock.go
+		-source internal/repositories/interfaces.go \
+		-package mockedrepositories \
+		-destination mocks/repositories/interfaces.mock.go
 
 .PHONY: wiregen
 wiregen:

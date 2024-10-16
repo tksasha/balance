@@ -6,6 +6,6 @@ import (
 
 func main() {
 	server.
-		Initialize().
+		InitializeServer().
 		Run()
 }

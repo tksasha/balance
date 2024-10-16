@@ -5,3 +5,5 @@ type Category struct {
 	Name   string
 	Income bool
 }
+
+type Categories []*Category

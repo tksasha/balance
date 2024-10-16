@@ -4,7 +4,6 @@ import (
 	"testing"
 
 	"github.com/a-h/templ"
-	"github.com/tksasha/balance/internal/decorators"
 	"github.com/tksasha/balance/internal/helpers"
 	"github.com/tksasha/balance/internal/models"
 	"gotest.tools/v3/assert"
@@ -12,9 +11,9 @@ import (
 
 func TestItemsURL(t *testing.T) {
 	t.Run("when currency is provided it should return url with currency", func(t *testing.T) {
-		currency := &models.Currency{Code: "EUR"}
+		currency := "eur"
 
-		res := helpers.ItemsURL(currency)
+		res := helpers.ItemsURL(&currency)
 
 		exp := templ.URL("/items?currency=eur")
 
@@ -31,11 +30,9 @@ func TestItemsURL(t *testing.T) {
 }
 
 func TestItemURL(t *testing.T) {
-	item := decorators.NewItemDecorator(
-		&models.Item{
-			ID: 1331,
-		},
-	)
+	item := &models.Item{
+		ID: 1331,
+	}
 
 	res := helpers.ItemURL(item)
 
@@ -45,11 +42,9 @@ func TestItemURL(t *testing.T) {
 }
 
 func TestEditItemURL(t *testing.T) {
-	item := decorators.NewItemDecorator(
-		&models.Item{
-			ID: 1409,
-		},
-	)
+	item := &models.Item{
+		ID: 1409,
+	}
 
 	res := helpers.EditItemURL(item)
 

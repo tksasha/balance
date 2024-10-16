@@ -6,30 +6,29 @@ import (
 	"strings"
 
 	"github.com/a-h/templ"
-	"github.com/tksasha/balance/internal/decorators"
 	"github.com/tksasha/balance/internal/models"
 )
 
-func ItemsURL(currency *models.Currency) templ.SafeURL {
+func ItemsURL(currency *string) templ.SafeURL {
 	if currency == nil {
 		return templ.URL("/items")
 	}
 
-	return templ.URL("/items?currency=" + strings.ToLower(currency.Code))
+	return templ.URL("/items?currency=" + strings.ToLower(*currency))
 }
 
-func ItemURL(item *decorators.ItemDecorator) templ.SafeURL {
+func ItemURL(item *models.Item) templ.SafeURL {
 	return templ.URL(
 		"/items/" + strconv.Itoa(item.ID),
 	)
 }
 
-func EditItemURL(item *decorators.ItemDecorator) templ.SafeURL {
+func EditItemURL(item *models.Item) templ.SafeURL {
 	return templ.URL(
 		"/items/" + strconv.Itoa(item.ID) + "/edit",
 	)
 }
 
-func ItemID(item *decorators.ItemDecorator) string {
+func ItemID(item *models.Item) string {
 	return fmt.Sprintf("item_%d", item.ID)
 }

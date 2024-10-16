@@ -27,5 +27,7 @@ linters:
     - wrapcheck
 issues:
   exclude-use-default: false
-  exclude:
-  exclude-files:
+  exclude-rules:
+    - path: _test\.go
+      linters:
+        - err113

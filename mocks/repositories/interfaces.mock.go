@@ -41,10 +41,10 @@ func (m *MockItemsGetter) EXPECT() *MockItemsGetterMockRecorder {
 }
 
 // GetItems mocks base method.
-func (m *MockItemsGetter) GetItems(ctx context.Context, currency *models.Currency) ([]*models.Item, error) {
+func (m *MockItemsGetter) GetItems(ctx context.Context, currency models.Currency) (models.Items, error) {
 	m.ctrl.T.Helper()
 	ret := m.ctrl.Call(m, "GetItems", ctx, currency)
-	ret0, _ := ret[0].([]*models.Item)
+	ret0, _ := ret[0].(models.Items)
 	ret1, _ := ret[1].(error)
 	return ret0, ret1
 }
@@ -228,10 +228,10 @@ func (m *MockCategoriesGetter) EXPECT() *MockCategoriesGetterMockRecorder {
 }
 
 // GetCategories mocks base method.
-func (m *MockCategoriesGetter) GetCategories(ctx context.Context, currency int) ([]*models.Category, error) {
+func (m *MockCategoriesGetter) GetCategories(ctx context.Context, currency models.Currency) (models.Categories, error) {
 	m.ctrl.T.Helper()
 	ret := m.ctrl.Call(m, "GetCategories", ctx, currency)
-	ret0, _ := ret[0].([]*models.Category)
+	ret0, _ := ret[0].(models.Categories)
 	ret1, _ := ret[1].(error)
 	return ret0, ret1
 }

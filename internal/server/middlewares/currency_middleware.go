@@ -9,30 +9,24 @@ import (
 	"github.com/tksasha/balance/internal/server/app"
 )
 
-type CurrencyMiddleware struct {
-	currencies      models.Currencies
-	defaultCurrency *models.Currency
-}
+type CurrencyMiddleware struct{}
 
 func NewCurrencyMiddleware(app *app.App) *CurrencyMiddleware {
-	return &CurrencyMiddleware{
-		currencies:      app.Currencies,
-		defaultCurrency: app.DefaultCurrency,
-	}
+	return &CurrencyMiddleware{}
 }
 
 func (m *CurrencyMiddleware) Wrap(next http.Handler) http.Handler {
 	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
-		currencyCode := strings.ToUpper(
+		code := strings.ToUpper(
 			r.URL.Query().Get("currency"),
 		)
 
-		currency, ok := m.currencies[currencyCode]
-		if !ok {
-			currency = m.defaultCurrency // set default currency
+		currency := models.GetCurrencyByCode(code)
+		if currency == 0 {
+			_, code = models.GetDefaultCurrency()
 		}
 
-		ctx := context.WithValue(r.Context(), models.CurrencyContextValue{}, currency)
+		ctx := context.WithValue(r.Context(), models.CurrencyContextValue{}, code)
 
 		r = r.WithContext(ctx)
 
