@@ -10,7 +10,13 @@ import (
 //go:embed assets
 var assets embed.FS
 
-func New() *http.ServeMux {
+type Routes struct{}
+
+func New() *Routes {
+	return &Routes{}
+}
+
+func (r *Routes) GetServeMux() *http.ServeMux {
 	mux := http.NewServeMux()
 
 	mux.Handle("GET /assets/{$}", http.RedirectHandler("/", http.StatusMovedPermanently))
