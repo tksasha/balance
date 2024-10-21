@@ -13,37 +13,10 @@ import (
 	"gotest.tools/v3/assert"
 )
 
-type itemServiceTestContext struct {
-	service     *services.ItemService
-	itemsGetter *mockedrepositories.MockItemsGetter
-	itemGetter  *mockedrepositories.MockItemGetter
-	itemUpdater *mockedrepositories.MockItemUpdater
-	itemCreator *mockedrepositories.MockItemCreator
-	itemDeleter *mockedrepositories.MockItemDeleter
-}
-
-func setupItemService(t *testing.T) *itemServiceTestContext {
-	t.Helper()
-
-	controller := gomock.NewController(t)
-
-	itemsGetter := mockedrepositories.NewMockItemsGetter(controller)
-	itemGetter := mockedrepositories.NewMockItemGetter(controller)
-	itemUpdater := mockedrepositories.NewMockItemUpdater(controller)
-	itemCreator := mockedrepositories.NewMockItemCreator(controller)
-	itemDeleter := mockedrepositories.NewMockItemDeleter(controller)
-
-	service := services.NewItemService(itemsGetter, itemGetter, itemUpdater, itemCreator, itemDeleter)
-
-	return &itemServiceTestContext{
-		service, itemsGetter, itemGetter, itemUpdater, itemCreator, itemDeleter,
-	}
-}
-
 func TestItemService_GetItems(t *testing.T) {
-	setup := setupItemService(t)
+	itemsGetter := mockedrepositories.NewMockItemsGetter(gomock.NewController(t))
 
-	itemsGetter, service := setup.itemsGetter, setup.service
+	service := services.NewItemServiceBuilder().WithItemsGetter(itemsGetter).Build()
 
 	ctx := context.Background()
 
@@ -75,9 +48,9 @@ func TestItemService_GetItems(t *testing.T) {
 }
 
 func TestItemService_GetItem(t *testing.T) {
-	setup := setupItemService(t)
+	itemGetter := mockedrepositories.NewMockItemGetter(gomock.NewController(t))
 
-	service, itemGetter := setup.service, setup.itemGetter
+	service := services.NewItemServiceBuilder().WithItemGetter(itemGetter).Build()
 
 	ctx := context.Background()
 
@@ -127,9 +100,9 @@ func TestItemService_GetItem(t *testing.T) {
 }
 
 func TestItemService_UpdateItem(t *testing.T) {
-	setup := setupItemService(t)
+	itemUpdater := mockedrepositories.NewMockItemUpdater(gomock.NewController(t))
 
-	service, itemUpdater := setup.service, setup.itemUpdater
+	service := services.NewItemServiceBuilder().WithItemUpdater(itemUpdater).Build()
 
 	ctx := context.Background()
 
@@ -159,9 +132,9 @@ func TestItemService_UpdateItem(t *testing.T) {
 }
 
 func TestItemService_CreateItem(t *testing.T) {
-	setup := setupItemService(t)
+	itemCreator := mockedrepositories.NewMockItemCreator(gomock.NewController(t))
 
-	service, itemCreator := setup.service, setup.itemCreator
+	service := services.NewItemServiceBuilder().WithItemCreator(itemCreator).Build()
 
 	ctx := context.Background()
 
@@ -191,9 +164,9 @@ func TestItemService_CreateItem(t *testing.T) {
 }
 
 func TestItemService_DeleteItem(t *testing.T) {
-	setup := setupItemService(t)
+	itemDeleter := mockedrepositories.NewMockItemDeleter(gomock.NewController(t))
 
-	service, itemDeleter := setup.service, setup.itemDeleter
+	service := services.NewItemServiceBuilder().WithItemDeleter(itemDeleter).Build()
 
 	ctx := context.Background()
 

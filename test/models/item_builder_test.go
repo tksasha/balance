@@ -10,16 +10,14 @@ import (
 
 func TestItemBuilder_WithDate(t *testing.T) {
 	t.Run("when input is blank it should return error", func(t *testing.T) {
-		item, err := models.NewItemBuilder().WithDate("").Build()
+		_, err := models.NewItemBuilder().WithDate("").Build()
 
-		assert.Assert(t, item == nil)
 		assert.Equal(t, err.String(), "date: is required, is invalid")
 	})
 
 	t.Run("when input is invalid it should return error", func(t *testing.T) {
-		item, err := models.NewItemBuilder().WithDate("abc").Build()
+		_, err := models.NewItemBuilder().WithDate("abc").Build()
 
-		assert.Assert(t, item == nil)
 		assert.Equal(t, err.String(), "date: is invalid")
 	})
 
@@ -38,16 +36,14 @@ func TestItemBuilder_WithDate(t *testing.T) {
 
 func TestItemBuilder_WithFormula(t *testing.T) {
 	t.Run("when input is blank it should set an error", func(t *testing.T) {
-		item, err := models.NewItemBuilder().WithFormula("").Build()
+		_, err := models.NewItemBuilder().WithFormula("").Build()
 
-		assert.Assert(t, item == nil)
 		assert.Equal(t, err.String(), "formula: is required, is invalid")
 	})
 
 	t.Run("when input is invalid it should set an error", func(t *testing.T) {
-		item, err := models.NewItemBuilder().WithFormula("2/0").Build()
+		_, err := models.NewItemBuilder().WithFormula("2/0").Build()
 
-		assert.Assert(t, item == nil)
 		assert.Equal(t, err.String(), "formula: is invalid")
 	})
 
@@ -62,16 +58,14 @@ func TestItemBuilder_WithFormula(t *testing.T) {
 
 func TestItemBuilder_WithCategoryID(t *testing.T) {
 	t.Run("when input value is empty it should set an error", func(t *testing.T) {
-		item, err := models.NewItemBuilder().WithCategoryID("").Build()
+		_, err := models.NewItemBuilder().WithCategoryID("").Build()
 
-		assert.Assert(t, item == nil)
 		assert.Equal(t, err.String(), "category_id: is required, is invalid")
 	})
 
 	t.Run("when input value is invalid it should set an error", func(t *testing.T) {
-		item, err := models.NewItemBuilder().WithCategoryID("abc").Build()
+		_, err := models.NewItemBuilder().WithCategoryID("abc").Build()
 
-		assert.Assert(t, item == nil)
 		assert.Equal(t, err.String(), "category_id: is invalid")
 	})
 

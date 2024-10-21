@@ -7,6 +7,7 @@ import (
 	"github.com/tksasha/balance/internal/config"
 	"github.com/tksasha/balance/internal/handlers"
 	"github.com/tksasha/balance/internal/middlewares"
+	"github.com/tksasha/balance/internal/repositories"
 )
 
 func InitializeServer() *Server {
@@ -14,9 +15,12 @@ func InitializeServer() *Server {
 		New,
 		config.New,
 		handlers.NewIndexPageHandler,
+		handlers.NewCreateItemHandler,
 		middlewares.NewCurrencyMiddleware,
 		middlewares.NewRecoveryMiddleware,
 		NewRouter,
+		repositories.NewItemRepository,
+		wire.Bind(new(repositories.ItemCreator), new(*repositories.ItemRepository)),
 	)
 
 	return &Server{}

@@ -89,7 +89,7 @@ func (b *ItemBuilder) WithCurrencyCode(code string) *ItemBuilder {
 
 func (b *ItemBuilder) Build() (*Item, errors.ValidationError) {
 	if !b.Model.Errors.IsEmpty() {
-		return nil, b.Model.Errors
+		return b.item, b.Model.Errors
 	}
 
 	return b.item, nil

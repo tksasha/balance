@@ -17,6 +17,50 @@ type ItemService struct {
 	itemDeleter repositories.ItemDeleter
 }
 
+type ItemServiceBuilder struct {
+	service *ItemService
+}
+
+func NewItemServiceBuilder() *ItemServiceBuilder {
+	return &ItemServiceBuilder{
+		service: &ItemService{},
+	}
+}
+
+func (b *ItemServiceBuilder) WithItemsGetter(itemsGetter repositories.ItemsGetter) *ItemServiceBuilder {
+	b.service.itemsGetter = itemsGetter
+
+	return b
+}
+
+func (b *ItemServiceBuilder) WithItemGetter(itemGetter repositories.ItemGetter) *ItemServiceBuilder {
+	b.service.itemGetter = itemGetter
+
+	return b
+}
+
+func (b *ItemServiceBuilder) WithItemCreator(itemCreator repositories.ItemCreator) *ItemServiceBuilder {
+	b.service.itemCreator = itemCreator
+
+	return b
+}
+
+func (b *ItemServiceBuilder) WithItemUpdater(itemUpdater repositories.ItemUpdater) *ItemServiceBuilder {
+	b.service.itemUpdater = itemUpdater
+
+	return b
+}
+
+func (b *ItemServiceBuilder) WithItemDeleter(itemDeleter repositories.ItemDeleter) *ItemServiceBuilder {
+	b.service.itemDeleter = itemDeleter
+
+	return b
+}
+
+func (b *ItemServiceBuilder) Build() *ItemService {
+	return b.service
+}
+
 func NewItemService(
 	itemsGetter repositories.ItemsGetter,
 	itemGetter repositories.ItemGetter,

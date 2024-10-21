@@ -2,7 +2,6 @@
 
 //go:generate go run -mod=mod github.com/google/wire/cmd/wire
 //go:build !wireinject
-// +build !wireinject
 
 package server
 
@@ -10,20 +9,19 @@ import (
 	"github.com/tksasha/balance/internal/config"
 	"github.com/tksasha/balance/internal/handlers"
 	"github.com/tksasha/balance/internal/middlewares"
-	"github.com/tksasha/balance/internal/server/app"
-	"github.com/tksasha/balance/internal/server/db"
+	"github.com/tksasha/balance/internal/repositories"
 )
 
 // Injectors from wire.go:
 
 func InitializeServer() *Server {
 	configConfig := config.New()
-	sqlDB := db.Open()
-	appApp := app.New(sqlDB)
-	indexPageHandler := handlers.NewIndexPageHandler(appApp)
+	indexPageHandler := handlers.NewIndexPageHandler()
+	itemRepository := repositories.NewItemRepository()
+	createItemHandler := handlers.NewCreateItemHandler(itemRepository)
 	recoveryMiddleware := middlewares.NewRecoveryMiddleware()
-	currencyMiddleware := middlewares.NewCurrencyMiddleware(appApp)
-	router := NewRouter(indexPageHandler, recoveryMiddleware, currencyMiddleware)
+	currencyMiddleware := middlewares.NewCurrencyMiddleware()
+	router := NewRouter(indexPageHandler, createItemHandler, recoveryMiddleware, currencyMiddleware)
 	server := New(configConfig, router)
 	return server
 }
