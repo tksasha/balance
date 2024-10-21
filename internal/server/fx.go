@@ -3,6 +3,7 @@ package server
 import (
 	"net/http"
 
+	"github.com/tksasha/balance/internal/config"
 	"github.com/tksasha/balance/internal/handlers"
 	"github.com/tksasha/balance/internal/interfaces"
 	"github.com/tksasha/balance/internal/middlewares"
@@ -17,7 +18,7 @@ func Run() {
 				NewHTTPServer,
 				fx.ParamTags("", "", "", `group:"middlewares"`),
 			),
-			NewConfig,
+			config.New,
 			fx.Annotate(
 				NewServeMux,
 				fx.ParamTags(`group:"routes"`),

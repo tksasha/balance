@@ -7,13 +7,14 @@ import (
 	"net"
 	"net/http"
 
+	"github.com/tksasha/balance/internal/config"
 	"github.com/tksasha/balance/internal/interfaces"
 	"go.uber.org/fx"
 )
 
 func NewHTTPServer(
 	lifecycle fx.Lifecycle,
-	config *Config,
+	config *config.Config,
 	mux *http.ServeMux,
 	middlewares []interfaces.Middleware,
 ) *http.Server {

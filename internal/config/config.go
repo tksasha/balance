@@ -1,4 +1,4 @@
-package server
+package config
 
 import (
 	"os"
@@ -12,7 +12,7 @@ type Config struct {
 	ReadHeaderTimeout time.Duration
 }
 
-func NewConfig() *Config {
+func New() *Config {
 	address := os.Getenv("ADDRESS")
 	if address == "" {
 		panic("ADDRESS must be set")
