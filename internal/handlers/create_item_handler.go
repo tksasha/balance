@@ -6,6 +6,7 @@ import (
 	"net/http"
 
 	"github.com/tksasha/balance/internal/components"
+	"github.com/tksasha/balance/internal/interfaces"
 	"github.com/tksasha/balance/internal/models"
 	"github.com/tksasha/balance/internal/repositories"
 	"github.com/tksasha/balance/internal/services"
@@ -15,10 +16,14 @@ type CreateItemHandler struct {
 	service *services.ItemService
 }
 
-func NewCreateItemHandler(itemCreator repositories.ItemCreator) *CreateItemHandler {
+func NewCreateItemHandler(itemCreator repositories.ItemCreator) interfaces.Route {
 	service := services.NewItemServiceBuilder().WithItemCreator(itemCreator).Build()
 
 	return &CreateItemHandler{service: service}
+}
+
+func (h *CreateItemHandler) Pattern() string {
+	return "POST /items"
 }
 
 func (h *CreateItemHandler) ServeHTTP(w http.ResponseWriter, r *http.Request) {

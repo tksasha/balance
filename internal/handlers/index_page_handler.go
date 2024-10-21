@@ -5,12 +5,17 @@ import (
 	"net/http"
 
 	"github.com/tksasha/balance/internal/components"
+	"github.com/tksasha/balance/internal/interfaces"
 )
 
 type IndexPageHandler struct{}
 
-func NewIndexPageHandler() *IndexPageHandler {
+func NewIndexPageHandler() interfaces.Route {
 	return &IndexPageHandler{}
+}
+
+func (h *IndexPageHandler) Pattern() string {
+	return "GET /"
 }
 
 func (h *IndexPageHandler) ServeHTTP(w http.ResponseWriter, r *http.Request) {

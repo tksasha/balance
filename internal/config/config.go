@@ -2,12 +2,14 @@ package config
 
 import (
 	"os"
+	"time"
 
 	_ "github.com/joho/godotenv/autoload"
 )
 
 type Config struct {
-	Address string
+	Address           string
+	ReadHeaderTimeout time.Duration
 }
 
 func New() *Config {
@@ -17,6 +19,7 @@ func New() *Config {
 	}
 
 	return &Config{
-		Address: address,
+		Address:           address,
+		ReadHeaderTimeout: 1 * time.Second,
 	}
 }

@@ -5,7 +5,6 @@ MAIN=cmd/balance/main.go
 OUTPUT=balance
 RM=rm -f
 MOCKGEN=go.uber.org/mock/mockgen@latest
-WIRE=github.com/google/wire/cmd/wire@latest
 
 .PHONY: default
 default: vet fix fmt lint test
@@ -54,7 +53,7 @@ clear:
 clean: clear
 
 .PHONY: gen
-gen: mockgen wiregen
+gen: mockgen
 
 .PHONY: mockgen
 mockgen:
@@ -62,10 +61,3 @@ mockgen:
 		-source internal/repositories/interfaces.go \
 		-package mockedrepositories \
 		-destination mocks/repositories/interfaces.mock.go
-
-.PHONY: wiregen
-wiregen:
-	@$(GO) run $(WIRE) gen \
-		internal/server/router.go \
-		internal/server/server.go \
-		internal/server/wire.go \
