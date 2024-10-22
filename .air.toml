@@ -4,9 +4,12 @@ tmp_dir = "tmp"
 
 [build]
 args_bin = []
-bin = "./tmp/balance"
-cmd = "go build -o ./tmp/balance ./cmd/balance/main.go"
-delay = 1000
+# bin = "./tmp/balance"
+bin = "run.zsh"
+# cmd = "go build -o ./tmp/balance ./cmd/balance/main.go"
+cmd = "/usr/bin/true"
+# delay = 1000
+delay = 100
 exclude_dir = ["assets", "tmp", "vendor", "testdata"]
 exclude_file = []
 exclude_regex = ["_test.go"]
