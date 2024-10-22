@@ -27,5 +27,5 @@ func (h *IndexPageHandler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 }
 
 func (h *IndexPageHandler) handle(w http.ResponseWriter, _ *http.Request) error {
-	return components.IndexPageComponent().Render(w)
+	return components.IndexPage().Render(w)
 }
