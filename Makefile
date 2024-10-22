@@ -1,9 +1,11 @@
 GO=/opt/homebrew/bin/go
-LINTER=github.com/golangci/golangci-lint/cmd/golangci-lint@latest
-FORMATTER=mvdan.cc/gofumpt@latest
 MAIN=cmd/balance/main.go
 OUTPUT=balance
 RM=rm -f
+
+AIR=github.com/air-verse/air@latest
+FORMATTER=mvdan.cc/gofumpt@latest
+LINTER=github.com/golangci/golangci-lint/cmd/golangci-lint@latest
 MOCKGEN=go.uber.org/mock/mockgen@latest
 
 .PHONY: default
@@ -37,7 +39,7 @@ test:
 .PHONY: run
 run:
 	@echo "go run"
-	@$(GO) run $(MAIN)
+	@$(GO) run $(AIR)
 
 .PHONY: build
 build:
