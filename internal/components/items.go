@@ -1,39 +1,40 @@
 package components
 
+//nolint:stylecheck // ST1001
 import (
 	"github.com/tksasha/balance/internal/models"
-	"maragu.dev/gomponents"
+	. "maragu.dev/gomponents"
 	hx "maragu.dev/gomponents-htmx"
-	"maragu.dev/gomponents/html"
+	. "maragu.dev/gomponents/html"
 )
 
-func Items(items models.Items) gomponents.Node {
-	return html.Table(
-		html.Class("table"),
-		html.THead(
-			html.Tr(
-				html.Th(html.Class("text-center"), gomponents.Text("Date")),
-				html.Th(html.Class("text-center"), gomponents.Text("Sum")),
-				html.Th(html.Class("text-center"), gomponents.Text("Category")),
-				html.Th(html.Class("text-center"), gomponents.Text("Description")),
+func Items(items models.Items) Node {
+	return Table(
+		Class("table"),
+		THead(
+			Tr(
+				Th(Class("text-center"), Text("Date")),
+				Th(Class("text-center"), Text("Sum")),
+				Th(Class("text-center"), Text("Category")),
+				Th(Class("text-center"), Text("Description")),
 			),
 		),
-		html.TBody(
-			gomponents.Map(
+		TBody(
+			Map(
 				items,
-				func(item *models.Item) gomponents.Node {
-					return html.Tr(
-						html.Td(html.Class("text-center"), gomponents.Text(item.GetDateAsString())),
-						html.Td(
-							html.Class("text-end"),
-							html.A(
-								html.Href("/items"),
+				func(item *models.Item) Node {
+					return Tr(
+						Td(Class("text-center"), Text(item.GetDateAsString())),
+						Td(
+							Class("text-end"),
+							A(
+								Href("/items"),
 								hx.Get("/items"),
-								gomponents.Text(item.GetSumAsString()),
+								Text(item.GetSumAsString()),
 							),
 						),
-						html.Td(gomponents.Text(item.CategoryName)),
-						html.Td(gomponents.Text(item.Description)),
+						Td(Text(item.CategoryName)),
+						Td(Text(item.Description)),
 					)
 				},
 			),
