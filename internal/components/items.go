@@ -2,45 +2,35 @@ package components
 
 import (
 	"github.com/tksasha/balance/internal/models"
-	"github.com/tksasha/model/errors"
-	g "maragu.dev/gomponents"
-	h "maragu.dev/gomponents/html"
+	"maragu.dev/gomponents"
+	"maragu.dev/gomponents/html"
 )
 
-func ValidationErrors(validationErrors errors.ValidationError) g.Node {
-	return g.If(
-		validationErrors.Has("date"),
-		h.Ul(
-			h.Class("invalid-feedback"),
-			g.Map(
-				validationErrors.Get("date"),
-				func(err string) g.Node {
-					return h.Li(g.Text(err))
-				}),
+func Items(items models.Items) gomponents.Node {
+	return html.Table(
+		html.Class("table"),
+		html.THead(
+			html.Tr(
+				html.Th(gomponents.Text("ID")),
+				html.Th(gomponents.Text("Date")),
+				html.Th(gomponents.Text("Sum")),
+				html.Th(gomponents.Text("Category")),
+				html.Th(gomponents.Text("Description")),
+			),
 		),
-	)
-}
-
-func ItemForm(item *models.Item, validationErrors errors.ValidationError) g.Node {
-	return h.Form(
-		h.Div(
-			h.Class("mb-3"),
-			h.Label(
-				h.Class("form-label"),
-				g.Text("date"),
+		html.TBody(
+			gomponents.Map(
+				items,
+				func(item *models.Item) gomponents.Node {
+					return html.Tr(
+						html.Td(gomponents.Text(item.GetIDAsString())),
+						html.Td(gomponents.Text(item.GetDateAsString())),
+						html.Td(gomponents.Text(item.GetSumAsString())),
+						html.Td(gomponents.Text(item.CategoryName)),
+						html.Td(gomponents.Text(item.Description)),
+					)
+				},
 			),
-			h.Input(
-				g.If(
-					validationErrors.Has("date"),
-					h.Class("form-control invalid"),
-				),
-				g.If(
-					!validationErrors.Has("date"),
-					h.Class("form-control"),
-				),
-				h.Value(item.GetDateAsString()),
-			),
-			h.Div(ValidationErrors(validationErrors)),
 		),
 	)
 }

@@ -105,6 +105,11 @@ func Run() {
 				fx.ResultTags(`group:"routes"`),
 			),
 			fx.Annotate(
+				handlers.NewGetItemsHandler,
+				fx.As(new(handlers.Route)),
+				fx.ResultTags(`group:"routes"`),
+			),
+			fx.Annotate(
 				middlewares.NewCurrencyMiddleware,
 				fx.As(new(middlewares.Middleware)),
 				fx.ResultTags(`group:"middlewares"`),
@@ -116,6 +121,10 @@ func Run() {
 			fx.Annotate(
 				services.NewCategoryService,
 				fx.As(new(services.CategoryService)),
+			),
+			fx.Annotate(
+				services.NewItemService,
+				fx.As(new(services.ItemService)),
 			),
 			fx.Annotate(
 				repositories.NewCategoryRepository,
