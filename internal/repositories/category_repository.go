@@ -9,17 +9,21 @@ import (
 	"github.com/tksasha/balance/internal/models"
 )
 
-type CategoryRepository struct {
+type CategoryRepository interface {
+	GetCategories(ctx context.Context) (models.Categories, error)
+}
+
+type categoryRepository struct {
 	db *sql.DB
 }
 
-func NewCategoryRepository(db *sql.DB) *CategoryRepository {
-	return &CategoryRepository{
+func NewCategoryRepository(db *sql.DB) CategoryRepository {
+	return &categoryRepository{
 		db: db,
 	}
 }
 
-func (r *CategoryRepository) GetCategory(ctx context.Context, id int) (*models.Category, error) {
+func (r *categoryRepository) GetCategory(ctx context.Context, id int) (*models.Category, error) {
 	query := `
 		SELECT
 			id,
@@ -45,7 +49,12 @@ func (r *CategoryRepository) GetCategory(ctx context.Context, id int) (*models.C
 	return &category, nil
 }
 
-func (r *CategoryRepository) GetCategories(ctx context.Context, currency int) ([]*models.Category, error) {
+func (r *categoryRepository) GetCategories(ctx context.Context) (models.Categories, error) {
+	currency, ok := ctx.Value(models.CurrencyContextValue{}).(models.Currency)
+	if !ok {
+		currency, _ = models.GetDefaultCurrency()
+	}
+
 	query := `
 		SELECT
 			categories.id,
@@ -72,7 +81,7 @@ func (r *CategoryRepository) GetCategories(ctx context.Context, currency int) ([
 		}
 	}()
 
-	var categories []*models.Category
+	var categories models.Categories
 
 	for rows.Next() {
 		var category models.Category

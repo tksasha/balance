@@ -7,18 +7,22 @@ import (
 	"github.com/tksasha/balance/internal/repositories"
 )
 
-type CategoryService struct {
-	categoriesGetter repositories.CategoriesGetter
+type CategoryService interface {
+	GetCategories(ctx context.Context) (models.Categories, error)
 }
 
-func NewCategoryService(categoriesGetter repositories.CategoriesGetter) *CategoryService {
-	return &CategoryService{
-		categoriesGetter: categoriesGetter,
+type categoryService struct {
+	categoryRepository repositories.CategoryRepository
+}
+
+func NewCategoryService(categoryRepository repositories.CategoryRepository) CategoryService {
+	return &categoryService{
+		categoryRepository: categoryRepository,
 	}
 }
 
-func (s *CategoryService) GetCategories(ctx context.Context, currency models.Currency) (models.Categories, error) {
-	categories, err := s.categoriesGetter.GetCategories(ctx, currency)
+func (s *categoryService) GetCategories(ctx context.Context) (models.Categories, error) {
+	categories, err := s.categoryRepository.GetCategories(ctx)
 	if err != nil {
 		return nil, err
 	}

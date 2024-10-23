@@ -1,5 +1,7 @@
 package models
 
+import "strconv"
+
 type Category struct {
 	ID     int
 	Name   string
@@ -7,3 +9,7 @@ type Category struct {
 }
 
 type Categories []*Category
+
+func (c *Category) GetIDAsString() string {
+	return strconv.Itoa(c.ID)
+}

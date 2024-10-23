@@ -21,6 +21,7 @@ import (
 type MockItemsGetter struct {
 	ctrl     *gomock.Controller
 	recorder *MockItemsGetterMockRecorder
+	isgomock struct{}
 }
 
 // MockItemsGetterMockRecorder is the mock recorder for MockItemsGetter.
@@ -59,6 +60,7 @@ func (mr *MockItemsGetterMockRecorder) GetItems(ctx, currency any) *gomock.Call 
 type MockItemCreator struct {
 	ctrl     *gomock.Controller
 	recorder *MockItemCreatorMockRecorder
+	isgomock struct{}
 }
 
 // MockItemCreatorMockRecorder is the mock recorder for MockItemCreator.
@@ -96,6 +98,7 @@ func (mr *MockItemCreatorMockRecorder) CreateItem(ctx, item any) *gomock.Call {
 type MockItemGetter struct {
 	ctrl     *gomock.Controller
 	recorder *MockItemGetterMockRecorder
+	isgomock struct{}
 }
 
 // MockItemGetterMockRecorder is the mock recorder for MockItemGetter.
@@ -134,6 +137,7 @@ func (mr *MockItemGetterMockRecorder) GetItem(ctx, id any) *gomock.Call {
 type MockItemUpdater struct {
 	ctrl     *gomock.Controller
 	recorder *MockItemUpdaterMockRecorder
+	isgomock struct{}
 }
 
 // MockItemUpdaterMockRecorder is the mock recorder for MockItemUpdater.
@@ -171,6 +175,7 @@ func (mr *MockItemUpdaterMockRecorder) UpdateItem(ctx, item any) *gomock.Call {
 type MockItemDeleter struct {
 	ctrl     *gomock.Controller
 	recorder *MockItemDeleterMockRecorder
+	isgomock struct{}
 }
 
 // MockItemDeleterMockRecorder is the mock recorder for MockItemDeleter.
@@ -202,42 +207,4 @@ func (m *MockItemDeleter) DeleteItem(ctx context.Context, item *models.Item) err
 func (mr *MockItemDeleterMockRecorder) DeleteItem(ctx, item any) *gomock.Call {
 	mr.mock.ctrl.T.Helper()
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "DeleteItem", reflect.TypeOf((*MockItemDeleter)(nil).DeleteItem), ctx, item)
-}
-
-// MockCategoriesGetter is a mock of CategoriesGetter interface.
-type MockCategoriesGetter struct {
-	ctrl     *gomock.Controller
-	recorder *MockCategoriesGetterMockRecorder
-}
-
-// MockCategoriesGetterMockRecorder is the mock recorder for MockCategoriesGetter.
-type MockCategoriesGetterMockRecorder struct {
-	mock *MockCategoriesGetter
-}
-
-// NewMockCategoriesGetter creates a new mock instance.
-func NewMockCategoriesGetter(ctrl *gomock.Controller) *MockCategoriesGetter {
-	mock := &MockCategoriesGetter{ctrl: ctrl}
-	mock.recorder = &MockCategoriesGetterMockRecorder{mock}
-	return mock
-}
-
-// EXPECT returns an object that allows the caller to indicate expected use.
-func (m *MockCategoriesGetter) EXPECT() *MockCategoriesGetterMockRecorder {
-	return m.recorder
-}
-
-// GetCategories mocks base method.
-func (m *MockCategoriesGetter) GetCategories(ctx context.Context, currency models.Currency) (models.Categories, error) {
-	m.ctrl.T.Helper()
-	ret := m.ctrl.Call(m, "GetCategories", ctx, currency)
-	ret0, _ := ret[0].(models.Categories)
-	ret1, _ := ret[1].(error)
-	return ret0, ret1
-}
-
-// GetCategories indicates an expected call of GetCategories.
-func (mr *MockCategoriesGetterMockRecorder) GetCategories(ctx, currency any) *gomock.Call {
-	mr.mock.ctrl.T.Helper()
-	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "GetCategories", reflect.TypeOf((*MockCategoriesGetter)(nil).GetCategories), ctx, currency)
 }

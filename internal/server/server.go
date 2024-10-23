@@ -12,6 +12,8 @@ import (
 	"github.com/tksasha/balance/internal/interfaces"
 	"github.com/tksasha/balance/internal/middlewares"
 	"github.com/tksasha/balance/internal/repositories"
+	"github.com/tksasha/balance/internal/server/db"
+	"github.com/tksasha/balance/internal/services"
 	"go.uber.org/fx"
 )
 
@@ -98,6 +100,11 @@ func Run() {
 				fx.ResultTags(`group:"routes"`),
 			),
 			fx.Annotate(
+				handlers.NewGetCategoriesHandler,
+				fx.As(new(interfaces.Route)),
+				fx.ResultTags(`group:"routes"`),
+			),
+			fx.Annotate(
 				middlewares.NewCurrencyMiddleware,
 				fx.As(new(interfaces.Middleware)),
 				fx.ResultTags(`group:"middlewares"`),
@@ -106,6 +113,15 @@ func Run() {
 				repositories.NewItemRepository,
 				fx.As(new(repositories.ItemCreator)),
 			),
+			fx.Annotate(
+				services.NewCategoryService,
+				fx.As(new(services.CategoryService)),
+			),
+			fx.Annotate(
+				repositories.NewCategoryRepository,
+				fx.As(new(repositories.CategoryRepository)),
+			),
+			db.Open,
 		),
 		fx.Invoke(func(*http.Server) {}),
 	).Run()

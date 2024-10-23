@@ -25,7 +25,3 @@ type ItemUpdater interface {
 type ItemDeleter interface {
 	DeleteItem(ctx context.Context, item *models.Item) error
 }
-
-type CategoriesGetter interface {
-	GetCategories(ctx context.Context, currency models.Currency) (models.Categories, error)
-}

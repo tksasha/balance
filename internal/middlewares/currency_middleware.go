@@ -22,10 +22,10 @@ func (m *CurrencyMiddleware) Wrap(next http.Handler) http.Handler {
 
 		currency := models.GetCurrencyByCode(code)
 		if currency == 0 {
-			_, code = models.GetDefaultCurrency()
+			currency, _ = models.GetDefaultCurrency()
 		}
 
-		ctx := context.WithValue(r.Context(), models.CurrencyContextValue{}, code)
+		ctx := context.WithValue(r.Context(), models.CurrencyContextValue{}, currency)
 
 		r = r.WithContext(ctx)
 
