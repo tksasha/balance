@@ -6,24 +6,23 @@ import (
 	"net/http"
 
 	"github.com/tksasha/balance/internal/components"
-	"github.com/tksasha/balance/internal/interfaces"
 	"github.com/tksasha/balance/internal/models"
 	"github.com/tksasha/balance/internal/services"
 )
 
-type CreateItemHandler struct {
+type createItemHandler struct {
 	itemService services.ItemService
 }
 
-func NewCreateItemHandler(itemService services.ItemService) interfaces.Route {
-	return &CreateItemHandler{itemService}
+func NewCreateItemHandler(itemService services.ItemService) Route {
+	return &createItemHandler{itemService}
 }
 
-func (h *CreateItemHandler) Pattern() string {
+func (h *createItemHandler) Pattern() string {
 	return "POST /items"
 }
 
-func (h *CreateItemHandler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
+func (h *createItemHandler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 	if err := h.handle(w, r); err != nil {
 		var formParsingError *FormParsingError
 
@@ -45,7 +44,7 @@ func (h *CreateItemHandler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 	_, _ = w.Write([]byte("render create page\n"))
 }
 
-func (h *CreateItemHandler) handle(w http.ResponseWriter, r *http.Request) error {
+func (h *createItemHandler) handle(w http.ResponseWriter, r *http.Request) error {
 	if err := r.ParseForm(); err != nil {
 		return NewFormParsingError(err)
 	}

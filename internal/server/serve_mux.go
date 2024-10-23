@@ -4,13 +4,13 @@ import (
 	"embed"
 	"net/http"
 
-	"github.com/tksasha/balance/internal/interfaces"
+	"github.com/tksasha/balance/internal/handlers"
 )
 
 //go:embed assets
 var assets embed.FS
 
-func NewServeMux(routes []interfaces.Route) *http.ServeMux {
+func NewServeMux(routes []handlers.Route) *http.ServeMux {
 	mux := http.NewServeMux()
 
 	mux.Handle("GET /assets/{$}", http.RedirectHandler("/", http.StatusMovedPermanently))

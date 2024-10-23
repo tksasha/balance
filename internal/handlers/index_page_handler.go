@@ -5,20 +5,19 @@ import (
 	"net/http"
 
 	"github.com/tksasha/balance/internal/components"
-	"github.com/tksasha/balance/internal/interfaces"
 )
 
-type IndexPageHandler struct{}
+type indexPageHandler struct{}
 
-func NewIndexPageHandler() interfaces.Route {
-	return &IndexPageHandler{}
+func NewIndexPageHandler() Route {
+	return &indexPageHandler{}
 }
 
-func (h *IndexPageHandler) Pattern() string {
+func (h *indexPageHandler) Pattern() string {
 	return "GET /"
 }
 
-func (h *IndexPageHandler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
+func (h *indexPageHandler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 	if err := h.handle(w, r); err != nil {
 		slog.Error("index page handler error", "error", err)
 
@@ -26,6 +25,6 @@ func (h *IndexPageHandler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 	}
 }
 
-func (h *IndexPageHandler) handle(w http.ResponseWriter, _ *http.Request) error {
+func (h *indexPageHandler) handle(w http.ResponseWriter, _ *http.Request) error {
 	return components.IndexPage().Render(w)
 }

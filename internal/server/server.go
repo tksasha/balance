@@ -7,11 +7,10 @@ import (
 	"net"
 	"net/http"
 
-	"github.com/tksasha/balance/internal/config"
 	"github.com/tksasha/balance/internal/handlers"
-	"github.com/tksasha/balance/internal/interfaces"
 	"github.com/tksasha/balance/internal/middlewares"
 	"github.com/tksasha/balance/internal/repositories"
+	"github.com/tksasha/balance/internal/server/config"
 	"github.com/tksasha/balance/internal/server/db"
 	"github.com/tksasha/balance/internal/services"
 	"go.uber.org/fx"
@@ -21,7 +20,7 @@ func New(
 	lifecycle fx.Lifecycle,
 	config *config.Config,
 	mux *http.ServeMux,
-	middlewares []interfaces.Middleware,
+	middlewares []middlewares.Middleware,
 ) *http.Server {
 	handler := http.Handler(mux)
 
@@ -80,33 +79,34 @@ func New(
 func Run() {
 	fx.New(
 		fx.Provide(
+			config.New,
+			db.Open,
 			fx.Annotate(
 				New,
 				fx.ParamTags("", "", "", `group:"middlewares"`),
 			),
-			config.New,
 			fx.Annotate(
 				NewServeMux,
 				fx.ParamTags(`group:"routes"`),
 			),
 			fx.Annotate(
 				handlers.NewIndexPageHandler,
-				fx.As(new(interfaces.Route)),
+				fx.As(new(handlers.Route)),
 				fx.ResultTags(`group:"routes"`),
 			),
 			fx.Annotate(
 				handlers.NewCreateItemHandler,
-				fx.As(new(interfaces.Route)),
+				fx.As(new(handlers.Route)),
 				fx.ResultTags(`group:"routes"`),
 			),
 			fx.Annotate(
 				handlers.NewGetCategoriesHandler,
-				fx.As(new(interfaces.Route)),
+				fx.As(new(handlers.Route)),
 				fx.ResultTags(`group:"routes"`),
 			),
 			fx.Annotate(
 				middlewares.NewCurrencyMiddleware,
-				fx.As(new(interfaces.Middleware)),
+				fx.As(new(middlewares.Middleware)),
 				fx.ResultTags(`group:"middlewares"`),
 			),
 			fx.Annotate(
@@ -121,7 +121,6 @@ func Run() {
 				repositories.NewCategoryRepository,
 				fx.As(new(repositories.CategoryRepository)),
 			),
-			db.Open,
 		),
 		fx.Invoke(func(*http.Server) {}),
 	).Run()

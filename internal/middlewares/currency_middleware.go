@@ -8,13 +8,13 @@ import (
 	"github.com/tksasha/balance/internal/models"
 )
 
-type CurrencyMiddleware struct{}
+type currencyMiddleware struct{}
 
-func NewCurrencyMiddleware() *CurrencyMiddleware {
-	return &CurrencyMiddleware{}
+func NewCurrencyMiddleware() Middleware {
+	return &currencyMiddleware{}
 }
 
-func (m *CurrencyMiddleware) Wrap(next http.Handler) http.Handler {
+func (m *currencyMiddleware) Wrap(next http.Handler) http.Handler {
 	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 		code := strings.ToUpper(
 			r.URL.Query().Get("currency"),

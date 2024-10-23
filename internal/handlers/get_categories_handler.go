@@ -8,21 +8,21 @@ import (
 	"github.com/tksasha/balance/internal/services"
 )
 
-type GetCategoriesHandler struct {
+type getCategoriesHandler struct {
 	categoryService services.CategoryService
 }
 
-func NewGetCategoriesHandler(categoryService services.CategoryService) *GetCategoriesHandler {
-	return &GetCategoriesHandler{
+func NewGetCategoriesHandler(categoryService services.CategoryService) Route {
+	return &getCategoriesHandler{
 		categoryService: categoryService,
 	}
 }
 
-func (h *GetCategoriesHandler) Pattern() string {
+func (h *getCategoriesHandler) Pattern() string {
 	return "GET /categories"
 }
 
-func (h *GetCategoriesHandler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
+func (h *getCategoriesHandler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 	if err := h.handle(w, r); err != nil {
 		slog.Error("get categories handler error", "error", err)
 
@@ -30,7 +30,7 @@ func (h *GetCategoriesHandler) ServeHTTP(w http.ResponseWriter, r *http.Request)
 	}
 }
 
-func (h *GetCategoriesHandler) handle(w http.ResponseWriter, r *http.Request) error {
+func (h *getCategoriesHandler) handle(w http.ResponseWriter, r *http.Request) error {
 	categories, err := h.categoryService.GetCategories(r.Context())
 	if err != nil {
 		slog.Error("get categories error", "error", err)
