@@ -12,6 +12,7 @@ require (
 	golang.org/x/text v0.18.0
 	gotest.tools/v3 v3.5.1
 	maragu.dev/gomponents v1.0.0
+	maragu.dev/gomponents-htmx v0.6.1
 )
 
 require (

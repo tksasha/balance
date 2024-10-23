@@ -3,6 +3,7 @@ package handlers
 import (
 	"log/slog"
 	"net/http"
+	"time"
 
 	"github.com/tksasha/balance/internal/components"
 	"github.com/tksasha/balance/internal/services"
@@ -21,6 +22,8 @@ func (h *getItemsHandler) Pattern() string {
 }
 
 func (h *getItemsHandler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
+	time.Sleep(time.Second)
+
 	if err := h.handle(w, r); err != nil {
 		slog.Error("get items handler error", "error", err)
 

@@ -40,3 +40,5 @@ gotest.tools/v3 v3.5.1 h1:EENdUnS3pdur5nybKYIh2Vfgc8IUNBjxDPSjtiJcOzU=
 gotest.tools/v3 v3.5.1/go.mod h1:isy3WKz7GK6uNw/sbHzfKBLvlvXwUyV06n6brMxxopU=
 maragu.dev/gomponents v1.0.0 h1:eeLScjq4PqP1l+r5z/GC+xXZhLHXa6RWUWGW7gSfLh4=
 maragu.dev/gomponents v1.0.0/go.mod h1:oEDahza2gZoXDoDHhw8jBNgH+3UR5ni7Ur648HORydM=
+maragu.dev/gomponents-htmx v0.6.1 h1:vXXOkvqEDKYxSwD1UwqmVp12YwFSuM6u8lsRn7Evyng=
+maragu.dev/gomponents-htmx v0.6.1/go.mod h1:51nXX+dTGff3usM7AJvbeOcQjzjpSycod+60CYeEP/M=
