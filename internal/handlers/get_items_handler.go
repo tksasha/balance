@@ -34,10 +34,14 @@ func (h *getItemsHandler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 func (h *getItemsHandler) handle(w http.ResponseWriter, r *http.Request) error {
 	items, err := h.itemService.GetItems(r.Context())
 	if err != nil {
+		slog.Error("failed to get items", "error", err)
+
 		return err
 	}
 
 	if err := components.Items(items).Render(w); err != nil {
+		slog.Error("failed to render items", "error", err)
+
 		return err
 	}
 

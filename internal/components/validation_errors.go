@@ -1,21 +1,24 @@
 package components
 
+//nolint:stylecheck // ST1001
 import (
 	"github.com/tksasha/model/errors"
-	"maragu.dev/gomponents"
-	"maragu.dev/gomponents/html"
+	. "maragu.dev/gomponents"
+	. "maragu.dev/gomponents/html"
 )
 
-func ValidationErrors(validationErrors errors.ValidationError) gomponents.Node {
-	return gomponents.If(
+func ValidationErrors(validationErrors errors.ValidationError) Node {
+	return If(
 		validationErrors.Has("date"),
-		html.Ul(
-			html.Class("invalid-feedback"),
-			gomponents.Map(
-				validationErrors.Get("date"),
-				func(err string) gomponents.Node {
-					return html.Li(gomponents.Text(err))
-				}),
+		Div(
+			Ul(
+				Class("invalid-feedback"),
+				Map(
+					validationErrors.Get("date"),
+					func(err string) Node {
+						return Li(Text(err))
+					}),
+			),
 		),
 	)
 }

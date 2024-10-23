@@ -2,6 +2,7 @@ package components
 
 //nolint:stylecheck // ST1001
 import (
+	"github.com/tksasha/balance/internal/models"
 	. "maragu.dev/gomponents"
 	hx "maragu.dev/gomponents-htmx"
 	. "maragu.dev/gomponents/components"
@@ -19,13 +20,20 @@ func IndexPage() Node {
 			},
 			Body: []Node{
 				Div(
-					Class("container mt-3"),
-					hx.Get("/items"),
-					hx.Trigger("load"),
+					Class("container mt-4"),
+					Div(
+						Class("card mb-3"),
+						Div(
+							Class("card-body"),
+							ItemForm(&models.Item{}, nil),
+						),
+					),
 					Div(
 						Class("card"),
 						Div(
 							Class("card-body"),
+							hx.Get("/items"),
+							hx.Trigger("load"),
 							Div(Class("spinner-border htmx-indicator"), ID("htmx-indicator")),
 						),
 					),

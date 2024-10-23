@@ -1,32 +1,33 @@
 package components
 
+//nolint:stylecheck // ST1001
 import (
 	"github.com/tksasha/balance/internal/models"
 	"github.com/tksasha/model/errors"
-	"maragu.dev/gomponents"
-	"maragu.dev/gomponents/html"
+	. "maragu.dev/gomponents"
+	. "maragu.dev/gomponents/html"
 )
 
-func ItemForm(item *models.Item, validationErrors errors.ValidationError) gomponents.Node {
-	return html.Form(
-		html.Div(
-			html.Class("mb-3"),
-			html.Label(
-				html.Class("form-label"),
-				gomponents.Text("date"),
+func ItemForm(item *models.Item, validationErrors errors.ValidationError) Node {
+	return Form(
+		Div(
+			Class("mb-3"),
+			Label(
+				Class("form-label"),
+				Text("date"),
 			),
-			html.Input(
-				gomponents.If(
+			Input(
+				If(
 					validationErrors.Has("date"),
-					html.Class("form-control invalid"),
+					Class("form-control invalid"),
 				),
-				gomponents.If(
+				If(
 					!validationErrors.Has("date"),
-					html.Class("form-control"),
+					Class("form-control"),
 				),
-				html.Value(item.GetDateAsString()),
+				Value(item.GetDateAsString()),
 			),
-			html.Div(ValidationErrors(validationErrors)),
+			ValidationErrors(validationErrors),
 		),
 	)
 }
