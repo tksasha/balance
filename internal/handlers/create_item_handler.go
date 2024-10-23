@@ -8,18 +8,15 @@ import (
 	"github.com/tksasha/balance/internal/components"
 	"github.com/tksasha/balance/internal/interfaces"
 	"github.com/tksasha/balance/internal/models"
-	"github.com/tksasha/balance/internal/repositories"
 	"github.com/tksasha/balance/internal/services"
 )
 
 type CreateItemHandler struct {
-	service *services.ItemService
+	itemService services.ItemService
 }
 
-func NewCreateItemHandler(itemCreator repositories.ItemCreator) interfaces.Route {
-	service := services.NewItemServiceBuilder().WithItemCreator(itemCreator).Build()
-
-	return &CreateItemHandler{service: service}
+func NewCreateItemHandler(itemService services.ItemService) interfaces.Route {
+	return &CreateItemHandler{itemService}
 }
 
 func (h *CreateItemHandler) Pattern() string {
@@ -65,7 +62,7 @@ func (h *CreateItemHandler) handle(w http.ResponseWriter, r *http.Request) error
 		return nil // TODO: return there NewValidationError()
 	}
 
-	if err := h.service.CreateItem(r.Context(), item); err != nil {
+	if err := h.itemService.CreateItem(r.Context(), item); err != nil {
 		return err
 	}
 

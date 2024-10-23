@@ -5,7 +5,6 @@ import (
 	"database/sql"
 	"errors"
 
-	internalerrors "github.com/tksasha/balance/internal/errors"
 	"github.com/tksasha/balance/internal/models"
 )
 
@@ -40,7 +39,7 @@ func (r *categoryRepository) GetCategory(ctx context.Context, id int) (*models.C
 
 	if err := row.Scan(&category.ID, &category.Name); err != nil {
 		if errors.Is(err, sql.ErrNoRows) {
-			return nil, internalerrors.ErrNotFound
+			return nil, NewNotFoundError()
 		}
 
 		panic(err)

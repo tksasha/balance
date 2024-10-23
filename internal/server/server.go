@@ -111,7 +111,7 @@ func Run() {
 			),
 			fx.Annotate(
 				repositories.NewItemRepository,
-				fx.As(new(repositories.ItemCreator)),
+				fx.As(new(repositories.ItemRepository)),
 			),
 			fx.Annotate(
 				services.NewCategoryService,

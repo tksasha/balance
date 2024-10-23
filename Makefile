@@ -60,16 +60,21 @@ gen: mockgen
 .PHONY: mockgen
 mockgen:
 	@$(GO) run $(MOCKGEN) \
-		-source internal/repositories/interfaces.go \
-		-package mockedrepositories \
-		-destination mocks/repositories/interfaces.mock.go
-
-	@$(GO) run $(MOCKGEN) \
 		-source internal/repositories/category_repository.go \
 		-package mockedrepositories \
 		-destination mocks/repositories/category_repository.mock.go
 
 	@$(GO) run $(MOCKGEN) \
+		-source internal/repositories/item_repository.go \
+		-package mockedrepositories \
+		-destination mocks/repositories/item_repository.mock.go
+
+	@$(GO) run $(MOCKGEN) \
 		-source internal/services/category_service.go \
 		-package mockedservices \
 		-destination mocks/services/category_service.mock.go
+
+	@$(GO) run $(MOCKGEN) \
+		-source internal/services/item_service.go \
+		-package mockedservices \
+		-destination mocks/services/item_service.mock.go

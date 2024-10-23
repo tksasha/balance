@@ -10,15 +10,15 @@ import (
 	"testing"
 
 	"github.com/tksasha/balance/internal/handlers"
-	mockedrepositories "github.com/tksasha/balance/mocks/repositories"
+	mockedservices "github.com/tksasha/balance/mocks/services"
 	"go.uber.org/mock/gomock"
 	"gotest.tools/v3/assert"
 )
 
 func TestCreateItemHandler_ServeHTTP(t *testing.T) {
-	itemCreator := mockedrepositories.NewMockItemCreator(gomock.NewController(t))
+	itemService := mockedservices.NewMockItemService(gomock.NewController(t))
 
-	handler := handlers.NewCreateItemHandler(itemCreator)
+	handler := handlers.NewCreateItemHandler(itemService)
 
 	ctx := context.Background()
 
@@ -68,7 +68,7 @@ func TestCreateItemHandler_ServeHTTP(t *testing.T) {
 
 		recorder := httptest.NewRecorder()
 
-		itemCreator.EXPECT().CreateItem(ctx, gomock.Any()).Return(errors.New("create item error"))
+		itemService.EXPECT().CreateItem(ctx, gomock.Any()).Return(errors.New("create item error"))
 
 		handler.ServeHTTP(recorder, request)
 

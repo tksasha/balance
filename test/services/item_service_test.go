@@ -5,7 +5,6 @@ import (
 	"errors"
 	"testing"
 
-	internalerrors "github.com/tksasha/balance/internal/errors"
 	"github.com/tksasha/balance/internal/models"
 	"github.com/tksasha/balance/internal/services"
 	mockedrepositories "github.com/tksasha/balance/mocks/repositories"
@@ -14,33 +13,25 @@ import (
 )
 
 func TestItemService_GetItems(t *testing.T) {
-	itemsGetter := mockedrepositories.NewMockItemsGetter(gomock.NewController(t))
+	itemRepository := mockedrepositories.NewMockItemRepository(gomock.NewController(t))
 
-	service := services.NewItemServiceBuilder().WithItemsGetter(itemsGetter).Build()
+	service := services.NewItemService(itemRepository)
 
 	ctx := context.Background()
 
-	currency, _ := models.GetDefaultCurrency()
-
 	t.Run("when items getter returns an error it should return this error", func(t *testing.T) {
-		itemsGetter.
-			EXPECT().
-			GetItems(ctx, currency).
-			Return(nil, errors.New("get items error"))
+		itemRepository.EXPECT().GetItems(ctx).Return(nil, errors.New("get items error"))
 
-		items, err := service.GetItems(ctx, currency)
+		items, err := service.GetItems(ctx)
 
 		assert.Assert(t, items == nil)
 		assert.Error(t, err, "get items error")
 	})
 
 	t.Run("when items getter does not return any error it should return items", func(t *testing.T) {
-		itemsGetter.
-			EXPECT().
-			GetItems(ctx, currency).
-			Return(models.Items{}, nil)
+		itemRepository.EXPECT().GetItems(ctx).Return(models.Items{}, nil)
 
-		items, err := service.GetItems(ctx, currency)
+		items, err := service.GetItems(ctx)
 
 		assert.Assert(t, items != nil)
 		assert.NilError(t, err)
@@ -48,37 +39,34 @@ func TestItemService_GetItems(t *testing.T) {
 }
 
 func TestItemService_GetItem(t *testing.T) {
-	itemGetter := mockedrepositories.NewMockItemGetter(gomock.NewController(t))
+	itemRepository := mockedrepositories.NewMockItemRepository(gomock.NewController(t))
 
-	service := services.NewItemServiceBuilder().WithItemGetter(itemGetter).Build()
+	service := services.NewItemService(itemRepository)
 
 	ctx := context.Background()
 
 	t.Run("when id is invalid it should return an error", func(t *testing.T) {
 		_, err := service.GetItem(ctx, "abc")
 
-		assert.ErrorIs(t, err, internalerrors.ErrNotFound)
+		assert.Error(t, err, "not found")
 	})
 
 	t.Run("when id is zero it should return an error", func(t *testing.T) {
 		item, err := service.GetItem(ctx, "0")
 
 		assert.Assert(t, item == nil)
-		assert.ErrorIs(t, err, internalerrors.ErrNotFound)
+		assert.Error(t, err, "not found")
 	})
 
 	t.Run("when id is a negative number it should return an error", func(t *testing.T) {
 		item, err := service.GetItem(ctx, "-1")
 
 		assert.Assert(t, item == nil)
-		assert.ErrorIs(t, err, internalerrors.ErrNotFound)
+		assert.Error(t, err, "not found")
 	})
 
-	t.Run("when item getter returns an error it should return this error", func(t *testing.T) {
-		itemGetter.
-			EXPECT().
-			GetItem(ctx, 1314).
-			Return(nil, errors.New("get item error"))
+	t.Run("when GetItem returns an error it should return this error", func(t *testing.T) {
+		itemRepository.EXPECT().GetItem(ctx, 1314).Return(nil, errors.New("get item error"))
 
 		item, err := service.GetItem(ctx, "1314")
 
@@ -86,11 +74,8 @@ func TestItemService_GetItem(t *testing.T) {
 		assert.Error(t, err, "get item error")
 	})
 
-	t.Run("when item getter does not return any error it should return an item", func(t *testing.T) {
-		itemGetter.
-			EXPECT().
-			GetItem(ctx, 1346).
-			Return(&models.Item{}, nil)
+	t.Run("when GetItems does not return any error it should return an item", func(t *testing.T) {
+		itemRepository.EXPECT().GetItem(ctx, 1346).Return(&models.Item{}, nil)
 
 		item, err := service.GetItem(ctx, "1346")
 
@@ -100,30 +85,24 @@ func TestItemService_GetItem(t *testing.T) {
 }
 
 func TestItemService_UpdateItem(t *testing.T) {
-	itemUpdater := mockedrepositories.NewMockItemUpdater(gomock.NewController(t))
+	itemRepository := mockedrepositories.NewMockItemRepository(gomock.NewController(t))
 
-	service := services.NewItemServiceBuilder().WithItemUpdater(itemUpdater).Build()
+	service := services.NewItemService(itemRepository)
 
 	ctx := context.Background()
 
 	item := &models.Item{}
 
-	t.Run("when item updater returns an error it should return an error", func(t *testing.T) {
-		itemUpdater.
-			EXPECT().
-			UpdateItem(ctx, item).
-			Return(errors.New("update item error"))
+	t.Run("when UpdateItem returns an error it should return an error", func(t *testing.T) {
+		itemRepository.EXPECT().UpdateItem(ctx, item).Return(errors.New("update item error"))
 
 		err := service.UpdateItem(ctx, item)
 
 		assert.Error(t, err, "update item error")
 	})
 
-	t.Run("when item updater does not return an error it should return nil", func(t *testing.T) {
-		itemUpdater.
-			EXPECT().
-			UpdateItem(ctx, item).
-			Return(nil)
+	t.Run("when UpdateItem does not return an error it should return nil", func(t *testing.T) {
+		itemRepository.EXPECT().UpdateItem(ctx, item).Return(nil)
 
 		err := service.UpdateItem(ctx, item)
 
@@ -132,30 +111,24 @@ func TestItemService_UpdateItem(t *testing.T) {
 }
 
 func TestItemService_CreateItem(t *testing.T) {
-	itemCreator := mockedrepositories.NewMockItemCreator(gomock.NewController(t))
+	itemRepository := mockedrepositories.NewMockItemRepository(gomock.NewController(t))
 
-	service := services.NewItemServiceBuilder().WithItemCreator(itemCreator).Build()
+	service := services.NewItemService(itemRepository)
 
 	ctx := context.Background()
 
 	item := &models.Item{}
 
-	t.Run("when item creator returns an error it should return this error", func(t *testing.T) {
-		itemCreator.
-			EXPECT().
-			CreateItem(ctx, item).
-			Return(errors.New("create item error"))
+	t.Run("when CreateItem returns an error it should return this error", func(t *testing.T) {
+		itemRepository.EXPECT().CreateItem(ctx, item).Return(errors.New("create item error"))
 
 		err := service.CreateItem(ctx, item)
 
 		assert.Error(t, err, "create item error")
 	})
 
-	t.Run("when item creator doesn't return any error it should return nil", func(t *testing.T) {
-		itemCreator.
-			EXPECT().
-			CreateItem(ctx, item).
-			Return(nil)
+	t.Run("when CreateItem doesn't return any error it should return nil", func(t *testing.T) {
+		itemRepository.EXPECT().CreateItem(ctx, item).Return(nil)
 
 		err := service.CreateItem(ctx, item)
 
@@ -164,32 +137,42 @@ func TestItemService_CreateItem(t *testing.T) {
 }
 
 func TestItemService_DeleteItem(t *testing.T) {
-	itemDeleter := mockedrepositories.NewMockItemDeleter(gomock.NewController(t))
+	itemRepository := mockedrepositories.NewMockItemRepository(gomock.NewController(t))
 
-	service := services.NewItemServiceBuilder().WithItemDeleter(itemDeleter).Build()
+	service := services.NewItemService(itemRepository)
 
 	ctx := context.Background()
 
-	item := &models.Item{}
+	t.Run("when id is not a digit it should return NotFoundError", func(t *testing.T) {
+		err := service.DeleteItem(ctx, "abc")
 
-	t.Run("when item deleter returns an error it should return this error", func(t *testing.T) {
-		itemDeleter.
-			EXPECT().
-			DeleteItem(ctx, item).
-			Return(errors.New("delete item error"))
+		assert.Error(t, err, "not found")
+	})
 
-		err := service.DeleteItem(ctx, item)
+	t.Run("when id is zero it should return NotFoundError", func(t *testing.T) {
+		err := service.DeleteItem(ctx, "0")
+
+		assert.Error(t, err, "not found")
+	})
+
+	t.Run("when id is a negative number it should return NotFoundError", func(t *testing.T) {
+		err := service.DeleteItem(ctx, "-1")
+
+		assert.Error(t, err, "not found")
+	})
+
+	t.Run("when DeleteItem returns an error it should return this error", func(t *testing.T) {
+		itemRepository.EXPECT().DeleteItem(ctx, 1203).Return(errors.New("delete item error"))
+
+		err := service.DeleteItem(ctx, "1203")
 
 		assert.Error(t, err, "delete item error")
 	})
 
 	t.Run("when item deleter doesn't return any error it should return nil", func(t *testing.T) {
-		itemDeleter.
-			EXPECT().
-			DeleteItem(ctx, item).
-			Return(nil)
+		itemRepository.EXPECT().DeleteItem(ctx, 1204).Return(nil)
 
-		err := service.DeleteItem(ctx, item)
+		err := service.DeleteItem(ctx, "1204")
 
 		assert.NilError(t, err)
 	})
