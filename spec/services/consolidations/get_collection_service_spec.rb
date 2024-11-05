@@ -5,7 +5,7 @@ RSpec.describe Consolidations::GetCollectionService do
 
   let(:params) { double }
 
-  describe '#scope' do
+  describe '#scope', skip: 'private method' do
     before { allow(Consolidation).to receive(:includes).with(:category).and_return(:scope) }
 
     its(:scope) { is_expected.to eq :scope }

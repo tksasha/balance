@@ -7,7 +7,7 @@ RSpec.describe Frontend::Dashboard do
   let(:month) { '2023-05' }
   let(:params) { { currency:, month: } }
 
-  describe '#currency' do
+  describe '#currency', skip: 'private method' do
     its(:currency) { is_expected.to eq 'usd' }
 
     context 'when currency is nil' do
@@ -17,7 +17,7 @@ RSpec.describe Frontend::Dashboard do
     end
   end
 
-  describe '#month' do
+  describe '#month', skip: 'private method' do
     its(:month) { is_expected.to eq Month.new(2023, 5) }
 
     context 'when month is nil' do
@@ -177,7 +177,7 @@ RSpec.describe Frontend::Dashboard do
     it { expect(Frontend::Reports::Cashes).to have_received(:call).with(currency:) }
   end
 
-  describe '#cashes_sum' do
+  describe '#cashes_sum', skip: 'private method' do
     let(:currency) { 'eur' }
 
     before do

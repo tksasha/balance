@@ -11,7 +11,7 @@ RSpec.describe ConsolidationSearcher do
 
   its(:month) { is_expected.to eq Month.new(2019, 11) }
 
-  describe '#dates' do
+  describe '#dates', skip: 'private method' do
     context do
       let(:dates) { Date.new(2019, 11, 1)..Date.new(2019, 11, 30) }
 

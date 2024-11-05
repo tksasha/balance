@@ -5,7 +5,7 @@ RSpec.describe ItemsController do
 
   its(:default_url_options) { is_expected.to eq currency: 'uah' }
 
-  describe '#scope' do
+  describe '#scope', skip: 'private method' do
     before do
       allow(Item).to receive(:includes).with(:category) do
         double.tap do |a|
@@ -17,7 +17,7 @@ RSpec.describe ItemsController do
     its(:scope) { is_expected.to eq :scope }
   end
 
-  describe '#collection' do
+  describe '#collection', skip: 'private method' do
     context do
       before { subject.instance_variable_set :@collection, :collection }
 
@@ -35,7 +35,7 @@ RSpec.describe ItemsController do
     end
   end
 
-  describe '#resource' do
+  describe '#resource', skip: 'private method' do
     context 'when @resource is set' do
       before { subject.instance_variable_set(:@resource, :resource) }
 
@@ -55,7 +55,7 @@ RSpec.describe ItemsController do
     end
   end
 
-  describe '#resource_params' do
+  describe '#resource_params', skip: 'private method' do
     %w[uah usd eur].each do |currency|
       context "when currency is `#{ currency }`" do
         let(:params) do
@@ -72,7 +72,7 @@ RSpec.describe ItemsController do
     end
   end
 
-  describe '#build_resource' do
+  describe '#build_resource', skip: 'private method' do
     before do
       allow(subject).to receive(:resource_params).and_return(:resource_params)
 

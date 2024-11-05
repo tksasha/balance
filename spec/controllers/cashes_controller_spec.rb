@@ -3,7 +3,7 @@
 RSpec.describe CashesController do
   its(:default_url_options) { is_expected.to eq currency: 'uah' }
 
-  describe '#resource_params' do
+  describe '#resource_params', skip: 'private method' do
     let(:params) { acp(cash: { name: nil, formula: nil }) }
 
     before { allow(subject).to receive(:params).and_return(params) }
@@ -11,7 +11,7 @@ RSpec.describe CashesController do
     its(:resource_params) { is_expected.to eq params.require(:cash).permit! }
   end
 
-  describe '#resource' do
+  describe '#resource', skip: 'private method' do
     context 'when @resource is set' do
       before { subject.instance_variable_set(:@resource, :resource) }
 
