@@ -41,6 +41,11 @@ run:
 	@echo "go run"
 	@$(GO) run $(AIR)
 
+.PHONY: r
+r:
+	@echo "go run (without live reloading)"
+	@$(GO) run github.com/tksasha/balance/cmd/balance
+
 .PHONY: build
 build:
 	@echo "go build"

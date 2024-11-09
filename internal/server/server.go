@@ -2,135 +2,78 @@ package server
 
 import (
 	"context"
+	"embed"
 	"errors"
 	"log/slog"
-	"net"
 	"net/http"
+	"os"
+	"os/signal"
+	"syscall"
+	"time"
 
-	"github.com/tksasha/balance/internal/handlers"
-	"github.com/tksasha/balance/internal/middlewares"
-	"github.com/tksasha/balance/internal/repositories"
 	"github.com/tksasha/balance/internal/server/config"
-	"github.com/tksasha/balance/internal/server/db"
-	"github.com/tksasha/balance/internal/services"
-	"go.uber.org/fx"
 )
 
-func New(
-	lifecycle fx.Lifecycle,
-	config *config.Config,
-	mux *http.ServeMux,
-	middlewares []middlewares.Middleware,
-) *http.Server {
-	handler := http.Handler(mux)
+//go:embed assets
+var assets embed.FS
 
-	for _, middleware := range middlewares {
-		handler = middleware.Wrap(handler)
-	}
-
-	server := &http.Server{
-		Addr:              config.Address,
-		ReadHeaderTimeout: config.ReadHeaderTimeout,
-		Handler:           handler,
-	}
-
-	lifecycle.Append(fx.Hook{
-		OnStart: func(context.Context) error {
-			listener, err := net.Listen("tcp", server.Addr)
-			if err != nil {
-				slog.Error("failed to create listener", "error", err)
-
-				return err
-			}
-
-			go func() {
-				err := server.Serve(listener)
-				if err != nil && !errors.Is(err, http.ErrServerClosed) {
-					slog.Error("server error", "error", err)
-				}
-			}()
-
-			slog.Info("server started")
-
-			return nil
-		},
-		OnStop: func(ctx context.Context) error {
-			if err := server.Shutdown(ctx); err != nil {
-				slog.Error("failed to shutdown server", "error", err)
-
-				if err := server.Close(); err != nil {
-					slog.Error("failed to close server", "error", err)
-
-					return err
-				}
-
-				slog.Info("server closed")
-			}
-
-			slog.Info("server shutdown")
-
-			return nil
-		},
-	})
-
-	return server
+type Server struct {
+	httpServer            *http.Server
+	shutDownServerTimeout time.Duration
 }
 
-func Run() {
-	fx.New(
-		fx.Provide(
-			config.New,
-			db.Open,
-			fx.Annotate(
-				New,
-				fx.ParamTags("", "", "", `group:"middlewares"`),
-			),
-			fx.Annotate(
-				NewServeMux,
-				fx.ParamTags(`group:"routes"`),
-			),
-			fx.Annotate(
-				handlers.NewIndexPageHandler,
-				fx.As(new(handlers.Route)),
-				fx.ResultTags(`group:"routes"`),
-			),
-			fx.Annotate(
-				handlers.NewCreateItemHandler,
-				fx.As(new(handlers.Route)),
-				fx.ResultTags(`group:"routes"`),
-			),
-			fx.Annotate(
-				handlers.NewGetCategoriesHandler,
-				fx.As(new(handlers.Route)),
-				fx.ResultTags(`group:"routes"`),
-			),
-			fx.Annotate(
-				handlers.NewGetItemsHandler,
-				fx.As(new(handlers.Route)),
-				fx.ResultTags(`group:"routes"`),
-			),
-			fx.Annotate(
-				middlewares.NewCurrencyMiddleware,
-				fx.As(new(middlewares.Middleware)),
-				fx.ResultTags(`group:"middlewares"`),
-			),
-			fx.Annotate(
-				repositories.NewItemRepository,
-				fx.As(new(repositories.ItemRepository)),
-			),
-			fx.Annotate(
-				services.NewCategoryService,
-				fx.As(new(services.CategoryService)),
-			),
-			fx.Annotate(
-				services.NewItemService,
-				fx.As(new(services.ItemService)),
-			),
-			fx.Annotate(
-				repositories.NewCategoryRepository,
-				fx.As(new(repositories.CategoryRepository)),
-			),
-		),
-		fx.Invoke(func(*http.Server) {}),
-	).Run()
+func New() Server {
+	mux := http.NewServeMux()
+
+	mux.Handle("GET /assets/{$}", http.RedirectHandler("/", http.StatusMovedPermanently))
+	mux.Handle("GET /assets/", http.FileServerFS(assets))
+
+	config := config.New()
+
+	httpServer := &http.Server{
+		Addr:              config.Address,
+		ReadHeaderTimeout: config.ReadHeaderTimeout,
+		Handler:           mux,
+	}
+
+	return Server{
+		httpServer:            httpServer,
+		shutDownServerTimeout: config.ShutDownServerTimeout,
+	}
+}
+
+func (s Server) Run() {
+	slog.Info("Starting server...")
+
+	go func() {
+		if err := s.httpServer.ListenAndServe(); !errors.Is(err, http.ErrServerClosed) {
+			slog.Error("Server start error", "error", err)
+		}
+	}()
+
+	slog.Info("Server started")
+
+	sigChan := make(chan os.Signal, 1)
+
+	signal.Notify(sigChan, syscall.SIGINT, syscall.SIGTERM)
+	defer signal.Stop(sigChan)
+
+	<-sigChan
+
+	ctx, cancel := context.WithTimeout(context.Background(), s.shutDownServerTimeout)
+	defer cancel()
+
+	slog.Info("Shutting down server...")
+
+	if err := s.httpServer.Shutdown(ctx); err != nil {
+		slog.Error("Server shutdown error", "error", err)
+
+		slog.Info("Forcing server close...")
+
+		if err := s.httpServer.Close(); !errors.Is(err, http.ErrServerClosed) {
+			slog.Error("Server close error", "error", err)
+		}
+	}
+
+	slog.Info("Server stopped")
 }

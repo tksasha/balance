@@ -8,8 +8,9 @@ import (
 )
 
 type Config struct {
-	Address           string
-	ReadHeaderTimeout time.Duration
+	Address               string
+	ReadHeaderTimeout     time.Duration
+	ShutDownServerTimeout time.Duration
 }
 
 func New() *Config {
@@ -19,7 +20,8 @@ func New() *Config {
 	}
 
 	return &Config{
-		Address:           address,
-		ReadHeaderTimeout: 1 * time.Second,
+		Address:               address,
+		ReadHeaderTimeout:     1 * time.Second,
+		ShutDownServerTimeout: 10 * time.Second, //nolint:mnd
 	}
 }
