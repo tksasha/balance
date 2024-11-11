@@ -2,7 +2,7 @@ package handlers
 
 import "net/http"
 
-type Route interface {
+type Handler interface {
 	http.Handler
 
 	Pattern() string

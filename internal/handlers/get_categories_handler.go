@@ -12,7 +12,7 @@ type getCategoriesHandler struct {
 	categoryService services.CategoryService
 }
 
-func NewGetCategoriesHandler(categoryService services.CategoryService) Route {
+func NewGetCategoriesHandler(categoryService services.CategoryService) Handler {
 	return &getCategoriesHandler{
 		categoryService: categoryService,
 	}

@@ -11,7 +11,11 @@ import (
 	"syscall"
 	"time"
 
+	"github.com/tksasha/balance/internal/handlers"
+	"github.com/tksasha/balance/internal/repositories"
 	"github.com/tksasha/balance/internal/server/config"
+	"github.com/tksasha/balance/internal/server/db"
+	"github.com/tksasha/balance/internal/services"
 )
 
 //go:embed assets
@@ -23,12 +27,25 @@ type Server struct {
 }
 
 func New() Server {
+	config := config.New()
+
+	db := db.Open()
+
+	itemRepository := repositories.NewItemRepository(db)
+	categoryRepository := repositories.NewCategoryRepository(db)
+	itemService := services.NewItemService(itemRepository)
+	categoryService := services.NewCategoryService(categoryRepository)
+
+	handlers := handlers.GetHandlers(itemService, categoryService)
+
 	mux := http.NewServeMux()
 
 	mux.Handle("GET /assets/{$}", http.RedirectHandler("/", http.StatusMovedPermanently))
 	mux.Handle("GET /assets/", http.FileServerFS(assets))
 
-	config := config.New()
+	for _, handler := range handlers {
+		mux.Handle(handler.Pattern(), handler)
+	}
 
 	httpServer := &http.Server{
 		Addr:              config.Address,

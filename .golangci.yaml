@@ -1,5 +1,4 @@
 run:
-  skip-dirs:
 linters-settings:
   funlen:
     ignore-comments: true
@@ -13,9 +12,7 @@ linters:
   enable-all: true
   disable:
     ### deprecated, archived or obsolette by authors
-    - execinquery
     - exportloopref
-    - gomnd # use mnd instead
     - paralleltest
     ### disabled by me
     - depguard

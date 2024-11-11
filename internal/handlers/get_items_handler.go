@@ -13,7 +13,7 @@ type getItemsHandler struct {
 	itemService services.ItemService
 }
 
-func NewGetItemsHandler(itemService services.ItemService) Route {
+func NewGetItemsHandler(itemService services.ItemService) Handler {
 	return &getItemsHandler{itemService}
 }
 

@@ -14,7 +14,7 @@ type createItemHandler struct {
 	itemService services.ItemService
 }
 
-func NewCreateItemHandler(itemService services.ItemService) Route {
+func NewCreateItemHandler(itemService services.ItemService) Handler {
 	return &createItemHandler{itemService}
 }
 

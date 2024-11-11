@@ -9,7 +9,7 @@ import (
 
 type indexPageHandler struct{}
 
-func NewIndexPageHandler() Route {
+func NewIndexPageHandler() Handler {
 	return &indexPageHandler{}
 }
 
