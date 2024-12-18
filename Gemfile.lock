@@ -228,7 +228,7 @@ GEM
       ast (~> 2.4.1)
       racc
     popper_js (2.11.8)
-    psych (5.2.1)
+    psych (5.2.2)
       date
       stringio
     puma (6.5.0)
