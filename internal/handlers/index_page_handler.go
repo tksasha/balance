@@ -7,10 +7,14 @@ import (
 	"github.com/tksasha/balance/internal/components"
 )
 
-type indexPageHandler struct{}
+type indexPageHandler struct {
+	categoryService CategoryService
+}
 
-func NewIndexPageHandler() Handler {
-	return &indexPageHandler{}
+func NewIndexPageHandler(categoryService CategoryService) Handler {
+	return &indexPageHandler{
+		categoryService: categoryService,
+	}
 }
 
 func (h *indexPageHandler) Pattern() string {
@@ -25,6 +29,11 @@ func (h *indexPageHandler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 	}
 }
 
-func (h *indexPageHandler) handle(w http.ResponseWriter, _ *http.Request) error {
-	return components.IndexPage().Render(w)
+func (h *indexPageHandler) handle(w http.ResponseWriter, r *http.Request) error {
+	categories, err := h.categoryService.GetCategories(r.Context())
+	if err != nil {
+		return err
+	}
+
+	return components.IndexPage(categories).Render(w)
 }

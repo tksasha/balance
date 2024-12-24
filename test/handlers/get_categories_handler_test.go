@@ -12,7 +12,7 @@ import (
 	"github.com/tksasha/balance/internal/handlers"
 	"github.com/tksasha/balance/internal/middlewares"
 	"github.com/tksasha/balance/internal/models"
-	mockedservices "github.com/tksasha/balance/mocks/services"
+	mocksforhandlers "github.com/tksasha/balance/mocks/handlers"
 	"go.uber.org/mock/gomock"
 	"gotest.tools/v3/assert"
 )
@@ -20,7 +20,7 @@ import (
 func TestGetCategoriesHandler_GetCategories(t *testing.T) {
 	controller := gomock.NewController(t)
 
-	categoryService := mockedservices.NewMockCategoryService(controller)
+	categoryService := mocksforhandlers.NewMockCategoryService(controller)
 
 	middleware := middlewares.NewCurrencyMiddleware().Wrap(
 		handlers.NewGetCategoriesHandler(categoryService),

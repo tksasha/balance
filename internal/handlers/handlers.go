@@ -1,17 +1,15 @@
 package handlers
 
-import "github.com/tksasha/balance/internal/services"
-
 type Handlers []Handler
 
 func GetHandlers(
-	itemService services.ItemService,
-	categoryService services.CategoryService,
+	itemService ItemService,
+	categoryService CategoryService,
 ) []Handler {
 	return []Handler{
 		NewGetItemsHandler(itemService),
-		NewCreateItemHandler(itemService),
+		NewCreateItemHandler(itemService, categoryService),
 		NewGetCategoriesHandler(categoryService),
-		NewIndexPageHandler(),
+		NewIndexPageHandler(categoryService),
 	}
 }

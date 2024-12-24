@@ -7,22 +7,25 @@ import (
 
 	"github.com/tksasha/balance/internal/components"
 	"github.com/tksasha/balance/internal/models"
-	"github.com/tksasha/balance/internal/services"
 )
 
-type createItemHandler struct {
-	itemService services.ItemService
+type CreateItemHandler struct {
+	itemService     ItemService
+	categoryService CategoryService
 }
 
-func NewCreateItemHandler(itemService services.ItemService) Handler {
-	return &createItemHandler{itemService}
+func NewCreateItemHandler(itemService ItemService, categoryService CategoryService) *CreateItemHandler {
+	return &CreateItemHandler{
+		itemService:     itemService,
+		categoryService: categoryService,
+	}
 }
 
-func (h *createItemHandler) Pattern() string {
+func (h *CreateItemHandler) Pattern() string {
 	return "POST /items"
 }
 
-func (h *createItemHandler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
+func (h *CreateItemHandler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 	if err := h.handle(w, r); err != nil {
 		var formParsingError *FormParsingError
 
@@ -44,7 +47,7 @@ func (h *createItemHandler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 	_, _ = w.Write([]byte("render create page\n"))
 }
 
-func (h *createItemHandler) handle(w http.ResponseWriter, r *http.Request) error {
+func (h *CreateItemHandler) handle(w http.ResponseWriter, r *http.Request) error {
 	if err := r.ParseForm(); err != nil {
 		return NewFormParsingError(err)
 	}
@@ -53,8 +56,13 @@ func (h *createItemHandler) handle(w http.ResponseWriter, r *http.Request) error
 		WithDate(r.FormValue("date")).
 		Build()
 
+	categories, err := h.categoryService.GetCategories(r.Context())
+	if err != nil {
+		return err
+	}
+
 	if !validationErrors.IsEmpty() {
-		if err := components.ItemForm(item, validationErrors).Render(w); err != nil {
+		if err := components.ItemForm(item, categories, validationErrors).Render(w); err != nil {
 			return err
 		}
 

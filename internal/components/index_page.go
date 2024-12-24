@@ -9,7 +9,7 @@ import (
 	. "maragu.dev/gomponents/html"
 )
 
-func IndexPage() Node {
+func IndexPage(categories models.Categories) Node {
 	return HTML5(
 		HTML5Props{
 			Title:    "Balance",
@@ -25,7 +25,7 @@ func IndexPage() Node {
 						Class("card mb-3"),
 						Div(
 							Class("card-body"),
-							ItemForm(&models.Item{}, nil),
+							ItemForm(&models.Item{}, categories, nil),
 						),
 					),
 					Div(

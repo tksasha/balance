@@ -5,14 +5,13 @@ import (
 	"net/http"
 
 	"github.com/tksasha/balance/internal/components"
-	"github.com/tksasha/balance/internal/services"
 )
 
 type getCategoriesHandler struct {
-	categoryService services.CategoryService
+	categoryService CategoryService
 }
 
-func NewGetCategoriesHandler(categoryService services.CategoryService) Handler {
+func NewGetCategoriesHandler(categoryService CategoryService) Handler {
 	return &getCategoriesHandler{
 		categoryService: categoryService,
 	}

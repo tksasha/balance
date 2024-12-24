@@ -7,11 +7,17 @@ import (
 	"testing"
 
 	"github.com/tksasha/balance/internal/handlers"
+	mocksforhandlers "github.com/tksasha/balance/mocks/handlers"
+	"go.uber.org/mock/gomock"
 	"gotest.tools/v3/assert"
 )
 
 func TestIndexPageHandler_ServeHTTP(t *testing.T) {
-	handler := handlers.NewIndexPageHandler()
+	controller := gomock.NewController(t)
+
+	categoryService := mocksforhandlers.NewMockCategoryService(controller)
+
+	handler := handlers.NewIndexPageHandler(categoryService)
 
 	request, err := http.NewRequestWithContext(context.Background(), http.MethodGet, "/", nil)
 	assert.NilError(t, err)

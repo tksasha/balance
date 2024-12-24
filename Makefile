@@ -75,11 +75,6 @@ mockgen:
 		-destination mocks/repositories/item_repository.mock.go
 
 	@$(GO) run $(MOCKGEN) \
-		-source internal/services/category_service.go \
-		-package mockedservices \
-		-destination mocks/services/category_service.mock.go
-
-	@$(GO) run $(MOCKGEN) \
-		-source internal/services/item_service.go \
-		-package mockedservices \
-		-destination mocks/services/item_service.mock.go
+		-source internal/handlers/interfaces.go \
+		-package mocksforhandlers \
+		-destination mocks/handlers/interfaces.mock.go

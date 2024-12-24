@@ -3,27 +3,23 @@ package handlers
 import (
 	"log/slog"
 	"net/http"
-	"time"
 
 	"github.com/tksasha/balance/internal/components"
-	"github.com/tksasha/balance/internal/services"
 )
 
-type getItemsHandler struct {
-	itemService services.ItemService
+type GetItemsHandler struct {
+	itemService ItemService
 }
 
-func NewGetItemsHandler(itemService services.ItemService) Handler {
-	return &getItemsHandler{itemService}
+func NewGetItemsHandler(itemService ItemService) *GetItemsHandler {
+	return &GetItemsHandler{itemService}
 }
 
-func (h *getItemsHandler) Pattern() string {
+func (h *GetItemsHandler) Pattern() string {
 	return "GET /items"
 }
 
-func (h *getItemsHandler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
-	time.Sleep(time.Second)
-
+func (h *GetItemsHandler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 	if err := h.handle(w, r); err != nil {
 		slog.Error("get items handler error", "error", err)
 
@@ -31,7 +27,7 @@ func (h *getItemsHandler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 	}
 }
 
-func (h *getItemsHandler) handle(w http.ResponseWriter, r *http.Request) error {
+func (h *GetItemsHandler) handle(w http.ResponseWriter, r *http.Request) error {
 	items, err := h.itemService.GetItems(r.Context())
 	if err != nil {
 		slog.Error("failed to get items", "error", err)
