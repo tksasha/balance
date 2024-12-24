@@ -10,12 +10,13 @@ import (
 	"testing"
 
 	"github.com/tksasha/balance/internal/handlers"
+	"github.com/tksasha/balance/internal/models"
 	mocksforhandlers "github.com/tksasha/balance/mocks/handlers"
 	"go.uber.org/mock/gomock"
 	"gotest.tools/v3/assert"
 )
 
-func TestCreateItemHandler_ServeHTTP(t *testing.T) {
+func TestCreateItemHandler_ServeHTTP(t *testing.T) { //nolint:funlen
 	controller := gomock.NewController(t)
 
 	itemService := mocksforhandlers.NewMockItemService(controller)
@@ -51,6 +52,11 @@ func TestCreateItemHandler_ServeHTTP(t *testing.T) {
 
 		request.Header.Set("Content-Type", "application/x-www-form-urlencoded")
 
+		categoryService.
+			EXPECT().
+			GetCategories(ctx).
+			Return(models.Categories{}, nil)
+
 		recorder := httptest.NewRecorder()
 
 		handler.ServeHTTP(recorder, request)
@@ -71,7 +77,15 @@ func TestCreateItemHandler_ServeHTTP(t *testing.T) {
 
 		recorder := httptest.NewRecorder()
 
-		itemService.EXPECT().CreateItem(ctx, gomock.Any()).Return(errors.New("create item error"))
+		categoryService.
+			EXPECT().
+			GetCategories(ctx).
+			Return(models.Categories{}, nil)
+
+		itemService.
+			EXPECT().
+			CreateItem(ctx, gomock.Any()).
+			Return(errors.New("create item error"))
 
 		handler.ServeHTTP(recorder, request)
 

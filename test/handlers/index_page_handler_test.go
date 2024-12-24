@@ -2,6 +2,7 @@ package handlers_test
 
 import (
 	"context"
+	"errors"
 	"net/http"
 	"net/http/httptest"
 	"testing"
@@ -17,14 +18,23 @@ func TestIndexPageHandler_ServeHTTP(t *testing.T) {
 
 	categoryService := mocksforhandlers.NewMockCategoryService(controller)
 
+	ctx := context.Background()
+
 	handler := handlers.NewIndexPageHandler(categoryService)
 
-	request, err := http.NewRequestWithContext(context.Background(), http.MethodGet, "/", nil)
-	assert.NilError(t, err)
+	t.Run("when get categories returns an error, it should respond with 500 code", func(t *testing.T) {
+		request, err := http.NewRequestWithContext(ctx, http.MethodGet, "/", nil)
+		assert.NilError(t, err)
 
-	recorder := httptest.NewRecorder()
+		categoryService.
+			EXPECT().
+			GetCategories(ctx).
+			Return(nil, errors.New("get categories error"))
 
-	handler.ServeHTTP(recorder, request)
+		recorder := httptest.NewRecorder()
 
-	assert.Equal(t, http.StatusOK, recorder.Code)
+		handler.ServeHTTP(recorder, request)
+
+		assert.Equal(t, http.StatusInternalServerError, recorder.Code)
+	})
 }
