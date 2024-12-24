@@ -7,6 +7,7 @@ AIR=github.com/air-verse/air@latest
 FORMATTER=mvdan.cc/gofumpt@latest
 LINTER=github.com/golangci/golangci-lint/cmd/golangci-lint@latest
 MOCKGEN=go.uber.org/mock/mockgen@latest
+WIRE=github.com/google/wire/cmd/wire@latest
 
 .PHONY: default
 default: vet fix fmt lint test
@@ -60,7 +61,7 @@ clear:
 clean: clear
 
 .PHONY: gen
-gen: mockgen
+gen: wire mockgen
 
 .PHONY: mockgen
 mockgen:
@@ -78,3 +79,8 @@ mockgen:
 		-source internal/handlers/interfaces.go \
 		-package mocksforhandlers \
 		-destination mocks/handlers/interfaces.mock.go
+
+.PHONY: wire
+wire:
+	@echo "wire gen"
+	@$(GO) run $(WIRE) internal/wire/wire.go >/dev/null 2>&1

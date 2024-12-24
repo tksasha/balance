@@ -2,7 +2,7 @@ package server
 
 import (
 	"context"
-	"embed"
+	"database/sql"
 	"errors"
 	"log/slog"
 	"net/http"
@@ -11,55 +11,38 @@ import (
 	"syscall"
 	"time"
 
-	"github.com/tksasha/balance/internal/handlers"
 	"github.com/tksasha/balance/internal/repositories"
 	"github.com/tksasha/balance/internal/server/config"
-	"github.com/tksasha/balance/internal/server/db"
 	"github.com/tksasha/balance/internal/services"
 )
-
-//go:embed assets
-var assets embed.FS
 
 type Server struct {
 	httpServer            *http.Server
 	shutDownServerTimeout time.Duration
 }
 
-func New() Server {
-	config := config.New()
-
-	db := db.Open()
-
-	itemRepository := repositories.NewItemRepository(db)
-	categoryRepository := repositories.NewCategoryRepository(db)
-	itemService := services.NewItemService(itemRepository)
-	categoryService := services.NewCategoryService(categoryRepository)
-
-	handlers := handlers.GetHandlers(itemService, categoryService)
-
-	mux := http.NewServeMux()
-
-	mux.Handle("GET /assets/{$}", http.RedirectHandler("/", http.StatusMovedPermanently))
-	mux.Handle("GET /assets/", http.FileServerFS(assets))
-
-	for _, handler := range handlers {
-		mux.Handle(handler.Pattern(), handler)
-	}
-
+func New(
+	config *config.Config,
+	db *sql.DB,
+	itemRepository repositories.ItemRepository,
+	categoryRepository repositories.CategoryRepository,
+	itemService *services.ItemService,
+	categoryService *services.CategoryService,
+	routes *http.ServeMux,
+) *Server {
 	httpServer := &http.Server{
 		Addr:              config.Address,
 		ReadHeaderTimeout: config.ReadHeaderTimeout,
-		Handler:           mux,
+		Handler:           routes,
 	}
 
-	return Server{
+	return &Server{
 		httpServer:            httpServer,
 		shutDownServerTimeout: config.ShutDownServerTimeout,
 	}
 }
 
-func (s Server) Run() {
+func (s *Server) Run() {
 	slog.Info("Starting server...")
 
 	go func() {

@@ -1,9 +1,9 @@
 package main
 
 import (
-	"github.com/tksasha/balance/internal/server"
+	"github.com/tksasha/balance/internal/wire"
 )
 
 func main() {
-	server.New().Run()
+	wire.InitializeServer().Run()
 }

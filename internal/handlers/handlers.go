@@ -2,11 +2,11 @@ package handlers
 
 type Handlers []Handler
 
-func GetHandlers(
+func New(
 	itemService ItemService,
 	categoryService CategoryService,
-) []Handler {
-	return []Handler{
+) Handlers {
+	return Handlers{
 		NewGetItemsHandler(itemService),
 		NewCreateItemHandler(itemService, categoryService),
 		NewGetCategoriesHandler(categoryService),
