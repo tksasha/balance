@@ -2,7 +2,6 @@ package server
 
 import (
 	"context"
-	"database/sql"
 	"errors"
 	"log/slog"
 	"net/http"
@@ -11,9 +10,7 @@ import (
 	"syscall"
 	"time"
 
-	"github.com/tksasha/balance/internal/repositories"
 	"github.com/tksasha/balance/internal/server/config"
-	"github.com/tksasha/balance/internal/services"
 )
 
 type Server struct {
@@ -23,11 +20,6 @@ type Server struct {
 
 func New(
 	config *config.Config,
-	db *sql.DB,
-	itemRepository repositories.ItemRepository,
-	categoryRepository repositories.CategoryRepository,
-	itemService *services.ItemService,
-	categoryService *services.CategoryService,
 	routes *http.ServeMux,
 ) *Server {
 	httpServer := &http.Server{

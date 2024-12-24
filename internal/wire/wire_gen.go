@@ -22,11 +22,11 @@ func InitializeServer() *server.Server {
 	configConfig := config.New()
 	sqlDB := db.Open()
 	itemRepository := repositories.NewItemRepository(sqlDB)
-	categoryRepository := repositories.NewCategoryRepository(sqlDB)
 	itemService := services.NewItemService(itemRepository)
+	categoryRepository := repositories.NewCategoryRepository(sqlDB)
 	categoryService := services.NewCategoryService(categoryRepository)
 	handlersHandlers := handlers.New(itemService, categoryService)
 	serveMux := routes.New(handlersHandlers)
-	serverServer := server.New(configConfig, sqlDB, itemRepository, categoryRepository, itemService, categoryService, serveMux)
+	serverServer := server.New(configConfig, serveMux)
 	return serverServer
 }
