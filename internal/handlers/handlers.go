@@ -11,5 +11,6 @@ func New(
 		NewCreateItemHandler(itemService, categoryService),
 		NewGetCategoriesHandler(categoryService),
 		NewIndexPageHandler(categoryService),
+		NewGetItemHandler(itemService),
 	}
 }
