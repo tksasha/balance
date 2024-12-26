@@ -7,21 +7,17 @@ import (
 	"github.com/tksasha/balance/internal/components"
 )
 
-type indexPageHandler struct {
+type IndexPageHandler struct {
 	categoryService CategoryService
 }
 
-func NewIndexPageHandler(categoryService CategoryService) Handler {
-	return &indexPageHandler{
+func NewIndexPageHandler(categoryService CategoryService) *IndexPageHandler {
+	return &IndexPageHandler{
 		categoryService: categoryService,
 	}
 }
 
-func (h *indexPageHandler) Pattern() string {
-	return "GET /"
-}
-
-func (h *indexPageHandler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
+func (h *IndexPageHandler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 	if err := h.handle(w, r); err != nil {
 		slog.Error("index page handler error", "error", err)
 
@@ -29,7 +25,7 @@ func (h *indexPageHandler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 	}
 }
 
-func (h *indexPageHandler) handle(w http.ResponseWriter, r *http.Request) error {
+func (h *IndexPageHandler) handle(w http.ResponseWriter, r *http.Request) error {
 	categories, err := h.categoryService.GetCategories(r.Context())
 	if err != nil {
 		return err

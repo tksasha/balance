@@ -2,16 +2,9 @@ package handlers
 
 import (
 	"context"
-	"net/http"
 
 	"github.com/tksasha/balance/internal/models"
 )
-
-type Handler interface {
-	http.Handler
-
-	Pattern() string
-}
 
 type ItemService interface {
 	GetItems(ctx context.Context) (models.Items, error)

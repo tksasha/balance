@@ -15,10 +15,6 @@ func NewGetItemsHandler(itemService ItemService) *GetItemsHandler {
 	return &GetItemsHandler{itemService}
 }
 
-func (h *GetItemsHandler) Pattern() string {
-	return "GET /items"
-}
-
 func (h *GetItemsHandler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 	if err := h.handle(w, r); err != nil {
 		slog.Error("get items handler error", "error", err)

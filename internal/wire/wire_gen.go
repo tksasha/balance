@@ -2,7 +2,6 @@
 
 //go:generate go run -mod=mod github.com/google/wire/cmd/wire
 //go:build !wireinject
-// +build !wireinject
 
 package wire
 
@@ -21,12 +20,16 @@ import (
 func InitializeServer() *server.Server {
 	configConfig := config.New()
 	sqlDB := db.Open()
-	itemRepository := repositories.NewItemRepository(sqlDB)
-	itemService := services.NewItemService(itemRepository)
 	categoryRepository := repositories.NewCategoryRepository(sqlDB)
 	categoryService := services.NewCategoryService(categoryRepository)
-	handlersHandlers := handlers.New(itemService, categoryService)
-	serveMux := routes.New(handlersHandlers)
+	indexPageHandler := handlers.NewIndexPageHandler(categoryService)
+	itemRepository := repositories.NewItemRepository(sqlDB)
+	itemService := services.NewItemService(itemRepository)
+	createItemHandler := handlers.NewCreateItemHandler(itemService, categoryService)
+	getItemsHandler := handlers.NewGetItemsHandler(itemService)
+	getItemHandler := handlers.NewGetItemHandler(itemService)
+	getCategoriesHandler := handlers.NewGetCategoriesHandler(categoryService)
+	serveMux := routes.New(indexPageHandler, createItemHandler, getItemsHandler, getItemHandler, getCategoriesHandler)
 	serverServer := server.New(configConfig, serveMux)
 	return serverServer
 }

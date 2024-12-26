@@ -21,10 +21,6 @@ func NewCreateItemHandler(itemService ItemService, categoryService CategoryServi
 	}
 }
 
-func (h *CreateItemHandler) Pattern() string {
-	return "POST /items"
-}
-
 func (h *CreateItemHandler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 	if err := h.handle(w, r); err != nil {
 		var formParsingError *FormParsingError

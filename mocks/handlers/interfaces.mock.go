@@ -11,62 +11,11 @@ package mocksforhandlers
 
 import (
 	context "context"
-	http "net/http"
 	reflect "reflect"
 
 	models "github.com/tksasha/balance/internal/models"
 	gomock "go.uber.org/mock/gomock"
 )
-
-// MockHandler is a mock of Handler interface.
-type MockHandler struct {
-	ctrl     *gomock.Controller
-	recorder *MockHandlerMockRecorder
-	isgomock struct{}
-}
-
-// MockHandlerMockRecorder is the mock recorder for MockHandler.
-type MockHandlerMockRecorder struct {
-	mock *MockHandler
-}
-
-// NewMockHandler creates a new mock instance.
-func NewMockHandler(ctrl *gomock.Controller) *MockHandler {
-	mock := &MockHandler{ctrl: ctrl}
-	mock.recorder = &MockHandlerMockRecorder{mock}
-	return mock
-}
-
-// EXPECT returns an object that allows the caller to indicate expected use.
-func (m *MockHandler) EXPECT() *MockHandlerMockRecorder {
-	return m.recorder
-}
-
-// Pattern mocks base method.
-func (m *MockHandler) Pattern() string {
-	m.ctrl.T.Helper()
-	ret := m.ctrl.Call(m, "Pattern")
-	ret0, _ := ret[0].(string)
-	return ret0
-}
-
-// Pattern indicates an expected call of Pattern.
-func (mr *MockHandlerMockRecorder) Pattern() *gomock.Call {
-	mr.mock.ctrl.T.Helper()
-	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "Pattern", reflect.TypeOf((*MockHandler)(nil).Pattern))
-}
-
-// ServeHTTP mocks base method.
-func (m *MockHandler) ServeHTTP(arg0 http.ResponseWriter, arg1 *http.Request) {
-	m.ctrl.T.Helper()
-	m.ctrl.Call(m, "ServeHTTP", arg0, arg1)
-}
-
-// ServeHTTP indicates an expected call of ServeHTTP.
-func (mr *MockHandlerMockRecorder) ServeHTTP(arg0, arg1 any) *gomock.Call {
-	mr.mock.ctrl.T.Helper()
-	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "ServeHTTP", reflect.TypeOf((*MockHandler)(nil).ServeHTTP), arg0, arg1)
-}
 
 // MockItemService is a mock of ItemService interface.
 type MockItemService struct {

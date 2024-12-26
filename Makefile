@@ -83,4 +83,4 @@ mockgen:
 .PHONY: wire
 wire:
 	@echo "wire gen"
-	@$(GO) run $(WIRE) internal/wire/wire.go >/dev/null 2>&1
+	@$(GO) run $(WIRE) internal/wire/wire.go

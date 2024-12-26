@@ -10,15 +10,25 @@ import (
 //go:embed assets
 var assets embed.FS
 
-func New(handlers handlers.Handlers) *http.ServeMux {
+func New(
+	indexPageHandler *handlers.IndexPageHandler,
+	createItemHandler *handlers.CreateItemHandler,
+	getItemsHandler *handlers.GetItemsHandler,
+	getItemHandler *handlers.GetItemHandler,
+	getCategoriesHandler *handlers.GetCategoriesHandler,
+) *http.ServeMux {
 	routes := http.NewServeMux()
 
 	routes.Handle("GET /assets/{$}", http.RedirectHandler("/", http.StatusMovedPermanently))
 	routes.Handle("GET /assets/", http.FileServerFS(assets))
 
-	for _, handler := range handlers {
-		routes.Handle(handler.Pattern(), handler)
-	}
+	routes.Handle("GET /", indexPageHandler)
+
+	routes.Handle("POST /items", createItemHandler)
+	routes.Handle("GET /items", getItemsHandler)
+	routes.Handle("GET /items/{id}", getItemHandler)
+
+	routes.Handle("POST /categories", getCategoriesHandler)
 
 	return routes
 }
