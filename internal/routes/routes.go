@@ -10,25 +10,31 @@ import (
 //go:embed assets
 var assets embed.FS
 
+type Routes struct {
+	Mux *http.ServeMux
+}
+
 func New(
 	indexPageHandler *handlers.IndexPageHandler,
 	createItemHandler *handlers.CreateItemHandler,
 	getItemsHandler *handlers.GetItemsHandler,
 	getItemHandler *handlers.GetItemHandler,
 	getCategoriesHandler *handlers.GetCategoriesHandler,
-) *http.ServeMux {
-	routes := http.NewServeMux()
+) *Routes {
+	mux := http.NewServeMux()
 
-	routes.Handle("GET /assets/{$}", http.RedirectHandler("/", http.StatusMovedPermanently))
-	routes.Handle("GET /assets/", http.FileServerFS(assets))
+	mux.Handle("GET /assets/{$}", http.RedirectHandler("/", http.StatusMovedPermanently))
+	mux.Handle("GET /assets/", http.FileServerFS(assets))
 
-	routes.Handle("GET /", indexPageHandler)
+	mux.Handle("GET /", indexPageHandler)
 
-	routes.Handle("POST /items", createItemHandler)
-	routes.Handle("GET /items", getItemsHandler)
-	routes.Handle("GET /items/{id}", getItemHandler)
+	mux.Handle("POST /items", createItemHandler)
+	mux.Handle("GET /items", getItemsHandler)
+	mux.Handle("GET /items/{id}", getItemHandler)
 
-	routes.Handle("POST /categories", getCategoriesHandler)
+	mux.Handle("POST /categories", getCategoriesHandler)
 
-	return routes
+	return &Routes{
+		Mux: mux,
+	}
 }

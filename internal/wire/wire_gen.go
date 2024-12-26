@@ -6,12 +6,12 @@
 package wire
 
 import (
+	"github.com/tksasha/balance/internal/config"
+	"github.com/tksasha/balance/internal/db"
 	"github.com/tksasha/balance/internal/handlers"
 	"github.com/tksasha/balance/internal/repositories"
 	"github.com/tksasha/balance/internal/routes"
 	"github.com/tksasha/balance/internal/server"
-	"github.com/tksasha/balance/internal/server/config"
-	"github.com/tksasha/balance/internal/server/db"
 	"github.com/tksasha/balance/internal/services"
 )
 
@@ -19,17 +19,17 @@ import (
 
 func InitializeServer() *server.Server {
 	configConfig := config.New()
-	sqlDB := db.Open()
-	categoryRepository := repositories.NewCategoryRepository(sqlDB)
+	dbDB := db.Open()
+	categoryRepository := repositories.NewCategoryRepository(dbDB)
 	categoryService := services.NewCategoryService(categoryRepository)
 	indexPageHandler := handlers.NewIndexPageHandler(categoryService)
-	itemRepository := repositories.NewItemRepository(sqlDB)
+	itemRepository := repositories.NewItemRepository(dbDB)
 	itemService := services.NewItemService(itemRepository)
 	createItemHandler := handlers.NewCreateItemHandler(itemService, categoryService)
 	getItemsHandler := handlers.NewGetItemsHandler(itemService)
 	getItemHandler := handlers.NewGetItemHandler(itemService)
 	getCategoriesHandler := handlers.NewGetCategoriesHandler(categoryService)
-	serveMux := routes.New(indexPageHandler, createItemHandler, getItemsHandler, getItemHandler, getCategoriesHandler)
-	serverServer := server.New(configConfig, serveMux)
+	routesRoutes := routes.New(indexPageHandler, createItemHandler, getItemsHandler, getItemHandler, getCategoriesHandler)
+	serverServer := server.New(configConfig, routesRoutes)
 	return serverServer
 }

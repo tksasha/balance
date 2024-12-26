@@ -4,12 +4,12 @@ package wire
 
 import (
 	"github.com/google/wire"
+	"github.com/tksasha/balance/internal/config"
+	"github.com/tksasha/balance/internal/db"
 	"github.com/tksasha/balance/internal/handlers"
 	"github.com/tksasha/balance/internal/repositories"
 	"github.com/tksasha/balance/internal/routes"
 	"github.com/tksasha/balance/internal/server"
-	"github.com/tksasha/balance/internal/server/config"
-	"github.com/tksasha/balance/internal/server/db"
 	"github.com/tksasha/balance/internal/services"
 )
 

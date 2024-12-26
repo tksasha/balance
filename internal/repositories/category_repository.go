@@ -5,6 +5,7 @@ import (
 	"database/sql"
 	"errors"
 
+	"github.com/tksasha/balance/internal/db"
 	"github.com/tksasha/balance/internal/models"
 )
 
@@ -13,10 +14,10 @@ type CategoryRepository interface {
 }
 
 type categoryRepository struct {
-	db *sql.DB
+	db *db.DB
 }
 
-func NewCategoryRepository(db *sql.DB) CategoryRepository {
+func NewCategoryRepository(db *db.DB) CategoryRepository {
 	return &categoryRepository{
 		db: db,
 	}
@@ -33,7 +34,7 @@ func (r *categoryRepository) GetCategory(ctx context.Context, id int) (*models.C
 			id=?
 	`
 
-	row := r.db.QueryRowContext(ctx, query, id)
+	row := r.db.Connection.QueryRowContext(ctx, query, id)
 
 	var category models.Category
 
@@ -69,7 +70,7 @@ func (r *categoryRepository) GetCategories(ctx context.Context) (models.Categori
 			categories.name ASC
 	`
 
-	rows, err := r.db.QueryContext(ctx, query, currency)
+	rows, err := r.db.Connection.QueryContext(ctx, query, currency)
 	if err != nil {
 		return nil, err
 	}

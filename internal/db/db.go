@@ -7,12 +7,16 @@ import (
 	"os"
 
 	_ "github.com/mattn/go-sqlite3"
-	"github.com/tksasha/balance/internal/server/db/migrations"
-	"github.com/tksasha/balance/internal/server/env"
-	"github.com/tksasha/balance/internal/server/workdir"
+	"github.com/tksasha/balance/internal/db/migrations"
+	"github.com/tksasha/balance/internal/env"
+	"github.com/tksasha/balance/internal/workdir"
 )
 
-func Open() *sql.DB {
+type DB struct {
+	Connection *sql.DB
+}
+
+func Open() *DB {
 	ctx := context.Background()
 
 	dbName := fmt.Sprintf(
@@ -41,7 +45,9 @@ func Open() *sql.DB {
 
 	migrate(ctx, db)
 
-	return db
+	return &DB{
+		Connection: db,
+	}
 }
 
 func migrate(ctx context.Context, db *sql.DB) {

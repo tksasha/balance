@@ -2,9 +2,9 @@ package repositories
 
 import (
 	"context"
-	"database/sql"
 	"log/slog"
 
+	"github.com/tksasha/balance/internal/db"
 	"github.com/tksasha/balance/internal/models"
 )
 
@@ -17,10 +17,10 @@ type ItemRepository interface {
 }
 
 type itemRepository struct {
-	db *sql.DB
+	db *db.DB
 }
 
-func NewItemRepository(db *sql.DB) ItemRepository {
+func NewItemRepository(db *db.DB) ItemRepository {
 	return &itemRepository{db}
 }
 
@@ -47,7 +47,7 @@ func (r *itemRepository) GetItems(ctx context.Context) (models.Items, error) {
 			items.date DESC
 	`
 
-	rows, err := r.db.QueryContext(ctx, query, currency)
+	rows, err := r.db.Connection.QueryContext(ctx, query, currency)
 	if err != nil {
 		return nil, err
 	}

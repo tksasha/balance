@@ -10,7 +10,8 @@ import (
 	"syscall"
 	"time"
 
-	"github.com/tksasha/balance/internal/server/config"
+	"github.com/tksasha/balance/internal/config"
+	"github.com/tksasha/balance/internal/routes"
 )
 
 type Server struct {
@@ -20,12 +21,12 @@ type Server struct {
 
 func New(
 	config *config.Config,
-	routes *http.ServeMux,
+	routes *routes.Routes,
 ) *Server {
 	httpServer := &http.Server{
 		Addr:              config.Address,
 		ReadHeaderTimeout: config.ReadHeaderTimeout,
-		Handler:           routes,
+		Handler:           routes.Mux,
 	}
 
 	return &Server{
