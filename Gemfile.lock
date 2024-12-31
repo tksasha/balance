@@ -103,7 +103,7 @@ GEM
     bootstrap (5.3.3)
       autoprefixer-rails (>= 9.1.0)
       popper_js (>= 2.11.8, < 3)
-    brakeman (6.2.2)
+    brakeman (7.0.0)
       racc
     builder (3.3.0)
     bullet (8.0.0)
@@ -149,7 +149,7 @@ GEM
       i18n (>= 1.8.11, < 2)
     fasterer (0.11.0)
       ruby_parser (>= 3.19.1)
-    ffi (1.17.0)
+    ffi (1.17.1-arm64-darwin)
     formtastic (5.0.0)
       actionpack (>= 6.0.0)
     formtastic_i18n (0.7.0)
