@@ -205,7 +205,7 @@ GEM
     mini_racer (0.15.0)
       libv8-node (~> 22.7.0.1)
     minitest (5.25.4)
-    month (2.0.0)
+    month (2.1.0)
     msgpack (1.7.5)
     net-imap (0.5.4)
       date
