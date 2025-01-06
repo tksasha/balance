@@ -43,5 +43,6 @@ func migrate(ctx context.Context, db *sql.DB) {
 	migrations.NewCreateItemsMigration(db).Up(ctx)
 	migrations.NewCreateIndexBalanceItemsOnDateAndCategoryID(db).Up(ctx)
 	migrations.NewCreateIndexBalanceItemsOnDate(db).Up(ctx)
+	migrations.NewCreateCategoriesMigration(db).Up(ctx)
 	migrations.NewAddItemsCategoryNameMigration(db).Up(ctx)
 }
