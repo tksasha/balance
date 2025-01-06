@@ -3,30 +3,19 @@ package db
 import (
 	"context"
 	"database/sql"
-	"fmt"
-	"os"
 
 	_ "github.com/mattn/go-sqlite3"
 	"github.com/tksasha/balance/internal/db/migrations"
-	"github.com/tksasha/balance/internal/env"
-	"github.com/tksasha/balance/internal/workdir"
 )
 
 type DB struct {
 	Connection *sql.DB
 }
 
-func Open() *DB {
+func Open(dbNameProvider DBNameProvider) *DB {
 	ctx := context.Background()
 
-	dbName := fmt.Sprintf(
-		"%s%s%s.sqlite3",
-		workdir.New(),
-		string(os.PathSeparator),
-		env.Get(),
-	)
-
-	db, err := sql.Open("sqlite3", dbName)
+	db, err := sql.Open("sqlite3", dbNameProvider.Provide())
 	if err != nil {
 		panic(err)
 	}
@@ -51,6 +40,8 @@ func Open() *DB {
 }
 
 func migrate(ctx context.Context, db *sql.DB) {
-	migrations.
-		NewAddItemsCategoryNameMigration(db).Up(ctx)
+	migrations.NewCreateItemsMigration(db).Up(ctx)
+	migrations.NewCreateIndexBalanceItemsOnDateAndCategoryID(db).Up(ctx)
+	migrations.NewCreateIndexBalanceItemsOnDate(db).Up(ctx)
+	migrations.NewAddItemsCategoryNameMigration(db).Up(ctx)
 }

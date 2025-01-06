@@ -37,13 +37,13 @@ test:
 	@echo "go test"
 	@$(GO) test ./test/...
 
+# .PHONY: run
+# run:
+# 	@echo "go run"
+# 	@$(GO) run $(AIR)
+
 .PHONY: run
 run:
-	@echo "go run"
-	@$(GO) run $(AIR)
-
-.PHONY: r
-r:
 	@echo "go run (without live reloading)"
 	@$(GO) run github.com/tksasha/balance/cmd/balance
 
@@ -71,9 +71,9 @@ mockgen:
 		-destination mocks/repositories/category_repository.mock.go
 
 	@$(GO) run $(MOCKGEN) \
-		-source internal/repositories/item_repository.go \
-		-package mockedrepositories \
-		-destination mocks/repositories/item_repository.mock.go
+		-source internal/services/interfaces.go \
+		-package mocksforservices \
+		-destination mocks/services/interfaces.mock.go
 
 	@$(GO) run $(MOCKGEN) \
 		-source internal/handlers/interfaces.go \

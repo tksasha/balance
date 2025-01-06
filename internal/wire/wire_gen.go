@@ -2,7 +2,6 @@
 
 //go:generate go run -mod=mod github.com/google/wire/cmd/wire
 //go:build !wireinject
-// +build !wireinject
 
 package wire
 
@@ -10,6 +9,7 @@ import (
 	"github.com/tksasha/balance/internal/config"
 	"github.com/tksasha/balance/internal/db"
 	"github.com/tksasha/balance/internal/handlers"
+	"github.com/tksasha/balance/internal/providers"
 	"github.com/tksasha/balance/internal/repositories"
 	"github.com/tksasha/balance/internal/routes"
 	"github.com/tksasha/balance/internal/server"
@@ -20,7 +20,8 @@ import (
 
 func InitializeServer() *server.Server {
 	configConfig := config.New()
-	dbDB := db.Open()
+	dbNameProvider := providers.NewDBNameProvider()
+	dbDB := db.Open(dbNameProvider)
 	categoryRepository := repositories.NewCategoryRepository(dbDB)
 	categoryService := services.NewCategoryService(categoryRepository)
 	indexPageHandler := handlers.NewIndexPageHandler(categoryService)

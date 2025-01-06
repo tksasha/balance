@@ -11,8 +11,7 @@ type AddItemsCategoryNameMigration struct {
 	schemaMigration *SchemaMigration
 }
 
-//nolint:ireturn
-func NewAddItemsCategoryNameMigration(db *sql.DB) Migration {
+func NewAddItemsCategoryNameMigration(db *sql.DB) *AddItemsCategoryNameMigration {
 	return &AddItemsCategoryNameMigration{
 		db:              db,
 		schemaMigration: NewSchemaMigration(db, "20241008111749"),
