@@ -1,10 +1,11 @@
 package handlers
 
 import (
+	"errors"
 	"log/slog"
 	"net/http"
 
-	"github.com/tksasha/balance/internal/models"
+	internalerrors "github.com/tksasha/balance/internal/errors"
 )
 
 type UpdateItemHandler struct {
@@ -19,6 +20,12 @@ func NewUpdateItemHandler(itemService ItemService) *UpdateItemHandler {
 
 func (h *UpdateItemHandler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 	if err := h.handle(w, r); err != nil {
+		if errors.Is(err, internalerrors.ErrRecordNotFound) {
+			http.Error(w, "Not Found", http.StatusNotFound)
+
+			return
+		}
+
 		slog.Error("update item handler error", "error", err)
 
 		http.Error(w, "Internal Server Error", http.StatusInternalServerError)
@@ -30,9 +37,12 @@ func (h *UpdateItemHandler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 }
 
 func (h *UpdateItemHandler) handle(w http.ResponseWriter, r *http.Request) error {
-	_ = w
+	item, err := h.itemService.GetItem(r.Context(), r.PathValue("id"))
+	if err != nil {
+		return err
+	}
 
-	item := &models.Item{}
+	_ = w
 
 	return h.itemService.UpdateItem(r.Context(), item)
 }

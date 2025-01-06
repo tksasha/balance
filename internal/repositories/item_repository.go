@@ -2,9 +2,12 @@ package repositories
 
 import (
 	"context"
+	"database/sql"
+	"errors"
 	"log/slog"
 
 	"github.com/tksasha/balance/internal/db"
+	internalerrors "github.com/tksasha/balance/internal/errors"
 	"github.com/tksasha/balance/internal/models"
 )
 
@@ -74,7 +77,32 @@ func (r *ItemRepository) CreateItem(ctx context.Context, item *models.Item) erro
 }
 
 func (r *ItemRepository) GetItem(ctx context.Context, id int) (*models.Item, error) {
-	return &models.Item{}, nil
+	query := `
+		SELECT
+			items.id,
+			items.date,
+			items.sum,
+			COALESCE(items.category_name, ""),
+			items.description
+		FROM
+			items
+		WHERE
+			items.id=?
+		AND
+			items.deleted_at IS NULL
+	`
+
+	item := &models.Item{}
+
+	if err := r.db.Connection.QueryRowContext(ctx, query, id).Scan(item); err != nil {
+		if errors.Is(err, sql.ErrNoRows) {
+			return nil, internalerrors.ErrRecordNotFound
+		}
+
+		return nil, err
+	}
+
+	return item, nil
 }
 
 func (r *ItemRepository) UpdateItem(ctx context.Context, item *models.Item) error {

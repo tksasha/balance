@@ -24,8 +24,6 @@ func (h *GetItemHandler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 }
 
 func (h *GetItemHandler) handle(_ http.ResponseWriter, r *http.Request) error {
-	slog.Info("debug", "id", r.PathValue("id"))
-
 	item, err := h.itemService.GetItem(r.Context(), r.PathValue("id"))
 	if err != nil {
 		slog.Error("failed to get item by id", "error", err)
