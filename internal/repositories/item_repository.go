@@ -8,23 +8,15 @@ import (
 	"github.com/tksasha/balance/internal/models"
 )
 
-type ItemRepository interface {
-	GetItems(ctx context.Context) (models.Items, error)
-	CreateItem(ctx context.Context, item *models.Item) error
-	GetItem(ctx context.Context, id int) (*models.Item, error)
-	UpdateItem(ctx context.Context, item *models.Item) error
-	DeleteItem(ctx context.Context, id int) error
-}
-
-type itemRepository struct {
+type ItemRepository struct {
 	db *db.DB
 }
 
-func NewItemRepository(db *db.DB) ItemRepository {
-	return &itemRepository{db}
+func NewItemRepository(db *db.DB) *ItemRepository {
+	return &ItemRepository{db}
 }
 
-func (r *itemRepository) GetItems(ctx context.Context) (models.Items, error) {
+func (r *ItemRepository) GetItems(ctx context.Context) (models.Items, error) {
 	currency, ok := ctx.Value(models.CurrencyContextValue{}).(models.Currency)
 	if !ok {
 		currency, _ = models.GetDefaultCurrency()
@@ -77,18 +69,18 @@ func (r *itemRepository) GetItems(ctx context.Context) (models.Items, error) {
 	return items, nil
 }
 
-func (r *itemRepository) CreateItem(ctx context.Context, item *models.Item) error {
+func (r *ItemRepository) CreateItem(ctx context.Context, item *models.Item) error {
 	return nil
 }
 
-func (r *itemRepository) GetItem(ctx context.Context, id int) (*models.Item, error) {
+func (r *ItemRepository) GetItem(ctx context.Context, id int) (*models.Item, error) {
 	return &models.Item{}, nil
 }
 
-func (r *itemRepository) UpdateItem(ctx context.Context, item *models.Item) error {
+func (r *ItemRepository) UpdateItem(ctx context.Context, item *models.Item) error {
 	return nil
 }
 
-func (r *itemRepository) DeleteItem(ctx context.Context, id int) error {
+func (r *ItemRepository) DeleteItem(ctx context.Context, id int) error {
 	return nil
 }

@@ -5,14 +5,13 @@ import (
 	"strconv"
 
 	"github.com/tksasha/balance/internal/models"
-	"github.com/tksasha/balance/internal/repositories"
 )
 
 type ItemService struct {
-	itemRepository repositories.ItemRepository
+	itemRepository ItemRepository
 }
 
-func NewItemService(itemRepository repositories.ItemRepository) *ItemService {
+func NewItemService(itemRepository ItemRepository) *ItemService {
 	return &ItemService{
 		itemRepository: itemRepository,
 	}

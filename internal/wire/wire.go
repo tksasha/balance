@@ -30,6 +30,7 @@ func InitializeServer() *server.Server {
 		services.NewItemService,
 		wire.Bind(new(handlers.ItemService), new(*services.ItemService)),
 		wire.Bind(new(handlers.CategoryService), new(*services.CategoryService)),
+		wire.Bind(new(services.ItemRepository), new(*repositories.ItemRepository)),
 	)
 
 	return nil

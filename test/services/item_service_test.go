@@ -7,13 +7,13 @@ import (
 
 	"github.com/tksasha/balance/internal/models"
 	"github.com/tksasha/balance/internal/services"
-	mockedrepositories "github.com/tksasha/balance/mocks/repositories"
+	mocksforservices "github.com/tksasha/balance/mocks/services"
 	"go.uber.org/mock/gomock"
 	"gotest.tools/v3/assert"
 )
 
 func TestItemService_GetItems(t *testing.T) {
-	itemRepository := mockedrepositories.NewMockItemRepository(gomock.NewController(t))
+	itemRepository := mocksforservices.NewMockItemRepository(gomock.NewController(t))
 
 	service := services.NewItemService(itemRepository)
 
@@ -39,7 +39,7 @@ func TestItemService_GetItems(t *testing.T) {
 }
 
 func TestItemService_GetItem(t *testing.T) {
-	itemRepository := mockedrepositories.NewMockItemRepository(gomock.NewController(t))
+	itemRepository := mocksforservices.NewMockItemRepository(gomock.NewController(t))
 
 	service := services.NewItemService(itemRepository)
 
@@ -85,7 +85,7 @@ func TestItemService_GetItem(t *testing.T) {
 }
 
 func TestItemService_UpdateItem(t *testing.T) {
-	itemRepository := mockedrepositories.NewMockItemRepository(gomock.NewController(t))
+	itemRepository := mocksforservices.NewMockItemRepository(gomock.NewController(t))
 
 	service := services.NewItemService(itemRepository)
 
@@ -111,7 +111,7 @@ func TestItemService_UpdateItem(t *testing.T) {
 }
 
 func TestItemService_CreateItem(t *testing.T) {
-	itemRepository := mockedrepositories.NewMockItemRepository(gomock.NewController(t))
+	itemRepository := mocksforservices.NewMockItemRepository(gomock.NewController(t))
 
 	service := services.NewItemService(itemRepository)
 
@@ -137,7 +137,7 @@ func TestItemService_CreateItem(t *testing.T) {
 }
 
 func TestItemService_DeleteItem(t *testing.T) {
-	itemRepository := mockedrepositories.NewMockItemRepository(gomock.NewController(t))
+	itemRepository := mocksforservices.NewMockItemRepository(gomock.NewController(t))
 
 	service := services.NewItemService(itemRepository)
 
