@@ -4,6 +4,7 @@ import (
 	"context"
 	"strconv"
 
+	internalerrors "github.com/tksasha/balance/internal/errors"
 	"github.com/tksasha/balance/internal/models"
 )
 
@@ -29,7 +30,7 @@ func (s *ItemService) GetItems(ctx context.Context) (models.Items, error) {
 func (s *ItemService) GetItem(ctx context.Context, input string) (*models.Item, error) {
 	id, err := strconv.Atoi(input)
 	if err != nil || id <= 0 {
-		return nil, NewNotFoundError()
+		return nil, internalerrors.ErrResourceNotFound
 	}
 
 	item, err := s.itemRepository.GetItem(ctx, id)
@@ -51,7 +52,7 @@ func (s *ItemService) CreateItem(ctx context.Context, item *models.Item) error {
 func (s *ItemService) DeleteItem(ctx context.Context, input string) error {
 	id, err := strconv.Atoi(input)
 	if err != nil || id < 1 {
-		return NewNotFoundError()
+		return internalerrors.ErrResourceNotFound
 	}
 
 	return s.itemRepository.DeleteItem(ctx, id)

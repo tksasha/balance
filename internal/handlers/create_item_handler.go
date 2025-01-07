@@ -6,6 +6,7 @@ import (
 	"net/http"
 
 	"github.com/tksasha/balance/internal/components"
+	internalerrors "github.com/tksasha/balance/internal/errors"
 	"github.com/tksasha/balance/internal/models"
 )
 
@@ -23,9 +24,7 @@ func NewCreateItemHandler(itemService ItemService, categoryService CategoryServi
 
 func (h *CreateItemHandler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 	if err := h.handle(w, r); err != nil {
-		var formParsingError *FormParsingError
-
-		if errors.As(err, &formParsingError) {
+		if errors.Is(err, internalerrors.ErrParsingForm) {
 			slog.Error("invalid user input", "error", err)
 
 			http.Error(w, "Invalid User Input", http.StatusBadRequest)
@@ -45,7 +44,7 @@ func (h *CreateItemHandler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 
 func (h *CreateItemHandler) handle(w http.ResponseWriter, r *http.Request) error {
 	if err := r.ParseForm(); err != nil {
-		return NewFormParsingError(err)
+		return internalerrors.ErrParsingForm
 	}
 
 	item, validationErrors := models.
