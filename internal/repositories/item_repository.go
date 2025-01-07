@@ -73,6 +73,31 @@ func (r *ItemRepository) GetItems(ctx context.Context) (models.Items, error) {
 }
 
 func (r *ItemRepository) CreateItem(ctx context.Context, item *models.Item) error {
+	query := `
+		INSERT INTO items (
+			date,
+			formula,
+			sum,
+			category_id,
+			category_name,
+			description
+		)
+		VALUES (?, ?, ?, ?, ?, ?)
+	`
+
+	if _, err := r.db.Connection.ExecContext(
+		ctx,
+		query,
+		item.Date,
+		item.Formula,
+		item.Sum,
+		item.CategoryID,
+		item.CategoryName,
+		item.Description,
+	); err != nil {
+		return err
+	}
+
 	return nil
 }
 

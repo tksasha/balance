@@ -33,6 +33,7 @@ func InitializeServer() *server.Server {
 		wire.Bind(new(db.DBNameProvider), new(*providers.DBNameProvider)),
 		wire.Bind(new(handlers.CategoryService), new(*services.CategoryService)),
 		wire.Bind(new(handlers.ItemService), new(*services.ItemService)),
+		wire.Bind(new(services.CategoryRepository), new(*repositories.CategoryRepository)),
 		wire.Bind(new(services.ItemRepository), new(*repositories.ItemRepository)),
 	)
 

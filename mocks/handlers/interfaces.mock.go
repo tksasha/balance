@@ -137,6 +137,20 @@ func (m *MockCategoryService) EXPECT() *MockCategoryServiceMockRecorder {
 	return m.recorder
 }
 
+// Create mocks base method.
+func (m *MockCategoryService) Create(ctx context.Context, category *models.Category) error {
+	m.ctrl.T.Helper()
+	ret := m.ctrl.Call(m, "Create", ctx, category)
+	ret0, _ := ret[0].(error)
+	return ret0
+}
+
+// Create indicates an expected call of Create.
+func (mr *MockCategoryServiceMockRecorder) Create(ctx, category any) *gomock.Call {
+	mr.mock.ctrl.T.Helper()
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "Create", reflect.TypeOf((*MockCategoryService)(nil).Create), ctx, category)
+}
+
 // GetCategories mocks base method.
 func (m *MockCategoryService) GetCategories(ctx context.Context) (models.Categories, error) {
 	m.ctrl.T.Helper()

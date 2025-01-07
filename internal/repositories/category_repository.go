@@ -9,21 +9,17 @@ import (
 	"github.com/tksasha/balance/internal/models"
 )
 
-type CategoryRepository interface {
-	GetCategories(ctx context.Context) (models.Categories, error)
-}
-
-type categoryRepository struct {
+type CategoryRepository struct {
 	db *db.DB
 }
 
-func NewCategoryRepository(db *db.DB) CategoryRepository {
-	return &categoryRepository{
+func NewCategoryRepository(db *db.DB) *CategoryRepository {
+	return &CategoryRepository{
 		db: db,
 	}
 }
 
-func (r *categoryRepository) GetCategory(ctx context.Context, id int) (*models.Category, error) {
+func (r *CategoryRepository) GetCategory(ctx context.Context, id int) (*models.Category, error) {
 	query := `
 		SELECT
 			id,
@@ -49,7 +45,7 @@ func (r *categoryRepository) GetCategory(ctx context.Context, id int) (*models.C
 	return &category, nil
 }
 
-func (r *categoryRepository) GetCategories(ctx context.Context) (models.Categories, error) {
+func (r *CategoryRepository) GetCategories(ctx context.Context) (models.Categories, error) {
 	currency, ok := ctx.Value(models.CurrencyContextValue{}).(models.Currency)
 	if !ok {
 		currency, _ = models.GetDefaultCurrency()
@@ -98,4 +94,72 @@ func (r *categoryRepository) GetCategories(ctx context.Context) (models.Categori
 	}
 
 	return categories, nil
+}
+
+func (r *CategoryRepository) Create(ctx context.Context, category *models.Category) error {
+	currency, ok := ctx.Value(models.CurrencyContextValue{}).(models.Currency)
+	if !ok {
+		currency, _ = models.GetDefaultCurrency()
+	}
+
+	query := `INSERT INTO categories (name, income, visible, currency, supercategory) VALUES (?, ?, ?, ?, ?)`
+
+	if _, err := r.db.Connection.ExecContext(
+		ctx,
+		query,
+		category.Name,
+		category.Income,
+		category.Visible,
+		currency,
+		category.Supercategory,
+	); err != nil {
+		return err
+	}
+
+	return nil
+}
+
+func (r *CategoryRepository) FindByName(ctx context.Context, name string) (*models.Category, error) {
+	currency, ok := ctx.Value(models.CurrencyContextValue{}).(models.Currency)
+	if !ok {
+		currency, _ = models.GetDefaultCurrency()
+	}
+
+	query := `
+		SELECT
+			id,
+			name,
+			income,
+			visible,
+			currency,
+			supercategory
+		FROM
+			categories
+		WHERE
+			name=? AND currency=?
+		LIMIT 1
+	`
+
+	category := &models.Category{}
+
+	err := r.db.Connection.
+		QueryRowContext(
+			ctx,
+			query,
+			name,
+			currency,
+		).
+		Scan(
+			&category.ID,
+			&category.Name,
+			&category.Income,
+			&category.Visible,
+			&category.Currency,
+			&category.Supercategory,
+		)
+	if err != nil {
+		return nil, err
+	}
+
+	return category, nil
 }

@@ -1,11 +1,16 @@
 package models
 
-import "strconv"
+import (
+	"strconv"
+)
 
 type Category struct {
-	ID     int
-	Name   string
-	Income bool
+	ID            int
+	Name          string
+	Income        bool
+	Visible       bool
+	Currency      Currency
+	Supercategory int
 }
 
 type Categories []*Category

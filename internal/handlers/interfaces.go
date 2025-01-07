@@ -16,4 +16,5 @@ type ItemService interface {
 
 type CategoryService interface {
 	GetCategories(ctx context.Context) (models.Categories, error)
+	Create(ctx context.Context, category *models.Category) error
 }

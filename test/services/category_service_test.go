@@ -7,35 +7,87 @@ import (
 
 	"github.com/tksasha/balance/internal/models"
 	"github.com/tksasha/balance/internal/services"
-	mockedrepositories "github.com/tksasha/balance/mocks/repositories"
+	mocksforservices "github.com/tksasha/balance/mocks/services"
 	"go.uber.org/mock/gomock"
 	"gotest.tools/v3/assert"
 )
 
-func TestGetCategoriesService_GetCategories(t *testing.T) {
-	categoryRepository := mockedrepositories.NewMockCategoryRepository(
-		gomock.NewController(t),
-	)
+func TestCategoryService_Create(t *testing.T) { //nolint:funlen
+	controller := gomock.NewController(t)
+
+	categoryRepository := mocksforservices.NewMockCategoryRepository(controller)
 
 	service := services.NewCategoryService(categoryRepository)
 
 	ctx := context.Background()
 
-	t.Run("when GetCategories returns an error it should return this error", func(t *testing.T) {
-		categoryRepository.EXPECT().GetCategories(ctx).Return(nil, errors.New("get categories error"))
+	t.Run("when category name is empty, it should return error", func(t *testing.T) {
+		category := &models.Category{
+			Name: "",
+		}
 
-		categories, err := service.GetCategories(ctx)
+		categoryRepository.
+			EXPECT().
+			FindByName(ctx, "").
+			Return(nil, errors.New("record not found"))
 
-		assert.Assert(t, categories == nil)
-		assert.Error(t, err, "get categories error")
+		err := service.Create(ctx, category)
+
+		assert.Error(t, err, "name: is required")
 	})
 
-	t.Run("when GetCategories doesn't return any error it should return categories", func(t *testing.T) {
-		categoryRepository.EXPECT().GetCategories(ctx).Return(models.Categories{}, nil)
+	t.Run("when category name is not unique, it should return error", func(t *testing.T) {
+		category := &models.Category{
+			Name: "Food",
+		}
 
-		categories, err := service.GetCategories(ctx)
+		categoryRepository.
+			EXPECT().
+			FindByName(ctx, "Food").
+			Return(category, nil)
 
-		assert.Assert(t, categories != nil)
+		err := service.Create(ctx, category)
+
+		assert.Error(t, err, "name: already exists")
+	})
+
+	t.Run("when create category returns error, it should return error", func(t *testing.T) {
+		category := &models.Category{
+			Name: "Drinks",
+		}
+
+		categoryRepository.
+			EXPECT().
+			FindByName(ctx, "Drinks").
+			Return(nil, errors.New("record not found"))
+
+		categoryRepository.
+			EXPECT().
+			Create(ctx, category).
+			Return(errors.New("create category error"))
+
+		err := service.Create(ctx, category)
+
+		assert.Error(t, err, "create category error")
+	})
+
+	t.Run("when create category does not return error, it should return nil", func(t *testing.T) {
+		category := &models.Category{
+			Name: "Products",
+		}
+
+		categoryRepository.
+			EXPECT().
+			FindByName(ctx, "Products").
+			Return(nil, errors.New("record not found"))
+
+		categoryRepository.
+			EXPECT().
+			Create(ctx, category).
+			Return(nil)
+
+		err := service.Create(ctx, category)
+
 		assert.NilError(t, err)
 	})
 }
