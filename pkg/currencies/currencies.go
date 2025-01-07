@@ -1,4 +1,4 @@
-package models
+package currencies
 
 import "strings"
 
@@ -8,18 +8,16 @@ const (
 	EUR
 )
 
-var currencyCodeToID = map[string]Currency{ //nolint:gochecknoglobals
-	"uah": UAH,
-	"usd": USD,
-	"eur": EUR,
-}
-
 type Currency int
 
 type CurrencyContextValue struct{}
 
 func GetCurrencyByCode(code string) Currency {
-	return currencyCodeToID[strings.ToLower(code)]
+	return map[string]Currency{
+		"uah": UAH,
+		"usd": USD,
+		"eur": EUR,
+	}[strings.ToLower(code)]
 }
 
 func GetDefaultCurrency() (Currency, string) {

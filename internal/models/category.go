@@ -2,6 +2,8 @@ package models
 
 import (
 	"strconv"
+
+	"github.com/tksasha/balance/pkg/currencies"
 )
 
 type Category struct {
@@ -9,7 +11,7 @@ type Category struct {
 	Name          string
 	Income        bool
 	Visible       bool
-	Currency      Currency
+	Currency      currencies.Currency
 	Supercategory int
 }
 

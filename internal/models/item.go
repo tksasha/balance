@@ -4,6 +4,7 @@ import (
 	"strconv"
 	"time"
 
+	"github.com/tksasha/balance/pkg/currencies"
 	"golang.org/x/text/language"
 	"golang.org/x/text/message"
 )
@@ -16,7 +17,7 @@ type Item struct {
 	CategoryID   int
 	CategoryName string
 	Description  string
-	Currency     Currency
+	Currency     currencies.Currency
 	CurrencyCode string
 }
 

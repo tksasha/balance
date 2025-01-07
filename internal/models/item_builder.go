@@ -5,6 +5,7 @@ import (
 	"strings"
 	"time"
 
+	"github.com/tksasha/balance/pkg/currencies"
 	"github.com/tksasha/calculator"
 	"github.com/tksasha/model"
 	"github.com/tksasha/model/errors"
@@ -76,9 +77,9 @@ func (b *ItemBuilder) WithDescription(input string) *ItemBuilder {
 }
 
 func (b *ItemBuilder) WithCurrencyCode(code string) *ItemBuilder {
-	currency := GetCurrencyByCode(code)
+	currency := currencies.GetCurrencyByCode(code)
 	if currency == 0 {
-		currency, code = GetDefaultCurrency()
+		currency, code = currencies.GetDefaultCurrency()
 	}
 
 	b.item.Currency = currency

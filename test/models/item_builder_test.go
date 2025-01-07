@@ -5,6 +5,7 @@ import (
 	"time"
 
 	"github.com/tksasha/balance/internal/models"
+	"github.com/tksasha/balance/pkg/currencies"
 	"gotest.tools/v3/assert"
 )
 
@@ -95,7 +96,7 @@ func TestItemBuilder_WithCurrencyCode(t *testing.T) {
 	t.Run("when code is uah it should set id to 1", func(t *testing.T) {
 		item, err := models.NewItemBuilder().WithCurrencyCode("uah").Build()
 
-		assert.Equal(t, item.Currency, models.Currency(1))
+		assert.Equal(t, item.Currency, currencies.Currency(1))
 		assert.Equal(t, item.CurrencyCode, "uah")
 		assert.Assert(t, err.IsEmpty())
 	})
@@ -103,7 +104,7 @@ func TestItemBuilder_WithCurrencyCode(t *testing.T) {
 	t.Run("when code is usd it should set id to 2", func(t *testing.T) {
 		item, err := models.NewItemBuilder().WithCurrencyCode("usd").Build()
 
-		assert.Equal(t, item.Currency, models.Currency(2))
+		assert.Equal(t, item.Currency, currencies.Currency(2))
 		assert.Equal(t, item.CurrencyCode, "usd")
 		assert.Assert(t, err.IsEmpty())
 	})
@@ -111,7 +112,7 @@ func TestItemBuilder_WithCurrencyCode(t *testing.T) {
 	t.Run("when code is eur it should set id to 3", func(t *testing.T) {
 		item, err := models.NewItemBuilder().WithCurrencyCode("eur").Build()
 
-		assert.Equal(t, item.Currency, models.Currency(3))
+		assert.Equal(t, item.Currency, currencies.Currency(3))
 		assert.Equal(t, item.CurrencyCode, "eur")
 		assert.Assert(t, err.IsEmpty())
 	})
@@ -119,7 +120,7 @@ func TestItemBuilder_WithCurrencyCode(t *testing.T) {
 	t.Run("when code is xxx it should set default currency", func(t *testing.T) {
 		item, err := models.NewItemBuilder().WithCurrencyCode("xxx").Build()
 
-		assert.Equal(t, item.Currency, models.Currency(1))
+		assert.Equal(t, item.Currency, currencies.Currency(1))
 		assert.Equal(t, item.CurrencyCode, "uah")
 		assert.Assert(t, err.IsEmpty())
 	})

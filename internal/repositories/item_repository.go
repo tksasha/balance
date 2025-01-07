@@ -9,6 +9,7 @@ import (
 	"github.com/tksasha/balance/internal/db"
 	internalerrors "github.com/tksasha/balance/internal/errors"
 	"github.com/tksasha/balance/internal/models"
+	"github.com/tksasha/balance/pkg/currencies"
 )
 
 type ItemRepository struct {
@@ -20,9 +21,9 @@ func NewItemRepository(db *db.DB) *ItemRepository {
 }
 
 func (r *ItemRepository) GetItems(ctx context.Context) (models.Items, error) {
-	currency, ok := ctx.Value(models.CurrencyContextValue{}).(models.Currency)
+	currency, ok := ctx.Value(currencies.CurrencyContextValue{}).(currencies.Currency)
 	if !ok {
-		currency, _ = models.GetDefaultCurrency()
+		currency, _ = currencies.GetDefaultCurrency()
 	}
 
 	query := `

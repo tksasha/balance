@@ -16,6 +16,7 @@ import (
 	providers "github.com/tksasha/balance/internal/providers/test"
 	"github.com/tksasha/balance/internal/repositories"
 	"github.com/tksasha/balance/internal/services"
+	"github.com/tksasha/balance/pkg/currencies"
 	"gotest.tools/v3/assert"
 	is "gotest.tools/v3/assert/cmp"
 )
@@ -104,13 +105,13 @@ func TestCreateCategoryHandlerTest(t *testing.T) { //nolint:funlen
 			ctx,
 			"SELECT id, name, currency FROM categories WHERE name=? AND currency=?",
 			"Food",
-			models.EUR,
+			currencies.EUR,
 		).Scan(&category.ID, &category.Name, &category.Currency); err != nil {
 			t.Fatalf("failed to find category by name, error: %v", err)
 		}
 
 		assert.Equal(t, category.ID, 1)
 		assert.Equal(t, category.Name, "Food")
-		assert.Equal(t, category.Currency, models.EUR)
+		assert.Equal(t, category.Currency, currencies.EUR)
 	})
 }

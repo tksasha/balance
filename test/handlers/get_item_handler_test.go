@@ -9,8 +9,8 @@ import (
 
 	"github.com/tksasha/balance/internal/handlers"
 	"github.com/tksasha/balance/internal/middlewares"
-	"github.com/tksasha/balance/internal/models"
 	mocksforhandlers "github.com/tksasha/balance/mocks/handlers"
+	"github.com/tksasha/balance/pkg/currencies"
 	"go.uber.org/mock/gomock"
 	"gotest.tools/v3/assert"
 )
@@ -26,7 +26,7 @@ func TestGetItemHandler(t *testing.T) {
 
 	ctx := context.Background()
 
-	ctxWithValue := context.WithValue(ctx, models.CurrencyContextValue{}, models.USD)
+	ctxWithValue := context.WithValue(ctx, currencies.CurrencyContextValue{}, currencies.USD)
 
 	t.Run("when get item by id returns an error, it should respond with 500 code", func(t *testing.T) {
 		itemService.

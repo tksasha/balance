@@ -11,10 +11,10 @@ import (
 	"github.com/tksasha/balance/internal/db"
 	"github.com/tksasha/balance/internal/handlers"
 	"github.com/tksasha/balance/internal/middlewares"
-	"github.com/tksasha/balance/internal/models"
 	providers "github.com/tksasha/balance/internal/providers/test"
 	"github.com/tksasha/balance/internal/repositories"
 	"github.com/tksasha/balance/internal/services"
+	"github.com/tksasha/balance/pkg/currencies"
 	"gotest.tools/v3/assert"
 )
 
@@ -66,7 +66,7 @@ func TestGetCategoriesHandler_GetCategories(t *testing.T) { //nolint:funlen
 				ctx,
 				"INSERT INTO categories(name, currency) VALUES(?, ?)",
 				name,
-				models.EUR,
+				currencies.EUR,
 			); err != nil {
 				t.Fatalf("failed to create category with name %s, error: %v", name, err)
 			}

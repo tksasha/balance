@@ -1,9 +1,9 @@
-package models_test
+package currencies_test
 
 import (
 	"testing"
 
-	"github.com/tksasha/balance/internal/models"
+	"github.com/tksasha/balance/pkg/currencies"
 	"gotest.tools/v3/assert"
 )
 
@@ -19,13 +19,13 @@ func TestGetCurrencyIDByCode(t *testing.T) {
 	}
 
 	for code, id := range data {
-		assert.Equal(t, models.GetCurrencyByCode(code), models.Currency(id))
+		assert.Equal(t, currencies.GetCurrencyByCode(code), currencies.Currency(id))
 	}
 }
 
 func TestGetDefaultCurrency(t *testing.T) {
-	id, code := models.GetDefaultCurrency()
+	id, code := currencies.GetDefaultCurrency()
 
-	assert.Equal(t, id, models.Currency(1))
+	assert.Equal(t, id, currencies.Currency(1))
 	assert.Equal(t, code, "uah")
 }

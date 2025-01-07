@@ -5,7 +5,7 @@ import (
 	"net/http"
 	"strings"
 
-	"github.com/tksasha/balance/internal/models"
+	"github.com/tksasha/balance/pkg/currencies"
 )
 
 type currencyMiddleware struct{}
@@ -20,12 +20,12 @@ func (m *currencyMiddleware) Wrap(next http.Handler) http.Handler {
 			r.URL.Query().Get("currency"),
 		)
 
-		currency := models.GetCurrencyByCode(code)
+		currency := currencies.GetCurrencyByCode(code)
 		if currency == 0 {
-			currency, _ = models.GetDefaultCurrency()
+			currency, _ = currencies.GetDefaultCurrency()
 		}
 
-		ctx := context.WithValue(r.Context(), models.CurrencyContextValue{}, currency)
+		ctx := context.WithValue(r.Context(), currencies.CurrencyContextValue{}, currency)
 
 		r = r.WithContext(ctx)
 
