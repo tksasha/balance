@@ -98,10 +98,14 @@ func TestCreateCategoryHandlerTest(t *testing.T) { //nolint:funlen
 		assert.Equal(t, recorder.Code, http.StatusOK)
 		assert.Assert(t, is.Contains(string(response), "create category page"))
 
-		ctx2 := context.WithValue(ctx, models.CurrencyContextValue{}, models.EUR)
+		category := &models.Category{}
 
-		category, err := categoryRepository.FindByName(ctx2, "Food")
-		if err != nil {
+		if err := db.Connection.QueryRowContext(
+			ctx,
+			"SELECT id, name, currency FROM categories WHERE name=? AND currency=?",
+			"Food",
+			models.EUR,
+		).Scan(&category.ID, &category.Name, &category.Currency); err != nil {
 			t.Fatalf("failed to find category by name, error: %v", err)
 		}
 

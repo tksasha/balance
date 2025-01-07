@@ -6,6 +6,7 @@ import (
 	"errors"
 
 	"github.com/tksasha/balance/internal/db"
+	internalerrors "github.com/tksasha/balance/internal/errors"
 	"github.com/tksasha/balance/internal/models"
 )
 
@@ -19,30 +20,34 @@ func NewCategoryRepository(db *db.DB) *CategoryRepository {
 	}
 }
 
-func (r *CategoryRepository) GetCategory(ctx context.Context, id int) (*models.Category, error) {
+func (r *CategoryRepository) FindByID(ctx context.Context, id int) (*models.Category, error) {
+	currency, ok := ctx.Value(models.CurrencyContextValue{}).(models.Currency)
+	if !ok {
+		currency, _ = models.GetDefaultCurrency()
+	}
+
 	query := `
 		SELECT
-			id,
-			name
+			id, name, currency
 		FROM
 			categories
 		WHERE
-			id=?
+			id=? AND currency=?
 	`
 
-	row := r.db.Connection.QueryRowContext(ctx, query, id)
+	row := r.db.Connection.QueryRowContext(ctx, query, id, currency)
 
-	var category models.Category
+	category := &models.Category{}
 
-	if err := row.Scan(&category.ID, &category.Name); err != nil {
+	if err := row.Scan(&category.ID, &category.Name, &category.Currency); err != nil {
 		if errors.Is(err, sql.ErrNoRows) {
-			return nil, NewNotFoundError()
+			return nil, internalerrors.ErrRecordNotFound
 		}
 
-		panic(err)
+		return nil, err
 	}
 
-	return &category, nil
+	return category, nil
 }
 
 func (r *CategoryRepository) GetAll(ctx context.Context) (models.Categories, error) {
@@ -53,7 +58,7 @@ func (r *CategoryRepository) GetAll(ctx context.Context) (models.Categories, err
 
 	query := `
 		SELECT
-			id, name, income
+			id, name, income, currency
 		FROM
 			categories
 		WHERE
@@ -78,7 +83,7 @@ func (r *CategoryRepository) GetAll(ctx context.Context) (models.Categories, err
 	for rows.Next() {
 		category := &models.Category{}
 
-		if err := rows.Scan(&category.ID, &category.Name, &category.Income); err != nil {
+		if err := rows.Scan(&category.ID, &category.Name, &category.Income, &category.Currency); err != nil {
 			return nil, err
 		}
 
@@ -98,7 +103,11 @@ func (r *CategoryRepository) Create(ctx context.Context, category *models.Catego
 		currency, _ = models.GetDefaultCurrency()
 	}
 
-	query := `INSERT INTO categories (name, income, visible, currency, supercategory) VALUES (?, ?, ?, ?, ?)`
+	query := `
+		INSERT INTO
+			categories (name, income, visible, currency, supercategory)
+		VALUES (?, ?, ?, ?, ?)
+	`
 
 	if _, err := r.db.Connection.ExecContext(
 		ctx,
@@ -123,12 +132,7 @@ func (r *CategoryRepository) FindByName(ctx context.Context, name string) (*mode
 
 	query := `
 		SELECT
-			id,
-			name,
-			income,
-			visible,
-			currency,
-			supercategory
+			id, name, currency
 		FROM
 			categories
 		WHERE
@@ -138,22 +142,9 @@ func (r *CategoryRepository) FindByName(ctx context.Context, name string) (*mode
 
 	category := &models.Category{}
 
-	err := r.db.Connection.
-		QueryRowContext(
-			ctx,
-			query,
-			name,
-			currency,
-		).
-		Scan(
-			&category.ID,
-			&category.Name,
-			&category.Income,
-			&category.Visible,
-			&category.Currency,
-			&category.Supercategory,
-		)
-	if err != nil {
+	if err := r.db.Connection.
+		QueryRowContext(ctx, query, name, currency).
+		Scan(&category.ID, &category.Name, &category.Currency); err != nil {
 		return nil, err
 	}
 
