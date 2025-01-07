@@ -28,7 +28,7 @@ func TestIndexPageHandler_ServeHTTP(t *testing.T) {
 
 		categoryService.
 			EXPECT().
-			GetCategories(ctx).
+			GetAll(ctx).
 			Return(nil, errors.New("get categories error"))
 
 		recorder := httptest.NewRecorder()

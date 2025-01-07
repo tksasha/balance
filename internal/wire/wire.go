@@ -18,6 +18,7 @@ func InitializeServer() *server.Server {
 	wire.Build(
 		config.New,
 		db.Open,
+		handlers.NewCreateCategoryHandler,
 		handlers.NewCreateItemHandler,
 		handlers.NewGetCategoriesHandler,
 		handlers.NewGetItemHandler,

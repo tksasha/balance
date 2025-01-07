@@ -151,17 +151,17 @@ func (mr *MockCategoryServiceMockRecorder) Create(ctx, category any) *gomock.Cal
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "Create", reflect.TypeOf((*MockCategoryService)(nil).Create), ctx, category)
 }
 
-// GetCategories mocks base method.
-func (m *MockCategoryService) GetCategories(ctx context.Context) (models.Categories, error) {
+// GetAll mocks base method.
+func (m *MockCategoryService) GetAll(ctx context.Context) (models.Categories, error) {
 	m.ctrl.T.Helper()
-	ret := m.ctrl.Call(m, "GetCategories", ctx)
+	ret := m.ctrl.Call(m, "GetAll", ctx)
 	ret0, _ := ret[0].(models.Categories)
 	ret1, _ := ret[1].(error)
 	return ret0, ret1
 }
 
-// GetCategories indicates an expected call of GetCategories.
-func (mr *MockCategoryServiceMockRecorder) GetCategories(ctx any) *gomock.Call {
+// GetAll indicates an expected call of GetAll.
+func (mr *MockCategoryServiceMockRecorder) GetAll(ctx any) *gomock.Call {
 	mr.mock.ctrl.T.Helper()
-	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "GetCategories", reflect.TypeOf((*MockCategoryService)(nil).GetCategories), ctx)
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "GetAll", reflect.TypeOf((*MockCategoryService)(nil).GetAll), ctx)
 }

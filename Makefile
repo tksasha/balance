@@ -66,11 +66,6 @@ gen: wire mockgen
 .PHONY: mockgen
 mockgen:
 	@$(GO) run $(MOCKGEN) \
-		-source internal/repositories/category_repository.go \
-		-package mockedrepositories \
-		-destination mocks/repositories/category_repository.mock.go
-
-	@$(GO) run $(MOCKGEN) \
 		-source internal/services/interfaces.go \
 		-package mocksforservices \
 		-destination mocks/services/interfaces.mock.go

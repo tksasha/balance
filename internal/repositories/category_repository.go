@@ -45,7 +45,7 @@ func (r *CategoryRepository) GetCategory(ctx context.Context, id int) (*models.C
 	return &category, nil
 }
 
-func (r *CategoryRepository) GetCategories(ctx context.Context) (models.Categories, error) {
+func (r *CategoryRepository) GetAll(ctx context.Context) (models.Categories, error) {
 	currency, ok := ctx.Value(models.CurrencyContextValue{}).(models.Currency)
 	if !ok {
 		currency, _ = models.GetDefaultCurrency()
@@ -53,15 +53,11 @@ func (r *CategoryRepository) GetCategories(ctx context.Context) (models.Categori
 
 	query := `
 		SELECT
-			categories.id,
-			categories.name,
-			categories.income
+			id, name, income
 		FROM
 			categories
 		WHERE
-			categories.visible=true
-			AND
-				categories.currency=?
+			visible=true AND categories.currency=?
 		ORDER BY
 			categories.name ASC
 	`
@@ -80,13 +76,13 @@ func (r *CategoryRepository) GetCategories(ctx context.Context) (models.Categori
 	var categories models.Categories
 
 	for rows.Next() {
-		var category models.Category
+		category := &models.Category{}
 
 		if err := rows.Scan(&category.ID, &category.Name, &category.Income); err != nil {
 			return nil, err
 		}
 
-		categories = append(categories, &category)
+		categories = append(categories, category)
 	}
 
 	if err := rows.Err(); err != nil {

@@ -31,8 +31,9 @@ func InitializeServer() *server.Server {
 	createItemHandler := handlers.NewCreateItemHandler(itemService, categoryService)
 	getItemsHandler := handlers.NewGetItemsHandler(itemService)
 	getItemHandler := handlers.NewGetItemHandler(itemService)
+	createCategoryHandler := handlers.NewCreateCategoryHandler(categoryService)
 	getCategoriesHandler := handlers.NewGetCategoriesHandler(categoryService)
-	routesRoutes := routes.New(indexPageHandler, createItemHandler, getItemsHandler, getItemHandler, getCategoriesHandler)
+	routesRoutes := routes.New(indexPageHandler, createItemHandler, getItemsHandler, getItemHandler, createCategoryHandler, getCategoriesHandler)
 	serverServer := server.New(configConfig, routesRoutes)
 	return serverServer
 }

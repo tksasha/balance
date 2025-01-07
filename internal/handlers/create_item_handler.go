@@ -53,7 +53,7 @@ func (h *CreateItemHandler) handle(w http.ResponseWriter, r *http.Request) error
 		WithDate(r.FormValue("date")).
 		Build()
 
-	categories, err := h.categoryService.GetCategories(r.Context())
+	categories, err := h.categoryService.GetAll(r.Context())
 	if err != nil {
 		return err
 	}

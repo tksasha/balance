@@ -26,7 +26,7 @@ func (h *GetCategoriesHandler) ServeHTTP(w http.ResponseWriter, r *http.Request)
 }
 
 func (h *GetCategoriesHandler) handle(w http.ResponseWriter, r *http.Request) error {
-	categories, err := h.categoryService.GetCategories(r.Context())
+	categories, err := h.categoryService.GetAll(r.Context())
 	if err != nil {
 		slog.Error("get categories error", "error", err)
 

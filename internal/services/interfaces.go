@@ -15,7 +15,7 @@ type ItemRepository interface {
 }
 
 type CategoryRepository interface {
-	GetCategories(ctx context.Context) (models.Categories, error)
+	GetAll(ctx context.Context) (models.Categories, error)
 	Create(ctx context.Context, category *models.Category) error
 	FindByName(ctx context.Context, name string) (*models.Category, error)
 }

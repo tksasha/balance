@@ -1,4 +1,4 @@
-package handlers_test //nolint:dupl
+package handlers_test
 
 import (
 	"context"
