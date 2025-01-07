@@ -11,6 +11,7 @@ import (
 	"time"
 
 	"github.com/tksasha/balance/internal/config"
+	"github.com/tksasha/balance/internal/middlewares"
 	"github.com/tksasha/balance/internal/routes"
 )
 
@@ -23,10 +24,12 @@ func New(
 	config *config.Config,
 	routes *routes.Routes,
 ) *Server {
+	middleware := middlewares.NewCurrencyMiddleware().Wrap(routes.Mux)
+
 	httpServer := &http.Server{
 		Addr:              config.Address,
 		ReadHeaderTimeout: config.ReadHeaderTimeout,
-		Handler:           routes.Mux,
+		Handler:           middleware,
 	}
 
 	return &Server{
