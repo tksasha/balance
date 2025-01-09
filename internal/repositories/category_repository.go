@@ -143,9 +143,14 @@ func (r *CategoryRepository) FindByName(ctx context.Context, name string) (*mode
 
 	category := &models.Category{}
 
-	if err := r.db.
+	err := r.db.
 		QueryRowContext(ctx, query, name, currency).
-		Scan(&category.ID, &category.Name, &category.Currency); err != nil {
+		Scan(&category.ID, &category.Name, &category.Currency)
+	if err != nil {
+		if errors.Is(err, sql.ErrNoRows) {
+			return nil, internalerrors.ErrRecordNotFound
+		}
+
 		return nil, err
 	}
 

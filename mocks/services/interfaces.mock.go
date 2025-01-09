@@ -195,3 +195,17 @@ func (mr *MockCategoryRepositoryMockRecorder) GetAll(ctx any) *gomock.Call {
 	mr.mock.ctrl.T.Helper()
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "GetAll", reflect.TypeOf((*MockCategoryRepository)(nil).GetAll), ctx)
 }
+
+// Update mocks base method.
+func (m *MockCategoryRepository) Update(ctx context.Context, category *models.Category) error {
+	m.ctrl.T.Helper()
+	ret := m.ctrl.Call(m, "Update", ctx, category)
+	ret0, _ := ret[0].(error)
+	return ret0
+}
+
+// Update indicates an expected call of Update.
+func (mr *MockCategoryRepositoryMockRecorder) Update(ctx, category any) *gomock.Call {
+	mr.mock.ctrl.T.Helper()
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "Update", reflect.TypeOf((*MockCategoryRepository)(nil).Update), ctx, category)
+}

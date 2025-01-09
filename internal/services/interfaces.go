@@ -19,4 +19,5 @@ type CategoryRepository interface {
 	Create(ctx context.Context, category *models.Category) error
 	FindByName(ctx context.Context, name string) (*models.Category, error)
 	FindByID(ctx context.Context, id int) (*models.Category, error)
+	Update(ctx context.Context, category *models.Category) error
 }

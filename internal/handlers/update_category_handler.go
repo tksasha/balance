@@ -10,17 +10,17 @@ import (
 	"github.com/tksasha/balance/internal/models"
 )
 
-type EditCategoryHandler struct {
+type UpdateCategoryHandler struct {
 	categoryService CategoryService
 }
 
-func NewEditCategoryHandler(categoryService CategoryService) *EditCategoryHandler {
-	return &EditCategoryHandler{
+func NewUpdateCategoryHandler(categoryService CategoryService) *UpdateCategoryHandler {
+	return &UpdateCategoryHandler{
 		categoryService: categoryService,
 	}
 }
 
-func (h *EditCategoryHandler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
+func (h *UpdateCategoryHandler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 	category, err := h.handle(r)
 	if err != nil {
 		if errors.Is(err, internalerrors.ErrResourceNotFound) {
@@ -29,7 +29,7 @@ func (h *EditCategoryHandler) ServeHTTP(w http.ResponseWriter, r *http.Request) 
 			return
 		}
 
-		slog.Error("edit category handler error", "error", err)
+		slog.Error("update category handler error", "error", err)
 
 		http.Error(w, "Internal Server Error", http.StatusInternalServerError)
 
@@ -38,10 +38,10 @@ func (h *EditCategoryHandler) ServeHTTP(w http.ResponseWriter, r *http.Request) 
 
 	_ = category
 
-	_, _ = w.Write([]byte("edit category form\n"))
+	_, _ = w.Write([]byte("update category page\n"))
 }
 
-func (h *EditCategoryHandler) handle(r *http.Request) (*models.Category, error) {
+func (h *UpdateCategoryHandler) handle(r *http.Request) (*models.Category, error) {
 	id, err := strconv.Atoi(r.PathValue("id"))
 	if err != nil {
 		return nil, internalerrors.ErrResourceNotFound
@@ -50,6 +50,16 @@ func (h *EditCategoryHandler) handle(r *http.Request) (*models.Category, error) 
 	category, err := h.categoryService.FindByID(r.Context(), id)
 	if err != nil {
 		return nil, err
+	}
+
+	if err := r.ParseForm(); err != nil {
+		return category, err
+	}
+
+	category.Name = r.FormValue("name")
+
+	if err := h.categoryService.Update(r.Context(), category); err != nil {
+		return category, err
 	}
 
 	return category, nil

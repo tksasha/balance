@@ -40,7 +40,7 @@ func TestEditCategoryHandler(t *testing.T) { //nolint:funlen
 		}
 	}
 
-	t.Run("when id is not a digit, it should respond with 404", func(t *testing.T) {
+	t.Run("when category id is not a digit, it should respond with 404", func(t *testing.T) {
 		t.Cleanup(truncate)
 
 		request, err := http.NewRequestWithContext(ctx, http.MethodGet, "/categories/abcd/edit", nil)
@@ -75,8 +75,9 @@ func TestEditCategoryHandler(t *testing.T) { //nolint:funlen
 
 		if _, err := db.Connection.ExecContext(
 			ctx,
-			"INSERT INTO categories (id, currency) VALUES (?, ?)",
+			"INSERT INTO categories (id, name, currency) VALUES (?, ?, ?)",
 			1010,
+			"Xenomorphic",
 			currencies.EUR,
 		); err != nil {
 			t.Fatalf("failed to create category, error: %v", err)
