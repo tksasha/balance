@@ -42,3 +42,7 @@ func (s *CategoryService) Create(ctx context.Context, category *models.Category)
 
 	return nil
 }
+
+func (s *CategoryService) FindByID(ctx context.Context, id int) (*models.Category, error) {
+	return s.categoryRepository.FindByID(ctx, id)
+}

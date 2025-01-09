@@ -127,3 +127,38 @@ func TestCategoryService_GetAll(t *testing.T) {
 		assert.NilError(t, err)
 	})
 }
+
+func TestCategoryService_FindByID(t *testing.T) {
+	controller := gomock.NewController(t)
+
+	categoryRepository := mocksforservices.NewMockCategoryRepository(controller)
+
+	service := services.NewCategoryService(categoryRepository)
+
+	ctx := context.Background()
+
+	t.Run("when find category by id returns error, it should return error", func(t *testing.T) {
+		categoryRepository.
+			EXPECT().
+			FindByID(ctx, 1531).
+			Return(nil, errors.New("find category by id error"))
+
+		_, err := service.FindByID(ctx, 1531)
+
+		assert.Error(t, err, "find category by id error")
+	})
+
+	t.Run("when find category by id returns category, it should return category", func(t *testing.T) {
+		expected := &models.Category{}
+
+		categoryRepository.
+			EXPECT().
+			FindByID(ctx, 1536).
+			Return(expected, nil)
+
+		result, err := service.FindByID(ctx, 1536)
+
+		assert.Equal(t, result, expected)
+		assert.NilError(t, err)
+	})
+}
