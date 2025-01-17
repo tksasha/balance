@@ -85,3 +85,7 @@ func (s *CategoryService) Update(ctx context.Context, categoryToUpdate *models.C
 
 	return s.categoryRepository.Update(ctx, categoryToUpdate)
 }
+
+func (s *CategoryService) Delete(ctx context.Context, category *models.Category) error {
+	return s.categoryRepository.Delete(ctx, category)
+}

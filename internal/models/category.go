@@ -1,6 +1,7 @@
 package models
 
 import (
+	"database/sql"
 	"strconv"
 
 	"github.com/tksasha/balance/pkg/currencies"
@@ -13,6 +14,7 @@ type Category struct {
 	Visible       bool
 	Currency      currencies.Currency
 	Supercategory int
+	DeletedAt     sql.NullTime
 }
 
 type Categories []*Category

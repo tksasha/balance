@@ -4,6 +4,7 @@ import (
 	"context"
 	"database/sql"
 	"errors"
+	"time"
 
 	"github.com/tksasha/balance/internal/db"
 	internalerrors "github.com/tksasha/balance/internal/errors"
@@ -28,12 +29,9 @@ func (r *CategoryRepository) FindByID(ctx context.Context, id int) (*models.Cate
 	}
 
 	query := `
-		SELECT
-			id, name, currency
-		FROM
-			categories
-		WHERE
-			id=? AND currency=?
+		SELECT id, name, currency
+		FROM categories
+		WHERE id=? AND currency=?
 	`
 
 	row := r.db.QueryRowContext(ctx, query, id, currency)
@@ -58,14 +56,10 @@ func (r *CategoryRepository) GetAll(ctx context.Context) (models.Categories, err
 	}
 
 	query := `
-		SELECT
-			id, name, income, currency
-		FROM
-			categories
-		WHERE
-			visible=true AND categories.currency=?
-		ORDER BY
-			categories.name ASC
+		SELECT id, name, income, currency
+		FROM categories
+		WHERE visible=true AND categories.currency=?
+		ORDER BY categories.name ASC
 	`
 
 	rows, err := r.db.QueryContext(ctx, query, currency)
@@ -105,8 +99,7 @@ func (r *CategoryRepository) Create(ctx context.Context, category *models.Catego
 	}
 
 	query := `
-		INSERT INTO
-			categories (name, income, visible, currency, supercategory)
+		INSERT INTO categories (name, income, visible, currency, supercategory)
 		VALUES (?, ?, ?, ?, ?)
 	`
 
@@ -132,12 +125,9 @@ func (r *CategoryRepository) FindByName(ctx context.Context, name string) (*mode
 	}
 
 	query := `
-		SELECT
-			id, name, currency
-		FROM
-			categories
-		WHERE
-			name=? AND currency=?
+		SELECT id, name, currency
+		FROM categories
+		WHERE name=? AND currency=?
 		LIMIT 1
 	`
 
@@ -164,12 +154,9 @@ func (r *CategoryRepository) Update(ctx context.Context, category *models.Catego
 	}
 
 	query := `
-		UPDATE
-			categories
-		SET
-			name=?, income=?, visible=?, supercategory=?
-		WHERE
-			id=? AND currency=?
+		UPDATE categories
+		SET name=?, income=?, visible=?, supercategory=?
+		WHERE id=? AND currency=?
 	`
 
 	if _, err := r.db.ExecContext(
@@ -182,6 +169,25 @@ func (r *CategoryRepository) Update(ctx context.Context, category *models.Catego
 		category.ID,
 		currency,
 	); err != nil {
+		return err
+	}
+
+	return nil
+}
+
+func (r *CategoryRepository) Delete(ctx context.Context, category *models.Category) error {
+	currency, ok := ctx.Value(currencies.CurrencyContextValue{}).(currencies.Currency)
+	if !ok {
+		currency, _ = currencies.GetDefaultCurrency()
+	}
+
+	query := `
+		UPDATE categories
+		SET deleted_at=?
+		WHERE id=? AND currency=?
+	`
+
+	if _, err := r.db.ExecContext(ctx, query, time.Now().UTC(), category.ID, currency); err != nil {
 		return err
 	}
 

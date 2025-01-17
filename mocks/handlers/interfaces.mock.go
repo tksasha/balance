@@ -151,6 +151,20 @@ func (mr *MockCategoryServiceMockRecorder) Create(ctx, category any) *gomock.Cal
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "Create", reflect.TypeOf((*MockCategoryService)(nil).Create), ctx, category)
 }
 
+// Delete mocks base method.
+func (m *MockCategoryService) Delete(ctx context.Context, category *models.Category) error {
+	m.ctrl.T.Helper()
+	ret := m.ctrl.Call(m, "Delete", ctx, category)
+	ret0, _ := ret[0].(error)
+	return ret0
+}
+
+// Delete indicates an expected call of Delete.
+func (mr *MockCategoryServiceMockRecorder) Delete(ctx, category any) *gomock.Call {
+	mr.mock.ctrl.T.Helper()
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "Delete", reflect.TypeOf((*MockCategoryService)(nil).Delete), ctx, category)
+}
+
 // FindByID mocks base method.
 func (m *MockCategoryService) FindByID(ctx context.Context, id int) (*models.Category, error) {
 	m.ctrl.T.Helper()

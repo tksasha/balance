@@ -15,7 +15,7 @@ func NewDBNameProvider() *DBNameProvider {
 
 func (p *DBNameProvider) Provide() string {
 	return fmt.Sprintf(
-		"%s%s%s.sqlite3",
+		"%s%s%s.sqlite3?parseTime=true",
 		workdir.New(),
 		string(os.PathSeparator),
 		"test",

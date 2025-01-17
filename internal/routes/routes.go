@@ -21,6 +21,8 @@ func New(
 	getItemHandler *handlers.GetItemHandler,
 	createCategoryHandler *handlers.CreateCategoryHandler,
 	getCategoriesHandler *handlers.GetCategoriesHandler,
+	editCategoryHandler *handlers.EditCategoryHandler,
+	updateCategoryHandler *handlers.UpdateCategoryHandler,
 ) *Routes {
 	mux := http.NewServeMux()
 
@@ -35,6 +37,8 @@ func New(
 
 	mux.Handle("POST /categories", createCategoryHandler)
 	mux.Handle("GET /categories", getCategoriesHandler)
+	mux.Handle("GET /categories/{id}/edit", editCategoryHandler)
+	mux.Handle("PATCH /categories/{id}", updateCategoryHandler)
 
 	return &Routes{
 		Mux: mux,
