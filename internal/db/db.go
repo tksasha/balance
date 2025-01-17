@@ -46,4 +46,5 @@ func migrate(ctx context.Context, db *sql.DB) {
 	migrations.NewCreateCategoriesMigration(db).Up(ctx)
 	migrations.NewCreateIndexCategoriesOnNameAndCurrency(db).Up(ctx)
 	migrations.NewAddItemsCategoryNameMigration(db).Up(ctx)
+	migrations.NewChangeTypeOfDeletedAtInCategories(db).Up(ctx)
 }

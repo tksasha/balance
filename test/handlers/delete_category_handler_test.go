@@ -99,17 +99,15 @@ func TestDeleteCategoryHandler(t *testing.T) { //nolint:funlen
 
 		if err := db.Connection.QueryRowContext(
 			ctx,
-			"SELECT id, name, currency FROM categories WHERE id=?",
+			"SELECT id, name, currency, deleted_at FROM categories WHERE id=?",
 			1411,
-		).Scan(&category.ID, &category.Name, &category.Currency); err != nil {
+		).Scan(&category.ID, &category.Name, &category.Currency, &category.DeletedAt); err != nil {
 			t.Fatalf("failed to get category, error: %v", err)
 		}
 
 		assert.Equal(t, category.ID, 1411)
 		assert.Equal(t, category.Name, "Miscellaneous")
 		assert.Equal(t, category.Currency, currencies.EUR)
-		// assert.Equal(t, category.DeletedAt, time.Now())
-		{
-		}
+		assert.Assert(t, !category.DeletedAt.Time.IsZero())
 	})
 }
