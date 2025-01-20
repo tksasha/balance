@@ -47,7 +47,7 @@ func truncate(ctx context.Context, t *testing.T, db *db.DB) func() {
 	}
 }
 
-func newPatchRequest(ctx context.Context, t *testing.T, endpoint string, params Params) *http.Request {
+func newRequest(ctx context.Context, t *testing.T, method, endpoint string, params Params) *http.Request {
 	t.Helper()
 
 	formData := url.Values{}
@@ -58,12 +58,18 @@ func newPatchRequest(ctx context.Context, t *testing.T, endpoint string, params 
 
 	body := strings.NewReader(formData.Encode())
 
-	request, err := http.NewRequestWithContext(ctx, http.MethodPatch, endpoint, body)
+	request, err := http.NewRequestWithContext(ctx, method, endpoint, body)
 	if err != nil {
-		t.Fatalf("failed to build new post request, error: %v", err)
+		t.Fatalf("failed to build new request with context, error: %v", err)
 	}
 
 	request.Header.Add("Content-Type", "application/x-www-form-urlencoded")
 
 	return request
+}
+
+func newPatchRequest(ctx context.Context, t *testing.T, endpoint string, params Params) *http.Request {
+	t.Helper()
+
+	return newRequest(ctx, t, http.MethodPatch, endpoint, params)
 }
