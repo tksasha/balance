@@ -53,7 +53,7 @@ func (h *UpdateCategoryHandler) handle(r *http.Request) (*models.Category, error
 	}
 
 	if err := r.ParseForm(); err != nil {
-		return category, err
+		return category, internalerrors.ErrParsingForm
 	}
 
 	category.Name = r.FormValue("name")
