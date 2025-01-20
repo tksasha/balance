@@ -31,6 +31,30 @@ func createCategory(ctx context.Context, t *testing.T, db *db.DB, category *mode
 	}
 }
 
+func findCategoryByName(ctx context.Context, t *testing.T, db *db.DB, name string) *models.Category {
+	t.Helper()
+
+	category := &models.Category{}
+
+	if err := db.Connection.QueryRowContext(
+		ctx,
+		"SELECT id, name, income, visible, currency, supercategory FROM categories WHERE name=? AND currency=?",
+		name,
+		currencies.EUR,
+	).Scan(
+		&category.ID,
+		&category.Name,
+		&category.Income,
+		&category.Visible,
+		&category.Currency,
+		&category.Supercategory,
+	); err != nil {
+		t.Fatalf("failed to find category by name, error: %v", err)
+	}
+
+	return category
+}
+
 func usdContext(ctx context.Context, t *testing.T) context.Context {
 	t.Helper()
 
@@ -66,6 +90,12 @@ func newRequest(ctx context.Context, t *testing.T, method, endpoint string, para
 	request.Header.Add("Content-Type", "application/x-www-form-urlencoded")
 
 	return request
+}
+
+func newPostRequest(ctx context.Context, t *testing.T, endpoint string, params Params) *http.Request {
+	t.Helper()
+
+	return newRequest(ctx, t, http.MethodPost, endpoint, params)
 }
 
 func newPatchRequest(ctx context.Context, t *testing.T, endpoint string, params Params) *http.Request {

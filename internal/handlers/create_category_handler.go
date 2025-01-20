@@ -4,7 +4,9 @@ import (
 	"errors"
 	"log/slog"
 	"net/http"
+	"strconv"
 
+	internalerrors "github.com/tksasha/balance/internal/errors"
 	"github.com/tksasha/balance/internal/models"
 	"github.com/tksasha/balance/pkg/validationerror"
 )
@@ -40,11 +42,22 @@ func (h *CreateCategoryHandler) ServeHTTP(w http.ResponseWriter, r *http.Request
 
 func (h *CreateCategoryHandler) handle(r *http.Request) error {
 	if err := r.ParseForm(); err != nil {
-		return err
+		return internalerrors.ErrParsingForm
 	}
 
 	category := &models.Category{
-		Name: r.FormValue("name"),
+		Name:    r.FormValue("name"),
+		Income:  r.FormValue("income") == "true", //nolint:goconst
+		Visible: r.FormValue("visible") == "true",
+	}
+
+	if r.FormValue("supercategory") != "" {
+		supercategory, err := strconv.Atoi(r.FormValue("supercategory"))
+		if err != nil {
+			return internalerrors.ErrParsingForm
+		}
+
+		category.Supercategory = supercategory
 	}
 
 	return h.categoryService.Create(r.Context(), category)

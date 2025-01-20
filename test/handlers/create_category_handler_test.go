@@ -5,14 +5,11 @@ import (
 	"io"
 	"net/http"
 	"net/http/httptest"
-	"net/url"
-	"strings"
 	"testing"
 
 	"github.com/tksasha/balance/internal/db"
 	"github.com/tksasha/balance/internal/handlers"
 	"github.com/tksasha/balance/internal/middlewares"
-	"github.com/tksasha/balance/internal/models"
 	providers "github.com/tksasha/balance/internal/providers/test"
 	"github.com/tksasha/balance/internal/repositories"
 	"github.com/tksasha/balance/internal/services"
@@ -39,25 +36,8 @@ func TestCreateCategoryHandlerTest(t *testing.T) { //nolint:funlen
 
 	ctx := context.Background()
 
-	truncate := func() {
-		_, err := db.Connection.ExecContext(ctx, "DELETE FROM categories")
-		if err != nil {
-			t.Fatalf("failed to truncate categories, error: %v", err)
-		}
-	}
-
 	t.Run("when input data is invalid, it should render validation errors", func(t *testing.T) {
-		formData := url.Values{}
-		formData.Set("name", "")
-
-		body := strings.NewReader(formData.Encode())
-
-		request, err := http.NewRequestWithContext(ctx, http.MethodPost, "/categories", body)
-		if err != nil {
-			t.Fatalf("failed to build request with context, error: %v", err)
-		}
-
-		request.Header.Set("Content-Type", "application/x-www-form-urlencoded")
+		request := newPostRequest(ctx, t, "/categories", Params{"name": ""})
 
 		recorder := httptest.NewRecorder()
 
@@ -73,19 +53,16 @@ func TestCreateCategoryHandlerTest(t *testing.T) { //nolint:funlen
 	})
 
 	t.Run("when input data is valid, it should create category", func(t *testing.T) {
-		t.Cleanup(truncate)
+		t.Cleanup(truncate(ctx, t, db))
 
-		formData := url.Values{}
-		formData.Set("name", "Food")
-
-		body := strings.NewReader(formData.Encode())
-
-		request, err := http.NewRequestWithContext(ctx, http.MethodPost, "/categories?currency=eur", body)
-		if err != nil {
-			t.Fatalf("failed to build request with context, error: %v", err)
-		}
-
-		request.Header.Set("Content-Type", "application/x-www-form-urlencoded")
+		request := newPostRequest(ctx, t, "/categories?currency=eur",
+			Params{
+				"name":          "Miscellaneous",
+				"income":        "true",
+				"visible":       "true",
+				"supercategory": "3",
+			},
+		)
 
 		recorder := httptest.NewRecorder()
 
@@ -99,19 +76,13 @@ func TestCreateCategoryHandlerTest(t *testing.T) { //nolint:funlen
 		assert.Equal(t, recorder.Code, http.StatusOK)
 		assert.Assert(t, is.Contains(string(response), "create category page"))
 
-		category := &models.Category{}
-
-		if err := db.Connection.QueryRowContext(
-			ctx,
-			"SELECT id, name, currency FROM categories WHERE name=? AND currency=?",
-			"Food",
-			currencies.EUR,
-		).Scan(&category.ID, &category.Name, &category.Currency); err != nil {
-			t.Fatalf("failed to find category by name, error: %v", err)
-		}
+		category := findCategoryByName(ctx, t, db, "Miscellaneous")
 
 		assert.Equal(t, category.ID, 1)
-		assert.Equal(t, category.Name, "Food")
+		assert.Equal(t, category.Name, "Miscellaneous")
+		assert.Equal(t, category.Income, true)
+		assert.Equal(t, category.Visible, true)
 		assert.Equal(t, category.Currency, currencies.EUR)
+		assert.Equal(t, category.Supercategory, 3)
 	})
 }
