@@ -57,6 +57,15 @@ func (h *UpdateCategoryHandler) handle(r *http.Request) (*models.Category, error
 	}
 
 	category.Name = r.FormValue("name")
+	category.Income = r.FormValue("income") == "true"
+	category.Visible = r.FormValue("visible") == "true"
+
+	supercategory, err := strconv.Atoi(r.FormValue("supercategory"))
+	if err != nil {
+		return nil, internalerrors.ErrParsingForm
+	}
+
+	category.Supercategory = supercategory
 
 	if err := h.categoryService.Update(r.Context(), category); err != nil {
 		return category, err

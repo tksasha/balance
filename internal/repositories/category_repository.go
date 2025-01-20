@@ -29,7 +29,7 @@ func (r *CategoryRepository) FindByID(ctx context.Context, id int) (*models.Cate
 	}
 
 	query := `
-		SELECT id, name, currency
+		SELECT id, name, income, visible, currency, supercategory
 		FROM categories
 		WHERE id=? AND currency=?
 	`
@@ -38,7 +38,14 @@ func (r *CategoryRepository) FindByID(ctx context.Context, id int) (*models.Cate
 
 	category := &models.Category{}
 
-	if err := row.Scan(&category.ID, &category.Name, &category.Currency); err != nil {
+	if err := row.Scan(
+		&category.ID,
+		&category.Name,
+		&category.Income,
+		&category.Visible,
+		&category.Currency,
+		&category.Supercategory,
+	); err != nil {
 		if errors.Is(err, sql.ErrNoRows) {
 			return nil, internalerrors.ErrRecordNotFound
 		}
