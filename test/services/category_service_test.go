@@ -14,102 +14,6 @@ import (
 	"gotest.tools/v3/assert"
 )
 
-func TestCategoryService_Create(t *testing.T) { //nolint:funlen,dupl
-	controller := gomock.NewController(t)
-
-	categoryRepository := mocksforservices.NewMockCategoryRepository(controller)
-
-	service := services.NewCategoryService(categoryRepository)
-
-	ctx := context.Background()
-
-	t.Run("when category name is empty, it should return error", func(t *testing.T) {
-		category := &models.Category{
-			Name: "",
-		}
-
-		err := service.Create(ctx, category)
-
-		assert.Error(t, err, "name: is required")
-	})
-
-	t.Run("when find category by name returns error, it should return error", func(t *testing.T) {
-		category := &models.Category{
-			Name: "Miscellaneous",
-		}
-
-		categoryRepository.
-			EXPECT().
-			FindByName(ctx, "Miscellaneous").
-			Return(nil, errors.New("find category by name error"))
-
-		err := service.Create(ctx, category)
-
-		assert.Error(t, err, "find category by name error")
-	})
-
-	t.Run("when category name is not unique, it should return error", func(t *testing.T) {
-		categoryToCreate := &models.Category{
-			ID:   1101,
-			Name: "Pharmaceutical",
-		}
-
-		categoryFound := &models.Category{
-			ID:   1100,
-			Name: "Pharmaceutical",
-		}
-
-		categoryRepository.
-			EXPECT().
-			FindByName(ctx, "Pharmaceutical").
-			Return(categoryFound, nil)
-
-		err := service.Create(ctx, categoryToCreate)
-
-		assert.Error(t, err, "name: already exists")
-	})
-
-	t.Run("when create category returns error, it should return error", func(t *testing.T) {
-		category := &models.Category{
-			Name: "Confectionery",
-		}
-
-		categoryRepository.
-			EXPECT().
-			FindByName(ctx, "Confectionery").
-			Return(nil, internalerrors.ErrRecordNotFound)
-
-		categoryRepository.
-			EXPECT().
-			Create(ctx, category).
-			Return(errors.New("create category error"))
-
-		err := service.Create(ctx, category)
-
-		assert.Error(t, err, "create category error")
-	})
-
-	t.Run("when create category does not return error, it should return nil", func(t *testing.T) {
-		category := &models.Category{
-			Name: "Haberdashery",
-		}
-
-		categoryRepository.
-			EXPECT().
-			FindByName(ctx, "Haberdashery").
-			Return(nil, internalerrors.ErrRecordNotFound)
-
-		categoryRepository.
-			EXPECT().
-			Create(ctx, category).
-			Return(nil)
-
-		err := service.Create(ctx, category)
-
-		assert.NilError(t, err)
-	})
-}
-
 func TestCategoryService_GetAll(t *testing.T) {
 	controller := gomock.NewController(t)
 
@@ -180,7 +84,7 @@ func TestCategoryService_FindByID(t *testing.T) {
 	})
 }
 
-func TestCategoryService_Update(t *testing.T) { //nolint:funlen,dupl
+func TestCategoryService_Update(t *testing.T) { //nolint:funlen
 	controller := gomock.NewController(t)
 
 	categoryRepository := mocksforservices.NewMockCategoryRepository(controller)

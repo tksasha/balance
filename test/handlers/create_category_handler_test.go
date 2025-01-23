@@ -25,10 +25,10 @@ func TestCreateCategoryHandlerTest(t *testing.T) { //nolint:funlen
 
 	categoryRepository := repositories.NewCategoryRepository(db)
 
-	categoryService := services.NewCategoryService(categoryRepository)
+	createCategoryService := services.NewCreateCategoryService(categoryRepository)
 
 	middleware := middlewares.NewCurrencyMiddleware().Wrap(
-		handlers.NewCreateCategoryHandler(categoryService),
+		handlers.NewCreateCategoryHandler(createCategoryService),
 	)
 
 	mux := http.NewServeMux()

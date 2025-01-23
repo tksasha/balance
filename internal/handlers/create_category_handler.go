@@ -4,20 +4,19 @@ import (
 	"errors"
 	"log/slog"
 	"net/http"
-	"strconv"
 
 	internalerrors "github.com/tksasha/balance/internal/errors"
-	"github.com/tksasha/balance/internal/models"
+	"github.com/tksasha/balance/internal/requests"
 	"github.com/tksasha/balance/pkg/validationerror"
 )
 
 type CreateCategoryHandler struct {
-	categoryService CategoryService
+	categoryCreator CategoryCreator
 }
 
-func NewCreateCategoryHandler(categoryService CategoryService) *CreateCategoryHandler {
+func NewCreateCategoryHandler(categoryCreator CategoryCreator) *CreateCategoryHandler {
 	return &CreateCategoryHandler{
-		categoryService: categoryService,
+		categoryCreator: categoryCreator,
 	}
 }
 
@@ -45,20 +44,12 @@ func (h *CreateCategoryHandler) handle(r *http.Request) error {
 		return internalerrors.ErrParsingForm
 	}
 
-	category := &models.Category{
-		Name:    r.FormValue("name"),
-		Income:  r.FormValue("income") == "true", //nolint:goconst
-		Visible: r.FormValue("visible") == "true",
+	request := requests.CreateCategoryRequest{
+		Name:          r.FormValue("name"),
+		Income:        r.FormValue("income"),
+		Visible:       r.FormValue("visible"),
+		Supercategory: r.FormValue("supercategory"),
 	}
 
-	if r.FormValue("supercategory") != "" {
-		supercategory, err := strconv.Atoi(r.FormValue("supercategory"))
-		if err != nil {
-			return internalerrors.ErrParsingForm
-		}
-
-		category.Supercategory = supercategory
-	}
-
-	return h.categoryService.Create(r.Context(), category)
+	return h.categoryCreator.Create(r.Context(), request)
 }
