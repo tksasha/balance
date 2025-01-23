@@ -2,12 +2,11 @@ package handlers_test
 
 import (
 	"context"
-	"database/sql"
 	"net/http"
 	"net/http/httptest"
-	"net/url"
 	"strings"
 	"testing"
+	"time"
 
 	"github.com/tksasha/balance/internal/db"
 	"github.com/tksasha/balance/internal/handlers"
@@ -16,16 +15,17 @@ import (
 	providers "github.com/tksasha/balance/internal/providers/test"
 	"github.com/tksasha/balance/internal/repositories"
 	"github.com/tksasha/balance/internal/services"
+	"github.com/tksasha/balance/pkg/currencies"
 	"gotest.tools/v3/assert"
 )
 
 func TestCreateItemHandler_ServeHTTP(t *testing.T) { //nolint:funlen
 	dbNameProvider := providers.NewDBNameProvider()
 
-	dbConnection := db.Open(dbNameProvider)
+	db := db.Open(dbNameProvider)
 
-	itemRepository := repositories.NewItemRepository(dbConnection)
-	categoryRepository := repositories.NewCategoryRepository(dbConnection)
+	itemRepository := repositories.NewItemRepository(db)
+	categoryRepository := repositories.NewCategoryRepository(db)
 
 	itemService := services.NewItemService(itemRepository)
 	categoryService := services.NewCategoryService(categoryRepository)
@@ -34,12 +34,14 @@ func TestCreateItemHandler_ServeHTTP(t *testing.T) { //nolint:funlen
 		handlers.NewCreateItemHandler(itemService, categoryService),
 	)
 
-	route := http.NewServeMux()
-	route.Handle("POST /items", middleware)
+	mux := http.NewServeMux()
+	mux.Handle("POST /items", middleware)
 
 	ctx := context.Background()
 
 	t.Run("when form parsing error is happened, it should respond with 400", func(t *testing.T) {
+		cleanup(ctx, t, db)
+
 		body := strings.NewReader("%")
 
 		request, err := http.NewRequestWithContext(ctx, http.MethodPost, "/items", body)
@@ -49,67 +51,56 @@ func TestCreateItemHandler_ServeHTTP(t *testing.T) { //nolint:funlen
 
 		recorder := httptest.NewRecorder()
 
-		route.ServeHTTP(recorder, request)
+		mux.ServeHTTP(recorder, request)
 
 		assert.Equal(t, http.StatusBadRequest, recorder.Code)
 	})
 
 	t.Run("when input data is invalid it should render form", func(t *testing.T) {
-		formData := url.Values{}
-		formData.Set("date", "")
+		cleanup(ctx, t, db)
 
-		body := strings.NewReader(formData.Encode())
-
-		request, err := http.NewRequestWithContext(ctx, http.MethodPost, "/items", body)
-		assert.NilError(t, err)
-
-		request.Header.Set("Content-Type", "application/x-www-form-urlencoded")
+		request := newPostRequest(ctx, t, "/items", Params{"date": ""})
 
 		recorder := httptest.NewRecorder()
 
-		route.ServeHTTP(recorder, request)
+		mux.ServeHTTP(recorder, request)
 
 		assert.Equal(t, http.StatusOK, recorder.Code)
 	})
 
 	t.Run("when input data is valid, it should respond with 200", func(t *testing.T) {
-		t.Skip("TODO: will fix later")
+		cleanup(ctx, t, db)
 
-		formData := url.Values{}
-		formData.Set("date", "2024-10-16")
+		createCategory(ctx, t, db,
+			&models.Category{
+				ID:       1101,
+				Name:     "Accoutrements",
+				Currency: currencies.USD,
+			},
+		)
 
-		body := strings.NewReader(formData.Encode())
-
-		request, err := http.NewRequestWithContext(ctx, http.MethodPost, "/items", body)
-		if err != nil {
-			t.Fatalf("failed to build request with context, error: %v", err)
+		params := Params{
+			"date":        "2024-10-16",
+			"formula":     "42.69+69.42",
+			"category_id": "1101",
+			"description": "paper clips, notebooks, and pens",
 		}
 
-		request.Header.Set("Content-Type", "application/x-www-form-urlencoded")
+		request := newPostRequest(ctx, t, "/items?currency=usd", params)
 
 		recorder := httptest.NewRecorder()
 
-		route.ServeHTTP(recorder, request)
+		mux.ServeHTTP(recorder, request)
 
 		assert.Equal(t, http.StatusOK, recorder.Code)
 
-		item, err := getItemByDate(ctx, dbConnection.Connection, "2024-10-16")
-		if err != nil {
-			t.Fatalf("failed to get item by date, error: %v", err)
-		}
+		item := findItemByDate(usdContext(ctx, t), t, db.Connection, "2024-10-16")
 
-		assert.Equal(t, "2024-10-16", item.Date.String())
+		assert.Equal(t, item.Date.Format(time.DateOnly), "2024-10-16")
+		assert.Equal(t, item.CategoryID, 1101)
+		assert.Equal(t, item.Currency, currencies.USD)
+		assert.Equal(t, item.Formula, "42.69+69.42")
+		assert.Equal(t, item.Sum, 112.11)
+		assert.Equal(t, item.Description, "paper clips, notebooks, and pens")
 	})
-}
-
-func getItemByDate(ctx context.Context, db *sql.DB, date string) (*models.Item, error) {
-	var item *models.Item
-
-	query := `SELECT id, date FROM items WHERE date="?" ORDER BY created_at LIMIT 1`
-
-	if err := db.QueryRowContext(ctx, query, date).Scan(item); err != nil {
-		return nil, err
-	}
-
-	return item, nil
 }

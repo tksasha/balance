@@ -2,6 +2,7 @@ package handlers_test
 
 import (
 	"context"
+	"database/sql"
 	"net/http"
 	"net/url"
 	"strings"
@@ -97,6 +98,41 @@ func findCategoryByID(ctx context.Context, t *testing.T, db *db.DB, id int) *mod
 	return category
 }
 
+func findItemByDate(ctx context.Context, t *testing.T, db *sql.DB, date string) *models.Item {
+	t.Helper()
+
+	currency, ok := ctx.Value(currencies.CurrencyContextValue{}).(currencies.Currency)
+	if !ok {
+		currency = currencies.DefaultCurrency
+	}
+
+	item := &models.Item{}
+
+	query := `
+		SELECT id, date, formula, sum, category_id, currency, description
+		FROM items
+		WHERE date=? AND currency=?
+		ORDER BY created_at
+		LIMIT 1
+	`
+
+	if err := db.
+		QueryRowContext(ctx, query, date, currency).
+		Scan(
+			&item.ID,
+			&item.Date,
+			&item.Formula,
+			&item.Sum,
+			&item.CategoryID,
+			&item.Currency,
+			&item.Description,
+		); err != nil {
+		t.Fatalf("failed to find item by date, error: %v", err)
+	}
+
+	return item
+}
+
 func usdContext(ctx context.Context, t *testing.T) context.Context {
 	t.Helper()
 
@@ -113,8 +149,12 @@ func cleanup(ctx context.Context, t *testing.T, db *db.DB) {
 	t.Helper()
 
 	t.Cleanup(func() {
-		if _, err := db.Connection.ExecContext(ctx, "DELETE FROM categories"); err != nil {
-			t.Fatalf("failed to truncate categories, error: %v", err)
+		tables := []string{"items", "categories"}
+
+		for _, table := range tables {
+			if _, err := db.Connection.ExecContext(ctx, "DELETE FROM "+table); err != nil { //nolint:gosec
+				t.Fatalf("failed to truncate %s, error: %v", table, err)
+			}
 		}
 	})
 }

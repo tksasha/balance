@@ -4,8 +4,9 @@ import (
 	"errors"
 	"log/slog"
 	"net/http"
+	"strconv"
+	"time"
 
-	"github.com/tksasha/balance/internal/components"
 	internalerrors "github.com/tksasha/balance/internal/errors"
 	"github.com/tksasha/balance/internal/models"
 )
@@ -23,11 +24,17 @@ func NewCreateItemHandler(itemService ItemService, categoryService CategoryServi
 }
 
 func (h *CreateItemHandler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
-	if err := h.handle(w, r); err != nil {
+	if err := h.handle(r); err != nil {
 		if errors.Is(err, internalerrors.ErrParsingForm) {
 			slog.Error("invalid user input", "error", err)
 
 			http.Error(w, "Invalid User Input", http.StatusBadRequest)
+
+			return
+		}
+
+		if errors.Is(err, internalerrors.ErrResourceInvalid) {
+			_, _ = w.Write([]byte("render form with errors"))
 
 			return
 		}
@@ -42,27 +49,32 @@ func (h *CreateItemHandler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 	_, _ = w.Write([]byte("render create page\n"))
 }
 
-func (h *CreateItemHandler) handle(w http.ResponseWriter, r *http.Request) error {
+func (h *CreateItemHandler) handle(r *http.Request) error {
 	if err := r.ParseForm(); err != nil {
 		return internalerrors.ErrParsingForm
 	}
 
-	item, validationErrors := models.
-		NewItemBuilder().
-		WithDate(r.FormValue("date")).
-		Build()
-
-	categories, err := h.categoryService.GetAll(r.Context())
-	if err != nil {
-		return err
+	item := &models.Item{
+		Formula:     r.FormValue("formula"),
+		Description: r.FormValue("description"),
 	}
 
-	if !validationErrors.IsEmpty() {
-		if err := components.ItemForm(item, categories, validationErrors).Render(w); err != nil {
-			return nil //nolint:nilerr // TODO: render form with errors here
+	if r.FormValue("date") != "" {
+		date, err := time.Parse(time.DateOnly, r.FormValue("date")) // TODO: test me
+		if err != nil {
+			return internalerrors.ErrParsingForm
 		}
 
-		return nil // TODO: return there NewValidationError()
+		item.Date = date
+	}
+
+	if r.FormValue("category_id") != "" {
+		categoryID, err := strconv.Atoi(r.FormValue("category_id")) // TODO: test me
+		if err != nil {
+			return internalerrors.ErrParsingForm
+		}
+
+		item.CategoryID = categoryID
 	}
 
 	if err := h.itemService.CreateItem(r.Context(), item); err != nil {

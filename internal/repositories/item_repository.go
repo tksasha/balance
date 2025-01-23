@@ -5,6 +5,7 @@ import (
 	"database/sql"
 	"errors"
 	"log/slog"
+	"time"
 
 	"github.com/tksasha/balance/internal/db"
 	internalerrors "github.com/tksasha/balance/internal/errors"
@@ -74,6 +75,11 @@ func (r *ItemRepository) GetItems(ctx context.Context) (models.Items, error) {
 }
 
 func (r *ItemRepository) CreateItem(ctx context.Context, item *models.Item) error {
+	currency, ok := ctx.Value(currencies.CurrencyContextValue{}).(currencies.Currency)
+	if !ok {
+		currency = currencies.DefaultCurrency
+	}
+
 	query := `
 		INSERT INTO items (
 			date,
@@ -81,20 +87,22 @@ func (r *ItemRepository) CreateItem(ctx context.Context, item *models.Item) erro
 			sum,
 			category_id,
 			category_name,
-			description
+			description,
+			currency
 		)
-		VALUES (?, ?, ?, ?, ?, ?)
+		VALUES (?, ?, ?, ?, ?, ?, ?)
 	`
 
 	if _, err := r.db.Connection.ExecContext(
 		ctx,
 		query,
-		item.Date,
+		item.Date.Format(time.DateOnly),
 		item.Formula,
 		item.Sum,
 		item.CategoryID,
 		item.CategoryName,
 		item.Description,
+		currency,
 	); err != nil {
 		return err
 	}
