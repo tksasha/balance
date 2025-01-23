@@ -109,7 +109,7 @@ func findItemByDate(ctx context.Context, t *testing.T, db *sql.DB, date string) 
 	item := &models.Item{}
 
 	query := `
-		SELECT id, date, formula, sum, category_id, currency, description
+		SELECT id, date, formula, sum, category_id, category_name, currency, description
 		FROM items
 		WHERE date=? AND currency=?
 		ORDER BY created_at
@@ -124,6 +124,7 @@ func findItemByDate(ctx context.Context, t *testing.T, db *sql.DB, date string) 
 			&item.Formula,
 			&item.Sum,
 			&item.CategoryID,
+			&item.CategoryName,
 			&item.Currency,
 			&item.Description,
 		); err != nil {

@@ -4,22 +4,19 @@ import (
 	"errors"
 	"log/slog"
 	"net/http"
-	"strconv"
-	"time"
 
 	internalerrors "github.com/tksasha/balance/internal/errors"
-	"github.com/tksasha/balance/internal/models"
+	"github.com/tksasha/balance/internal/requests"
+	"github.com/tksasha/balance/pkg/validationerror"
 )
 
 type CreateItemHandler struct {
-	itemService     ItemService
-	categoryService CategoryService
+	itemCreator ItemCreator
 }
 
-func NewCreateItemHandler(itemService ItemService, categoryService CategoryService) *CreateItemHandler {
+func NewCreateItemHandler(itemCreator ItemCreator) *CreateItemHandler {
 	return &CreateItemHandler{
-		itemService:     itemService,
-		categoryService: categoryService,
+		itemCreator: itemCreator,
 	}
 }
 
@@ -33,7 +30,9 @@ func (h *CreateItemHandler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 			return
 		}
 
-		if errors.Is(err, internalerrors.ErrResourceInvalid) {
+		var validationErrors validationerror.ValidationError
+
+		if errors.As(err, &validationErrors) {
 			_, _ = w.Write([]byte("render form with errors"))
 
 			return
@@ -54,30 +53,14 @@ func (h *CreateItemHandler) handle(r *http.Request) error {
 		return internalerrors.ErrParsingForm
 	}
 
-	item := &models.Item{
+	request := requests.CreateItemRequest{
+		Date:        r.FormValue("date"),
 		Formula:     r.FormValue("formula"),
+		CategoryID:  r.FormValue("category_id"),
 		Description: r.FormValue("description"),
 	}
 
-	if r.FormValue("date") != "" {
-		date, err := time.Parse(time.DateOnly, r.FormValue("date")) // TODO: test me
-		if err != nil {
-			return internalerrors.ErrParsingForm
-		}
-
-		item.Date = date
-	}
-
-	if r.FormValue("category_id") != "" {
-		categoryID, err := strconv.Atoi(r.FormValue("category_id")) // TODO: test me
-		if err != nil {
-			return internalerrors.ErrParsingForm
-		}
-
-		item.CategoryID = categoryID
-	}
-
-	if err := h.itemService.CreateItem(r.Context(), item); err != nil {
+	if _, err := h.itemCreator.Create(r.Context(), request); err != nil {
 		return err
 	}
 

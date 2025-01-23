@@ -9,7 +9,9 @@ import (
 
 const (
 	IsRequired    = "is required"
+	IsInvalid     = "is invalid"
 	AlreadyExists = "already exists"
+	InternalError = "internal error"
 )
 
 type ValidationError map[string][]string

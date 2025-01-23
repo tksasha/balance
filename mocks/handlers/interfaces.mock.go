@@ -14,8 +14,48 @@ import (
 	reflect "reflect"
 
 	models "github.com/tksasha/balance/internal/models"
+	requests "github.com/tksasha/balance/internal/requests"
 	gomock "go.uber.org/mock/gomock"
 )
+
+// MockItemCreator is a mock of ItemCreator interface.
+type MockItemCreator struct {
+	ctrl     *gomock.Controller
+	recorder *MockItemCreatorMockRecorder
+	isgomock struct{}
+}
+
+// MockItemCreatorMockRecorder is the mock recorder for MockItemCreator.
+type MockItemCreatorMockRecorder struct {
+	mock *MockItemCreator
+}
+
+// NewMockItemCreator creates a new mock instance.
+func NewMockItemCreator(ctrl *gomock.Controller) *MockItemCreator {
+	mock := &MockItemCreator{ctrl: ctrl}
+	mock.recorder = &MockItemCreatorMockRecorder{mock}
+	return mock
+}
+
+// EXPECT returns an object that allows the caller to indicate expected use.
+func (m *MockItemCreator) EXPECT() *MockItemCreatorMockRecorder {
+	return m.recorder
+}
+
+// Create mocks base method.
+func (m *MockItemCreator) Create(ctx context.Context, request requests.CreateItemRequest) (*models.Item, error) {
+	m.ctrl.T.Helper()
+	ret := m.ctrl.Call(m, "Create", ctx, request)
+	ret0, _ := ret[0].(*models.Item)
+	ret1, _ := ret[1].(error)
+	return ret0, ret1
+}
+
+// Create indicates an expected call of Create.
+func (mr *MockItemCreatorMockRecorder) Create(ctx, request any) *gomock.Call {
+	mr.mock.ctrl.T.Helper()
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "Create", reflect.TypeOf((*MockItemCreator)(nil).Create), ctx, request)
+}
 
 // MockItemService is a mock of ItemService interface.
 type MockItemService struct {
@@ -39,20 +79,6 @@ func NewMockItemService(ctrl *gomock.Controller) *MockItemService {
 // EXPECT returns an object that allows the caller to indicate expected use.
 func (m *MockItemService) EXPECT() *MockItemServiceMockRecorder {
 	return m.recorder
-}
-
-// CreateItem mocks base method.
-func (m *MockItemService) CreateItem(ctx context.Context, item *models.Item) error {
-	m.ctrl.T.Helper()
-	ret := m.ctrl.Call(m, "CreateItem", ctx, item)
-	ret0, _ := ret[0].(error)
-	return ret0
-}
-
-// CreateItem indicates an expected call of CreateItem.
-func (mr *MockItemServiceMockRecorder) CreateItem(ctx, item any) *gomock.Call {
-	mr.mock.ctrl.T.Helper()
-	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "CreateItem", reflect.TypeOf((*MockItemService)(nil).CreateItem), ctx, item)
 }
 
 // DeleteItem mocks base method.

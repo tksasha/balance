@@ -6,16 +6,17 @@ import (
 
 	internalerrors "github.com/tksasha/balance/internal/errors"
 	"github.com/tksasha/balance/internal/models"
-	"github.com/tksasha/calculator"
 )
 
 type ItemService struct {
-	itemRepository ItemRepository
+	itemRepository     ItemRepository
+	categoryRepository CategoryRepository
 }
 
-func NewItemService(itemRepository ItemRepository) *ItemService {
+func NewItemService(itemRepository ItemRepository, categoryRepository CategoryRepository) *ItemService {
 	return &ItemService{
-		itemRepository: itemRepository,
+		itemRepository:     itemRepository,
+		categoryRepository: categoryRepository,
 	}
 }
 
@@ -44,23 +45,6 @@ func (s *ItemService) GetItem(ctx context.Context, input string) (*models.Item, 
 
 func (s *ItemService) UpdateItem(ctx context.Context, item *models.Item) error {
 	return s.itemRepository.UpdateItem(ctx, item)
-}
-
-func (s *ItemService) CreateItem(ctx context.Context, item *models.Item) error {
-	if item.Formula == "" {
-		return internalerrors.ErrResourceInvalid // TODO: do something
-	}
-
-	if item.Formula != "" {
-		sum, err := calculator.Calculate(item.Formula)
-		if err != nil {
-			return err
-		}
-
-		item.Sum = sum
-	}
-
-	return s.itemRepository.CreateItem(ctx, item)
 }
 
 func (s *ItemService) DeleteItem(ctx context.Context, input string) error {

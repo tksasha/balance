@@ -6,7 +6,6 @@ import (
 	"net/http/httptest"
 	"strings"
 	"testing"
-	"time"
 
 	"github.com/tksasha/balance/internal/db"
 	"github.com/tksasha/balance/internal/handlers"
@@ -27,11 +26,10 @@ func TestCreateItemHandler_ServeHTTP(t *testing.T) { //nolint:funlen
 	itemRepository := repositories.NewItemRepository(db)
 	categoryRepository := repositories.NewCategoryRepository(db)
 
-	itemService := services.NewItemService(itemRepository)
-	categoryService := services.NewCategoryService(categoryRepository)
+	createItemService := services.NewCreateItemService(itemRepository, categoryRepository)
 
 	middleware := middlewares.NewCurrencyMiddleware().Wrap(
-		handlers.NewCreateItemHandler(itemService, categoryService),
+		handlers.NewCreateItemHandler(createItemService),
 	)
 
 	mux := http.NewServeMux()
@@ -96,11 +94,12 @@ func TestCreateItemHandler_ServeHTTP(t *testing.T) { //nolint:funlen
 
 		item := findItemByDate(usdContext(ctx, t), t, db.Connection, "2024-10-16")
 
-		assert.Equal(t, item.Date.Format(time.DateOnly), "2024-10-16")
+		assert.Equal(t, item.GetDateAsString(), "2024-10-16")
 		assert.Equal(t, item.CategoryID, 1101)
+		assert.Equal(t, item.CategoryName, "Accoutrements")
 		assert.Equal(t, item.Currency, currencies.USD)
 		assert.Equal(t, item.Formula, "42.69+69.42")
-		assert.Equal(t, item.Sum, 112.11)
+		assert.Equal(t, item.GetSumAsString(), "112,11")
 		assert.Equal(t, item.Description, "paper clips, notebooks, and pens")
 	})
 }

@@ -21,8 +21,9 @@ func TestUpdateItemHandler(t *testing.T) {
 	dbConnection := db.Open(dbNameProvider)
 
 	itemRepository := repositories.NewItemRepository(dbConnection)
+	categoryRepository := repositories.NewCategoryRepository(dbConnection)
 
-	itemService := services.NewItemService(itemRepository)
+	itemService := services.NewItemService(itemRepository, categoryRepository)
 
 	middleware := middlewares.NewCurrencyMiddleware().Wrap(
 		handlers.NewUpdateItemHandler(itemService),

@@ -32,10 +32,12 @@ func InitializeServer() *server.Server {
 		routes.New,
 		server.New,
 		services.NewCategoryService,
+		services.NewCreateItemService,
 		services.NewItemService,
 		wire.Bind(new(db.DBNameProvider), new(*providers.DBNameProvider)),
 		wire.Bind(new(handlers.CategoryService), new(*services.CategoryService)),
 		wire.Bind(new(handlers.ItemService), new(*services.ItemService)),
+		wire.Bind(new(handlers.ItemCreator), new(*services.CreateItemService)),
 		wire.Bind(new(services.CategoryRepository), new(*repositories.CategoryRepository)),
 		wire.Bind(new(services.ItemRepository), new(*repositories.ItemRepository)),
 	)

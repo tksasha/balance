@@ -18,7 +18,9 @@ type ItemRepository struct {
 }
 
 func NewItemRepository(db *db.DB) *ItemRepository {
-	return &ItemRepository{db}
+	return &ItemRepository{
+		db: db,
+	}
 }
 
 func (r *ItemRepository) GetItems(ctx context.Context) (models.Items, error) {
@@ -74,7 +76,7 @@ func (r *ItemRepository) GetItems(ctx context.Context) (models.Items, error) {
 	return items, nil
 }
 
-func (r *ItemRepository) CreateItem(ctx context.Context, item *models.Item) error {
+func (r *ItemRepository) Create(ctx context.Context, item *models.Item) error {
 	currency, ok := ctx.Value(currencies.CurrencyContextValue{}).(currencies.Currency)
 	if !ok {
 		currency = currencies.DefaultCurrency

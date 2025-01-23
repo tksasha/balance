@@ -41,18 +41,18 @@ func (m *MockItemRepository) EXPECT() *MockItemRepositoryMockRecorder {
 	return m.recorder
 }
 
-// CreateItem mocks base method.
-func (m *MockItemRepository) CreateItem(ctx context.Context, item *models.Item) error {
+// Create mocks base method.
+func (m *MockItemRepository) Create(ctx context.Context, item *models.Item) error {
 	m.ctrl.T.Helper()
-	ret := m.ctrl.Call(m, "CreateItem", ctx, item)
+	ret := m.ctrl.Call(m, "Create", ctx, item)
 	ret0, _ := ret[0].(error)
 	return ret0
 }
 
-// CreateItem indicates an expected call of CreateItem.
-func (mr *MockItemRepositoryMockRecorder) CreateItem(ctx, item any) *gomock.Call {
+// Create indicates an expected call of Create.
+func (mr *MockItemRepositoryMockRecorder) Create(ctx, item any) *gomock.Call {
 	mr.mock.ctrl.T.Helper()
-	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "CreateItem", reflect.TypeOf((*MockItemRepository)(nil).CreateItem), ctx, item)
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "Create", reflect.TypeOf((*MockItemRepository)(nil).Create), ctx, item)
 }
 
 // DeleteItem mocks base method.
