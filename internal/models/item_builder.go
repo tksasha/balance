@@ -79,7 +79,7 @@ func (b *ItemBuilder) WithDescription(input string) *ItemBuilder {
 func (b *ItemBuilder) WithCurrencyCode(code string) *ItemBuilder {
 	currency := currencies.GetCurrencyByCode(code)
 	if currency == 0 {
-		currency, code = currencies.GetDefaultCurrency()
+		currency = currencies.DefaultCurrency
 	}
 
 	b.item.Currency = currency

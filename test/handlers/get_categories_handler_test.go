@@ -3,6 +3,7 @@ package handlers_test
 import (
 	"context"
 	"io"
+	"math/rand"
 	"net/http"
 	"net/http/httptest"
 	"strings"
@@ -11,6 +12,7 @@ import (
 	"github.com/tksasha/balance/internal/db"
 	"github.com/tksasha/balance/internal/handlers"
 	"github.com/tksasha/balance/internal/middlewares"
+	"github.com/tksasha/balance/internal/models"
 	providers "github.com/tksasha/balance/internal/providers/test"
 	"github.com/tksasha/balance/internal/repositories"
 	"github.com/tksasha/balance/internal/services"
@@ -18,7 +20,7 @@ import (
 	"gotest.tools/v3/assert"
 )
 
-func TestGetCategoriesHandler_GetCategories(t *testing.T) { //nolint:funlen
+func TestGetCategoriesHandler_GetCategories(t *testing.T) {
 	db := db.Open(
 		providers.NewDBNameProvider(),
 	)
@@ -36,20 +38,10 @@ func TestGetCategoriesHandler_GetCategories(t *testing.T) { //nolint:funlen
 
 	ctx := context.Background()
 
-	truncate := func() {
-		_, err := db.Connection.ExecContext(ctx, "DELETE FROM categories")
-		if err != nil {
-			t.Fatalf("failed to truncate categories, error: %v", err)
-		}
-	}
-
 	t.Run("when there no categories, it should render empty widget", func(t *testing.T) {
-		t.Cleanup(truncate)
+		cleanup(ctx, t, db)
 
-		request, err := http.NewRequestWithContext(ctx, http.MethodGet, "/categories?currency=eur", nil)
-		if err != nil {
-			t.Fatalf("failed to build new request with context, error: %v", err)
-		}
+		request := newGetRequest(ctx, t, "/categories?currency=eur")
 
 		recorder := httptest.NewRecorder()
 
@@ -59,23 +51,20 @@ func TestGetCategoriesHandler_GetCategories(t *testing.T) { //nolint:funlen
 	})
 
 	t.Run("when there are categories, it should render widget with those categories", func(t *testing.T) {
-		t.Cleanup(truncate)
+		cleanup(ctx, t, db)
 
 		for _, name := range []string{"category one", "category two"} {
-			if _, err := db.Connection.ExecContext(
-				ctx,
-				"INSERT INTO categories(name, currency) VALUES(?, ?)",
-				name,
-				currencies.EUR,
-			); err != nil {
-				t.Fatalf("failed to create category with name %s, error: %v", name, err)
-			}
+			createCategory(ctx, t, db,
+				&models.Category{
+					ID:       rand.Int(), //nolint:gosec
+					Name:     name,
+					Currency: currencies.EUR,
+					Visible:  true,
+				},
+			)
 		}
 
-		request, err := http.NewRequestWithContext(ctx, http.MethodGet, "/categories?currency=eur", nil)
-		if err != nil {
-			t.Fatalf("failed to build new request with context, error: %v", err)
-		}
+		request := newGetRequest(ctx, t, "/categories?currency=eur")
 
 		recorder := httptest.NewRecorder()
 

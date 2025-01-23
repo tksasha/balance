@@ -23,7 +23,7 @@ func NewItemRepository(db *db.DB) *ItemRepository {
 func (r *ItemRepository) GetItems(ctx context.Context) (models.Items, error) {
 	currency, ok := ctx.Value(currencies.CurrencyContextValue{}).(currencies.Currency)
 	if !ok {
-		currency, _ = currencies.GetDefaultCurrency()
+		currency = currencies.DefaultCurrency
 	}
 
 	query := `

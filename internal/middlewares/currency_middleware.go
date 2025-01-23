@@ -22,7 +22,7 @@ func (m *currencyMiddleware) Wrap(next http.Handler) http.Handler {
 
 		currency := currencies.GetCurrencyByCode(code)
 		if currency == 0 {
-			currency, _ = currencies.GetDefaultCurrency()
+			currency = currencies.DefaultCurrency
 		}
 
 		ctx := context.WithValue(r.Context(), currencies.CurrencyContextValue{}, currency)

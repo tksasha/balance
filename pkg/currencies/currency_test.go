@@ -24,8 +24,7 @@ func TestGetCurrencyIDByCode(t *testing.T) {
 }
 
 func TestGetDefaultCurrency(t *testing.T) {
-	id, code := currencies.GetDefaultCurrency()
+	currency := currencies.DefaultCurrency
 
-	assert.Equal(t, id, currencies.Currency(1))
-	assert.Equal(t, code, "uah")
+	assert.Equal(t, currency, currencies.Currency(1))
 }

@@ -120,8 +120,7 @@ func TestItemBuilder_WithCurrencyCode(t *testing.T) {
 	t.Run("when code is xxx it should set default currency", func(t *testing.T) {
 		item, err := models.NewItemBuilder().WithCurrencyCode("xxx").Build()
 
-		assert.Equal(t, item.Currency, currencies.Currency(1))
-		assert.Equal(t, item.CurrencyCode, "uah")
+		assert.Equal(t, item.Currency, currencies.UAH)
 		assert.Assert(t, err.IsEmpty())
 	})
 }

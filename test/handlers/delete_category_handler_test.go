@@ -35,19 +35,10 @@ func TestDeleteCategoryHandler(t *testing.T) { //nolint:funlen
 
 	ctx := context.Background()
 
-	truncate := func() {
-		if _, err := db.Connection.ExecContext(ctx, "DELETE FROM categories"); err != nil {
-			t.Fatalf("failed to truncate categories, error: %v", err)
-		}
-	}
-
 	t.Run("when category id is not a digit, it should respond with 404", func(t *testing.T) {
-		t.Cleanup(truncate)
+		cleanup(ctx, t, db)
 
-		request, err := http.NewRequestWithContext(ctx, http.MethodDelete, "/categories/abcd", nil)
-		if err != nil {
-			t.Fatalf("failed to build new request with context, error: %v", err)
-		}
+		request := newDeleteRequest(ctx, t, "/categories/abcd")
 
 		recorder := httptest.NewRecorder()
 
@@ -57,12 +48,9 @@ func TestDeleteCategoryHandler(t *testing.T) { //nolint:funlen
 	})
 
 	t.Run("when category is not found by id, it should respond with 404", func(t *testing.T) {
-		t.Cleanup(truncate)
+		cleanup(ctx, t, db)
 
-		request, err := http.NewRequestWithContext(ctx, http.MethodDelete, "/categories/1348", nil)
-		if err != nil {
-			t.Fatalf("failed to build new request with context, error: %v", err)
-		}
+		request := newDeleteRequest(ctx, t, "/categories/1348")
 
 		recorder := httptest.NewRecorder()
 
@@ -72,22 +60,17 @@ func TestDeleteCategoryHandler(t *testing.T) { //nolint:funlen
 	})
 
 	t.Run("when category is found, it should respond with 200", func(t *testing.T) {
-		t.Cleanup(truncate)
+		cleanup(ctx, t, db)
 
-		if _, err := db.Connection.ExecContext(
-			ctx,
-			"INSERT INTO categories(id, name, currency) VALUES(?, ?, ?)",
-			1411,
-			"Miscellaneous",
-			currencies.EUR,
-		); err != nil {
-			t.Fatalf("failed to create category, error: %v", err)
-		}
+		createCategory(ctx, t, db,
+			&models.Category{
+				ID:       1411,
+				Name:     "Miscellaneous",
+				Currency: currencies.EUR,
+			},
+		)
 
-		request, err := http.NewRequestWithContext(ctx, http.MethodDelete, "/categories/1411?currency=eur", nil)
-		if err != nil {
-			t.Fatalf("failed to create new request with context, error: %v", err)
-		}
+		request := newDeleteRequest(ctx, t, "/categories/1411?currency=eur")
 
 		recorder := httptest.NewRecorder()
 
@@ -95,15 +78,7 @@ func TestDeleteCategoryHandler(t *testing.T) { //nolint:funlen
 
 		assert.Equal(t, recorder.Code, http.StatusOK)
 
-		category := &models.Category{}
-
-		if err := db.Connection.QueryRowContext(
-			ctx,
-			"SELECT id, name, currency, deleted_at FROM categories WHERE id=?",
-			1411,
-		).Scan(&category.ID, &category.Name, &category.Currency, &category.DeletedAt); err != nil {
-			t.Fatalf("failed to get category, error: %v", err)
-		}
+		category := findCategoryByID(eurContext(ctx, t), t, db, 1411)
 
 		assert.Equal(t, category.ID, 1411)
 		assert.Equal(t, category.Name, "Miscellaneous")

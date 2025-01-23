@@ -53,7 +53,7 @@ func TestCreateCategoryHandlerTest(t *testing.T) { //nolint:funlen
 	})
 
 	t.Run("when input data is valid, it should create category", func(t *testing.T) {
-		t.Cleanup(truncate(ctx, t, db))
+		cleanup(ctx, t, db)
 
 		request := newPostRequest(ctx, t, "/categories?currency=eur",
 			Params{
@@ -76,7 +76,7 @@ func TestCreateCategoryHandlerTest(t *testing.T) { //nolint:funlen
 		assert.Equal(t, recorder.Code, http.StatusOK)
 		assert.Assert(t, is.Contains(string(response), "create category page"))
 
-		category := findCategoryByName(ctx, t, db, "Miscellaneous")
+		category := findCategoryByName(eurContext(ctx, t), t, db, "Miscellaneous")
 
 		assert.Equal(t, category.ID, 1)
 		assert.Equal(t, category.Name, "Miscellaneous")

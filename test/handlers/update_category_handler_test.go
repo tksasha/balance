@@ -36,7 +36,7 @@ func TestUpdateCategoryHandler(t *testing.T) { //nolint:funlen
 	ctx := context.Background()
 
 	t.Run("when category id is not a digit, it should respond with 404", func(t *testing.T) {
-		t.Cleanup(truncate(ctx, t, db))
+		cleanup(ctx, t, db)
 
 		request := newPatchRequest(ctx, t, "/categories/abcd", nil)
 
@@ -48,7 +48,7 @@ func TestUpdateCategoryHandler(t *testing.T) { //nolint:funlen
 	})
 
 	t.Run("when category is not found by id, it should respond with 404", func(t *testing.T) {
-		t.Cleanup(truncate(ctx, t, db))
+		cleanup(ctx, t, db)
 
 		request := newPatchRequest(ctx, t, "/categories/1141", nil)
 
@@ -60,7 +60,7 @@ func TestUpdateCategoryHandler(t *testing.T) { //nolint:funlen
 	})
 
 	t.Run("when category name is already exists, it should respond with 500", func(t *testing.T) {
-		t.Cleanup(truncate(ctx, t, db))
+		cleanup(ctx, t, db)
 
 		for id, name := range map[int]string{1151: "Heterogeneous", 11654: "Paraphernalia"} {
 			createCategory(ctx, t, db,
@@ -82,7 +82,7 @@ func TestUpdateCategoryHandler(t *testing.T) { //nolint:funlen
 	})
 
 	t.Run("when category name is uniq, it should respond with 200", func(t *testing.T) {
-		t.Cleanup(truncate(ctx, t, db))
+		cleanup(ctx, t, db)
 
 		createCategory(ctx, t, db,
 			&models.Category{
@@ -110,10 +110,7 @@ func TestUpdateCategoryHandler(t *testing.T) { //nolint:funlen
 
 		assert.Equal(t, recorder.Code, http.StatusOK)
 
-		category, err := categoryRepository.FindByID(usdContext(ctx, t), 1208)
-		if err != nil {
-			t.Fatalf("failed to find category by id, err: %v", err)
-		}
+		category := findCategoryByID(usdContext(ctx, t), t, db, 1208)
 
 		assert.Equal(t, category.ID, 1208)
 		assert.Equal(t, category.Name, "Heterogeneous")

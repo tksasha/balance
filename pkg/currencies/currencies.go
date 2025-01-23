@@ -6,6 +6,8 @@ const (
 	UAH Currency = iota + 1
 	USD
 	EUR
+
+	DefaultCurrency = UAH
 )
 
 type Currency int
@@ -18,8 +20,4 @@ func GetCurrencyByCode(code string) Currency {
 		"usd": USD,
 		"eur": EUR,
 	}[strings.ToLower(code)]
-}
-
-func GetDefaultCurrency() (Currency, string) {
-	return UAH, "uah"
 }
