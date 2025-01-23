@@ -11,12 +11,12 @@ import (
 )
 
 type CreateItemHandler struct {
-	itemCreator ItemCreator
+	itemService ItemService
 }
 
-func NewCreateItemHandler(itemCreator ItemCreator) *CreateItemHandler {
+func NewCreateItemHandler(itemService ItemService) *CreateItemHandler {
 	return &CreateItemHandler{
-		itemCreator: itemCreator,
+		itemService: itemService,
 	}
 }
 
@@ -60,7 +60,7 @@ func (h *CreateItemHandler) handle(r *http.Request) error {
 		Description: r.FormValue("description"),
 	}
 
-	if _, err := h.itemCreator.Create(r.Context(), request); err != nil {
+	if _, err := h.itemService.Create(r.Context(), request); err != nil {
 		return err
 	}
 

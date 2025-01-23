@@ -26,10 +26,10 @@ func TestCreateItemHandler_ServeHTTP(t *testing.T) { //nolint:funlen
 	itemRepository := repositories.NewItemRepository(db)
 	categoryRepository := repositories.NewCategoryRepository(db)
 
-	createItemService := services.NewCreateItemService(itemRepository, categoryRepository)
+	itemService := services.NewItemService(itemRepository, categoryRepository)
 
 	middleware := middlewares.NewCurrencyMiddleware().Wrap(
-		handlers.NewCreateItemHandler(createItemService),
+		handlers.NewCreateItemHandler(itemService),
 	)
 
 	mux := http.NewServeMux()

@@ -22,18 +22,18 @@ func NewCategoryService(categoryRepository CategoryRepository) *CategoryService 
 }
 
 func (s *CategoryService) Create(ctx context.Context, request requests.CreateCategoryRequest) error {
-	category := &models.Category{
-		Income:  request.Income == "true",
-		Visible: request.Visible == "true",
-	}
+	category := &models.Category{}
+
+	s.setIncome(request, category)
+	s.setVisible(request, category)
 
 	validationErrors := validationerror.New()
 
-	if err := s.validateName(ctx, request, category, validationErrors); err != nil {
+	if err := s.setName(ctx, request, category, validationErrors); err != nil {
 		return err
 	}
 
-	s.validateSupercategory(request, category, validationErrors)
+	s.setSupercategory(request, category, validationErrors)
 
 	if validationErrors.Exists() {
 		return validationErrors
@@ -90,7 +90,21 @@ func (s *CategoryService) Delete(ctx context.Context, category *models.Category)
 	return s.categoryRepository.Delete(ctx, category)
 }
 
-func (s *CategoryService) validateName(
+func (s *CategoryService) setIncome(
+	request requests.CreateCategoryRequest,
+	category *models.Category,
+) {
+	category.Income = request.Income == "true"
+}
+
+func (s *CategoryService) setVisible(
+	request requests.CreateCategoryRequest,
+	category *models.Category,
+) {
+	category.Visible = request.Visible == "true"
+}
+
+func (s *CategoryService) setName(
 	ctx context.Context,
 	request requests.CreateCategoryRequest,
 	category *models.Category,
@@ -116,7 +130,7 @@ func (s *CategoryService) validateName(
 	return nil
 }
 
-func (s *CategoryService) validateSupercategory(
+func (s *CategoryService) setSupercategory(
 	request requests.CreateCategoryRequest,
 	category *models.Category,
 	validationErrors validationerror.ValidationError,

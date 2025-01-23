@@ -19,7 +19,7 @@ func TestCreateItemService(t *testing.T) { //nolint:funlen
 	itemRepository := mocksforservices.NewMockItemRepository(controller)
 	categoryRepository := mocksforservices.NewMockCategoryRepository(controller)
 
-	service := services.NewCreateItemService(itemRepository, categoryRepository)
+	service := services.NewItemService(itemRepository, categoryRepository)
 
 	ctx := context.Background()
 
