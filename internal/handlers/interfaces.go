@@ -11,10 +11,6 @@ type ItemCreator interface {
 	Create(ctx context.Context, request requests.CreateItemRequest) (*models.Item, error)
 }
 
-type CategoryCreator interface {
-	Create(ctx context.Context, request requests.CreateCategoryRequest) error
-}
-
 type ItemService interface {
 	GetItems(ctx context.Context) (models.Items, error)
 	GetItem(ctx context.Context, input string) (*models.Item, error)
@@ -23,6 +19,7 @@ type ItemService interface {
 }
 
 type CategoryService interface {
+	Create(ctx context.Context, request requests.CreateCategoryRequest) error
 	GetAll(ctx context.Context) (models.Categories, error)
 	FindByID(ctx context.Context, id int) (*models.Category, error)
 	Update(ctx context.Context, category *models.Category) error

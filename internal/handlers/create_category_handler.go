@@ -11,12 +11,12 @@ import (
 )
 
 type CreateCategoryHandler struct {
-	categoryCreator CategoryCreator
+	categoryService CategoryService
 }
 
-func NewCreateCategoryHandler(categoryCreator CategoryCreator) *CreateCategoryHandler {
+func NewCreateCategoryHandler(categoryService CategoryService) *CreateCategoryHandler {
 	return &CreateCategoryHandler{
-		categoryCreator: categoryCreator,
+		categoryService: categoryService,
 	}
 }
 
@@ -51,5 +51,5 @@ func (h *CreateCategoryHandler) handle(r *http.Request) error {
 		Supercategory: r.FormValue("supercategory"),
 	}
 
-	return h.categoryCreator.Create(r.Context(), request)
+	return h.categoryService.Create(r.Context(), request)
 }
