@@ -148,7 +148,7 @@ func (r *ItemRepository) Update(ctx context.Context, item *models.Item) error {
 		WHERE id=?
 	`
 
-	if _, err := r.db.ExecContext(ctx, query,
+	result, err := r.db.ExecContext(ctx, query,
 		item.Date.Format(time.DateOnly),
 		item.Formula,
 		item.Sum,
@@ -156,13 +156,39 @@ func (r *ItemRepository) Update(ctx context.Context, item *models.Item) error {
 		item.CategoryName,
 		item.Description,
 		item.ID,
-	); err != nil {
+	)
+	if err != nil {
 		return err
+	}
+
+	rowsAffected, err := result.RowsAffected()
+	if err != nil {
+		return err
+	}
+
+	if rowsAffected == 0 {
+		return internalerrors.ErrRecordNotFound
 	}
 
 	return nil
 }
 
-func (r *ItemRepository) DeleteItem(ctx context.Context, id int) error {
+func (r *ItemRepository) Delete(ctx context.Context, id int) error {
+	query := `UPDATE items SET deleted_at = ? WHERE id = ?`
+
+	result, err := r.db.ExecContext(ctx, query, time.Now().UTC(), id)
+	if err != nil {
+		return err
+	}
+
+	rowsAffected, err := result.RowsAffected()
+	if err != nil {
+		return err
+	}
+
+	if rowsAffected == 0 {
+		return internalerrors.ErrRecordNotFound
+	}
+
 	return nil
 }

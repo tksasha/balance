@@ -11,7 +11,7 @@ type ItemRepository interface {
 	Create(ctx context.Context, item *models.Item) error
 	FindByID(ctx context.Context, id int) (*models.Item, error)
 	Update(ctx context.Context, item *models.Item) error
-	DeleteItem(ctx context.Context, id int) error
+	Delete(ctx context.Context, id int) error
 }
 
 type CategoryRepository interface {

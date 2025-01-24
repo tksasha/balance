@@ -106,13 +106,13 @@ func (s *ItemService) Update(ctx context.Context, request requests.UpdateItemReq
 	return s.itemRepository.Update(ctx, item)
 }
 
-func (s *ItemService) DeleteItem(ctx context.Context, input string) error {
+func (s *ItemService) Delete(ctx context.Context, input string) error {
 	id, err := strconv.Atoi(input)
 	if err != nil || id < 1 {
 		return internalerrors.ErrResourceNotFound
 	}
 
-	return s.itemRepository.DeleteItem(ctx, id)
+	return s.itemRepository.Delete(ctx, id)
 }
 
 func (s *ItemService) setDate(

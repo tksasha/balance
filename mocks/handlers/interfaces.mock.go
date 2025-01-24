@@ -57,18 +57,18 @@ func (mr *MockItemServiceMockRecorder) Create(ctx, request any) *gomock.Call {
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "Create", reflect.TypeOf((*MockItemService)(nil).Create), ctx, request)
 }
 
-// DeleteItem mocks base method.
-func (m *MockItemService) DeleteItem(ctx context.Context, input string) error {
+// Delete mocks base method.
+func (m *MockItemService) Delete(ctx context.Context, input string) error {
 	m.ctrl.T.Helper()
-	ret := m.ctrl.Call(m, "DeleteItem", ctx, input)
+	ret := m.ctrl.Call(m, "Delete", ctx, input)
 	ret0, _ := ret[0].(error)
 	return ret0
 }
 
-// DeleteItem indicates an expected call of DeleteItem.
-func (mr *MockItemServiceMockRecorder) DeleteItem(ctx, input any) *gomock.Call {
+// Delete indicates an expected call of Delete.
+func (mr *MockItemServiceMockRecorder) Delete(ctx, input any) *gomock.Call {
 	mr.mock.ctrl.T.Helper()
-	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "DeleteItem", reflect.TypeOf((*MockItemService)(nil).DeleteItem), ctx, input)
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "Delete", reflect.TypeOf((*MockItemService)(nil).Delete), ctx, input)
 }
 
 // GetItem mocks base method.

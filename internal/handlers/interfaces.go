@@ -12,7 +12,7 @@ type ItemService interface {
 	GetItems(ctx context.Context) (models.Items, error)
 	GetItem(ctx context.Context, input string) (*models.Item, error)
 	Update(ctx context.Context, request requests.UpdateItemRequest) error
-	DeleteItem(ctx context.Context, input string) error
+	Delete(ctx context.Context, input string) error
 }
 
 type CategoryService interface {
