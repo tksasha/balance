@@ -18,7 +18,6 @@ type Item struct {
 	CategoryName string
 	Description  string
 	Currency     currencies.Currency
-	CurrencyCode string
 }
 
 type Items []*Item

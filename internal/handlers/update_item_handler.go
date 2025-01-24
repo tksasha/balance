@@ -21,7 +21,13 @@ func NewUpdateItemHandler(itemService ItemService) *UpdateItemHandler {
 
 func (h *UpdateItemHandler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 	if err := h.handle(r); err != nil {
-		if errors.Is(err, internalerrors.ErrRecordNotFound) {
+		if errors.Is(err, internalerrors.ErrParsingForm) {
+			http.Error(w, "Bad Request", http.StatusBadRequest)
+
+			return
+		}
+
+		if errors.Is(err, internalerrors.ErrResourceNotFound) {
 			http.Error(w, "Not Found", http.StatusNotFound)
 
 			return

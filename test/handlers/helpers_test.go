@@ -2,7 +2,6 @@ package handlers_test
 
 import (
 	"context"
-	"database/sql"
 	"net/http"
 	"net/url"
 	"strings"
@@ -29,6 +28,30 @@ func createCategory(ctx context.Context, t *testing.T, db *db.DB, category *mode
 		category.Supercategory,
 	); err != nil {
 		t.Fatalf("failed to create category, error: %v", err)
+	}
+}
+
+func createItem(ctx context.Context, t *testing.T, db *db.DB, item *models.Item) {
+	t.Helper()
+
+	query := `
+		INSERT INTO items(id, date, formula, sum, category_id, category_name, description, currency)
+		VALUES(?, ?, ?, ?, ?, ?, ?, ?)
+	`
+
+	if _, err := db.Connection.ExecContext(
+		ctx,
+		query,
+		item.ID,
+		item.Date,
+		item.Formula,
+		item.Sum,
+		item.CategoryID,
+		item.CategoryName,
+		item.Description,
+		item.Currency,
+	); err != nil {
+		t.Fatalf("failed to create item, error: %v", err)
 	}
 }
 
@@ -98,7 +121,7 @@ func findCategoryByID(ctx context.Context, t *testing.T, db *db.DB, id int) *mod
 	return category
 }
 
-func findItemByDate(ctx context.Context, t *testing.T, db *sql.DB, date string) *models.Item {
+func findItemByDate(ctx context.Context, t *testing.T, db *db.DB, date string) *models.Item {
 	t.Helper()
 
 	currency, ok := ctx.Value(currencies.CurrencyContextValue{}).(currencies.Currency)
@@ -116,7 +139,7 @@ func findItemByDate(ctx context.Context, t *testing.T, db *sql.DB, date string) 
 		LIMIT 1
 	`
 
-	if err := db.
+	if err := db.Connection.
 		QueryRowContext(ctx, query, date, currency).
 		Scan(
 			&item.ID,
@@ -203,4 +226,31 @@ func newGetRequest(ctx context.Context, t *testing.T, endpoint string) *http.Req
 	t.Helper()
 
 	return newRequest(ctx, t, http.MethodGet, endpoint, nil)
+}
+
+func newInvalidRequest(ctx context.Context, t *testing.T, method, endpoint string) *http.Request {
+	t.Helper()
+
+	body := strings.NewReader("%")
+
+	request, err := http.NewRequestWithContext(ctx, method, endpoint, body)
+	if err != nil {
+		t.Fatalf("failed to build new request with context, error: %v", err)
+	}
+
+	request.Header.Set("Content-Type", "application/x-www-form-urlencoded")
+
+	return request
+}
+
+func newInvalidPatchRequest(ctx context.Context, t *testing.T, endpoint string) *http.Request {
+	t.Helper()
+
+	return newInvalidRequest(ctx, t, http.MethodPatch, endpoint)
+}
+
+func newInvalidPostRequest(ctx context.Context, t *testing.T, endpoint string) *http.Request {
+	t.Helper()
+
+	return newInvalidRequest(ctx, t, http.MethodPost, endpoint)
 }

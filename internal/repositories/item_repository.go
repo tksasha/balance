@@ -149,7 +149,7 @@ func (r *ItemRepository) Update(ctx context.Context, item *models.Item) error {
 	`
 
 	if _, err := r.db.ExecContext(ctx, query,
-		item.Date,
+		item.Date.Format(time.DateOnly),
 		item.Formula,
 		item.Sum,
 		item.CategoryID,

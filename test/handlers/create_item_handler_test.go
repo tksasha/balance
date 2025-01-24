@@ -4,7 +4,6 @@ import (
 	"context"
 	"net/http"
 	"net/http/httptest"
-	"strings"
 	"testing"
 
 	"github.com/tksasha/balance/internal/db"
@@ -40,12 +39,7 @@ func TestCreateItemHandler_ServeHTTP(t *testing.T) { //nolint:funlen
 	t.Run("when form parsing error is happened, it should respond with 400", func(t *testing.T) {
 		cleanup(ctx, t, db)
 
-		body := strings.NewReader("%")
-
-		request, err := http.NewRequestWithContext(ctx, http.MethodPost, "/items", body)
-		assert.NilError(t, err)
-
-		request.Header.Set("Content-Type", "application/x-www-form-urlencoded")
+		request := newInvalidPostRequest(ctx, t, "/items")
 
 		recorder := httptest.NewRecorder()
 
@@ -92,7 +86,7 @@ func TestCreateItemHandler_ServeHTTP(t *testing.T) { //nolint:funlen
 
 		assert.Equal(t, http.StatusOK, recorder.Code)
 
-		item := findItemByDate(usdContext(ctx, t), t, db.Connection, "2024-10-16")
+		item := findItemByDate(usdContext(ctx, t), t, db, "2024-10-16")
 
 		assert.Equal(t, item.GetDateAsString(), "2024-10-16")
 		assert.Equal(t, item.CategoryID, 1101)
