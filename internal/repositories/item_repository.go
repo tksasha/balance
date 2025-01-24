@@ -14,12 +14,12 @@ import (
 )
 
 type ItemRepository struct {
-	db *db.DB
+	db *sql.DB
 }
 
 func NewItemRepository(db *db.DB) *ItemRepository {
 	return &ItemRepository{
-		db: db,
+		db: db.Connection,
 	}
 }
 
@@ -46,7 +46,7 @@ func (r *ItemRepository) GetItems(ctx context.Context) (models.Items, error) {
 			items.date DESC
 	`
 
-	rows, err := r.db.Connection.QueryContext(ctx, query, currency)
+	rows, err := r.db.QueryContext(ctx, query, currency)
 	if err != nil {
 		return nil, err
 	}
@@ -95,7 +95,7 @@ func (r *ItemRepository) Create(ctx context.Context, item *models.Item) error {
 		VALUES (?, ?, ?, ?, ?, ?, ?)
 	`
 
-	if _, err := r.db.Connection.ExecContext(
+	if _, err := r.db.ExecContext(
 		ctx,
 		query,
 		item.Date.Format(time.DateOnly),
@@ -112,25 +112,25 @@ func (r *ItemRepository) Create(ctx context.Context, item *models.Item) error {
 	return nil
 }
 
-func (r *ItemRepository) GetItem(ctx context.Context, id int) (*models.Item, error) {
+func (r *ItemRepository) FindByID(ctx context.Context, id int) (*models.Item, error) {
 	query := `
-		SELECT
-			items.id,
-			items.date,
-			items.sum,
-			COALESCE(items.category_name, ""),
-			items.description
-		FROM
-			items
-		WHERE
-			items.id=?
-		AND
-			items.deleted_at IS NULL
+		SELECT id, date, sum, category_id, category_name, description
+		FROM items
+		WHERE items.id=? AND items.deleted_at IS NULL
 	`
 
 	item := &models.Item{}
 
-	if err := r.db.Connection.QueryRowContext(ctx, query, id).Scan(item); err != nil {
+	if err := r.db.
+		QueryRowContext(ctx, query, id).
+		Scan(
+			&item.ID,
+			&item.Date,
+			&item.Sum,
+			&item.CategoryID,
+			&item.CategoryName,
+			&item.Description,
+		); err != nil {
 		if errors.Is(err, sql.ErrNoRows) {
 			return nil, internalerrors.ErrRecordNotFound
 		}
@@ -141,7 +141,25 @@ func (r *ItemRepository) GetItem(ctx context.Context, id int) (*models.Item, err
 	return item, nil
 }
 
-func (r *ItemRepository) UpdateItem(ctx context.Context, item *models.Item) error {
+func (r *ItemRepository) Update(ctx context.Context, item *models.Item) error {
+	query := `
+		UPDATE items
+		SET date=?, formula=?, sum=?, category_id=?, category_name=?, description=?
+		WHERE id=?
+	`
+
+	if _, err := r.db.ExecContext(ctx, query,
+		item.Date,
+		item.Formula,
+		item.Sum,
+		item.CategoryID,
+		item.CategoryName,
+		item.Description,
+		item.ID,
+	); err != nil {
+		return err
+	}
+
 	return nil
 }
 

@@ -101,18 +101,18 @@ func (mr *MockItemServiceMockRecorder) GetItems(ctx any) *gomock.Call {
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "GetItems", reflect.TypeOf((*MockItemService)(nil).GetItems), ctx)
 }
 
-// UpdateItem mocks base method.
-func (m *MockItemService) UpdateItem(ctx context.Context, item *models.Item) error {
+// Update mocks base method.
+func (m *MockItemService) Update(ctx context.Context, request requests.UpdateItemRequest) error {
 	m.ctrl.T.Helper()
-	ret := m.ctrl.Call(m, "UpdateItem", ctx, item)
+	ret := m.ctrl.Call(m, "Update", ctx, request)
 	ret0, _ := ret[0].(error)
 	return ret0
 }
 
-// UpdateItem indicates an expected call of UpdateItem.
-func (mr *MockItemServiceMockRecorder) UpdateItem(ctx, item any) *gomock.Call {
+// Update indicates an expected call of Update.
+func (mr *MockItemServiceMockRecorder) Update(ctx, request any) *gomock.Call {
 	mr.mock.ctrl.T.Helper()
-	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "UpdateItem", reflect.TypeOf((*MockItemService)(nil).UpdateItem), ctx, item)
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "Update", reflect.TypeOf((*MockItemService)(nil).Update), ctx, request)
 }
 
 // MockCategoryService is a mock of CategoryService interface.

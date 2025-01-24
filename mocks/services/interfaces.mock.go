@@ -69,19 +69,19 @@ func (mr *MockItemRepositoryMockRecorder) DeleteItem(ctx, id any) *gomock.Call {
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "DeleteItem", reflect.TypeOf((*MockItemRepository)(nil).DeleteItem), ctx, id)
 }
 
-// GetItem mocks base method.
-func (m *MockItemRepository) GetItem(ctx context.Context, id int) (*models.Item, error) {
+// FindByID mocks base method.
+func (m *MockItemRepository) FindByID(ctx context.Context, id int) (*models.Item, error) {
 	m.ctrl.T.Helper()
-	ret := m.ctrl.Call(m, "GetItem", ctx, id)
+	ret := m.ctrl.Call(m, "FindByID", ctx, id)
 	ret0, _ := ret[0].(*models.Item)
 	ret1, _ := ret[1].(error)
 	return ret0, ret1
 }
 
-// GetItem indicates an expected call of GetItem.
-func (mr *MockItemRepositoryMockRecorder) GetItem(ctx, id any) *gomock.Call {
+// FindByID indicates an expected call of FindByID.
+func (mr *MockItemRepositoryMockRecorder) FindByID(ctx, id any) *gomock.Call {
 	mr.mock.ctrl.T.Helper()
-	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "GetItem", reflect.TypeOf((*MockItemRepository)(nil).GetItem), ctx, id)
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "FindByID", reflect.TypeOf((*MockItemRepository)(nil).FindByID), ctx, id)
 }
 
 // GetItems mocks base method.
@@ -99,18 +99,18 @@ func (mr *MockItemRepositoryMockRecorder) GetItems(ctx any) *gomock.Call {
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "GetItems", reflect.TypeOf((*MockItemRepository)(nil).GetItems), ctx)
 }
 
-// UpdateItem mocks base method.
-func (m *MockItemRepository) UpdateItem(ctx context.Context, item *models.Item) error {
+// Update mocks base method.
+func (m *MockItemRepository) Update(ctx context.Context, item *models.Item) error {
 	m.ctrl.T.Helper()
-	ret := m.ctrl.Call(m, "UpdateItem", ctx, item)
+	ret := m.ctrl.Call(m, "Update", ctx, item)
 	ret0, _ := ret[0].(error)
 	return ret0
 }
 
-// UpdateItem indicates an expected call of UpdateItem.
-func (mr *MockItemRepositoryMockRecorder) UpdateItem(ctx, item any) *gomock.Call {
+// Update indicates an expected call of Update.
+func (mr *MockItemRepositoryMockRecorder) Update(ctx, item any) *gomock.Call {
 	mr.mock.ctrl.T.Helper()
-	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "UpdateItem", reflect.TypeOf((*MockItemRepository)(nil).UpdateItem), ctx, item)
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "Update", reflect.TypeOf((*MockItemRepository)(nil).Update), ctx, item)
 }
 
 // MockCategoryRepository is a mock of CategoryRepository interface.

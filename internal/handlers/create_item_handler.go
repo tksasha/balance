@@ -53,14 +53,15 @@ func (h *CreateItemHandler) handle(r *http.Request) error {
 		return internalerrors.ErrParsingForm
 	}
 
-	request := requests.CreateItemRequest{
-		Date:        r.FormValue("date"),
-		Formula:     r.FormValue("formula"),
-		CategoryID:  r.FormValue("category_id"),
-		Description: r.FormValue("description"),
-	}
-
-	if _, err := h.itemService.Create(r.Context(), request); err != nil {
+	if _, err := h.itemService.Create(
+		r.Context(),
+		requests.CreateItemRequest{
+			Date:        r.FormValue("date"),
+			Formula:     r.FormValue("formula"),
+			CategoryID:  r.FormValue("category_id"),
+			Description: r.FormValue("description"),
+		},
+	); err != nil {
 		return err
 	}
 

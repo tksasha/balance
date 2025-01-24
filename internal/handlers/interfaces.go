@@ -11,7 +11,7 @@ type ItemService interface {
 	Create(ctx context.Context, request requests.CreateItemRequest) (*models.Item, error)
 	GetItems(ctx context.Context) (models.Items, error)
 	GetItem(ctx context.Context, input string) (*models.Item, error)
-	UpdateItem(ctx context.Context, item *models.Item) error
+	Update(ctx context.Context, request requests.UpdateItemRequest) error
 	DeleteItem(ctx context.Context, input string) error
 }
 

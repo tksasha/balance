@@ -6,6 +6,7 @@ import (
 	"net/http"
 
 	internalerrors "github.com/tksasha/balance/internal/errors"
+	"github.com/tksasha/balance/internal/requests"
 )
 
 type UpdateItemHandler struct {
@@ -19,7 +20,7 @@ func NewUpdateItemHandler(itemService ItemService) *UpdateItemHandler {
 }
 
 func (h *UpdateItemHandler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
-	if err := h.handle(w, r); err != nil {
+	if err := h.handle(r); err != nil {
 		if errors.Is(err, internalerrors.ErrRecordNotFound) {
 			http.Error(w, "Not Found", http.StatusNotFound)
 
@@ -36,13 +37,19 @@ func (h *UpdateItemHandler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 	_, _ = w.Write([]byte("render update page\n"))
 }
 
-func (h *UpdateItemHandler) handle(w http.ResponseWriter, r *http.Request) error {
-	item, err := h.itemService.GetItem(r.Context(), r.PathValue("id"))
-	if err != nil {
-		return err
+func (h *UpdateItemHandler) handle(r *http.Request) error {
+	if err := r.ParseForm(); err != nil {
+		return internalerrors.ErrParsingForm
 	}
 
-	_ = w
-
-	return h.itemService.UpdateItem(r.Context(), item)
+	return h.itemService.Update(
+		r.Context(),
+		requests.UpdateItemRequest{
+			ID:          r.PathValue("id"),
+			Date:        r.FormValue("date"),
+			Formula:     r.FormValue("formula"),
+			CategoryID:  r.FormValue("category_id"),
+			Description: r.FormValue("description"),
+		},
+	)
 }
