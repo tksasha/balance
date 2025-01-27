@@ -185,9 +185,6 @@ func (s *ItemService) setCategory(
 	return nil
 }
 
-func (s *ItemService) setDescription(
-	item *models.Item,
-	value string,
-) {
+func (s *ItemService) setDescription(item *models.Item, value string) {
 	item.Description = value
 }

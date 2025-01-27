@@ -559,3 +559,48 @@ func TestItemService_Update(t *testing.T) { //nolint:funlen,maintidx
 		assert.NilError(t, err)
 	})
 }
+
+func TestItemService_Delete(t *testing.T) {
+	controller := gomock.NewController(t)
+
+	itemRepository := mocksforservices.NewMockItemRepository(controller)
+	categoryRepository := mocksforservices.NewMockCategoryRepository(controller)
+
+	service := services.NewItemService(itemRepository, categoryRepository)
+
+	ctx := context.Background()
+
+	t.Run("when id is blank, it should return error", func(t *testing.T) {
+		err := service.Delete(ctx, "")
+
+		assert.Error(t, err, "failed to find resource")
+	})
+
+	t.Run("when id is zero, it should return error", func(t *testing.T) {
+		err := service.Delete(ctx, "0")
+
+		assert.Error(t, err, "failed to find resource")
+	})
+
+	t.Run("when delete category returns error, it should return error", func(t *testing.T) {
+		itemRepository.
+			EXPECT().
+			Delete(ctx, 2847).
+			Return(errors.New("delete category error"))
+
+		err := service.Delete(ctx, "2847")
+
+		assert.Error(t, err, "delete category error")
+	})
+
+	t.Run("when delete category does not return error, it should return nil", func(t *testing.T) {
+		itemRepository.
+			EXPECT().
+			Delete(ctx, 2847).
+			Return(nil)
+
+		err := service.Delete(ctx, "2847")
+
+		assert.NilError(t, err)
+	})
+}
