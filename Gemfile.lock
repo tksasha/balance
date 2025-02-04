@@ -394,6 +394,7 @@ GEM
       base64
       websocket-extensions (>= 0.1.0)
     websocket-extensions (0.1.5)
+    yard (0.9.37)
     zeitwerk (2.7.1)
 
 PLATFORMS
@@ -441,9 +442,10 @@ DEPENDENCIES
   sprockets-rails
   sqlite3
   uglifier
+  yard
 
 RUBY VERSION
    ruby 3.3.1p55
 
 BUNDLED WITH
-   2.6.2
+   2.6.3
