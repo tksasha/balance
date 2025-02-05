@@ -24,7 +24,7 @@ func TestItemService_Create(t *testing.T) { //nolint:funlen
 
 	ctx := context.Background()
 
-	t.Run("when date is blank, it should return error", func(t *testing.T) {
+	t.Run("returns error when date is blank", func(t *testing.T) {
 		request := requests.CreateItemRequest{
 			Date:       "",
 			Formula:    "2+2",
@@ -46,7 +46,7 @@ func TestItemService_Create(t *testing.T) { //nolint:funlen
 		assert.Error(t, err, "date: is required")
 	})
 
-	t.Run("when date is invalid, it should return error", func(t *testing.T) {
+	t.Run("returns error when date is invalid", func(t *testing.T) {
 		request := requests.CreateItemRequest{
 			Date:       "abc",
 			Formula:    "2+2",
@@ -68,7 +68,7 @@ func TestItemService_Create(t *testing.T) { //nolint:funlen
 		assert.Error(t, err, "date: is invalid")
 	})
 
-	t.Run("when formula is blank, it should return error", func(t *testing.T) {
+	t.Run("returns error when formula is blank", func(t *testing.T) {
 		request := requests.CreateItemRequest{
 			Date:       "2025-01-23",
 			Formula:    "",
@@ -90,7 +90,7 @@ func TestItemService_Create(t *testing.T) { //nolint:funlen
 		assert.Error(t, err, "sum: is required")
 	})
 
-	t.Run("when formula is invalid, it should return error", func(t *testing.T) {
+	t.Run("returns error when formula is invalid", func(t *testing.T) {
 		request := requests.CreateItemRequest{
 			Date:       "2025-01-23",
 			Formula:    "abc",
@@ -112,7 +112,7 @@ func TestItemService_Create(t *testing.T) { //nolint:funlen
 		assert.Error(t, err, "sum: is invalid")
 	})
 
-	t.Run("when category_id is blank, it should return error", func(t *testing.T) {
+	t.Run("returns error when category_id is blank", func(t *testing.T) {
 		request := requests.CreateItemRequest{
 			Date:       "2025-01-23",
 			Formula:    "42.69+69.42",
@@ -124,7 +124,7 @@ func TestItemService_Create(t *testing.T) { //nolint:funlen
 		assert.Error(t, err, "category: is required")
 	})
 
-	t.Run("when category_id is invalid, it should return error", func(t *testing.T) {
+	t.Run("returns error when category_id is invalid", func(t *testing.T) {
 		request := requests.CreateItemRequest{
 			Date:       "2025-01-23",
 			Formula:    "42.69+69.42",
@@ -136,7 +136,7 @@ func TestItemService_Create(t *testing.T) { //nolint:funlen
 		assert.Error(t, err, "category: is invalid")
 	})
 
-	t.Run("when find category by id returns error, it should return error", func(t *testing.T) {
+	t.Run("returns error when find by id fails", func(t *testing.T) {
 		request := requests.CreateItemRequest{
 			Date:       "2025-01-23",
 			Formula:    "42.69+69.42",
@@ -153,7 +153,7 @@ func TestItemService_Create(t *testing.T) { //nolint:funlen
 		assert.Error(t, err, "find category by id error")
 	})
 
-	t.Run("when create item returns error, it should return error", func(t *testing.T) {
+	t.Run("returns error when create fails", func(t *testing.T) {
 		request := requests.CreateItemRequest{
 			Date:        "2025-01-23",
 			Formula:     "42.69+69.42",
@@ -190,7 +190,7 @@ func TestItemService_Create(t *testing.T) { //nolint:funlen
 		assert.Error(t, err, "create item error")
 	})
 
-	t.Run("when create item doesn't return error, it should create item", func(t *testing.T) {
+	t.Run("creates successfully", func(t *testing.T) {
 		request := requests.CreateItemRequest{
 			Date:        "2025-01-23",
 			Formula:     "42.69+69.42",
@@ -238,7 +238,7 @@ func TestItemService_Update(t *testing.T) { //nolint:funlen,maintidx
 
 	ctx := context.Background()
 
-	t.Run("when id is not a digit, it should return error", func(t *testing.T) {
+	t.Run("returns error when id is invalid", func(t *testing.T) {
 		request := requests.UpdateItemRequest{
 			ID: "abc",
 		}
@@ -248,7 +248,7 @@ func TestItemService_Update(t *testing.T) { //nolint:funlen,maintidx
 		assert.Error(t, err, "failed to find resource")
 	})
 
-	t.Run("when item was not found by id, it should return error", func(t *testing.T) {
+	t.Run("returns error when item doesn't exist", func(t *testing.T) {
 		request := requests.UpdateItemRequest{
 			ID: "1027",
 		}
@@ -263,7 +263,7 @@ func TestItemService_Update(t *testing.T) { //nolint:funlen,maintidx
 		assert.Error(t, err, "failed to find resource")
 	})
 
-	t.Run("when find item by id returns error, it should return error", func(t *testing.T) {
+	t.Run("returns error when find by id fails", func(t *testing.T) {
 		request := requests.UpdateItemRequest{
 			ID: "1049",
 		}
@@ -275,10 +275,10 @@ func TestItemService_Update(t *testing.T) { //nolint:funlen,maintidx
 
 		err := service.Update(ctx, request)
 
-		assert.Error(t, err, "find item by id error")
+		assert.Error(t, err, "failed to find resource")
 	})
 
-	t.Run("when date is blank, it should return error", func(t *testing.T) {
+	t.Run("returns error when date is blank", func(t *testing.T) {
 		request := requests.UpdateItemRequest{
 			ID:         "1051",
 			Date:       "",
@@ -308,7 +308,7 @@ func TestItemService_Update(t *testing.T) { //nolint:funlen,maintidx
 		assert.Error(t, err, "date: is required")
 	})
 
-	t.Run("when date is invalid, it should return error", func(t *testing.T) {
+	t.Run("returns error when date is invalid", func(t *testing.T) {
 		request := requests.UpdateItemRequest{
 			ID:         "1051",
 			Date:       "abc",
@@ -338,7 +338,7 @@ func TestItemService_Update(t *testing.T) { //nolint:funlen,maintidx
 		assert.Error(t, err, "date: is invalid")
 	})
 
-	t.Run("when formula is blank, it should return error", func(t *testing.T) {
+	t.Run("returns error when formula is blank", func(t *testing.T) {
 		request := requests.UpdateItemRequest{
 			ID:         "1051",
 			Date:       "2025-01-25",
@@ -368,7 +368,7 @@ func TestItemService_Update(t *testing.T) { //nolint:funlen,maintidx
 		assert.Error(t, err, "sum: is required")
 	})
 
-	t.Run("when formula is invalid, it should return error", func(t *testing.T) {
+	t.Run("returns error when formula is invalid", func(t *testing.T) {
 		request := requests.UpdateItemRequest{
 			ID:         "1051",
 			Date:       "2025-01-25",
@@ -398,7 +398,7 @@ func TestItemService_Update(t *testing.T) { //nolint:funlen,maintidx
 		assert.Error(t, err, "sum: is invalid")
 	})
 
-	t.Run("when category_id is blank, it should return error", func(t *testing.T) {
+	t.Run("returns error when category_id is blank", func(t *testing.T) {
 		request := requests.UpdateItemRequest{
 			ID:         "1051",
 			Date:       "2025-01-25",
@@ -418,7 +418,7 @@ func TestItemService_Update(t *testing.T) { //nolint:funlen,maintidx
 		assert.Error(t, err, "category: is required")
 	})
 
-	t.Run("when category_id is invalid, it should return error", func(t *testing.T) {
+	t.Run("returns error when category_id is invalid", func(t *testing.T) {
 		request := requests.UpdateItemRequest{
 			ID:         "1051",
 			Date:       "2025-01-25",
@@ -438,7 +438,7 @@ func TestItemService_Update(t *testing.T) { //nolint:funlen,maintidx
 		assert.Error(t, err, "category: is invalid")
 	})
 
-	t.Run("when find category by id returns error, it should return error", func(t *testing.T) {
+	t.Run("returns error when find category fails", func(t *testing.T) {
 		request := requests.UpdateItemRequest{
 			ID:         "1051",
 			Date:       "2025-01-25",
@@ -463,7 +463,7 @@ func TestItemService_Update(t *testing.T) { //nolint:funlen,maintidx
 		assert.Error(t, err, "find category by id error")
 	})
 
-	t.Run("when update category returns error, it should return error", func(t *testing.T) {
+	t.Run("returns error when update fails", func(t *testing.T) {
 		request := requests.UpdateItemRequest{
 			ID:          "1051",
 			Date:        "2025-01-25",
@@ -511,7 +511,7 @@ func TestItemService_Update(t *testing.T) { //nolint:funlen,maintidx
 		assert.Error(t, err, "update category error")
 	})
 
-	t.Run("when update category doesn't return error, it should return nil", func(t *testing.T) {
+	t.Run("updates successfully", func(t *testing.T) {
 		request := requests.UpdateItemRequest{
 			ID:          "1051",
 			Date:        "2025-01-25",

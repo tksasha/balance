@@ -2,15 +2,12 @@ package services
 
 import (
 	"context"
-	"errors"
 	"strconv"
-	"time"
 
 	internalerrors "github.com/tksasha/balance/internal/errors"
 	"github.com/tksasha/balance/internal/models"
 	"github.com/tksasha/balance/internal/requests"
-	"github.com/tksasha/balance/pkg/validationerror"
-	"github.com/tksasha/calculator"
+	"github.com/tksasha/balance/pkg/validation"
 )
 
 type ItemService struct {
@@ -26,21 +23,23 @@ func NewItemService(itemRepository ItemRepository, categoryRepository CategoryRe
 }
 
 func (s *ItemService) Create(ctx context.Context, request requests.CreateItemRequest) (*models.Item, error) {
-	item := &models.Item{}
-
-	validationErrors := validationerror.New()
-
-	s.setDate(item, request.Date, validationErrors)
-	s.setSum(item, request.Formula, validationErrors)
-
-	if err := s.setCategory(ctx, item, request.CategoryID, validationErrors); err != nil {
-		return item, err
+	item := &models.Item{
+		Formula:     request.Formula,
+		Description: request.Description,
 	}
 
-	s.setDescription(item, request.Description)
+	validate := validation.New()
 
-	if validationErrors.Exists() {
-		return item, validationErrors
+	item.Date = validate.Date("date", request.Date)
+
+	item.Sum = validate.Formula("sum", item.Formula)
+
+	if err := s.setCategory(ctx, item, request.CategoryID, validate); err != nil {
+		return nil, err
+	}
+
+	if validate.HasErrors() {
+		return nil, validate.Errors
 	}
 
 	if err := s.itemRepository.Create(ctx, item); err != nil {
@@ -74,33 +73,27 @@ func (s *ItemService) GetItem(ctx context.Context, input string) (*models.Item, 
 }
 
 func (s *ItemService) Update(ctx context.Context, request requests.UpdateItemRequest) error {
-	id, err := strconv.Atoi(request.ID)
+	item, err := s.findByID(ctx, request.ID)
 	if err != nil {
 		return internalerrors.ErrResourceNotFound
 	}
 
-	item, err := s.itemRepository.FindByID(ctx, id)
-	if err != nil {
-		if errors.Is(err, internalerrors.ErrRecordNotFound) {
-			return internalerrors.ErrResourceNotFound
-		}
+	validate := validation.New()
 
+	item.Date = validate.Date("date", request.Date)
+
+	item.Formula = request.Formula
+
+	item.Sum = validate.Formula("sum", item.Formula)
+
+	if err := s.setCategory(ctx, item, request.CategoryID, validate); err != nil {
 		return err
 	}
 
-	validationErrors := validationerror.New()
+	item.Description = request.Description
 
-	s.setDate(item, request.Date, validationErrors)
-	s.setSum(item, request.Formula, validationErrors)
-
-	if err := s.setCategory(ctx, item, request.CategoryID, validationErrors); err != nil {
-		return err
-	}
-
-	s.setDescription(item, request.Description)
-
-	if validationErrors.Exists() {
-		return validationErrors
+	if validate.HasErrors() {
+		return validate.Errors
 	}
 
 	return s.itemRepository.Update(ctx, item)
@@ -115,67 +108,19 @@ func (s *ItemService) Delete(ctx context.Context, input string) error {
 	return s.itemRepository.Delete(ctx, id)
 }
 
-func (s *ItemService) setDate(
-	item *models.Item,
-	value string,
-	validationErrors validationerror.ValidationError,
-) {
-	if value == "" {
-		validationErrors.Set("date", validationerror.IsRequired)
-
-		return
-	}
-
-	date, err := time.Parse(time.DateOnly, value)
-	if err != nil {
-		validationErrors.Set("date", validationerror.IsInvalid)
-	}
-
-	item.Date = date
-}
-
-func (s *ItemService) setSum(
-	item *models.Item,
-	value string,
-	validationErrors validationerror.ValidationError,
-) {
-	if value == "" {
-		validationErrors.Set("sum", validationerror.IsRequired)
-
-		return
-	}
-
-	sum, err := calculator.Calculate(value)
-	if err != nil {
-		validationErrors.Set("sum", validationerror.IsInvalid)
-	}
-
-	item.Formula = value
-	item.Sum = sum
-}
-
 func (s *ItemService) setCategory(
 	ctx context.Context,
 	item *models.Item,
-	value string,
-	validationErrors validationerror.ValidationError,
+	categoryID string,
+	validate *validation.Validation,
 ) error {
-	if value == "" {
-		validationErrors.Set("category", validationerror.IsRequired)
+	item.CategoryID = validate.Integer("category", categoryID)
 
+	if item.CategoryID == 0 {
 		return nil
 	}
 
-	categoryID, err := strconv.Atoi(value)
-	if err != nil {
-		validationErrors.Set("category", validationerror.IsInvalid)
-
-		return nil //nolint:nilerr
-	}
-
-	item.CategoryID = categoryID
-
-	category, err := s.categoryRepository.FindByID(ctx, categoryID)
+	category, err := s.categoryRepository.FindByID(ctx, item.CategoryID)
 	if err != nil {
 		return err
 	}
@@ -185,6 +130,11 @@ func (s *ItemService) setCategory(
 	return nil
 }
 
-func (s *ItemService) setDescription(item *models.Item, value string) {
-	item.Description = value
+func (s *ItemService) findByID(ctx context.Context, value string) (*models.Item, error) {
+	id, err := strconv.Atoi(value)
+	if err != nil {
+		return nil, err
+	}
+
+	return s.itemRepository.FindByID(ctx, id)
 }

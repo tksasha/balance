@@ -9,7 +9,6 @@ import (
 	"github.com/tksasha/balance/internal/db"
 	internalerrors "github.com/tksasha/balance/internal/errors"
 	"github.com/tksasha/balance/internal/models"
-	"github.com/tksasha/balance/pkg/currencies"
 )
 
 type CategoryRepository struct {
@@ -23,10 +22,7 @@ func NewCategoryRepository(db *db.DB) *CategoryRepository {
 }
 
 func (r *CategoryRepository) FindByID(ctx context.Context, id int) (*models.Category, error) {
-	currency, ok := ctx.Value(currencies.CurrencyContextValue{}).(currencies.Currency)
-	if !ok {
-		currency = currencies.DefaultCurrency
-	}
+	currency := getCurrencyFromContext(ctx)
 
 	query := `
 		SELECT id, name, income, visible, currency, supercategory
@@ -57,10 +53,7 @@ func (r *CategoryRepository) FindByID(ctx context.Context, id int) (*models.Cate
 }
 
 func (r *CategoryRepository) GetAll(ctx context.Context) (models.Categories, error) {
-	currency, ok := ctx.Value(currencies.CurrencyContextValue{}).(currencies.Currency)
-	if !ok {
-		currency = currencies.DefaultCurrency
-	}
+	currency := getCurrencyFromContext(ctx)
 
 	query := `
 		SELECT id, name, income, currency
@@ -100,10 +93,7 @@ func (r *CategoryRepository) GetAll(ctx context.Context) (models.Categories, err
 }
 
 func (r *CategoryRepository) Create(ctx context.Context, category *models.Category) error {
-	currency, ok := ctx.Value(currencies.CurrencyContextValue{}).(currencies.Currency)
-	if !ok {
-		currency = currencies.DefaultCurrency
-	}
+	currency := getCurrencyFromContext(ctx)
 
 	query := `
 		INSERT INTO categories (name, income, visible, currency, supercategory)
@@ -126,10 +116,7 @@ func (r *CategoryRepository) Create(ctx context.Context, category *models.Catego
 }
 
 func (r *CategoryRepository) FindByName(ctx context.Context, name string) (*models.Category, error) {
-	currency, ok := ctx.Value(currencies.CurrencyContextValue{}).(currencies.Currency)
-	if !ok {
-		currency = currencies.DefaultCurrency
-	}
+	currency := getCurrencyFromContext(ctx)
 
 	query := `
 		SELECT id, name, currency
@@ -155,10 +142,7 @@ func (r *CategoryRepository) FindByName(ctx context.Context, name string) (*mode
 }
 
 func (r *CategoryRepository) Update(ctx context.Context, category *models.Category) error {
-	currency, ok := ctx.Value(currencies.CurrencyContextValue{}).(currencies.Currency)
-	if !ok {
-		currency = currencies.DefaultCurrency
-	}
+	currency := getCurrencyFromContext(ctx)
 
 	query := `
 		UPDATE categories
@@ -183,10 +167,7 @@ func (r *CategoryRepository) Update(ctx context.Context, category *models.Catego
 }
 
 func (r *CategoryRepository) Delete(ctx context.Context, category *models.Category) error {
-	currency, ok := ctx.Value(currencies.CurrencyContextValue{}).(currencies.Currency)
-	if !ok {
-		currency = currencies.DefaultCurrency
-	}
+	currency := getCurrencyFromContext(ctx)
 
 	query := `
 		UPDATE categories

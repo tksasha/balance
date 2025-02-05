@@ -7,7 +7,7 @@ import (
 
 	internalerrors "github.com/tksasha/balance/internal/errors"
 	"github.com/tksasha/balance/internal/requests"
-	"github.com/tksasha/balance/pkg/validationerror"
+	"github.com/tksasha/balance/pkg/validation"
 )
 
 type CreateItemHandler struct {
@@ -30,10 +30,9 @@ func (h *CreateItemHandler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 			return
 		}
 
-		var validationErrors validationerror.ValidationError
-
-		if errors.As(err, &validationErrors) {
-			_, _ = w.Write([]byte("render form with errors"))
+		var verrors validation.Errors
+		if errors.As(err, &verrors) {
+			_, _ = w.Write([]byte(verrors.Error()))
 
 			return
 		}

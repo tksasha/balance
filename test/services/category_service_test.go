@@ -24,9 +24,10 @@ func TestCategoryService_Create(t *testing.T) { //nolint:funlen
 
 	ctx := context.Background()
 
-	t.Run("when category name is empty, it should return error", func(t *testing.T) {
+	t.Run("returns error when name is blank", func(t *testing.T) {
 		request := requests.CreateCategoryRequest{
-			Name: "",
+			Name:          "",
+			Supercategory: "59",
 		}
 
 		err := service.Create(ctx, request)
@@ -34,7 +35,7 @@ func TestCategoryService_Create(t *testing.T) { //nolint:funlen
 		assert.Error(t, err, "name: is required")
 	})
 
-	t.Run("when find category by name returns error, it should return error", func(t *testing.T) {
+	t.Run("returns error when find category by name fails", func(t *testing.T) {
 		request := requests.CreateCategoryRequest{
 			Name: "Miscellaneous",
 		}
@@ -49,9 +50,10 @@ func TestCategoryService_Create(t *testing.T) { //nolint:funlen
 		assert.Error(t, err, "find category by name error")
 	})
 
-	t.Run("when category name is not unique, it should return error", func(t *testing.T) {
+	t.Run("returns error when name already exists", func(t *testing.T) {
 		request := requests.CreateCategoryRequest{
-			Name: "Pharmaceutical",
+			Name:          "Pharmaceutical",
+			Supercategory: "59",
 		}
 
 		category := &models.Category{
@@ -69,7 +71,7 @@ func TestCategoryService_Create(t *testing.T) { //nolint:funlen
 		assert.Error(t, err, "name: already exists")
 	})
 
-	t.Run("when supercategory is invalid, it should return error", func(t *testing.T) {
+	t.Run("returns error when supercategory is invalid", func(t *testing.T) {
 		request := requests.CreateCategoryRequest{
 			Name:          "Miscellaneous",
 			Supercategory: "abc",
@@ -78,20 +80,22 @@ func TestCategoryService_Create(t *testing.T) { //nolint:funlen
 		categoryRepository.
 			EXPECT().
 			FindByName(ctx, "Miscellaneous").
-			Return(nil, nil)
+			Return(nil, internalerrors.ErrRecordNotFound)
 
 		err := service.Create(ctx, request)
 
 		assert.Error(t, err, "supercategory: is invalid")
 	})
 
-	t.Run("when create category returns error, it should return error", func(t *testing.T) {
+	t.Run("returns error when create fails", func(t *testing.T) {
 		request := requests.CreateCategoryRequest{
-			Name: "Confectionery",
+			Name:          "Confectionery",
+			Supercategory: "58",
 		}
 
 		category := &models.Category{
-			Name: "Confectionery",
+			Name:          "Confectionery",
+			Supercategory: 58,
 		}
 
 		categoryRepository.
@@ -109,7 +113,7 @@ func TestCategoryService_Create(t *testing.T) { //nolint:funlen
 		assert.Error(t, err, "create category error")
 	})
 
-	t.Run("when create category does not return error, it should return nil", func(t *testing.T) {
+	t.Run("creates successfully", func(t *testing.T) {
 		request := requests.CreateCategoryRequest{
 			Name:          "Haberdashery",
 			Income:        "true",
@@ -219,7 +223,7 @@ func TestCategoryService_Update(t *testing.T) { //nolint:funlen
 
 	ctx := context.Background()
 
-	t.Run("when category name is blank, it should return error", func(t *testing.T) {
+	t.Run("returns error when name is blank", func(t *testing.T) {
 		category := &models.Category{
 			Name: "",
 		}
@@ -229,7 +233,7 @@ func TestCategoryService_Update(t *testing.T) { //nolint:funlen
 		assert.Error(t, err, "name: is required")
 	})
 
-	t.Run("when find category by name returns error, it should return error", func(t *testing.T) {
+	t.Run("returns error when find by name fails", func(t *testing.T) {
 		category := &models.Category{
 			Name: "Entrepreneurship",
 		}
@@ -244,7 +248,7 @@ func TestCategoryService_Update(t *testing.T) { //nolint:funlen
 		assert.Error(t, err, "find category by name error")
 	})
 
-	t.Run("when category already exists, it should return error", func(t *testing.T) {
+	t.Run("returns error when name already exists", func(t *testing.T) {
 		categoryToUpdate := &models.Category{
 			ID:   1030,
 			Name: "Beverages",
@@ -265,7 +269,7 @@ func TestCategoryService_Update(t *testing.T) { //nolint:funlen
 		assert.Error(t, err, "name: already exists")
 	})
 
-	t.Run("when update category returns error, it should return error", func(t *testing.T) {
+	t.Run("returns error when update fails", func(t *testing.T) {
 		category := &models.Category{
 			Name: "Miscellaneous",
 		}
@@ -285,7 +289,7 @@ func TestCategoryService_Update(t *testing.T) { //nolint:funlen
 		assert.Error(t, err, "update category error")
 	})
 
-	t.Run("when update category does not return error, it should return nil", func(t *testing.T) {
+	t.Run("updates successfully", func(t *testing.T) {
 		category := &models.Category{
 			Name: "Stationery",
 		}

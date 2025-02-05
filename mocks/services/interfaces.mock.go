@@ -223,3 +223,56 @@ func (mr *MockCategoryRepositoryMockRecorder) Update(ctx, category any) *gomock.
 	mr.mock.ctrl.T.Helper()
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "Update", reflect.TypeOf((*MockCategoryRepository)(nil).Update), ctx, category)
 }
+
+// MockCashRepository is a mock of CashRepository interface.
+type MockCashRepository struct {
+	ctrl     *gomock.Controller
+	recorder *MockCashRepositoryMockRecorder
+	isgomock struct{}
+}
+
+// MockCashRepositoryMockRecorder is the mock recorder for MockCashRepository.
+type MockCashRepositoryMockRecorder struct {
+	mock *MockCashRepository
+}
+
+// NewMockCashRepository creates a new mock instance.
+func NewMockCashRepository(ctrl *gomock.Controller) *MockCashRepository {
+	mock := &MockCashRepository{ctrl: ctrl}
+	mock.recorder = &MockCashRepositoryMockRecorder{mock}
+	return mock
+}
+
+// EXPECT returns an object that allows the caller to indicate expected use.
+func (m *MockCashRepository) EXPECT() *MockCashRepositoryMockRecorder {
+	return m.recorder
+}
+
+// Create mocks base method.
+func (m *MockCashRepository) Create(ctx context.Context, cash *models.Cash) error {
+	m.ctrl.T.Helper()
+	ret := m.ctrl.Call(m, "Create", ctx, cash)
+	ret0, _ := ret[0].(error)
+	return ret0
+}
+
+// Create indicates an expected call of Create.
+func (mr *MockCashRepositoryMockRecorder) Create(ctx, cash any) *gomock.Call {
+	mr.mock.ctrl.T.Helper()
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "Create", reflect.TypeOf((*MockCashRepository)(nil).Create), ctx, cash)
+}
+
+// FindByName mocks base method.
+func (m *MockCashRepository) FindByName(ctx context.Context, name string) (*models.Cash, error) {
+	m.ctrl.T.Helper()
+	ret := m.ctrl.Call(m, "FindByName", ctx, name)
+	ret0, _ := ret[0].(*models.Cash)
+	ret1, _ := ret[1].(error)
+	return ret0, ret1
+}
+
+// FindByName indicates an expected call of FindByName.
+func (mr *MockCashRepositoryMockRecorder) FindByName(ctx, name any) *gomock.Call {
+	mr.mock.ctrl.T.Helper()
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "FindByName", reflect.TypeOf((*MockCashRepository)(nil).FindByName), ctx, name)
+}

@@ -3,12 +3,11 @@ package services
 import (
 	"context"
 	"errors"
-	"strconv"
 
 	internalerrors "github.com/tksasha/balance/internal/errors"
 	"github.com/tksasha/balance/internal/models"
 	"github.com/tksasha/balance/internal/requests"
-	"github.com/tksasha/balance/pkg/validationerror"
+	"github.com/tksasha/balance/pkg/validation"
 )
 
 type CategoryService struct {
@@ -22,28 +21,29 @@ func NewCategoryService(categoryRepository CategoryRepository) *CategoryService 
 }
 
 func (s *CategoryService) Create(ctx context.Context, request requests.CreateCategoryRequest) error {
-	category := &models.Category{}
+	category := &models.Category{
+		Name: request.Name,
+	}
 
-	s.setIncome(request, category)
-	s.setVisible(request, category)
+	validate := validation.New()
 
-	validationErrors := validationerror.New()
+	validate.Presence("name", category.Name)
 
-	if err := s.setName(ctx, request, category, validationErrors); err != nil {
+	if err := s.nameAlreadyExists(ctx, category.Name, 0, validate); err != nil {
 		return err
 	}
 
-	s.setSupercategory(request, category, validationErrors)
+	category.Supercategory = validate.Integer("supercategory", request.Supercategory)
 
-	if validationErrors.Exists() {
-		return validationErrors
+	category.Income = validate.Boolean("income", request.Income)
+
+	category.Visible = validate.Boolean("visible", request.Visible)
+
+	if validate.HasErrors() {
+		return validate.Errors
 	}
 
-	if err := s.categoryRepository.Create(ctx, category); err != nil {
-		return err
-	}
-
-	return nil
+	return s.categoryRepository.Create(ctx, category)
 }
 
 func (s *CategoryService) GetAll(ctx context.Context) (models.Categories, error) {
@@ -63,86 +63,49 @@ func (s *CategoryService) FindByID(ctx context.Context, id int) (*models.Categor
 	return category, nil
 }
 
-func (s *CategoryService) Update(ctx context.Context, categoryToUpdate *models.Category) error {
-	validationError := validationerror.New()
+func (s *CategoryService) Update(ctx context.Context, category *models.Category) error {
+	validate := validation.New()
 
-	if categoryToUpdate.Name == "" {
-		validationError.Set("name", validationerror.IsRequired)
-	} else {
-		categoryFound, err := s.categoryRepository.FindByName(ctx, categoryToUpdate.Name)
-		if err != nil && !errors.Is(err, internalerrors.ErrRecordNotFound) {
-			return err
-		}
+	validate.Presence("name", category.Name)
 
-		if categoryFound != nil && categoryFound.ID != categoryToUpdate.ID {
-			validationError.Set("name", validationerror.AlreadyExists)
-		}
+	if err := s.nameAlreadyExists(ctx, category.Name, category.ID, validate); err != nil {
+		return err
 	}
 
-	if validationError.Exists() {
-		return validationError
+	if validate.HasErrors() {
+		return validate.Errors
 	}
 
-	return s.categoryRepository.Update(ctx, categoryToUpdate)
+	return s.categoryRepository.Update(ctx, category)
 }
 
 func (s *CategoryService) Delete(ctx context.Context, category *models.Category) error {
 	return s.categoryRepository.Delete(ctx, category)
 }
 
-func (s *CategoryService) setIncome(
-	request requests.CreateCategoryRequest,
-	category *models.Category,
-) {
-	category.Income = request.Income == "true"
-}
-
-func (s *CategoryService) setVisible(
-	request requests.CreateCategoryRequest,
-	category *models.Category,
-) {
-	category.Visible = request.Visible == "true"
-}
-
-func (s *CategoryService) setName(
+func (s *CategoryService) nameAlreadyExists(
 	ctx context.Context,
-	request requests.CreateCategoryRequest,
-	category *models.Category,
-	validationErrors validationerror.ValidationError,
+	name string,
+	categoryID int,
+	validation *validation.Validation,
 ) error {
-	if request.Name == "" {
-		validationErrors.Set("name", validationerror.IsRequired)
-
+	if name == "" {
 		return nil
 	}
 
-	category.Name = request.Name
+	category, err := s.categoryRepository.FindByName(ctx, name)
 
-	category, err := s.categoryRepository.FindByName(ctx, category.Name)
-	if err != nil && !errors.Is(err, internalerrors.ErrRecordNotFound) {
+	if errors.Is(err, internalerrors.ErrRecordNotFound) {
+		return nil
+	}
+
+	if err != nil {
 		return err
 	}
 
-	if category != nil {
-		validationErrors.Set("name", validationerror.AlreadyExists)
+	if category.ID != categoryID {
+		validation.Set("name", AlreadyExists)
 	}
 
 	return nil
-}
-
-func (s *CategoryService) setSupercategory(
-	request requests.CreateCategoryRequest,
-	category *models.Category,
-	validationErrors validationerror.ValidationError,
-) {
-	if request.Supercategory == "" {
-		return
-	}
-
-	supercategory, err := strconv.Atoi(request.Supercategory)
-	if err != nil {
-		validationErrors.Set("supercategory", validationerror.IsInvalid)
-	}
-
-	category.Supercategory = supercategory
 }

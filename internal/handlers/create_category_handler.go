@@ -7,7 +7,7 @@ import (
 
 	internalerrors "github.com/tksasha/balance/internal/errors"
 	"github.com/tksasha/balance/internal/requests"
-	"github.com/tksasha/balance/pkg/validationerror"
+	"github.com/tksasha/balance/pkg/validation"
 )
 
 type CreateCategoryHandler struct {
@@ -22,9 +22,9 @@ func NewCreateCategoryHandler(categoryService CategoryService) *CreateCategoryHa
 
 func (h *CreateCategoryHandler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 	if err := h.handle(r); err != nil {
-		var validationError validationerror.ValidationError
-		if errors.As(err, &validationError) {
-			_, _ = w.Write([]byte(validationError.Error()))
+		var verrors validation.Errors
+		if errors.As(err, &verrors) {
+			_, _ = w.Write([]byte(verrors.Error()))
 
 			return
 		}

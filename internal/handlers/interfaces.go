@@ -22,3 +22,7 @@ type CategoryService interface {
 	Update(ctx context.Context, category *models.Category) error
 	Delete(ctx context.Context, category *models.Category) error
 }
+
+type CashService interface {
+	Create(ctx context.Context, request requests.CreateCashRequest) error
+}

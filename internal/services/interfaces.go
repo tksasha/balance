@@ -22,3 +22,8 @@ type CategoryRepository interface {
 	Update(ctx context.Context, category *models.Category) error
 	Delete(ctx context.Context, category *models.Category) error
 }
+
+type CashRepository interface {
+	Create(ctx context.Context, cash *models.Cash) error
+	FindByName(ctx context.Context, name string) (*models.Cash, error)
+}

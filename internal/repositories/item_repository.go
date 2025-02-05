@@ -10,7 +10,6 @@ import (
 	"github.com/tksasha/balance/internal/db"
 	internalerrors "github.com/tksasha/balance/internal/errors"
 	"github.com/tksasha/balance/internal/models"
-	"github.com/tksasha/balance/pkg/currencies"
 )
 
 type ItemRepository struct {
@@ -24,10 +23,7 @@ func NewItemRepository(db *db.DB) *ItemRepository {
 }
 
 func (r *ItemRepository) GetItems(ctx context.Context) (models.Items, error) {
-	currency, ok := ctx.Value(currencies.CurrencyContextValue{}).(currencies.Currency)
-	if !ok {
-		currency = currencies.DefaultCurrency
-	}
+	currency := getCurrencyFromContext(ctx)
 
 	query := `
 		SELECT
@@ -77,10 +73,7 @@ func (r *ItemRepository) GetItems(ctx context.Context) (models.Items, error) {
 }
 
 func (r *ItemRepository) Create(ctx context.Context, item *models.Item) error {
-	currency, ok := ctx.Value(currencies.CurrencyContextValue{}).(currencies.Currency)
-	if !ok {
-		currency = currencies.DefaultCurrency
-	}
+	currency := getCurrencyFromContext(ctx)
 
 	query := `
 		INSERT INTO items (
@@ -113,16 +106,18 @@ func (r *ItemRepository) Create(ctx context.Context, item *models.Item) error {
 }
 
 func (r *ItemRepository) FindByID(ctx context.Context, id int) (*models.Item, error) {
+	currency := getCurrencyFromContext(ctx)
+
 	query := `
 		SELECT id, date, sum, category_id, category_name, description
 		FROM items
-		WHERE items.id=? AND items.deleted_at IS NULL
+		WHERE items.id = ? AND items.deleted_at IS NULL AND currency = ?
 	`
 
 	item := &models.Item{}
 
 	if err := r.db.
-		QueryRowContext(ctx, query, id).
+		QueryRowContext(ctx, query, id, currency).
 		Scan(
 			&item.ID,
 			&item.Date,
@@ -142,20 +137,23 @@ func (r *ItemRepository) FindByID(ctx context.Context, id int) (*models.Item, er
 }
 
 func (r *ItemRepository) Update(ctx context.Context, item *models.Item) error {
+	currency := getCurrencyFromContext(ctx)
+
 	query := `
 		UPDATE items
-		SET date=?, formula=?, sum=?, category_id=?, category_name=?, description=?
-		WHERE id=?
+		SET date = ?, formula = ?, sum = ?, category_id = ?, category_name = ?, description = ?
+		WHERE id = ? AND deleted_at IS NULL AND currency = ?
 	`
 
 	result, err := r.db.ExecContext(ctx, query,
-		item.Date.Format(time.DateOnly),
+		item.GetDateAsString(),
 		item.Formula,
 		item.Sum,
 		item.CategoryID,
 		item.CategoryName,
 		item.Description,
 		item.ID,
+		currency,
 	)
 	if err != nil {
 		return err
@@ -174,9 +172,14 @@ func (r *ItemRepository) Update(ctx context.Context, item *models.Item) error {
 }
 
 func (r *ItemRepository) Delete(ctx context.Context, id int) error {
-	query := `UPDATE items SET deleted_at = ? WHERE id = ?`
+	currencies := getCurrencyFromContext(ctx)
 
-	result, err := r.db.ExecContext(ctx, query, time.Now().UTC(), id)
+	query := `
+		UPDATE items
+		SET deleted_at = ?
+		WHERE id = ? AND deleted_at IS NULL AND currency = ?`
+
+	result, err := r.db.ExecContext(ctx, query, time.Now().UTC(), id, currencies)
 	if err != nil {
 		return err
 	}

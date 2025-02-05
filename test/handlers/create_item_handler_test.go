@@ -36,7 +36,7 @@ func TestCreateItemHandler_ServeHTTP(t *testing.T) { //nolint:funlen
 
 	ctx := context.Background()
 
-	t.Run("when form parsing error is happened, it should respond with 400", func(t *testing.T) {
+	t.Run("responds with 400 when parse form fails", func(t *testing.T) {
 		cleanup(ctx, t, db)
 
 		request := newInvalidPostRequest(ctx, t, "/items")
@@ -48,7 +48,7 @@ func TestCreateItemHandler_ServeHTTP(t *testing.T) { //nolint:funlen
 		assert.Equal(t, http.StatusBadRequest, recorder.Code)
 	})
 
-	t.Run("when input data is invalid it should render form", func(t *testing.T) {
+	t.Run("renders form when input data is invalid", func(t *testing.T) {
 		cleanup(ctx, t, db)
 
 		request := newPostRequest(ctx, t, "/items", Params{"date": ""})
@@ -60,7 +60,7 @@ func TestCreateItemHandler_ServeHTTP(t *testing.T) { //nolint:funlen
 		assert.Equal(t, http.StatusOK, recorder.Code)
 	})
 
-	t.Run("when input data is valid, it should respond with 200", func(t *testing.T) {
+	t.Run("responds with 200 when there no errors", func(t *testing.T) {
 		cleanup(ctx, t, db)
 
 		createCategory(ctx, t, db,

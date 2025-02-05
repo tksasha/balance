@@ -210,3 +210,41 @@ func (mr *MockCategoryServiceMockRecorder) Update(ctx, category any) *gomock.Cal
 	mr.mock.ctrl.T.Helper()
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "Update", reflect.TypeOf((*MockCategoryService)(nil).Update), ctx, category)
 }
+
+// MockCashService is a mock of CashService interface.
+type MockCashService struct {
+	ctrl     *gomock.Controller
+	recorder *MockCashServiceMockRecorder
+	isgomock struct{}
+}
+
+// MockCashServiceMockRecorder is the mock recorder for MockCashService.
+type MockCashServiceMockRecorder struct {
+	mock *MockCashService
+}
+
+// NewMockCashService creates a new mock instance.
+func NewMockCashService(ctrl *gomock.Controller) *MockCashService {
+	mock := &MockCashService{ctrl: ctrl}
+	mock.recorder = &MockCashServiceMockRecorder{mock}
+	return mock
+}
+
+// EXPECT returns an object that allows the caller to indicate expected use.
+func (m *MockCashService) EXPECT() *MockCashServiceMockRecorder {
+	return m.recorder
+}
+
+// Create mocks base method.
+func (m *MockCashService) Create(ctx context.Context, request requests.CreateCashRequest) error {
+	m.ctrl.T.Helper()
+	ret := m.ctrl.Call(m, "Create", ctx, request)
+	ret0, _ := ret[0].(error)
+	return ret0
+}
+
+// Create indicates an expected call of Create.
+func (mr *MockCashServiceMockRecorder) Create(ctx, request any) *gomock.Call {
+	mr.mock.ctrl.T.Helper()
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "Create", reflect.TypeOf((*MockCashService)(nil).Create), ctx, request)
+}

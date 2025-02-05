@@ -15,13 +15,14 @@ type Routes struct {
 }
 
 func New(
-	indexPageHandler *handlers.IndexPageHandler,
-	createItemHandler *handlers.CreateItemHandler,
-	getItemsHandler *handlers.GetItemsHandler,
-	getItemHandler *handlers.GetItemHandler,
+	createCashHandler *handlers.CreateCashHandler,
 	createCategoryHandler *handlers.CreateCategoryHandler,
-	getCategoriesHandler *handlers.GetCategoriesHandler,
+	createItemHandler *handlers.CreateItemHandler,
 	editCategoryHandler *handlers.EditCategoryHandler,
+	getCategoriesHandler *handlers.GetCategoriesHandler,
+	getItemHandler *handlers.GetItemHandler,
+	getItemsHandler *handlers.GetItemsHandler,
+	indexPageHandler *handlers.IndexPageHandler,
 	updateCategoryHandler *handlers.UpdateCategoryHandler,
 ) *Routes {
 	mux := http.NewServeMux()
@@ -39,6 +40,8 @@ func New(
 	mux.Handle("GET /categories", getCategoriesHandler)
 	mux.Handle("GET /categories/{id}/edit", editCategoryHandler)
 	mux.Handle("PATCH /categories/{id}", updateCategoryHandler)
+
+	mux.Handle("POST /cash", createCashHandler)
 
 	return &Routes{
 		Mux: mux,
