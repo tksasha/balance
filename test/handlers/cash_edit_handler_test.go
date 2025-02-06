@@ -1,4 +1,4 @@
-package cash_test
+package handlers_test
 
 import (
 	"context"
@@ -8,7 +8,7 @@ import (
 	"testing"
 
 	"github.com/tksasha/balance/internal/db"
-	"github.com/tksasha/balance/internal/handlers/cash"
+	"github.com/tksasha/balance/internal/handlers"
 	"github.com/tksasha/balance/internal/models"
 	providers "github.com/tksasha/balance/internal/providers/test"
 	"github.com/tksasha/balance/internal/repositories"
@@ -18,7 +18,7 @@ import (
 	"gotest.tools/v3/assert"
 )
 
-func TestEdit(t *testing.T) { //nolint:funlen
+func TestCashEditHandler(t *testing.T) { //nolint:funlen
 	dbNameProvider := providers.NewDBNameProvider()
 
 	db := db.Open(dbNameProvider)
@@ -27,7 +27,7 @@ func TestEdit(t *testing.T) { //nolint:funlen
 
 	cashService := services.NewCashService(cashRepository)
 
-	mux := testutils.NewMux(t, "GET /cashes/{id}/edit", cash.NewEditHandler(cashService))
+	mux := testutils.NewMux(t, "GET /cashes/{id}/edit", handlers.NewCashEditHandler(cashService))
 
 	ctx := context.Background()
 

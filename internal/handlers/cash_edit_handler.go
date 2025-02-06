@@ -1,25 +1,24 @@
-package cash
+package handlers
 
 import (
 	"errors"
 	"net/http"
 
 	"github.com/tksasha/balance/internal/apperrors"
-	"github.com/tksasha/balance/internal/handlers"
 	"github.com/tksasha/balance/internal/models"
 )
 
-type EditHandler struct {
-	cashService handlers.CashService
+type CashEditHandler struct {
+	cashService CashService
 }
 
-func NewEditHandler(cashService handlers.CashService) *EditHandler {
-	return &EditHandler{
+func NewCashEditHandler(cashService CashService) *CashEditHandler {
+	return &CashEditHandler{
 		cashService: cashService,
 	}
 }
 
-func (h *EditHandler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
+func (h *CashEditHandler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 	cash, err := h.handle(r)
 	if err != nil {
 		if errors.Is(err, apperrors.ErrResourceNotFound) {
@@ -32,6 +31,6 @@ func (h *EditHandler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 	_, _ = w.Write([]byte(cash.Name))
 }
 
-func (h *EditHandler) handle(r *http.Request) (*models.Cash, error) {
+func (h *CashEditHandler) handle(r *http.Request) (*models.Cash, error) {
 	return h.cashService.FindByID(r.Context(), r.PathValue("id"))
 }

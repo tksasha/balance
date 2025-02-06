@@ -1,4 +1,4 @@
-package cash_test
+package handlers_test
 
 import (
 	"context"
@@ -8,7 +8,7 @@ import (
 	"testing"
 
 	"github.com/tksasha/balance/internal/db"
-	"github.com/tksasha/balance/internal/handlers/cash"
+	"github.com/tksasha/balance/internal/handlers"
 	"github.com/tksasha/balance/internal/middlewares"
 	providers "github.com/tksasha/balance/internal/providers/test"
 	"github.com/tksasha/balance/internal/repositories"
@@ -18,7 +18,7 @@ import (
 	"gotest.tools/v3/assert"
 )
 
-func TestCashCreate(t *testing.T) { //nolint:funlen
+func TestCashCreateHandler(t *testing.T) { //nolint:funlen
 	dbNameProvider := providers.NewDBNameProvider()
 
 	db := db.Open(dbNameProvider)
@@ -28,7 +28,7 @@ func TestCashCreate(t *testing.T) { //nolint:funlen
 	cashService := services.NewCashService(cashRepository)
 
 	middleware := middlewares.NewCurrencyMiddleware().Wrap(
-		cash.NewCreateHandler(cashService),
+		handlers.NewCashCreateHandler(cashService),
 	)
 
 	mux := http.NewServeMux()

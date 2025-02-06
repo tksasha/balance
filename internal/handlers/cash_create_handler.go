@@ -1,27 +1,26 @@
-package cash
+package handlers
 
 import (
 	"errors"
 	"net/http"
 
 	"github.com/tksasha/balance/internal/apperrors"
-	"github.com/tksasha/balance/internal/handlers"
 	"github.com/tksasha/balance/internal/models"
 	"github.com/tksasha/balance/internal/requests"
 	"github.com/tksasha/balance/pkg/validation"
 )
 
-type CreateHandler struct {
-	cashService handlers.CashService
+type CashCreateHandler struct {
+	cashService CashService
 }
 
-func NewCreateHandler(cashService handlers.CashService) *CreateHandler {
-	return &CreateHandler{
+func NewCashCreateHandler(cashService CashService) *CashCreateHandler {
+	return &CashCreateHandler{
 		cashService: cashService,
 	}
 }
 
-func (h *CreateHandler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
+func (h *CashCreateHandler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 	if _, err := h.handle(r); err != nil {
 		if errors.Is(err, apperrors.ErrParsingForm) {
 			http.Error(w, "Bad Request", http.StatusBadRequest)
@@ -40,7 +39,7 @@ func (h *CreateHandler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 	_, _ = w.Write([]byte("cash"))
 }
 
-func (h *CreateHandler) handle(r *http.Request) (*models.Cash, error) {
+func (h *CashCreateHandler) handle(r *http.Request) (*models.Cash, error) {
 	if err := r.ParseForm(); err != nil {
 		return nil, apperrors.ErrParsingForm
 	}

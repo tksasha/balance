@@ -7,7 +7,6 @@ import (
 	"github.com/tksasha/balance/internal/config"
 	"github.com/tksasha/balance/internal/db"
 	"github.com/tksasha/balance/internal/handlers"
-	"github.com/tksasha/balance/internal/handlers/cash"
 	"github.com/tksasha/balance/internal/providers"
 	"github.com/tksasha/balance/internal/repositories"
 	"github.com/tksasha/balance/internal/routes"
@@ -19,8 +18,8 @@ func InitializeServer() *server.Server {
 	wire.Build(
 		config.New,
 		db.Open,
-		cash.NewCreateHandler,
-		cash.NewEditHandler,
+		handlers.NewCashEditHandler,
+		handlers.NewCashCreateHandler,
 		handlers.NewCreateCategoryHandler,
 		handlers.NewCreateItemHandler,
 		handlers.NewEditCategoryHandler,

@@ -5,7 +5,6 @@ import (
 	"net/http"
 
 	"github.com/tksasha/balance/internal/handlers"
-	"github.com/tksasha/balance/internal/handlers/cash"
 )
 
 //go:embed assets
@@ -16,8 +15,8 @@ type Routes struct {
 }
 
 func New(
-	cashCreateHandler *cash.CreateHandler,
-	cashEditHandler *cash.EditHandler,
+	cashCreateHandler *handlers.CashCreateHandler,
+	cashEditHandler *handlers.CashEditHandler,
 	createCategoryHandler *handlers.CreateCategoryHandler,
 	createItemHandler *handlers.CreateItemHandler,
 	editCategoryHandler *handlers.EditCategoryHandler,
