@@ -8,6 +8,7 @@ import (
 
 	internalerrors "github.com/tksasha/balance/internal/errors"
 	"github.com/tksasha/balance/internal/models"
+	"github.com/tksasha/balance/pkg/validation"
 )
 
 type UpdateCategoryHandler struct {
@@ -25,6 +26,13 @@ func (h *UpdateCategoryHandler) ServeHTTP(w http.ResponseWriter, r *http.Request
 	if err != nil {
 		if errors.Is(err, internalerrors.ErrResourceNotFound) {
 			http.Error(w, "Resource Not Found", http.StatusNotFound)
+
+			return
+		}
+
+		var verrors validation.Errors
+		if errors.As(err, &verrors) {
+			_, _ = w.Write([]byte(verrors.Error()))
 
 			return
 		}
@@ -60,12 +68,14 @@ func (h *UpdateCategoryHandler) handle(r *http.Request) (*models.Category, error
 	category.Income = r.FormValue("income") == "true"
 	category.Visible = r.FormValue("visible") == "true"
 
-	supercategory, err := strconv.Atoi(r.FormValue("supercategory"))
-	if err != nil {
-		return nil, internalerrors.ErrParsingForm
-	}
+	if r.FormValue("supercategory") != "" {
+		supercategory, err := strconv.Atoi(r.FormValue("supercategory"))
+		if err != nil {
+			return nil, internalerrors.ErrParsingForm
+		}
 
-	category.Supercategory = supercategory
+		category.Supercategory = supercategory
+	}
 
 	if err := h.categoryService.Update(r.Context(), category); err != nil {
 		return category, err

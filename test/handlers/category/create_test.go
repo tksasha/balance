@@ -14,11 +14,12 @@ import (
 	"github.com/tksasha/balance/internal/repositories"
 	"github.com/tksasha/balance/internal/services"
 	"github.com/tksasha/balance/pkg/currencies"
+	"github.com/tksasha/balance/test/testutils"
 	"gotest.tools/v3/assert"
 	is "gotest.tools/v3/assert/cmp"
 )
 
-func TestCreateCategoryHandlerTest(t *testing.T) { //nolint:funlen
+func TestCreate(t *testing.T) { //nolint:funlen
 	dbNameProvider := providers.NewDBNameProvider()
 
 	db := db.Open(dbNameProvider)
@@ -36,8 +37,8 @@ func TestCreateCategoryHandlerTest(t *testing.T) { //nolint:funlen
 
 	ctx := context.Background()
 
-	t.Run("when input data is invalid, it should render validation errors", func(t *testing.T) {
-		request := newPostRequest(ctx, t, "/categories", Params{"name": ""})
+	t.Run("responds 200 on invalid input", func(t *testing.T) {
+		request := testutils.NewPostRequest(ctx, t, "/categories", testutils.Params{"name": ""})
 
 		recorder := httptest.NewRecorder()
 
@@ -52,11 +53,11 @@ func TestCreateCategoryHandlerTest(t *testing.T) { //nolint:funlen
 		assert.Assert(t, is.Contains(string(response), "name: is required"))
 	})
 
-	t.Run("when input data is valid, it should create category", func(t *testing.T) {
-		cleanup(ctx, t, db)
+	t.Run("responds 200 on successful create", func(t *testing.T) {
+		testutils.Cleanup(ctx, t, db)
 
-		request := newPostRequest(ctx, t, "/categories?currency=eur",
-			Params{
+		request := testutils.NewPostRequest(ctx, t, "/categories?currency=eur",
+			testutils.Params{
 				"name":          "Miscellaneous",
 				"income":        "true",
 				"visible":       "true",
@@ -76,7 +77,7 @@ func TestCreateCategoryHandlerTest(t *testing.T) { //nolint:funlen
 		assert.Equal(t, recorder.Code, http.StatusOK)
 		assert.Assert(t, is.Contains(string(response), "create category page"))
 
-		category := findCategoryByName(eurContext(ctx, t), t, db, "Miscellaneous")
+		category := testutils.FindCategoryByName(testutils.EURContext(ctx, t), t, db, "Miscellaneous")
 
 		assert.Equal(t, category.ID, 1)
 		assert.Equal(t, category.Name, "Miscellaneous")

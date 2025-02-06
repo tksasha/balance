@@ -14,10 +14,11 @@ import (
 	"github.com/tksasha/balance/internal/repositories"
 	"github.com/tksasha/balance/internal/services"
 	"github.com/tksasha/balance/pkg/currencies"
+	"github.com/tksasha/balance/test/testutils"
 	"gotest.tools/v3/assert"
 )
 
-func TestCreateItemHandler_ServeHTTP(t *testing.T) { //nolint:funlen
+func TestCreate(t *testing.T) { //nolint:funlen
 	dbNameProvider := providers.NewDBNameProvider()
 
 	db := db.Open(dbNameProvider)
@@ -36,10 +37,8 @@ func TestCreateItemHandler_ServeHTTP(t *testing.T) { //nolint:funlen
 
 	ctx := context.Background()
 
-	t.Run("responds with 400 when parse form fails", func(t *testing.T) {
-		cleanup(ctx, t, db)
-
-		request := newInvalidPostRequest(ctx, t, "/items")
+	t.Run("responds 400 on parse form fails", func(t *testing.T) {
+		request := testutils.NewInvalidPostRequest(ctx, t, "/items")
 
 		recorder := httptest.NewRecorder()
 
@@ -48,10 +47,10 @@ func TestCreateItemHandler_ServeHTTP(t *testing.T) { //nolint:funlen
 		assert.Equal(t, http.StatusBadRequest, recorder.Code)
 	})
 
-	t.Run("renders form when input data is invalid", func(t *testing.T) {
-		cleanup(ctx, t, db)
+	t.Run("renders errors on invalid input", func(t *testing.T) {
+		testutils.Cleanup(ctx, t, db)
 
-		request := newPostRequest(ctx, t, "/items", Params{"date": ""})
+		request := testutils.NewPostRequest(ctx, t, "/items", testutils.Params{"date": ""})
 
 		recorder := httptest.NewRecorder()
 
@@ -60,10 +59,10 @@ func TestCreateItemHandler_ServeHTTP(t *testing.T) { //nolint:funlen
 		assert.Equal(t, http.StatusOK, recorder.Code)
 	})
 
-	t.Run("responds with 200 when there no errors", func(t *testing.T) {
-		cleanup(ctx, t, db)
+	t.Run("responds 200 on succcessful create", func(t *testing.T) {
+		testutils.Cleanup(ctx, t, db)
 
-		createCategory(ctx, t, db,
+		testutils.CreateCategory(ctx, t, db,
 			&models.Category{
 				ID:       1101,
 				Name:     "Accoutrements",
@@ -71,14 +70,14 @@ func TestCreateItemHandler_ServeHTTP(t *testing.T) { //nolint:funlen
 			},
 		)
 
-		params := Params{
+		params := testutils.Params{
 			"date":        "2024-10-16",
 			"formula":     "42.69+69.42",
 			"category_id": "1101",
 			"description": "paper clips, notebooks, and pens",
 		}
 
-		request := newPostRequest(ctx, t, "/items?currency=usd", params)
+		request := testutils.NewPostRequest(ctx, t, "/items?currency=usd", params)
 
 		recorder := httptest.NewRecorder()
 
@@ -86,7 +85,7 @@ func TestCreateItemHandler_ServeHTTP(t *testing.T) { //nolint:funlen
 
 		assert.Equal(t, http.StatusOK, recorder.Code)
 
-		item := findItemByDate(usdContext(ctx, t), t, db, "2024-10-16")
+		item := testutils.FindItemByDate(testutils.USDContext(ctx, t), t, db, "2024-10-16")
 
 		assert.Equal(t, item.GetDateAsString(), "2024-10-16")
 		assert.Equal(t, item.CategoryID, 1101)

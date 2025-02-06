@@ -5,6 +5,7 @@ import (
 	"net/http"
 
 	"github.com/tksasha/balance/internal/handlers"
+	"github.com/tksasha/balance/internal/handlers/cash"
 )
 
 //go:embed assets
@@ -15,7 +16,7 @@ type Routes struct {
 }
 
 func New(
-	createCashHandler *handlers.CreateCashHandler,
+	cashCreateHandler *cash.CreateHandler,
 	createCategoryHandler *handlers.CreateCategoryHandler,
 	createItemHandler *handlers.CreateItemHandler,
 	editCategoryHandler *handlers.EditCategoryHandler,
@@ -41,7 +42,7 @@ func New(
 	mux.Handle("GET /categories/{id}/edit", editCategoryHandler)
 	mux.Handle("PATCH /categories/{id}", updateCategoryHandler)
 
-	mux.Handle("POST /cash", createCashHandler)
+	mux.Handle("POST /cash", cashCreateHandler)
 
 	return &Routes{
 		Mux: mux,

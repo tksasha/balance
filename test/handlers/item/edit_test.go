@@ -2,20 +2,21 @@ package handlers_test
 
 import (
 	"context"
-	"errors"
 	"net/http"
 	"net/http/httptest"
 	"testing"
 
+	internalerrors "github.com/tksasha/balance/internal/errors"
 	"github.com/tksasha/balance/internal/handlers"
 	"github.com/tksasha/balance/internal/middlewares"
 	mocksforhandlers "github.com/tksasha/balance/mocks/handlers"
 	"github.com/tksasha/balance/pkg/currencies"
+	"github.com/tksasha/balance/test/testutils"
 	"go.uber.org/mock/gomock"
 	"gotest.tools/v3/assert"
 )
 
-func TestGetItemHandler(t *testing.T) {
+func TestEdit(t *testing.T) {
 	controller := gomock.NewController(t)
 
 	itemService := mocksforhandlers.NewMockItemService(controller)
@@ -28,22 +29,21 @@ func TestGetItemHandler(t *testing.T) {
 
 	ctxWithValue := context.WithValue(ctx, currencies.CurrencyContextValue{}, currencies.USD)
 
-	t.Run("when get item by id returns an error, it should respond with 500 code", func(t *testing.T) {
+	mux := http.NewServeMux()
+	mux.Handle("GET /items/{id}/edit", middleware)
+
+	t.Run("responds 404 on no item found", func(t *testing.T) {
 		itemService.
 			EXPECT().
 			GetItem(ctxWithValue, "1514").
-			Return(nil, errors.New("get item by id error"))
+			Return(nil, internalerrors.ErrResourceNotFound)
 
-		request, err := http.NewRequestWithContext(ctx, http.MethodGet, "/items/1514?currency=usd", nil)
-		assert.NilError(t, err)
+		request := testutils.NewGetRequest(ctx, t, "/items/1514/edit?currency=usd")
 
-		route := http.NewServeMux()
-		route.Handle("GET /items/{id}", middleware)
+		recorder := httptest.NewRecorder()
 
-		response := httptest.NewRecorder()
+		mux.ServeHTTP(recorder, request)
 
-		route.ServeHTTP(response, request)
-
-		assert.Equal(t, http.StatusInternalServerError, response.Code)
+		assert.Equal(t, http.StatusNotFound, recorder.Code)
 	})
 }

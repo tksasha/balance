@@ -3,7 +3,6 @@ package handlers_test
 import (
 	"context"
 	"io"
-	"math/rand"
 	"net/http"
 	"net/http/httptest"
 	"strings"
@@ -17,10 +16,11 @@ import (
 	"github.com/tksasha/balance/internal/repositories"
 	"github.com/tksasha/balance/internal/services"
 	"github.com/tksasha/balance/pkg/currencies"
+	"github.com/tksasha/balance/test/testutils"
 	"gotest.tools/v3/assert"
 )
 
-func TestGetCategoriesHandler_GetCategories(t *testing.T) {
+func TestList(t *testing.T) {
 	db := db.Open(
 		providers.NewDBNameProvider(),
 	)
@@ -38,10 +38,10 @@ func TestGetCategoriesHandler_GetCategories(t *testing.T) {
 
 	ctx := context.Background()
 
-	t.Run("when there no categories, it should render empty widget", func(t *testing.T) {
-		cleanup(ctx, t, db)
+	t.Run("responds 200 on no categories found", func(t *testing.T) {
+		testutils.Cleanup(ctx, t, db)
 
-		request := newGetRequest(ctx, t, "/categories?currency=eur")
+		request := testutils.NewGetRequest(ctx, t, "/categories?currency=eur")
 
 		recorder := httptest.NewRecorder()
 
@@ -50,13 +50,13 @@ func TestGetCategoriesHandler_GetCategories(t *testing.T) {
 		assert.Equal(t, recorder.Code, http.StatusOK)
 	})
 
-	t.Run("when there are categories, it should render widget with those categories", func(t *testing.T) {
-		cleanup(ctx, t, db)
+	t.Run("responds 200 on categories found", func(t *testing.T) {
+		testutils.Cleanup(ctx, t, db)
 
-		for _, name := range []string{"category one", "category two"} {
-			createCategory(ctx, t, db,
+		for id, name := range map[int]string{1: "category one", 2: "category two"} {
+			testutils.CreateCategory(ctx, t, db,
 				&models.Category{
-					ID:       rand.Int(), //nolint:gosec
+					ID:       id,
 					Name:     name,
 					Currency: currencies.EUR,
 					Visible:  true,
@@ -64,7 +64,7 @@ func TestGetCategoriesHandler_GetCategories(t *testing.T) {
 			)
 		}
 
-		request := newGetRequest(ctx, t, "/categories?currency=eur")
+		request := testutils.NewGetRequest(ctx, t, "/categories?currency=eur")
 
 		recorder := httptest.NewRecorder()
 

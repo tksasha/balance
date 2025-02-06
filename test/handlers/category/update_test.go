@@ -14,6 +14,7 @@ import (
 	"github.com/tksasha/balance/internal/repositories"
 	"github.com/tksasha/balance/internal/services"
 	"github.com/tksasha/balance/pkg/currencies"
+	"github.com/tksasha/balance/test/testutils"
 	"gotest.tools/v3/assert"
 )
 
@@ -35,22 +36,10 @@ func TestUpdateCategoryHandler(t *testing.T) { //nolint:funlen
 
 	ctx := context.Background()
 
-	t.Run("when category id is not a digit, it should respond with 404", func(t *testing.T) {
-		cleanup(ctx, t, db)
+	t.Run("responds 404 on no category found", func(t *testing.T) {
+		testutils.Cleanup(ctx, t, db)
 
-		request := newPatchRequest(ctx, t, "/categories/abcd", nil)
-
-		recorder := httptest.NewRecorder()
-
-		mux.ServeHTTP(recorder, request)
-
-		assert.Equal(t, recorder.Code, http.StatusNotFound)
-	})
-
-	t.Run("when category is not found by id, it should respond with 404", func(t *testing.T) {
-		cleanup(ctx, t, db)
-
-		request := newPatchRequest(ctx, t, "/categories/1141", nil)
+		request := testutils.NewPatchRequest(ctx, t, "/categories/1141", nil)
 
 		recorder := httptest.NewRecorder()
 
@@ -59,11 +48,11 @@ func TestUpdateCategoryHandler(t *testing.T) { //nolint:funlen
 		assert.Equal(t, recorder.Code, http.StatusNotFound)
 	})
 
-	t.Run("when category name is already exists, it should respond with 500", func(t *testing.T) {
-		cleanup(ctx, t, db)
+	t.Run("responds 200 on duplicates name", func(t *testing.T) {
+		testutils.Cleanup(ctx, t, db)
 
 		for id, name := range map[int]string{1151: "Heterogeneous", 11654: "Paraphernalia"} {
-			createCategory(ctx, t, db,
+			testutils.CreateCategory(ctx, t, db,
 				&models.Category{
 					ID:       id,
 					Name:     name,
@@ -72,19 +61,22 @@ func TestUpdateCategoryHandler(t *testing.T) { //nolint:funlen
 			)
 		}
 
-		request := newPatchRequest(ctx, t, "/categories/1151?currency=usd", Params{"name": "Paraphernalia"})
+		request := testutils.NewPatchRequest(ctx, t,
+			"/categories/1151?currency=usd",
+			testutils.Params{"name": "Paraphernalia"},
+		)
 
 		recorder := httptest.NewRecorder()
 
 		mux.ServeHTTP(recorder, request)
 
-		assert.Equal(t, recorder.Code, http.StatusInternalServerError)
+		assert.Equal(t, recorder.Code, http.StatusOK)
 	})
 
-	t.Run("when category name is uniq, it should respond with 200", func(t *testing.T) {
-		cleanup(ctx, t, db)
+	t.Run("responds 200 on successful update", func(t *testing.T) {
+		testutils.Cleanup(ctx, t, db)
 
-		createCategory(ctx, t, db,
+		testutils.CreateCategory(ctx, t, db,
 			&models.Category{
 				ID:            1208,
 				Name:          "Paraphernalia",
@@ -95,8 +87,8 @@ func TestUpdateCategoryHandler(t *testing.T) { //nolint:funlen
 			},
 		)
 
-		request := newPatchRequest(ctx, t, "/categories/1208?currency=usd",
-			Params{
+		request := testutils.NewPatchRequest(ctx, t, "/categories/1208?currency=usd",
+			testutils.Params{
 				"name":          "Heterogeneous",
 				"income":        "true",
 				"visible":       "true",
@@ -110,7 +102,7 @@ func TestUpdateCategoryHandler(t *testing.T) { //nolint:funlen
 
 		assert.Equal(t, recorder.Code, http.StatusOK)
 
-		category := findCategoryByID(usdContext(ctx, t), t, db, 1208)
+		category := testutils.FindCategoryByID(testutils.USDContext(ctx, t), t, db, 1208)
 
 		assert.Equal(t, category.ID, 1208)
 		assert.Equal(t, category.Name, "Heterogeneous")

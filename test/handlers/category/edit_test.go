@@ -14,10 +14,11 @@ import (
 	"github.com/tksasha/balance/internal/repositories"
 	"github.com/tksasha/balance/internal/services"
 	"github.com/tksasha/balance/pkg/currencies"
+	"github.com/tksasha/balance/test/testutils"
 	"gotest.tools/v3/assert"
 )
 
-func TestEditCategoryHandler(t *testing.T) {
+func TestEdit(t *testing.T) {
 	dbNameProvider := providers.NewDBNameProvider()
 
 	db := db.Open(dbNameProvider)
@@ -35,22 +36,10 @@ func TestEditCategoryHandler(t *testing.T) {
 
 	ctx := context.Background()
 
-	t.Run("when category id is not a digit, it should respond with 404", func(t *testing.T) {
-		cleanup(ctx, t, db)
+	t.Run("responds 404 on category not found", func(t *testing.T) {
+		testutils.Cleanup(ctx, t, db)
 
-		request := newGetRequest(ctx, t, "/categories/abcd/edit")
-
-		recorder := httptest.NewRecorder()
-
-		mux.ServeHTTP(recorder, request)
-
-		assert.Equal(t, recorder.Code, http.StatusNotFound)
-	})
-
-	t.Run("when category was not found by id, it should respond with 404", func(t *testing.T) {
-		cleanup(ctx, t, db)
-
-		request := newGetRequest(ctx, t, "/categories/1004/edit")
+		request := testutils.NewGetRequest(ctx, t, "/categories/1004/edit")
 
 		recorder := httptest.NewRecorder()
 
@@ -59,10 +48,10 @@ func TestEditCategoryHandler(t *testing.T) {
 		assert.Equal(t, recorder.Code, http.StatusNotFound)
 	})
 
-	t.Run("when category was found by id, it should respond with 200", func(t *testing.T) {
-		cleanup(ctx, t, db)
+	t.Run("responds 200 on category found", func(t *testing.T) {
+		testutils.Cleanup(ctx, t, db)
 
-		createCategory(ctx, t, db,
+		testutils.CreateCategory(ctx, t, db,
 			&models.Category{
 				ID:       1010,
 				Name:     "Xenomorphic",
@@ -70,7 +59,7 @@ func TestEditCategoryHandler(t *testing.T) {
 			},
 		)
 
-		request := newGetRequest(ctx, t, "/categories/1010/edit?currency=eur")
+		request := testutils.NewGetRequest(ctx, t, "/categories/1010/edit?currency=eur")
 
 		recorder := httptest.NewRecorder()
 

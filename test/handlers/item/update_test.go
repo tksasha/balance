@@ -14,10 +14,11 @@ import (
 	"github.com/tksasha/balance/internal/repositories"
 	"github.com/tksasha/balance/internal/services"
 	"github.com/tksasha/balance/pkg/currencies"
+	"github.com/tksasha/balance/test/testutils"
 	"gotest.tools/v3/assert"
 )
 
-func TestUpdateItemHandler(t *testing.T) { //nolint:funlen
+func TestUpdate(t *testing.T) { //nolint:funlen
 	dbNameProvider := providers.NewDBNameProvider()
 
 	db := db.Open(dbNameProvider)
@@ -36,10 +37,10 @@ func TestUpdateItemHandler(t *testing.T) { //nolint:funlen
 	mux := http.NewServeMux()
 	mux.Handle("PATCH /items/{id}", middleware)
 
-	t.Run("when form data is invalid, it should respond with 400", func(t *testing.T) {
-		cleanup(ctx, t, db)
+	t.Run("responds 400 on invalid input", func(t *testing.T) {
+		testutils.Cleanup(ctx, t, db)
 
-		request := newInvalidPatchRequest(ctx, t, "/items/1138")
+		request := testutils.NewInvalidPatchRequest(ctx, t, "/items/1138")
 
 		recorder := httptest.NewRecorder()
 
@@ -48,10 +49,10 @@ func TestUpdateItemHandler(t *testing.T) { //nolint:funlen
 		assert.Equal(t, recorder.Code, http.StatusBadRequest)
 	})
 
-	t.Run("when item is not found, it should respond with 404", func(t *testing.T) {
-		cleanup(ctx, t, db)
+	t.Run("responds 404 on no item found", func(t *testing.T) {
+		testutils.Cleanup(ctx, t, db)
 
-		request := newPatchRequest(ctx, t, "/items/1218", Params{"date": "2025-01-25"})
+		request := testutils.NewPatchRequest(ctx, t, "/items/1218", testutils.Params{"date": "2025-01-25"})
 
 		recorder := httptest.NewRecorder()
 
@@ -60,10 +61,10 @@ func TestUpdateItemHandler(t *testing.T) { //nolint:funlen
 		assert.Equal(t, recorder.Code, http.StatusNotFound)
 	})
 
-	t.Run("when item is found and data is valid, it should respond with 200", func(t *testing.T) {
-		cleanup(ctx, t, db)
+	t.Run("responds 200 on successful update", func(t *testing.T) {
+		testutils.Cleanup(ctx, t, db)
 
-		createCategory(ctx, t, db,
+		testutils.CreateCategory(ctx, t, db,
 			&models.Category{
 				ID:       1148,
 				Name:     "Pharmaceutical",
@@ -71,7 +72,7 @@ func TestUpdateItemHandler(t *testing.T) { //nolint:funlen
 			},
 		)
 
-		createItem(ctx, t, db,
+		testutils.CreateItem(ctx, t, db,
 			&models.Item{
 				ID:         1143,
 				CategoryID: 1148,
@@ -79,8 +80,8 @@ func TestUpdateItemHandler(t *testing.T) { //nolint:funlen
 			},
 		)
 
-		request := newPatchRequest(ctx, t, "/items/1143?currency=eur",
-			Params{
+		request := testutils.NewPatchRequest(ctx, t, "/items/1143?currency=eur",
+			testutils.Params{
 				"date":        "2025-01-25",
 				"formula":     "24 + 11 + 49",
 				"category_id": "1148",
@@ -94,7 +95,7 @@ func TestUpdateItemHandler(t *testing.T) { //nolint:funlen
 
 		assert.Equal(t, recorder.Code, http.StatusOK)
 
-		item := findItemByDate(eurContext(ctx, t), t, db, "2025-01-25")
+		item := testutils.FindItemByDate(testutils.EURContext(ctx, t), t, db, "2025-01-25")
 
 		assert.Equal(t, item.ID, 1143)
 	})

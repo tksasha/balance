@@ -14,11 +14,12 @@ import (
 	"github.com/tksasha/balance/internal/models"
 	mocksforhandlers "github.com/tksasha/balance/mocks/handlers"
 	"github.com/tksasha/balance/pkg/currencies"
+	"github.com/tksasha/balance/test/testutils"
 	"go.uber.org/mock/gomock"
 	"gotest.tools/v3/assert"
 )
 
-func TestGetItemsHandler(t *testing.T) {
+func TestList(t *testing.T) {
 	controller := gomock.NewController(t)
 
 	itemService := mocksforhandlers.NewMockItemService(controller)
@@ -31,18 +32,20 @@ func TestGetItemsHandler(t *testing.T) {
 
 	ctxWithValue := context.WithValue(ctx, currencies.CurrencyContextValue{}, currencies.EUR)
 
-	t.Run("when GetItems returns an error, it should respond with 500 code", func(t *testing.T) {
+	mux := http.NewServeMux()
+	mux.Handle("GET /items", middleware)
+
+	t.Run("responds 500 on internal server error", func(t *testing.T) {
 		itemService.
 			EXPECT().
 			GetItems(ctxWithValue).
 			Return(nil, errors.New("get items error"))
 
-		request, err := http.NewRequestWithContext(ctx, http.MethodGet, "/items?currency=eur", nil)
-		assert.NilError(t, err)
+		request := testutils.NewGetRequest(ctx, t, "/items?currency=eur")
 
 		recorder := httptest.NewRecorder()
 
-		middleware.ServeHTTP(recorder, request)
+		mux.ServeHTTP(recorder, request)
 
 		body, err := io.ReadAll(recorder.Body)
 		assert.NilError(t, err)
@@ -51,18 +54,17 @@ func TestGetItemsHandler(t *testing.T) {
 		assert.Assert(t, strings.Contains(string(body), "Internal Server Error"))
 	})
 
-	t.Run("when GetItems doesn't return any error, it should respond with 200 code", func(t *testing.T) {
+	t.Run("responds 200 on items found", func(t *testing.T) {
 		itemService.
 			EXPECT().
 			GetItems(ctxWithValue).
 			Return(models.Items{}, nil)
 
-		request, err := http.NewRequestWithContext(ctx, http.MethodGet, "/items?currency=eur", nil)
-		assert.NilError(t, err)
+		request := testutils.NewGetRequest(ctx, t, "/items?currency=eur")
 
 		recorder := httptest.NewRecorder()
 
-		middleware.ServeHTTP(recorder, request)
+		mux.ServeHTTP(recorder, request)
 
 		assert.Equal(t, http.StatusOK, recorder.Code)
 	})

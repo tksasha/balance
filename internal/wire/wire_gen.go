@@ -10,6 +10,7 @@ import (
 	"github.com/tksasha/balance/internal/config"
 	"github.com/tksasha/balance/internal/db"
 	"github.com/tksasha/balance/internal/handlers"
+	"github.com/tksasha/balance/internal/handlers/cash"
 	"github.com/tksasha/balance/internal/providers"
 	"github.com/tksasha/balance/internal/repositories"
 	"github.com/tksasha/balance/internal/routes"
@@ -25,7 +26,7 @@ func InitializeServer() *server.Server {
 	dbDB := db.Open(dbNameProvider)
 	cashRepository := repositories.NewCashRepository(dbDB)
 	cashService := services.NewCashService(cashRepository)
-	createCashHandler := handlers.NewCreateCashHandler(cashService)
+	createHandler := cash.NewCreateHandler(cashService)
 	categoryRepository := repositories.NewCategoryRepository(dbDB)
 	categoryService := services.NewCategoryService(categoryRepository)
 	createCategoryHandler := handlers.NewCreateCategoryHandler(categoryService)
@@ -38,7 +39,7 @@ func InitializeServer() *server.Server {
 	getItemsHandler := handlers.NewGetItemsHandler(itemService)
 	indexPageHandler := handlers.NewIndexPageHandler(categoryService)
 	updateCategoryHandler := handlers.NewUpdateCategoryHandler(categoryService)
-	routesRoutes := routes.New(createCashHandler, createCategoryHandler, createItemHandler, editCategoryHandler, getCategoriesHandler, getItemHandler, getItemsHandler, indexPageHandler, updateCategoryHandler)
+	routesRoutes := routes.New(createHandler, createCategoryHandler, createItemHandler, editCategoryHandler, getCategoriesHandler, getItemHandler, getItemsHandler, indexPageHandler, updateCategoryHandler)
 	serverServer := server.New(configConfig, routesRoutes)
 	return serverServer
 }
