@@ -26,4 +26,5 @@ type CategoryRepository interface {
 type CashRepository interface {
 	Create(ctx context.Context, cash *models.Cash) error
 	FindByName(ctx context.Context, name string) (*models.Cash, error)
+	FindByID(ctx context.Context, id int) (*models.Cash, error)
 }

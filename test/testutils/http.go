@@ -7,6 +7,8 @@ import (
 	"net/url"
 	"strings"
 	"testing"
+
+	"github.com/tksasha/balance/internal/middlewares"
 )
 
 type Params map[string]string
@@ -92,4 +94,15 @@ func GetResponseBody(t *testing.T, reader io.Reader) string {
 	}
 
 	return string(body)
+}
+
+func NewMux(t *testing.T, pattern string, handler http.Handler) *http.ServeMux {
+	t.Helper()
+
+	handler = middlewares.NewCurrencyMiddleware().Wrap(handler)
+
+	mux := http.NewServeMux()
+	mux.Handle(pattern, handler)
+
+	return mux
 }

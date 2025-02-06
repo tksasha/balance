@@ -33,8 +33,26 @@ func FindCashByName(ctx context.Context, t *testing.T, db *db.DB, name string) *
 			&cash.Favorite,
 			&cash.DeletedAt,
 		); err != nil {
-		t.Fatalf("failed to find cash by name, error: %v", err)
+		t.Fatalf("failed to find cash by name: %v", err)
 	}
 
 	return cash
+}
+
+func CreateCash(ctx context.Context, t *testing.T, db *db.DB, cash *models.Cash) {
+	t.Helper()
+
+	if _, err := db.Connection.ExecContext(
+		ctx,
+		"INSERT INTO cashes(id, currency, formula, sum, name, supercategory, favorite) VALUES(?, ?, ?, ?, ?, ?, ?)",
+		cash.ID,
+		cash.Currency,
+		cash.Formula,
+		cash.Sum,
+		cash.Name,
+		cash.Supercategory,
+		cash.Favorite,
+	); err != nil {
+		t.Fatalf("failed to create cash: %v", err)
+	}
 }

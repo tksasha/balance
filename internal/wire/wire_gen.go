@@ -27,6 +27,7 @@ func InitializeServer() *server.Server {
 	cashRepository := repositories.NewCashRepository(dbDB)
 	cashService := services.NewCashService(cashRepository)
 	createHandler := cash.NewCreateHandler(cashService)
+	editHandler := cash.NewEditHandler(cashService)
 	categoryRepository := repositories.NewCategoryRepository(dbDB)
 	categoryService := services.NewCategoryService(categoryRepository)
 	createCategoryHandler := handlers.NewCreateCategoryHandler(categoryService)
@@ -39,7 +40,7 @@ func InitializeServer() *server.Server {
 	getItemsHandler := handlers.NewGetItemsHandler(itemService)
 	indexPageHandler := handlers.NewIndexPageHandler(categoryService)
 	updateCategoryHandler := handlers.NewUpdateCategoryHandler(categoryService)
-	routesRoutes := routes.New(createHandler, createCategoryHandler, createItemHandler, editCategoryHandler, getCategoriesHandler, getItemHandler, getItemsHandler, indexPageHandler, updateCategoryHandler)
+	routesRoutes := routes.New(createHandler, editHandler, createCategoryHandler, createItemHandler, editCategoryHandler, getCategoriesHandler, getItemHandler, getItemsHandler, indexPageHandler, updateCategoryHandler)
 	serverServer := server.New(configConfig, routesRoutes)
 	return serverServer
 }

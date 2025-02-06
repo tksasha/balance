@@ -1,4 +1,4 @@
-package services_test
+package cash_test
 
 import (
 	"context"
@@ -14,7 +14,7 @@ import (
 	"gotest.tools/v3/assert"
 )
 
-func TestCashService_Create(t *testing.T) { //nolint:funlen
+func TestCreate(t *testing.T) { //nolint:funlen
 	controller := gomock.NewController(t)
 
 	cashRepository := mocksforservices.NewMockCashRepository(controller)

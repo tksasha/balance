@@ -11,7 +11,7 @@ func Cleanup(ctx context.Context, t *testing.T, db *db.DB) {
 	t.Helper()
 
 	t.Cleanup(func() {
-		tables := []string{"items", "categories"}
+		tables := []string{"items", "categories", "cashes"}
 
 		for _, table := range tables {
 			if _, err := db.Connection.ExecContext(ctx, "DELETE FROM "+table); err != nil { //nolint:gosec

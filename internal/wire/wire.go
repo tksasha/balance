@@ -20,6 +20,7 @@ func InitializeServer() *server.Server {
 		config.New,
 		db.Open,
 		cash.NewCreateHandler,
+		cash.NewEditHandler,
 		handlers.NewCreateCategoryHandler,
 		handlers.NewCreateItemHandler,
 		handlers.NewEditCategoryHandler,

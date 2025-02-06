@@ -262,6 +262,21 @@ func (mr *MockCashRepositoryMockRecorder) Create(ctx, cash any) *gomock.Call {
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "Create", reflect.TypeOf((*MockCashRepository)(nil).Create), ctx, cash)
 }
 
+// FindByID mocks base method.
+func (m *MockCashRepository) FindByID(ctx context.Context, id int) (*models.Cash, error) {
+	m.ctrl.T.Helper()
+	ret := m.ctrl.Call(m, "FindByID", ctx, id)
+	ret0, _ := ret[0].(*models.Cash)
+	ret1, _ := ret[1].(error)
+	return ret0, ret1
+}
+
+// FindByID indicates an expected call of FindByID.
+func (mr *MockCashRepositoryMockRecorder) FindByID(ctx, id any) *gomock.Call {
+	mr.mock.ctrl.T.Helper()
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "FindByID", reflect.TypeOf((*MockCashRepository)(nil).FindByID), ctx, id)
+}
+
 // FindByName mocks base method.
 func (m *MockCashRepository) FindByName(ctx context.Context, name string) (*models.Cash, error) {
 	m.ctrl.T.Helper()

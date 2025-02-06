@@ -3,7 +3,9 @@ package services
 import (
 	"context"
 	"errors"
+	"strconv"
 
+	"github.com/tksasha/balance/internal/apperrors"
 	internalerrors "github.com/tksasha/balance/internal/errors"
 	"github.com/tksasha/balance/internal/models"
 	"github.com/tksasha/balance/internal/requests"
@@ -45,6 +47,22 @@ func (s *CashService) Create(ctx context.Context, request requests.CreateCashReq
 	}
 
 	return s.cashRepository.Create(ctx, cash)
+}
+
+func (s *CashService) FindByID(ctx context.Context, input string) (*models.Cash, error) {
+	id, err := strconv.Atoi(input)
+	if err != nil {
+		return nil, apperrors.ErrResourceNotFound
+	}
+
+	cash, err := s.cashRepository.FindByID(ctx, id)
+	if err != nil {
+		if errors.Is(err, apperrors.ErrRecordNotFound) {
+			return nil, apperrors.ErrResourceNotFound
+		}
+	}
+
+	return cash, nil
 }
 
 func (s *CashService) nameAlreadyExists(ctx context.Context, name string, validation *validation.Validation) error {
