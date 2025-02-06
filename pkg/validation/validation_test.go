@@ -28,7 +28,7 @@ func TestValidatePresence(t *testing.T) {
 	t.Run("add error for blank value", func(t *testing.T) {
 		validate := validation.New()
 
-		validate.Presence("name", "")
+		_ = validate.Presence("name", "")
 
 		assert.Error(t, validate.Errors, "name: is required")
 	})
@@ -36,22 +36,13 @@ func TestValidatePresence(t *testing.T) {
 	t.Run("passes when value is present", func(t *testing.T) {
 		validate := validation.New()
 
-		validate.Presence("name", "Bruce Wayne")
+		_ = validate.Presence("name", "Bruce Wayne")
 
 		assert.Assert(t, !validate.HasErrors())
 	})
 }
 
-func TestValidateInteger(t *testing.T) { //nolint:dupl
-	t.Run("add error for blank value", func(t *testing.T) {
-		validate := validation.New()
-
-		res := validate.Integer("age", "")
-
-		assert.Equal(t, res, 0)
-		assert.Error(t, validate.Errors, "age: is required")
-	})
-
+func TestValidateInteger(t *testing.T) {
 	t.Run("add error for invalid value", func(t *testing.T) {
 		validate := validation.New()
 
@@ -71,12 +62,13 @@ func TestValidateInteger(t *testing.T) { //nolint:dupl
 	})
 }
 
-func TestValidateFormula(t *testing.T) { //nolint:dupl
+func TestValidateFormula(t *testing.T) {
 	t.Run("add error for blank value", func(t *testing.T) {
 		validate := validation.New()
 
-		res := validate.Formula("formula", "")
+		formula, res := validate.Formula("formula", "")
 
+		assert.Equal(t, formula, "")
 		assert.Equal(t, res, 0.0)
 		assert.Error(t, validate.Errors, "formula: is required")
 	})
@@ -84,8 +76,9 @@ func TestValidateFormula(t *testing.T) { //nolint:dupl
 	t.Run("add error for invalid value", func(t *testing.T) {
 		validate := validation.New()
 
-		res := validate.Formula("formula", "abc")
+		formula, res := validate.Formula("formula", "abc")
 
+		assert.Equal(t, formula, "abc")
 		assert.Equal(t, res, 0.0)
 		assert.Error(t, validate.Errors, "formula: is invalid")
 	})
@@ -93,8 +86,9 @@ func TestValidateFormula(t *testing.T) { //nolint:dupl
 	t.Run("calculate result when value is valid", func(t *testing.T) {
 		validate := validation.New()
 
-		res := validate.Formula("formula", "2+3")
+		formula, res := validate.Formula("formula", "2+3")
 
+		assert.Equal(t, formula, "2+3")
 		assert.Equal(t, res, 5.0)
 		assert.Assert(t, !validate.HasErrors())
 	})

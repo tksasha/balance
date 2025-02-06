@@ -277,17 +277,31 @@ func (mr *MockCashRepositoryMockRecorder) FindByID(ctx, id any) *gomock.Call {
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "FindByID", reflect.TypeOf((*MockCashRepository)(nil).FindByID), ctx, id)
 }
 
-// FindByName mocks base method.
-func (m *MockCashRepository) FindByName(ctx context.Context, name string) (*models.Cash, error) {
+// NameExists mocks base method.
+func (m *MockCashRepository) NameExists(ctx context.Context, name string, id int) (bool, error) {
 	m.ctrl.T.Helper()
-	ret := m.ctrl.Call(m, "FindByName", ctx, name)
-	ret0, _ := ret[0].(*models.Cash)
+	ret := m.ctrl.Call(m, "NameExists", ctx, name, id)
+	ret0, _ := ret[0].(bool)
 	ret1, _ := ret[1].(error)
 	return ret0, ret1
 }
 
-// FindByName indicates an expected call of FindByName.
-func (mr *MockCashRepositoryMockRecorder) FindByName(ctx, name any) *gomock.Call {
+// NameExists indicates an expected call of NameExists.
+func (mr *MockCashRepositoryMockRecorder) NameExists(ctx, name, id any) *gomock.Call {
 	mr.mock.ctrl.T.Helper()
-	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "FindByName", reflect.TypeOf((*MockCashRepository)(nil).FindByName), ctx, name)
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "NameExists", reflect.TypeOf((*MockCashRepository)(nil).NameExists), ctx, name, id)
+}
+
+// Update mocks base method.
+func (m *MockCashRepository) Update(ctx context.Context, cash *models.Cash) error {
+	m.ctrl.T.Helper()
+	ret := m.ctrl.Call(m, "Update", ctx, cash)
+	ret0, _ := ret[0].(error)
+	return ret0
+}
+
+// Update indicates an expected call of Update.
+func (mr *MockCashRepositoryMockRecorder) Update(ctx, cash any) *gomock.Call {
+	mr.mock.ctrl.T.Helper()
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "Update", reflect.TypeOf((*MockCashRepository)(nil).Update), ctx, cash)
 }

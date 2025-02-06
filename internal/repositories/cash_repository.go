@@ -52,36 +52,32 @@ func (r *CashRepository) Create(ctx context.Context, cash *models.Cash) error {
 	return nil
 }
 
-func (r *CashRepository) FindByName(ctx context.Context, name string) (*models.Cash, error) {
+func (r *CashRepository) NameExists(ctx context.Context, name string, id int) (bool, error) {
 	currency := getCurrencyFromContext(ctx)
 
 	query := `
-		SELECT id, currency, name, formula, sum, supercategory, favorite
+		SELECT 1
 		FROM cashes
-		WHERE currency = ? AND deleted_at IS NULL and name = ?
+		WHERE
+			currency = ? AND
+			deleted_at IS NULL AND
+			name = ? AND
+			id != ?
 	`
 
-	row := r.db.QueryRowContext(ctx, query, currency, name)
+	row := r.db.QueryRowContext(ctx, query, currency, name, id)
 
-	cash := &models.Cash{}
+	var exists int
 
-	if err := row.Scan(
-		&cash.ID,
-		&cash.Currency,
-		&cash.Name,
-		&cash.Formula,
-		&cash.Sum,
-		&cash.Supercategory,
-		&cash.Favorite,
-	); err != nil {
+	if err := row.Scan(&exists); err != nil {
 		if errors.Is(err, sql.ErrNoRows) {
-			return nil, apperrors.ErrRecordNotFound
+			return false, nil
 		}
 
-		return nil, err
+		return false, err
 	}
 
-	return cash, nil
+	return exists == 1, nil
 }
 
 func (r *CashRepository) FindByID(ctx context.Context, id int) (*models.Cash, error) {
@@ -114,4 +110,40 @@ func (r *CashRepository) FindByID(ctx context.Context, id int) (*models.Cash, er
 	}
 
 	return cash, nil
+}
+
+func (r *CashRepository) Update(ctx context.Context, cash *models.Cash) error {
+	currency := getCurrencyFromContext(ctx)
+
+	query := `
+		UPDATE cashes
+		SET formula = ?, sum = ?, name = ?, supercategory = ?, favorite = ?
+		WHERE id = ? AND currency = ?
+	`
+
+	result, err := r.db.ExecContext(
+		ctx,
+		query,
+		cash.Formula,
+		cash.Sum,
+		cash.Name,
+		cash.Supercategory,
+		cash.Favorite,
+		cash.ID,
+		currency,
+	)
+	if err != nil {
+		return err
+	}
+
+	rowsAffected, err := result.RowsAffected()
+	if err != nil {
+		return err
+	}
+
+	if rowsAffected == 0 {
+		return apperrors.ErrRecordNotFound
+	}
+
+	return nil
 }

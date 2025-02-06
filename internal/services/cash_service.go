@@ -22,20 +22,24 @@ func NewCashService(cashRepository CashRepository) *CashService {
 }
 
 func (s *CashService) Create(ctx context.Context, request requests.CreateCashRequest) error {
-	cash := &models.Cash{
-		Name:    request.Name,
-		Formula: request.Formula,
-	}
+	cash := &models.Cash{}
 
 	validate := validation.New()
 
-	validate.Presence("name", cash.Name)
+	cash.Name = validate.Presence("name", request.Name)
 
-	if err := s.nameAlreadyExists(ctx, cash.Name, validate); err != nil {
-		return err
+	if cash.Name != "" {
+		exists, err := s.cashRepository.NameExists(ctx, cash.Name, 0)
+		if err != nil {
+			return err
+		}
+
+		if exists {
+			validate.Set("name", AlreadyExists)
+		}
 	}
 
-	cash.Sum = validate.Formula("formula", cash.Formula)
+	cash.Formula, cash.Sum = validate.Formula("formula", request.Formula)
 
 	cash.Supercategory = validate.Integer("supercategory", request.Supercategory)
 
@@ -64,22 +68,53 @@ func (s *CashService) FindByID(ctx context.Context, input string) (*models.Cash,
 	return cash, nil
 }
 
-func (s *CashService) nameAlreadyExists(ctx context.Context, name string, validation *validation.Validation) error {
-	if name == "" {
-		return nil
-	}
-
-	_, err := s.cashRepository.FindByName(ctx, name)
-
-	if errors.Is(err, apperrors.ErrRecordNotFound) {
-		return nil
-	}
-
+func (s *CashService) Update(ctx context.Context, request requests.UpdateCashRequest) (*models.Cash, error) {
+	id, err := strconv.Atoi(request.ID)
 	if err != nil {
-		return err
+		return nil, apperrors.ErrResourceNotFound
 	}
 
-	validation.Set("name", AlreadyExists)
+	cash, err := s.cashRepository.FindByID(ctx, id)
+	if err != nil {
+		if errors.Is(err, apperrors.ErrRecordNotFound) {
+			return nil, apperrors.ErrResourceNotFound
+		}
 
-	return nil
+		return nil, err
+	}
+
+	validate := validation.New()
+
+	cash.Formula, cash.Sum = validate.Formula("sum", request.Formula)
+
+	cash.Name = validate.Presence("name", request.Name)
+
+	if cash.Name != "" {
+		exists, err := s.cashRepository.NameExists(ctx, cash.Name, cash.ID)
+		if err != nil {
+			return nil, err
+		}
+
+		if exists {
+			validate.Set("name", AlreadyExists)
+		}
+	}
+
+	cash.Supercategory = validate.Integer("supercategory", request.Supercategory)
+
+	cash.Favorite = validate.Boolean("favorite", request.Favorite)
+
+	if validate.HasErrors() {
+		return cash, validate.Errors
+	}
+
+	if err := s.cashRepository.Update(ctx, cash); err != nil {
+		if errors.Is(err, apperrors.ErrRecordNotFound) {
+			return nil, apperrors.ErrResourceNotFound
+		}
+
+		return nil, err
+	}
+
+	return cash, nil
 }

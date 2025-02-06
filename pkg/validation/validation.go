@@ -30,16 +30,16 @@ func (v *Validation) Set(attribute, value string) {
 	v.Errors.add(attribute, value)
 }
 
-func (v *Validation) Presence(attribute, value string) {
+func (v *Validation) Presence(attribute, value string) string {
 	if value == "" {
 		v.Errors.add(attribute, required)
 	}
+
+	return value
 }
 
 func (v *Validation) Integer(attribute, value string) int {
 	if value == "" {
-		v.Errors.add(attribute, required)
-
 		return 0
 	}
 
@@ -53,21 +53,21 @@ func (v *Validation) Integer(attribute, value string) int {
 	return digit
 }
 
-func (v *Validation) Formula(attribute, value string) float64 {
-	if value == "" {
+func (v *Validation) Formula(attribute, formula string) (string, float64) {
+	if formula == "" {
 		v.Errors.add(attribute, required)
 
-		return 0.0
+		return formula, 0.0
 	}
 
-	result, err := calculator.Calculate(value)
+	sum, err := calculator.Calculate(formula)
 	if err != nil {
 		v.Errors.add(attribute, invalid)
 
-		return 0.0
+		return formula, 0.0
 	}
 
-	return result
+	return formula, sum
 }
 
 func (v *Validation) Boolean(attribute, value string) bool {

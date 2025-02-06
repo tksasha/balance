@@ -136,7 +136,7 @@ func TestItemService_Create(t *testing.T) { //nolint:funlen
 		assert.Error(t, err, "category: is invalid")
 	})
 
-	t.Run("returns error when find by id fails", func(t *testing.T) {
+	t.Run("returns error when find by id failed", func(t *testing.T) {
 		request := requests.CreateItemRequest{
 			Date:       "2025-01-23",
 			Formula:    "42.69+69.42",
@@ -153,7 +153,7 @@ func TestItemService_Create(t *testing.T) { //nolint:funlen
 		assert.Error(t, err, "find category by id error")
 	})
 
-	t.Run("returns error when create fails", func(t *testing.T) {
+	t.Run("returns error when create failed", func(t *testing.T) {
 		request := requests.CreateItemRequest{
 			Date:        "2025-01-23",
 			Formula:     "42.69+69.42",
@@ -190,7 +190,7 @@ func TestItemService_Create(t *testing.T) { //nolint:funlen
 		assert.Error(t, err, "create item error")
 	})
 
-	t.Run("creates successfully", func(t *testing.T) {
+	t.Run("returns item when create succeeded", func(t *testing.T) {
 		request := requests.CreateItemRequest{
 			Date:        "2025-01-23",
 			Formula:     "42.69+69.42",
@@ -263,7 +263,7 @@ func TestItemService_Update(t *testing.T) { //nolint:funlen,maintidx
 		assert.Error(t, err, "resource not found")
 	})
 
-	t.Run("returns error when find by id fails", func(t *testing.T) {
+	t.Run("returns error when find by id failed", func(t *testing.T) {
 		request := requests.UpdateItemRequest{
 			ID: "1049",
 		}
@@ -438,7 +438,7 @@ func TestItemService_Update(t *testing.T) { //nolint:funlen,maintidx
 		assert.Error(t, err, "category: is invalid")
 	})
 
-	t.Run("returns error when find category fails", func(t *testing.T) {
+	t.Run("returns error when find category by id failed", func(t *testing.T) {
 		request := requests.UpdateItemRequest{
 			ID:         "1051",
 			Date:       "2025-01-25",
@@ -463,7 +463,7 @@ func TestItemService_Update(t *testing.T) { //nolint:funlen,maintidx
 		assert.Error(t, err, "find category by id error")
 	})
 
-	t.Run("returns error when update fails", func(t *testing.T) {
+	t.Run("returns error when update failed", func(t *testing.T) {
 		request := requests.UpdateItemRequest{
 			ID:          "1051",
 			Date:        "2025-01-25",
@@ -511,7 +511,7 @@ func TestItemService_Update(t *testing.T) { //nolint:funlen,maintidx
 		assert.Error(t, err, "update category error")
 	})
 
-	t.Run("updates successfully", func(t *testing.T) {
+	t.Run("returns nil when update succeeded", func(t *testing.T) {
 		request := requests.UpdateItemRequest{
 			ID:          "1051",
 			Date:        "2025-01-25",
@@ -570,19 +570,19 @@ func TestItemService_Delete(t *testing.T) {
 
 	ctx := context.Background()
 
-	t.Run("when id is blank, it should return error", func(t *testing.T) {
+	t.Run("returns error when id is blank", func(t *testing.T) {
 		err := service.Delete(ctx, "")
 
 		assert.Error(t, err, "resource not found")
 	})
 
-	t.Run("when id is zero, it should return error", func(t *testing.T) {
+	t.Run("returns error when id is zero", func(t *testing.T) {
 		err := service.Delete(ctx, "0")
 
 		assert.Error(t, err, "resource not found")
 	})
 
-	t.Run("when delete category returns error, it should return error", func(t *testing.T) {
+	t.Run("returns error when delete failed", func(t *testing.T) {
 		itemRepository.
 			EXPECT().
 			Delete(ctx, 2847).
@@ -593,7 +593,7 @@ func TestItemService_Delete(t *testing.T) {
 		assert.Error(t, err, "delete category error")
 	})
 
-	t.Run("when delete category does not return error, it should return nil", func(t *testing.T) {
+	t.Run("returns nil when delete succeeded", func(t *testing.T) {
 		itemRepository.
 			EXPECT().
 			Delete(ctx, 2847).

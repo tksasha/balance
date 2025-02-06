@@ -18,7 +18,7 @@ import (
 	"gotest.tools/v3/assert"
 )
 
-func TestCreate(t *testing.T) { //nolint:funlen
+func TestCashCreate(t *testing.T) { //nolint:funlen
 	dbNameProvider := providers.NewDBNameProvider()
 
 	db := db.Open(dbNameProvider)
@@ -36,7 +36,7 @@ func TestCreate(t *testing.T) { //nolint:funlen
 
 	ctx := context.Background()
 
-	t.Run("responds 400 on parse form fails", func(t *testing.T) {
+	t.Run("responds 400 whe parse form failed", func(t *testing.T) {
 		request := testutils.NewInvalidPostRequest(ctx, t, "/cashes")
 
 		recorder := httptest.NewRecorder()
@@ -46,7 +46,7 @@ func TestCreate(t *testing.T) { //nolint:funlen
 		assert.Equal(t, recorder.Code, http.StatusBadRequest)
 	})
 
-	t.Run("responds 200 on invalid input", func(t *testing.T) {
+	t.Run("responds 200 when input is invalid", func(t *testing.T) {
 		request := testutils.NewPostRequest(ctx, t, "/cashes", testutils.Params{"name": ""})
 
 		recorder := httptest.NewRecorder()
@@ -59,7 +59,7 @@ func TestCreate(t *testing.T) { //nolint:funlen
 		assert.Assert(t, strings.Contains(body, "name: is required"))
 	})
 
-	t.Run("responds 200 on successful create", func(t *testing.T) {
+	t.Run("responds 200 when create succeeded", func(t *testing.T) {
 		testutils.Cleanup(ctx, t, db)
 
 		params := testutils.Params{

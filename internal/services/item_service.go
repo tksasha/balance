@@ -24,7 +24,6 @@ func NewItemService(itemRepository ItemRepository, categoryRepository CategoryRe
 
 func (s *ItemService) Create(ctx context.Context, request requests.CreateItemRequest) (*models.Item, error) {
 	item := &models.Item{
-		Formula:     request.Formula,
 		Description: request.Description,
 	}
 
@@ -32,7 +31,9 @@ func (s *ItemService) Create(ctx context.Context, request requests.CreateItemReq
 
 	item.Date = validate.Date("date", request.Date)
 
-	item.Sum = validate.Formula("sum", item.Formula)
+	item.Formula, item.Sum = validate.Formula("sum", request.Formula)
+
+	_ = validate.Presence("category", request.CategoryID)
 
 	if err := s.setCategory(ctx, item, request.CategoryID, validate); err != nil {
 		return nil, err
@@ -82,9 +83,9 @@ func (s *ItemService) Update(ctx context.Context, request requests.UpdateItemReq
 
 	item.Date = validate.Date("date", request.Date)
 
-	item.Formula = request.Formula
+	item.Formula, item.Sum = validate.Formula("sum", request.Formula)
 
-	item.Sum = validate.Formula("sum", item.Formula)
+	_ = validate.Presence("category", request.CategoryID)
 
 	if err := s.setCategory(ctx, item, request.CategoryID, validate); err != nil {
 		return err
