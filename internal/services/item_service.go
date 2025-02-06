@@ -4,7 +4,7 @@ import (
 	"context"
 	"strconv"
 
-	internalerrors "github.com/tksasha/balance/internal/errors"
+	"github.com/tksasha/balance/internal/apperrors"
 	"github.com/tksasha/balance/internal/models"
 	"github.com/tksasha/balance/internal/requests"
 	"github.com/tksasha/balance/pkg/validation"
@@ -61,7 +61,7 @@ func (s *ItemService) GetItems(ctx context.Context) (models.Items, error) {
 func (s *ItemService) GetItem(ctx context.Context, input string) (*models.Item, error) {
 	id, err := strconv.Atoi(input)
 	if err != nil || id <= 0 {
-		return nil, internalerrors.ErrResourceNotFound
+		return nil, apperrors.ErrResourceNotFound
 	}
 
 	item, err := s.itemRepository.FindByID(ctx, id)
@@ -75,7 +75,7 @@ func (s *ItemService) GetItem(ctx context.Context, input string) (*models.Item, 
 func (s *ItemService) Update(ctx context.Context, request requests.UpdateItemRequest) error {
 	item, err := s.findByID(ctx, request.ID)
 	if err != nil {
-		return internalerrors.ErrResourceNotFound
+		return apperrors.ErrResourceNotFound
 	}
 
 	validate := validation.New()
@@ -102,7 +102,7 @@ func (s *ItemService) Update(ctx context.Context, request requests.UpdateItemReq
 func (s *ItemService) Delete(ctx context.Context, input string) error {
 	id, err := strconv.Atoi(input)
 	if err != nil || id < 1 {
-		return internalerrors.ErrResourceNotFound
+		return apperrors.ErrResourceNotFound
 	}
 
 	return s.itemRepository.Delete(ctx, id)

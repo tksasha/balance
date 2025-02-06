@@ -6,7 +6,7 @@ import (
 	"slices"
 	"testing"
 
-	internalerrors "github.com/tksasha/balance/internal/errors"
+	"github.com/tksasha/balance/internal/apperrors"
 	"github.com/tksasha/balance/internal/models"
 	"github.com/tksasha/balance/internal/requests"
 	"github.com/tksasha/balance/internal/services"
@@ -80,7 +80,7 @@ func TestCategoryService_Create(t *testing.T) { //nolint:funlen
 		categoryRepository.
 			EXPECT().
 			FindByName(ctx, "Miscellaneous").
-			Return(nil, internalerrors.ErrRecordNotFound)
+			Return(nil, apperrors.ErrRecordNotFound)
 
 		err := service.Create(ctx, request)
 
@@ -101,7 +101,7 @@ func TestCategoryService_Create(t *testing.T) { //nolint:funlen
 		categoryRepository.
 			EXPECT().
 			FindByName(ctx, "Confectionery").
-			Return(nil, internalerrors.ErrRecordNotFound)
+			Return(nil, apperrors.ErrRecordNotFound)
 
 		categoryRepository.
 			EXPECT().
@@ -131,7 +131,7 @@ func TestCategoryService_Create(t *testing.T) { //nolint:funlen
 		categoryRepository.
 			EXPECT().
 			FindByName(ctx, "Haberdashery").
-			Return(nil, internalerrors.ErrRecordNotFound)
+			Return(nil, apperrors.ErrRecordNotFound)
 
 		categoryRepository.
 			EXPECT().
@@ -277,7 +277,7 @@ func TestCategoryService_Update(t *testing.T) { //nolint:funlen
 		categoryRepository.
 			EXPECT().
 			FindByName(ctx, "Miscellaneous").
-			Return(nil, internalerrors.ErrRecordNotFound)
+			Return(nil, apperrors.ErrRecordNotFound)
 
 		categoryRepository.
 			EXPECT().
@@ -297,7 +297,7 @@ func TestCategoryService_Update(t *testing.T) { //nolint:funlen
 		categoryRepository.
 			EXPECT().
 			FindByName(ctx, "Stationery").
-			Return(nil, internalerrors.ErrRecordNotFound)
+			Return(nil, apperrors.ErrRecordNotFound)
 
 		categoryRepository.
 			EXPECT().

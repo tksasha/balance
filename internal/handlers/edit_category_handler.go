@@ -6,7 +6,7 @@ import (
 	"net/http"
 	"strconv"
 
-	internalerrors "github.com/tksasha/balance/internal/errors"
+	"github.com/tksasha/balance/internal/apperrors"
 	"github.com/tksasha/balance/internal/models"
 )
 
@@ -23,7 +23,7 @@ func NewEditCategoryHandler(categoryService CategoryService) *EditCategoryHandle
 func (h *EditCategoryHandler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 	category, err := h.handle(r)
 	if err != nil {
-		if errors.Is(err, internalerrors.ErrResourceNotFound) {
+		if errors.Is(err, apperrors.ErrResourceNotFound) {
 			http.Error(w, "Resource Not Found", http.StatusNotFound)
 
 			return
@@ -44,7 +44,7 @@ func (h *EditCategoryHandler) ServeHTTP(w http.ResponseWriter, r *http.Request) 
 func (h *EditCategoryHandler) handle(r *http.Request) (*models.Category, error) {
 	id, err := strconv.Atoi(r.PathValue("id"))
 	if err != nil {
-		return nil, internalerrors.ErrResourceNotFound
+		return nil, apperrors.ErrResourceNotFound
 	}
 
 	category, err := h.categoryService.FindByID(r.Context(), id)

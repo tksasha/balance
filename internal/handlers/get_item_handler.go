@@ -5,7 +5,7 @@ import (
 	"log/slog"
 	"net/http"
 
-	internalerrors "github.com/tksasha/balance/internal/errors"
+	"github.com/tksasha/balance/internal/apperrors"
 )
 
 type GetItemHandler struct {
@@ -20,7 +20,7 @@ func NewGetItemHandler(itemService ItemService) *GetItemHandler {
 
 func (h *GetItemHandler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 	if err := h.handle(w, r); err != nil {
-		if errors.Is(err, internalerrors.ErrResourceNotFound) {
+		if errors.Is(err, apperrors.ErrResourceNotFound) {
 			http.Error(w, "Resource Not Found", http.StatusNotFound)
 
 			return

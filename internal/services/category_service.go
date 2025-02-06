@@ -4,7 +4,7 @@ import (
 	"context"
 	"errors"
 
-	internalerrors "github.com/tksasha/balance/internal/errors"
+	"github.com/tksasha/balance/internal/apperrors"
 	"github.com/tksasha/balance/internal/models"
 	"github.com/tksasha/balance/internal/requests"
 	"github.com/tksasha/balance/pkg/validation"
@@ -53,8 +53,8 @@ func (s *CategoryService) GetAll(ctx context.Context) (models.Categories, error)
 func (s *CategoryService) FindByID(ctx context.Context, id int) (*models.Category, error) {
 	category, err := s.categoryRepository.FindByID(ctx, id)
 	if err != nil {
-		if errors.Is(err, internalerrors.ErrRecordNotFound) {
-			return nil, internalerrors.ErrResourceNotFound
+		if errors.Is(err, apperrors.ErrRecordNotFound) {
+			return nil, apperrors.ErrResourceNotFound
 		}
 
 		return nil, err
@@ -95,7 +95,7 @@ func (s *CategoryService) nameAlreadyExists(
 
 	category, err := s.categoryRepository.FindByName(ctx, name)
 
-	if errors.Is(err, internalerrors.ErrRecordNotFound) {
+	if errors.Is(err, apperrors.ErrRecordNotFound) {
 		return nil
 	}
 

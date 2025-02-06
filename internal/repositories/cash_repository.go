@@ -7,7 +7,6 @@ import (
 
 	"github.com/tksasha/balance/internal/apperrors"
 	"github.com/tksasha/balance/internal/db"
-	internalerrors "github.com/tksasha/balance/internal/errors"
 	"github.com/tksasha/balance/internal/models"
 )
 
@@ -76,7 +75,7 @@ func (r *CashRepository) FindByName(ctx context.Context, name string) (*models.C
 		&cash.Favorite,
 	); err != nil {
 		if errors.Is(err, sql.ErrNoRows) {
-			return nil, internalerrors.ErrRecordNotFound
+			return nil, apperrors.ErrRecordNotFound
 		}
 
 		return nil, err

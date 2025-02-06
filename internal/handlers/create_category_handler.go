@@ -5,7 +5,7 @@ import (
 	"log/slog"
 	"net/http"
 
-	internalerrors "github.com/tksasha/balance/internal/errors"
+	"github.com/tksasha/balance/internal/apperrors"
 	"github.com/tksasha/balance/internal/requests"
 	"github.com/tksasha/balance/pkg/validation"
 )
@@ -41,7 +41,7 @@ func (h *CreateCategoryHandler) ServeHTTP(w http.ResponseWriter, r *http.Request
 
 func (h *CreateCategoryHandler) handle(r *http.Request) error {
 	if err := r.ParseForm(); err != nil {
-		return internalerrors.ErrParsingForm
+		return apperrors.ErrParsingForm
 	}
 
 	request := requests.CreateCategoryRequest{

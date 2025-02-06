@@ -4,7 +4,7 @@ import (
 	"errors"
 	"net/http"
 
-	internalerrors "github.com/tksasha/balance/internal/errors"
+	"github.com/tksasha/balance/internal/apperrors"
 	"github.com/tksasha/balance/internal/handlers"
 	"github.com/tksasha/balance/internal/models"
 	"github.com/tksasha/balance/internal/requests"
@@ -23,7 +23,7 @@ func NewCreateHandler(cashService handlers.CashService) *CreateHandler {
 
 func (h *CreateHandler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 	if _, err := h.handle(r); err != nil {
-		if errors.Is(err, internalerrors.ErrParsingForm) {
+		if errors.Is(err, apperrors.ErrParsingForm) {
 			http.Error(w, "Bad Request", http.StatusBadRequest)
 
 			return
@@ -42,7 +42,7 @@ func (h *CreateHandler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 
 func (h *CreateHandler) handle(r *http.Request) (*models.Cash, error) {
 	if err := r.ParseForm(); err != nil {
-		return nil, internalerrors.ErrParsingForm
+		return nil, apperrors.ErrParsingForm
 	}
 
 	request := requests.CreateCashRequest{

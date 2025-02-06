@@ -5,7 +5,7 @@ import (
 	"errors"
 	"testing"
 
-	internalerrors "github.com/tksasha/balance/internal/errors"
+	"github.com/tksasha/balance/internal/apperrors"
 	"github.com/tksasha/balance/internal/models"
 	"github.com/tksasha/balance/internal/requests"
 	"github.com/tksasha/balance/internal/services"
@@ -245,7 +245,7 @@ func TestItemService_Update(t *testing.T) { //nolint:funlen,maintidx
 
 		err := service.Update(ctx, request)
 
-		assert.Error(t, err, "failed to find resource")
+		assert.Error(t, err, "resource not found")
 	})
 
 	t.Run("returns error when item doesn't exist", func(t *testing.T) {
@@ -256,11 +256,11 @@ func TestItemService_Update(t *testing.T) { //nolint:funlen,maintidx
 		itemRepository.
 			EXPECT().
 			FindByID(ctx, 1027).
-			Return(nil, internalerrors.ErrRecordNotFound)
+			Return(nil, apperrors.ErrRecordNotFound)
 
 		err := service.Update(ctx, request)
 
-		assert.Error(t, err, "failed to find resource")
+		assert.Error(t, err, "resource not found")
 	})
 
 	t.Run("returns error when find by id fails", func(t *testing.T) {
@@ -275,7 +275,7 @@ func TestItemService_Update(t *testing.T) { //nolint:funlen,maintidx
 
 		err := service.Update(ctx, request)
 
-		assert.Error(t, err, "failed to find resource")
+		assert.Error(t, err, "resource not found")
 	})
 
 	t.Run("returns error when date is blank", func(t *testing.T) {
@@ -573,13 +573,13 @@ func TestItemService_Delete(t *testing.T) {
 	t.Run("when id is blank, it should return error", func(t *testing.T) {
 		err := service.Delete(ctx, "")
 
-		assert.Error(t, err, "failed to find resource")
+		assert.Error(t, err, "resource not found")
 	})
 
 	t.Run("when id is zero, it should return error", func(t *testing.T) {
 		err := service.Delete(ctx, "0")
 
-		assert.Error(t, err, "failed to find resource")
+		assert.Error(t, err, "resource not found")
 	})
 
 	t.Run("when delete category returns error, it should return error", func(t *testing.T) {

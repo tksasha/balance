@@ -7,8 +7,8 @@ import (
 	"log/slog"
 	"time"
 
+	"github.com/tksasha/balance/internal/apperrors"
 	"github.com/tksasha/balance/internal/db"
-	internalerrors "github.com/tksasha/balance/internal/errors"
 	"github.com/tksasha/balance/internal/models"
 )
 
@@ -127,7 +127,7 @@ func (r *ItemRepository) FindByID(ctx context.Context, id int) (*models.Item, er
 			&item.Description,
 		); err != nil {
 		if errors.Is(err, sql.ErrNoRows) {
-			return nil, internalerrors.ErrRecordNotFound
+			return nil, apperrors.ErrRecordNotFound
 		}
 
 		return nil, err
@@ -165,7 +165,7 @@ func (r *ItemRepository) Update(ctx context.Context, item *models.Item) error {
 	}
 
 	if rowsAffected == 0 {
-		return internalerrors.ErrRecordNotFound
+		return apperrors.ErrRecordNotFound
 	}
 
 	return nil
@@ -190,7 +190,7 @@ func (r *ItemRepository) Delete(ctx context.Context, id int) error {
 	}
 
 	if rowsAffected == 0 {
-		return internalerrors.ErrRecordNotFound
+		return apperrors.ErrRecordNotFound
 	}
 
 	return nil

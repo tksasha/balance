@@ -6,8 +6,8 @@ import (
 	"errors"
 	"time"
 
+	"github.com/tksasha/balance/internal/apperrors"
 	"github.com/tksasha/balance/internal/db"
-	internalerrors "github.com/tksasha/balance/internal/errors"
 	"github.com/tksasha/balance/internal/models"
 )
 
@@ -43,7 +43,7 @@ func (r *CategoryRepository) FindByID(ctx context.Context, id int) (*models.Cate
 		&category.Supercategory,
 	); err != nil {
 		if errors.Is(err, sql.ErrNoRows) {
-			return nil, internalerrors.ErrRecordNotFound
+			return nil, apperrors.ErrRecordNotFound
 		}
 
 		return nil, err
@@ -132,7 +132,7 @@ func (r *CategoryRepository) FindByName(ctx context.Context, name string) (*mode
 		Scan(&category.ID, &category.Name, &category.Currency)
 	if err != nil {
 		if errors.Is(err, sql.ErrNoRows) {
-			return nil, internalerrors.ErrRecordNotFound
+			return nil, apperrors.ErrRecordNotFound
 		}
 
 		return nil, err

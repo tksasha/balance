@@ -6,7 +6,6 @@ import (
 	"strconv"
 
 	"github.com/tksasha/balance/internal/apperrors"
-	internalerrors "github.com/tksasha/balance/internal/errors"
 	"github.com/tksasha/balance/internal/models"
 	"github.com/tksasha/balance/internal/requests"
 	"github.com/tksasha/balance/pkg/validation"
@@ -72,7 +71,7 @@ func (s *CashService) nameAlreadyExists(ctx context.Context, name string, valida
 
 	_, err := s.cashRepository.FindByName(ctx, name)
 
-	if errors.Is(err, internalerrors.ErrRecordNotFound) {
+	if errors.Is(err, apperrors.ErrRecordNotFound) {
 		return nil
 	}
 

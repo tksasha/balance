@@ -5,7 +5,7 @@ import (
 	"log/slog"
 	"net/http"
 
-	internalerrors "github.com/tksasha/balance/internal/errors"
+	"github.com/tksasha/balance/internal/apperrors"
 	"github.com/tksasha/balance/internal/requests"
 )
 
@@ -21,13 +21,13 @@ func NewUpdateItemHandler(itemService ItemService) *UpdateItemHandler {
 
 func (h *UpdateItemHandler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 	if err := h.handle(r); err != nil {
-		if errors.Is(err, internalerrors.ErrParsingForm) {
+		if errors.Is(err, apperrors.ErrParsingForm) {
 			http.Error(w, "Bad Request", http.StatusBadRequest)
 
 			return
 		}
 
-		if errors.Is(err, internalerrors.ErrResourceNotFound) {
+		if errors.Is(err, apperrors.ErrResourceNotFound) {
 			http.Error(w, "Not Found", http.StatusNotFound)
 
 			return
@@ -45,7 +45,7 @@ func (h *UpdateItemHandler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 
 func (h *UpdateItemHandler) handle(r *http.Request) error {
 	if err := r.ParseForm(); err != nil {
-		return internalerrors.ErrParsingForm
+		return apperrors.ErrParsingForm
 	}
 
 	return h.itemService.Update(

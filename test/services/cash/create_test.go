@@ -5,7 +5,7 @@ import (
 	"errors"
 	"testing"
 
-	internalerrors "github.com/tksasha/balance/internal/errors"
+	"github.com/tksasha/balance/internal/apperrors"
 	"github.com/tksasha/balance/internal/models"
 	"github.com/tksasha/balance/internal/requests"
 	"github.com/tksasha/balance/internal/services"
@@ -85,7 +85,7 @@ func TestCreate(t *testing.T) { //nolint:funlen
 		cashRepository.
 			EXPECT().
 			FindByName(ctx, "Bonds").
-			Return(nil, internalerrors.ErrRecordNotFound)
+			Return(nil, apperrors.ErrRecordNotFound)
 
 		err := service.Create(ctx, request)
 
@@ -103,7 +103,7 @@ func TestCreate(t *testing.T) { //nolint:funlen
 		cashRepository.
 			EXPECT().
 			FindByName(ctx, "Bonds").
-			Return(nil, internalerrors.ErrRecordNotFound)
+			Return(nil, apperrors.ErrRecordNotFound)
 
 		err := service.Create(ctx, request)
 
@@ -121,7 +121,7 @@ func TestCreate(t *testing.T) { //nolint:funlen
 		cashRepository.
 			EXPECT().
 			FindByName(ctx, "Bonds").
-			Return(nil, internalerrors.ErrRecordNotFound)
+			Return(nil, apperrors.ErrRecordNotFound)
 
 		err := service.Create(ctx, request)
 
@@ -139,7 +139,7 @@ func TestCreate(t *testing.T) { //nolint:funlen
 		cashRepository.
 			EXPECT().
 			FindByName(ctx, "Bonds").
-			Return(nil, internalerrors.ErrRecordNotFound)
+			Return(nil, apperrors.ErrRecordNotFound)
 
 		cash := &models.Cash{
 			Name:          "Bonds",
@@ -170,7 +170,7 @@ func TestCreate(t *testing.T) { //nolint:funlen
 		cashRepository.
 			EXPECT().
 			FindByName(ctx, "Bonds").
-			Return(nil, internalerrors.ErrRecordNotFound)
+			Return(nil, apperrors.ErrRecordNotFound)
 
 		cash := &models.Cash{
 			Name:          "Bonds",

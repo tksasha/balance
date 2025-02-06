@@ -5,7 +5,7 @@ import (
 	"log/slog"
 	"net/http"
 
-	internalerrors "github.com/tksasha/balance/internal/errors"
+	"github.com/tksasha/balance/internal/apperrors"
 	"github.com/tksasha/balance/internal/requests"
 	"github.com/tksasha/balance/pkg/validation"
 )
@@ -22,7 +22,7 @@ func NewCreateItemHandler(itemService ItemService) *CreateItemHandler {
 
 func (h *CreateItemHandler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 	if err := h.handle(r); err != nil {
-		if errors.Is(err, internalerrors.ErrParsingForm) {
+		if errors.Is(err, apperrors.ErrParsingForm) {
 			slog.Error("invalid user input", "error", err)
 
 			http.Error(w, "Invalid User Input", http.StatusBadRequest)
@@ -49,7 +49,7 @@ func (h *CreateItemHandler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 
 func (h *CreateItemHandler) handle(r *http.Request) error {
 	if err := r.ParseForm(); err != nil {
-		return internalerrors.ErrParsingForm
+		return apperrors.ErrParsingForm
 	}
 
 	if _, err := h.itemService.Create(

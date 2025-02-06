@@ -6,7 +6,7 @@ import (
 	"net/http"
 	"strconv"
 
-	internalerrors "github.com/tksasha/balance/internal/errors"
+	"github.com/tksasha/balance/internal/apperrors"
 	"github.com/tksasha/balance/internal/models"
 	"github.com/tksasha/balance/pkg/validation"
 )
@@ -24,7 +24,7 @@ func NewUpdateCategoryHandler(categoryService CategoryService) *UpdateCategoryHa
 func (h *UpdateCategoryHandler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 	category, err := h.handle(r)
 	if err != nil {
-		if errors.Is(err, internalerrors.ErrResourceNotFound) {
+		if errors.Is(err, apperrors.ErrResourceNotFound) {
 			http.Error(w, "Resource Not Found", http.StatusNotFound)
 
 			return
@@ -52,7 +52,7 @@ func (h *UpdateCategoryHandler) ServeHTTP(w http.ResponseWriter, r *http.Request
 func (h *UpdateCategoryHandler) handle(r *http.Request) (*models.Category, error) {
 	id, err := strconv.Atoi(r.PathValue("id"))
 	if err != nil {
-		return nil, internalerrors.ErrResourceNotFound
+		return nil, apperrors.ErrResourceNotFound
 	}
 
 	category, err := h.categoryService.FindByID(r.Context(), id)
@@ -61,7 +61,7 @@ func (h *UpdateCategoryHandler) handle(r *http.Request) (*models.Category, error
 	}
 
 	if err := r.ParseForm(); err != nil {
-		return category, internalerrors.ErrParsingForm
+		return category, apperrors.ErrParsingForm
 	}
 
 	category.Name = r.FormValue("name")
@@ -71,7 +71,7 @@ func (h *UpdateCategoryHandler) handle(r *http.Request) (*models.Category, error
 	if r.FormValue("supercategory") != "" {
 		supercategory, err := strconv.Atoi(r.FormValue("supercategory"))
 		if err != nil {
-			return nil, internalerrors.ErrParsingForm
+			return nil, apperrors.ErrParsingForm
 		}
 
 		category.Supercategory = supercategory

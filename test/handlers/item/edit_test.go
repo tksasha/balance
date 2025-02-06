@@ -6,7 +6,7 @@ import (
 	"net/http/httptest"
 	"testing"
 
-	internalerrors "github.com/tksasha/balance/internal/errors"
+	"github.com/tksasha/balance/internal/apperrors"
 	"github.com/tksasha/balance/internal/handlers"
 	"github.com/tksasha/balance/internal/middlewares"
 	mocksforhandlers "github.com/tksasha/balance/mocks/handlers"
@@ -36,7 +36,7 @@ func TestEdit(t *testing.T) {
 		itemService.
 			EXPECT().
 			GetItem(ctxWithValue, "1514").
-			Return(nil, internalerrors.ErrResourceNotFound)
+			Return(nil, apperrors.ErrResourceNotFound)
 
 		request := testutils.NewGetRequest(ctx, t, "/items/1514/edit?currency=usd")
 
