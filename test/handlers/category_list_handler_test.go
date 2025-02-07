@@ -20,7 +20,7 @@ import (
 	"gotest.tools/v3/assert"
 )
 
-func TestList(t *testing.T) {
+func TestCategoryListHandler(t *testing.T) {
 	db := db.Open(
 		providers.NewDBNameProvider(),
 	)
@@ -30,7 +30,7 @@ func TestList(t *testing.T) {
 	categoryService := services.NewCategoryService(categoryRepository)
 
 	middleware := middlewares.NewCurrencyMiddleware().Wrap(
-		handlers.NewGetCategoriesHandler(categoryService),
+		handlers.NewCategoryListHandler(categoryService),
 	)
 
 	mux := http.NewServeMux()

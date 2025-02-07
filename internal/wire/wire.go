@@ -23,7 +23,7 @@ func InitializeServer() *server.Server {
 		handlers.NewCategoryCreateHandler,
 		handlers.NewCategoryDeleteHandler,
 		handlers.NewEditCategoryHandler,
-		handlers.NewGetCategoriesHandler,
+		handlers.NewCategoryListHandler,
 		handlers.NewGetItemHandler,
 		handlers.NewGetItemsHandler,
 		handlers.NewIndexPageHandler,
