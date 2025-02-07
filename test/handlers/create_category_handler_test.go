@@ -19,7 +19,7 @@ import (
 	is "gotest.tools/v3/assert/cmp"
 )
 
-func TestCreate(t *testing.T) { //nolint:funlen
+func TestCategoryCreateHandler(t *testing.T) { //nolint:funlen
 	dbNameProvider := providers.NewDBNameProvider()
 
 	db := db.Open(dbNameProvider)

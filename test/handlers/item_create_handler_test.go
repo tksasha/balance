@@ -18,7 +18,7 @@ import (
 	"gotest.tools/v3/assert"
 )
 
-func TestCreate(t *testing.T) { //nolint:funlen
+func TestItemCreateHandler(t *testing.T) { //nolint:funlen
 	dbNameProvider := providers.NewDBNameProvider()
 
 	db := db.Open(dbNameProvider)
@@ -29,7 +29,7 @@ func TestCreate(t *testing.T) { //nolint:funlen
 	itemService := services.NewItemService(itemRepository, categoryRepository)
 
 	middleware := middlewares.NewCurrencyMiddleware().Wrap(
-		handlers.NewCreateItemHandler(itemService),
+		handlers.NewItemCreateHandler(itemService),
 	)
 
 	mux := http.NewServeMux()

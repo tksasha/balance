@@ -18,7 +18,7 @@ func New(
 	cashCreateHandler *handlers.CashCreateHandler,
 	cashEditHandler *handlers.CashEditHandler,
 	categoryCreateHandler *handlers.CategoryCreateHandler,
-	createItemHandler *handlers.CreateItemHandler,
+	itemCreateHandler *handlers.ItemCreateHandler,
 	editCategoryHandler *handlers.EditCategoryHandler,
 	getCategoriesHandler *handlers.GetCategoriesHandler,
 	getItemHandler *handlers.GetItemHandler,
@@ -33,7 +33,7 @@ func New(
 
 	mux.Handle("GET /", indexPageHandler)
 
-	mux.Handle("POST /items", createItemHandler)
+	mux.Handle("POST /items", itemCreateHandler)
 	mux.Handle("GET /items", getItemsHandler)
 	mux.Handle("GET /items/{id}", getItemHandler)
 

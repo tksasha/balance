@@ -10,17 +10,17 @@ import (
 	"github.com/tksasha/balance/pkg/validation"
 )
 
-type CreateItemHandler struct {
+type ItemCreateHandler struct {
 	itemService ItemService
 }
 
-func NewCreateItemHandler(itemService ItemService) *CreateItemHandler {
-	return &CreateItemHandler{
+func NewItemCreateHandler(itemService ItemService) *ItemCreateHandler {
+	return &ItemCreateHandler{
 		itemService: itemService,
 	}
 }
 
-func (h *CreateItemHandler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
+func (h *ItemCreateHandler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 	if err := h.handle(r); err != nil {
 		if errors.Is(err, apperrors.ErrParsingForm) {
 			slog.Error("invalid user input", "error", err)
@@ -47,7 +47,7 @@ func (h *CreateItemHandler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 	_, _ = w.Write([]byte("render create page\n"))
 }
 
-func (h *CreateItemHandler) handle(r *http.Request) error {
+func (h *ItemCreateHandler) handle(r *http.Request) error {
 	if err := r.ParseForm(); err != nil {
 		return apperrors.ErrParsingForm
 	}
