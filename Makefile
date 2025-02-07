@@ -1,7 +1,5 @@
-GO=/opt/homebrew/bin/go
 MAIN=cmd/balance/main.go
 OUTPUT=balance
-RM=rm -f
 
 AIR=github.com/air-verse/air@latest
 FORMATTER=mvdan.cc/gofumpt@latest
@@ -15,47 +13,47 @@ default: vet fix fmt lint test
 .PHONY: vet
 vet:
 	@echo "go vet"
-	@$(GO) vet ./...
+	@go vet ./...
 
 .PHONY: fix
 fix:
 	@echo "go fix"
-	@$(GO) fix ./...
+	@go fix ./...
 
 .PHONY: fmt
 fmt:
 	@echo "go fmt"
-	@$(GO) run $(FORMATTER) -l -w .
+	@go run $(FORMATTER) -l -w .
 
 .PHONY: lint
 lint:
 	@echo "go lint"
-	@$(GO) run $(LINTER) run
+	@go run $(LINTER) run
 
 .PHONY: test
 test:
 	@echo "go test"
-	@$(GO) test ./test/...
+	@go test ./test/...
 
 # .PHONY: run
 # run:
 # 	@echo "go run"
-# 	@$(GO) run $(AIR)
+# 	@go run $(AIR)
 
 .PHONY: run
 run:
 	@echo "go run (without live reloading)"
-	@$(GO) run github.com/tksasha/balance/cmd/balance
+	@go run github.com/tksasha/balance/cmd/balance
 
 .PHONY: build
 build:
 	@echo "go build"
-	@$(GO) build -o $(OUTPUT) $(MAIN)
+	@go build -o $(OUTPUT) $(MAIN)
 
 .PHONY: clear
 clear:
 	@echo "go clear"
-	@$(RM) $(OUTPUT)
+	@rm $(OUTPUT)
 
 .PHONY: clean
 clean: clear
@@ -65,12 +63,12 @@ gen: wire mockgen
 
 .PHONY: mockgen
 mockgen:
-	@$(GO) run $(MOCKGEN) \
+	@go run $(MOCKGEN) \
 		-source internal/services/interfaces.go \
 		-package mocksforservices \
 		-destination mocks/services/interfaces.mock.go
 
-	@$(GO) run $(MOCKGEN) \
+	@go run $(MOCKGEN) \
 		-source internal/handlers/interfaces.go \
 		-package mocksforhandlers \
 		-destination mocks/handlers/interfaces.mock.go
@@ -78,4 +76,4 @@ mockgen:
 .PHONY: wire
 wire:
 	@echo "wire gen"
-	@$(GO) run $(WIRE) internal/wire/wire.go
+	@go run $(WIRE) internal/wire/wire.go

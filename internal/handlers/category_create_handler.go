@@ -10,17 +10,17 @@ import (
 	"github.com/tksasha/balance/pkg/validation"
 )
 
-type CreateCategoryHandler struct {
+type CategoryCreateHandler struct {
 	categoryService CategoryService
 }
 
-func NewCreateCategoryHandler(categoryService CategoryService) *CreateCategoryHandler {
-	return &CreateCategoryHandler{
+func NewCategoryCreateHandler(categoryService CategoryService) *CategoryCreateHandler {
+	return &CategoryCreateHandler{
 		categoryService: categoryService,
 	}
 }
 
-func (h *CreateCategoryHandler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
+func (h *CategoryCreateHandler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 	if err := h.handle(r); err != nil {
 		var verrors validation.Errors
 		if errors.As(err, &verrors) {
@@ -39,7 +39,7 @@ func (h *CreateCategoryHandler) ServeHTTP(w http.ResponseWriter, r *http.Request
 	_, _ = w.Write([]byte("create category page\n"))
 }
 
-func (h *CreateCategoryHandler) handle(r *http.Request) error {
+func (h *CategoryCreateHandler) handle(r *http.Request) error {
 	if err := r.ParseForm(); err != nil {
 		return apperrors.ErrParsingForm
 	}

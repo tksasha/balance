@@ -29,7 +29,7 @@ func TestCreate(t *testing.T) { //nolint:funlen
 	categoryService := services.NewCategoryService(categoryRepository)
 
 	middleware := middlewares.NewCurrencyMiddleware().Wrap(
-		handlers.NewCreateCategoryHandler(categoryService),
+		handlers.NewCategoryCreateHandler(categoryService),
 	)
 
 	mux := http.NewServeMux()
