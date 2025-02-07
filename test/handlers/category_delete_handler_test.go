@@ -6,37 +6,26 @@ import (
 	"net/http/httptest"
 	"testing"
 
-	"github.com/tksasha/balance/internal/db"
 	"github.com/tksasha/balance/internal/handlers"
-	"github.com/tksasha/balance/internal/middlewares"
 	"github.com/tksasha/balance/internal/models"
-	providers "github.com/tksasha/balance/internal/providers/test"
-	"github.com/tksasha/balance/internal/repositories"
-	"github.com/tksasha/balance/internal/services"
 	"github.com/tksasha/balance/pkg/currencies"
 	"gotest.tools/v3/assert"
 )
 
 func TestCategoryDeleteHandler(t *testing.T) {
-	dbNameProvider := providers.NewDBNameProvider()
-
-	db := db.Open(dbNameProvider)
-
-	categoryRepository := repositories.NewCategoryRepository(db)
-
-	categoryService := services.NewCategoryService(categoryRepository)
-
-	middleware := middlewares.NewCurrencyMiddleware().Wrap(
-		handlers.NewCategoryDeleteHandler(categoryService),
-	)
-
-	mux := http.NewServeMux()
-	mux.Handle("DELETE /categories/{id}", middleware)
-
 	ctx := context.Background()
 
+	service, db := newCategoryService(ctx, t)
+	defer func() {
+		_ = db.Close()
+	}()
+
+	handler := handlers.NewCategoryDeleteHandler(service)
+
+	mux := newMux(t, "DELETE /categories/{id}", handler)
+
 	t.Run("responds 404 on category not found", func(t *testing.T) {
-		cleanup(ctx, t, db)
+		cleanup(ctx, t)
 
 		request := newDeleteRequest(ctx, t, "/categories/1348")
 
@@ -48,15 +37,15 @@ func TestCategoryDeleteHandler(t *testing.T) {
 	})
 
 	t.Run("responds 200 on category found", func(t *testing.T) {
-		cleanup(ctx, t, db)
+		cleanup(ctx, t)
 
-		createCategory(ctx, t, db,
-			&models.Category{
-				ID:       1411,
-				Name:     "Miscellaneous",
-				Currency: currencies.EUR,
-			},
-		)
+		categoryToCreate := &models.Category{
+			ID:       1411,
+			Name:     "Miscellaneous",
+			Currency: currencies.EUR,
+		}
+
+		createCategory(ctx, t, categoryToCreate)
 
 		request := newDeleteRequest(ctx, t, "/categories/1411?currency=eur")
 
@@ -66,7 +55,7 @@ func TestCategoryDeleteHandler(t *testing.T) {
 
 		assert.Equal(t, recorder.Code, http.StatusOK)
 
-		category := findCategoryByID(eurContext(ctx, t), t, db, 1411)
+		category := findCategoryByID(ctx, t, currencies.EUR, 1411)
 
 		assert.Equal(t, category.ID, 1411)
 		assert.Equal(t, category.Name, "Miscellaneous")
