@@ -8,37 +8,24 @@ import (
 	"strings"
 	"testing"
 
-	"github.com/tksasha/balance/internal/db"
 	"github.com/tksasha/balance/internal/handlers"
-	"github.com/tksasha/balance/internal/middlewares"
 	"github.com/tksasha/balance/internal/models"
-	providers "github.com/tksasha/balance/internal/providers/test"
-	"github.com/tksasha/balance/internal/repositories"
-	"github.com/tksasha/balance/internal/services"
 	"github.com/tksasha/balance/pkg/currencies"
 	"gotest.tools/v3/assert"
 )
 
 func TestCategoryListHandler(t *testing.T) {
-	db := db.Open(
-		providers.NewDBNameProvider(),
-	)
-
-	categoryRepository := repositories.NewCategoryRepository(db)
-
-	categoryService := services.NewCategoryService(categoryRepository)
-
-	middleware := middlewares.NewCurrencyMiddleware().Wrap(
-		handlers.NewCategoryListHandler(categoryService),
-	)
-
-	mux := http.NewServeMux()
-	mux.Handle("GET /categories", middleware)
-
 	ctx := context.Background()
 
+	service, db := newCategoryService(ctx, t)
+	defer func() {
+		_ = db.Close()
+	}()
+
+	mux := newMux(t, "GET /categories", handlers.NewCategoryListHandler(service))
+
 	t.Run("responds 200 on no categories found", func(t *testing.T) {
-		cleanup(ctx, t, db)
+		cleanup(ctx, t)
 
 		request := newGetRequest(ctx, t, "/categories?currency=eur")
 
@@ -50,17 +37,17 @@ func TestCategoryListHandler(t *testing.T) {
 	})
 
 	t.Run("responds 200 on categories found", func(t *testing.T) {
-		cleanup(ctx, t, db)
+		cleanup(ctx, t)
 
 		for id, name := range map[int]string{1: "category one", 2: "category two"} {
-			createCategory(ctx, t, db,
-				&models.Category{
-					ID:       id,
-					Name:     name,
-					Currency: currencies.EUR,
-					Visible:  true,
-				},
-			)
+			categoryToCreate := &models.Category{
+				ID:       id,
+				Name:     name,
+				Currency: currencies.EUR,
+				Visible:  true,
+			}
+
+			createCategory(ctx, t, categoryToCreate)
 		}
 
 		request := newGetRequest(ctx, t, "/categories?currency=eur")
