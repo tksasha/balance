@@ -9,17 +9,17 @@ import (
 	"github.com/tksasha/balance/internal/requests"
 )
 
-type UpdateItemHandler struct {
+type ItemUpdateHandler struct {
 	itemService ItemService
 }
 
-func NewUpdateItemHandler(itemService ItemService) *UpdateItemHandler {
-	return &UpdateItemHandler{
+func NewItemUpdateHandler(itemService ItemService) *ItemUpdateHandler {
+	return &ItemUpdateHandler{
 		itemService: itemService,
 	}
 }
 
-func (h *UpdateItemHandler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
+func (h *ItemUpdateHandler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 	if err := h.handle(r); err != nil {
 		if errors.Is(err, apperrors.ErrParsingForm) {
 			http.Error(w, "Bad Request", http.StatusBadRequest)
@@ -43,7 +43,7 @@ func (h *UpdateItemHandler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 	_, _ = w.Write([]byte("render update page\n"))
 }
 
-func (h *UpdateItemHandler) handle(r *http.Request) error {
+func (h *ItemUpdateHandler) handle(r *http.Request) error {
 	if err := r.ParseForm(); err != nil {
 		return apperrors.ErrParsingForm
 	}

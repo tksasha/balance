@@ -18,7 +18,7 @@ import (
 	"gotest.tools/v3/assert"
 )
 
-func TestUpdate(t *testing.T) { //nolint:funlen
+func TestItemUpdateHandler(t *testing.T) { //nolint:funlen
 	dbNameProvider := providers.NewDBNameProvider()
 
 	db := db.Open(dbNameProvider)
@@ -29,7 +29,7 @@ func TestUpdate(t *testing.T) { //nolint:funlen
 	itemService := services.NewItemService(itemRepository, categoryRepository)
 
 	middleware := middlewares.NewCurrencyMiddleware().Wrap(
-		handlers.NewUpdateItemHandler(itemService),
+		handlers.NewItemUpdateHandler(itemService),
 	)
 
 	ctx := context.Background()

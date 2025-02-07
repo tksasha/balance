@@ -29,6 +29,7 @@ func InitializeServer() *server.Server {
 		handlers.NewItemCreateHandler,
 		handlers.NewItemEditHandler,
 		handlers.NewItemListHandler,
+		handlers.NewItemUpdateHandler,
 		providers.NewDBNameProvider,
 		repositories.NewCashRepository,
 		repositories.NewCategoryRepository,

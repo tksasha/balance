@@ -2,6 +2,7 @@
 
 //go:generate go run -mod=mod github.com/google/wire/cmd/wire
 //go:build !wireinject
+// +build !wireinject
 
 package wire
 
@@ -39,7 +40,8 @@ func InitializeServer() *server.Server {
 	itemCreateHandler := handlers.NewItemCreateHandler(itemService)
 	itemEditHandler := handlers.NewItemEditHandler(itemService)
 	itemListHandler := handlers.NewItemListHandler(itemService)
-	routesRoutes := routes.New(cashCreateHandler, cashEditHandler, categoryCreateHandler, categoryDeleteHandler, categoryEditHandler, categoryListHandler, categoryUpdateHandler, indexPageHandler, itemCreateHandler, itemEditHandler, itemListHandler)
+	itemUpdateHandler := handlers.NewItemUpdateHandler(itemService)
+	routesRoutes := routes.New(cashCreateHandler, cashEditHandler, categoryCreateHandler, categoryDeleteHandler, categoryEditHandler, categoryListHandler, categoryUpdateHandler, indexPageHandler, itemCreateHandler, itemEditHandler, itemListHandler, itemUpdateHandler)
 	serverServer := server.New(configConfig, routesRoutes)
 	return serverServer
 }
