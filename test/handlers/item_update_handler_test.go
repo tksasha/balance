@@ -14,7 +14,6 @@ import (
 	"github.com/tksasha/balance/internal/repositories"
 	"github.com/tksasha/balance/internal/services"
 	"github.com/tksasha/balance/pkg/currencies"
-	"github.com/tksasha/balance/test/testutils"
 	"gotest.tools/v3/assert"
 )
 
@@ -38,9 +37,9 @@ func TestItemUpdateHandler(t *testing.T) { //nolint:funlen
 	mux.Handle("PATCH /items/{id}", middleware)
 
 	t.Run("responds 400 on invalid input", func(t *testing.T) {
-		testutils.Cleanup(ctx, t, db)
+		cleanup(ctx, t, db)
 
-		request := testutils.NewInvalidPatchRequest(ctx, t, "/items/1138")
+		request := newInvalidPatchRequest(ctx, t, "/items/1138")
 
 		recorder := httptest.NewRecorder()
 
@@ -50,9 +49,9 @@ func TestItemUpdateHandler(t *testing.T) { //nolint:funlen
 	})
 
 	t.Run("responds 404 on no item found", func(t *testing.T) {
-		testutils.Cleanup(ctx, t, db)
+		cleanup(ctx, t, db)
 
-		request := testutils.NewPatchRequest(ctx, t, "/items/1218", testutils.Params{"date": "2025-01-25"})
+		request := newPatchRequest(ctx, t, "/items/1218", Params{"date": "2025-01-25"})
 
 		recorder := httptest.NewRecorder()
 
@@ -62,9 +61,9 @@ func TestItemUpdateHandler(t *testing.T) { //nolint:funlen
 	})
 
 	t.Run("responds 200 on successful update", func(t *testing.T) {
-		testutils.Cleanup(ctx, t, db)
+		cleanup(ctx, t, db)
 
-		testutils.CreateCategory(ctx, t, db,
+		createCategory(ctx, t, db,
 			&models.Category{
 				ID:       1148,
 				Name:     "Pharmaceutical",
@@ -72,7 +71,7 @@ func TestItemUpdateHandler(t *testing.T) { //nolint:funlen
 			},
 		)
 
-		testutils.CreateItem(ctx, t, db,
+		createItem(ctx, t, db,
 			&models.Item{
 				ID:         1143,
 				CategoryID: 1148,
@@ -80,8 +79,8 @@ func TestItemUpdateHandler(t *testing.T) { //nolint:funlen
 			},
 		)
 
-		request := testutils.NewPatchRequest(ctx, t, "/items/1143?currency=eur",
-			testutils.Params{
+		request := newPatchRequest(ctx, t, "/items/1143?currency=eur",
+			Params{
 				"date":        "2025-01-25",
 				"formula":     "24 + 11 + 49",
 				"category_id": "1148",
@@ -95,7 +94,7 @@ func TestItemUpdateHandler(t *testing.T) { //nolint:funlen
 
 		assert.Equal(t, recorder.Code, http.StatusOK)
 
-		item := testutils.FindItemByDate(testutils.EURContext(ctx, t), t, db, "2025-01-25")
+		item := findItemByDate(eurContext(ctx, t), t, db, "2025-01-25")
 
 		assert.Equal(t, item.ID, 1143)
 	})

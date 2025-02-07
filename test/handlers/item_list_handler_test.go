@@ -14,7 +14,6 @@ import (
 	"github.com/tksasha/balance/internal/models"
 	mocksforhandlers "github.com/tksasha/balance/mocks/handlers"
 	"github.com/tksasha/balance/pkg/currencies"
-	"github.com/tksasha/balance/test/testutils"
 	"go.uber.org/mock/gomock"
 	"gotest.tools/v3/assert"
 )
@@ -41,7 +40,7 @@ func TestItemListHandler(t *testing.T) {
 			GetItems(ctxWithValue).
 			Return(nil, errors.New("get items error"))
 
-		request := testutils.NewGetRequest(ctx, t, "/items?currency=eur")
+		request := newGetRequest(ctx, t, "/items?currency=eur")
 
 		recorder := httptest.NewRecorder()
 
@@ -60,7 +59,7 @@ func TestItemListHandler(t *testing.T) {
 			GetItems(ctxWithValue).
 			Return(models.Items{}, nil)
 
-		request := testutils.NewGetRequest(ctx, t, "/items?currency=eur")
+		request := newGetRequest(ctx, t, "/items?currency=eur")
 
 		recorder := httptest.NewRecorder()
 

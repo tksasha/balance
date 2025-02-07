@@ -14,7 +14,6 @@ import (
 	"github.com/tksasha/balance/internal/repositories"
 	"github.com/tksasha/balance/internal/services"
 	"github.com/tksasha/balance/pkg/currencies"
-	"github.com/tksasha/balance/test/testutils"
 	"gotest.tools/v3/assert"
 )
 
@@ -37,9 +36,9 @@ func TestCategoryDeleteHandler(t *testing.T) {
 	ctx := context.Background()
 
 	t.Run("responds 404 on category not found", func(t *testing.T) {
-		testutils.Cleanup(ctx, t, db)
+		cleanup(ctx, t, db)
 
-		request := testutils.NewDeleteRequest(ctx, t, "/categories/1348")
+		request := newDeleteRequest(ctx, t, "/categories/1348")
 
 		recorder := httptest.NewRecorder()
 
@@ -49,9 +48,9 @@ func TestCategoryDeleteHandler(t *testing.T) {
 	})
 
 	t.Run("responds 200 on category found", func(t *testing.T) {
-		testutils.Cleanup(ctx, t, db)
+		cleanup(ctx, t, db)
 
-		testutils.CreateCategory(ctx, t, db,
+		createCategory(ctx, t, db,
 			&models.Category{
 				ID:       1411,
 				Name:     "Miscellaneous",
@@ -59,7 +58,7 @@ func TestCategoryDeleteHandler(t *testing.T) {
 			},
 		)
 
-		request := testutils.NewDeleteRequest(ctx, t, "/categories/1411?currency=eur")
+		request := newDeleteRequest(ctx, t, "/categories/1411?currency=eur")
 
 		recorder := httptest.NewRecorder()
 
@@ -67,7 +66,7 @@ func TestCategoryDeleteHandler(t *testing.T) {
 
 		assert.Equal(t, recorder.Code, http.StatusOK)
 
-		category := testutils.FindCategoryByID(testutils.EURContext(ctx, t), t, db, 1411)
+		category := findCategoryByID(eurContext(ctx, t), t, db, 1411)
 
 		assert.Equal(t, category.ID, 1411)
 		assert.Equal(t, category.Name, "Miscellaneous")

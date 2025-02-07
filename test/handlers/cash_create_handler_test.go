@@ -14,7 +14,6 @@ import (
 	"github.com/tksasha/balance/internal/repositories"
 	"github.com/tksasha/balance/internal/services"
 	"github.com/tksasha/balance/pkg/currencies"
-	"github.com/tksasha/balance/test/testutils"
 	"gotest.tools/v3/assert"
 )
 
@@ -37,7 +36,7 @@ func TestCashCreateHandler(t *testing.T) { //nolint:funlen
 	ctx := context.Background()
 
 	t.Run("responds 400 whe parse form failed", func(t *testing.T) {
-		request := testutils.NewInvalidPostRequest(ctx, t, "/cashes")
+		request := newInvalidPostRequest(ctx, t, "/cashes")
 
 		recorder := httptest.NewRecorder()
 
@@ -47,29 +46,29 @@ func TestCashCreateHandler(t *testing.T) { //nolint:funlen
 	})
 
 	t.Run("responds 200 when input is invalid", func(t *testing.T) {
-		request := testutils.NewPostRequest(ctx, t, "/cashes", testutils.Params{"name": ""})
+		request := newPostRequest(ctx, t, "/cashes", Params{"name": ""})
 
 		recorder := httptest.NewRecorder()
 
 		mux.ServeHTTP(recorder, request)
 
-		body := testutils.GetResponseBody(t, recorder.Body)
+		body := getResponseBody(t, recorder.Body)
 
 		assert.Equal(t, recorder.Code, http.StatusOK)
 		assert.Assert(t, strings.Contains(body, "name: is required"))
 	})
 
 	t.Run("responds 200 when create succeeded", func(t *testing.T) {
-		testutils.Cleanup(ctx, t, db)
+		cleanup(ctx, t, db)
 
-		params := testutils.Params{
+		params := Params{
 			"name":          "Bonds",
 			"formula":       "2+3",
 			"supercategory": "2",
 			"favorite":      "true",
 		}
 
-		request := testutils.NewPostRequest(ctx, t, "/cashes?currency=usd", params)
+		request := newPostRequest(ctx, t, "/cashes?currency=usd", params)
 
 		recorder := httptest.NewRecorder()
 
@@ -77,7 +76,7 @@ func TestCashCreateHandler(t *testing.T) { //nolint:funlen
 
 		assert.Equal(t, recorder.Code, http.StatusOK)
 
-		cash := testutils.FindCashByName(testutils.USDContext(ctx, t), t, db, "Bonds")
+		cash := findCashByName(usdContext(ctx, t), t, db, "Bonds")
 
 		assert.Equal(t, cash.ID, 1)
 		assert.Equal(t, cash.Name, "Bonds")

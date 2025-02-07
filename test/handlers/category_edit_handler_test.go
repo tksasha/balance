@@ -14,7 +14,6 @@ import (
 	"github.com/tksasha/balance/internal/repositories"
 	"github.com/tksasha/balance/internal/services"
 	"github.com/tksasha/balance/pkg/currencies"
-	"github.com/tksasha/balance/test/testutils"
 	"gotest.tools/v3/assert"
 )
 
@@ -37,9 +36,9 @@ func TestCategoryEditHandler(t *testing.T) {
 	ctx := context.Background()
 
 	t.Run("responds 404 on category not found", func(t *testing.T) {
-		testutils.Cleanup(ctx, t, db)
+		cleanup(ctx, t, db)
 
-		request := testutils.NewGetRequest(ctx, t, "/categories/1004/edit")
+		request := newGetRequest(ctx, t, "/categories/1004/edit")
 
 		recorder := httptest.NewRecorder()
 
@@ -49,9 +48,9 @@ func TestCategoryEditHandler(t *testing.T) {
 	})
 
 	t.Run("responds 200 on category found", func(t *testing.T) {
-		testutils.Cleanup(ctx, t, db)
+		cleanup(ctx, t, db)
 
-		testutils.CreateCategory(ctx, t, db,
+		createCategory(ctx, t, db,
 			&models.Category{
 				ID:       1010,
 				Name:     "Xenomorphic",
@@ -59,7 +58,7 @@ func TestCategoryEditHandler(t *testing.T) {
 			},
 		)
 
-		request := testutils.NewGetRequest(ctx, t, "/categories/1010/edit?currency=eur")
+		request := newGetRequest(ctx, t, "/categories/1010/edit?currency=eur")
 
 		recorder := httptest.NewRecorder()
 

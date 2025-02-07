@@ -11,7 +11,6 @@ import (
 	"github.com/tksasha/balance/internal/middlewares"
 	mocksforhandlers "github.com/tksasha/balance/mocks/handlers"
 	"github.com/tksasha/balance/pkg/currencies"
-	"github.com/tksasha/balance/test/testutils"
 	"go.uber.org/mock/gomock"
 	"gotest.tools/v3/assert"
 )
@@ -38,7 +37,7 @@ func TestItemEditHandler(t *testing.T) {
 			GetItem(ctxWithValue, "1514").
 			Return(nil, apperrors.ErrResourceNotFound)
 
-		request := testutils.NewGetRequest(ctx, t, "/items/1514/edit?currency=usd")
+		request := newGetRequest(ctx, t, "/items/1514/edit?currency=usd")
 
 		recorder := httptest.NewRecorder()
 

@@ -14,7 +14,6 @@ import (
 	"github.com/tksasha/balance/internal/repositories"
 	"github.com/tksasha/balance/internal/services"
 	"github.com/tksasha/balance/pkg/currencies"
-	"github.com/tksasha/balance/test/testutils"
 	"gotest.tools/v3/assert"
 )
 
@@ -37,9 +36,9 @@ func TestCategoryUpdateHandler(t *testing.T) { //nolint:funlen
 	ctx := context.Background()
 
 	t.Run("responds 404 on no category found", func(t *testing.T) {
-		testutils.Cleanup(ctx, t, db)
+		cleanup(ctx, t, db)
 
-		request := testutils.NewPatchRequest(ctx, t, "/categories/1141", nil)
+		request := newPatchRequest(ctx, t, "/categories/1141", nil)
 
 		recorder := httptest.NewRecorder()
 
@@ -49,10 +48,10 @@ func TestCategoryUpdateHandler(t *testing.T) { //nolint:funlen
 	})
 
 	t.Run("responds 200 on duplicates name", func(t *testing.T) {
-		testutils.Cleanup(ctx, t, db)
+		cleanup(ctx, t, db)
 
 		for id, name := range map[int]string{1151: "Heterogeneous", 11654: "Paraphernalia"} {
-			testutils.CreateCategory(ctx, t, db,
+			createCategory(ctx, t, db,
 				&models.Category{
 					ID:       id,
 					Name:     name,
@@ -61,9 +60,9 @@ func TestCategoryUpdateHandler(t *testing.T) { //nolint:funlen
 			)
 		}
 
-		request := testutils.NewPatchRequest(ctx, t,
+		request := newPatchRequest(ctx, t,
 			"/categories/1151?currency=usd",
-			testutils.Params{"name": "Paraphernalia"},
+			Params{"name": "Paraphernalia"},
 		)
 
 		recorder := httptest.NewRecorder()
@@ -74,9 +73,9 @@ func TestCategoryUpdateHandler(t *testing.T) { //nolint:funlen
 	})
 
 	t.Run("responds 200 on successful update", func(t *testing.T) {
-		testutils.Cleanup(ctx, t, db)
+		cleanup(ctx, t, db)
 
-		testutils.CreateCategory(ctx, t, db,
+		createCategory(ctx, t, db,
 			&models.Category{
 				ID:            1208,
 				Name:          "Paraphernalia",
@@ -87,8 +86,8 @@ func TestCategoryUpdateHandler(t *testing.T) { //nolint:funlen
 			},
 		)
 
-		request := testutils.NewPatchRequest(ctx, t, "/categories/1208?currency=usd",
-			testutils.Params{
+		request := newPatchRequest(ctx, t, "/categories/1208?currency=usd",
+			Params{
 				"name":          "Heterogeneous",
 				"income":        "true",
 				"visible":       "true",
@@ -102,7 +101,7 @@ func TestCategoryUpdateHandler(t *testing.T) { //nolint:funlen
 
 		assert.Equal(t, recorder.Code, http.StatusOK)
 
-		category := testutils.FindCategoryByID(testutils.USDContext(ctx, t), t, db, 1208)
+		category := findCategoryByID(usdContext(ctx, t), t, db, 1208)
 
 		assert.Equal(t, category.ID, 1208)
 		assert.Equal(t, category.Name, "Heterogeneous")

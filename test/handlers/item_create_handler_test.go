@@ -14,7 +14,6 @@ import (
 	"github.com/tksasha/balance/internal/repositories"
 	"github.com/tksasha/balance/internal/services"
 	"github.com/tksasha/balance/pkg/currencies"
-	"github.com/tksasha/balance/test/testutils"
 	"gotest.tools/v3/assert"
 )
 
@@ -38,7 +37,7 @@ func TestItemCreateHandler(t *testing.T) { //nolint:funlen
 	ctx := context.Background()
 
 	t.Run("responds 400 on parse form fails", func(t *testing.T) {
-		request := testutils.NewInvalidPostRequest(ctx, t, "/items")
+		request := newInvalidPostRequest(ctx, t, "/items")
 
 		recorder := httptest.NewRecorder()
 
@@ -48,9 +47,9 @@ func TestItemCreateHandler(t *testing.T) { //nolint:funlen
 	})
 
 	t.Run("renders errors on invalid input", func(t *testing.T) {
-		testutils.Cleanup(ctx, t, db)
+		cleanup(ctx, t, db)
 
-		request := testutils.NewPostRequest(ctx, t, "/items", testutils.Params{"date": ""})
+		request := newPostRequest(ctx, t, "/items", Params{"date": ""})
 
 		recorder := httptest.NewRecorder()
 
@@ -60,9 +59,9 @@ func TestItemCreateHandler(t *testing.T) { //nolint:funlen
 	})
 
 	t.Run("responds 200 on succcessful create", func(t *testing.T) {
-		testutils.Cleanup(ctx, t, db)
+		cleanup(ctx, t, db)
 
-		testutils.CreateCategory(ctx, t, db,
+		createCategory(ctx, t, db,
 			&models.Category{
 				ID:       1101,
 				Name:     "Accoutrements",
@@ -70,14 +69,14 @@ func TestItemCreateHandler(t *testing.T) { //nolint:funlen
 			},
 		)
 
-		params := testutils.Params{
+		params := Params{
 			"date":        "2024-10-16",
 			"formula":     "42.69+69.42",
 			"category_id": "1101",
 			"description": "paper clips, notebooks, and pens",
 		}
 
-		request := testutils.NewPostRequest(ctx, t, "/items?currency=usd", params)
+		request := newPostRequest(ctx, t, "/items?currency=usd", params)
 
 		recorder := httptest.NewRecorder()
 
@@ -85,7 +84,7 @@ func TestItemCreateHandler(t *testing.T) { //nolint:funlen
 
 		assert.Equal(t, http.StatusOK, recorder.Code)
 
-		item := testutils.FindItemByDate(testutils.USDContext(ctx, t), t, db, "2024-10-16")
+		item := findItemByDate(usdContext(ctx, t), t, db, "2024-10-16")
 
 		assert.Equal(t, item.GetDateAsString(), "2024-10-16")
 		assert.Equal(t, item.CategoryID, 1101)

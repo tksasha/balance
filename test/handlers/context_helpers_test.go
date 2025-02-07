@@ -1,4 +1,4 @@
-package testutils
+package handlers_test
 
 import (
 	"context"
@@ -7,13 +7,13 @@ import (
 	"github.com/tksasha/balance/pkg/currencies"
 )
 
-func USDContext(ctx context.Context, t *testing.T) context.Context {
+func usdContext(ctx context.Context, t *testing.T) context.Context {
 	t.Helper()
 
 	return context.WithValue(ctx, currencies.CurrencyContextValue{}, currencies.USD)
 }
 
-func EURContext(ctx context.Context, t *testing.T) context.Context {
+func eurContext(ctx context.Context, t *testing.T) context.Context {
 	t.Helper()
 
 	return context.WithValue(ctx, currencies.CurrencyContextValue{}, currencies.EUR)

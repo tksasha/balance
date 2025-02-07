@@ -16,7 +16,6 @@ import (
 	"github.com/tksasha/balance/internal/repositories"
 	"github.com/tksasha/balance/internal/services"
 	"github.com/tksasha/balance/pkg/currencies"
-	"github.com/tksasha/balance/test/testutils"
 	"gotest.tools/v3/assert"
 )
 
@@ -39,9 +38,9 @@ func TestCategoryListHandler(t *testing.T) {
 	ctx := context.Background()
 
 	t.Run("responds 200 on no categories found", func(t *testing.T) {
-		testutils.Cleanup(ctx, t, db)
+		cleanup(ctx, t, db)
 
-		request := testutils.NewGetRequest(ctx, t, "/categories?currency=eur")
+		request := newGetRequest(ctx, t, "/categories?currency=eur")
 
 		recorder := httptest.NewRecorder()
 
@@ -51,10 +50,10 @@ func TestCategoryListHandler(t *testing.T) {
 	})
 
 	t.Run("responds 200 on categories found", func(t *testing.T) {
-		testutils.Cleanup(ctx, t, db)
+		cleanup(ctx, t, db)
 
 		for id, name := range map[int]string{1: "category one", 2: "category two"} {
-			testutils.CreateCategory(ctx, t, db,
+			createCategory(ctx, t, db,
 				&models.Category{
 					ID:       id,
 					Name:     name,
@@ -64,7 +63,7 @@ func TestCategoryListHandler(t *testing.T) {
 			)
 		}
 
-		request := testutils.NewGetRequest(ctx, t, "/categories?currency=eur")
+		request := newGetRequest(ctx, t, "/categories?currency=eur")
 
 		recorder := httptest.NewRecorder()
 

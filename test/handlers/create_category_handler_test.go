@@ -14,7 +14,6 @@ import (
 	"github.com/tksasha/balance/internal/repositories"
 	"github.com/tksasha/balance/internal/services"
 	"github.com/tksasha/balance/pkg/currencies"
-	"github.com/tksasha/balance/test/testutils"
 	"gotest.tools/v3/assert"
 	is "gotest.tools/v3/assert/cmp"
 )
@@ -38,7 +37,7 @@ func TestCategoryCreateHandler(t *testing.T) { //nolint:funlen
 	ctx := context.Background()
 
 	t.Run("responds 200 on invalid input", func(t *testing.T) {
-		request := testutils.NewPostRequest(ctx, t, "/categories", testutils.Params{"name": ""})
+		request := newPostRequest(ctx, t, "/categories", Params{"name": ""})
 
 		recorder := httptest.NewRecorder()
 
@@ -54,10 +53,10 @@ func TestCategoryCreateHandler(t *testing.T) { //nolint:funlen
 	})
 
 	t.Run("responds 200 on successful create", func(t *testing.T) {
-		testutils.Cleanup(ctx, t, db)
+		cleanup(ctx, t, db)
 
-		request := testutils.NewPostRequest(ctx, t, "/categories?currency=eur",
-			testutils.Params{
+		request := newPostRequest(ctx, t, "/categories?currency=eur",
+			Params{
 				"name":          "Miscellaneous",
 				"income":        "true",
 				"visible":       "true",
@@ -77,7 +76,7 @@ func TestCategoryCreateHandler(t *testing.T) { //nolint:funlen
 		assert.Equal(t, recorder.Code, http.StatusOK)
 		assert.Assert(t, is.Contains(string(response), "create category page"))
 
-		category := testutils.FindCategoryByName(testutils.EURContext(ctx, t), t, db, "Miscellaneous")
+		category := findCategoryByName(eurContext(ctx, t), t, db, "Miscellaneous")
 
 		assert.Equal(t, category.ID, 1)
 		assert.Equal(t, category.Name, "Miscellaneous")

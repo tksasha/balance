@@ -1,4 +1,4 @@
-package testutils
+package handlers_test
 
 import (
 	"context"
@@ -34,25 +34,25 @@ func newRequest(ctx context.Context, t *testing.T, method, endpoint string, para
 	return request
 }
 
-func NewPostRequest(ctx context.Context, t *testing.T, endpoint string, params Params) *http.Request {
+func newPostRequest(ctx context.Context, t *testing.T, endpoint string, params Params) *http.Request {
 	t.Helper()
 
 	return newRequest(ctx, t, http.MethodPost, endpoint, params)
 }
 
-func NewPatchRequest(ctx context.Context, t *testing.T, endpoint string, params Params) *http.Request {
+func newPatchRequest(ctx context.Context, t *testing.T, endpoint string, params Params) *http.Request {
 	t.Helper()
 
 	return newRequest(ctx, t, http.MethodPatch, endpoint, params)
 }
 
-func NewDeleteRequest(ctx context.Context, t *testing.T, endpoint string) *http.Request {
+func newDeleteRequest(ctx context.Context, t *testing.T, endpoint string) *http.Request {
 	t.Helper()
 
 	return newRequest(ctx, t, http.MethodDelete, endpoint, nil)
 }
 
-func NewGetRequest(ctx context.Context, t *testing.T, endpoint string) *http.Request {
+func newGetRequest(ctx context.Context, t *testing.T, endpoint string) *http.Request {
 	t.Helper()
 
 	return newRequest(ctx, t, http.MethodGet, endpoint, nil)
@@ -73,19 +73,19 @@ func newInvalidRequest(ctx context.Context, t *testing.T, method, endpoint strin
 	return request
 }
 
-func NewInvalidPatchRequest(ctx context.Context, t *testing.T, endpoint string) *http.Request {
+func newInvalidPatchRequest(ctx context.Context, t *testing.T, endpoint string) *http.Request {
 	t.Helper()
 
 	return newInvalidRequest(ctx, t, http.MethodPatch, endpoint)
 }
 
-func NewInvalidPostRequest(ctx context.Context, t *testing.T, endpoint string) *http.Request {
+func newInvalidPostRequest(ctx context.Context, t *testing.T, endpoint string) *http.Request {
 	t.Helper()
 
 	return newInvalidRequest(ctx, t, http.MethodPost, endpoint)
 }
 
-func GetResponseBody(t *testing.T, reader io.Reader) string {
+func getResponseBody(t *testing.T, reader io.Reader) string {
 	t.Helper()
 
 	body, err := io.ReadAll(reader)
@@ -96,7 +96,7 @@ func GetResponseBody(t *testing.T, reader io.Reader) string {
 	return string(body)
 }
 
-func NewMux(t *testing.T, pattern string, handler http.Handler) *http.ServeMux {
+func newMux(t *testing.T, pattern string, handler http.Handler) *http.ServeMux {
 	t.Helper()
 
 	handler = middlewares.NewCurrencyMiddleware().Wrap(handler)
