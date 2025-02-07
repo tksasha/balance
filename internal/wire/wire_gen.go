@@ -2,11 +2,11 @@
 
 //go:generate go run -mod=mod github.com/google/wire/cmd/wire
 //go:build !wireinject
-// +build !wireinject
 
 package wire
 
 import (
+	"context"
 	"github.com/tksasha/balance/internal/config"
 	"github.com/tksasha/balance/internal/db"
 	"github.com/tksasha/balance/internal/handlers"
@@ -21,12 +21,14 @@ import (
 
 func InitializeServer() *server.Server {
 	configConfig := config.New()
+	contextContext := context.Background()
 	dbNameProvider := providers.NewDBNameProvider()
-	dbDB := db.Open(dbNameProvider)
+	dbDB := db.Open(contextContext, dbNameProvider)
 	cashRepository := repositories.NewCashRepository(dbDB)
 	cashService := services.NewCashService(cashRepository)
 	cashCreateHandler := handlers.NewCashCreateHandler(cashService)
 	cashEditHandler := handlers.NewCashEditHandler(cashService)
+	cashDeleteHandler := handlers.NewCashDeleteHandler(cashService)
 	categoryRepository := repositories.NewCategoryRepository(dbDB)
 	categoryService := services.NewCategoryService(categoryRepository)
 	categoryCreateHandler := handlers.NewCategoryCreateHandler(categoryService)
@@ -41,7 +43,7 @@ func InitializeServer() *server.Server {
 	itemEditHandler := handlers.NewItemEditHandler(itemService)
 	itemListHandler := handlers.NewItemListHandler(itemService)
 	itemUpdateHandler := handlers.NewItemUpdateHandler(itemService)
-	routesRoutes := routes.New(cashCreateHandler, cashEditHandler, categoryCreateHandler, categoryDeleteHandler, categoryEditHandler, categoryListHandler, categoryUpdateHandler, indexPageHandler, itemCreateHandler, itemEditHandler, itemListHandler, itemUpdateHandler)
+	routesRoutes := routes.New(cashCreateHandler, cashEditHandler, cashDeleteHandler, categoryCreateHandler, categoryDeleteHandler, categoryEditHandler, categoryListHandler, categoryUpdateHandler, indexPageHandler, itemCreateHandler, itemEditHandler, itemListHandler, itemUpdateHandler)
 	serverServer := server.New(configConfig, routesRoutes)
 	return serverServer
 }

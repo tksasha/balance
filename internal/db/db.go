@@ -12,9 +12,7 @@ type DB struct {
 	Connection *sql.DB
 }
 
-func Open(dbNameProvider DBNameProvider) *DB {
-	ctx := context.Background()
-
+func Open(ctx context.Context, dbNameProvider DBNameProvider) *DB {
 	db, err := sql.Open("sqlite3", dbNameProvider.Provide())
 	if err != nil {
 		panic(err)

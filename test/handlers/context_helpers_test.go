@@ -19,11 +19,19 @@ func eurContext(ctx context.Context, t *testing.T) context.Context {
 	return context.WithValue(ctx, currencies.CurrencyContextValue{}, currencies.EUR)
 }
 
-func getCurrency(ctx context.Context) currencies.Currency {
-	currency, ok := ctx.Value(currencies.CurrencyContextValue{}).(currencies.Currency)
-	if !ok {
-		currency = currencies.DefaultCurrency
+func currencyContext(ctx context.Context, t *testing.T, currency currencies.Currency) context.Context {
+	t.Helper()
+
+	switch currency {
+	case currencies.UAH:
+		return context.WithValue(ctx, currencies.CurrencyContextValue{}, currencies.UAH)
+	case currencies.USD:
+		return context.WithValue(ctx, currencies.CurrencyContextValue{}, currencies.USD)
+	case currencies.EUR:
+		return context.WithValue(ctx, currencies.CurrencyContextValue{}, currencies.EUR)
+	default:
+		t.Fatalf("invalid currency: %v", currency)
 	}
 
-	return currency
+	return nil
 }

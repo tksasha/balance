@@ -3,6 +3,8 @@
 package wire
 
 import (
+	"context"
+
 	"github.com/google/wire"
 	"github.com/tksasha/balance/internal/config"
 	"github.com/tksasha/balance/internal/db"
@@ -17,8 +19,10 @@ import (
 func InitializeServer() *server.Server {
 	wire.Build(
 		config.New,
+		context.Background,
 		db.Open,
 		handlers.NewCashCreateHandler,
+		handlers.NewCashDeleteHandler,
 		handlers.NewCashEditHandler,
 		handlers.NewCategoryCreateHandler,
 		handlers.NewCategoryDeleteHandler,

@@ -7,33 +7,19 @@ import (
 	"strings"
 	"testing"
 
-	"github.com/tksasha/balance/internal/db"
 	"github.com/tksasha/balance/internal/handlers"
-	"github.com/tksasha/balance/internal/middlewares"
-	providers "github.com/tksasha/balance/internal/providers/test"
-	"github.com/tksasha/balance/internal/repositories"
-	"github.com/tksasha/balance/internal/services"
 	"github.com/tksasha/balance/pkg/currencies"
 	"gotest.tools/v3/assert"
 )
 
-func TestCashCreateHandler(t *testing.T) { //nolint:funlen
-	dbNameProvider := providers.NewDBNameProvider()
+func TestCashCreateHandler(t *testing.T) {
+	ctx := context.Background()
 
-	db := db.Open(dbNameProvider)
-
-	cashRepository := repositories.NewCashRepository(db)
-
-	cashService := services.NewCashService(cashRepository)
-
-	middleware := middlewares.NewCurrencyMiddleware().Wrap(
-		handlers.NewCashCreateHandler(cashService),
+	handler := handlers.NewCashCreateHandler(
+		newCashService(ctx, t),
 	)
 
-	mux := http.NewServeMux()
-	mux.Handle("POST /cashes", middleware)
-
-	ctx := context.Background()
+	mux := newMux(t, "POST /cashes", handler)
 
 	t.Run("responds 400 whe parse form failed", func(t *testing.T) {
 		request := newInvalidPostRequest(ctx, t, "/cashes")
@@ -59,7 +45,7 @@ func TestCashCreateHandler(t *testing.T) { //nolint:funlen
 	})
 
 	t.Run("responds 200 when create succeeded", func(t *testing.T) {
-		cleanup(ctx, t, db)
+		cleanup(ctx, t)
 
 		params := Params{
 			"name":          "Bonds",
@@ -76,7 +62,7 @@ func TestCashCreateHandler(t *testing.T) { //nolint:funlen
 
 		assert.Equal(t, recorder.Code, http.StatusOK)
 
-		cash := findCashByName(usdContext(ctx, t), t, db, "Bonds")
+		cash := findCashByName(ctx, t, currencies.USD, "Bonds")
 
 		assert.Equal(t, cash.ID, 1)
 		assert.Equal(t, cash.Name, "Bonds")

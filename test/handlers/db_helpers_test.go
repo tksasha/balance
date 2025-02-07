@@ -2,17 +2,27 @@ package handlers_test
 
 import (
 	"context"
+	"database/sql"
 	"testing"
 
 	"github.com/tksasha/balance/internal/db"
 	"github.com/tksasha/balance/internal/models"
+	providers "github.com/tksasha/balance/internal/providers/test"
 	"github.com/tksasha/balance/pkg/currencies"
 )
 
-func findCashByName(ctx context.Context, t *testing.T, db *db.DB, name string) *models.Cash {
+func newDB(ctx context.Context, t *testing.T) *sql.DB {
 	t.Helper()
 
-	currency := getCurrency(ctx)
+	dbNameProvider := providers.NewDBNameProvider()
+
+	return db.Open(ctx, dbNameProvider).Connection
+}
+
+func findCashByName(ctx context.Context, t *testing.T, currency currencies.Currency, name string) *models.Cash {
+	t.Helper()
+
+	ctx = currencyContext(ctx, t, currency)
 
 	query := `
 		SELECT id, name, formula, sum, currency, supercategory, favorite, deleted_at
@@ -22,7 +32,12 @@ func findCashByName(ctx context.Context, t *testing.T, db *db.DB, name string) *
 
 	cash := &models.Cash{}
 
-	if err := db.Connection.
+	db := newDB(ctx, t)
+	defer func() {
+		_ = db.Close()
+	}()
+
+	if err := db.
 		QueryRowContext(ctx, query, name, currency).
 		Scan(
 			&cash.ID,
@@ -141,14 +156,19 @@ func findCategoryByID(ctx context.Context, t *testing.T, db *db.DB, id int) *mod
 	return category
 }
 
-func cleanup(ctx context.Context, t *testing.T, db *db.DB) {
+func cleanup(ctx context.Context, t *testing.T) {
 	t.Helper()
 
 	t.Cleanup(func() {
+		db := newDB(ctx, t)
+		defer func() {
+			_ = db.Close()
+		}()
+
 		tables := []string{"items", "categories", "cashes"}
 
 		for _, table := range tables {
-			if _, err := db.Connection.ExecContext(ctx, "DELETE FROM "+table); err != nil { //nolint:gosec
+			if _, err := db.ExecContext(ctx, "DELETE FROM "+table); err != nil { //nolint:gosec
 				t.Fatalf("failed to truncate %s, error: %v", table, err)
 			}
 		}
