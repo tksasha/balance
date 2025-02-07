@@ -11,17 +11,17 @@ import (
 	"github.com/tksasha/balance/pkg/validation"
 )
 
-type UpdateCategoryHandler struct {
+type CategoryUpdateHandler struct {
 	categoryService CategoryService
 }
 
-func NewUpdateCategoryHandler(categoryService CategoryService) *UpdateCategoryHandler {
-	return &UpdateCategoryHandler{
+func NewCategoryUpdateHandler(categoryService CategoryService) *CategoryUpdateHandler {
+	return &CategoryUpdateHandler{
 		categoryService: categoryService,
 	}
 }
 
-func (h *UpdateCategoryHandler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
+func (h *CategoryUpdateHandler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 	category, err := h.handle(r)
 	if err != nil {
 		if errors.Is(err, apperrors.ErrResourceNotFound) {
@@ -49,7 +49,7 @@ func (h *UpdateCategoryHandler) ServeHTTP(w http.ResponseWriter, r *http.Request
 	_, _ = w.Write([]byte("update category page\n"))
 }
 
-func (h *UpdateCategoryHandler) handle(r *http.Request) (*models.Category, error) {
+func (h *CategoryUpdateHandler) handle(r *http.Request) (*models.Category, error) {
 	id, err := strconv.Atoi(r.PathValue("id"))
 	if err != nil {
 		return nil, apperrors.ErrResourceNotFound

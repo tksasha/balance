@@ -25,7 +25,7 @@ func New(
 	indexPageHandler *handlers.IndexPageHandler,
 	itemCreateHandler *handlers.ItemCreateHandler,
 	itemEditHandler *handlers.ItemEditHandler,
-	updateCategoryHandler *handlers.UpdateCategoryHandler,
+	categoryUpdateHandler *handlers.CategoryUpdateHandler,
 ) *Routes {
 	mux := http.NewServeMux()
 
@@ -41,7 +41,7 @@ func New(
 	mux.Handle("POST /categories", categoryCreateHandler)
 	mux.Handle("GET /categories", categoryListHandler)
 	mux.Handle("GET /categories/{id}/edit", categoryEditHandler)
-	mux.Handle("PATCH /categories/{id}", updateCategoryHandler)
+	mux.Handle("PATCH /categories/{id}", categoryUpdateHandler)
 	mux.Handle("DELETE /categories/{id}", categoryDeleteHandler)
 
 	mux.Handle("POST /cash", cashCreateHandler)

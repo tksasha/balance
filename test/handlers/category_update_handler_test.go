@@ -18,7 +18,7 @@ import (
 	"gotest.tools/v3/assert"
 )
 
-func TestUpdateCategoryHandler(t *testing.T) { //nolint:funlen
+func TestCategoryUpdateHandler(t *testing.T) { //nolint:funlen
 	dbNameProvider := providers.NewDBNameProvider()
 
 	db := db.Open(dbNameProvider)
@@ -28,7 +28,7 @@ func TestUpdateCategoryHandler(t *testing.T) { //nolint:funlen
 	categoryService := services.NewCategoryService(categoryRepository)
 
 	middleware := middlewares.NewCurrencyMiddleware().Wrap(
-		handlers.NewUpdateCategoryHandler(categoryService),
+		handlers.NewCategoryUpdateHandler(categoryService),
 	)
 
 	mux := http.NewServeMux()
