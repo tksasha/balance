@@ -12,7 +12,7 @@ import (
 	"gotest.tools/v3/assert"
 )
 
-func TestCashCreateHandler(t *testing.T) {
+func TestCashCreateHandler(t *testing.T) { //nolint:funlen
 	ctx := context.Background()
 
 	service, db := newCashService(ctx, t)

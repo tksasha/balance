@@ -16,9 +16,12 @@ import (
 func TestCashEditHandler(t *testing.T) {
 	ctx := context.Background()
 
-	handler := handlers.NewCashEditHandler(
-		newCashService(ctx, t),
-	)
+	service, db := newCashService(ctx, t)
+	defer func() {
+		_ = db.Close()
+	}()
+
+	handler := handlers.NewCashEditHandler(service)
 
 	mux := newMux(t, "GET /cashes/{id}/edit", handler)
 
