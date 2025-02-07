@@ -118,3 +118,20 @@ func (s *CashService) Update(ctx context.Context, request requests.UpdateCashReq
 
 	return cash, nil
 }
+
+func (s *CashService) Delete(ctx context.Context, input string) error {
+	id, err := strconv.Atoi(input)
+	if err != nil {
+		return apperrors.ErrResourceNotFound
+	}
+
+	if err := s.cashRepository.Delete(ctx, id); err != nil {
+		if errors.Is(err, apperrors.ErrRecordNotFound) {
+			return apperrors.ErrResourceNotFound
+		}
+
+		return err
+	}
+
+	return nil
+}
