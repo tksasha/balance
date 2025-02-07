@@ -7,28 +7,20 @@ import (
 	"strings"
 	"testing"
 
-	"github.com/tksasha/balance/internal/db"
 	"github.com/tksasha/balance/internal/handlers"
 	"github.com/tksasha/balance/internal/models"
-	providers "github.com/tksasha/balance/internal/providers/test"
-	"github.com/tksasha/balance/internal/repositories"
-	"github.com/tksasha/balance/internal/services"
 	"github.com/tksasha/balance/pkg/currencies"
 	"gotest.tools/v3/assert"
 )
 
-func TestCashEditHandler(t *testing.T) { //nolint:funlen
-	dbNameProvider := providers.NewDBNameProvider()
-
-	db := db.Open(dbNameProvider)
-
-	cashRepository := repositories.NewCashRepository(db)
-
-	cashService := services.NewCashService(cashRepository)
-
-	mux := newMux(t, "GET /cashes/{id}/edit", handlers.NewCashEditHandler(cashService))
-
+func TestCashEditHandler(t *testing.T) {
 	ctx := context.Background()
+
+	handler := handlers.NewCashEditHandler(
+		newCashService(ctx, t),
+	)
+
+	mux := newMux(t, "GET /cashes/{id}/edit", handler)
 
 	t.Run("renders 404 on invalid id", func(t *testing.T) {
 		request := newGetRequest(ctx, t, "/cashes/abc/edit")
@@ -41,7 +33,7 @@ func TestCashEditHandler(t *testing.T) { //nolint:funlen
 	})
 
 	t.Run("renders 404 on not found", func(t *testing.T) {
-		cleanup(ctx, t, db)
+		cleanup(ctx, t)
 
 		request := newGetRequest(ctx, t, "/cashes/1255/edit")
 
@@ -53,7 +45,7 @@ func TestCashEditHandler(t *testing.T) { //nolint:funlen
 	})
 
 	t.Run("renders resource on success", func(t *testing.T) {
-		cleanup(ctx, t, db)
+		cleanup(ctx, t)
 
 		cash := &models.Cash{
 			ID:            1300,
@@ -65,7 +57,7 @@ func TestCashEditHandler(t *testing.T) { //nolint:funlen
 			Favorite:      true,
 		}
 
-		createCash(ctx, t, db, cash)
+		createCash(ctx, t, cash)
 
 		request := newGetRequest(ctx, t, "/cashes/1300/edit?currency=eur")
 

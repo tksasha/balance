@@ -55,10 +55,15 @@ func findCashByName(ctx context.Context, t *testing.T, currency currencies.Curre
 	return cash
 }
 
-func createCash(ctx context.Context, t *testing.T, db *db.DB, cash *models.Cash) {
+func createCash(ctx context.Context, t *testing.T, cash *models.Cash) {
 	t.Helper()
 
-	if _, err := db.Connection.ExecContext(
+	db := newDB(ctx, t)
+	defer func() {
+		_ = db.Close()
+	}()
+
+	if _, err := db.ExecContext(
 		ctx,
 		"INSERT INTO cashes(id, currency, formula, sum, name, supercategory, favorite) VALUES(?, ?, ?, ?, ?, ?, ?)",
 		cash.ID,
