@@ -10,17 +10,17 @@ import (
 	"github.com/tksasha/balance/internal/models"
 )
 
-type EditCategoryHandler struct {
+type CategoryEditHandler struct {
 	categoryService CategoryService
 }
 
-func NewEditCategoryHandler(categoryService CategoryService) *EditCategoryHandler {
-	return &EditCategoryHandler{
+func NewCategoryEditHandler(categoryService CategoryService) *CategoryEditHandler {
+	return &CategoryEditHandler{
 		categoryService: categoryService,
 	}
 }
 
-func (h *EditCategoryHandler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
+func (h *CategoryEditHandler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 	category, err := h.handle(r)
 	if err != nil {
 		if errors.Is(err, apperrors.ErrResourceNotFound) {
@@ -41,7 +41,7 @@ func (h *EditCategoryHandler) ServeHTTP(w http.ResponseWriter, r *http.Request) 
 	_, _ = w.Write([]byte("edit category form\n"))
 }
 
-func (h *EditCategoryHandler) handle(r *http.Request) (*models.Category, error) {
+func (h *CategoryEditHandler) handle(r *http.Request) (*models.Category, error) {
 	id, err := strconv.Atoi(r.PathValue("id"))
 	if err != nil {
 		return nil, apperrors.ErrResourceNotFound

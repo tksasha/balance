@@ -8,17 +8,17 @@ import (
 	"github.com/tksasha/balance/internal/apperrors"
 )
 
-type GetItemHandler struct {
+type ItemEditHandler struct {
 	itemService ItemService
 }
 
-func NewGetItemHandler(itemService ItemService) *GetItemHandler {
-	return &GetItemHandler{
+func NewItemEditHandler(itemService ItemService) *ItemEditHandler {
+	return &ItemEditHandler{
 		itemService: itemService,
 	}
 }
 
-func (h *GetItemHandler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
+func (h *ItemEditHandler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 	if err := h.handle(w, r); err != nil {
 		if errors.Is(err, apperrors.ErrResourceNotFound) {
 			http.Error(w, "Resource Not Found", http.StatusNotFound)
@@ -32,7 +32,7 @@ func (h *GetItemHandler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 	}
 }
 
-func (h *GetItemHandler) handle(_ http.ResponseWriter, r *http.Request) error {
+func (h *ItemEditHandler) handle(_ http.ResponseWriter, r *http.Request) error {
 	item, err := h.itemService.GetItem(r.Context(), r.PathValue("id"))
 	if err != nil {
 		slog.Error("failed to get item by id", "error", err)

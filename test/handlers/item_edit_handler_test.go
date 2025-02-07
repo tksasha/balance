@@ -16,13 +16,13 @@ import (
 	"gotest.tools/v3/assert"
 )
 
-func TestEdit(t *testing.T) {
+func TestItemEditHandler(t *testing.T) {
 	controller := gomock.NewController(t)
 
 	itemService := mocksforhandlers.NewMockItemService(controller)
 
 	middleware := middlewares.NewCurrencyMiddleware().Wrap(
-		handlers.NewGetItemHandler(itemService),
+		handlers.NewItemEditHandler(itemService),
 	)
 
 	ctx := context.Background()

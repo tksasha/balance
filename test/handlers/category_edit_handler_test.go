@@ -18,7 +18,7 @@ import (
 	"gotest.tools/v3/assert"
 )
 
-func TestEdit(t *testing.T) {
+func TestCategoryEditHandler(t *testing.T) {
 	dbNameProvider := providers.NewDBNameProvider()
 
 	db := db.Open(dbNameProvider)
@@ -28,7 +28,7 @@ func TestEdit(t *testing.T) {
 	categoryService := services.NewCategoryService(categoryRepository)
 
 	middleware := middlewares.NewCurrencyMiddleware().Wrap(
-		handlers.NewEditCategoryHandler(categoryService),
+		handlers.NewCategoryEditHandler(categoryService),
 	)
 
 	mux := http.NewServeMux()
