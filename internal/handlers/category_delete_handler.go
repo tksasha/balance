@@ -10,17 +10,17 @@ import (
 	"github.com/tksasha/balance/internal/models"
 )
 
-type DeleteCategoryHandler struct {
+type CategoryDeleteHandler struct {
 	categoryService CategoryService
 }
 
-func NewDeleteCategoryHandler(categoryService CategoryService) *DeleteCategoryHandler {
-	return &DeleteCategoryHandler{
+func NewCategoryDeleteHandler(categoryService CategoryService) *CategoryDeleteHandler {
+	return &CategoryDeleteHandler{
 		categoryService: categoryService,
 	}
 }
 
-func (h *DeleteCategoryHandler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
+func (h *CategoryDeleteHandler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 	category, err := h.handle(r)
 	if err != nil {
 		if errors.Is(err, apperrors.ErrResourceNotFound) {
@@ -41,7 +41,7 @@ func (h *DeleteCategoryHandler) ServeHTTP(w http.ResponseWriter, r *http.Request
 	_, _ = w.Write([]byte("delete category page\n"))
 }
 
-func (h *DeleteCategoryHandler) handle(r *http.Request) (*models.Category, error) {
+func (h *CategoryDeleteHandler) handle(r *http.Request) (*models.Category, error) {
 	id, err := strconv.Atoi(r.PathValue("id"))
 	if err != nil {
 		return nil, apperrors.ErrResourceNotFound

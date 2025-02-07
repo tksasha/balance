@@ -18,7 +18,7 @@ import (
 	"gotest.tools/v3/assert"
 )
 
-func TestDelete(t *testing.T) {
+func TestCategoryDeleteHandler(t *testing.T) {
 	dbNameProvider := providers.NewDBNameProvider()
 
 	db := db.Open(dbNameProvider)
@@ -28,7 +28,7 @@ func TestDelete(t *testing.T) {
 	categoryService := services.NewCategoryService(categoryRepository)
 
 	middleware := middlewares.NewCurrencyMiddleware().Wrap(
-		handlers.NewDeleteCategoryHandler(categoryService),
+		handlers.NewCategoryDeleteHandler(categoryService),
 	)
 
 	mux := http.NewServeMux()

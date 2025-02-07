@@ -18,6 +18,7 @@ func New(
 	cashCreateHandler *handlers.CashCreateHandler,
 	cashEditHandler *handlers.CashEditHandler,
 	categoryCreateHandler *handlers.CategoryCreateHandler,
+	categoryDeleteHandler *handlers.CategoryDeleteHandler,
 	itemCreateHandler *handlers.ItemCreateHandler,
 	editCategoryHandler *handlers.EditCategoryHandler,
 	getCategoriesHandler *handlers.GetCategoriesHandler,
@@ -41,6 +42,7 @@ func New(
 	mux.Handle("GET /categories", getCategoriesHandler)
 	mux.Handle("GET /categories/{id}/edit", editCategoryHandler)
 	mux.Handle("PATCH /categories/{id}", updateCategoryHandler)
+	mux.Handle("DELETE /categories/{id}", categoryDeleteHandler)
 
 	mux.Handle("POST /cash", cashCreateHandler)
 	mux.Handle("GET /cashes/{id}/edit", cashEditHandler)
