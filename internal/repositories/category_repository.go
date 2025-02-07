@@ -169,11 +169,7 @@ func (r *CategoryRepository) Update(ctx context.Context, category *models.Catego
 func (r *CategoryRepository) Delete(ctx context.Context, category *models.Category) error {
 	currency := getCurrencyFromContext(ctx)
 
-	query := `
-		UPDATE categories
-		SET deleted_at=?
-		WHERE id=? AND currency=?
-	`
+	query := `UPDATE categories SET deleted_at=? WHERE id=? AND currency=?`
 
 	if _, err := r.db.ExecContext(ctx, query, time.Now().UTC(), category.ID, currency); err != nil {
 		return err
