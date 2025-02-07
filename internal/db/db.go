@@ -8,11 +8,7 @@ import (
 	"github.com/tksasha/balance/internal/db/migrations"
 )
 
-type DB struct {
-	Connection *sql.DB
-}
-
-func Open(ctx context.Context, dbNameProvider DBNameProvider) *DB {
+func Open(ctx context.Context, dbNameProvider DBNameProvider) *sql.DB {
 	db, err := sql.Open("sqlite3", dbNameProvider.Provide())
 	if err != nil {
 		panic(err)
@@ -32,9 +28,7 @@ func Open(ctx context.Context, dbNameProvider DBNameProvider) *DB {
 
 	migrate(ctx, db)
 
-	return &DB{
-		Connection: db,
-	}
+	return db
 }
 
 func migrate(ctx context.Context, db *sql.DB) {

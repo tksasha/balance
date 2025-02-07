@@ -7,7 +7,6 @@ import (
 	"time"
 
 	"github.com/tksasha/balance/internal/apperrors"
-	"github.com/tksasha/balance/internal/db"
 	"github.com/tksasha/balance/internal/models"
 )
 
@@ -15,9 +14,9 @@ type CategoryRepository struct {
 	db *sql.DB
 }
 
-func NewCategoryRepository(db *db.DB) *CategoryRepository {
+func NewCategoryRepository(db *sql.DB) *CategoryRepository {
 	return &CategoryRepository{
-		db: db.Connection,
+		db: db,
 	}
 }
 

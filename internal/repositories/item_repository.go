@@ -8,7 +8,6 @@ import (
 	"time"
 
 	"github.com/tksasha/balance/internal/apperrors"
-	"github.com/tksasha/balance/internal/db"
 	"github.com/tksasha/balance/internal/models"
 )
 
@@ -16,9 +15,9 @@ type ItemRepository struct {
 	db *sql.DB
 }
 
-func NewItemRepository(db *db.DB) *ItemRepository {
+func NewItemRepository(db *sql.DB) *ItemRepository {
 	return &ItemRepository{
-		db: db.Connection,
+		db: db,
 	}
 }
 

@@ -2,6 +2,7 @@
 
 //go:generate go run -mod=mod github.com/google/wire/cmd/wire
 //go:build !wireinject
+// +build !wireinject
 
 package wire
 
@@ -23,13 +24,13 @@ func InitializeServer() *server.Server {
 	configConfig := config.New()
 	contextContext := context.Background()
 	dbNameProvider := providers.NewDBNameProvider()
-	dbDB := db.Open(contextContext, dbNameProvider)
-	cashRepository := repositories.NewCashRepository(dbDB)
+	sqlDB := db.Open(contextContext, dbNameProvider)
+	cashRepository := repositories.NewCashRepository(sqlDB)
 	cashService := services.NewCashService(cashRepository)
 	cashCreateHandler := handlers.NewCashCreateHandler(cashService)
 	cashEditHandler := handlers.NewCashEditHandler(cashService)
 	cashDeleteHandler := handlers.NewCashDeleteHandler(cashService)
-	categoryRepository := repositories.NewCategoryRepository(dbDB)
+	categoryRepository := repositories.NewCategoryRepository(sqlDB)
 	categoryService := services.NewCategoryService(categoryRepository)
 	categoryCreateHandler := handlers.NewCategoryCreateHandler(categoryService)
 	categoryDeleteHandler := handlers.NewCategoryDeleteHandler(categoryService)
@@ -37,7 +38,7 @@ func InitializeServer() *server.Server {
 	categoryListHandler := handlers.NewCategoryListHandler(categoryService)
 	categoryUpdateHandler := handlers.NewCategoryUpdateHandler(categoryService)
 	indexPageHandler := handlers.NewIndexPageHandler(categoryService)
-	itemRepository := repositories.NewItemRepository(dbDB)
+	itemRepository := repositories.NewItemRepository(sqlDB)
 	itemService := services.NewItemService(itemRepository, categoryRepository)
 	itemCreateHandler := handlers.NewItemCreateHandler(itemService)
 	itemEditHandler := handlers.NewItemEditHandler(itemService)

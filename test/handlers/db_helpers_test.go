@@ -16,7 +16,7 @@ func newDB(ctx context.Context, t *testing.T) *sql.DB {
 
 	dbNameProvider := providers.NewDBNameProvider()
 
-	return db.Open(ctx, dbNameProvider).Connection
+	return db.Open(ctx, dbNameProvider)
 }
 
 func findCashByName(ctx context.Context, t *testing.T, currency currencies.Currency, name string) *models.Cash {
@@ -78,10 +78,15 @@ func createCash(ctx context.Context, t *testing.T, cash *models.Cash) {
 	}
 }
 
-func createCategory(ctx context.Context, t *testing.T, db *db.DB, category *models.Category) {
+func createCategory(ctx context.Context, t *testing.T, category *models.Category) {
 	t.Helper()
 
-	if _, err := db.Connection.ExecContext(
+	db := newDB(ctx, t)
+	defer func() {
+		_ = db.Close()
+	}()
+
+	if _, err := db.ExecContext(
 		ctx,
 		"INSERT INTO categories(id, name, income, visible, currency, supercategory) VALUES(?, ?, ?, ?, ?, ?)",
 		category.ID,
@@ -95,7 +100,7 @@ func createCategory(ctx context.Context, t *testing.T, db *db.DB, category *mode
 	}
 }
 
-func findCategoryByName(ctx context.Context, t *testing.T, db *db.DB, name string) *models.Category {
+func findCategoryByName(ctx context.Context, t *testing.T, db *sql.DB, name string) *models.Category {
 	t.Helper()
 
 	currency, ok := ctx.Value(currencies.CurrencyContextValue{}).(currencies.Currency)
@@ -111,7 +116,7 @@ func findCategoryByName(ctx context.Context, t *testing.T, db *db.DB, name strin
 
 	category := &models.Category{}
 
-	if err := db.Connection.
+	if err := db.
 		QueryRowContext(ctx, query, name, currency).
 		Scan(
 			&category.ID,
@@ -128,13 +133,15 @@ func findCategoryByName(ctx context.Context, t *testing.T, db *db.DB, name strin
 	return category
 }
 
-func findCategoryByID(ctx context.Context, t *testing.T, db *db.DB, id int) *models.Category {
+func findCategoryByID(ctx context.Context, t *testing.T, currency currencies.Currency, id int) *models.Category {
 	t.Helper()
 
-	currency, ok := ctx.Value(currencies.CurrencyContextValue{}).(currencies.Currency)
-	if !ok {
-		currency = currencies.DefaultCurrency
-	}
+	db := newDB(ctx, t)
+	defer func() {
+		_ = db.Close()
+	}()
+
+	ctx = currencyContext(ctx, t, currency)
 
 	query := `
 		SELECT id, name, income, visible, currency, supercategory, deleted_at
@@ -144,7 +151,7 @@ func findCategoryByID(ctx context.Context, t *testing.T, db *db.DB, id int) *mod
 
 	category := &models.Category{}
 
-	if err := db.Connection.
+	if err := db.
 		QueryRowContext(ctx, query, id, currency).
 		Scan(
 			&category.ID,
@@ -180,7 +187,7 @@ func cleanup(ctx context.Context, t *testing.T) {
 	})
 }
 
-func createItem(ctx context.Context, t *testing.T, db *db.DB, item *models.Item) {
+func createItem(ctx context.Context, t *testing.T, db *sql.DB, item *models.Item) {
 	t.Helper()
 
 	query := `
@@ -188,7 +195,7 @@ func createItem(ctx context.Context, t *testing.T, db *db.DB, item *models.Item)
 		VALUES(?, ?, ?, ?, ?, ?, ?, ?)
 	`
 
-	if _, err := db.Connection.ExecContext(
+	if _, err := db.ExecContext(
 		ctx,
 		query,
 		item.ID,
@@ -204,7 +211,7 @@ func createItem(ctx context.Context, t *testing.T, db *db.DB, item *models.Item)
 	}
 }
 
-func findItemByDate(ctx context.Context, t *testing.T, db *db.DB, date string) *models.Item {
+func findItemByDate(ctx context.Context, t *testing.T, db *sql.DB, date string) *models.Item {
 	t.Helper()
 
 	currency, ok := ctx.Value(currencies.CurrencyContextValue{}).(currencies.Currency)
@@ -222,7 +229,7 @@ func findItemByDate(ctx context.Context, t *testing.T, db *db.DB, date string) *
 		LIMIT 1
 	`
 
-	if err := db.Connection.
+	if err := db.
 		QueryRowContext(ctx, query, date, currency).
 		Scan(
 			&item.ID,

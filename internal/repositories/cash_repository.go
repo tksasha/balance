@@ -7,7 +7,6 @@ import (
 	"time"
 
 	"github.com/tksasha/balance/internal/apperrors"
-	"github.com/tksasha/balance/internal/db"
 	"github.com/tksasha/balance/internal/models"
 )
 
@@ -15,9 +14,9 @@ type CashRepository struct {
 	db *sql.DB
 }
 
-func NewCashRepository(db *db.DB) *CashRepository {
+func NewCashRepository(db *sql.DB) *CashRepository {
 	return &CashRepository{
-		db: db.Connection,
+		db: db,
 	}
 }
 

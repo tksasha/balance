@@ -15,9 +15,12 @@ import (
 func TestCashCreateHandler(t *testing.T) {
 	ctx := context.Background()
 
-	handler := handlers.NewCashCreateHandler(
-		newCashService(ctx, t),
-	)
+	service, db := newCashService(ctx, t)
+	defer func() {
+		_ = db.Close()
+	}()
+
+	handler := handlers.NewCashCreateHandler(service)
 
 	mux := newMux(t, "POST /cashes", handler)
 
