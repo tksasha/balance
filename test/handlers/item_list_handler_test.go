@@ -19,13 +19,13 @@ import (
 	"gotest.tools/v3/assert"
 )
 
-func TestList(t *testing.T) {
+func TestItemListHandler(t *testing.T) {
 	controller := gomock.NewController(t)
 
 	itemService := mocksforhandlers.NewMockItemService(controller)
 
 	middleware := middlewares.NewCurrencyMiddleware().Wrap(
-		handlers.NewGetItemsHandler(itemService),
+		handlers.NewItemListHandler(itemService),
 	)
 
 	ctx := context.Background()

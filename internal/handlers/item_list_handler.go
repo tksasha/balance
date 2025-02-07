@@ -7,15 +7,15 @@ import (
 	"github.com/tksasha/balance/internal/components"
 )
 
-type GetItemsHandler struct {
+type ItemListHandler struct {
 	itemService ItemService
 }
 
-func NewGetItemsHandler(itemService ItemService) *GetItemsHandler {
-	return &GetItemsHandler{itemService}
+func NewItemListHandler(itemService ItemService) *ItemListHandler {
+	return &ItemListHandler{itemService}
 }
 
-func (h *GetItemsHandler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
+func (h *ItemListHandler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 	if err := h.handle(w, r); err != nil {
 		slog.Error("get items handler error", "error", err)
 
@@ -23,7 +23,7 @@ func (h *GetItemsHandler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 	}
 }
 
-func (h *GetItemsHandler) handle(w http.ResponseWriter, r *http.Request) error {
+func (h *ItemListHandler) handle(w http.ResponseWriter, r *http.Request) error {
 	items, err := h.itemService.GetItems(r.Context())
 	if err != nil {
 		slog.Error("failed to get items", "error", err)
