@@ -6,38 +6,24 @@ import (
 	"net/http/httptest"
 	"testing"
 
-	"github.com/tksasha/balance/internal/db"
 	"github.com/tksasha/balance/internal/handlers"
-	"github.com/tksasha/balance/internal/middlewares"
 	"github.com/tksasha/balance/internal/models"
-	providers "github.com/tksasha/balance/internal/providers/test"
-	"github.com/tksasha/balance/internal/repositories"
-	"github.com/tksasha/balance/internal/services"
 	"github.com/tksasha/balance/pkg/currencies"
 	"gotest.tools/v3/assert"
 )
 
 func TestItemUpdateHandler(t *testing.T) { //nolint:funlen
-	dbNameProvider := providers.NewDBNameProvider()
-
-	db := db.Open(dbNameProvider)
-
-	itemRepository := repositories.NewItemRepository(db)
-	categoryRepository := repositories.NewCategoryRepository(db)
-
-	itemService := services.NewItemService(itemRepository, categoryRepository)
-
-	middleware := middlewares.NewCurrencyMiddleware().Wrap(
-		handlers.NewItemUpdateHandler(itemService),
-	)
-
 	ctx := context.Background()
 
-	mux := http.NewServeMux()
-	mux.Handle("PATCH /items/{id}", middleware)
+	service, db := newItemService(ctx, t)
+	defer func() {
+		_ = db.Close()
+	}()
+
+	mux := newMux(t, "PATCH /items/{id}", handlers.NewItemUpdateHandler(service))
 
 	t.Run("responds 400 on invalid input", func(t *testing.T) {
-		cleanup(ctx, t, db)
+		cleanup(ctx, t)
 
 		request := newInvalidPatchRequest(ctx, t, "/items/1138")
 
@@ -49,7 +35,7 @@ func TestItemUpdateHandler(t *testing.T) { //nolint:funlen
 	})
 
 	t.Run("responds 404 on no item found", func(t *testing.T) {
-		cleanup(ctx, t, db)
+		cleanup(ctx, t)
 
 		request := newPatchRequest(ctx, t, "/items/1218", Params{"date": "2025-01-25"})
 
@@ -61,23 +47,23 @@ func TestItemUpdateHandler(t *testing.T) { //nolint:funlen
 	})
 
 	t.Run("responds 200 on successful update", func(t *testing.T) {
-		cleanup(ctx, t, db)
+		cleanup(ctx, t)
 
-		createCategory(ctx, t, db,
-			&models.Category{
-				ID:       1148,
-				Name:     "Pharmaceutical",
-				Currency: currencies.EUR,
-			},
-		)
+		categoryToCreate := &models.Category{
+			ID:       1148,
+			Name:     "Pharmaceutical",
+			Currency: currencies.EUR,
+		}
 
-		createItem(ctx, t, db,
-			&models.Item{
-				ID:         1143,
-				CategoryID: 1148,
-				Currency:   currencies.EUR,
-			},
-		)
+		createCategory(ctx, t, categoryToCreate)
+
+		itemToCreate := &models.Item{
+			ID:         1143,
+			CategoryID: 1148,
+			Currency:   currencies.EUR,
+		}
+
+		createItem(ctx, t, itemToCreate)
 
 		request := newPatchRequest(ctx, t, "/items/1143?currency=eur",
 			Params{
@@ -94,7 +80,7 @@ func TestItemUpdateHandler(t *testing.T) { //nolint:funlen
 
 		assert.Equal(t, recorder.Code, http.StatusOK)
 
-		item := findItemByDate(eurContext(ctx, t), t, db, "2025-01-25")
+		item := findItemByDate(ctx, t, currencies.EUR, "2025-01-25")
 
 		assert.Equal(t, item.ID, 1143)
 	})

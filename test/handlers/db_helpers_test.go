@@ -189,8 +189,13 @@ func cleanup(ctx context.Context, t *testing.T) {
 	})
 }
 
-func createItem(ctx context.Context, t *testing.T, db *sql.DB, item *models.Item) {
+func createItem(ctx context.Context, t *testing.T, item *models.Item) {
 	t.Helper()
+
+	db := newDB(ctx, t)
+	defer func() {
+		_ = db.Close()
+	}()
 
 	query := `
 		INSERT INTO items(id, date, formula, sum, category_id, category_name, description, currency)
