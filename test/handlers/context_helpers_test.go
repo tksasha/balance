@@ -7,18 +7,6 @@ import (
 	"github.com/tksasha/balance/pkg/currencies"
 )
 
-func usdContext(ctx context.Context, t *testing.T) context.Context {
-	t.Helper()
-
-	return context.WithValue(ctx, currencies.CurrencyContextValue{}, currencies.USD)
-}
-
-func eurContext(ctx context.Context, t *testing.T) context.Context {
-	t.Helper()
-
-	return context.WithValue(ctx, currencies.CurrencyContextValue{}, currencies.EUR)
-}
-
 func currencyContext(ctx context.Context, t *testing.T, currency currencies.Currency) context.Context {
 	t.Helper()
 

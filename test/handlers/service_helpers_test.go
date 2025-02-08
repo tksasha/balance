@@ -29,3 +29,15 @@ func newCategoryService(ctx context.Context, t *testing.T) (handlers.CategorySer
 
 	return services.NewCategoryService(categoryRepository), db
 }
+
+func newItemService(ctx context.Context, t *testing.T) (handlers.ItemService, *sql.DB) {
+	t.Helper()
+
+	db := newDB(ctx, t)
+
+	itemRepository := repositories.NewItemRepository(db)
+
+	categoryRepository := repositories.NewCategoryRepository(db)
+
+	return services.NewItemService(itemRepository, categoryRepository), db
+}

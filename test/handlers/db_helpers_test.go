@@ -213,13 +213,15 @@ func createItem(ctx context.Context, t *testing.T, db *sql.DB, item *models.Item
 	}
 }
 
-func findItemByDate(ctx context.Context, t *testing.T, db *sql.DB, date string) *models.Item {
+func findItemByDate(ctx context.Context, t *testing.T, currency currencies.Currency, date string) *models.Item {
 	t.Helper()
 
-	currency, ok := ctx.Value(currencies.CurrencyContextValue{}).(currencies.Currency)
-	if !ok {
-		currency = currencies.DefaultCurrency
-	}
+	db := newDB(ctx, t)
+	defer func() {
+		_ = db.Close()
+	}()
+
+	ctx = currencyContext(ctx, t, currency)
 
 	item := &models.Item{}
 

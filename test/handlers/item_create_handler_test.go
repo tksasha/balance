@@ -6,35 +6,21 @@ import (
 	"net/http/httptest"
 	"testing"
 
-	"github.com/tksasha/balance/internal/db"
 	"github.com/tksasha/balance/internal/handlers"
-	"github.com/tksasha/balance/internal/middlewares"
 	"github.com/tksasha/balance/internal/models"
-	providers "github.com/tksasha/balance/internal/providers/test"
-	"github.com/tksasha/balance/internal/repositories"
-	"github.com/tksasha/balance/internal/services"
 	"github.com/tksasha/balance/pkg/currencies"
 	"gotest.tools/v3/assert"
 )
 
 func TestItemCreateHandler(t *testing.T) { //nolint:funlen
-	dbNameProvider := providers.NewDBNameProvider()
-
-	db := db.Open(dbNameProvider)
-
-	itemRepository := repositories.NewItemRepository(db)
-	categoryRepository := repositories.NewCategoryRepository(db)
-
-	itemService := services.NewItemService(itemRepository, categoryRepository)
-
-	middleware := middlewares.NewCurrencyMiddleware().Wrap(
-		handlers.NewItemCreateHandler(itemService),
-	)
-
-	mux := http.NewServeMux()
-	mux.Handle("POST /items", middleware)
-
 	ctx := context.Background()
+
+	service, db := newItemService(ctx, t)
+	defer func() {
+		_ = db.Close()
+	}()
+
+	mux := newMux(t, "POST /items", handlers.NewItemCreateHandler(service))
 
 	t.Run("responds 400 on parse form fails", func(t *testing.T) {
 		request := newInvalidPostRequest(ctx, t, "/items")
@@ -47,7 +33,7 @@ func TestItemCreateHandler(t *testing.T) { //nolint:funlen
 	})
 
 	t.Run("renders errors on invalid input", func(t *testing.T) {
-		cleanup(ctx, t, db)
+		cleanup(ctx, t)
 
 		request := newPostRequest(ctx, t, "/items", Params{"date": ""})
 
@@ -59,15 +45,15 @@ func TestItemCreateHandler(t *testing.T) { //nolint:funlen
 	})
 
 	t.Run("responds 200 on succcessful create", func(t *testing.T) {
-		cleanup(ctx, t, db)
+		cleanup(ctx, t)
 
-		createCategory(ctx, t, db,
-			&models.Category{
-				ID:       1101,
-				Name:     "Accoutrements",
-				Currency: currencies.USD,
-			},
-		)
+		categoryToCreate := &models.Category{
+			ID:       1101,
+			Name:     "Accoutrements",
+			Currency: currencies.USD,
+		}
+
+		createCategory(ctx, t, categoryToCreate)
 
 		params := Params{
 			"date":        "2024-10-16",
@@ -84,7 +70,7 @@ func TestItemCreateHandler(t *testing.T) { //nolint:funlen
 
 		assert.Equal(t, http.StatusOK, recorder.Code)
 
-		item := findItemByDate(usdContext(ctx, t), t, db, "2024-10-16")
+		item := findItemByDate(ctx, t, currencies.USD, "2024-10-16")
 
 		assert.Equal(t, item.GetDateAsString(), "2024-10-16")
 		assert.Equal(t, item.CategoryID, 1101)
