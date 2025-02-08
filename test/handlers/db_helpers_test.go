@@ -100,13 +100,15 @@ func createCategory(ctx context.Context, t *testing.T, category *models.Category
 	}
 }
 
-func findCategoryByName(ctx context.Context, t *testing.T, db *sql.DB, name string) *models.Category {
+func findCategoryByName(ctx context.Context, t *testing.T, currency currencies.Currency, name string) *models.Category {
 	t.Helper()
 
-	currency, ok := ctx.Value(currencies.CurrencyContextValue{}).(currencies.Currency)
-	if !ok {
-		currency = currencies.DefaultCurrency
-	}
+	db := newDB(ctx, t)
+	defer func() {
+		_ = db.Close()
+	}()
+
+	ctx = currencyContext(ctx, t, currency)
 
 	query := `
 		SELECT id, name, income, visible, currency, supercategory, deleted_at

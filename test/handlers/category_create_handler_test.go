@@ -7,34 +7,21 @@ import (
 	"net/http/httptest"
 	"testing"
 
-	"github.com/tksasha/balance/internal/db"
 	"github.com/tksasha/balance/internal/handlers"
-	"github.com/tksasha/balance/internal/middlewares"
-	providers "github.com/tksasha/balance/internal/providers/test"
-	"github.com/tksasha/balance/internal/repositories"
-	"github.com/tksasha/balance/internal/services"
 	"github.com/tksasha/balance/pkg/currencies"
 	"gotest.tools/v3/assert"
 	is "gotest.tools/v3/assert/cmp"
 )
 
-func TestCategoryCreateHandler(t *testing.T) { //nolint:funlen
-	dbNameProvider := providers.NewDBNameProvider()
-
-	db := db.Open(dbNameProvider)
-
-	categoryRepository := repositories.NewCategoryRepository(db)
-
-	categoryService := services.NewCategoryService(categoryRepository)
-
-	middleware := middlewares.NewCurrencyMiddleware().Wrap(
-		handlers.NewCategoryCreateHandler(categoryService),
-	)
-
-	mux := http.NewServeMux()
-	mux.Handle("POST /categories", middleware)
-
+func TestCategoryCreateHandler(t *testing.T) {
 	ctx := context.Background()
+
+	service, db := newCategoryService(ctx, t)
+	defer func() {
+		_ = db.Close()
+	}()
+
+	mux := newMux(t, "POST /categories", handlers.NewCategoryCreateHandler(service))
 
 	t.Run("responds 200 on invalid input", func(t *testing.T) {
 		request := newPostRequest(ctx, t, "/categories", Params{"name": ""})
@@ -53,7 +40,7 @@ func TestCategoryCreateHandler(t *testing.T) { //nolint:funlen
 	})
 
 	t.Run("responds 200 on successful create", func(t *testing.T) {
-		cleanup(ctx, t, db)
+		cleanup(ctx, t)
 
 		request := newPostRequest(ctx, t, "/categories?currency=eur",
 			Params{
@@ -76,7 +63,7 @@ func TestCategoryCreateHandler(t *testing.T) { //nolint:funlen
 		assert.Equal(t, recorder.Code, http.StatusOK)
 		assert.Assert(t, is.Contains(string(response), "create category page"))
 
-		category := findCategoryByName(eurContext(ctx, t), t, db, "Miscellaneous")
+		category := findCategoryByName(ctx, t, currencies.EUR, "Miscellaneous")
 
 		assert.Equal(t, category.ID, 1)
 		assert.Equal(t, category.Name, "Miscellaneous")
