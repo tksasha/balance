@@ -231,7 +231,7 @@ func TestCashService_Update(t *testing.T) { //nolint:funlen
 	ctx := context.Background()
 
 	t.Run("returns error when id is invalid", func(t *testing.T) {
-		request := requests.UpdateCashRequest{
+		request := requests.CashUpdateRequest{
 			ID: "abc",
 		}
 
@@ -241,7 +241,7 @@ func TestCashService_Update(t *testing.T) { //nolint:funlen
 	})
 
 	t.Run("returns error when cash was not found", func(t *testing.T) {
-		request := requests.UpdateCashRequest{
+		request := requests.CashUpdateRequest{
 			ID: "1530",
 		}
 
@@ -256,7 +256,7 @@ func TestCashService_Update(t *testing.T) { //nolint:funlen
 	})
 
 	t.Run("returns error when find failed", func(t *testing.T) {
-		request := requests.UpdateCashRequest{
+		request := requests.CashUpdateRequest{
 			ID: "1530",
 		}
 
@@ -271,7 +271,7 @@ func TestCashService_Update(t *testing.T) { //nolint:funlen
 	})
 
 	t.Run("returns error when formula is blank", func(t *testing.T) {
-		request := requests.UpdateCashRequest{
+		request := requests.CashUpdateRequest{
 			ID:      "1540",
 			Formula: "",
 			Name:    "Bonds",
@@ -297,7 +297,7 @@ func TestCashService_Update(t *testing.T) { //nolint:funlen
 	})
 
 	t.Run("returns error when formula is invalid", func(t *testing.T) {
-		request := requests.UpdateCashRequest{
+		request := requests.CashUpdateRequest{
 			ID:      "1540",
 			Formula: "abc",
 			Name:    "Bonds",
@@ -323,7 +323,7 @@ func TestCashService_Update(t *testing.T) { //nolint:funlen
 	})
 
 	t.Run("returns error when name is blank", func(t *testing.T) {
-		request := requests.UpdateCashRequest{
+		request := requests.CashUpdateRequest{
 			ID:      "1540",
 			Formula: "2+3",
 			Name:    "",
@@ -344,7 +344,7 @@ func TestCashService_Update(t *testing.T) { //nolint:funlen
 	})
 
 	t.Run("returns error when name already exists", func(t *testing.T) {
-		request := requests.UpdateCashRequest{
+		request := requests.CashUpdateRequest{
 			ID:      "1540",
 			Formula: "2+3",
 			Name:    "Bonds",
@@ -370,7 +370,7 @@ func TestCashService_Update(t *testing.T) { //nolint:funlen
 	})
 
 	t.Run("returns error when supercategory is invalid", func(t *testing.T) {
-		request := requests.UpdateCashRequest{
+		request := requests.CashUpdateRequest{
 			ID:            "1540",
 			Formula:       "2+3",
 			Name:          "Bonds",
@@ -397,7 +397,7 @@ func TestCashService_Update(t *testing.T) { //nolint:funlen
 	})
 
 	t.Run("returns error when favorite is invalid", func(t *testing.T) {
-		request := requests.UpdateCashRequest{
+		request := requests.CashUpdateRequest{
 			ID:            "1540",
 			Formula:       "2+3",
 			Name:          "Bonds",
@@ -425,7 +425,7 @@ func TestCashService_Update(t *testing.T) { //nolint:funlen
 	})
 
 	t.Run("returns error when update failed", func(t *testing.T) {
-		request := requests.UpdateCashRequest{
+		request := requests.CashUpdateRequest{
 			ID:            "1540",
 			Formula:       "2+3",
 			Name:          "Bonds",
@@ -458,7 +458,7 @@ func TestCashService_Update(t *testing.T) { //nolint:funlen
 	})
 
 	t.Run("returns updated cash when update succeeded", func(t *testing.T) {
-		request := requests.UpdateCashRequest{
+		request := requests.CashUpdateRequest{
 			ID:            "1540",
 			Formula:       "2+3",
 			Name:          "Bonds",

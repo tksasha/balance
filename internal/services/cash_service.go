@@ -74,7 +74,7 @@ func (s *CashService) FindByID(ctx context.Context, input string) (*models.Cash,
 	return s.findByID(ctx, input)
 }
 
-func (s *CashService) Update(ctx context.Context, request requests.UpdateCashRequest) (*models.Cash, error) {
+func (s *CashService) Update(ctx context.Context, request requests.CashUpdateRequest) (*models.Cash, error) {
 	cash, err := s.findByID(ctx, request.ID)
 	if err != nil {
 		return nil, err

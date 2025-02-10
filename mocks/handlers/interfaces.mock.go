@@ -277,3 +277,18 @@ func (mr *MockCashServiceMockRecorder) FindByID(ctx, id any) *gomock.Call {
 	mr.mock.ctrl.T.Helper()
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "FindByID", reflect.TypeOf((*MockCashService)(nil).FindByID), ctx, id)
 }
+
+// Update mocks base method.
+func (m *MockCashService) Update(ctx context.Context, request requests.CashUpdateRequest) (*models.Cash, error) {
+	m.ctrl.T.Helper()
+	ret := m.ctrl.Call(m, "Update", ctx, request)
+	ret0, _ := ret[0].(*models.Cash)
+	ret1, _ := ret[1].(error)
+	return ret0, ret1
+}
+
+// Update indicates an expected call of Update.
+func (mr *MockCashServiceMockRecorder) Update(ctx, request any) *gomock.Call {
+	mr.mock.ctrl.T.Helper()
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "Update", reflect.TypeOf((*MockCashService)(nil).Update), ctx, request)
+}

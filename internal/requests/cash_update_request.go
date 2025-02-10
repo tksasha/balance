@@ -1,6 +1,6 @@
 package requests
 
-type UpdateCashRequest struct {
+type CashUpdateRequest struct {
 	ID            string
 	Formula       string
 	Name          string
