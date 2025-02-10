@@ -73,7 +73,7 @@ func (s *ItemService) GetItem(ctx context.Context, input string) (*models.Item, 
 	return item, nil
 }
 
-func (s *ItemService) Update(ctx context.Context, request requests.UpdateItemRequest) error {
+func (s *ItemService) Update(ctx context.Context, request requests.ItemUpdateRequest) error {
 	item, err := s.findByID(ctx, request.ID)
 	if err != nil {
 		return apperrors.ErrResourceNotFound

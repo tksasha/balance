@@ -50,7 +50,7 @@ func (h *ItemUpdateHandler) handle(r *http.Request) error {
 
 	return h.itemService.Update(
 		r.Context(),
-		requests.UpdateItemRequest{
+		requests.ItemUpdateRequest{
 			ID:          r.PathValue("id"),
 			Date:        r.FormValue("date"),
 			Formula:     r.FormValue("formula"),

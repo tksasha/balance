@@ -239,7 +239,7 @@ func TestItemService_Update(t *testing.T) { //nolint:funlen,maintidx
 	ctx := context.Background()
 
 	t.Run("returns error when id is invalid", func(t *testing.T) {
-		request := requests.UpdateItemRequest{
+		request := requests.ItemUpdateRequest{
 			ID: "abc",
 		}
 
@@ -249,7 +249,7 @@ func TestItemService_Update(t *testing.T) { //nolint:funlen,maintidx
 	})
 
 	t.Run("returns error when item doesn't exist", func(t *testing.T) {
-		request := requests.UpdateItemRequest{
+		request := requests.ItemUpdateRequest{
 			ID: "1027",
 		}
 
@@ -264,7 +264,7 @@ func TestItemService_Update(t *testing.T) { //nolint:funlen,maintidx
 	})
 
 	t.Run("returns error when find by id failed", func(t *testing.T) {
-		request := requests.UpdateItemRequest{
+		request := requests.ItemUpdateRequest{
 			ID: "1049",
 		}
 
@@ -279,7 +279,7 @@ func TestItemService_Update(t *testing.T) { //nolint:funlen,maintidx
 	})
 
 	t.Run("returns error when date is blank", func(t *testing.T) {
-		request := requests.UpdateItemRequest{
+		request := requests.ItemUpdateRequest{
 			ID:         "1051",
 			Date:       "",
 			Formula:    "2+2",
@@ -309,7 +309,7 @@ func TestItemService_Update(t *testing.T) { //nolint:funlen,maintidx
 	})
 
 	t.Run("returns error when date is invalid", func(t *testing.T) {
-		request := requests.UpdateItemRequest{
+		request := requests.ItemUpdateRequest{
 			ID:         "1051",
 			Date:       "abc",
 			Formula:    "2+2",
@@ -339,7 +339,7 @@ func TestItemService_Update(t *testing.T) { //nolint:funlen,maintidx
 	})
 
 	t.Run("returns error when formula is blank", func(t *testing.T) {
-		request := requests.UpdateItemRequest{
+		request := requests.ItemUpdateRequest{
 			ID:         "1051",
 			Date:       "2025-01-25",
 			Formula:    "",
@@ -369,7 +369,7 @@ func TestItemService_Update(t *testing.T) { //nolint:funlen,maintidx
 	})
 
 	t.Run("returns error when formula is invalid", func(t *testing.T) {
-		request := requests.UpdateItemRequest{
+		request := requests.ItemUpdateRequest{
 			ID:         "1051",
 			Date:       "2025-01-25",
 			Formula:    "abc",
@@ -399,7 +399,7 @@ func TestItemService_Update(t *testing.T) { //nolint:funlen,maintidx
 	})
 
 	t.Run("returns error when category_id is blank", func(t *testing.T) {
-		request := requests.UpdateItemRequest{
+		request := requests.ItemUpdateRequest{
 			ID:         "1051",
 			Date:       "2025-01-25",
 			Formula:    "2+2",
@@ -419,7 +419,7 @@ func TestItemService_Update(t *testing.T) { //nolint:funlen,maintidx
 	})
 
 	t.Run("returns error when category_id is invalid", func(t *testing.T) {
-		request := requests.UpdateItemRequest{
+		request := requests.ItemUpdateRequest{
 			ID:         "1051",
 			Date:       "2025-01-25",
 			Formula:    "2+2",
@@ -439,7 +439,7 @@ func TestItemService_Update(t *testing.T) { //nolint:funlen,maintidx
 	})
 
 	t.Run("returns error when find category by id failed", func(t *testing.T) {
-		request := requests.UpdateItemRequest{
+		request := requests.ItemUpdateRequest{
 			ID:         "1051",
 			Date:       "2025-01-25",
 			Formula:    "2+2",
@@ -464,7 +464,7 @@ func TestItemService_Update(t *testing.T) { //nolint:funlen,maintidx
 	})
 
 	t.Run("returns error when update failed", func(t *testing.T) {
-		request := requests.UpdateItemRequest{
+		request := requests.ItemUpdateRequest{
 			ID:          "1051",
 			Date:        "2025-01-25",
 			Formula:     "2+2",
@@ -512,7 +512,7 @@ func TestItemService_Update(t *testing.T) { //nolint:funlen,maintidx
 	})
 
 	t.Run("returns nil when update succeeded", func(t *testing.T) {
-		request := requests.UpdateItemRequest{
+		request := requests.ItemUpdateRequest{
 			ID:          "1051",
 			Date:        "2025-01-25",
 			Formula:     "2+2",

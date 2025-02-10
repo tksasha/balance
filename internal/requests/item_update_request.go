@@ -1,6 +1,6 @@
 package requests
 
-type UpdateItemRequest struct {
+type ItemUpdateRequest struct {
 	ID          string
 	Date        string
 	Formula     string

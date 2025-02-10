@@ -102,7 +102,7 @@ func (mr *MockItemServiceMockRecorder) GetItems(ctx any) *gomock.Call {
 }
 
 // Update mocks base method.
-func (m *MockItemService) Update(ctx context.Context, request requests.UpdateItemRequest) error {
+func (m *MockItemService) Update(ctx context.Context, request requests.ItemUpdateRequest) error {
 	m.ctrl.T.Helper()
 	ret := m.ctrl.Call(m, "Update", ctx, request)
 	ret0, _ := ret[0].(error)
