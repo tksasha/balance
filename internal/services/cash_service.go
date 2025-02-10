@@ -52,7 +52,7 @@ func (s *CashService) Create(ctx context.Context, request requests.CreateCashReq
 	return s.cashRepository.Create(ctx, cash)
 }
 
-func (s *CashService) FindByID(ctx context.Context, input string) (*models.Cash, error) {
+func (s *CashService) findByID(ctx context.Context, input string) (*models.Cash, error) {
 	id, err := strconv.Atoi(input)
 	if err != nil {
 		return nil, apperrors.ErrResourceNotFound
@@ -63,23 +63,20 @@ func (s *CashService) FindByID(ctx context.Context, input string) (*models.Cash,
 		if errors.Is(err, apperrors.ErrRecordNotFound) {
 			return nil, apperrors.ErrResourceNotFound
 		}
+
+		return nil, err
 	}
 
 	return cash, nil
 }
 
+func (s *CashService) FindByID(ctx context.Context, input string) (*models.Cash, error) {
+	return s.findByID(ctx, input)
+}
+
 func (s *CashService) Update(ctx context.Context, request requests.UpdateCashRequest) (*models.Cash, error) {
-	id, err := strconv.Atoi(request.ID)
+	cash, err := s.findByID(ctx, request.ID)
 	if err != nil {
-		return nil, apperrors.ErrResourceNotFound
-	}
-
-	cash, err := s.cashRepository.FindByID(ctx, id)
-	if err != nil {
-		if errors.Is(err, apperrors.ErrRecordNotFound) {
-			return nil, apperrors.ErrResourceNotFound
-		}
-
 		return nil, err
 	}
 
