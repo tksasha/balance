@@ -25,7 +25,7 @@ func TestItemService_Create(t *testing.T) { //nolint:funlen
 	ctx := context.Background()
 
 	t.Run("returns error when date is blank", func(t *testing.T) {
-		request := requests.CreateItemRequest{
+		request := requests.ItemCreateRequest{
 			Date:       "",
 			Formula:    "2+2",
 			CategoryID: "1321",
@@ -47,7 +47,7 @@ func TestItemService_Create(t *testing.T) { //nolint:funlen
 	})
 
 	t.Run("returns error when date is invalid", func(t *testing.T) {
-		request := requests.CreateItemRequest{
+		request := requests.ItemCreateRequest{
 			Date:       "abc",
 			Formula:    "2+2",
 			CategoryID: "1320",
@@ -69,7 +69,7 @@ func TestItemService_Create(t *testing.T) { //nolint:funlen
 	})
 
 	t.Run("returns error when formula is blank", func(t *testing.T) {
-		request := requests.CreateItemRequest{
+		request := requests.ItemCreateRequest{
 			Date:       "2025-01-23",
 			Formula:    "",
 			CategoryID: "1318",
@@ -91,7 +91,7 @@ func TestItemService_Create(t *testing.T) { //nolint:funlen
 	})
 
 	t.Run("returns error when formula is invalid", func(t *testing.T) {
-		request := requests.CreateItemRequest{
+		request := requests.ItemCreateRequest{
 			Date:       "2025-01-23",
 			Formula:    "abc",
 			CategoryID: "1315",
@@ -113,7 +113,7 @@ func TestItemService_Create(t *testing.T) { //nolint:funlen
 	})
 
 	t.Run("returns error when category_id is blank", func(t *testing.T) {
-		request := requests.CreateItemRequest{
+		request := requests.ItemCreateRequest{
 			Date:       "2025-01-23",
 			Formula:    "42.69+69.42",
 			CategoryID: "",
@@ -125,7 +125,7 @@ func TestItemService_Create(t *testing.T) { //nolint:funlen
 	})
 
 	t.Run("returns error when category_id is invalid", func(t *testing.T) {
-		request := requests.CreateItemRequest{
+		request := requests.ItemCreateRequest{
 			Date:       "2025-01-23",
 			Formula:    "42.69+69.42",
 			CategoryID: "abc",
@@ -137,7 +137,7 @@ func TestItemService_Create(t *testing.T) { //nolint:funlen
 	})
 
 	t.Run("returns error when find by id failed", func(t *testing.T) {
-		request := requests.CreateItemRequest{
+		request := requests.ItemCreateRequest{
 			Date:       "2025-01-23",
 			Formula:    "42.69+69.42",
 			CategoryID: "1237",
@@ -154,7 +154,7 @@ func TestItemService_Create(t *testing.T) { //nolint:funlen
 	})
 
 	t.Run("returns error when create failed", func(t *testing.T) {
-		request := requests.CreateItemRequest{
+		request := requests.ItemCreateRequest{
 			Date:        "2025-01-23",
 			Formula:     "42.69+69.42",
 			CategoryID:  "1244",
@@ -191,7 +191,7 @@ func TestItemService_Create(t *testing.T) { //nolint:funlen
 	})
 
 	t.Run("returns item when create succeeded", func(t *testing.T) {
-		request := requests.CreateItemRequest{
+		request := requests.ItemCreateRequest{
 			Date:        "2025-01-23",
 			Formula:     "42.69+69.42",
 			CategoryID:  "1307",

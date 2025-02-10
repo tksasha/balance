@@ -1,6 +1,6 @@
 package requests
 
-type CreateItemRequest struct {
+type ItemCreateRequest struct {
 	Date        string
 	Formula     string
 	CategoryID  string

@@ -8,7 +8,7 @@ import (
 )
 
 type ItemService interface {
-	Create(ctx context.Context, request requests.CreateItemRequest) (*models.Item, error)
+	Create(ctx context.Context, request requests.ItemCreateRequest) (*models.Item, error)
 	GetItems(ctx context.Context) (models.Items, error)
 	GetItem(ctx context.Context, input string) (*models.Item, error)
 	Update(ctx context.Context, request requests.UpdateItemRequest) error

@@ -22,7 +22,7 @@ func NewItemService(itemRepository ItemRepository, categoryRepository CategoryRe
 	}
 }
 
-func (s *ItemService) Create(ctx context.Context, request requests.CreateItemRequest) (*models.Item, error) {
+func (s *ItemService) Create(ctx context.Context, request requests.ItemCreateRequest) (*models.Item, error) {
 	item := &models.Item{
 		Description: request.Description,
 	}

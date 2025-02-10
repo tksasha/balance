@@ -43,7 +43,7 @@ func (m *MockItemService) EXPECT() *MockItemServiceMockRecorder {
 }
 
 // Create mocks base method.
-func (m *MockItemService) Create(ctx context.Context, request requests.CreateItemRequest) (*models.Item, error) {
+func (m *MockItemService) Create(ctx context.Context, request requests.ItemCreateRequest) (*models.Item, error) {
 	m.ctrl.T.Helper()
 	ret := m.ctrl.Call(m, "Create", ctx, request)
 	ret0, _ := ret[0].(*models.Item)

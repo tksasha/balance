@@ -54,7 +54,7 @@ func (h *ItemCreateHandler) handle(r *http.Request) error {
 
 	if _, err := h.itemService.Create(
 		r.Context(),
-		requests.CreateItemRequest{
+		requests.ItemCreateRequest{
 			Date:        r.FormValue("date"),
 			Formula:     r.FormValue("formula"),
 			CategoryID:  r.FormValue("category_id"),
