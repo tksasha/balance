@@ -24,8 +24,17 @@ func (r *CashRepository) Create(ctx context.Context, cash *models.Cash) error {
 	currency := getCurrencyFromContext(ctx)
 
 	query := `
-		INSERT INTO cashes(currency, formula, sum, name, supercategory, favorite)
-		VALUES(?, ?, ?, ?, ?, ?)
+		INSERT INTO
+		    cashes (
+		        currency,
+		        formula,
+		        sum,
+		        name,
+		        supercategory,
+		        favorite
+		    )
+		VALUES
+		    (?, ?, ?, ?, ?, ?)
 	`
 
 	result, err := r.db.ExecContext(
@@ -56,13 +65,15 @@ func (r *CashRepository) NameExists(ctx context.Context, name string, id int) (b
 	currency := getCurrencyFromContext(ctx)
 
 	query := `
-		SELECT 1
-		FROM cashes
+		SELECT
+			1
+		FROM
+			cashes
 		WHERE
-			currency = ? AND
-			deleted_at IS NULL AND
-			name = ? AND
-			id != ?
+			currency = ?
+			AND deleted_at IS NULL
+			AND name = ?
+			AND id != ?
 	`
 
 	row := r.db.QueryRowContext(ctx, query, currency, name, id)
@@ -84,9 +95,20 @@ func (r *CashRepository) FindByID(ctx context.Context, id int) (*models.Cash, er
 	currency := getCurrencyFromContext(ctx)
 
 	query := `
-		SELECT id, currency, name, formula, sum, supercategory, favorite
-		FROM cashes
-		WHERE currency = ? AND deleted_at IS NULL and id = ?
+		SELECT
+		    id,
+		    currency,
+		    name,
+		    formula,
+		    sum,
+		    supercategory,
+		    favorite
+		FROM
+		    cashes
+		WHERE
+		    currency = ?
+		    AND deleted_at IS NULL
+		    AND id = ?
 	`
 
 	row := r.db.QueryRowContext(ctx, query, currency, id)
@@ -117,8 +139,15 @@ func (r *CashRepository) Update(ctx context.Context, cash *models.Cash) error {
 
 	query := `
 		UPDATE cashes
-		SET formula = ?, sum = ?, name = ?, supercategory = ?, favorite = ?
-		WHERE id = ? AND currency = ?
+		SET
+		    formula = ?,
+		    sum = ?,
+		    name = ?,
+		    supercategory = ?,
+		    favorite = ?
+		WHERE
+		    id = ?
+		    AND currency = ?
 	`
 
 	result, err := r.db.ExecContext(
@@ -151,7 +180,14 @@ func (r *CashRepository) Update(ctx context.Context, cash *models.Cash) error {
 func (r *CashRepository) Delete(ctx context.Context, id int) error {
 	currency := getCurrencyFromContext(ctx)
 
-	query := `UPDATE cashes SET deleted_at = ? WHERE id = ? AND currency = ?`
+	query := `
+		UPDATE cashes
+		SET
+			deleted_at = ?
+		WHERE
+			id = ?
+			AND currency = ?
+	`
 
 	result, err := r.db.ExecContext(ctx, query, time.Now().UTC(), id, currency)
 	if err != nil {
