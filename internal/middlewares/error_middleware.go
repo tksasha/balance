@@ -22,6 +22,8 @@ func (m *errorMiddleware) Wrap(next http.Handler) http.Handler {
 
 		if err := rw.Error; err != nil {
 			switch {
+			case errors.Is(err, apperrors.ErrParsingForm):
+				http.Error(w, "Bad Request", http.StatusBadRequest)
 			case errors.Is(err, apperrors.ErrResourceNotFound):
 				http.Error(w, "Resource Not Found", http.StatusNotFound)
 			default:

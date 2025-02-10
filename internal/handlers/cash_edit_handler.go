@@ -20,13 +20,11 @@ func NewCashEditHandler(cashService CashService) *CashEditHandler {
 func (h *CashEditHandler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 	cash, err := h.handle(r)
 	if err != nil {
-		if rw, ok := w.(*responses.Response); ok {
-			rw.Error = err
+		if response, ok := w.(*responses.Response); ok {
+			response.Error = err
 
 			return
 		}
-
-		http.Error(w, "Internal Server Error", http.StatusInternalServerError)
 
 		return
 	}
