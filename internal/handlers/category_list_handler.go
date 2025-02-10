@@ -5,6 +5,7 @@ import (
 	"net/http"
 
 	"github.com/tksasha/balance/internal/components"
+	"github.com/tksasha/balance/internal/responses"
 )
 
 type CategoryListHandler struct {
@@ -19,9 +20,13 @@ func NewCategoryListHandler(categoryService CategoryService) *CategoryListHandle
 
 func (h *CategoryListHandler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 	if err := h.handle(w, r); err != nil {
-		slog.Error("get categories handler error", "error", err)
+		if response, ok := w.(*responses.Response); ok {
+			response.Error = err
 
-		http.Error(w, "Internal Server Error", http.StatusInternalServerError)
+			return
+		}
+
+		return
 	}
 }
 

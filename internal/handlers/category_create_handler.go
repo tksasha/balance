@@ -2,7 +2,6 @@ package handlers
 
 import (
 	"errors"
-	"log/slog"
 	"net/http"
 
 	"github.com/tksasha/balance/internal/apperrors"
@@ -28,10 +27,6 @@ func (h *CategoryCreateHandler) ServeHTTP(w http.ResponseWriter, r *http.Request
 
 			return
 		}
-
-		slog.Error("failed to create category", "error", err)
-
-		http.Error(w, "Internal Server Error", http.StatusInternalServerError)
 
 		return
 	}

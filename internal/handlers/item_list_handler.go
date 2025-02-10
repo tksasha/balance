@@ -5,6 +5,7 @@ import (
 	"net/http"
 
 	"github.com/tksasha/balance/internal/components"
+	"github.com/tksasha/balance/internal/responses"
 )
 
 type ItemListHandler struct {
@@ -17,9 +18,13 @@ func NewItemListHandler(itemService ItemService) *ItemListHandler {
 
 func (h *ItemListHandler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 	if err := h.handle(w, r); err != nil {
-		slog.Error("get items handler error", "error", err)
+		if response, ok := w.(*responses.Response); ok {
+			response.Error = err
 
-		http.Error(w, "Internal Server Error", http.StatusInternalServerError)
+			return
+		}
+
+		return
 	}
 }
 

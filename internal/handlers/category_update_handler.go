@@ -2,12 +2,12 @@ package handlers
 
 import (
 	"errors"
-	"log/slog"
 	"net/http"
 	"strconv"
 
 	"github.com/tksasha/balance/internal/apperrors"
 	"github.com/tksasha/balance/internal/models"
+	"github.com/tksasha/balance/internal/responses"
 	"github.com/tksasha/balance/pkg/validation"
 )
 
@@ -24,12 +24,6 @@ func NewCategoryUpdateHandler(categoryService CategoryService) *CategoryUpdateHa
 func (h *CategoryUpdateHandler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 	category, err := h.handle(r)
 	if err != nil {
-		if errors.Is(err, apperrors.ErrResourceNotFound) {
-			http.Error(w, "Resource Not Found", http.StatusNotFound)
-
-			return
-		}
-
 		var verrors validation.Errors
 		if errors.As(err, &verrors) {
 			_, _ = w.Write([]byte(verrors.Error()))
@@ -37,9 +31,11 @@ func (h *CategoryUpdateHandler) ServeHTTP(w http.ResponseWriter, r *http.Request
 			return
 		}
 
-		slog.Error("update category handler error", "error", err)
+		if response, ok := w.(*responses.Response); ok {
+			response.Error = err
 
-		http.Error(w, "Internal Server Error", http.StatusInternalServerError)
+			return
+		}
 
 		return
 	}

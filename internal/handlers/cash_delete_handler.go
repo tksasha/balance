@@ -1,10 +1,9 @@
 package handlers
 
 import (
-	"errors"
 	"net/http"
 
-	"github.com/tksasha/balance/internal/apperrors"
+	"github.com/tksasha/balance/internal/responses"
 )
 
 type CashDeleteHandler struct {
@@ -19,13 +18,11 @@ func NewCashDeleteHandler(cashService CashService) *CashDeleteHandler {
 
 func (h *CashDeleteHandler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 	if err := h.handle(r); err != nil {
-		if errors.Is(err, apperrors.ErrResourceNotFound) {
-			http.Error(w, "Resource Not Found", http.StatusNotFound)
+		if response, ok := w.(*responses.Response); ok {
+			response.Error = err
 
 			return
 		}
-
-		http.Error(w, "Internal Server Error", http.StatusInternalServerError)
 
 		return
 	}

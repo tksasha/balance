@@ -1,13 +1,12 @@
 package handlers
 
 import (
-	"errors"
-	"log/slog"
 	"net/http"
 	"strconv"
 
 	"github.com/tksasha/balance/internal/apperrors"
 	"github.com/tksasha/balance/internal/models"
+	"github.com/tksasha/balance/internal/responses"
 )
 
 type CategoryEditHandler struct {
@@ -23,15 +22,11 @@ func NewCategoryEditHandler(categoryService CategoryService) *CategoryEditHandle
 func (h *CategoryEditHandler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 	category, err := h.handle(r)
 	if err != nil {
-		if errors.Is(err, apperrors.ErrResourceNotFound) {
-			http.Error(w, "Resource Not Found", http.StatusNotFound)
+		if response, ok := w.(*responses.Response); ok {
+			response.Error = err
 
 			return
 		}
-
-		slog.Error("edit category handler error", "error", err)
-
-		http.Error(w, "Internal Server Error", http.StatusInternalServerError)
 
 		return
 	}

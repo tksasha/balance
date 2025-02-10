@@ -2,11 +2,11 @@ package handlers
 
 import (
 	"errors"
-	"log/slog"
 	"net/http"
 
 	"github.com/tksasha/balance/internal/apperrors"
 	"github.com/tksasha/balance/internal/requests"
+	"github.com/tksasha/balance/internal/responses"
 	"github.com/tksasha/balance/pkg/validation"
 )
 
@@ -22,14 +22,6 @@ func NewItemCreateHandler(itemService ItemService) *ItemCreateHandler {
 
 func (h *ItemCreateHandler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 	if err := h.handle(r); err != nil {
-		if errors.Is(err, apperrors.ErrParsingForm) {
-			slog.Error("invalid user input", "error", err)
-
-			http.Error(w, "Invalid User Input", http.StatusBadRequest)
-
-			return
-		}
-
 		var verrors validation.Errors
 		if errors.As(err, &verrors) {
 			_, _ = w.Write([]byte(verrors.Error()))
@@ -37,9 +29,11 @@ func (h *ItemCreateHandler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 			return
 		}
 
-		slog.Error("create item handler error", "error", err)
+		if response, ok := w.(*responses.Response); ok {
+			response.Error = err
 
-		http.Error(w, "Internal Server Error", http.StatusInternalServerError)
+			return
+		}
 
 		return
 	}

@@ -1,12 +1,11 @@
 package handlers
 
 import (
-	"errors"
-	"log/slog"
 	"net/http"
 
 	"github.com/tksasha/balance/internal/apperrors"
 	"github.com/tksasha/balance/internal/requests"
+	"github.com/tksasha/balance/internal/responses"
 )
 
 type ItemUpdateHandler struct {
@@ -21,21 +20,11 @@ func NewItemUpdateHandler(itemService ItemService) *ItemUpdateHandler {
 
 func (h *ItemUpdateHandler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 	if err := h.handle(r); err != nil {
-		if errors.Is(err, apperrors.ErrParsingForm) {
-			http.Error(w, "Bad Request", http.StatusBadRequest)
+		if response, ok := w.(*responses.Response); ok {
+			response.Error = err
 
 			return
 		}
-
-		if errors.Is(err, apperrors.ErrResourceNotFound) {
-			http.Error(w, "Not Found", http.StatusNotFound)
-
-			return
-		}
-
-		slog.Error("update item handler error", "error", err)
-
-		http.Error(w, "Internal Server Error", http.StatusInternalServerError)
 
 		return
 	}

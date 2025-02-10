@@ -1,12 +1,12 @@
 package handlers
 
 import (
-	"errors"
 	"net/http"
 
 	"github.com/tksasha/balance/internal/apperrors"
 	"github.com/tksasha/balance/internal/models"
 	"github.com/tksasha/balance/internal/requests"
+	"github.com/tksasha/balance/internal/responses"
 )
 
 type CashUpdateHandler struct {
@@ -22,19 +22,11 @@ func NewCashUpdateHandler(cashService CashService) *CashUpdateHandler {
 func (h *CashUpdateHandler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 	cash, err := h.handle(r)
 	if err != nil {
-		if errors.Is(err, apperrors.ErrParsingForm) {
-			http.Error(w, "Bad Request", http.StatusBadRequest)
+		if response, ok := w.(*responses.Response); ok {
+			response.Error = err
 
 			return
 		}
-
-		if errors.Is(err, apperrors.ErrResourceNotFound) {
-			http.Error(w, "Resource Not Found", http.StatusNotFound)
-
-			return
-		}
-
-		http.Error(w, "Internal Server Error", http.StatusInternalServerError)
 
 		return
 	}
