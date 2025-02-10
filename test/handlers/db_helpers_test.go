@@ -255,3 +255,39 @@ func findItemByDate(ctx context.Context, t *testing.T, currency currencies.Curre
 
 	return item
 }
+
+func findCashByID(ctx context.Context, t *testing.T, currency currencies.Currency, id int) *models.Cash {
+	t.Helper()
+
+	db := newDB(ctx, t)
+	defer func() {
+		_ = db.Close()
+	}()
+
+	ctx = currencyContext(ctx, t, currency)
+
+	query := `
+		SELECT id, currency, formula, sum, name, supercategory, favorite, deleted_at
+		FROM cashes
+		WHERE id=? AND currency=?
+	`
+
+	cash := &models.Cash{}
+
+	if err := db.
+		QueryRowContext(ctx, query, id, currency).
+		Scan(
+			&cash.ID,
+			&cash.Currency,
+			&cash.Formula,
+			&cash.Sum,
+			&cash.Name,
+			&cash.Supercategory,
+			&cash.Favorite,
+			&cash.DeletedAt,
+		); err != nil {
+		t.Fatalf("failed to find cash by id, error: %v", err)
+	}
+
+	return cash
+}

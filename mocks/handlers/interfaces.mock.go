@@ -249,6 +249,20 @@ func (mr *MockCashServiceMockRecorder) Create(ctx, request any) *gomock.Call {
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "Create", reflect.TypeOf((*MockCashService)(nil).Create), ctx, request)
 }
 
+// Delete mocks base method.
+func (m *MockCashService) Delete(ctx context.Context, id string) error {
+	m.ctrl.T.Helper()
+	ret := m.ctrl.Call(m, "Delete", ctx, id)
+	ret0, _ := ret[0].(error)
+	return ret0
+}
+
+// Delete indicates an expected call of Delete.
+func (mr *MockCashServiceMockRecorder) Delete(ctx, id any) *gomock.Call {
+	mr.mock.ctrl.T.Helper()
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "Delete", reflect.TypeOf((*MockCashService)(nil).Delete), ctx, id)
+}
+
 // FindByID mocks base method.
 func (m *MockCashService) FindByID(ctx context.Context, id string) (*models.Cash, error) {
 	m.ctrl.T.Helper()
