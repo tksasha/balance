@@ -94,7 +94,11 @@ func (m migration) migrations() (map[string]string, error) {
 			return nil, err
 		}
 
-		migrations[version] = strings.TrimSpace(string(data))
+		query := strings.TrimSpace(string(data))
+
+		if query != "" {
+			migrations[version] = query
+		}
 	}
 
 	return migrations, nil
