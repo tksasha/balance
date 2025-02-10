@@ -1,6 +1,6 @@
 package requests
 
-type CreateCategoryRequest struct {
+type CategoryCreateRequest struct {
 	Name          string
 	Income        string
 	Visible       string

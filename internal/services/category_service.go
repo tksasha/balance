@@ -20,7 +20,7 @@ func NewCategoryService(categoryRepository CategoryRepository) *CategoryService 
 	}
 }
 
-func (s *CategoryService) Create(ctx context.Context, request requests.CreateCategoryRequest) error {
+func (s *CategoryService) Create(ctx context.Context, request requests.CategoryCreateRequest) error {
 	category := &models.Category{
 		Name: request.Name,
 	}

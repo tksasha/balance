@@ -25,7 +25,7 @@ func TestCategoryService_Create(t *testing.T) { //nolint:funlen
 	ctx := context.Background()
 
 	t.Run("returns error when name is blank", func(t *testing.T) {
-		request := requests.CreateCategoryRequest{
+		request := requests.CategoryCreateRequest{
 			Name:          "",
 			Supercategory: "59",
 		}
@@ -36,7 +36,7 @@ func TestCategoryService_Create(t *testing.T) { //nolint:funlen
 	})
 
 	t.Run("returns error when find category by name fails", func(t *testing.T) {
-		request := requests.CreateCategoryRequest{
+		request := requests.CategoryCreateRequest{
 			Name: "Miscellaneous",
 		}
 
@@ -51,7 +51,7 @@ func TestCategoryService_Create(t *testing.T) { //nolint:funlen
 	})
 
 	t.Run("returns error when name already exists", func(t *testing.T) {
-		request := requests.CreateCategoryRequest{
+		request := requests.CategoryCreateRequest{
 			Name:          "Pharmaceutical",
 			Supercategory: "59",
 		}
@@ -72,7 +72,7 @@ func TestCategoryService_Create(t *testing.T) { //nolint:funlen
 	})
 
 	t.Run("returns error when supercategory is invalid", func(t *testing.T) {
-		request := requests.CreateCategoryRequest{
+		request := requests.CategoryCreateRequest{
 			Name:          "Miscellaneous",
 			Supercategory: "abc",
 		}
@@ -88,7 +88,7 @@ func TestCategoryService_Create(t *testing.T) { //nolint:funlen
 	})
 
 	t.Run("returns error when create fails", func(t *testing.T) {
-		request := requests.CreateCategoryRequest{
+		request := requests.CategoryCreateRequest{
 			Name:          "Confectionery",
 			Supercategory: "58",
 		}
@@ -114,7 +114,7 @@ func TestCategoryService_Create(t *testing.T) { //nolint:funlen
 	})
 
 	t.Run("creates successfully", func(t *testing.T) {
-		request := requests.CreateCategoryRequest{
+		request := requests.CategoryCreateRequest{
 			Name:          "Haberdashery",
 			Income:        "true",
 			Visible:       "true",

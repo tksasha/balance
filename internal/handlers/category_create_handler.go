@@ -44,7 +44,7 @@ func (h *CategoryCreateHandler) handle(r *http.Request) error {
 		return apperrors.ErrParsingForm
 	}
 
-	request := requests.CreateCategoryRequest{
+	request := requests.CategoryCreateRequest{
 		Name:          r.FormValue("name"),
 		Income:        r.FormValue("income"),
 		Visible:       r.FormValue("visible"),
