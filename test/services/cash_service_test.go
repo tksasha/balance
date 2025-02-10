@@ -25,7 +25,7 @@ func TestCashService_Create(t *testing.T) { //nolint:funlen
 	ctx := context.Background()
 
 	t.Run("returns error when name is blank", func(t *testing.T) {
-		request := requests.CreateCashRequest{
+		request := requests.CashCreateRequest{
 			Name:          "",
 			Formula:       "2+3",
 			Supercategory: "23",
@@ -38,7 +38,7 @@ func TestCashService_Create(t *testing.T) { //nolint:funlen
 	})
 
 	t.Run("returns error when check name existence failed", func(t *testing.T) {
-		request := requests.CreateCashRequest{
+		request := requests.CashCreateRequest{
 			Name: "Bonds",
 		}
 
@@ -53,7 +53,7 @@ func TestCashService_Create(t *testing.T) { //nolint:funlen
 	})
 
 	t.Run("returns error when name already exists", func(t *testing.T) {
-		request := requests.CreateCashRequest{
+		request := requests.CashCreateRequest{
 			Name:    "Bonds",
 			Formula: "2+3",
 		}
@@ -69,7 +69,7 @@ func TestCashService_Create(t *testing.T) { //nolint:funlen
 	})
 
 	t.Run("returns error when formula is blank", func(t *testing.T) {
-		request := requests.CreateCashRequest{
+		request := requests.CashCreateRequest{
 			Name:    "Bonds",
 			Formula: "",
 		}
@@ -85,7 +85,7 @@ func TestCashService_Create(t *testing.T) { //nolint:funlen
 	})
 
 	t.Run("returns error when formula is invalid", func(t *testing.T) {
-		request := requests.CreateCashRequest{
+		request := requests.CashCreateRequest{
 			Name:    "Bonds",
 			Formula: "abc",
 		}
@@ -101,7 +101,7 @@ func TestCashService_Create(t *testing.T) { //nolint:funlen
 	})
 
 	t.Run("returns error when supercategory is invalid", func(t *testing.T) {
-		request := requests.CreateCashRequest{
+		request := requests.CashCreateRequest{
 			Name:          "Bonds",
 			Formula:       "2+3",
 			Supercategory: "abc",
@@ -118,7 +118,7 @@ func TestCashService_Create(t *testing.T) { //nolint:funlen
 	})
 
 	t.Run("returns error when create failed", func(t *testing.T) {
-		request := requests.CreateCashRequest{
+		request := requests.CashCreateRequest{
 			Name:          "Bonds",
 			Formula:       "2+3",
 			Supercategory: "1242",
@@ -149,7 +149,7 @@ func TestCashService_Create(t *testing.T) { //nolint:funlen
 	})
 
 	t.Run("returns nil when create succeeded", func(t *testing.T) {
-		request := requests.CreateCashRequest{
+		request := requests.CashCreateRequest{
 			Name:          "Bonds",
 			Formula:       "2+3",
 			Supercategory: "1242",

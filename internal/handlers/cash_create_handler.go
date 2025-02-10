@@ -44,7 +44,7 @@ func (h *CashCreateHandler) handle(r *http.Request) (*models.Cash, error) {
 		return nil, apperrors.ErrParsingForm
 	}
 
-	request := requests.CreateCashRequest{
+	request := requests.CashCreateRequest{
 		Name:          r.FormValue("name"),
 		Formula:       r.FormValue("formula"),
 		Supercategory: r.FormValue("supercategory"),

@@ -21,7 +21,7 @@ func NewCashService(cashRepository CashRepository) *CashService {
 	}
 }
 
-func (s *CashService) Create(ctx context.Context, request requests.CreateCashRequest) error {
+func (s *CashService) Create(ctx context.Context, request requests.CashCreateRequest) error {
 	cash := &models.Cash{}
 
 	validate := validation.New()

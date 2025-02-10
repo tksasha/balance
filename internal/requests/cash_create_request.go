@@ -1,6 +1,6 @@
 package requests
 
-type CreateCashRequest struct {
+type CashCreateRequest struct {
 	Formula       string
 	Name          string
 	Supercategory string

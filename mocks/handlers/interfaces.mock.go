@@ -236,7 +236,7 @@ func (m *MockCashService) EXPECT() *MockCashServiceMockRecorder {
 }
 
 // Create mocks base method.
-func (m *MockCashService) Create(ctx context.Context, request requests.CreateCashRequest) error {
+func (m *MockCashService) Create(ctx context.Context, request requests.CashCreateRequest) error {
 	m.ctrl.T.Helper()
 	ret := m.ctrl.Call(m, "Create", ctx, request)
 	ret0, _ := ret[0].(error)
