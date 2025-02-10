@@ -99,10 +99,16 @@ func getResponseBody(t *testing.T, reader io.Reader) string {
 func newMux(t *testing.T, pattern string, handler http.Handler) *http.ServeMux {
 	t.Helper()
 
-	handler = middlewares.NewCurrencyMiddleware().Wrap(handler)
+	next := handler
+
+	middlewares := middlewares.New()
+
+	for _, middleware := range middlewares {
+		next = middleware.Wrap(next)
+	}
 
 	mux := http.NewServeMux()
-	mux.Handle(pattern, handler)
+	mux.Handle(pattern, next)
 
 	return mux
 }

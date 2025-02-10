@@ -23,13 +23,18 @@ type Server struct {
 func New(
 	config *config.Config,
 	routes *routes.Routes,
+	middlewares []middlewares.Middleware,
 ) *Server {
-	middleware := middlewares.NewCurrencyMiddleware().Wrap(routes.Mux)
+	next := http.Handler(routes.Mux)
+
+	for _, middleware := range middlewares {
+		next = middleware.Wrap(next)
+	}
 
 	httpServer := &http.Server{
 		Addr:              config.Address,
 		ReadHeaderTimeout: config.ReadHeaderTimeout,
-		Handler:           middleware,
+		Handler:           next,
 	}
 
 	return &Server{

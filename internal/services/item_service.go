@@ -2,6 +2,7 @@ package services
 
 import (
 	"context"
+	"errors"
 	"strconv"
 
 	"github.com/tksasha/balance/internal/apperrors"
@@ -67,6 +68,10 @@ func (s *ItemService) GetItem(ctx context.Context, input string) (*models.Item, 
 
 	item, err := s.itemRepository.FindByID(ctx, id)
 	if err != nil {
+		if errors.Is(err, apperrors.ErrRecordNotFound) {
+			return nil, apperrors.ErrResourceNotFound
+		}
+
 		return nil, err
 	}
 

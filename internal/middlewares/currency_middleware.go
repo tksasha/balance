@@ -10,7 +10,7 @@ import (
 
 type currencyMiddleware struct{}
 
-func NewCurrencyMiddleware() Middleware {
+func newCurrencyMiddleware() *currencyMiddleware {
 	return &currencyMiddleware{}
 }
 

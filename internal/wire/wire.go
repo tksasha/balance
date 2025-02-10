@@ -9,6 +9,7 @@ import (
 	"github.com/tksasha/balance/internal/config"
 	"github.com/tksasha/balance/internal/db"
 	"github.com/tksasha/balance/internal/handlers"
+	"github.com/tksasha/balance/internal/middlewares"
 	"github.com/tksasha/balance/internal/providers"
 	"github.com/tksasha/balance/internal/repositories"
 	"github.com/tksasha/balance/internal/routes"
@@ -35,6 +36,7 @@ func InitializeServer() *server.Server {
 		handlers.NewItemEditHandler,
 		handlers.NewItemListHandler,
 		handlers.NewItemUpdateHandler,
+		middlewares.New,
 		providers.NewDBNameProvider,
 		repositories.NewCashRepository,
 		repositories.NewCategoryRepository,

@@ -11,6 +11,7 @@ import (
 	"github.com/tksasha/balance/internal/config"
 	"github.com/tksasha/balance/internal/db"
 	"github.com/tksasha/balance/internal/handlers"
+	"github.com/tksasha/balance/internal/middlewares"
 	"github.com/tksasha/balance/internal/providers"
 	"github.com/tksasha/balance/internal/repositories"
 	"github.com/tksasha/balance/internal/routes"
@@ -46,6 +47,7 @@ func InitializeServer() *server.Server {
 	itemListHandler := handlers.NewItemListHandler(itemService)
 	itemUpdateHandler := handlers.NewItemUpdateHandler(itemService)
 	routesRoutes := routes.New(cashCreateHandler, cashDeleteHandler, cashEditHandler, cashUpdateHandler, categoryCreateHandler, categoryDeleteHandler, categoryEditHandler, categoryListHandler, categoryUpdateHandler, indexPageHandler, itemCreateHandler, itemEditHandler, itemListHandler, itemUpdateHandler)
-	serverServer := server.New(configConfig, routesRoutes)
+	v := middlewares.New()
+	serverServer := server.New(configConfig, routesRoutes, v)
 	return serverServer
 }
