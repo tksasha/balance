@@ -5,6 +5,7 @@ import (
 	"net/http"
 
 	"github.com/tksasha/balance/internal/handlers"
+	"github.com/tksasha/balance/internal/handlers/cashes"
 )
 
 //go:embed assets
@@ -19,7 +20,7 @@ func New(
 	cashDeleteHandler *handlers.CashDeleteHandler,
 	cashEditHandler *handlers.CashEditHandler,
 	cashListHandler *handlers.CashListHandler,
-	cashNewHandler *handlers.CashNewHandler,
+	cashNewHandler *cashes.NewHandler,
 	cashUpdateHandler *handlers.CashUpdateHandler,
 	categoryCreateHandler *handlers.CategoryCreateHandler,
 	categoryDeleteHandler *handlers.CategoryDeleteHandler,

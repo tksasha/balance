@@ -11,6 +11,7 @@ import (
 	"github.com/tksasha/balance/internal/config"
 	"github.com/tksasha/balance/internal/db"
 	"github.com/tksasha/balance/internal/handlers"
+	"github.com/tksasha/balance/internal/handlers/cashes"
 	"github.com/tksasha/balance/internal/middlewares"
 	"github.com/tksasha/balance/internal/providers"
 	"github.com/tksasha/balance/internal/repositories"
@@ -32,7 +33,7 @@ func InitializeServer() *server.Server {
 	cashDeleteHandler := handlers.NewCashDeleteHandler(cashService)
 	cashEditHandler := handlers.NewCashEditHandler(cashService)
 	cashListHandler := handlers.NewCashListHandler(cashService)
-	cashNewHandler := handlers.NewCashNewHandler()
+	newHandler := cashes.NewNewHandler()
 	cashUpdateHandler := handlers.NewCashUpdateHandler(cashService)
 	categoryRepository := repositories.NewCategoryRepository(sqlDB)
 	categoryService := services.NewCategoryService(categoryRepository)
@@ -48,7 +49,7 @@ func InitializeServer() *server.Server {
 	itemEditHandler := handlers.NewItemEditHandler(itemService)
 	itemListHandler := handlers.NewItemListHandler(itemService)
 	itemUpdateHandler := handlers.NewItemUpdateHandler(itemService)
-	routesRoutes := routes.New(cashCreateHandler, cashDeleteHandler, cashEditHandler, cashListHandler, cashNewHandler, cashUpdateHandler, categoryCreateHandler, categoryDeleteHandler, categoryEditHandler, categoryListHandler, categoryUpdateHandler, indexPageHandler, itemCreateHandler, itemEditHandler, itemListHandler, itemUpdateHandler)
+	routesRoutes := routes.New(cashCreateHandler, cashDeleteHandler, cashEditHandler, cashListHandler, newHandler, cashUpdateHandler, categoryCreateHandler, categoryDeleteHandler, categoryEditHandler, categoryListHandler, categoryUpdateHandler, indexPageHandler, itemCreateHandler, itemEditHandler, itemListHandler, itemUpdateHandler)
 	v := middlewares.New()
 	serverServer := server.New(configConfig, routesRoutes, v)
 	return serverServer

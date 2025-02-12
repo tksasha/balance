@@ -11,3 +11,7 @@ func e(w http.ResponseWriter, err error) {
 		response.Error = err
 	}
 }
+
+func E(w http.ResponseWriter, err error) {
+	e(w, err)
+}
