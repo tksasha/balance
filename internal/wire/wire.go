@@ -26,6 +26,7 @@ func InitializeServer() *server.Server {
 		handlers.NewCashDeleteHandler,
 		handlers.NewCashEditHandler,
 		handlers.NewCashListHandler,
+		handlers.NewCashNewHandler,
 		handlers.NewCashUpdateHandler,
 		handlers.NewCategoryCreateHandler,
 		handlers.NewCategoryDeleteHandler,

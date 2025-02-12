@@ -2,8 +2,6 @@ package handlers
 
 import (
 	"net/http"
-
-	"github.com/tksasha/balance/internal/responses"
 )
 
 type CashDeleteHandler struct {
@@ -18,16 +16,12 @@ func NewCashDeleteHandler(cashService CashService) *CashDeleteHandler {
 
 func (h *CashDeleteHandler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 	if err := h.handle(r); err != nil {
-		if response, ok := w.(*responses.Response); ok {
-			response.Error = err
-
-			return
-		}
+		e(w, err)
 
 		return
 	}
 
-	_, _ = w.Write([]byte("deleted"))
+	w.WriteHeader(http.StatusNoContent)
 }
 
 func (h *CashDeleteHandler) handle(r *http.Request) error {

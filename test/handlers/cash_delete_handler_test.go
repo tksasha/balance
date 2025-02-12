@@ -25,8 +25,6 @@ func TestCashDeleteHandler(t *testing.T) {
 
 	mux := newMux(t, "DELETE /cashes/{id}", handler)
 
-	_ = mux
-
 	t.Run("renders 404 when cash not found", func(t *testing.T) {
 		request := newDeleteRequest(ctx, t, "/cashes/1007")
 
@@ -37,7 +35,7 @@ func TestCashDeleteHandler(t *testing.T) {
 		assert.Equal(t, recorder.Code, http.StatusNotFound)
 	})
 
-	t.Run("renders 200 when cash found", func(t *testing.T) {
+	t.Run("renders 204 when cash deleted", func(t *testing.T) {
 		cleanup(ctx, t)
 
 		cashToCreate := &models.Cash{
@@ -54,7 +52,7 @@ func TestCashDeleteHandler(t *testing.T) {
 
 		mux.ServeHTTP(recorder, request)
 
-		assert.Equal(t, recorder.Code, http.StatusOK)
+		assert.Equal(t, recorder.Code, http.StatusNoContent)
 
 		cash := findCashByID(ctx, t, currencies.UAH, 1011)
 
