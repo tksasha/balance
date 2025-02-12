@@ -35,10 +35,10 @@ test:
 	@echo "go test"
 	@go test ./test/...
 
-# .PHONY: run
-# run:
-# 	@echo "go run"
-# 	@go run $(AIR)
+.PHONY: air
+air:
+	@echo "go air"
+	@go run $(AIR)
 
 .PHONY: run
 run:

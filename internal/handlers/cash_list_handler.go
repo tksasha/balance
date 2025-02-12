@@ -3,8 +3,8 @@ package handlers
 import (
 	"net/http"
 
+	"github.com/tksasha/balance/internal/components"
 	"github.com/tksasha/balance/internal/models"
-	"github.com/tksasha/balance/internal/responses"
 )
 
 type CashListHandler struct {
@@ -20,16 +20,14 @@ func NewCashListHandler(cashService CashService) *CashListHandler {
 func (h *CashListHandler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 	cashes, err := h.handle(r)
 	if err != nil {
-		if response, ok := w.(*responses.Response); ok {
-			response.Error = err
-		}
+		e(w, err)
 
 		return
 	}
 
-	_ = cashes
-
-	_, _ = w.Write([]byte(""))
+	if err := components.CashList(cashes).Render(w); err != nil {
+		e(w, err)
+	}
 }
 
 func (h *CashListHandler) handle(r *http.Request) (models.Cashes, error) {
