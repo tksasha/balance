@@ -291,21 +291,6 @@ func (mr *MockCashRepositoryMockRecorder) FindByID(ctx, id any) *gomock.Call {
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "FindByID", reflect.TypeOf((*MockCashRepository)(nil).FindByID), ctx, id)
 }
 
-// List mocks base method.
-func (m *MockCashRepository) List(ctx context.Context) (models.Cashes, error) {
-	m.ctrl.T.Helper()
-	ret := m.ctrl.Call(m, "List", ctx)
-	ret0, _ := ret[0].(models.Cashes)
-	ret1, _ := ret[1].(error)
-	return ret0, ret1
-}
-
-// List indicates an expected call of List.
-func (mr *MockCashRepositoryMockRecorder) List(ctx any) *gomock.Call {
-	mr.mock.ctrl.T.Helper()
-	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "List", reflect.TypeOf((*MockCashRepository)(nil).List), ctx)
-}
-
 // NameExists mocks base method.
 func (m *MockCashRepository) NameExists(ctx context.Context, name string, id int) (bool, error) {
 	m.ctrl.T.Helper()

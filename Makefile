@@ -33,7 +33,7 @@ lint:
 .PHONY: test
 test:
 	@echo "go test"
-	@go test ./test/...
+	@go test ./...
 
 .PHONY: air
 air:
@@ -72,6 +72,11 @@ mockgen:
 		-source internal/handlers/interfaces.go \
 		-package mocksforhandlers \
 		-destination mocks/handlers/interfaces.mock.go
+
+	@go run $(MOCKGEN) \
+		-source internal/cash/interfaces.go \
+		-package mocks \
+		-destination internal/cash/test/mocks/interfaces.mock.go
 
 .PHONY: wire
 wire:

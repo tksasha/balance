@@ -14,3 +14,12 @@ func getCurrencyFromContext(ctx context.Context) currencies.Currency {
 
 	return currency
 }
+
+func GetCurrencyFromContext(ctx context.Context) currencies.Currency {
+	currency, ok := ctx.Value(currencies.CurrencyContextValue{}).(currencies.Currency)
+	if !ok {
+		currency = currencies.DefaultCurrency
+	}
+
+	return currency
+}

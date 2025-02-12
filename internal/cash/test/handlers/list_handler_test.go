@@ -6,24 +6,25 @@ import (
 	"net/http/httptest"
 	"testing"
 
-	"github.com/tksasha/balance/internal/handlers"
+	"github.com/tksasha/balance/internal/cash/handlers"
+	"github.com/tksasha/balance/testutil"
 	"gotest.tools/v3/assert"
 )
 
 func TestCashListHandler(t *testing.T) {
 	ctx := context.Background()
 
-	cashService, db := newCashService(ctx, t)
+	cashService, db := testutil.NewCashService(ctx, t)
 	defer func() {
 		if err := db.Close(); err != nil {
 			t.Logf("failed to close db: %v", err)
 		}
 	}()
 
-	mux := newMux(t, "GET /cashes", handlers.NewCashListHandler(cashService))
+	mux := testutil.NewMux(t, "GET /cashes", handlers.NewListHandler(cashService))
 
 	t.Run("renders cash list when there no errors", func(t *testing.T) {
-		request := newGetRequest(ctx, t, "/cashes")
+		request := testutil.NewGetRequest(ctx, t, "/cashes")
 
 		responseWriter := httptest.NewRecorder()
 

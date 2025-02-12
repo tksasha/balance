@@ -6,6 +6,7 @@ import (
 	"embed"
 	"errors"
 	"fmt"
+	"log"
 	"maps"
 	"path/filepath"
 	"regexp"
@@ -50,20 +51,9 @@ func (m migration) run(ctx context.Context) error {
 			continue
 		}
 
-		tx, err := m.db.BeginTx(ctx, nil)
-		if err != nil {
-			return err
-		}
+		log.Printf("run migration: %s", version)
 
-		if err := m.migrate(ctx, tx, version, migrations[version]); err != nil {
-			if err := tx.Rollback(); err != nil {
-				return err
-			}
-
-			return err
-		}
-
-		if err := tx.Commit(); err != nil {
+		if err := m.migrate(ctx, version, migrations[version]); err != nil {
 			return err
 		}
 	}
@@ -135,12 +125,12 @@ func (m migration) exists(ctx context.Context, version string) (bool, error) {
 	return exists == 1, nil
 }
 
-func (m migration) migrate(ctx context.Context, tx *sql.Tx, version, query string) error {
-	if _, err := tx.ExecContext(ctx, query); err != nil {
+func (m migration) migrate(ctx context.Context, version, query string) error {
+	if _, err := m.db.ExecContext(ctx, query); err != nil {
 		return err
 	}
 
-	if _, err := tx.ExecContext(ctx, `INSERT INTO schema_migrations(version) VALUES(?)`, version); err != nil {
+	if _, err := m.db.ExecContext(ctx, `INSERT INTO schema_migrations(version) VALUES(?)`, version); err != nil {
 		return err
 	}
 

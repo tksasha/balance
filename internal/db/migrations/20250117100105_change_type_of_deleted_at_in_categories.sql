@@ -1,5 +1,7 @@
 PRAGMA foreign_keys = OFF;
 
+BEGIN TRANSACTION;
+
 CREATE TABLE "categories2" (
     "id" integer NOT NULL PRIMARY KEY,
     "name" varchar DEFAULT NULL,
@@ -30,4 +32,6 @@ RENAME TO categories;
 
 CREATE UNIQUE INDEX "index_categories_on_name_and_currency" ON "categories" ("name", "currency");
 
-PRAGMA foreign_keys = OFF;
+COMMIT;
+
+PRAGMA foreign_keys = ON;

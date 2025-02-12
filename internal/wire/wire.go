@@ -6,6 +6,10 @@ import (
 	"context"
 
 	"github.com/google/wire"
+	"github.com/tksasha/balance/internal/cash"
+	cashhandlers "github.com/tksasha/balance/internal/cash/handlers"
+	cashrepository "github.com/tksasha/balance/internal/cash/repository"
+	cashservice "github.com/tksasha/balance/internal/cash/service"
 	"github.com/tksasha/balance/internal/config"
 	"github.com/tksasha/balance/internal/db"
 	"github.com/tksasha/balance/internal/handlers"
@@ -20,14 +24,16 @@ import (
 
 func InitializeServer() *server.Server {
 	wire.Build(
+		cashes.NewCreateHandler,
+		cashes.NewNewHandler,
+		cashhandlers.NewListHandler,
+		cashrepository.New,
+		cashservice.New,
 		config.New,
 		context.Background,
 		db.Open,
-		cashes.NewCreateHandler,
 		handlers.NewCashDeleteHandler,
 		handlers.NewCashEditHandler,
-		handlers.NewCashListHandler,
-		cashes.NewNewHandler,
 		handlers.NewCashUpdateHandler,
 		handlers.NewCategoryCreateHandler,
 		handlers.NewCategoryDeleteHandler,
@@ -49,6 +55,8 @@ func InitializeServer() *server.Server {
 		services.NewCashService,
 		services.NewCategoryService,
 		services.NewItemService,
+		wire.Bind(new(cash.Repository), new(*cashrepository.Repository)),
+		wire.Bind(new(cash.Service), new(*cashservice.Service)),
 		wire.Bind(new(db.DBNameProvider), new(*providers.DBNameProvider)),
 		wire.Bind(new(handlers.CashService), new(*services.CashService)),
 		wire.Bind(new(handlers.CategoryService), new(*services.CategoryService)),

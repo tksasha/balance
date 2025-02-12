@@ -1,3 +1,5 @@
+BEGIN TRANSACTION;
+
 CREATE TABLE IF NOT EXISTS "cashes" (
     "id" integer NOT NULL PRIMARY KEY,
     "sum" decimal(10, 2) DEFAULT NULL,
@@ -10,3 +12,5 @@ CREATE TABLE IF NOT EXISTS "cashes" (
 );
 
 CREATE UNIQUE INDEX IF NOT EXISTS "index_cashes_on_name_and_currency" ON "cashes" ("name", "currency");
+
+COMMIT;
