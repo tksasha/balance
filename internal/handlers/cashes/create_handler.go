@@ -1,27 +1,28 @@
-package handlers
+package cashes
 
 import (
 	"errors"
 	"net/http"
 
 	"github.com/tksasha/balance/internal/apperrors"
+	"github.com/tksasha/balance/internal/handlers"
+	"github.com/tksasha/balance/internal/handlers/utils"
 	"github.com/tksasha/balance/internal/models"
 	"github.com/tksasha/balance/internal/requests"
-	"github.com/tksasha/balance/internal/responses"
 	"github.com/tksasha/balance/pkg/validation"
 )
 
-type CashCreateHandler struct {
-	cashService CashService
+type CreateHandler struct {
+	cashService handlers.CashService
 }
 
-func NewCashCreateHandler(cashService CashService) *CashCreateHandler {
-	return &CashCreateHandler{
+func NewCreateHandler(cashService handlers.CashService) *CreateHandler {
+	return &CreateHandler{
 		cashService: cashService,
 	}
 }
 
-func (h *CashCreateHandler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
+func (h *CreateHandler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 	if _, err := h.handle(r); err != nil {
 		var verrors validation.Errors
 		if errors.As(err, &verrors) {
@@ -30,11 +31,7 @@ func (h *CashCreateHandler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 			return
 		}
 
-		if response, ok := w.(*responses.Response); ok {
-			response.Error = err
-
-			return
-		}
+		utils.E(w, err)
 
 		return
 	}
@@ -42,7 +39,7 @@ func (h *CashCreateHandler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 	_, _ = w.Write([]byte("cash"))
 }
 
-func (h *CashCreateHandler) handle(r *http.Request) (*models.Cash, error) {
+func (h *CreateHandler) handle(r *http.Request) (*models.Cash, error) {
 	if err := r.ParseForm(); err != nil {
 		return nil, apperrors.ErrParsingForm
 	}

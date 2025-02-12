@@ -4,7 +4,7 @@ import (
 	"net/http"
 
 	components "github.com/tksasha/balance/internal/components/cash"
-	"github.com/tksasha/balance/internal/handlers"
+	"github.com/tksasha/balance/internal/handlers/utils"
 	"github.com/tksasha/balance/internal/models"
 )
 
@@ -18,6 +18,6 @@ func (h *NewHandler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 	cash := &models.Cash{}
 
 	if err := components.CashNew(cash).Render(w); err != nil {
-		handlers.E(w, err)
+		utils.E(w, err)
 	}
 }

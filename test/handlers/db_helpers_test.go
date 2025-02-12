@@ -19,42 +19,6 @@ func newDB(ctx context.Context, t *testing.T) *sql.DB {
 	return db.Open(ctx, dbNameProvider)
 }
 
-func findCashByName(ctx context.Context, t *testing.T, currency currencies.Currency, name string) *models.Cash {
-	t.Helper()
-
-	ctx = currencyContext(ctx, t, currency)
-
-	query := `
-		SELECT id, name, formula, sum, currency, supercategory, favorite, deleted_at
-		FROM cashes
-		WHERE name=? AND currency=?
-	`
-
-	cash := &models.Cash{}
-
-	db := newDB(ctx, t)
-	defer func() {
-		_ = db.Close()
-	}()
-
-	if err := db.
-		QueryRowContext(ctx, query, name, currency).
-		Scan(
-			&cash.ID,
-			&cash.Name,
-			&cash.Formula,
-			&cash.Sum,
-			&cash.Currency,
-			&cash.Supercategory,
-			&cash.Favorite,
-			&cash.DeletedAt,
-		); err != nil {
-		t.Fatalf("failed to find cash by name: %v", err)
-	}
-
-	return cash
-}
-
 func createCash(ctx context.Context, t *testing.T, cash *models.Cash) {
 	t.Helper()
 

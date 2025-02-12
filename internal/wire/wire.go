@@ -23,7 +23,7 @@ func InitializeServer() *server.Server {
 		config.New,
 		context.Background,
 		db.Open,
-		handlers.NewCashCreateHandler,
+		cashes.NewCreateHandler,
 		handlers.NewCashDeleteHandler,
 		handlers.NewCashEditHandler,
 		handlers.NewCashListHandler,

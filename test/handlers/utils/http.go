@@ -2,6 +2,7 @@ package utils
 
 import (
 	"context"
+	"io"
 	"net/http"
 	"net/url"
 	"strings"
@@ -54,4 +55,42 @@ func NewGetRequest(ctx context.Context, t *testing.T, endpoint string) *http.Req
 	t.Helper()
 
 	return newRequest(ctx, t, http.MethodGet, endpoint, nil)
+}
+
+func NewPostRequest(ctx context.Context, t *testing.T, endpoint string, params Params) *http.Request {
+	t.Helper()
+
+	return newRequest(ctx, t, http.MethodPost, endpoint, params)
+}
+
+func newInvalidRequest(ctx context.Context, t *testing.T, method, endpoint string) *http.Request {
+	t.Helper()
+
+	body := strings.NewReader("%")
+
+	request, err := http.NewRequestWithContext(ctx, method, endpoint, body)
+	if err != nil {
+		t.Fatalf("failed to build new request with context, error: %v", err)
+	}
+
+	request.Header.Set("Content-Type", "application/x-www-form-urlencoded")
+
+	return request
+}
+
+func NewInvalidPostRequest(ctx context.Context, t *testing.T, endpoint string) *http.Request {
+	t.Helper()
+
+	return newInvalidRequest(ctx, t, http.MethodPost, endpoint)
+}
+
+func GetResponseBody(t *testing.T, reader io.Reader) string {
+	t.Helper()
+
+	body, err := io.ReadAll(reader)
+	if err != nil {
+		t.Fatalf("failed to parse response body: %v", err)
+	}
+
+	return string(body)
 }

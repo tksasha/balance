@@ -1,4 +1,4 @@
-package handlers
+package utils
 
 import (
 	"net/http"
@@ -6,12 +6,8 @@ import (
 	"github.com/tksasha/balance/internal/responses"
 )
 
-func e(w http.ResponseWriter, err error) {
+func E(w http.ResponseWriter, err error) {
 	if response, ok := w.(*responses.Response); ok {
 		response.Error = err
 	}
-}
-
-func E(w http.ResponseWriter, err error) {
-	e(w, err)
 }

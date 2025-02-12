@@ -4,6 +4,7 @@ import (
 	"net/http"
 
 	components "github.com/tksasha/balance/internal/components/cash"
+	"github.com/tksasha/balance/internal/handlers/utils"
 	"github.com/tksasha/balance/internal/models"
 )
 
@@ -20,13 +21,13 @@ func NewCashListHandler(cashService CashService) *CashListHandler {
 func (h *CashListHandler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 	cashes, err := h.handle(r)
 	if err != nil {
-		e(w, err)
+		utils.E(w, err)
 
 		return
 	}
 
 	if err := components.CashList(cashes).Render(w); err != nil {
-		e(w, err)
+		utils.E(w, err)
 	}
 }
 
