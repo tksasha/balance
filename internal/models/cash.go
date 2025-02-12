@@ -16,3 +16,5 @@ type Cash struct {
 	Favorite      bool
 	DeletedAt     sql.NullTime
 }
+
+type Cashes []*Cash

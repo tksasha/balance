@@ -4,6 +4,7 @@ import (
 	"context"
 	"database/sql"
 	"errors"
+	"log"
 	"time"
 
 	"github.com/tksasha/balance/internal/apperrors"
@@ -204,4 +205,65 @@ func (r *CashRepository) Delete(ctx context.Context, id int) error {
 	}
 
 	return nil
+}
+
+func (r *CashRepository) List(ctx context.Context) (models.Cashes, error) {
+	currency := getCurrencyFromContext(ctx)
+
+	query := `
+		SELECT
+			id,
+			currency,
+			formula,
+			sum,
+			name,
+			supercategory,
+			favorite
+		FROM
+			cashes
+		WHERE
+			currency = ?
+			AND deleted_at IS NULL
+	`
+
+	rows, err := r.db.QueryContext(ctx, query, currency)
+	if err != nil {
+		return nil, err
+	}
+
+	defer func() {
+		if err := rows.Close(); err != nil {
+			log.Printf("failed to close rows: %v", err)
+		}
+	}()
+
+	cashes := models.Cashes{}
+
+	for rows.Next() {
+		if err := ctx.Err(); err != nil {
+			return nil, err
+		}
+
+		cash := &models.Cash{}
+
+		if err := rows.Scan(
+			&cash.ID,
+			&cash.Currency,
+			&cash.Formula,
+			&cash.Sum,
+			&cash.Name,
+			&cash.Supercategory,
+			&cash.Favorite,
+		); err != nil {
+			return nil, err
+		}
+
+		cashes = append(cashes, cash)
+	}
+
+	if err := rows.Err(); err != nil {
+		return nil, err
+	}
+
+	return cashes, nil
 }

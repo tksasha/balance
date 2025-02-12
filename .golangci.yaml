@@ -11,8 +11,8 @@ linters:
   enable-all: true
   disable:
     ### deprecated, archived or obsolette by authors
-    - exportloopref
     - paralleltest
+    - tenv
     ### disabled by me
     - depguard
     - exhaustruct

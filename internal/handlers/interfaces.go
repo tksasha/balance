@@ -28,4 +28,5 @@ type CashService interface {
 	FindByID(ctx context.Context, id string) (*models.Cash, error)
 	Delete(ctx context.Context, id string) error
 	Update(ctx context.Context, request requests.CashUpdateRequest) (*models.Cash, error)
+	List(ctx context.Context) (models.Cashes, error)
 }

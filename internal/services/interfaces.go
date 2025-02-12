@@ -29,4 +29,5 @@ type CashRepository interface {
 	FindByID(ctx context.Context, id int) (*models.Cash, error)
 	Update(ctx context.Context, cash *models.Cash) error
 	Delete(ctx context.Context, id int) error
+	List(ctx context.Context) (models.Cashes, error)
 }

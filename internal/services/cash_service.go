@@ -132,3 +132,7 @@ func (s *CashService) Delete(ctx context.Context, input string) error {
 
 	return nil
 }
+
+func (s *CashService) List(ctx context.Context) (models.Cashes, error) {
+	return s.cashRepository.List(ctx)
+}

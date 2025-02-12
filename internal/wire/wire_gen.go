@@ -31,6 +31,7 @@ func InitializeServer() *server.Server {
 	cashCreateHandler := handlers.NewCashCreateHandler(cashService)
 	cashDeleteHandler := handlers.NewCashDeleteHandler(cashService)
 	cashEditHandler := handlers.NewCashEditHandler(cashService)
+	cashListHandler := handlers.NewCashListHandler(cashService)
 	cashUpdateHandler := handlers.NewCashUpdateHandler(cashService)
 	categoryRepository := repositories.NewCategoryRepository(sqlDB)
 	categoryService := services.NewCategoryService(categoryRepository)
@@ -46,7 +47,7 @@ func InitializeServer() *server.Server {
 	itemEditHandler := handlers.NewItemEditHandler(itemService)
 	itemListHandler := handlers.NewItemListHandler(itemService)
 	itemUpdateHandler := handlers.NewItemUpdateHandler(itemService)
-	routesRoutes := routes.New(cashCreateHandler, cashDeleteHandler, cashEditHandler, cashUpdateHandler, categoryCreateHandler, categoryDeleteHandler, categoryEditHandler, categoryListHandler, categoryUpdateHandler, indexPageHandler, itemCreateHandler, itemEditHandler, itemListHandler, itemUpdateHandler)
+	routesRoutes := routes.New(cashCreateHandler, cashDeleteHandler, cashEditHandler, cashListHandler, cashUpdateHandler, categoryCreateHandler, categoryDeleteHandler, categoryEditHandler, categoryListHandler, categoryUpdateHandler, indexPageHandler, itemCreateHandler, itemEditHandler, itemListHandler, itemUpdateHandler)
 	v := middlewares.New()
 	serverServer := server.New(configConfig, routesRoutes, v)
 	return serverServer
