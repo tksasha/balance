@@ -8,6 +8,6 @@ import (
 
 func CashNew(cash *models.Cash) Node {
 	return Div(
-		Form(),
+		CashForm(cash),
 	)
 }
