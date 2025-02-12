@@ -3,7 +3,7 @@ package handlers
 import (
 	"net/http"
 
-	"github.com/tksasha/balance/internal/components"
+	components "github.com/tksasha/balance/internal/components/cash"
 	"github.com/tksasha/balance/internal/models"
 )
 
