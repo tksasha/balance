@@ -26,7 +26,7 @@ func New(
 	categoryCreateHandler *handlers.CategoryCreateHandler,
 	categoryDeleteHandler *categoryhandlers.DeleteHandler,
 	categoryEditHandler *handlers.CategoryEditHandler,
-	categoryListHandler *handlers.CategoryListHandler,
+	categoryListHandler *categoryhandlers.ListHandler,
 	categoryUpdateHandler *handlers.CategoryUpdateHandler,
 	indexPageHandler *handlers.IndexPageHandler,
 	itemCreateHandler *handlers.ItemCreateHandler,

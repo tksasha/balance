@@ -2,6 +2,9 @@ package components
 
 //nolint:stylecheck // ST1001
 import (
+	"strconv"
+
+	"github.com/tksasha/balance/internal/category"
 	"github.com/tksasha/balance/internal/models"
 	"github.com/tksasha/model/errors"
 	. "maragu.dev/gomponents"
@@ -9,7 +12,7 @@ import (
 )
 
 //nolint:funlen
-func ItemForm(item *models.Item, categories models.Categories, validationErrors errors.ValidationError) Node {
+func ItemForm(item *models.Item, categories category.Categories, validationErrors errors.ValidationError) Node {
 	return Form(
 		Div(
 			Class("mb-3"),
@@ -58,18 +61,18 @@ func ItemForm(item *models.Item, categories models.Categories, validationErrors 
 				Class("form-select"),
 				OptGroup(
 					Attr("Label", "Expense"),
-					Map(categories.Expense(), func(category *models.Category) Node {
+					Map(categories.Expense(), func(category *category.Category) Node {
 						return Option(
-							Value(category.GetIDAsString()),
+							Value(strconv.Itoa(category.ID)),
 							Text(category.Name),
 						)
 					}),
 				),
 				OptGroup(
 					Attr("Label", "Income"),
-					Map(categories.Income(), func(category *models.Category) Node {
+					Map(categories.Income(), func(category *category.Category) Node {
 						return Option(
-							Value(category.GetIDAsString()),
+							Value(strconv.Itoa(category.ID)),
 							Text(category.Name),
 						)
 					}),

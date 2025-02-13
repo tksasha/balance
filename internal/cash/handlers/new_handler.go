@@ -5,7 +5,7 @@ import (
 
 	"github.com/tksasha/balance/internal/cash"
 	"github.com/tksasha/balance/internal/cash/components"
-	"github.com/tksasha/balance/internal/handlers/utils"
+	"github.com/tksasha/balance/internal/common/handlers"
 )
 
 type NewHandler struct{}
@@ -18,6 +18,6 @@ func (h *NewHandler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 	cash := &cash.Cash{}
 
 	if err := components.CashNew(cash).Render(w); err != nil {
-		utils.E(w, err)
+		handlers.E(w, err)
 	}
 }

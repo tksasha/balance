@@ -17,3 +17,27 @@ type Category struct {
 }
 
 type Categories []*Category
+
+func (c Categories) Income() Categories {
+	categories := Categories{}
+
+	for _, category := range c {
+		if category.Income {
+			categories = append(categories, category)
+		}
+	}
+
+	return categories
+}
+
+func (c Categories) Expense() Categories {
+	categories := Categories{}
+
+	for _, category := range c {
+		if !category.Income {
+			categories = append(categories, category)
+		}
+	}
+
+	return categories
+}

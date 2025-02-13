@@ -46,10 +46,6 @@ func (s *CategoryService) Create(ctx context.Context, request requests.CategoryC
 	return s.categoryRepository.Create(ctx, category)
 }
 
-func (s *CategoryService) GetAll(ctx context.Context) (models.Categories, error) {
-	return s.categoryRepository.GetAll(ctx)
-}
-
 func (s *CategoryService) FindByID(ctx context.Context, id int) (*models.Category, error) {
 	category, err := s.categoryRepository.FindByID(ctx, id)
 	if err != nil {

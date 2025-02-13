@@ -2,6 +2,7 @@ package components
 
 //nolint:stylecheck // ST1001
 import (
+	"github.com/tksasha/balance/internal/category"
 	"github.com/tksasha/balance/internal/models"
 	. "maragu.dev/gomponents"
 	hx "maragu.dev/gomponents-htmx"
@@ -9,7 +10,7 @@ import (
 	. "maragu.dev/gomponents/html"
 )
 
-func IndexPage(categories models.Categories) Node {
+func IndexPage(categories category.Categories) Node {
 	return HTML5(
 		HTML5Props{
 			Title:    "Balance",

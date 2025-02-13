@@ -4,7 +4,7 @@ import (
 	"net/http"
 
 	"github.com/tksasha/balance/internal/cash"
-	"github.com/tksasha/balance/internal/handlers/utils"
+	"github.com/tksasha/balance/internal/common/handlers"
 )
 
 type DeleteHandler struct {
@@ -19,7 +19,7 @@ func NewDeleteHandler(service cash.Service) *DeleteHandler {
 
 func (h *DeleteHandler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 	if err := h.handle(r); err != nil {
-		utils.E(w, err)
+		handlers.E(w, err)
 
 		return
 	}

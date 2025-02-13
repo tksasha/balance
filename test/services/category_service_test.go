@@ -2,7 +2,6 @@ package services_test
 
 import (
 	"errors"
-	"slices"
 	"testing"
 
 	"github.com/tksasha/balance/internal/apperrors"
@@ -139,41 +138,6 @@ func TestCategoryService_Create(t *testing.T) { //nolint:funlen
 
 		err := service.Create(ctx, request)
 
-		assert.NilError(t, err)
-	})
-}
-
-func TestCategoryService_GetAll(t *testing.T) {
-	controller := gomock.NewController(t)
-
-	categoryRepository := mocksforservices.NewMockCategoryRepository(controller)
-
-	service := services.NewCategoryService(categoryRepository)
-
-	ctx := t.Context()
-
-	t.Run("when get all categories returns error, it should return error", func(t *testing.T) {
-		categoryRepository.
-			EXPECT().
-			GetAll(ctx).
-			Return(nil, errors.New("get all categories error"))
-
-		_, err := service.GetAll(ctx)
-
-		assert.Error(t, err, "get all categories error")
-	})
-
-	t.Run("when get all categories does not return error, it should not return error", func(t *testing.T) {
-		expected := models.Categories{}
-
-		categoryRepository.
-			EXPECT().
-			GetAll(ctx).
-			Return(expected, nil)
-
-		result, err := service.GetAll(ctx)
-
-		assert.Assert(t, slices.Equal(result, expected))
 		assert.NilError(t, err)
 	})
 }

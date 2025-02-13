@@ -1,14 +1,14 @@
 package handlers_test
 
 import (
-	"io"
 	"net/http"
 	"net/http/httptest"
 	"strings"
 	"testing"
 
-	"github.com/tksasha/balance/internal/handlers"
-	"github.com/tksasha/balance/internal/models"
+	"github.com/tksasha/balance/internal/category"
+	"github.com/tksasha/balance/internal/category/handlers"
+	"github.com/tksasha/balance/internal/common/testutils"
 	"github.com/tksasha/balance/pkg/currencies"
 	"gotest.tools/v3/assert"
 )
@@ -16,17 +16,17 @@ import (
 func TestCategoryListHandler(t *testing.T) {
 	ctx := t.Context()
 
-	service, db := newCategoryService(ctx, t)
+	service, db := testutils.NewCategoryService(ctx, t)
 	defer func() {
 		_ = db.Close()
 	}()
 
-	mux := newMux(t, "GET /categories", handlers.NewCategoryListHandler(service))
+	mux := testutils.NewMux(t, "GET /categories", handlers.NewListHandler(service))
 
 	t.Run("responds 200 on no categories found", func(t *testing.T) {
-		cleanup(ctx, t)
+		testutils.Cleanup(ctx, t)
 
-		request := newGetRequest(ctx, t, "/categories?currency=eur")
+		request := testutils.NewGetRequest(ctx, t, "/categories?currency=eur")
 
 		recorder := httptest.NewRecorder()
 
@@ -36,32 +36,29 @@ func TestCategoryListHandler(t *testing.T) {
 	})
 
 	t.Run("responds 200 on categories found", func(t *testing.T) {
-		cleanup(ctx, t)
+		testutils.Cleanup(ctx, t)
 
 		for id, name := range map[int]string{1: "category one", 2: "category two"} {
-			categoryToCreate := &models.Category{
+			categoryToCreate := &category.Category{
 				ID:       id,
 				Name:     name,
 				Currency: currencies.EUR,
 				Visible:  true,
 			}
 
-			createCategory(ctx, t, categoryToCreate)
+			testutils.CreateCategory(ctx, t, categoryToCreate)
 		}
 
-		request := newGetRequest(ctx, t, "/categories?currency=eur")
+		request := testutils.NewGetRequest(ctx, t, "/categories?currency=eur")
 
 		recorder := httptest.NewRecorder()
 
 		mux.ServeHTTP(recorder, request)
 
-		response, err := io.ReadAll(recorder.Body)
-		if err != nil {
-			t.Fatalf("failed to read response body, error: %v", err)
-		}
+		body := testutils.GetResponseBody(t, recorder.Body)
 
 		assert.Equal(t, http.StatusOK, recorder.Code)
-		assert.Assert(t, strings.Contains(string(response), "category one"))
-		assert.Assert(t, strings.Contains(string(response), "category two"))
+		assert.Assert(t, strings.Contains(body, "category one"))
+		assert.Assert(t, strings.Contains(body, "category two"))
 	})
 }

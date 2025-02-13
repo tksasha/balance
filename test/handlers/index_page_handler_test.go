@@ -5,6 +5,7 @@ import (
 	"net/http/httptest"
 	"testing"
 
+	"github.com/tksasha/balance/internal/common/testutils"
 	"github.com/tksasha/balance/internal/handlers"
 	"gotest.tools/v3/assert"
 )
@@ -12,7 +13,7 @@ import (
 func TestIndexPageHandler_ServeHTTP(t *testing.T) {
 	ctx := t.Context()
 
-	service, db := newCategoryService(ctx, t)
+	service, db := testutils.NewCategoryService(ctx, t)
 	defer func() {
 		_ = db.Close()
 	}()

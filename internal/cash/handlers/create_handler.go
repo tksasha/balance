@@ -6,7 +6,7 @@ import (
 
 	"github.com/tksasha/balance/internal/apperrors"
 	"github.com/tksasha/balance/internal/cash"
-	"github.com/tksasha/balance/internal/handlers/utils"
+	"github.com/tksasha/balance/internal/common/handlers"
 	"github.com/tksasha/balance/pkg/validation"
 )
 
@@ -29,7 +29,7 @@ func (h *CreateHandler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 			return
 		}
 
-		utils.E(w, err)
+		handlers.E(w, err)
 
 		return
 	}

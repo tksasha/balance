@@ -181,21 +181,6 @@ func (mr *MockCategoryRepositoryMockRecorder) FindByName(ctx, name any) *gomock.
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "FindByName", reflect.TypeOf((*MockCategoryRepository)(nil).FindByName), ctx, name)
 }
 
-// GetAll mocks base method.
-func (m *MockCategoryRepository) GetAll(ctx context.Context) (models.Categories, error) {
-	m.ctrl.T.Helper()
-	ret := m.ctrl.Call(m, "GetAll", ctx)
-	ret0, _ := ret[0].(models.Categories)
-	ret1, _ := ret[1].(error)
-	return ret0, ret1
-}
-
-// GetAll indicates an expected call of GetAll.
-func (mr *MockCategoryRepositoryMockRecorder) GetAll(ctx any) *gomock.Call {
-	mr.mock.ctrl.T.Helper()
-	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "GetAll", reflect.TypeOf((*MockCategoryRepository)(nil).GetAll), ctx)
-}
-
 // Update mocks base method.
 func (m *MockCategoryRepository) Update(ctx context.Context, category *models.Category) error {
 	m.ctrl.T.Helper()

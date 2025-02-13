@@ -17,7 +17,6 @@ type ItemService interface {
 
 type CategoryService interface {
 	Create(ctx context.Context, request requests.CategoryCreateRequest) error
-	GetAll(ctx context.Context) (models.Categories, error)
 	FindByID(ctx context.Context, id int) (*models.Category, error)
 	Update(ctx context.Context, category *models.Category) error
 }
