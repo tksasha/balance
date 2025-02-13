@@ -1,4 +1,4 @@
-package cashes
+package handlers
 
 import (
 	"net/http"

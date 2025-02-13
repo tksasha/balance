@@ -2,6 +2,7 @@
 
 //go:generate go run -mod=mod github.com/google/wire/cmd/wire
 //go:build !wireinject
+// +build !wireinject
 
 package wire
 
@@ -13,7 +14,6 @@ import (
 	"github.com/tksasha/balance/internal/config"
 	"github.com/tksasha/balance/internal/db"
 	handlers2 "github.com/tksasha/balance/internal/handlers"
-	"github.com/tksasha/balance/internal/handlers/cashes"
 	"github.com/tksasha/balance/internal/middlewares"
 	"github.com/tksasha/balance/internal/providers"
 	"github.com/tksasha/balance/internal/repositories"
@@ -37,7 +37,7 @@ func InitializeServer() *server.Server {
 	cashDeleteHandler := handlers2.NewCashDeleteHandler(cashService)
 	editHandler := handlers.NewEditHandler(serviceService)
 	listHandler := handlers.NewListHandler(serviceService)
-	newHandler := cashes.NewNewHandler()
+	newHandler := handlers.NewNewHandler()
 	updateHandler := handlers.NewUpdateHandler(serviceService)
 	categoryRepository := repositories.NewCategoryRepository(sqlDB)
 	categoryService := services.NewCategoryService(categoryRepository)
