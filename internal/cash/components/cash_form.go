@@ -1,12 +1,12 @@
 package components
 
 import (
-	"github.com/tksasha/balance/internal/models"
+	"github.com/tksasha/balance/internal/cash"
 	. "maragu.dev/gomponents"      //nolint:stylecheck
 	. "maragu.dev/gomponents/html" //nolint:stylecheck
 )
 
-func CashForm(cash *models.Cash) Node {
+func CashForm(cash *cash.Cash) Node {
 	return Form(
 		Div(
 			Class("mb-3"),

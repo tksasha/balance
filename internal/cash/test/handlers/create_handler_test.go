@@ -9,7 +9,6 @@ import (
 	"github.com/tksasha/balance/internal/cash/handlers"
 	"github.com/tksasha/balance/internal/common/testutils"
 	"github.com/tksasha/balance/pkg/currencies"
-	"github.com/tksasha/balance/test/handlers/utils"
 	"gotest.tools/v3/assert"
 )
 
@@ -23,10 +22,10 @@ func TestCashCreateHandler(t *testing.T) { //nolint:funlen
 
 	handler := handlers.NewCreateHandler(service)
 
-	mux := utils.NewMux(t, "POST /cashes", handler)
+	mux := testutils.NewMux(t, "POST /cashes", handler)
 
 	t.Run("responds 400 whe parse form failed", func(t *testing.T) {
-		request := utils.NewInvalidPostRequest(ctx, t, "/cashes")
+		request := testutils.NewInvalidPostRequest(ctx, t, "/cashes")
 
 		responseWriter := httptest.NewRecorder()
 
@@ -36,29 +35,31 @@ func TestCashCreateHandler(t *testing.T) { //nolint:funlen
 	})
 
 	t.Run("responds 200 when input is invalid", func(t *testing.T) {
-		request := utils.NewPostRequest(ctx, t, "/cashes", utils.Params{"name": ""})
+		params := testutils.Params{"name": ""}
+
+		request := testutils.NewPostRequest(ctx, t, "/cashes", params)
 
 		recorder := httptest.NewRecorder()
 
 		mux.ServeHTTP(recorder, request)
 
-		body := utils.GetResponseBody(t, recorder.Body)
+		body := testutils.GetResponseBody(t, recorder.Body)
 
 		assert.Equal(t, recorder.Code, http.StatusOK)
 		assert.Assert(t, strings.Contains(body, "name: is required"))
 	})
 
 	t.Run("responds 200 when create succeeded", func(t *testing.T) {
-		utils.Cleanup(ctx, t)
+		testutils.Cleanup(ctx, t)
 
-		params := utils.Params{
+		params := testutils.Params{
 			"name":          "Bonds",
 			"formula":       "2+3",
 			"supercategory": "2",
 			"favorite":      "true",
 		}
 
-		request := utils.NewPostRequest(ctx, t, "/cashes?currency=usd", params)
+		request := testutils.NewPostRequest(ctx, t, "/cashes?currency=usd", params)
 
 		recorder := httptest.NewRecorder()
 
@@ -66,7 +67,7 @@ func TestCashCreateHandler(t *testing.T) { //nolint:funlen
 
 		assert.Equal(t, recorder.Code, http.StatusOK)
 
-		cash := utils.FindCashByName(ctx, t, currencies.USD, "Bonds")
+		cash := testutils.FindCashByName(ctx, t, currencies.USD, "Bonds")
 
 		assert.Equal(t, cash.ID, 1)
 		assert.Equal(t, cash.Name, "Bonds")
