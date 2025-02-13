@@ -79,10 +79,6 @@ func (s *CategoryService) Update(ctx context.Context, category *models.Category)
 	return s.categoryRepository.Update(ctx, category)
 }
 
-func (s *CategoryService) Delete(ctx context.Context, category *models.Category) error {
-	return s.categoryRepository.Delete(ctx, category)
-}
-
 func (s *CategoryService) nameAlreadyExists(
 	ctx context.Context,
 	name string,

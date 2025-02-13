@@ -7,7 +7,7 @@ import (
 
 	"github.com/tksasha/balance/internal/apperrors"
 	"github.com/tksasha/balance/internal/cash"
-	"github.com/tksasha/balance/internal/repositories"
+	"github.com/tksasha/balance/internal/common/repositories"
 )
 
 func (r *Repository) FindByID(ctx context.Context, id int) (*cash.Cash, error) {

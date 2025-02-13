@@ -5,7 +5,7 @@ import (
 	"log"
 
 	"github.com/tksasha/balance/internal/cash"
-	"github.com/tksasha/balance/internal/repositories"
+	"github.com/tksasha/balance/internal/common/repositories"
 )
 
 func (r *Repository) List(ctx context.Context) (cash.Cashes, error) {

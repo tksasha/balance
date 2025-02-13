@@ -78,6 +78,11 @@ mockgen:
 		-package mocks \
 		-destination internal/cash/test/mocks/interfaces.mock.go
 
+	@go run $(MOCKGEN) \
+		-source internal/category/interfaces.go \
+		-package mocks \
+		-destination internal/category/test/mocks/interfaces.mock.go
+
 .PHONY: wire
 wire:
 	@echo "wire gen"

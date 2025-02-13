@@ -5,7 +5,7 @@ import (
 
 	"github.com/tksasha/balance/internal/apperrors"
 	"github.com/tksasha/balance/internal/cash"
-	"github.com/tksasha/balance/internal/repositories"
+	"github.com/tksasha/balance/internal/common/repositories"
 )
 
 func (r *Repository) Update(ctx context.Context, cash *cash.Cash) error {

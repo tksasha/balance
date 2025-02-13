@@ -6,8 +6,11 @@ import (
 	"testing"
 
 	"github.com/tksasha/balance/internal/cash"
-	"github.com/tksasha/balance/internal/cash/repository"
-	"github.com/tksasha/balance/internal/cash/service"
+	cashrepository "github.com/tksasha/balance/internal/cash/repository"
+	cashservice "github.com/tksasha/balance/internal/cash/service"
+	"github.com/tksasha/balance/internal/category"
+	categoryrepository "github.com/tksasha/balance/internal/category/repository"
+	categoryservice "github.com/tksasha/balance/internal/category/service"
 )
 
 func NewCashService(ctx context.Context, t *testing.T) (cash.Service, *sql.DB) {
@@ -15,7 +18,17 @@ func NewCashService(ctx context.Context, t *testing.T) (cash.Service, *sql.DB) {
 
 	db := newDB(ctx, t)
 
-	cashRepository := repository.New(db)
+	repository := cashrepository.New(db)
 
-	return service.New(cashRepository), db
+	return cashservice.New(repository), db
+}
+
+func NewCategoryService(ctx context.Context, t *testing.T) (category.Service, *sql.DB) {
+	t.Helper()
+
+	db := newDB(ctx, t)
+
+	repository := categoryrepository.New(db)
+
+	return categoryservice.New(repository), db
 }

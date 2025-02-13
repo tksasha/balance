@@ -5,7 +5,7 @@ import (
 	"database/sql"
 	"errors"
 
-	"github.com/tksasha/balance/internal/repositories"
+	"github.com/tksasha/balance/internal/common/repositories"
 )
 
 func (r *Repository) NameExists(ctx context.Context, name string, id int) (bool, error) {

@@ -2,6 +2,7 @@
 
 //go:generate go run -mod=mod github.com/google/wire/cmd/wire
 //go:build !wireinject
+// +build !wireinject
 
 package wire
 
@@ -10,6 +11,9 @@ import (
 	"github.com/tksasha/balance/internal/cash/handlers"
 	"github.com/tksasha/balance/internal/cash/repository"
 	"github.com/tksasha/balance/internal/cash/service"
+	handlers3 "github.com/tksasha/balance/internal/category/handlers"
+	repository2 "github.com/tksasha/balance/internal/category/repository"
+	service2 "github.com/tksasha/balance/internal/category/service"
 	"github.com/tksasha/balance/internal/config"
 	"github.com/tksasha/balance/internal/db"
 	handlers2 "github.com/tksasha/balance/internal/handlers"
@@ -39,7 +43,9 @@ func InitializeServer() *server.Server {
 	categoryRepository := repositories.NewCategoryRepository(sqlDB)
 	categoryService := services.NewCategoryService(categoryRepository)
 	categoryCreateHandler := handlers2.NewCategoryCreateHandler(categoryService)
-	categoryDeleteHandler := handlers2.NewCategoryDeleteHandler(categoryService)
+	repository3 := repository2.New(sqlDB)
+	service3 := service2.New(repository3)
+	handlersDeleteHandler := handlers3.NewDeleteHandler(service3)
 	categoryEditHandler := handlers2.NewCategoryEditHandler(categoryService)
 	categoryListHandler := handlers2.NewCategoryListHandler(categoryService)
 	categoryUpdateHandler := handlers2.NewCategoryUpdateHandler(categoryService)
@@ -50,7 +56,7 @@ func InitializeServer() *server.Server {
 	itemEditHandler := handlers2.NewItemEditHandler(itemService)
 	itemListHandler := handlers2.NewItemListHandler(itemService)
 	itemUpdateHandler := handlers2.NewItemUpdateHandler(itemService)
-	routesRoutes := routes.New(createHandler, deleteHandler, editHandler, listHandler, newHandler, updateHandler, categoryCreateHandler, categoryDeleteHandler, categoryEditHandler, categoryListHandler, categoryUpdateHandler, indexPageHandler, itemCreateHandler, itemEditHandler, itemListHandler, itemUpdateHandler)
+	routesRoutes := routes.New(createHandler, deleteHandler, editHandler, listHandler, newHandler, updateHandler, categoryCreateHandler, handlersDeleteHandler, categoryEditHandler, categoryListHandler, categoryUpdateHandler, indexPageHandler, itemCreateHandler, itemEditHandler, itemListHandler, itemUpdateHandler)
 	v := middlewares.New()
 	serverServer := server.New(configConfig, routesRoutes, v)
 	return serverServer

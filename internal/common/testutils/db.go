@@ -6,6 +6,7 @@ import (
 	"testing"
 
 	"github.com/tksasha/balance/internal/cash"
+	"github.com/tksasha/balance/internal/category"
 	"github.com/tksasha/balance/internal/db"
 	"github.com/tksasha/balance/internal/providers"
 	"github.com/tksasha/balance/pkg/currencies"
@@ -131,4 +132,61 @@ func FindCashByID(ctx context.Context, t *testing.T, currency currencies.Currenc
 	}
 
 	return cash
+}
+
+func CreateCategory(ctx context.Context, t *testing.T, category *category.Category) {
+	t.Helper()
+
+	db := newDB(ctx, t)
+	defer func() {
+		_ = db.Close()
+	}()
+
+	if _, err := db.ExecContext(
+		ctx,
+		"INSERT INTO categories(id, name, income, visible, currency, supercategory) VALUES(?, ?, ?, ?, ?, ?)",
+		category.ID,
+		category.Name,
+		category.Income,
+		category.Visible,
+		category.Currency,
+		category.Supercategory,
+	); err != nil {
+		t.Fatalf("failed to create category, error: %v", err)
+	}
+}
+
+func FindCategoryByID(ctx context.Context, t *testing.T, currency currencies.Currency, id int) *category.Category {
+	t.Helper()
+
+	db := newDB(ctx, t)
+	defer func() {
+		_ = db.Close()
+	}()
+
+	ctx = currencyContext(ctx, t, currency)
+
+	query := `
+		SELECT id, name, income, visible, currency, supercategory, deleted_at
+		FROM categories
+		WHERE id=? AND currency=?
+	`
+
+	category := &category.Category{}
+
+	if err := db.
+		QueryRowContext(ctx, query, id, currency).
+		Scan(
+			&category.ID,
+			&category.Name,
+			&category.Income,
+			&category.Visible,
+			&category.Currency,
+			&category.Supercategory,
+			&category.DeletedAt,
+		); err != nil {
+		t.Fatalf("failed to find category by id, error: %v", err)
+	}
+
+	return category
 }

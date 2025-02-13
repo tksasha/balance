@@ -5,6 +5,7 @@ import (
 	"net/http"
 
 	cashhandlers "github.com/tksasha/balance/internal/cash/handlers"
+	categoryhandlers "github.com/tksasha/balance/internal/category/handlers"
 	"github.com/tksasha/balance/internal/handlers"
 )
 
@@ -23,7 +24,7 @@ func New(
 	cashNewHandler *cashhandlers.NewHandler,
 	cashUpdateHandler *cashhandlers.UpdateHandler,
 	categoryCreateHandler *handlers.CategoryCreateHandler,
-	categoryDeleteHandler *handlers.CategoryDeleteHandler,
+	categoryDeleteHandler *categoryhandlers.DeleteHandler,
 	categoryEditHandler *handlers.CategoryEditHandler,
 	categoryListHandler *handlers.CategoryListHandler,
 	categoryUpdateHandler *handlers.CategoryUpdateHandler,

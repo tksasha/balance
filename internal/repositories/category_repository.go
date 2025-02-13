@@ -4,7 +4,6 @@ import (
 	"context"
 	"database/sql"
 	"errors"
-	"time"
 
 	"github.com/tksasha/balance/internal/apperrors"
 	"github.com/tksasha/balance/internal/models"
@@ -159,18 +158,6 @@ func (r *CategoryRepository) Update(ctx context.Context, category *models.Catego
 		category.ID,
 		currency,
 	); err != nil {
-		return err
-	}
-
-	return nil
-}
-
-func (r *CategoryRepository) Delete(ctx context.Context, category *models.Category) error {
-	currency := getCurrencyFromContext(ctx)
-
-	query := `UPDATE categories SET deleted_at=? WHERE id=? AND currency=?`
-
-	if _, err := r.db.ExecContext(ctx, query, time.Now().UTC(), category.ID, currency); err != nil {
 		return err
 	}
 

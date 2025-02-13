@@ -4,7 +4,7 @@ import (
 	"context"
 
 	"github.com/tksasha/balance/internal/cash"
-	"github.com/tksasha/balance/internal/repositories"
+	"github.com/tksasha/balance/internal/common/repositories"
 )
 
 func (r *Repository) Create(ctx context.Context, cash *cash.Cash) error {

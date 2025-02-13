@@ -308,37 +308,3 @@ func TestCategoryService_Update(t *testing.T) { //nolint:funlen
 		assert.NilError(t, err)
 	})
 }
-
-func TestCategoryService_Delete(t *testing.T) {
-	controller := gomock.NewController(t)
-
-	categoryRepository := mocksforservices.NewMockCategoryRepository(controller)
-
-	service := services.NewCategoryService(categoryRepository)
-
-	ctx := t.Context()
-
-	category := &models.Category{}
-
-	t.Run("when delete category returns error, it should return error", func(t *testing.T) {
-		categoryRepository.
-			EXPECT().
-			Delete(ctx, category).
-			Return(errors.New("delete category error"))
-
-		err := service.Delete(ctx, category)
-
-		assert.Error(t, err, "delete category error")
-	})
-
-	t.Run("when delete category does not return error, it should return nil", func(t *testing.T) {
-		categoryRepository.
-			EXPECT().
-			Delete(ctx, category).
-			Return(nil)
-
-		err := service.Delete(ctx, category)
-
-		assert.NilError(t, err)
-	})
-}

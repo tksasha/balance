@@ -11,14 +11,7 @@ import (
 func (r *Repository) Delete(ctx context.Context, id int) error {
 	currency := repositories.GetCurrencyFromContext(ctx)
 
-	query := `
-		UPDATE cashes
-		SET
-			deleted_at = ?
-		WHERE
-			id = ?
-			AND currency = ?
-	`
+	query := `UPDATE categories SET deleted_at=? WHERE id=? AND currency=?`
 
 	result, err := r.db.ExecContext(ctx, query, time.Now().UTC(), id, currency)
 	if err != nil {
