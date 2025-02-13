@@ -6,8 +6,9 @@ import (
 	"net/http/httptest"
 	"testing"
 
-	"github.com/tksasha/balance/internal/handlers"
-	"github.com/tksasha/balance/internal/models"
+	"github.com/tksasha/balance/internal/cash"
+	"github.com/tksasha/balance/internal/cash/handlers"
+	"github.com/tksasha/balance/internal/common/testutils"
 	"github.com/tksasha/balance/pkg/currencies"
 	"gotest.tools/v3/assert"
 )
@@ -15,17 +16,17 @@ import (
 func TestCashDeleteHandler(t *testing.T) {
 	ctx := t.Context()
 
-	service, db := newCashService(ctx, t)
+	service, db := testutils.NewCashService(ctx, t)
 	defer func() {
 		_ = db.Close()
 	}()
 
-	handler := handlers.NewCashDeleteHandler(service)
+	handler := handlers.NewDeleteHandler(service)
 
-	mux := newMux(t, "DELETE /cashes/{id}", handler)
+	mux := testutils.NewMux(t, "DELETE /cashes/{id}", handler)
 
 	t.Run("renders 404 when cash not found", func(t *testing.T) {
-		request := newDeleteRequest(ctx, t, "/cashes/1007")
+		request := testutils.NewDeleteRequest(ctx, t, "/cashes/1007")
 
 		recorder := httptest.NewRecorder()
 
@@ -35,17 +36,17 @@ func TestCashDeleteHandler(t *testing.T) {
 	})
 
 	t.Run("renders 204 when cash deleted", func(t *testing.T) {
-		cleanup(ctx, t)
+		testutils.Cleanup(ctx, t)
 
-		cashToCreate := &models.Cash{
+		cashToCreate := &cash.Cash{
 			ID:        1011,
 			Currency:  currencies.UAH,
 			DeletedAt: sql.NullTime{},
 		}
 
-		createCash(ctx, t, cashToCreate)
+		testutils.CreateCash(ctx, t, cashToCreate)
 
-		request := newDeleteRequest(ctx, t, "/cashes/1011")
+		request := testutils.NewDeleteRequest(ctx, t, "/cashes/1011")
 
 		recorder := httptest.NewRecorder()
 
@@ -53,7 +54,7 @@ func TestCashDeleteHandler(t *testing.T) {
 
 		assert.Equal(t, recorder.Code, http.StatusNoContent)
 
-		cash := findCashByID(ctx, t, currencies.UAH, 1011)
+		cash := testutils.FindCashByID(ctx, t, currencies.UAH, 1011)
 
 		assert.Equal(t, cash.ID, 1011)
 		assert.Assert(t, cash.DeletedAt.Valid)

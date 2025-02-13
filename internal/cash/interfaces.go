@@ -10,6 +10,7 @@ type Repository interface {
 	Create(ctx context.Context, cash *Cash) error
 	FindByID(ctx context.Context, id int) (*Cash, error)
 	Update(ctx context.Context, cash *Cash) error
+	Delete(ctx context.Context, id int) error
 }
 
 type Service interface {
@@ -17,4 +18,5 @@ type Service interface {
 	Create(ctx context.Context, request CreateRequest) error
 	FindByID(ctx context.Context, id string) (*Cash, error)
 	Update(ctx context.Context, request UpdateRequest) (*Cash, error)
+	Delete(ctx context.Context, id string) error
 }

@@ -22,7 +22,3 @@ type CategoryRepository interface {
 	Update(ctx context.Context, category *models.Category) error
 	Delete(ctx context.Context, category *models.Category) error
 }
-
-type CashRepository interface {
-	Delete(ctx context.Context, id int) error
-}

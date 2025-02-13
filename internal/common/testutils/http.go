@@ -69,6 +69,12 @@ func NewPatchRequest(ctx context.Context, t *testing.T, endpoint string, params 
 	return newRequest(ctx, t, http.MethodPatch, endpoint, params)
 }
 
+func NewDeleteRequest(ctx context.Context, t *testing.T, endpoint string) *http.Request {
+	t.Helper()
+
+	return newRequest(ctx, t, http.MethodDelete, endpoint, nil)
+}
+
 func newInvalidRequest(ctx context.Context, t *testing.T, method, endpoint string) *http.Request {
 	t.Helper()
 

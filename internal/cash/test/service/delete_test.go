@@ -1,22 +1,22 @@
-package services_test
+package service_test
 
 import (
 	"errors"
 	"testing"
 
 	"github.com/tksasha/balance/internal/apperrors"
-	"github.com/tksasha/balance/internal/services"
-	mocksforservices "github.com/tksasha/balance/mocks/services"
+	"github.com/tksasha/balance/internal/cash/service"
+	"github.com/tksasha/balance/internal/cash/test/mocks"
 	"go.uber.org/mock/gomock"
 	"gotest.tools/v3/assert"
 )
 
 func TestCashService_Delete(t *testing.T) {
-	controller := gomock.NewController(t)
+	ctrl := gomock.NewController(t)
 
-	cashRepository := mocksforservices.NewMockCashRepository(controller)
+	repository := mocks.NewMockRepository(ctrl)
 
-	service := services.NewCashService(cashRepository)
+	service := service.New(repository)
 
 	ctx := t.Context()
 
@@ -27,7 +27,7 @@ func TestCashService_Delete(t *testing.T) {
 	})
 
 	t.Run("returns error when delete cash failed", func(t *testing.T) {
-		cashRepository.
+		repository.
 			EXPECT().
 			Delete(ctx, 1059).
 			Return(errors.New("failed to delete cash"))
@@ -38,7 +38,7 @@ func TestCashService_Delete(t *testing.T) {
 	})
 
 	t.Run("returns error when cash not found", func(t *testing.T) {
-		cashRepository.
+		repository.
 			EXPECT().
 			Delete(ctx, 1103).
 			Return(apperrors.ErrRecordNotFound)
@@ -49,7 +49,7 @@ func TestCashService_Delete(t *testing.T) {
 	})
 
 	t.Run("returns nil when delete cash succeeded", func(t *testing.T) {
-		cashRepository.
+		repository.
 			EXPECT().
 			Delete(ctx, 1106).
 			Return(nil)

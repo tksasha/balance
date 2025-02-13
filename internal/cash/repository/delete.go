@@ -1,25 +1,15 @@
-package repositories
+package repository
 
 import (
 	"context"
-	"database/sql"
 	"time"
 
 	"github.com/tksasha/balance/internal/apperrors"
+	"github.com/tksasha/balance/internal/repositories"
 )
 
-type CashRepository struct {
-	db *sql.DB
-}
-
-func NewCashRepository(db *sql.DB) *CashRepository {
-	return &CashRepository{
-		db: db,
-	}
-}
-
-func (r *CashRepository) Delete(ctx context.Context, id int) error {
-	currency := getCurrencyFromContext(ctx)
+func (r *Repository) Delete(ctx context.Context, id int) error {
+	currency := repositories.GetCurrencyFromContext(ctx)
 
 	query := `
 		UPDATE cashes

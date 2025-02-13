@@ -17,7 +17,7 @@ type Routes struct {
 
 func New(
 	cashCreateHandler *cashhandlers.CreateHandler,
-	cashDeleteHandler *handlers.CashDeleteHandler,
+	cashDeleteHandler *cashhandlers.DeleteHandler,
 	cashEditHandler *cashhandlers.EditHandler,
 	cashListHandler *cashhandlers.ListHandler,
 	cashNewHandler *cashhandlers.NewHandler,

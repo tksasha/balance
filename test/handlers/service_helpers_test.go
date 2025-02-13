@@ -10,16 +10,6 @@ import (
 	"github.com/tksasha/balance/internal/services"
 )
 
-func newCashService(ctx context.Context, t *testing.T) (handlers.CashService, *sql.DB) {
-	t.Helper()
-
-	db := newDB(ctx, t)
-
-	cashRepository := repositories.NewCashRepository(db)
-
-	return services.NewCashService(cashRepository), db
-}
-
 func newCategoryService(ctx context.Context, t *testing.T) (handlers.CategoryService, *sql.DB) {
 	t.Helper()
 
