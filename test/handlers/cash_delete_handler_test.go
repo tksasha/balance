@@ -1,7 +1,6 @@
 package handlers_test
 
 import (
-	"context"
 	"database/sql"
 	"net/http"
 	"net/http/httptest"
@@ -14,7 +13,7 @@ import (
 )
 
 func TestCashDeleteHandler(t *testing.T) {
-	ctx := context.Background()
+	ctx := t.Context()
 
 	service, db := newCashService(ctx, t)
 	defer func() {

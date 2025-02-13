@@ -1,7 +1,6 @@
 package handlers_test
 
 import (
-	"context"
 	"net/http"
 	"net/http/httptest"
 	"testing"
@@ -12,7 +11,7 @@ import (
 )
 
 func TestCashNewHandler(t *testing.T) {
-	ctx := context.Background()
+	ctx := t.Context()
 
 	mux := utils.NewMux(t, "GET /cashes/new", cashes.NewNewHandler())
 

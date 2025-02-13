@@ -1,7 +1,6 @@
 package handlers_test
 
 import (
-	"context"
 	"net/http"
 	"net/http/httptest"
 	"testing"
@@ -13,7 +12,7 @@ import (
 )
 
 func TestCashUpdateHandler(t *testing.T) {
-	ctx := context.Background()
+	ctx := t.Context()
 
 	service, db := newCashService(ctx, t)
 	defer func() {

@@ -21,37 +21,6 @@ func NewCashService(cashRepository CashRepository) *CashService {
 	}
 }
 
-func (s *CashService) Create(ctx context.Context, request requests.CashCreateRequest) error {
-	cash := &models.Cash{}
-
-	validate := validation.New()
-
-	cash.Name = validate.Presence("name", request.Name)
-
-	if cash.Name != "" {
-		exists, err := s.cashRepository.NameExists(ctx, cash.Name, 0)
-		if err != nil {
-			return err
-		}
-
-		if exists {
-			validate.Set("name", AlreadyExists)
-		}
-	}
-
-	cash.Formula, cash.Sum = validate.Formula("formula", request.Formula)
-
-	cash.Supercategory = validate.Integer("supercategory", request.Supercategory)
-
-	cash.Favorite = validate.Boolean("favorite", request.Favorite)
-
-	if validate.HasErrors() {
-		return validate.Errors
-	}
-
-	return s.cashRepository.Create(ctx, cash)
-}
-
 func (s *CashService) findByID(ctx context.Context, input string) (*models.Cash, error) {
 	id, err := strconv.Atoi(input)
 	if err != nil {

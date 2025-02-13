@@ -3,6 +3,7 @@ package repository
 import (
 	"context"
 	"database/sql"
+	"errors"
 	"log"
 
 	"github.com/tksasha/balance/internal/cash"
@@ -78,4 +79,75 @@ func (r *Repository) List(ctx context.Context) (cash.Cashes, error) {
 	}
 
 	return cashes, nil
+}
+
+func (r *Repository) NameExists(ctx context.Context, name string, id int) (bool, error) {
+	currency := repositories.GetCurrencyFromContext(ctx)
+
+	query := `
+		SELECT
+			1
+		FROM
+			cashes
+		WHERE
+			currency = ?
+			AND deleted_at IS NULL
+			AND name = ?
+			AND id != ?
+	`
+
+	row := r.db.QueryRowContext(ctx, query, currency, name, id)
+
+	var exists int
+
+	if err := row.Scan(&exists); err != nil {
+		if errors.Is(err, sql.ErrNoRows) {
+			return false, nil
+		}
+
+		return false, err
+	}
+
+	return exists == 1, nil
+}
+
+func (r *Repository) Create(ctx context.Context, cash *cash.Cash) error {
+	currency := repositories.GetCurrencyFromContext(ctx)
+
+	query := `
+		INSERT INTO
+		    cashes (
+		        currency,
+		        formula,
+		        sum,
+		        name,
+		        supercategory,
+		        favorite
+		    )
+		VALUES
+		    (?, ?, ?, ?, ?, ?)
+	`
+
+	result, err := r.db.ExecContext(
+		ctx,
+		query,
+		currency,
+		cash.Formula,
+		cash.Sum,
+		cash.Name,
+		cash.Supercategory,
+		cash.Favorite,
+	)
+	if err != nil {
+		return err
+	}
+
+	id, err := result.LastInsertId()
+	if err != nil {
+		return err
+	}
+
+	cash.ID = int(id)
+
+	return nil
 }

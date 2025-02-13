@@ -24,8 +24,8 @@ import (
 
 func InitializeServer() *server.Server {
 	wire.Build(
-		cashes.NewCreateHandler,
 		cashes.NewNewHandler,
+		cashhandlers.NewCreateHandler,
 		cashhandlers.NewListHandler,
 		cashrepository.New,
 		cashservice.New,

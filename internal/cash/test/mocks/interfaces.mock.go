@@ -41,6 +41,20 @@ func (m *MockRepository) EXPECT() *MockRepositoryMockRecorder {
 	return m.recorder
 }
 
+// Create mocks base method.
+func (m *MockRepository) Create(ctx context.Context, cash *cash.Cash) error {
+	m.ctrl.T.Helper()
+	ret := m.ctrl.Call(m, "Create", ctx, cash)
+	ret0, _ := ret[0].(error)
+	return ret0
+}
+
+// Create indicates an expected call of Create.
+func (mr *MockRepositoryMockRecorder) Create(ctx, cash any) *gomock.Call {
+	mr.mock.ctrl.T.Helper()
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "Create", reflect.TypeOf((*MockRepository)(nil).Create), ctx, cash)
+}
+
 // List mocks base method.
 func (m *MockRepository) List(ctx context.Context) (cash.Cashes, error) {
 	m.ctrl.T.Helper()
@@ -54,6 +68,21 @@ func (m *MockRepository) List(ctx context.Context) (cash.Cashes, error) {
 func (mr *MockRepositoryMockRecorder) List(ctx any) *gomock.Call {
 	mr.mock.ctrl.T.Helper()
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "List", reflect.TypeOf((*MockRepository)(nil).List), ctx)
+}
+
+// NameExists mocks base method.
+func (m *MockRepository) NameExists(ctx context.Context, name string, id int) (bool, error) {
+	m.ctrl.T.Helper()
+	ret := m.ctrl.Call(m, "NameExists", ctx, name, id)
+	ret0, _ := ret[0].(bool)
+	ret1, _ := ret[1].(error)
+	return ret0, ret1
+}
+
+// NameExists indicates an expected call of NameExists.
+func (mr *MockRepositoryMockRecorder) NameExists(ctx, name, id any) *gomock.Call {
+	mr.mock.ctrl.T.Helper()
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "NameExists", reflect.TypeOf((*MockRepository)(nil).NameExists), ctx, name, id)
 }
 
 // MockService is a mock of Service interface.
@@ -78,6 +107,20 @@ func NewMockService(ctrl *gomock.Controller) *MockService {
 // EXPECT returns an object that allows the caller to indicate expected use.
 func (m *MockService) EXPECT() *MockServiceMockRecorder {
 	return m.recorder
+}
+
+// Create mocks base method.
+func (m *MockService) Create(ctx context.Context, request cash.CreateRequest) error {
+	m.ctrl.T.Helper()
+	ret := m.ctrl.Call(m, "Create", ctx, request)
+	ret0, _ := ret[0].(error)
+	return ret0
+}
+
+// Create indicates an expected call of Create.
+func (mr *MockServiceMockRecorder) Create(ctx, request any) *gomock.Call {
+	mr.mock.ctrl.T.Helper()
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "Create", reflect.TypeOf((*MockService)(nil).Create), ctx, request)
 }
 
 // List mocks base method.

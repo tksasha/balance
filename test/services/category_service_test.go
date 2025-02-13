@@ -1,7 +1,6 @@
 package services_test
 
 import (
-	"context"
 	"errors"
 	"slices"
 	"testing"
@@ -22,7 +21,7 @@ func TestCategoryService_Create(t *testing.T) { //nolint:funlen
 
 	service := services.NewCategoryService(categoryRepository)
 
-	ctx := context.Background()
+	ctx := t.Context()
 
 	t.Run("returns error when name is blank", func(t *testing.T) {
 		request := requests.CategoryCreateRequest{
@@ -151,7 +150,7 @@ func TestCategoryService_GetAll(t *testing.T) {
 
 	service := services.NewCategoryService(categoryRepository)
 
-	ctx := context.Background()
+	ctx := t.Context()
 
 	t.Run("when get all categories returns error, it should return error", func(t *testing.T) {
 		categoryRepository.
@@ -186,7 +185,7 @@ func TestCategoryService_FindByID(t *testing.T) {
 
 	service := services.NewCategoryService(categoryRepository)
 
-	ctx := context.Background()
+	ctx := t.Context()
 
 	t.Run("when find category by id returns error, it should return error", func(t *testing.T) {
 		categoryRepository.
@@ -221,7 +220,7 @@ func TestCategoryService_Update(t *testing.T) { //nolint:funlen
 
 	service := services.NewCategoryService(categoryRepository)
 
-	ctx := context.Background()
+	ctx := t.Context()
 
 	t.Run("returns error when name is blank", func(t *testing.T) {
 		category := &models.Category{
@@ -317,7 +316,7 @@ func TestCategoryService_Delete(t *testing.T) {
 
 	service := services.NewCategoryService(categoryRepository)
 
-	ctx := context.Background()
+	ctx := t.Context()
 
 	category := &models.Category{}
 

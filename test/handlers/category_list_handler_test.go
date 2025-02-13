@@ -1,7 +1,6 @@
 package handlers_test
 
 import (
-	"context"
 	"io"
 	"net/http"
 	"net/http/httptest"
@@ -15,7 +14,7 @@ import (
 )
 
 func TestCategoryListHandler(t *testing.T) {
-	ctx := context.Background()
+	ctx := t.Context()
 
 	service, db := newCategoryService(ctx, t)
 	defer func() {

@@ -248,20 +248,6 @@ func (m *MockCashRepository) EXPECT() *MockCashRepositoryMockRecorder {
 	return m.recorder
 }
 
-// Create mocks base method.
-func (m *MockCashRepository) Create(ctx context.Context, cash *models.Cash) error {
-	m.ctrl.T.Helper()
-	ret := m.ctrl.Call(m, "Create", ctx, cash)
-	ret0, _ := ret[0].(error)
-	return ret0
-}
-
-// Create indicates an expected call of Create.
-func (mr *MockCashRepositoryMockRecorder) Create(ctx, cash any) *gomock.Call {
-	mr.mock.ctrl.T.Helper()
-	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "Create", reflect.TypeOf((*MockCashRepository)(nil).Create), ctx, cash)
-}
-
 // Delete mocks base method.
 func (m *MockCashRepository) Delete(ctx context.Context, id int) error {
 	m.ctrl.T.Helper()

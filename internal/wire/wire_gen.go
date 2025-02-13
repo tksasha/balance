@@ -2,17 +2,18 @@
 
 //go:generate go run -mod=mod github.com/google/wire/cmd/wire
 //go:build !wireinject
+// +build !wireinject
 
 package wire
 
 import (
 	"context"
-	handlers2 "github.com/tksasha/balance/internal/cash/handlers"
+	"github.com/tksasha/balance/internal/cash/handlers"
 	"github.com/tksasha/balance/internal/cash/repository"
 	"github.com/tksasha/balance/internal/cash/service"
 	"github.com/tksasha/balance/internal/config"
 	"github.com/tksasha/balance/internal/db"
-	"github.com/tksasha/balance/internal/handlers"
+	handlers2 "github.com/tksasha/balance/internal/handlers"
 	"github.com/tksasha/balance/internal/handlers/cashes"
 	"github.com/tksasha/balance/internal/middlewares"
 	"github.com/tksasha/balance/internal/providers"
@@ -29,30 +30,30 @@ func InitializeServer() *server.Server {
 	contextContext := context.Background()
 	dbNameProvider := providers.NewDBNameProvider()
 	sqlDB := db.Open(contextContext, dbNameProvider)
-	cashRepository := repositories.NewCashRepository(sqlDB)
-	cashService := services.NewCashService(cashRepository)
-	createHandler := cashes.NewCreateHandler(cashService)
-	cashDeleteHandler := handlers.NewCashDeleteHandler(cashService)
-	cashEditHandler := handlers.NewCashEditHandler(cashService)
 	repositoryRepository := repository.New(sqlDB)
 	serviceService := service.New(repositoryRepository)
-	listHandler := handlers2.NewListHandler(serviceService)
+	createHandler := handlers.NewCreateHandler(serviceService)
+	cashRepository := repositories.NewCashRepository(sqlDB)
+	cashService := services.NewCashService(cashRepository)
+	cashDeleteHandler := handlers2.NewCashDeleteHandler(cashService)
+	cashEditHandler := handlers2.NewCashEditHandler(cashService)
+	listHandler := handlers.NewListHandler(serviceService)
 	newHandler := cashes.NewNewHandler()
-	cashUpdateHandler := handlers.NewCashUpdateHandler(cashService)
+	cashUpdateHandler := handlers2.NewCashUpdateHandler(cashService)
 	categoryRepository := repositories.NewCategoryRepository(sqlDB)
 	categoryService := services.NewCategoryService(categoryRepository)
-	categoryCreateHandler := handlers.NewCategoryCreateHandler(categoryService)
-	categoryDeleteHandler := handlers.NewCategoryDeleteHandler(categoryService)
-	categoryEditHandler := handlers.NewCategoryEditHandler(categoryService)
-	categoryListHandler := handlers.NewCategoryListHandler(categoryService)
-	categoryUpdateHandler := handlers.NewCategoryUpdateHandler(categoryService)
-	indexPageHandler := handlers.NewIndexPageHandler(categoryService)
+	categoryCreateHandler := handlers2.NewCategoryCreateHandler(categoryService)
+	categoryDeleteHandler := handlers2.NewCategoryDeleteHandler(categoryService)
+	categoryEditHandler := handlers2.NewCategoryEditHandler(categoryService)
+	categoryListHandler := handlers2.NewCategoryListHandler(categoryService)
+	categoryUpdateHandler := handlers2.NewCategoryUpdateHandler(categoryService)
+	indexPageHandler := handlers2.NewIndexPageHandler(categoryService)
 	itemRepository := repositories.NewItemRepository(sqlDB)
 	itemService := services.NewItemService(itemRepository, categoryRepository)
-	itemCreateHandler := handlers.NewItemCreateHandler(itemService)
-	itemEditHandler := handlers.NewItemEditHandler(itemService)
-	itemListHandler := handlers.NewItemListHandler(itemService)
-	itemUpdateHandler := handlers.NewItemUpdateHandler(itemService)
+	itemCreateHandler := handlers2.NewItemCreateHandler(itemService)
+	itemEditHandler := handlers2.NewItemEditHandler(itemService)
+	itemListHandler := handlers2.NewItemListHandler(itemService)
+	itemUpdateHandler := handlers2.NewItemUpdateHandler(itemService)
 	routesRoutes := routes.New(createHandler, cashDeleteHandler, cashEditHandler, listHandler, newHandler, cashUpdateHandler, categoryCreateHandler, categoryDeleteHandler, categoryEditHandler, categoryListHandler, categoryUpdateHandler, indexPageHandler, itemCreateHandler, itemEditHandler, itemListHandler, itemUpdateHandler)
 	v := middlewares.New()
 	serverServer := server.New(configConfig, routesRoutes, v)

@@ -1,7 +1,6 @@
 package handlers_test
 
 import (
-	"context"
 	"net/http"
 	"net/http/httptest"
 	"testing"
@@ -11,7 +10,7 @@ import (
 )
 
 func TestItemEditHandler(t *testing.T) {
-	ctx := context.Background()
+	ctx := t.Context()
 
 	service, db := newItemService(ctx, t)
 	defer func() {

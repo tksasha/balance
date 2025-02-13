@@ -1,24 +1,22 @@
-package cashes
+package handlers
 
 import (
 	"errors"
 	"net/http"
 
 	"github.com/tksasha/balance/internal/apperrors"
-	"github.com/tksasha/balance/internal/handlers"
+	"github.com/tksasha/balance/internal/cash"
 	"github.com/tksasha/balance/internal/handlers/utils"
-	"github.com/tksasha/balance/internal/models"
-	"github.com/tksasha/balance/internal/requests"
 	"github.com/tksasha/balance/pkg/validation"
 )
 
 type CreateHandler struct {
-	cashService handlers.CashService
+	service cash.Service
 }
 
-func NewCreateHandler(cashService handlers.CashService) *CreateHandler {
+func NewCreateHandler(service cash.Service) *CreateHandler {
 	return &CreateHandler{
-		cashService: cashService,
+		service: service,
 	}
 }
 
@@ -39,21 +37,21 @@ func (h *CreateHandler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 	_, _ = w.Write([]byte("cash"))
 }
 
-func (h *CreateHandler) handle(r *http.Request) (*models.Cash, error) {
+func (h *CreateHandler) handle(r *http.Request) (*cash.Cash, error) {
 	if err := r.ParseForm(); err != nil {
 		return nil, apperrors.ErrParsingForm
 	}
 
-	request := requests.CashCreateRequest{
+	request := cash.CreateRequest{
 		Name:          r.FormValue("name"),
 		Formula:       r.FormValue("formula"),
 		Supercategory: r.FormValue("supercategory"),
 		Favorite:      r.FormValue("favorite"),
 	}
 
-	if err := h.cashService.Create(r.Context(), request); err != nil {
+	if err := h.service.Create(r.Context(), request); err != nil {
 		return nil, err
 	}
 
-	return &models.Cash{}, nil
+	return &cash.Cash{}, nil
 }

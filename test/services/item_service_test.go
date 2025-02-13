@@ -1,7 +1,6 @@
 package services_test
 
 import (
-	"context"
 	"errors"
 	"testing"
 
@@ -22,7 +21,7 @@ func TestItemService_Create(t *testing.T) { //nolint:funlen
 
 	service := services.NewItemService(itemRepository, categoryRepository)
 
-	ctx := context.Background()
+	ctx := t.Context()
 
 	t.Run("returns error when date is blank", func(t *testing.T) {
 		request := requests.ItemCreateRequest{
@@ -236,7 +235,7 @@ func TestItemService_Update(t *testing.T) { //nolint:funlen,maintidx
 
 	service := services.NewItemService(itemRepository, categoryRepository)
 
-	ctx := context.Background()
+	ctx := t.Context()
 
 	t.Run("returns error when id is invalid", func(t *testing.T) {
 		request := requests.ItemUpdateRequest{
@@ -568,7 +567,7 @@ func TestItemService_Delete(t *testing.T) {
 
 	service := services.NewItemService(itemRepository, categoryRepository)
 
-	ctx := context.Background()
+	ctx := t.Context()
 
 	t.Run("returns error when id is blank", func(t *testing.T) {
 		err := service.Delete(ctx, "")

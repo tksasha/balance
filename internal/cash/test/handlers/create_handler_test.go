@@ -1,38 +1,38 @@
 package handlers_test
 
 import (
-	"context"
 	"net/http"
 	"net/http/httptest"
 	"strings"
 	"testing"
 
-	"github.com/tksasha/balance/internal/handlers/cashes"
+	"github.com/tksasha/balance/internal/cash/handlers"
+	"github.com/tksasha/balance/internal/common/testutils"
 	"github.com/tksasha/balance/pkg/currencies"
 	"github.com/tksasha/balance/test/handlers/utils"
 	"gotest.tools/v3/assert"
 )
 
 func TestCashCreateHandler(t *testing.T) { //nolint:funlen
-	ctx := context.Background()
+	ctx := t.Context()
 
-	service, db := utils.NewCashService(ctx, t)
+	service, db := testutils.NewCashService(ctx, t)
 	defer func() {
 		_ = db.Close()
 	}()
 
-	handler := cashes.NewCreateHandler(service)
+	handler := handlers.NewCreateHandler(service)
 
 	mux := utils.NewMux(t, "POST /cashes", handler)
 
 	t.Run("responds 400 whe parse form failed", func(t *testing.T) {
 		request := utils.NewInvalidPostRequest(ctx, t, "/cashes")
 
-		recorder := httptest.NewRecorder()
+		responseWriter := httptest.NewRecorder()
 
-		mux.ServeHTTP(recorder, request)
+		mux.ServeHTTP(responseWriter, request)
 
-		assert.Equal(t, recorder.Code, http.StatusBadRequest)
+		assert.Equal(t, responseWriter.Code, http.StatusBadRequest)
 	})
 
 	t.Run("responds 200 when input is invalid", func(t *testing.T) {
