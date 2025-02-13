@@ -2,7 +2,6 @@ package handlers_test
 
 import (
 	"context"
-	"io"
 	"net/http"
 	"net/url"
 	"strings"
@@ -83,17 +82,6 @@ func newInvalidPostRequest(ctx context.Context, t *testing.T, endpoint string) *
 	t.Helper()
 
 	return newInvalidRequest(ctx, t, http.MethodPost, endpoint)
-}
-
-func getResponseBody(t *testing.T, reader io.Reader) string {
-	t.Helper()
-
-	body, err := io.ReadAll(reader)
-	if err != nil {
-		t.Fatalf("failed to parse response body: %v", err)
-	}
-
-	return string(body)
 }
 
 func newMux(t *testing.T, pattern string, handler http.Handler) *http.ServeMux {

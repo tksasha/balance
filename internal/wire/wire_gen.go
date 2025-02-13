@@ -2,7 +2,6 @@
 
 //go:generate go run -mod=mod github.com/google/wire/cmd/wire
 //go:build !wireinject
-// +build !wireinject
 
 package wire
 
@@ -36,7 +35,7 @@ func InitializeServer() *server.Server {
 	cashRepository := repositories.NewCashRepository(sqlDB)
 	cashService := services.NewCashService(cashRepository)
 	cashDeleteHandler := handlers2.NewCashDeleteHandler(cashService)
-	cashEditHandler := handlers2.NewCashEditHandler(cashService)
+	editHandler := handlers.NewEditHandler(serviceService)
 	listHandler := handlers.NewListHandler(serviceService)
 	newHandler := cashes.NewNewHandler()
 	updateHandler := handlers.NewUpdateHandler(serviceService)
@@ -54,7 +53,7 @@ func InitializeServer() *server.Server {
 	itemEditHandler := handlers2.NewItemEditHandler(itemService)
 	itemListHandler := handlers2.NewItemListHandler(itemService)
 	itemUpdateHandler := handlers2.NewItemUpdateHandler(itemService)
-	routesRoutes := routes.New(createHandler, cashDeleteHandler, cashEditHandler, listHandler, newHandler, updateHandler, categoryCreateHandler, categoryDeleteHandler, categoryEditHandler, categoryListHandler, categoryUpdateHandler, indexPageHandler, itemCreateHandler, itemEditHandler, itemListHandler, itemUpdateHandler)
+	routesRoutes := routes.New(createHandler, cashDeleteHandler, editHandler, listHandler, newHandler, updateHandler, categoryCreateHandler, categoryDeleteHandler, categoryEditHandler, categoryListHandler, categoryUpdateHandler, indexPageHandler, itemCreateHandler, itemEditHandler, itemListHandler, itemUpdateHandler)
 	v := middlewares.New()
 	serverServer := server.New(configConfig, routesRoutes, v)
 	return serverServer

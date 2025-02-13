@@ -6,8 +6,9 @@ import (
 	"strings"
 	"testing"
 
-	"github.com/tksasha/balance/internal/handlers"
-	"github.com/tksasha/balance/internal/models"
+	"github.com/tksasha/balance/internal/cash"
+	"github.com/tksasha/balance/internal/cash/handlers"
+	"github.com/tksasha/balance/internal/common/testutils"
 	"github.com/tksasha/balance/pkg/currencies"
 	"gotest.tools/v3/assert"
 )
@@ -15,17 +16,17 @@ import (
 func TestCashEditHandler(t *testing.T) {
 	ctx := t.Context()
 
-	service, db := newCashService(ctx, t)
+	service, db := testutils.NewCashService(ctx, t)
 	defer func() {
 		_ = db.Close()
 	}()
 
-	handler := handlers.NewCashEditHandler(service)
+	handler := handlers.NewEditHandler(service)
 
-	mux := newMux(t, "GET /cashes/{id}/edit", handler)
+	mux := testutils.NewMux(t, "GET /cashes/{id}/edit", handler)
 
 	t.Run("renders 404 on invalid id", func(t *testing.T) {
-		request := newGetRequest(ctx, t, "/cashes/abc/edit")
+		request := testutils.NewGetRequest(ctx, t, "/cashes/abc/edit")
 
 		recorder := httptest.NewRecorder()
 
@@ -35,9 +36,9 @@ func TestCashEditHandler(t *testing.T) {
 	})
 
 	t.Run("renders 404 on not found", func(t *testing.T) {
-		cleanup(ctx, t)
+		testutils.Cleanup(ctx, t)
 
-		request := newGetRequest(ctx, t, "/cashes/1255/edit")
+		request := testutils.NewGetRequest(ctx, t, "/cashes/1255/edit")
 
 		recorder := httptest.NewRecorder()
 
@@ -47,9 +48,9 @@ func TestCashEditHandler(t *testing.T) {
 	})
 
 	t.Run("renders resource on success", func(t *testing.T) {
-		cleanup(ctx, t)
+		testutils.Cleanup(ctx, t)
 
-		cash := &models.Cash{
+		cash := &cash.Cash{
 			ID:            1300,
 			Currency:      currencies.EUR,
 			Formula:       "2+3",
@@ -59,9 +60,9 @@ func TestCashEditHandler(t *testing.T) {
 			Favorite:      true,
 		}
 
-		createCash(ctx, t, cash)
+		testutils.CreateCash(ctx, t, cash)
 
-		request := newGetRequest(ctx, t, "/cashes/1300/edit?currency=eur")
+		request := testutils.NewGetRequest(ctx, t, "/cashes/1300/edit?currency=eur")
 
 		recorder := httptest.NewRecorder()
 
@@ -69,7 +70,7 @@ func TestCashEditHandler(t *testing.T) {
 
 		assert.Equal(t, recorder.Code, http.StatusOK)
 
-		body := getResponseBody(t, recorder.Body)
+		body := testutils.GetResponseBody(t, recorder.Body)
 
 		assert.Assert(t, strings.Contains(body, "Bonds"))
 	})

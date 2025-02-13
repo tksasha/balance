@@ -24,6 +24,5 @@ type CategoryService interface {
 }
 
 type CashService interface {
-	FindByID(ctx context.Context, id string) (*models.Cash, error)
 	Delete(ctx context.Context, id string) error
 }

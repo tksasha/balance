@@ -9,6 +9,10 @@ import (
 	"github.com/tksasha/balance/internal/cash"
 )
 
+func (s *Service) FindByID(ctx context.Context, input string) (*cash.Cash, error) {
+	return s.findByID(ctx, input)
+}
+
 func (s *Service) findByID(ctx context.Context, input string) (*cash.Cash, error) {
 	id, err := strconv.Atoi(input)
 	if err != nil {

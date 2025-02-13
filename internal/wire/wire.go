@@ -26,6 +26,7 @@ func InitializeServer() *server.Server {
 	wire.Build(
 		cashes.NewNewHandler,
 		cashhandlers.NewCreateHandler,
+		cashhandlers.NewEditHandler,
 		cashhandlers.NewListHandler,
 		cashhandlers.NewUpdateHandler,
 		cashrepository.New,
@@ -34,7 +35,6 @@ func InitializeServer() *server.Server {
 		context.Background,
 		db.Open,
 		handlers.NewCashDeleteHandler,
-		handlers.NewCashEditHandler,
 		handlers.NewCategoryCreateHandler,
 		handlers.NewCategoryDeleteHandler,
 		handlers.NewCategoryEditHandler,

@@ -248,18 +248,3 @@ func (mr *MockCashServiceMockRecorder) Delete(ctx, id any) *gomock.Call {
 	mr.mock.ctrl.T.Helper()
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "Delete", reflect.TypeOf((*MockCashService)(nil).Delete), ctx, id)
 }
-
-// FindByID mocks base method.
-func (m *MockCashService) FindByID(ctx context.Context, id string) (*models.Cash, error) {
-	m.ctrl.T.Helper()
-	ret := m.ctrl.Call(m, "FindByID", ctx, id)
-	ret0, _ := ret[0].(*models.Cash)
-	ret1, _ := ret[1].(error)
-	return ret0, ret1
-}
-
-// FindByID indicates an expected call of FindByID.
-func (mr *MockCashServiceMockRecorder) FindByID(ctx, id any) *gomock.Call {
-	mr.mock.ctrl.T.Helper()
-	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "FindByID", reflect.TypeOf((*MockCashService)(nil).FindByID), ctx, id)
-}

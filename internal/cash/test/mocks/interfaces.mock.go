@@ -152,6 +152,21 @@ func (mr *MockServiceMockRecorder) Create(ctx, request any) *gomock.Call {
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "Create", reflect.TypeOf((*MockService)(nil).Create), ctx, request)
 }
 
+// FindByID mocks base method.
+func (m *MockService) FindByID(ctx context.Context, id string) (*cash.Cash, error) {
+	m.ctrl.T.Helper()
+	ret := m.ctrl.Call(m, "FindByID", ctx, id)
+	ret0, _ := ret[0].(*cash.Cash)
+	ret1, _ := ret[1].(error)
+	return ret0, ret1
+}
+
+// FindByID indicates an expected call of FindByID.
+func (mr *MockServiceMockRecorder) FindByID(ctx, id any) *gomock.Call {
+	mr.mock.ctrl.T.Helper()
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "FindByID", reflect.TypeOf((*MockService)(nil).FindByID), ctx, id)
+}
+
 // List mocks base method.
 func (m *MockService) List(ctx context.Context) (cash.Cashes, error) {
 	m.ctrl.T.Helper()
