@@ -7,7 +7,7 @@ import (
 
 	"github.com/tksasha/balance/internal/cash"
 	"github.com/tksasha/balance/internal/cash/handlers"
-	"github.com/tksasha/balance/internal/common/testutils"
+	"github.com/tksasha/balance/internal/common/tests"
 	"github.com/tksasha/balance/pkg/currencies"
 	"gotest.tools/v3/assert"
 )
@@ -15,15 +15,15 @@ import (
 func TestCashUpdateHandler(t *testing.T) {
 	ctx := t.Context()
 
-	service, db := testutils.NewCashService(ctx, t)
+	service, db := tests.NewCashService(ctx, t)
 	defer func() {
 		_ = db.Close()
 	}()
 
-	mux := testutils.NewMux(t, "PATCH /cashes/{id}", handlers.NewUpdateHandler(service))
+	mux := tests.NewMux(t, "PATCH /cashes/{id}", handlers.NewUpdateHandler(service))
 
 	t.Run("renders 404 when cash not found", func(t *testing.T) {
-		request := testutils.NewPatchRequest(ctx, t, "/cashes/1439", nil)
+		request := tests.NewPatchRequest(ctx, t, "/cashes/1439", nil)
 
 		recorder := httptest.NewRecorder()
 
@@ -33,7 +33,7 @@ func TestCashUpdateHandler(t *testing.T) {
 	})
 
 	t.Run("renders 400 when invalid input", func(t *testing.T) {
-		request := testutils.NewInvalidPatchRequest(ctx, t, "/cashes/1453")
+		request := tests.NewInvalidPatchRequest(ctx, t, "/cashes/1453")
 
 		recorder := httptest.NewRecorder()
 
@@ -43,7 +43,7 @@ func TestCashUpdateHandler(t *testing.T) {
 	})
 
 	t.Run("renders 200 when cash updated", func(t *testing.T) {
-		testutils.Cleanup(ctx, t)
+		tests.Cleanup(ctx, t)
 
 		cashToCreate := &cash.Cash{
 			ID:            1442,
@@ -55,16 +55,16 @@ func TestCashUpdateHandler(t *testing.T) {
 			Favorite:      false,
 		}
 
-		testutils.CreateCash(ctx, t, cashToCreate)
+		tests.CreateCash(ctx, t, cashToCreate)
 
-		params := testutils.Params{
+		params := tests.Params{
 			"formula":       "3+4",
 			"name":          "Stocks",
 			"supercategory": "3",
 			"favorite":      "true",
 		}
 
-		request := testutils.NewPatchRequest(ctx, t, "/cashes/1442", params)
+		request := tests.NewPatchRequest(ctx, t, "/cashes/1442", params)
 
 		recorder := httptest.NewRecorder()
 

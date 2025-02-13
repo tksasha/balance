@@ -7,7 +7,7 @@ import (
 	"testing"
 
 	"github.com/tksasha/balance/internal/cash/handlers"
-	"github.com/tksasha/balance/internal/common/testutils"
+	"github.com/tksasha/balance/internal/common/tests"
 	"github.com/tksasha/balance/pkg/currencies"
 	"gotest.tools/v3/assert"
 )
@@ -15,17 +15,17 @@ import (
 func TestCashCreateHandler(t *testing.T) { //nolint:funlen
 	ctx := t.Context()
 
-	service, db := testutils.NewCashService(ctx, t)
+	service, db := tests.NewCashService(ctx, t)
 	defer func() {
 		_ = db.Close()
 	}()
 
 	handler := handlers.NewCreateHandler(service)
 
-	mux := testutils.NewMux(t, "POST /cashes", handler)
+	mux := tests.NewMux(t, "POST /cashes", handler)
 
 	t.Run("responds 400 whe parse form failed", func(t *testing.T) {
-		request := testutils.NewInvalidPostRequest(ctx, t, "/cashes")
+		request := tests.NewInvalidPostRequest(ctx, t, "/cashes")
 
 		responseWriter := httptest.NewRecorder()
 
@@ -35,31 +35,31 @@ func TestCashCreateHandler(t *testing.T) { //nolint:funlen
 	})
 
 	t.Run("responds 200 when input is invalid", func(t *testing.T) {
-		params := testutils.Params{"name": ""}
+		params := tests.Params{"name": ""}
 
-		request := testutils.NewPostRequest(ctx, t, "/cashes", params)
+		request := tests.NewPostRequest(ctx, t, "/cashes", params)
 
 		recorder := httptest.NewRecorder()
 
 		mux.ServeHTTP(recorder, request)
 
-		body := testutils.GetResponseBody(t, recorder.Body)
+		body := tests.GetResponseBody(t, recorder.Body)
 
 		assert.Equal(t, recorder.Code, http.StatusOK)
 		assert.Assert(t, strings.Contains(body, "name: is required"))
 	})
 
 	t.Run("responds 200 when create succeeded", func(t *testing.T) {
-		testutils.Cleanup(ctx, t)
+		tests.Cleanup(ctx, t)
 
-		params := testutils.Params{
+		params := tests.Params{
 			"name":          "Bonds",
 			"formula":       "2+3",
 			"supercategory": "2",
 			"favorite":      "true",
 		}
 
-		request := testutils.NewPostRequest(ctx, t, "/cashes?currency=usd", params)
+		request := tests.NewPostRequest(ctx, t, "/cashes?currency=usd", params)
 
 		recorder := httptest.NewRecorder()
 
@@ -67,7 +67,7 @@ func TestCashCreateHandler(t *testing.T) { //nolint:funlen
 
 		assert.Equal(t, recorder.Code, http.StatusOK)
 
-		cash := testutils.FindCashByName(ctx, t, currencies.USD, "Bonds")
+		cash := tests.FindCashByName(ctx, t, currencies.USD, "Bonds")
 
 		assert.Equal(t, cash.ID, 1)
 		assert.Equal(t, cash.Name, "Bonds")

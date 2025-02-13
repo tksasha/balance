@@ -8,7 +8,7 @@ import (
 
 	"github.com/tksasha/balance/internal/category"
 	"github.com/tksasha/balance/internal/category/handlers"
-	"github.com/tksasha/balance/internal/common/testutils"
+	"github.com/tksasha/balance/internal/common/tests"
 	"github.com/tksasha/balance/pkg/currencies"
 	"gotest.tools/v3/assert"
 )
@@ -16,17 +16,17 @@ import (
 func TestCategoryListHandler(t *testing.T) {
 	ctx := t.Context()
 
-	service, db := testutils.NewCategoryService(ctx, t)
+	service, db := tests.NewCategoryService(ctx, t)
 	defer func() {
 		_ = db.Close()
 	}()
 
-	mux := testutils.NewMux(t, "GET /categories", handlers.NewListHandler(service))
+	mux := tests.NewMux(t, "GET /categories", handlers.NewListHandler(service))
 
 	t.Run("responds 200 on no categories found", func(t *testing.T) {
-		testutils.Cleanup(ctx, t)
+		tests.Cleanup(ctx, t)
 
-		request := testutils.NewGetRequest(ctx, t, "/categories?currency=eur")
+		request := tests.NewGetRequest(ctx, t, "/categories?currency=eur")
 
 		recorder := httptest.NewRecorder()
 
@@ -36,7 +36,7 @@ func TestCategoryListHandler(t *testing.T) {
 	})
 
 	t.Run("responds 200 on categories found", func(t *testing.T) {
-		testutils.Cleanup(ctx, t)
+		tests.Cleanup(ctx, t)
 
 		for id, name := range map[int]string{1: "category one", 2: "category two"} {
 			categoryToCreate := &category.Category{
@@ -46,16 +46,16 @@ func TestCategoryListHandler(t *testing.T) {
 				Visible:  true,
 			}
 
-			testutils.CreateCategory(ctx, t, categoryToCreate)
+			tests.CreateCategory(ctx, t, categoryToCreate)
 		}
 
-		request := testutils.NewGetRequest(ctx, t, "/categories?currency=eur")
+		request := tests.NewGetRequest(ctx, t, "/categories?currency=eur")
 
 		recorder := httptest.NewRecorder()
 
 		mux.ServeHTTP(recorder, request)
 
-		body := testutils.GetResponseBody(t, recorder.Body)
+		body := tests.GetResponseBody(t, recorder.Body)
 
 		assert.Equal(t, http.StatusOK, recorder.Code)
 		assert.Assert(t, strings.Contains(body, "category one"))

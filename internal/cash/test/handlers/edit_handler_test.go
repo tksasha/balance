@@ -8,7 +8,7 @@ import (
 
 	"github.com/tksasha/balance/internal/cash"
 	"github.com/tksasha/balance/internal/cash/handlers"
-	"github.com/tksasha/balance/internal/common/testutils"
+	"github.com/tksasha/balance/internal/common/tests"
 	"github.com/tksasha/balance/pkg/currencies"
 	"gotest.tools/v3/assert"
 )
@@ -16,17 +16,17 @@ import (
 func TestCashEditHandler(t *testing.T) {
 	ctx := t.Context()
 
-	service, db := testutils.NewCashService(ctx, t)
+	service, db := tests.NewCashService(ctx, t)
 	defer func() {
 		_ = db.Close()
 	}()
 
 	handler := handlers.NewEditHandler(service)
 
-	mux := testutils.NewMux(t, "GET /cashes/{id}/edit", handler)
+	mux := tests.NewMux(t, "GET /cashes/{id}/edit", handler)
 
 	t.Run("renders 404 on invalid id", func(t *testing.T) {
-		request := testutils.NewGetRequest(ctx, t, "/cashes/abc/edit")
+		request := tests.NewGetRequest(ctx, t, "/cashes/abc/edit")
 
 		recorder := httptest.NewRecorder()
 
@@ -36,9 +36,9 @@ func TestCashEditHandler(t *testing.T) {
 	})
 
 	t.Run("renders 404 on not found", func(t *testing.T) {
-		testutils.Cleanup(ctx, t)
+		tests.Cleanup(ctx, t)
 
-		request := testutils.NewGetRequest(ctx, t, "/cashes/1255/edit")
+		request := tests.NewGetRequest(ctx, t, "/cashes/1255/edit")
 
 		recorder := httptest.NewRecorder()
 
@@ -48,7 +48,7 @@ func TestCashEditHandler(t *testing.T) {
 	})
 
 	t.Run("renders resource on success", func(t *testing.T) {
-		testutils.Cleanup(ctx, t)
+		tests.Cleanup(ctx, t)
 
 		cash := &cash.Cash{
 			ID:            1300,
@@ -60,9 +60,9 @@ func TestCashEditHandler(t *testing.T) {
 			Favorite:      true,
 		}
 
-		testutils.CreateCash(ctx, t, cash)
+		tests.CreateCash(ctx, t, cash)
 
-		request := testutils.NewGetRequest(ctx, t, "/cashes/1300/edit?currency=eur")
+		request := tests.NewGetRequest(ctx, t, "/cashes/1300/edit?currency=eur")
 
 		recorder := httptest.NewRecorder()
 
@@ -70,7 +70,7 @@ func TestCashEditHandler(t *testing.T) {
 
 		assert.Equal(t, recorder.Code, http.StatusOK)
 
-		body := testutils.GetResponseBody(t, recorder.Body)
+		body := tests.GetResponseBody(t, recorder.Body)
 
 		assert.Assert(t, strings.Contains(body, "Bonds"))
 	})
