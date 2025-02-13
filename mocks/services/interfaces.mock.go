@@ -291,17 +291,3 @@ func (mr *MockCashRepositoryMockRecorder) NameExists(ctx, name, id any) *gomock.
 	mr.mock.ctrl.T.Helper()
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "NameExists", reflect.TypeOf((*MockCashRepository)(nil).NameExists), ctx, name, id)
 }
-
-// Update mocks base method.
-func (m *MockCashRepository) Update(ctx context.Context, cash *models.Cash) error {
-	m.ctrl.T.Helper()
-	ret := m.ctrl.Call(m, "Update", ctx, cash)
-	ret0, _ := ret[0].(error)
-	return ret0
-}
-
-// Update indicates an expected call of Update.
-func (mr *MockCashRepositoryMockRecorder) Update(ctx, cash any) *gomock.Call {
-	mr.mock.ctrl.T.Helper()
-	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "Update", reflect.TypeOf((*MockCashRepository)(nil).Update), ctx, cash)
-}

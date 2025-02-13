@@ -25,7 +25,6 @@ type CategoryRepository interface {
 
 type CashRepository interface {
 	FindByID(ctx context.Context, id int) (*models.Cash, error)
-	Update(ctx context.Context, cash *models.Cash) error
 	Delete(ctx context.Context, id int) error
 	NameExists(ctx context.Context, name string, id int) (bool, error)
 }

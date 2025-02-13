@@ -4,22 +4,21 @@ import (
 	"net/http"
 
 	"github.com/tksasha/balance/internal/apperrors"
-	"github.com/tksasha/balance/internal/models"
-	"github.com/tksasha/balance/internal/requests"
+	"github.com/tksasha/balance/internal/cash"
 	"github.com/tksasha/balance/internal/responses"
 )
 
-type CashUpdateHandler struct {
-	cashService CashService
+type UpdateHandler struct {
+	service cash.Service
 }
 
-func NewCashUpdateHandler(cashService CashService) *CashUpdateHandler {
-	return &CashUpdateHandler{
-		cashService: cashService,
+func NewUpdateHandler(service cash.Service) *UpdateHandler {
+	return &UpdateHandler{
+		service: service,
 	}
 }
 
-func (h *CashUpdateHandler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
+func (h *UpdateHandler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 	cash, err := h.handle(r)
 	if err != nil {
 		if response, ok := w.(*responses.Response); ok {
@@ -34,12 +33,12 @@ func (h *CashUpdateHandler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 	_, _ = w.Write([]byte(cash.Name))
 }
 
-func (h *CashUpdateHandler) handle(r *http.Request) (*models.Cash, error) {
+func (h *UpdateHandler) handle(r *http.Request) (*cash.Cash, error) {
 	if err := r.ParseForm(); err != nil {
 		return nil, apperrors.ErrParsingForm
 	}
 
-	request := requests.CashUpdateRequest{
+	request := cash.UpdateRequest{
 		ID:            r.PathValue("id"),
 		Formula:       r.FormValue("formula"),
 		Name:          r.FormValue("name"),
@@ -47,5 +46,5 @@ func (h *CashUpdateHandler) handle(r *http.Request) (*models.Cash, error) {
 		Favorite:      r.FormValue("favorite"),
 	}
 
-	return h.cashService.Update(r.Context(), request)
+	return h.service.Update(r.Context(), request)
 }

@@ -67,49 +67,6 @@ func (r *CashRepository) FindByID(ctx context.Context, id int) (*models.Cash, er
 	return cash, nil
 }
 
-func (r *CashRepository) Update(ctx context.Context, cash *models.Cash) error {
-	currency := getCurrencyFromContext(ctx)
-
-	query := `
-		UPDATE cashes
-		SET
-		    formula = ?,
-		    sum = ?,
-		    name = ?,
-		    supercategory = ?,
-		    favorite = ?
-		WHERE
-		    id = ?
-		    AND currency = ?
-	`
-
-	result, err := r.db.ExecContext(
-		ctx,
-		query,
-		cash.Formula,
-		cash.Sum,
-		cash.Name,
-		cash.Supercategory,
-		cash.Favorite,
-		cash.ID,
-		currency,
-	)
-	if err != nil {
-		return err
-	}
-
-	rowsAffected, err := result.RowsAffected()
-	if err != nil {
-		return err
-	}
-
-	if rowsAffected == 0 {
-		return apperrors.ErrRecordNotFound
-	}
-
-	return nil
-}
-
 func (r *CashRepository) Delete(ctx context.Context, id int) error {
 	currency := getCurrencyFromContext(ctx)
 

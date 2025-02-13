@@ -5,8 +5,8 @@ import (
 	"database/sql"
 	"testing"
 
+	"github.com/tksasha/balance/internal/cash"
 	"github.com/tksasha/balance/internal/db"
-	"github.com/tksasha/balance/internal/models"
 	"github.com/tksasha/balance/internal/providers"
 	"github.com/tksasha/balance/pkg/currencies"
 )
@@ -38,7 +38,7 @@ func Cleanup(ctx context.Context, t *testing.T) {
 	})
 }
 
-func FindCashByName(ctx context.Context, t *testing.T, currency currencies.Currency, name string) *models.Cash {
+func FindCashByName(ctx context.Context, t *testing.T, currency currencies.Currency, name string) *cash.Cash {
 	t.Helper()
 
 	ctx = currencyContext(ctx, t, currency)
@@ -49,7 +49,7 @@ func FindCashByName(ctx context.Context, t *testing.T, currency currencies.Curre
 		WHERE name=? AND currency=?
 	`
 
-	cash := &models.Cash{}
+	cash := &cash.Cash{}
 
 	db := newDB(ctx, t)
 	defer func() {
@@ -72,4 +72,27 @@ func FindCashByName(ctx context.Context, t *testing.T, currency currencies.Curre
 	}
 
 	return cash
+}
+
+func CreateCash(ctx context.Context, t *testing.T, cash *cash.Cash) {
+	t.Helper()
+
+	db := newDB(ctx, t)
+	defer func() {
+		_ = db.Close()
+	}()
+
+	if _, err := db.ExecContext(
+		ctx,
+		"INSERT INTO cashes(id, currency, formula, sum, name, supercategory, favorite) VALUES(?, ?, ?, ?, ?, ?, ?)",
+		cash.ID,
+		cash.Currency,
+		cash.Formula,
+		cash.Sum,
+		cash.Name,
+		cash.Supercategory,
+		cash.Favorite,
+	); err != nil {
+		t.Fatalf("failed to create cash: %v", err)
+	}
 }

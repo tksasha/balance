@@ -22,7 +22,7 @@ func New(
 	cashEditHandler *handlers.CashEditHandler,
 	cashListHandler *cashhandlers.ListHandler,
 	cashNewHandler *cashes.NewHandler,
-	cashUpdateHandler *handlers.CashUpdateHandler,
+	cashUpdateHandler *cashhandlers.UpdateHandler,
 	categoryCreateHandler *handlers.CategoryCreateHandler,
 	categoryDeleteHandler *handlers.CategoryDeleteHandler,
 	categoryEditHandler *handlers.CategoryEditHandler,

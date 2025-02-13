@@ -2,7 +2,6 @@ package service_test
 
 import (
 	"errors"
-	"log"
 	"testing"
 
 	"github.com/tksasha/balance/internal/cash"
@@ -11,10 +10,6 @@ import (
 	"go.uber.org/mock/gomock"
 	"gotest.tools/v3/assert"
 )
-
-func TestList(t *testing.T) {
-	log.Print("TODO: implement me -- !!!")
-}
 
 func TestCreate(t *testing.T) { //nolint:funlen
 	ctrl := gomock.NewController(t)
