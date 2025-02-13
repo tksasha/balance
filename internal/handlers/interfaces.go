@@ -14,9 +14,3 @@ type ItemService interface {
 	Update(ctx context.Context, request requests.ItemUpdateRequest) error
 	Delete(ctx context.Context, input string) error
 }
-
-type CategoryService interface {
-	Create(ctx context.Context, request requests.CategoryCreateRequest) error
-	FindByID(ctx context.Context, id int) (*models.Category, error)
-	Update(ctx context.Context, category *models.Category) error
-}

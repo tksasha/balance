@@ -5,21 +5,22 @@ import (
 	"net/http"
 
 	"github.com/tksasha/balance/internal/apperrors"
-	"github.com/tksasha/balance/internal/requests"
+	"github.com/tksasha/balance/internal/category"
+	"github.com/tksasha/balance/internal/common/handlers"
 	"github.com/tksasha/balance/pkg/validation"
 )
 
-type CategoryCreateHandler struct {
-	categoryService CategoryService
+type CreateHandler struct {
+	service category.Service
 }
 
-func NewCategoryCreateHandler(categoryService CategoryService) *CategoryCreateHandler {
-	return &CategoryCreateHandler{
-		categoryService: categoryService,
+func NewCreateHandler(service category.Service) *CreateHandler {
+	return &CreateHandler{
+		service: service,
 	}
 }
 
-func (h *CategoryCreateHandler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
+func (h *CreateHandler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 	if err := h.handle(r); err != nil {
 		var verrors validation.Errors
 		if errors.As(err, &verrors) {
@@ -28,23 +29,25 @@ func (h *CategoryCreateHandler) ServeHTTP(w http.ResponseWriter, r *http.Request
 			return
 		}
 
+		handlers.E(w, err)
+
 		return
 	}
 
-	_, _ = w.Write([]byte("create category page\n"))
+	w.WriteHeader(http.StatusCreated)
 }
 
-func (h *CategoryCreateHandler) handle(r *http.Request) error {
+func (h *CreateHandler) handle(r *http.Request) error {
 	if err := r.ParseForm(); err != nil {
 		return apperrors.ErrParsingForm
 	}
 
-	request := requests.CategoryCreateRequest{
+	request := category.CreateRequest{
 		Name:          r.FormValue("name"),
 		Income:        r.FormValue("income"),
 		Visible:       r.FormValue("visible"),
 		Supercategory: r.FormValue("supercategory"),
 	}
 
-	return h.categoryService.Create(r.Context(), request)
+	return h.service.Create(r.Context(), request)
 }

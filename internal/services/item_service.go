@@ -6,6 +6,7 @@ import (
 	"strconv"
 
 	"github.com/tksasha/balance/internal/apperrors"
+	"github.com/tksasha/balance/internal/category"
 	"github.com/tksasha/balance/internal/models"
 	"github.com/tksasha/balance/internal/requests"
 	"github.com/tksasha/balance/pkg/validation"
@@ -13,10 +14,10 @@ import (
 
 type ItemService struct {
 	itemRepository     ItemRepository
-	categoryRepository CategoryRepository
+	categoryRepository category.Repository
 }
 
-func NewItemService(itemRepository ItemRepository, categoryRepository CategoryRepository) *ItemService {
+func NewItemService(itemRepository ItemRepository, categoryRepository category.Repository) *ItemService {
 	return &ItemService{
 		itemRepository:     itemRepository,
 		categoryRepository: categoryRepository,

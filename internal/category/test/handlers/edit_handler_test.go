@@ -5,8 +5,9 @@ import (
 	"net/http/httptest"
 	"testing"
 
-	"github.com/tksasha/balance/internal/handlers"
-	"github.com/tksasha/balance/internal/models"
+	"github.com/tksasha/balance/internal/category"
+	"github.com/tksasha/balance/internal/category/handlers"
+	"github.com/tksasha/balance/internal/common/tests"
 	"github.com/tksasha/balance/pkg/currencies"
 	"gotest.tools/v3/assert"
 )
@@ -14,17 +15,17 @@ import (
 func TestCategoryEditHandler(t *testing.T) {
 	ctx := t.Context()
 
-	service, db := newCategoryService(ctx, t)
+	service, db := tests.NewCategoryService(ctx, t)
 	defer func() {
 		_ = db.Close()
 	}()
 
-	mux := newMux(t, "GET /categories/{id}/edit", handlers.NewCategoryEditHandler(service))
+	mux := tests.NewMux(t, "GET /categories/{id}/edit", handlers.NewEditHandler(service))
 
 	t.Run("responds 404 on category not found", func(t *testing.T) {
-		cleanup(ctx, t)
+		tests.Cleanup(ctx, t)
 
-		request := newGetRequest(ctx, t, "/categories/1004/edit")
+		request := tests.NewGetRequest(ctx, t, "/categories/1004/edit")
 
 		recorder := httptest.NewRecorder()
 
@@ -34,17 +35,17 @@ func TestCategoryEditHandler(t *testing.T) {
 	})
 
 	t.Run("responds 200 on category found", func(t *testing.T) {
-		cleanup(ctx, t)
+		tests.Cleanup(ctx, t)
 
-		categoryToCreate := &models.Category{
+		categoryToCreate := &category.Category{
 			ID:       1010,
 			Name:     "Xenomorphic",
 			Currency: currencies.EUR,
 		}
 
-		createCategory(ctx, t, categoryToCreate)
+		tests.CreateCategory(ctx, t, categoryToCreate)
 
-		request := newGetRequest(ctx, t, "/categories/1010/edit?currency=eur")
+		request := tests.NewGetRequest(ctx, t, "/categories/1010/edit?currency=eur")
 
 		recorder := httptest.NewRecorder()
 

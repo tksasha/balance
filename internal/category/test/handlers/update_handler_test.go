@@ -5,8 +5,9 @@ import (
 	"net/http/httptest"
 	"testing"
 
-	"github.com/tksasha/balance/internal/handlers"
-	"github.com/tksasha/balance/internal/models"
+	"github.com/tksasha/balance/internal/category"
+	"github.com/tksasha/balance/internal/category/handlers"
+	"github.com/tksasha/balance/internal/common/tests"
 	"github.com/tksasha/balance/pkg/currencies"
 	"gotest.tools/v3/assert"
 )
@@ -14,17 +15,17 @@ import (
 func TestCategoryUpdateHandler(t *testing.T) { //nolint:funlen
 	ctx := t.Context()
 
-	service, db := newCategoryService(ctx, t)
+	service, db := tests.NewCategoryService(ctx, t)
 	defer func() {
 		_ = db.Close()
 	}()
 
-	mux := newMux(t, "PATCH /categories/{id}", handlers.NewCategoryUpdateHandler(service))
+	mux := tests.NewMux(t, "PATCH /categories/{id}", handlers.NewUpdateHandler(service))
 
 	t.Run("responds 404 on no category found", func(t *testing.T) {
-		cleanup(ctx, t)
+		tests.Cleanup(ctx, t)
 
-		request := newPatchRequest(ctx, t, "/categories/1141", nil)
+		request := tests.NewPatchRequest(ctx, t, "/categories/1141", nil)
 
 		recorder := httptest.NewRecorder()
 
@@ -34,22 +35,21 @@ func TestCategoryUpdateHandler(t *testing.T) { //nolint:funlen
 	})
 
 	t.Run("responds 200 on duplicates name", func(t *testing.T) {
-		cleanup(ctx, t)
+		tests.Cleanup(ctx, t)
 
 		for id, name := range map[int]string{1151: "Heterogeneous", 11654: "Paraphernalia"} {
-			categoryToCreate := &models.Category{
+			categoryToCreate := &category.Category{
 				ID:       id,
 				Name:     name,
 				Currency: currencies.USD,
 			}
 
-			createCategory(ctx, t, categoryToCreate)
+			tests.CreateCategory(ctx, t, categoryToCreate)
 		}
 
-		request := newPatchRequest(ctx, t,
-			"/categories/1151?currency=usd",
-			Params{"name": "Paraphernalia"},
-		)
+		params := tests.Params{"name": "Paraphernalia"}
+
+		request := tests.NewPatchRequest(ctx, t, "/categories/1151?currency=usd", params)
 
 		recorder := httptest.NewRecorder()
 
@@ -59,9 +59,9 @@ func TestCategoryUpdateHandler(t *testing.T) { //nolint:funlen
 	})
 
 	t.Run("responds 200 on successful update", func(t *testing.T) {
-		cleanup(ctx, t)
+		tests.Cleanup(ctx, t)
 
-		categoryToCreate := &models.Category{
+		categoryToCreate := &category.Category{
 			ID:            1208,
 			Name:          "Paraphernalia",
 			Income:        false,
@@ -70,16 +70,16 @@ func TestCategoryUpdateHandler(t *testing.T) { //nolint:funlen
 			Supercategory: 5,
 		}
 
-		createCategory(ctx, t, categoryToCreate)
+		tests.CreateCategory(ctx, t, categoryToCreate)
 
-		request := newPatchRequest(ctx, t, "/categories/1208?currency=usd",
-			Params{
-				"name":          "Heterogeneous",
-				"income":        "true",
-				"visible":       "true",
-				"supercategory": "4",
-			},
-		)
+		params := tests.Params{
+			"name":          "Heterogeneous",
+			"income":        "true",
+			"visible":       "true",
+			"supercategory": "4",
+		}
+
+		request := tests.NewPatchRequest(ctx, t, "/categories/1208?currency=usd", params)
 
 		recorder := httptest.NewRecorder()
 
@@ -87,7 +87,7 @@ func TestCategoryUpdateHandler(t *testing.T) { //nolint:funlen
 
 		assert.Equal(t, recorder.Code, http.StatusOK)
 
-		category := findCategoryByID(ctx, t, currencies.USD, 1208)
+		category := tests.FindCategoryByID(ctx, t, currencies.USD, 1208)
 
 		assert.Equal(t, category.ID, 1208)
 		assert.Equal(t, category.Name, "Heterogeneous")

@@ -190,3 +190,43 @@ func FindCategoryByID(ctx context.Context, t *testing.T, currency currencies.Cur
 
 	return category
 }
+
+func FindCategoryByName(
+	ctx context.Context,
+	t *testing.T,
+	currency currencies.Currency,
+	name string,
+) *category.Category {
+	t.Helper()
+
+	db := newDB(ctx, t)
+	defer func() {
+		_ = db.Close()
+	}()
+
+	ctx = currencyContext(ctx, t, currency)
+
+	query := `
+		SELECT id, name, income, visible, currency, supercategory, deleted_at
+		FROM categories
+		WHERE name=? AND currency=?
+	`
+
+	category := &category.Category{}
+
+	if err := db.
+		QueryRowContext(ctx, query, name, currency).
+		Scan(
+			&category.ID,
+			&category.Name,
+			&category.Income,
+			&category.Visible,
+			&category.Currency,
+			&category.Supercategory,
+			&category.DeletedAt,
+		); err != nil {
+		t.Fatalf("failed to find category by name, error: %v", err)
+	}
+
+	return category
+}
