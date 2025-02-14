@@ -4,10 +4,10 @@ import (
 	"errors"
 	"net/http"
 
-	"github.com/tksasha/balance/internal/apperrors"
+	"github.com/tksasha/balance/internal/common/handlers"
 	"github.com/tksasha/balance/internal/core/category"
 	"github.com/tksasha/balance/internal/core/category/components"
-	"github.com/tksasha/balance/internal/common/handlers"
+	"github.com/tksasha/balance/internal/core/common"
 	"github.com/tksasha/balance/pkg/validation"
 )
 
@@ -43,7 +43,7 @@ func (h *UpdateHandler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 
 func (h *UpdateHandler) handle(r *http.Request) (*category.Category, error) {
 	if err := r.ParseForm(); err != nil {
-		return nil, apperrors.ErrParsingForm
+		return nil, common.ErrParsingForm
 	}
 
 	request := category.UpdateRequest{

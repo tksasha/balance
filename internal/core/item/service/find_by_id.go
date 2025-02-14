@@ -4,8 +4,8 @@ import (
 	"context"
 	"strconv"
 
-	"github.com/tksasha/balance/internal/apperrors"
 	"github.com/tksasha/balance/internal/common/services"
+	"github.com/tksasha/balance/internal/core/common"
 	"github.com/tksasha/balance/internal/core/item"
 )
 
@@ -16,7 +16,7 @@ func (s *Service) FindByID(ctx context.Context, input string) (*item.Item, error
 func (s *Service) findByID(ctx context.Context, input string) (*item.Item, error) {
 	id, err := strconv.Atoi(input)
 	if err != nil || id <= 0 {
-		return nil, apperrors.ErrResourceNotFound
+		return nil, common.ErrResourceNotFound
 	}
 
 	item, err := s.itemRepository.FindByID(ctx, id)

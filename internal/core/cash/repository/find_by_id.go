@@ -5,9 +5,9 @@ import (
 	"database/sql"
 	"errors"
 
-	"github.com/tksasha/balance/internal/apperrors"
 	"github.com/tksasha/balance/internal/common/repositories"
 	"github.com/tksasha/balance/internal/core/cash"
+	"github.com/tksasha/balance/internal/core/common"
 )
 
 func (r *Repository) FindByID(ctx context.Context, id int) (*cash.Cash, error) {
@@ -44,7 +44,7 @@ func (r *Repository) FindByID(ctx context.Context, id int) (*cash.Cash, error) {
 		&cash.Favorite,
 	); err != nil {
 		if errors.Is(err, sql.ErrNoRows) {
-			return nil, apperrors.ErrRecordNotFound
+			return nil, common.ErrRecordNotFound
 		}
 
 		return nil, err

@@ -3,10 +3,10 @@ package service_test
 import (
 	"testing"
 
-	"github.com/tksasha/balance/internal/apperrors"
 	"github.com/tksasha/balance/internal/core/cash"
 	"github.com/tksasha/balance/internal/core/cash/service"
 	"github.com/tksasha/balance/internal/core/cash/test/mocks"
+	"github.com/tksasha/balance/internal/core/common"
 	"go.uber.org/mock/gomock"
 	"gotest.tools/v3/assert"
 )
@@ -30,7 +30,7 @@ func TestFindByID(t *testing.T) {
 		repository.
 			EXPECT().
 			FindByID(ctx, 1230).
-			Return(nil, apperrors.ErrRecordNotFound)
+			Return(nil, common.ErrRecordNotFound)
 
 		_, err := service.FindByID(ctx, "1230")
 

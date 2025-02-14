@@ -5,9 +5,9 @@ import (
 	"database/sql"
 	"errors"
 
-	"github.com/tksasha/balance/internal/apperrors"
-	"github.com/tksasha/balance/internal/core/category"
 	"github.com/tksasha/balance/internal/common/repositories"
+	"github.com/tksasha/balance/internal/core/category"
+	"github.com/tksasha/balance/internal/core/common"
 )
 
 func (r *Repository) FindByName(ctx context.Context, name string) (*category.Category, error) {
@@ -33,7 +33,7 @@ func (r *Repository) FindByName(ctx context.Context, name string) (*category.Cat
 
 	if err := row.Scan(&category.ID, &category.Name, &category.Currency); err != nil {
 		if errors.Is(err, sql.ErrNoRows) {
-			return nil, apperrors.ErrRecordNotFound
+			return nil, common.ErrRecordNotFound
 		}
 
 		return nil, err

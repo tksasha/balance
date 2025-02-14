@@ -3,9 +3,9 @@ package repository
 import (
 	"context"
 
-	"github.com/tksasha/balance/internal/apperrors"
-	"github.com/tksasha/balance/internal/core/category"
 	"github.com/tksasha/balance/internal/common/repositories"
+	"github.com/tksasha/balance/internal/core/category"
+	"github.com/tksasha/balance/internal/core/common"
 )
 
 func (r *Repository) Update(ctx context.Context, category *category.Category) error {
@@ -43,7 +43,7 @@ func (r *Repository) Update(ctx context.Context, category *category.Category) er
 	}
 
 	if rowsAffected == 0 {
-		return apperrors.ErrRecordNotFound
+		return common.ErrRecordNotFound
 	}
 
 	return nil

@@ -4,9 +4,9 @@ import (
 	"context"
 	"errors"
 
-	"github.com/tksasha/balance/internal/apperrors"
 	"github.com/tksasha/balance/internal/common/services"
 	"github.com/tksasha/balance/internal/core/cash"
+	"github.com/tksasha/balance/internal/core/common"
 	"github.com/tksasha/balance/pkg/validation"
 )
 
@@ -42,8 +42,8 @@ func (s *Service) Update(ctx context.Context, request cash.UpdateRequest) (*cash
 	}
 
 	if err := s.repository.Update(ctx, cash); err != nil {
-		if errors.Is(err, apperrors.ErrRecordNotFound) {
-			return nil, apperrors.ErrResourceNotFound
+		if errors.Is(err, common.ErrRecordNotFound) {
+			return nil, common.ErrResourceNotFound
 		}
 
 		return nil, err

@@ -4,10 +4,10 @@ import (
 	"errors"
 	"testing"
 
-	"github.com/tksasha/balance/internal/apperrors"
+	"github.com/tksasha/balance/internal/common/tests"
 	"github.com/tksasha/balance/internal/core/category"
 	categorymocks "github.com/tksasha/balance/internal/core/category/test/mocks"
-	"github.com/tksasha/balance/internal/common/tests"
+	"github.com/tksasha/balance/internal/core/common"
 	"github.com/tksasha/balance/internal/core/item"
 	"github.com/tksasha/balance/internal/core/item/service"
 	"github.com/tksasha/balance/internal/core/item/test/mocks"
@@ -43,7 +43,7 @@ func TestUpdate(t *testing.T) { //nolint:funlen,maintidx
 		itemRepository.
 			EXPECT().
 			FindByID(ctx, 1027).
-			Return(nil, apperrors.ErrRecordNotFound)
+			Return(nil, common.ErrRecordNotFound)
 
 		_, err := service.Update(ctx, request)
 

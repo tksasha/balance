@@ -4,9 +4,9 @@ import (
 	"errors"
 	"net/http"
 
-	"github.com/tksasha/balance/internal/apperrors"
 	"github.com/tksasha/balance/internal/common/handlers"
 	"github.com/tksasha/balance/internal/core/cash"
+	"github.com/tksasha/balance/internal/core/common"
 	"github.com/tksasha/balance/pkg/validation"
 )
 
@@ -39,7 +39,7 @@ func (h *CreateHandler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 
 func (h *CreateHandler) handle(r *http.Request) (*cash.Cash, error) {
 	if err := r.ParseForm(); err != nil {
-		return nil, apperrors.ErrParsingForm
+		return nil, common.ErrParsingForm
 	}
 
 	request := cash.CreateRequest{

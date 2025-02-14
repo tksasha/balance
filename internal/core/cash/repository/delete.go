@@ -4,8 +4,8 @@ import (
 	"context"
 	"time"
 
-	"github.com/tksasha/balance/internal/apperrors"
 	"github.com/tksasha/balance/internal/common/repositories"
+	"github.com/tksasha/balance/internal/core/common"
 )
 
 func (r *Repository) Delete(ctx context.Context, id int) error {
@@ -31,7 +31,7 @@ func (r *Repository) Delete(ctx context.Context, id int) error {
 	}
 
 	if rowsAffected == 0 {
-		return apperrors.ErrRecordNotFound
+		return common.ErrRecordNotFound
 	}
 
 	return nil

@@ -4,10 +4,10 @@ import (
 	"errors"
 	"testing"
 
-	"github.com/tksasha/balance/internal/apperrors"
 	"github.com/tksasha/balance/internal/core/category"
 	"github.com/tksasha/balance/internal/core/category/service"
 	"github.com/tksasha/balance/internal/core/category/test/mocks"
+	"github.com/tksasha/balance/internal/core/common"
 	"go.uber.org/mock/gomock"
 	"gotest.tools/v3/assert"
 )
@@ -39,7 +39,7 @@ func TestUpdate(t *testing.T) { //nolint:funlen
 		repository.
 			EXPECT().
 			FindByID(ctx, 1513).
-			Return(nil, apperrors.ErrRecordNotFound)
+			Return(nil, common.ErrRecordNotFound)
 
 		_, err := service.Update(ctx, request)
 
@@ -155,7 +155,7 @@ func TestUpdate(t *testing.T) { //nolint:funlen
 		repository.
 			EXPECT().
 			FindByName(ctx, "Miscellaneous").
-			Return(nil, apperrors.ErrRecordNotFound)
+			Return(nil, common.ErrRecordNotFound)
 
 		categoryToUpdate := &category.Category{
 			ID:   1524,
@@ -197,7 +197,7 @@ func TestUpdate(t *testing.T) { //nolint:funlen
 		repository.
 			EXPECT().
 			FindByName(ctx, "Stationery").
-			Return(nil, apperrors.ErrRecordNotFound)
+			Return(nil, common.ErrRecordNotFound)
 
 		categoryToUpdate := &category.Category{
 			ID:            1529,

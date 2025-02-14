@@ -4,9 +4,9 @@ import (
 	"errors"
 	"testing"
 
-	"github.com/tksasha/balance/internal/apperrors"
 	"github.com/tksasha/balance/internal/core/cash/service"
 	"github.com/tksasha/balance/internal/core/cash/test/mocks"
+	"github.com/tksasha/balance/internal/core/common"
 	"go.uber.org/mock/gomock"
 	"gotest.tools/v3/assert"
 )
@@ -41,7 +41,7 @@ func TestCashService_Delete(t *testing.T) {
 		repository.
 			EXPECT().
 			Delete(ctx, 1103).
-			Return(apperrors.ErrRecordNotFound)
+			Return(common.ErrRecordNotFound)
 
 		err := service.Delete(ctx, "1103")
 

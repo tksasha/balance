@@ -4,9 +4,9 @@ import (
 	"context"
 	"errors"
 
-	"github.com/tksasha/balance/internal/apperrors"
-	"github.com/tksasha/balance/internal/core/category"
 	"github.com/tksasha/balance/internal/common/services"
+	"github.com/tksasha/balance/internal/core/category"
+	"github.com/tksasha/balance/internal/core/common"
 	"github.com/tksasha/balance/pkg/validation"
 )
 
@@ -32,7 +32,7 @@ func (s *Service) nameAlreadyExists(
 
 	category, err := s.repository.FindByName(ctx, name)
 
-	if errors.Is(err, apperrors.ErrRecordNotFound) {
+	if errors.Is(err, common.ErrRecordNotFound) {
 		return nil
 	}
 

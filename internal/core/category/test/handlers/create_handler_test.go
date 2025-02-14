@@ -5,8 +5,8 @@ import (
 	"net/http/httptest"
 	"testing"
 
-	"github.com/tksasha/balance/internal/core/category/handlers"
 	"github.com/tksasha/balance/internal/common/tests"
+	"github.com/tksasha/balance/internal/core/category/handlers"
 	"github.com/tksasha/balance/pkg/currencies"
 	"gotest.tools/v3/assert"
 	is "gotest.tools/v3/assert/cmp"

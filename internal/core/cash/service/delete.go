@@ -5,18 +5,18 @@ import (
 	"errors"
 	"strconv"
 
-	"github.com/tksasha/balance/internal/apperrors"
+	"github.com/tksasha/balance/internal/core/common"
 )
 
 func (s *Service) Delete(ctx context.Context, input string) error {
 	id, err := strconv.Atoi(input)
 	if err != nil {
-		return apperrors.ErrResourceNotFound
+		return common.ErrResourceNotFound
 	}
 
 	if err := s.repository.Delete(ctx, id); err != nil {
-		if errors.Is(err, apperrors.ErrRecordNotFound) {
-			return apperrors.ErrResourceNotFound
+		if errors.Is(err, common.ErrRecordNotFound) {
+			return common.ErrResourceNotFound
 		}
 
 		return err

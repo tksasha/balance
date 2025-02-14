@@ -5,8 +5,8 @@ import (
 	"database/sql"
 	"errors"
 
-	"github.com/tksasha/balance/internal/apperrors"
 	"github.com/tksasha/balance/internal/common/repositories"
+	"github.com/tksasha/balance/internal/core/common"
 	"github.com/tksasha/balance/internal/core/item"
 )
 
@@ -42,7 +42,7 @@ func (r *Repository) FindByID(ctx context.Context, id int) (*item.Item, error) {
 			&item.Description,
 		); err != nil {
 		if errors.Is(err, sql.ErrNoRows) {
-			return nil, apperrors.ErrRecordNotFound
+			return nil, common.ErrRecordNotFound
 		}
 
 		return nil, err

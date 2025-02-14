@@ -4,9 +4,9 @@ import (
 	"errors"
 	"net/http"
 
-	"github.com/tksasha/balance/internal/apperrors"
-	"github.com/tksasha/balance/internal/core/category"
 	"github.com/tksasha/balance/internal/common/handlers"
+	"github.com/tksasha/balance/internal/core/category"
+	"github.com/tksasha/balance/internal/core/common"
 	"github.com/tksasha/balance/pkg/validation"
 )
 
@@ -39,7 +39,7 @@ func (h *CreateHandler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 
 func (h *CreateHandler) handle(r *http.Request) error {
 	if err := r.ParseForm(); err != nil {
-		return apperrors.ErrParsingForm
+		return common.ErrParsingForm
 	}
 
 	request := category.CreateRequest{

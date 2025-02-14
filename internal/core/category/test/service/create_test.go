@@ -4,10 +4,10 @@ import (
 	"errors"
 	"testing"
 
-	"github.com/tksasha/balance/internal/apperrors"
 	"github.com/tksasha/balance/internal/core/category"
 	"github.com/tksasha/balance/internal/core/category/service"
 	"github.com/tksasha/balance/internal/core/category/test/mocks"
+	"github.com/tksasha/balance/internal/core/common"
 	"go.uber.org/mock/gomock"
 	"gotest.tools/v3/assert"
 )
@@ -77,7 +77,7 @@ func TestCreate(t *testing.T) { //nolint:funlen
 		repository.
 			EXPECT().
 			FindByName(ctx, "Miscellaneous").
-			Return(nil, apperrors.ErrRecordNotFound)
+			Return(nil, common.ErrRecordNotFound)
 
 		err := service.Create(ctx, request)
 
@@ -98,7 +98,7 @@ func TestCreate(t *testing.T) { //nolint:funlen
 		repository.
 			EXPECT().
 			FindByName(ctx, "Confectionery").
-			Return(nil, apperrors.ErrRecordNotFound)
+			Return(nil, common.ErrRecordNotFound)
 
 		repository.
 			EXPECT().
@@ -128,7 +128,7 @@ func TestCreate(t *testing.T) { //nolint:funlen
 		repository.
 			EXPECT().
 			FindByName(ctx, "Haberdashery").
-			Return(nil, apperrors.ErrRecordNotFound)
+			Return(nil, common.ErrRecordNotFound)
 
 		repository.
 			EXPECT().

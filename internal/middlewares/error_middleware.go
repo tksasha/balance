@@ -4,7 +4,7 @@ import (
 	"errors"
 	"net/http"
 
-	"github.com/tksasha/balance/internal/apperrors"
+	"github.com/tksasha/balance/internal/core/common"
 	"github.com/tksasha/balance/internal/responses"
 )
 
@@ -22,9 +22,9 @@ func (m *errorMiddleware) Wrap(next http.Handler) http.Handler {
 
 		if err := rw.Error; err != nil {
 			switch {
-			case errors.Is(err, apperrors.ErrParsingForm):
+			case errors.Is(err, common.ErrParsingForm):
 				http.Error(w, "Bad Request", http.StatusBadRequest)
-			case errors.Is(err, apperrors.ErrResourceNotFound):
+			case errors.Is(err, common.ErrResourceNotFound):
 				http.Error(w, "Resource Not Found", http.StatusNotFound)
 			default:
 				http.Error(w, "Internal Server Error", http.StatusInternalServerError)
