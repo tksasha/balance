@@ -3,7 +3,7 @@ package handlers
 import (
 	"net/http"
 
-	"github.com/tksasha/balance/internal/category"
+	"github.com/tksasha/balance/internal/core/category"
 	"github.com/tksasha/balance/internal/core/index/components"
 	"github.com/tksasha/balance/internal/responses"
 )

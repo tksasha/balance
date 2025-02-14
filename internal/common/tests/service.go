@@ -5,9 +5,9 @@ import (
 	"database/sql"
 	"testing"
 
-	"github.com/tksasha/balance/internal/category"
-	categoryrepository "github.com/tksasha/balance/internal/category/repository"
-	categoryservice "github.com/tksasha/balance/internal/category/service"
+	"github.com/tksasha/balance/internal/core/category"
+	categoryrepository "github.com/tksasha/balance/internal/core/category/repository"
+	categoryservice "github.com/tksasha/balance/internal/core/category/service"
 	"github.com/tksasha/balance/internal/core/cash"
 	cashrepository "github.com/tksasha/balance/internal/core/cash/repository"
 	cashservice "github.com/tksasha/balance/internal/core/cash/service"

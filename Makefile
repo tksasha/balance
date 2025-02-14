@@ -68,9 +68,9 @@ mockgen:
 		-package mocks \
 		-destination internal/core/cash/test/mocks/interfaces.mock.go
 	@go run $(MOCKGEN) \
-		-source internal/category/interfaces.go \
+		-source internal/core/category/interfaces.go \
 		-package mocks \
-		-destination internal/category/test/mocks/interfaces.mock.go
+		-destination internal/core/category/test/mocks/interfaces.mock.go
 	@go run $(MOCKGEN) \
 		-source internal/core/item/interfaces.go \
 		-package mocks \

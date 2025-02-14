@@ -5,7 +5,7 @@ import (
 	"database/sql"
 	"testing"
 
-	"github.com/tksasha/balance/internal/category"
+	"github.com/tksasha/balance/internal/core/category"
 	"github.com/tksasha/balance/internal/core/cash"
 	"github.com/tksasha/balance/internal/core/item"
 	"github.com/tksasha/balance/internal/db"

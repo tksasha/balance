@@ -4,7 +4,7 @@ import (
 	"embed"
 	"net/http"
 
-	category "github.com/tksasha/balance/internal/category/handlers"
+	category "github.com/tksasha/balance/internal/core/category/handlers"
 	cash "github.com/tksasha/balance/internal/core/cash/handlers"
 	index "github.com/tksasha/balance/internal/core/index/handler"
 	item "github.com/tksasha/balance/internal/core/item/handlers"

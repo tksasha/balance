@@ -3,7 +3,7 @@ package components
 import (
 	"strconv"
 
-	"github.com/tksasha/balance/internal/category"
+	"github.com/tksasha/balance/internal/core/category"
 	. "maragu.dev/gomponents"      //nolint:stylecheck
 	. "maragu.dev/gomponents/html" //nolint:stylecheck
 )

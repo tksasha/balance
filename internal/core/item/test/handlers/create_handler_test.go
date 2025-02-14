@@ -6,7 +6,7 @@ import (
 	"testing"
 	"time"
 
-	"github.com/tksasha/balance/internal/category"
+	"github.com/tksasha/balance/internal/core/category"
 	"github.com/tksasha/balance/internal/common/tests"
 	"github.com/tksasha/balance/internal/core/item/handlers"
 	"github.com/tksasha/balance/pkg/currencies"
