@@ -2,9 +2,9 @@ package components
 
 import (
 	"github.com/tksasha/balance/internal/cash"
-	. "github.com/tksasha/balance/internal/components" //nolint:stylecheck
-	. "maragu.dev/gomponents"                          //nolint:stylecheck
-	. "maragu.dev/gomponents/html"                     //nolint:stylecheck
+	"github.com/tksasha/balance/internal/core/common/components"
+	. "maragu.dev/gomponents"      //nolint:stylecheck
+	. "maragu.dev/gomponents/html" //nolint:stylecheck
 )
 
 func CashListItem(cash *cash.Cash) Node {
@@ -14,7 +14,7 @@ func CashListItem(cash *cash.Cash) Node {
 		),
 		Td(
 			Text(
-				Sum(cash.Sum),
+				components.Sum(cash.Sum),
 			),
 		),
 	)
