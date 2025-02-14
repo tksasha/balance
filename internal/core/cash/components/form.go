@@ -6,7 +6,7 @@ import (
 	. "maragu.dev/gomponents/html" //nolint:stylecheck
 )
 
-func CashForm(cash *cash.Cash) Node {
+func form(cash *cash.Cash) Node {
 	return Form(
 		Div(
 			Class("mb-3"),

@@ -7,7 +7,7 @@ import (
 	. "maragu.dev/gomponents/html" //nolint:stylecheck
 )
 
-func CashListItem(cash *cash.Cash) Node {
+func row(cash *cash.Cash) Node {
 	return Tr(
 		Td(
 			Text(cash.Name),

@@ -9,17 +9,17 @@ import (
 	"github.com/tksasha/balance/internal/core/common/handlers"
 )
 
-type ListHandler struct {
+type IndexHandler struct {
 	service category.Service
 }
 
-func NewListHandler(service category.Service) *ListHandler {
-	return &ListHandler{
+func NewIndexHandler(service category.Service) *IndexHandler {
+	return &IndexHandler{
 		service: service,
 	}
 }
 
-func (h *ListHandler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
+func (h *IndexHandler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 	categories, err := h.handle(r)
 	if err != nil {
 		handlers.E(w, err)
@@ -27,7 +27,7 @@ func (h *ListHandler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	if err := components.CategoryList(categories).Render(w); err != nil {
+	if err := components.Index(categories).Render(w); err != nil {
 		slog.Error("render categories component error", "error", err)
 
 		handlers.E(w, err)
@@ -36,6 +36,6 @@ func (h *ListHandler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 	}
 }
 
-func (h *ListHandler) handle(r *http.Request) (category.Categories, error) {
+func (h *IndexHandler) handle(r *http.Request) (category.Categories, error) {
 	return h.service.List(r.Context())
 }

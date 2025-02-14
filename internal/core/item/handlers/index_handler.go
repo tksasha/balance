@@ -8,17 +8,17 @@ import (
 	"github.com/tksasha/balance/internal/core/item/components"
 )
 
-type ListHandler struct {
+type IndexHandler struct {
 	service item.Service
 }
 
-func NewListHandler(service item.Service) *ListHandler {
-	return &ListHandler{
+func NewIndexHandler(service item.Service) *IndexHandler {
+	return &IndexHandler{
 		service: service,
 	}
 }
 
-func (h *ListHandler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
+func (h *IndexHandler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 	items, err := h.handle(r)
 	if err != nil {
 		handlers.E(w, err)
@@ -31,6 +31,6 @@ func (h *ListHandler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 	}
 }
 
-func (h *ListHandler) handle(r *http.Request) (item.Items, error) {
+func (h *IndexHandler) handle(r *http.Request) (item.Items, error) {
 	return h.service.List(r.Context())
 }

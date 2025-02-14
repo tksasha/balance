@@ -10,7 +10,7 @@ import (
 	"gotest.tools/v3/assert"
 )
 
-func TestCashListHandler(t *testing.T) {
+func TestCashIndexHandler(t *testing.T) {
 	ctx := t.Context()
 
 	cashService, db := tests.NewCashService(ctx, t)
@@ -20,7 +20,7 @@ func TestCashListHandler(t *testing.T) {
 		}
 	}()
 
-	mux := tests.NewMux(t, "GET /cashes", handlers.NewListHandler(cashService))
+	mux := tests.NewMux(t, "GET /cashes", handlers.NewIndexHandler(cashService))
 
 	t.Run("renders cash list when there no errors", func(t *testing.T) {
 		request := tests.NewGetRequest(ctx, t, "/cashes")

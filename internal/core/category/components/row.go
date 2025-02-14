@@ -6,16 +6,10 @@ import (
 	. "maragu.dev/gomponents/html" //nolint: stylecheck
 )
 
-func CategoryList(categories category.Categories) Node {
-	return Table(
-		Class("table"),
-		THead(
-			Tr(
-				Th(Text("Name")),
-			),
-		),
-		TBody(
-			Map(categories, CategoryListItem),
+func row(category *category.Category) Node {
+	return Tr(
+		Td(
+			Text(category.Name),
 		),
 	)
 }

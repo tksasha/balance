@@ -6,18 +6,8 @@ import (
 	. "maragu.dev/gomponents/html" //nolint:stylecheck
 )
 
-func CashList(cashes cash.Cashes) Node {
-	return Table(
-		THead(
-			Tr(
-				Text("Name"),
-			),
-			Tr(
-				Text("Sum"),
-			),
-		),
-		TBody(
-			Map(cashes, CashListItem),
-		),
+func New(cash *cash.Cash) Node {
+	return Div(
+		form(cash),
 	)
 }

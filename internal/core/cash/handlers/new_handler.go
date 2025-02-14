@@ -17,7 +17,7 @@ func NewNewHandler() *NewHandler {
 func (h *NewHandler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 	cash := &cash.Cash{}
 
-	if err := components.CashNew(cash).Render(w); err != nil {
+	if err := components.New(cash).Render(w); err != nil {
 		handlers.E(w, err)
 	}
 }

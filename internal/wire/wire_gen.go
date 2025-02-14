@@ -2,7 +2,6 @@
 
 //go:generate go run -mod=mod github.com/google/wire/cmd/wire
 //go:build !wireinject
-// +build !wireinject
 
 package wire
 
@@ -38,7 +37,7 @@ func InitializeServer() *server.Server {
 	createHandler := handlers.NewCreateHandler(serviceService)
 	deleteHandler := handlers.NewDeleteHandler(serviceService)
 	editHandler := handlers.NewEditHandler(serviceService)
-	listHandler := handlers.NewListHandler(serviceService)
+	indexHandler := handlers.NewIndexHandler(serviceService)
 	newHandler := handlers.NewNewHandler()
 	updateHandler := handlers.NewUpdateHandler(serviceService)
 	repository4 := repository2.New(sqlDB)
@@ -46,16 +45,16 @@ func InitializeServer() *server.Server {
 	handlersCreateHandler := handlers2.NewCreateHandler(service4)
 	handlersDeleteHandler := handlers2.NewDeleteHandler(service4)
 	handlersEditHandler := handlers2.NewEditHandler(service4)
-	handlersListHandler := handlers2.NewListHandler(service4)
+	handlersIndexHandler := handlers2.NewIndexHandler(service4)
 	handlersUpdateHandler := handlers2.NewUpdateHandler(service4)
 	handler := handlers3.NewHandler(service4)
 	repository5 := repository3.New(sqlDB)
 	service5 := service3.New(repository5, repository4)
 	createHandler2 := handlers4.NewCreateHandler(service5)
 	editHandler2 := handlers4.NewEditHandler(service5)
-	listHandler2 := handlers4.NewListHandler(service5)
+	indexHandler2 := handlers4.NewIndexHandler(service5)
 	updateHandler2 := handlers4.NewUpdateHandler(service5)
-	routesRoutes := routes.New(createHandler, deleteHandler, editHandler, listHandler, newHandler, updateHandler, handlersCreateHandler, handlersDeleteHandler, handlersEditHandler, handlersListHandler, handlersUpdateHandler, handler, createHandler2, editHandler2, listHandler2, updateHandler2)
+	routesRoutes := routes.New(createHandler, deleteHandler, editHandler, indexHandler, newHandler, updateHandler, handlersCreateHandler, handlersDeleteHandler, handlersEditHandler, handlersIndexHandler, handlersUpdateHandler, handler, createHandler2, editHandler2, indexHandler2, updateHandler2)
 	v := middlewares.New()
 	serverServer := server.New(configConfig, routesRoutes, v)
 	return serverServer
