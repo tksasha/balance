@@ -8,7 +8,7 @@ import (
 	"strings"
 	"testing"
 
-	"github.com/tksasha/balance/internal/middlewares"
+	"github.com/tksasha/balance/internal/server/middlewares"
 )
 
 type Params map[string]string

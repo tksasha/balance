@@ -21,10 +21,10 @@ import (
 	itemrepository "github.com/tksasha/balance/internal/core/item/repository"
 	itemservice "github.com/tksasha/balance/internal/core/item/service"
 	"github.com/tksasha/balance/internal/db"
-	"github.com/tksasha/balance/internal/middlewares"
 	"github.com/tksasha/balance/internal/providers"
 	"github.com/tksasha/balance/internal/routes"
 	"github.com/tksasha/balance/internal/server"
+	"github.com/tksasha/balance/internal/server/middlewares"
 )
 
 func InitializeServer() *server.Server {
