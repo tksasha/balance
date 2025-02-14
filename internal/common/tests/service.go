@@ -11,9 +11,9 @@ import (
 	"github.com/tksasha/balance/internal/core/cash"
 	cashrepository "github.com/tksasha/balance/internal/core/cash/repository"
 	cashservice "github.com/tksasha/balance/internal/core/cash/service"
-	"github.com/tksasha/balance/internal/item"
-	itemrepository "github.com/tksasha/balance/internal/item/repository"
-	itemservice "github.com/tksasha/balance/internal/item/service"
+	"github.com/tksasha/balance/internal/core/item"
+	itemrepository "github.com/tksasha/balance/internal/core/item/repository"
+	itemservice "github.com/tksasha/balance/internal/core/item/service"
 )
 
 func NewCashService(ctx context.Context, t *testing.T) (cash.Service, *sql.DB) {

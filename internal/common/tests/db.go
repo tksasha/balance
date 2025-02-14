@@ -7,8 +7,8 @@ import (
 
 	"github.com/tksasha/balance/internal/category"
 	"github.com/tksasha/balance/internal/core/cash"
+	"github.com/tksasha/balance/internal/core/item"
 	"github.com/tksasha/balance/internal/db"
-	"github.com/tksasha/balance/internal/item"
 	"github.com/tksasha/balance/internal/providers"
 	"github.com/tksasha/balance/pkg/currencies"
 )

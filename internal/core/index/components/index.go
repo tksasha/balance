@@ -3,7 +3,7 @@ package components
 import (
 	"github.com/tksasha/balance/internal/category"
 	"github.com/tksasha/balance/internal/core/common/components"
-	"github.com/tksasha/balance/internal/item"
+	"github.com/tksasha/balance/internal/core/item"
 	. "maragu.dev/gomponents" //nolint:stylecheck
 	hx "maragu.dev/gomponents-htmx"
 	. "maragu.dev/gomponents/components" //nolint:stylecheck
