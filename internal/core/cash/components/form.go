@@ -20,6 +20,7 @@ func form(cash *cash.Cash, errors validation.Errors) Node {
 			Input(
 				Class("form-control"),
 				ID("cash_name"),
+				Value(cash.Name),
 			),
 			components.Errors("name", errors),
 		),
@@ -33,6 +34,7 @@ func form(cash *cash.Cash, errors validation.Errors) Node {
 			Input(
 				Class("form-control"),
 				ID("cash_id"),
+				Value(cash.Formula),
 			),
 		),
 		Button(

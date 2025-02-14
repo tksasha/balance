@@ -47,7 +47,7 @@ func TestCashEditHandler(t *testing.T) {
 		assert.Equal(t, recorder.Code, http.StatusNotFound)
 	})
 
-	t.Run("renders resource on success", func(t *testing.T) {
+	t.Run("renders form on success", func(t *testing.T) {
 		tests.Cleanup(ctx, t)
 
 		cash := &cash.Cash{
@@ -73,5 +73,6 @@ func TestCashEditHandler(t *testing.T) {
 		body := tests.GetResponseBody(t, recorder.Body)
 
 		assert.Assert(t, strings.Contains(body, "Bonds"))
+		assert.Assert(t, strings.Contains(body, "2+3"))
 	})
 }

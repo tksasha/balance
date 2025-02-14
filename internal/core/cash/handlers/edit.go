@@ -4,6 +4,7 @@ import (
 	"net/http"
 
 	"github.com/tksasha/balance/internal/core/cash"
+	"github.com/tksasha/balance/internal/core/cash/components"
 	"github.com/tksasha/balance/internal/core/common/handlers"
 )
 
@@ -25,7 +26,9 @@ func (h *EditHandler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	_, _ = w.Write([]byte(cash.Name))
+	if err := components.Edit(cash).Render(w); err != nil {
+		handlers.E(w, err)
+	}
 }
 
 func (h *EditHandler) handle(r *http.Request) (*cash.Cash, error) {
