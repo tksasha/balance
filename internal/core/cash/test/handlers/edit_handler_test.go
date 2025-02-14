@@ -6,9 +6,9 @@ import (
 	"strings"
 	"testing"
 
-	"github.com/tksasha/balance/internal/common/tests"
 	"github.com/tksasha/balance/internal/core/cash"
 	"github.com/tksasha/balance/internal/core/cash/handlers"
+	"github.com/tksasha/balance/internal/core/common/tests"
 	"github.com/tksasha/balance/pkg/currencies"
 	"gotest.tools/v3/assert"
 )

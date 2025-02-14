@@ -5,8 +5,8 @@ import (
 	"net/http/httptest"
 	"testing"
 
-	"github.com/tksasha/balance/internal/common/tests"
 	"github.com/tksasha/balance/internal/core/category"
+	"github.com/tksasha/balance/internal/core/common/tests"
 	"github.com/tksasha/balance/internal/core/item"
 	"github.com/tksasha/balance/internal/core/item/handlers"
 	"github.com/tksasha/balance/pkg/currencies"

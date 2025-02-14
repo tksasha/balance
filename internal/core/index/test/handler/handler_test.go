@@ -5,7 +5,7 @@ import (
 	"net/http/httptest"
 	"testing"
 
-	"github.com/tksasha/balance/internal/common/tests"
+	"github.com/tksasha/balance/internal/core/common/tests"
 	handlers "github.com/tksasha/balance/internal/core/index/handler"
 	"gotest.tools/v3/assert"
 )
