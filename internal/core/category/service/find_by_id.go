@@ -4,9 +4,9 @@ import (
 	"context"
 	"strconv"
 
-	"github.com/tksasha/balance/internal/common/services"
 	"github.com/tksasha/balance/internal/core/category"
 	"github.com/tksasha/balance/internal/core/common"
+	"github.com/tksasha/balance/internal/core/common/services"
 )
 
 func (s *Service) FindByID(ctx context.Context, input string) (*category.Category, error) {

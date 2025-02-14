@@ -4,8 +4,8 @@ import (
 	"context"
 	"time"
 
-	"github.com/tksasha/balance/internal/common/repositories"
 	"github.com/tksasha/balance/internal/core/common"
+	"github.com/tksasha/balance/internal/core/common/repositories"
 	"github.com/tksasha/balance/internal/core/item"
 )
 

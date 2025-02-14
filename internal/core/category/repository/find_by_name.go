@@ -5,9 +5,9 @@ import (
 	"database/sql"
 	"errors"
 
-	"github.com/tksasha/balance/internal/common/repositories"
 	"github.com/tksasha/balance/internal/core/category"
 	"github.com/tksasha/balance/internal/core/common"
+	"github.com/tksasha/balance/internal/core/common/repositories"
 )
 
 func (r *Repository) FindByName(ctx context.Context, name string) (*category.Category, error) {
