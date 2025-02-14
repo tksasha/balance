@@ -4,7 +4,7 @@ import (
 	"fmt"
 	"os"
 
-	"github.com/tksasha/balance/internal/workdir"
+	"github.com/tksasha/balance/internal/db/workdir"
 )
 
 type Provider struct{}

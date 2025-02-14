@@ -4,8 +4,8 @@ import (
 	"fmt"
 	"os"
 
-	"github.com/tksasha/balance/internal/env"
-	"github.com/tksasha/balance/internal/workdir"
+	"github.com/tksasha/balance/internal/db/env"
+	"github.com/tksasha/balance/internal/db/workdir"
 )
 
 type Provider struct{}
