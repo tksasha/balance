@@ -40,6 +40,21 @@ func (m *MockRepository) EXPECT() *MockRepositoryMockRecorder {
 	return m.recorder
 }
 
+// Cashes mocks base method.
+func (m *MockRepository) Cashes(ctx context.Context) (float64, error) {
+	m.ctrl.T.Helper()
+	ret := m.ctrl.Call(m, "Cashes", ctx)
+	ret0, _ := ret[0].(float64)
+	ret1, _ := ret[1].(error)
+	return ret0, ret1
+}
+
+// Cashes indicates an expected call of Cashes.
+func (mr *MockRepositoryMockRecorder) Cashes(ctx any) *gomock.Call {
+	mr.mock.ctrl.T.Helper()
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "Cashes", reflect.TypeOf((*MockRepository)(nil).Cashes), ctx)
+}
+
 // Expense mocks base method.
 func (m *MockRepository) Expense(ctx context.Context) (float64, error) {
 	m.ctrl.T.Helper()
@@ -107,4 +122,19 @@ func (m *MockService) Balance(ctx context.Context) (float64, error) {
 func (mr *MockServiceMockRecorder) Balance(ctx any) *gomock.Call {
 	mr.mock.ctrl.T.Helper()
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "Balance", reflect.TypeOf((*MockService)(nil).Balance), ctx)
+}
+
+// Residual mocks base method.
+func (m *MockService) Residual(ctx context.Context) (float64, error) {
+	m.ctrl.T.Helper()
+	ret := m.ctrl.Call(m, "Residual", ctx)
+	ret0, _ := ret[0].(float64)
+	ret1, _ := ret[1].(error)
+	return ret0, ret1
+}
+
+// Residual indicates an expected call of Residual.
+func (mr *MockServiceMockRecorder) Residual(ctx any) *gomock.Call {
+	mr.mock.ctrl.T.Helper()
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "Residual", reflect.TypeOf((*MockService)(nil).Residual), ctx)
 }

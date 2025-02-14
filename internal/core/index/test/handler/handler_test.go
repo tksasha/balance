@@ -13,12 +13,17 @@ import (
 func TestIndexPageHandler_ServeHTTP(t *testing.T) {
 	ctx := t.Context()
 
-	service, db := tests.NewCategoryService(ctx, t)
+	service, db := tests.NewIndexService(ctx, t)
 	defer func() {
 		_ = db.Close()
 	}()
 
-	mux := tests.NewMux(t, "/", handlers.NewHandler(service))
+	categoryService, db2 := tests.NewCategoryService(ctx, t)
+	defer func() {
+		_ = db2.Close()
+	}()
+
+	mux := tests.NewMux(t, "/", handlers.NewHandler(service, categoryService))
 
 	t.Run("renders 200 when there no errors", func(t *testing.T) {
 		request := tests.NewGetRequest(ctx, t, "/")

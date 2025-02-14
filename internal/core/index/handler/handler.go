@@ -5,15 +5,18 @@ import (
 
 	"github.com/tksasha/balance/internal/core/category"
 	"github.com/tksasha/balance/internal/core/common/handlers"
+	"github.com/tksasha/balance/internal/core/index"
 	"github.com/tksasha/balance/internal/core/index/components"
 )
 
 type Handler struct {
+	service         index.Service
 	categoryService category.Service
 }
 
-func NewHandler(categoryService category.Service) *Handler {
+func NewHandler(service index.Service, categoryService category.Service) *Handler {
 	return &Handler{
+		service:         service,
 		categoryService: categoryService,
 	}
 }
