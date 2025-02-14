@@ -3,6 +3,7 @@ package handlers_test
 import (
 	"net/http"
 	"net/http/httptest"
+	"strings"
 	"testing"
 
 	"github.com/tksasha/balance/internal/core/cash"
@@ -12,7 +13,7 @@ import (
 	"gotest.tools/v3/assert"
 )
 
-func TestCashUpdateHandler(t *testing.T) {
+func TestCashUpdateHandler(t *testing.T) { //nolint:funlen
 	ctx := t.Context()
 
 	service, db := tests.NewCashService(ctx, t)
@@ -42,7 +43,34 @@ func TestCashUpdateHandler(t *testing.T) {
 		assert.Equal(t, recorder.Code, http.StatusBadRequest)
 	})
 
-	t.Run("renders 200 when cash updated", func(t *testing.T) {
+	t.Run("renders errors when validation failed", func(t *testing.T) {
+		tests.Cleanup(ctx, t)
+
+		cashToCreate := &cash.Cash{
+			ID:       1418,
+			Currency: currencies.USD,
+		}
+
+		tests.CreateCash(ctx, t, cashToCreate)
+
+		params := tests.Params{
+			"name": "",
+		}
+
+		request := tests.NewPatchRequest(ctx, t, "/cashes/1418?currency=usd", params)
+
+		recorder := httptest.NewRecorder()
+
+		mux.ServeHTTP(recorder, request)
+
+		assert.Equal(t, recorder.Code, http.StatusOK)
+
+		body := tests.GetResponseBody(t, recorder.Body)
+
+		assert.Assert(t, strings.Contains(body, "name: is required"))
+	})
+
+	t.Run("renders 204 when cash updated", func(t *testing.T) {
 		tests.Cleanup(ctx, t)
 
 		cashToCreate := &cash.Cash{
@@ -70,6 +98,6 @@ func TestCashUpdateHandler(t *testing.T) {
 
 		mux.ServeHTTP(recorder, request)
 
-		assert.Equal(t, recorder.Code, http.StatusOK)
+		assert.Equal(t, recorder.Code, http.StatusNoContent)
 	})
 }

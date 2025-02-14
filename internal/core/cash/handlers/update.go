@@ -1,11 +1,14 @@
 package handlers
 
 import (
+	"errors"
 	"net/http"
 
 	"github.com/tksasha/balance/internal/core/cash"
+	"github.com/tksasha/balance/internal/core/cash/components"
 	"github.com/tksasha/balance/internal/core/common"
 	"github.com/tksasha/balance/internal/core/common/handlers"
+	"github.com/tksasha/balance/pkg/validation"
 )
 
 type UpdateHandler struct {
@@ -20,13 +23,22 @@ func NewUpdateHandler(service cash.Service) *UpdateHandler {
 
 func (h *UpdateHandler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 	cash, err := h.handle(r)
-	if err != nil {
-		handlers.E(w, err)
+	if err == nil {
+		w.WriteHeader(http.StatusNoContent)
 
 		return
 	}
 
-	_, _ = w.Write([]byte(cash.Name))
+	var verrors validation.Errors
+	if errors.As(err, &verrors) {
+		err := components.Update(cash, verrors).Render(w)
+
+		handlers.SetError(w, err)
+
+		return
+	}
+
+	handlers.SetError(w, err)
 }
 
 func (h *UpdateHandler) handle(r *http.Request) (*cash.Cash, error) {

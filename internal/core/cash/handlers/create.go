@@ -1,6 +1,7 @@
 package handlers
 
 import (
+	"errors"
 	"net/http"
 
 	"github.com/tksasha/balance/internal/core/cash"
@@ -22,22 +23,22 @@ func NewCreateHandler(service cash.Service) *CreateHandler {
 
 func (h *CreateHandler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 	cash, err := h.handle(r)
-	if err != nil {
-		errors, ok := err.(validation.Errors)
-		if ok {
-			if err := components.Create(cash, errors).Render(w); err != nil {
-				handlers.E(w, err)
-			}
-
-			return
-		}
-
-		handlers.E(w, err)
+	if err == nil {
+		w.WriteHeader(http.StatusCreated)
 
 		return
 	}
 
-	w.WriteHeader(http.StatusCreated)
+	var verrors validation.Errors
+	if errors.As(err, &verrors) {
+		err := components.Create(cash, verrors).Render(w)
+
+		handlers.SetError(w, err)
+
+		return
+	}
+
+	handlers.SetError(w, err)
 }
 
 func (h *CreateHandler) handle(r *http.Request) (*cash.Cash, error) {

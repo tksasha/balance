@@ -21,14 +21,14 @@ func NewEditHandler(service cash.Service) *EditHandler {
 func (h *EditHandler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 	cash, err := h.handle(r)
 	if err != nil {
-		handlers.E(w, err)
+		handlers.SetError(w, err)
 
 		return
 	}
 
-	if err := components.Edit(cash).Render(w); err != nil {
-		handlers.E(w, err)
-	}
+	err = components.Edit(cash).Render(w)
+
+	handlers.SetError(w, err)
 }
 
 func (h *EditHandler) handle(r *http.Request) (*cash.Cash, error) {

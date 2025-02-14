@@ -21,14 +21,14 @@ func NewIndexHandler(service cash.Service) *IndexHandler {
 func (h *IndexHandler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 	cashes, err := h.handle(r)
 	if err != nil {
-		handlers.E(w, err)
+		handlers.SetError(w, err)
 
 		return
 	}
 
-	if err := components.Index(cashes).Render(w); err != nil {
-		handlers.E(w, err)
-	}
+	err = components.Index(cashes).Render(w)
+
+	handlers.SetError(w, err)
 }
 
 func (h *IndexHandler) handle(r *http.Request) (cash.Cashes, error) {
