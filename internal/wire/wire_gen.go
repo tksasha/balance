@@ -19,7 +19,7 @@ import (
 	repository3 "github.com/tksasha/balance/internal/core/item/repository"
 	service3 "github.com/tksasha/balance/internal/core/item/service"
 	"github.com/tksasha/balance/internal/db"
-	"github.com/tksasha/balance/internal/providers"
+	"github.com/tksasha/balance/internal/db/nameprovider"
 	"github.com/tksasha/balance/internal/server"
 	"github.com/tksasha/balance/internal/server/config"
 	"github.com/tksasha/balance/internal/server/middlewares"
@@ -31,8 +31,8 @@ import (
 func InitializeServer() *server.Server {
 	configConfig := config.New()
 	contextContext := context.Background()
-	dbNameProvider := providers.NewDBNameProvider()
-	sqlDB := db.Open(contextContext, dbNameProvider)
+	provider := nameprovider.New()
+	sqlDB := db.Open(contextContext, provider)
 	repositoryRepository := repository.New(sqlDB)
 	serviceService := service.New(repositoryRepository)
 	createHandler := handlers.NewCreateHandler(serviceService)

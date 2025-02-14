@@ -20,7 +20,7 @@ import (
 	itemrepository "github.com/tksasha/balance/internal/core/item/repository"
 	itemservice "github.com/tksasha/balance/internal/core/item/service"
 	"github.com/tksasha/balance/internal/db"
-	"github.com/tksasha/balance/internal/providers"
+	"github.com/tksasha/balance/internal/db/nameprovider"
 	"github.com/tksasha/balance/internal/server"
 	"github.com/tksasha/balance/internal/server/config"
 	"github.com/tksasha/balance/internal/server/middlewares"
@@ -55,7 +55,7 @@ func InitializeServer() *server.Server {
 		itemrepository.New,
 		itemservice.New,
 		middlewares.New,
-		providers.NewDBNameProvider,
+		nameprovider.New,
 		routes.New,
 		server.New,
 		wire.Bind(new(cash.Repository), new(*cashrepository.Repository)),
@@ -64,7 +64,7 @@ func InitializeServer() *server.Server {
 		wire.Bind(new(item.Service), new(*itemservice.Service)),
 		wire.Bind(new(category.Repository), new(*categoryrepository.Repository)),
 		wire.Bind(new(category.Service), new(*categoryservice.Service)),
-		wire.Bind(new(db.DBNameProvider), new(*providers.DBNameProvider)),
+		wire.Bind(new(db.NameProvider), new(*nameprovider.Provider)),
 	)
 
 	return nil

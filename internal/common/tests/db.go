@@ -9,16 +9,14 @@ import (
 	"github.com/tksasha/balance/internal/core/category"
 	"github.com/tksasha/balance/internal/core/item"
 	"github.com/tksasha/balance/internal/db"
-	"github.com/tksasha/balance/internal/providers"
+	nameprovider "github.com/tksasha/balance/internal/db/nameprovider/test"
 	"github.com/tksasha/balance/pkg/currencies"
 )
 
 func newDB(ctx context.Context, t *testing.T) *sql.DB {
 	t.Helper()
 
-	dbNameProvider := providers.NewDBNameProvider()
-
-	return db.Open(ctx, dbNameProvider)
+	return db.Open(ctx, nameprovider.New())
 }
 
 func Cleanup(ctx context.Context, t *testing.T) {

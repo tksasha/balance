@@ -1,4 +1,4 @@
-package providers
+package nameprovider
 
 import (
 	"fmt"
@@ -8,13 +8,13 @@ import (
 	"github.com/tksasha/balance/internal/workdir"
 )
 
-type DBNameProvider struct{}
+type Provider struct{}
 
-func NewDBNameProvider() *DBNameProvider {
-	return &DBNameProvider{}
+func New() *Provider {
+	return &Provider{}
 }
 
-func (p *DBNameProvider) Provide() string {
+func (p *Provider) Provide() string {
 	return fmt.Sprintf(
 		"%s%s%s.sqlite3",
 		workdir.New(),

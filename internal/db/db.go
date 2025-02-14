@@ -8,8 +8,8 @@ import (
 	_ "github.com/mattn/go-sqlite3"
 )
 
-func Open(ctx context.Context, dbNameProvider DBNameProvider) *sql.DB {
-	db, err := sql.Open("sqlite3", dbNameProvider.Provide())
+func Open(ctx context.Context, nameProvider NameProvider) *sql.DB {
+	db, err := sql.Open("sqlite3", nameProvider.Provide())
 	if err != nil {
 		log.Fatal(err)
 	}

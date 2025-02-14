@@ -1,5 +1,5 @@
 package db
 
-type DBNameProvider interface {
+type NameProvider interface {
 	Provide() string
 }
