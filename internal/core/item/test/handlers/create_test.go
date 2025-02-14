@@ -21,7 +21,12 @@ func TestItemCreateHandler(t *testing.T) { //nolint:funlen
 		_ = db.Close()
 	}()
 
-	mux := tests.NewMux(t, "POST /items", handlers.NewCreateHandler(service))
+	categoryService, db2 := tests.NewCategoryService(ctx, t)
+	defer func() {
+		_ = db2.Close()
+	}()
+
+	mux := tests.NewMux(t, "POST /items", handlers.NewCreateHandler(service, categoryService))
 
 	t.Run("responds 400 on parse form fails", func(t *testing.T) {
 		request := tests.NewInvalidPostRequest(ctx, t, "/items")
@@ -47,7 +52,7 @@ func TestItemCreateHandler(t *testing.T) { //nolint:funlen
 		assert.Equal(t, http.StatusOK, recorder.Code)
 	})
 
-	t.Run("responds 200 on succcessful create", func(t *testing.T) {
+	t.Run("responds 204 when item created", func(t *testing.T) {
 		tests.Cleanup(ctx, t)
 
 		categoryToCreate := &category.Category{
@@ -71,7 +76,7 @@ func TestItemCreateHandler(t *testing.T) { //nolint:funlen
 
 		mux.ServeHTTP(recorder, request)
 
-		assert.Equal(t, http.StatusOK, recorder.Code)
+		assert.Equal(t, recorder.Code, http.StatusNoContent)
 
 		item := tests.FindItemByDate(ctx, t, currencies.USD, "2024-10-16")
 

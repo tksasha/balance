@@ -25,11 +25,11 @@ func (s *Service) Create(ctx context.Context, request item.CreateRequest) (*item
 	}
 
 	if validate.HasErrors() {
-		return nil, validate.Errors
+		return item, validate.Errors
 	}
 
 	if err := s.itemRepository.Create(ctx, item); err != nil {
-		return item, err
+		return nil, err
 	}
 
 	return item, nil

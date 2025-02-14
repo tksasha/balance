@@ -12,7 +12,7 @@ import (
 	is "gotest.tools/v3/assert/cmp"
 )
 
-func TestCategoryCreateHandler(t *testing.T) {
+func TestCategoryCreateHandler(t *testing.T) { //nolint:funlen
 	ctx := t.Context()
 
 	service, db := tests.NewCategoryService(ctx, t)
@@ -22,7 +22,17 @@ func TestCategoryCreateHandler(t *testing.T) {
 
 	mux := tests.NewMux(t, "POST /categories", handlers.NewCreateHandler(service))
 
-	t.Run("responds 200 when input is invalid", func(t *testing.T) {
+	t.Run("responds 400 when input data is invalid", func(t *testing.T) {
+		request := tests.NewInvalidPostRequest(ctx, t, "/categories")
+
+		recorder := httptest.NewRecorder()
+
+		mux.ServeHTTP(recorder, request)
+
+		assert.Equal(t, recorder.Code, http.StatusBadRequest)
+	})
+
+	t.Run("renders errors when validation failed", func(t *testing.T) {
 		params := tests.Params{"name": ""}
 
 		request := tests.NewPostRequest(ctx, t, "/categories", params)

@@ -6,7 +6,7 @@ import (
 	"github.com/tksasha/balance/internal/core/common/response"
 )
 
-func E(w http.ResponseWriter, err error) {
+func SetError(w http.ResponseWriter, err error) {
 	if response, ok := w.(*response.Response); ok {
 		response.Error = err
 	}

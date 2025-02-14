@@ -4,6 +4,7 @@ import (
 	"errors"
 	"net/http"
 
+	"github.com/tksasha/balance/internal/core/category"
 	"github.com/tksasha/balance/internal/core/common"
 	"github.com/tksasha/balance/internal/core/common/handlers"
 	"github.com/tksasha/balance/internal/core/item"
@@ -12,33 +13,42 @@ import (
 )
 
 type CreateHandler struct {
-	service item.Service
+	service         item.Service
+	categoryService category.Service
 }
 
-func NewCreateHandler(service item.Service) *CreateHandler {
+func NewCreateHandler(service item.Service, categoryService category.Service) *CreateHandler {
 	return &CreateHandler{
-		service: service,
+		service:         service,
+		categoryService: categoryService,
 	}
 }
 
 func (h *CreateHandler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 	item, err := h.handle(r)
-	if err != nil {
-		var verrors validation.Errors
-		if errors.As(err, &verrors) {
-			_, _ = w.Write([]byte(verrors.Error()))
-
-			return
-		}
-
-		handlers.E(w, err)
+	if err == nil {
+		w.WriteHeader(http.StatusNoContent)
 
 		return
 	}
 
-	if err := components.Create(item).Render(w); err != nil {
-		handlers.E(w, err)
+	var verrors validation.Errors
+	if errors.As(err, &verrors) {
+		categories, err := h.categoryService.List(r.Context())
+		if err != nil {
+			handlers.SetError(w, err)
+
+			return
+		}
+
+		err = components.Create(item, categories, verrors).Render(w)
+
+		handlers.SetError(w, err)
+
+		return
 	}
+
+	handlers.SetError(w, err)
 }
 
 func (h *CreateHandler) handle(r *http.Request) (*item.Item, error) {

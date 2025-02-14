@@ -19,18 +19,23 @@ func NewHandler(categoryService category.Service) *Handler {
 }
 
 func (h *Handler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
-	if err := h.handle(w, r); err != nil {
-		handlers.E(w, err)
+	categories, err := h.handle(r)
+	if err != nil {
+		handlers.SetError(w, err)
 
 		return
 	}
+
+	err = components.Index(categories).Render(w)
+
+	handlers.SetError(w, err)
 }
 
-func (h *Handler) handle(w http.ResponseWriter, r *http.Request) error {
+func (h *Handler) handle(r *http.Request) (category.Categories, error) {
 	categories, err := h.categoryService.List(r.Context())
 	if err != nil {
-		return err
+		return nil, err
 	}
 
-	return components.Index(categories).Render(w)
+	return categories, nil
 }

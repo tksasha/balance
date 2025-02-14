@@ -19,7 +19,7 @@ func NewDeleteHandler(service category.Service) *DeleteHandler {
 
 func (h *DeleteHandler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 	if err := h.handle(r); err != nil {
-		handlers.E(w, err)
+		handlers.SetError(w, err)
 
 		return
 	}

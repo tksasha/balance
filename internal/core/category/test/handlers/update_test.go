@@ -3,6 +3,7 @@ package handlers_test
 import (
 	"net/http"
 	"net/http/httptest"
+	"strings"
 	"testing"
 
 	"github.com/tksasha/balance/internal/core/category"
@@ -34,7 +35,7 @@ func TestCategoryUpdateHandler(t *testing.T) { //nolint:funlen
 		assert.Equal(t, recorder.Code, http.StatusNotFound)
 	})
 
-	t.Run("responds 200 on duplicates name", func(t *testing.T) {
+	t.Run("renders errors when validation failed", func(t *testing.T) {
 		tests.Cleanup(ctx, t)
 
 		for id, name := range map[int]string{1151: "Heterogeneous", 11654: "Paraphernalia"} {
@@ -55,10 +56,13 @@ func TestCategoryUpdateHandler(t *testing.T) { //nolint:funlen
 
 		mux.ServeHTTP(recorder, request)
 
+		body := tests.GetResponseBody(t, recorder.Body)
+
 		assert.Equal(t, recorder.Code, http.StatusOK)
+		assert.Assert(t, strings.Contains(body, "name: already exists"))
 	})
 
-	t.Run("responds 200 on successful update", func(t *testing.T) {
+	t.Run("responds 204 when category updated", func(t *testing.T) {
 		tests.Cleanup(ctx, t)
 
 		categoryToCreate := &category.Category{
@@ -85,7 +89,7 @@ func TestCategoryUpdateHandler(t *testing.T) { //nolint:funlen
 
 		mux.ServeHTTP(recorder, request)
 
-		assert.Equal(t, recorder.Code, http.StatusOK)
+		assert.Equal(t, recorder.Code, http.StatusNoContent)
 
 		category := tests.FindCategoryByID(ctx, t, currencies.USD, 1208)
 

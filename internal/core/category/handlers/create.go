@@ -5,6 +5,7 @@ import (
 	"net/http"
 
 	"github.com/tksasha/balance/internal/core/category"
+	"github.com/tksasha/balance/internal/core/category/components"
 	"github.com/tksasha/balance/internal/core/common"
 	"github.com/tksasha/balance/internal/core/common/handlers"
 	"github.com/tksasha/balance/pkg/validation"
@@ -21,25 +22,28 @@ func NewCreateHandler(service category.Service) *CreateHandler {
 }
 
 func (h *CreateHandler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
-	if err := h.handle(r); err != nil {
-		var verrors validation.Errors
-		if errors.As(err, &verrors) {
-			_, _ = w.Write([]byte(verrors.Error()))
-
-			return
-		}
-
-		handlers.E(w, err)
+	category, err := h.handle(r)
+	if err == nil {
+		w.WriteHeader(http.StatusCreated)
 
 		return
 	}
 
-	w.WriteHeader(http.StatusCreated)
+	var verrors validation.Errors
+	if errors.As(err, &verrors) {
+		err := components.Create(category, verrors).Render(w)
+
+		handlers.SetError(w, err)
+
+		return
+	}
+
+	handlers.SetError(w, err)
 }
 
-func (h *CreateHandler) handle(r *http.Request) error {
+func (h *CreateHandler) handle(r *http.Request) (*category.Category, error) {
 	if err := r.ParseForm(); err != nil {
-		return common.ErrParsingForm
+		return nil, common.ErrParsingForm
 	}
 
 	request := category.CreateRequest{

@@ -7,7 +7,7 @@ import (
 	"github.com/tksasha/balance/pkg/validation"
 )
 
-func (s *Service) Create(ctx context.Context, request category.CreateRequest) error {
+func (s *Service) Create(ctx context.Context, request category.CreateRequest) (*category.Category, error) {
 	category := &category.Category{
 		Name: request.Name,
 	}
@@ -17,7 +17,7 @@ func (s *Service) Create(ctx context.Context, request category.CreateRequest) er
 	validate.Presence("name", category.Name)
 
 	if err := s.nameAlreadyExists(ctx, category.Name, 0, validate); err != nil {
-		return err
+		return nil, err
 	}
 
 	category.Supercategory = validate.Integer("supercategory", request.Supercategory)
@@ -27,8 +27,12 @@ func (s *Service) Create(ctx context.Context, request category.CreateRequest) er
 	category.Visible = validate.Boolean("visible", request.Visible)
 
 	if validate.HasErrors() {
-		return validate.Errors
+		return category, validate.Errors
 	}
 
-	return s.repository.Create(ctx, category)
+	if err := s.repository.Create(ctx, category); err != nil {
+		return nil, err
+	}
+
+	return category, nil
 }

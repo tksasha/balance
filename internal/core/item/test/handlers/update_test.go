@@ -21,7 +21,12 @@ func TestItemUpdateHandler(t *testing.T) { //nolint:funlen
 		_ = db.Close()
 	}()
 
-	mux := tests.NewMux(t, "PATCH /items/{id}", handlers.NewUpdateHandler(service))
+	categoryService, db2 := tests.NewCategoryService(ctx, t)
+	defer func() {
+		_ = db2.Close()
+	}()
+
+	mux := tests.NewMux(t, "PATCH /items/{id}", handlers.NewUpdateHandler(service, categoryService))
 
 	t.Run("responds 400 on invalid input", func(t *testing.T) {
 		tests.Cleanup(ctx, t)
@@ -49,7 +54,7 @@ func TestItemUpdateHandler(t *testing.T) { //nolint:funlen
 		assert.Equal(t, recorder.Code, http.StatusNotFound)
 	})
 
-	t.Run("responds 200 on successful update", func(t *testing.T) {
+	t.Run("responds 204 on successful update", func(t *testing.T) {
 		tests.Cleanup(ctx, t)
 
 		categoryToCreate := &category.Category{
@@ -81,7 +86,7 @@ func TestItemUpdateHandler(t *testing.T) { //nolint:funlen
 
 		mux.ServeHTTP(recorder, request)
 
-		assert.Equal(t, recorder.Code, http.StatusOK)
+		assert.Equal(t, recorder.Code, http.StatusNoContent)
 
 		item := tests.FindItemByDate(ctx, t, currencies.EUR, "2025-01-25")
 

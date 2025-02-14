@@ -26,7 +26,7 @@ func Index(categories category.Categories) Node {
 						Class("card mb-3"),
 						Div(
 							Class("card-body"),
-							form(&item.Item{}, categories),
+							form(&item.Item{}, categories, nil),
 						),
 					),
 					Div(

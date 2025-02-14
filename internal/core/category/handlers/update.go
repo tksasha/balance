@@ -23,22 +23,20 @@ func NewUpdateHandler(service category.Service) *UpdateHandler {
 
 func (h *UpdateHandler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 	category, err := h.handle(r)
-	if err != nil {
-		var verrors validation.Errors
-		if errors.As(err, &verrors) {
-			_, _ = w.Write([]byte(verrors.Error()))
-
-			return
-		}
-
-		handlers.E(w, err)
+	if err == nil {
+		w.WriteHeader(http.StatusNoContent)
 
 		return
 	}
 
-	if err := components.Update(category).Render(w); err != nil {
-		handlers.E(w, err)
+	var verrors validation.Errors
+	if errors.As(err, &verrors) {
+		err := components.Update(category, verrors).Render(w)
+
+		handlers.SetError(w, err)
 	}
+
+	handlers.SetError(w, err)
 }
 
 func (h *UpdateHandler) handle(r *http.Request) (*category.Category, error) {

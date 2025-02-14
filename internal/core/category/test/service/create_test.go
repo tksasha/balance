@@ -27,7 +27,7 @@ func TestCreate(t *testing.T) { //nolint:funlen
 			Supercategory: "59",
 		}
 
-		err := service.Create(ctx, request)
+		_, err := service.Create(ctx, request)
 
 		assert.Error(t, err, "name: is required")
 	})
@@ -42,7 +42,7 @@ func TestCreate(t *testing.T) { //nolint:funlen
 			FindByName(ctx, "Miscellaneous").
 			Return(nil, errors.New("find category by name error"))
 
-		err := service.Create(ctx, request)
+		_, err := service.Create(ctx, request)
 
 		assert.Error(t, err, "find category by name error")
 	})
@@ -63,7 +63,7 @@ func TestCreate(t *testing.T) { //nolint:funlen
 			FindByName(ctx, "Pharmaceutical").
 			Return(category, nil)
 
-		err := service.Create(ctx, request)
+		_, err := service.Create(ctx, request)
 
 		assert.Error(t, err, "name: already exists")
 	})
@@ -79,7 +79,7 @@ func TestCreate(t *testing.T) { //nolint:funlen
 			FindByName(ctx, "Miscellaneous").
 			Return(nil, common.ErrRecordNotFound)
 
-		err := service.Create(ctx, request)
+		_, err := service.Create(ctx, request)
 
 		assert.Error(t, err, "supercategory: is invalid")
 	})
@@ -105,7 +105,7 @@ func TestCreate(t *testing.T) { //nolint:funlen
 			Create(ctx, category).
 			Return(errors.New("create category error"))
 
-		err := service.Create(ctx, request)
+		_, err := service.Create(ctx, request)
 
 		assert.Error(t, err, "create category error")
 	})
@@ -135,7 +135,7 @@ func TestCreate(t *testing.T) { //nolint:funlen
 			Create(ctx, category).
 			Return(nil)
 
-		err := service.Create(ctx, request)
+		_, err := service.Create(ctx, request)
 
 		assert.NilError(t, err)
 	})

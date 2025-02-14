@@ -1,7 +1,6 @@
 package handlers
 
 import (
-	"log/slog"
 	"net/http"
 
 	"github.com/tksasha/balance/internal/core/category"
@@ -22,18 +21,14 @@ func NewIndexHandler(service category.Service) *IndexHandler {
 func (h *IndexHandler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 	categories, err := h.handle(r)
 	if err != nil {
-		handlers.E(w, err)
+		handlers.SetError(w, err)
 
 		return
 	}
 
-	if err := components.Index(categories).Render(w); err != nil {
-		slog.Error("render categories component error", "error", err)
+	err = components.Index(categories).Render(w)
 
-		handlers.E(w, err)
-
-		return
-	}
+	handlers.SetError(w, err)
 }
 
 func (h *IndexHandler) handle(r *http.Request) (category.Categories, error) {

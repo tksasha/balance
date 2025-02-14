@@ -21,7 +21,12 @@ func TestItemEditHandler(t *testing.T) {
 		_ = db.Close()
 	}()
 
-	mux := tests.NewMux(t, "GET /items/{id}/edit", handlers.NewEditHandler(service))
+	categoryService, db2 := tests.NewCategoryService(ctx, t)
+	defer func() {
+		_ = db2.Close()
+	}()
+
+	mux := tests.NewMux(t, "GET /items/{id}/edit", handlers.NewEditHandler(service, categoryService))
 
 	t.Run("responds 404 when item not found", func(t *testing.T) {
 		request := tests.NewGetRequest(ctx, t, "/items/1514/edit?currency=usd")

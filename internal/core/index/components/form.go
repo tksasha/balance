@@ -4,12 +4,14 @@ import (
 	"time"
 
 	"github.com/tksasha/balance/internal/core/category"
+	"github.com/tksasha/balance/internal/core/common/components"
 	"github.com/tksasha/balance/internal/core/item"
+	"github.com/tksasha/balance/pkg/validation"
 	. "maragu.dev/gomponents"      //nolint:stylecheck
 	. "maragu.dev/gomponents/html" //nolint:stylecheck
 )
 
-func form(item *item.Item, categories category.Categories) Node {
+func form(item *item.Item, categories category.Categories, errors validation.Errors) Node {
 	return Form(
 		Div(
 			Class("mb-3"),
@@ -27,6 +29,7 @@ func form(item *item.Item, categories category.Categories) Node {
 					Class("form-control"),
 				),
 				Value(item.Date.Format(time.DateOnly)),
+				components.Errors("date", errors),
 			),
 		),
 		Div(

@@ -2,12 +2,13 @@ package components
 
 import (
 	"github.com/tksasha/balance/internal/core/category"
+	"github.com/tksasha/balance/pkg/validation"
 	. "maragu.dev/gomponents"      //nolint: stylecheck
 	. "maragu.dev/gomponents/html" //nolint: stylecheck
 )
 
-func Update(category *category.Category) Node {
+func Update(category *category.Category, errors validation.Errors) Node {
 	return Div(
-		Text(category.Name),
+		form(category, errors),
 	)
 }
