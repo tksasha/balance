@@ -5,7 +5,7 @@ import (
 	"net/http"
 
 	"github.com/tksasha/balance/internal/core/common"
-	"github.com/tksasha/balance/internal/responses"
+	"github.com/tksasha/balance/internal/core/common/response"
 )
 
 type errorMiddleware struct{}
@@ -16,7 +16,7 @@ func newErrorMiddleware() *errorMiddleware {
 
 func (m *errorMiddleware) Wrap(next http.Handler) http.Handler {
 	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
-		rw := &responses.Response{ResponseWriter: w}
+		rw := &response.Response{ResponseWriter: w}
 
 		next.ServeHTTP(rw, r)
 

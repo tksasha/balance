@@ -3,8 +3,8 @@ package handlers
 import (
 	"net/http"
 
+	"github.com/tksasha/balance/internal/common/handlers"
 	"github.com/tksasha/balance/internal/core/category"
-	"github.com/tksasha/balance/internal/responses"
 )
 
 type DeleteHandler struct {
@@ -19,11 +19,7 @@ func NewDeleteHandler(service category.Service) *DeleteHandler {
 
 func (h *DeleteHandler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 	if err := h.handle(r); err != nil {
-		if response, ok := w.(*responses.Response); ok {
-			response.Error = err
-
-			return
-		}
+		handlers.E(w, err)
 
 		return
 	}

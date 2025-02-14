@@ -3,9 +3,9 @@ package handlers
 import (
 	"net/http"
 
+	"github.com/tksasha/balance/internal/common/handlers"
 	"github.com/tksasha/balance/internal/core/cash"
 	"github.com/tksasha/balance/internal/core/common"
-	"github.com/tksasha/balance/internal/responses"
 )
 
 type UpdateHandler struct {
@@ -21,11 +21,7 @@ func NewUpdateHandler(service cash.Service) *UpdateHandler {
 func (h *UpdateHandler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 	cash, err := h.handle(r)
 	if err != nil {
-		if response, ok := w.(*responses.Response); ok {
-			response.Error = err
-
-			return
-		}
+		handlers.E(w, err)
 
 		return
 	}

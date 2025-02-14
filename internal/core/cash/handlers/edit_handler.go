@@ -3,8 +3,8 @@ package handlers
 import (
 	"net/http"
 
+	"github.com/tksasha/balance/internal/common/handlers"
 	"github.com/tksasha/balance/internal/core/cash"
-	"github.com/tksasha/balance/internal/responses"
 )
 
 type EditHandler struct {
@@ -20,11 +20,7 @@ func NewEditHandler(service cash.Service) *EditHandler {
 func (h *EditHandler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 	cash, err := h.handle(r)
 	if err != nil {
-		if response, ok := w.(*responses.Response); ok {
-			response.Error = err
-
-			return
-		}
+		handlers.E(w, err)
 
 		return
 	}
