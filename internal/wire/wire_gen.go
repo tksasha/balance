@@ -8,13 +8,13 @@ package wire
 
 import (
 	"context"
-	"github.com/tksasha/balance/internal/cash/handlers"
-	"github.com/tksasha/balance/internal/cash/repository"
-	"github.com/tksasha/balance/internal/cash/service"
 	handlers2 "github.com/tksasha/balance/internal/category/handlers"
 	repository2 "github.com/tksasha/balance/internal/category/repository"
 	service2 "github.com/tksasha/balance/internal/category/service"
 	"github.com/tksasha/balance/internal/config"
+	"github.com/tksasha/balance/internal/core/cash/handlers"
+	"github.com/tksasha/balance/internal/core/cash/repository"
+	"github.com/tksasha/balance/internal/core/cash/service"
 	handlers3 "github.com/tksasha/balance/internal/core/index/handler"
 	"github.com/tksasha/balance/internal/db"
 	handlers4 "github.com/tksasha/balance/internal/item/handlers"

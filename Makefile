@@ -64,9 +64,9 @@ gen: wire mockgen
 .PHONY: mockgen
 mockgen:
 	@go run $(MOCKGEN) \
-		-source internal/cash/interfaces.go \
+		-source internal/core/cash/interfaces.go \
 		-package mocks \
-		-destination internal/cash/test/mocks/interfaces.mock.go
+		-destination internal/core/cash/test/mocks/interfaces.mock.go
 	@go run $(MOCKGEN) \
 		-source internal/category/interfaces.go \
 		-package mocks \
