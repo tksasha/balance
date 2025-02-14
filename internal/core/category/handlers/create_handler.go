@@ -4,9 +4,9 @@ import (
 	"errors"
 	"net/http"
 
-	"github.com/tksasha/balance/internal/common/handlers"
 	"github.com/tksasha/balance/internal/core/category"
 	"github.com/tksasha/balance/internal/core/common"
+	"github.com/tksasha/balance/internal/core/common/handlers"
 	"github.com/tksasha/balance/pkg/validation"
 )
 

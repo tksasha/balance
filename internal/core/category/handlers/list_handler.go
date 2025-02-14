@@ -4,9 +4,9 @@ import (
 	"log/slog"
 	"net/http"
 
-	"github.com/tksasha/balance/internal/common/handlers"
 	"github.com/tksasha/balance/internal/core/category"
 	"github.com/tksasha/balance/internal/core/category/components"
+	"github.com/tksasha/balance/internal/core/common/handlers"
 )
 
 type ListHandler struct {
