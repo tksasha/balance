@@ -75,6 +75,10 @@ mockgen:
 		-source internal/core/item/interfaces.go \
 		-package mocks \
 		-destination internal/core/item/test/mocks/interfaces.mock.go
+	@go run $(MOCKGEN) \
+			-source internal/core/index/interfaces.go \
+			-package mocks \
+			-destination internal/core/index/test/mocks/interfaces.mock.go
 
 .PHONY: wire
 wire:

@@ -42,6 +42,8 @@ func (h *UpdateHandler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 		}
 
 		err = components.Update(item, categories, verrors).Render(w)
+
+		handlers.SetError(w, err)
 	}
 
 	handlers.SetError(w, err)
