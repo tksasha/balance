@@ -6,7 +6,6 @@ import (
 	"context"
 
 	"github.com/google/wire"
-	"github.com/tksasha/balance/internal/config"
 	"github.com/tksasha/balance/internal/core/cash"
 	cashhandlers "github.com/tksasha/balance/internal/core/cash/handlers"
 	cashrepository "github.com/tksasha/balance/internal/core/cash/repository"
@@ -23,6 +22,7 @@ import (
 	"github.com/tksasha/balance/internal/db"
 	"github.com/tksasha/balance/internal/providers"
 	"github.com/tksasha/balance/internal/server"
+	"github.com/tksasha/balance/internal/server/config"
 	"github.com/tksasha/balance/internal/server/middlewares"
 	"github.com/tksasha/balance/internal/server/routes"
 )

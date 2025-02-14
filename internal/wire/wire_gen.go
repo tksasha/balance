@@ -2,12 +2,12 @@
 
 //go:generate go run -mod=mod github.com/google/wire/cmd/wire
 //go:build !wireinject
+// +build !wireinject
 
 package wire
 
 import (
 	"context"
-	"github.com/tksasha/balance/internal/config"
 	"github.com/tksasha/balance/internal/core/cash/handlers"
 	"github.com/tksasha/balance/internal/core/cash/repository"
 	"github.com/tksasha/balance/internal/core/cash/service"
@@ -21,6 +21,7 @@ import (
 	"github.com/tksasha/balance/internal/db"
 	"github.com/tksasha/balance/internal/providers"
 	"github.com/tksasha/balance/internal/server"
+	"github.com/tksasha/balance/internal/server/config"
 	"github.com/tksasha/balance/internal/server/middlewares"
 	"github.com/tksasha/balance/internal/server/routes"
 )
