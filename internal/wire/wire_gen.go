@@ -20,9 +20,9 @@ import (
 	service3 "github.com/tksasha/balance/internal/core/item/service"
 	"github.com/tksasha/balance/internal/db"
 	"github.com/tksasha/balance/internal/providers"
-	"github.com/tksasha/balance/internal/routes"
 	"github.com/tksasha/balance/internal/server"
 	"github.com/tksasha/balance/internal/server/middlewares"
+	"github.com/tksasha/balance/internal/server/routes"
 )
 
 // Injectors from wire.go:

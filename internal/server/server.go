@@ -11,8 +11,8 @@ import (
 	"time"
 
 	"github.com/tksasha/balance/internal/config"
-	"github.com/tksasha/balance/internal/routes"
 	"github.com/tksasha/balance/internal/server/middlewares"
+	"github.com/tksasha/balance/internal/server/routes"
 )
 
 type Server struct {
