@@ -8,7 +8,7 @@ import (
 	"github.com/tksasha/balance/pkg/validation"
 )
 
-func (s *Service) Create(ctx context.Context, request cash.CreateRequest) error {
+func (s *Service) Create(ctx context.Context, request cash.CreateRequest) (*cash.Cash, error) {
 	cash := &cash.Cash{}
 
 	validate := validation.New()
@@ -18,7 +18,7 @@ func (s *Service) Create(ctx context.Context, request cash.CreateRequest) error 
 	if cash.Name != "" {
 		exists, err := s.repository.NameExists(ctx, cash.Name, 0)
 		if err != nil {
-			return err
+			return nil, err
 		}
 
 		if exists {
@@ -33,8 +33,8 @@ func (s *Service) Create(ctx context.Context, request cash.CreateRequest) error 
 	cash.Favorite = validate.Boolean("favorite", request.Favorite)
 
 	if validate.HasErrors() {
-		return validate.Errors
+		return cash, validate.Errors
 	}
 
-	return s.repository.Create(ctx, cash)
+	return cash, s.repository.Create(ctx, cash)
 }

@@ -49,7 +49,7 @@ func TestCashCreateHandler(t *testing.T) { //nolint:funlen
 		assert.Assert(t, strings.Contains(body, "name: is required"))
 	})
 
-	t.Run("responds 200 when create succeeded", func(t *testing.T) {
+	t.Run("responds 201 when create succeeded", func(t *testing.T) {
 		tests.Cleanup(ctx, t)
 
 		params := tests.Params{
@@ -65,7 +65,7 @@ func TestCashCreateHandler(t *testing.T) { //nolint:funlen
 
 		mux.ServeHTTP(recorder, request)
 
-		assert.Equal(t, recorder.Code, http.StatusOK)
+		assert.Equal(t, recorder.Code, http.StatusCreated)
 
 		cash := tests.FindCashByName(ctx, t, currencies.USD, "Bonds")
 

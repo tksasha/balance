@@ -1,10 +1,10 @@
 package handlers
 
 import (
-	"errors"
 	"net/http"
 
 	"github.com/tksasha/balance/internal/core/cash"
+	"github.com/tksasha/balance/internal/core/cash/components"
 	"github.com/tksasha/balance/internal/core/common"
 	"github.com/tksasha/balance/internal/core/common/handlers"
 	"github.com/tksasha/balance/pkg/validation"
@@ -21,10 +21,13 @@ func NewCreateHandler(service cash.Service) *CreateHandler {
 }
 
 func (h *CreateHandler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
-	if _, err := h.handle(r); err != nil {
-		var verrors validation.Errors
-		if errors.As(err, &verrors) {
-			_, _ = w.Write([]byte(verrors.Error()))
+	cash, err := h.handle(r)
+	if err != nil {
+		errors, ok := err.(validation.Errors)
+		if ok {
+			if err := components.Create(cash, errors).Render(w); err != nil {
+				handlers.E(w, err)
+			}
 
 			return
 		}
@@ -34,7 +37,7 @@ func (h *CreateHandler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	_, _ = w.Write([]byte("cash"))
+	w.WriteHeader(http.StatusCreated)
 }
 
 func (h *CreateHandler) handle(r *http.Request) (*cash.Cash, error) {
@@ -49,9 +52,5 @@ func (h *CreateHandler) handle(r *http.Request) (*cash.Cash, error) {
 		Favorite:      r.FormValue("favorite"),
 	}
 
-	if err := h.service.Create(r.Context(), request); err != nil {
-		return nil, err
-	}
-
-	return &cash.Cash{}, nil
+	return h.service.Create(r.Context(), request)
 }

@@ -28,7 +28,7 @@ func TestCreate(t *testing.T) { //nolint:funlen
 			Favorite:      "false",
 		}
 
-		err := service.Create(ctx, request)
+		_, err := service.Create(ctx, request)
 
 		assert.Error(t, err, "name: is required")
 	})
@@ -43,7 +43,7 @@ func TestCreate(t *testing.T) { //nolint:funlen
 			NameExists(ctx, "Bonds", 0).
 			Return(false, errors.New("check name existence error"))
 
-		err := service.Create(ctx, request)
+		_, err := service.Create(ctx, request)
 
 		assert.Error(t, err, "check name existence error")
 	})
@@ -59,7 +59,7 @@ func TestCreate(t *testing.T) { //nolint:funlen
 			NameExists(ctx, "Bonds", 0).
 			Return(true, nil)
 
-		err := service.Create(ctx, request)
+		_, err := service.Create(ctx, request)
 
 		assert.Error(t, err, "name: already exists")
 	})
@@ -75,7 +75,7 @@ func TestCreate(t *testing.T) { //nolint:funlen
 			NameExists(ctx, "Bonds", 0).
 			Return(false, nil)
 
-		err := service.Create(ctx, request)
+		_, err := service.Create(ctx, request)
 
 		assert.Error(t, err, "formula: is required")
 	})
@@ -91,7 +91,7 @@ func TestCreate(t *testing.T) { //nolint:funlen
 			NameExists(ctx, "Bonds", 0).
 			Return(false, nil)
 
-		err := service.Create(ctx, request)
+		_, err := service.Create(ctx, request)
 
 		assert.Error(t, err, "formula: is invalid")
 	})
@@ -108,7 +108,7 @@ func TestCreate(t *testing.T) { //nolint:funlen
 			NameExists(ctx, "Bonds", 0).
 			Return(false, nil)
 
-		err := service.Create(ctx, request)
+		_, err := service.Create(ctx, request)
 
 		assert.Error(t, err, "supercategory: is invalid")
 	})
@@ -139,7 +139,7 @@ func TestCreate(t *testing.T) { //nolint:funlen
 			Create(ctx, cash).
 			Return(errors.New("create cash error"))
 
-		err := service.Create(ctx, request)
+		_, err := service.Create(ctx, request)
 
 		assert.Error(t, err, "create cash error")
 	})
@@ -170,7 +170,7 @@ func TestCreate(t *testing.T) { //nolint:funlen
 			Create(ctx, cash).
 			Return(nil)
 
-		err := service.Create(ctx, request)
+		_, err := service.Create(ctx, request)
 
 		assert.NilError(t, err)
 	})
