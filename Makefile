@@ -64,24 +64,17 @@ gen: wire mockgen
 .PHONY: mockgen
 mockgen:
 	@go run $(MOCKGEN) \
-		-source internal/services/interfaces.go \
-		-package mocksforservices \
-		-destination mocks/services/interfaces.mock.go
-
-	@go run $(MOCKGEN) \
-		-source internal/handlers/interfaces.go \
-		-package mocksforhandlers \
-		-destination mocks/handlers/interfaces.mock.go
-
-	@go run $(MOCKGEN) \
 		-source internal/cash/interfaces.go \
 		-package mocks \
 		-destination internal/cash/test/mocks/interfaces.mock.go
-
 	@go run $(MOCKGEN) \
 		-source internal/category/interfaces.go \
 		-package mocks \
 		-destination internal/category/test/mocks/interfaces.mock.go
+	@go run $(MOCKGEN) \
+		-source internal/item/interfaces.go \
+		-package mocks \
+		-destination internal/item/test/mocks/interfaces.mock.go
 
 .PHONY: wire
 wire:

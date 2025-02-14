@@ -7,7 +7,6 @@ import (
 
 	"github.com/tksasha/balance/internal/cash/handlers"
 	"github.com/tksasha/balance/internal/common/tests"
-	"github.com/tksasha/balance/test/handlers/utils"
 	"gotest.tools/v3/assert"
 )
 
@@ -17,7 +16,7 @@ func TestCashNewHandler(t *testing.T) {
 	mux := tests.NewMux(t, "GET /cashes/new", handlers.NewNewHandler())
 
 	t.Run("responds 200 when there are no errors", func(t *testing.T) {
-		request := utils.NewGetRequest(ctx, t, "/cashes/new")
+		request := tests.NewGetRequest(ctx, t, "/cashes/new")
 
 		responseWriter := httptest.NewRecorder()
 

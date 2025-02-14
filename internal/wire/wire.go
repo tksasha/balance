@@ -15,14 +15,16 @@ import (
 	categoryrepository "github.com/tksasha/balance/internal/category/repository"
 	categoryservice "github.com/tksasha/balance/internal/category/service"
 	"github.com/tksasha/balance/internal/config"
+	indexhandler "github.com/tksasha/balance/internal/core/index/handler"
 	"github.com/tksasha/balance/internal/db"
-	"github.com/tksasha/balance/internal/handlers"
+	"github.com/tksasha/balance/internal/item"
+	itemhandlers "github.com/tksasha/balance/internal/item/handlers"
+	itemrepository "github.com/tksasha/balance/internal/item/repository"
+	itemservice "github.com/tksasha/balance/internal/item/service"
 	"github.com/tksasha/balance/internal/middlewares"
 	"github.com/tksasha/balance/internal/providers"
-	"github.com/tksasha/balance/internal/repositories"
 	"github.com/tksasha/balance/internal/routes"
 	"github.com/tksasha/balance/internal/server"
-	"github.com/tksasha/balance/internal/services"
 )
 
 func InitializeServer() *server.Server {
@@ -45,24 +47,24 @@ func InitializeServer() *server.Server {
 		config.New,
 		context.Background,
 		db.Open,
-		handlers.NewIndexPageHandler,
-		handlers.NewItemCreateHandler,
-		handlers.NewItemEditHandler,
-		handlers.NewItemListHandler,
-		handlers.NewItemUpdateHandler,
+		indexhandler.NewHandler,
+		itemhandlers.NewCreateHandler,
+		itemhandlers.NewEditHandler,
+		itemhandlers.NewListHandler,
+		itemhandlers.NewUpdateHandler,
+		itemrepository.New,
+		itemservice.New,
 		middlewares.New,
 		providers.NewDBNameProvider,
-		repositories.NewItemRepository,
 		routes.New,
 		server.New,
-		services.NewItemService,
 		wire.Bind(new(cash.Repository), new(*cashrepository.Repository)),
 		wire.Bind(new(cash.Service), new(*cashservice.Service)),
+		wire.Bind(new(item.Repository), new(*itemrepository.Repository)),
+		wire.Bind(new(item.Service), new(*itemservice.Service)),
 		wire.Bind(new(category.Repository), new(*categoryrepository.Repository)),
 		wire.Bind(new(category.Service), new(*categoryservice.Service)),
 		wire.Bind(new(db.DBNameProvider), new(*providers.DBNameProvider)),
-		wire.Bind(new(handlers.ItemService), new(*services.ItemService)),
-		wire.Bind(new(services.ItemRepository), new(*repositories.ItemRepository)),
 	)
 
 	return nil

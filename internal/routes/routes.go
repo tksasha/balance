@@ -4,9 +4,10 @@ import (
 	"embed"
 	"net/http"
 
-	cashhandlers "github.com/tksasha/balance/internal/cash/handlers"
-	categoryhandlers "github.com/tksasha/balance/internal/category/handlers"
-	"github.com/tksasha/balance/internal/handlers"
+	cash "github.com/tksasha/balance/internal/cash/handlers"
+	category "github.com/tksasha/balance/internal/category/handlers"
+	index "github.com/tksasha/balance/internal/core/index/handler"
+	item "github.com/tksasha/balance/internal/item/handlers"
 )
 
 //go:embed assets
@@ -17,22 +18,22 @@ type Routes struct {
 }
 
 func New(
-	cashCreateHandler *cashhandlers.CreateHandler,
-	cashDeleteHandler *cashhandlers.DeleteHandler,
-	cashEditHandler *cashhandlers.EditHandler,
-	cashListHandler *cashhandlers.ListHandler,
-	cashNewHandler *cashhandlers.NewHandler,
-	cashUpdateHandler *cashhandlers.UpdateHandler,
-	categoryCreateHandler *categoryhandlers.CreateHandler,
-	categoryDeleteHandler *categoryhandlers.DeleteHandler,
-	categoryEditHandler *categoryhandlers.EditHandler,
-	categoryListHandler *categoryhandlers.ListHandler,
-	categoryUpdateHandler *categoryhandlers.UpdateHandler,
-	indexPageHandler *handlers.IndexPageHandler,
-	itemCreateHandler *handlers.ItemCreateHandler,
-	itemEditHandler *handlers.ItemEditHandler,
-	itemListHandler *handlers.ItemListHandler,
-	itemUpdateHandler *handlers.ItemUpdateHandler,
+	cashCreateHandler *cash.CreateHandler,
+	cashDeleteHandler *cash.DeleteHandler,
+	cashEditHandler *cash.EditHandler,
+	cashListHandler *cash.ListHandler,
+	cashNewHandler *cash.NewHandler,
+	cashUpdateHandler *cash.UpdateHandler,
+	categoryCreateHandler *category.CreateHandler,
+	categoryDeleteHandler *category.DeleteHandler,
+	categoryEditHandler *category.EditHandler,
+	categoryListHandler *category.ListHandler,
+	categoryUpdateHandler *category.UpdateHandler,
+	indexPageHandler *index.Handler,
+	itemCreateHandler *item.CreateHandler,
+	itemEditHandler *item.EditHandler,
+	itemListHandler *item.ListHandler,
+	itemUpdateHandler *item.UpdateHandler,
 ) *Routes {
 	mux := http.NewServeMux()
 
