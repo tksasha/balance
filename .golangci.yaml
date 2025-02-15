@@ -28,4 +28,4 @@ issues:
       linters:
         - err113
   exclude-files:
-    - cmd/debug/main.go
+    - debug.go

@@ -16,8 +16,8 @@ func (r *Repository) Income(ctx context.Context) (float64, error) {
 		    items
 		    INNER JOIN categories ON categories.id = items.category_id
 		WHERE
-		    currency = ?
-		    AND deleted_at IS NULL
+		    items.currency = ?
+		    AND items.deleted_at IS NULL
 		    AND categories.income = 1
 	`
 
