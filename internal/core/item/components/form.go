@@ -18,6 +18,15 @@ func form(item *item.Item, categories category.Categories, errors validation.Err
 			components.Errors("date", errors),
 		),
 		Div(
+			Label(
+				Text("Sum"),
+			),
+			Input(
+				Value(sum(item.Sum)),
+				components.Errors("sum", errors),
+			),
+		),
+		Div(
 			Input(Value(item.Description)),
 		),
 	)

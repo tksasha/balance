@@ -1,8 +1,6 @@
 package components
 
 import (
-	"time"
-
 	"github.com/tksasha/balance/internal/core/category"
 	"github.com/tksasha/balance/internal/core/common/components"
 	"github.com/tksasha/balance/internal/core/item"
@@ -11,7 +9,11 @@ import (
 	. "maragu.dev/gomponents/html" //nolint:stylecheck
 )
 
-func form(item *item.Item, categories category.Categories, errors validation.Errors) Node {
+func form( //nolint:funlen
+	item *item.Item,
+	categories category.Categories,
+	errors validation.Errors,
+) Node {
 	return Form(
 		Div(
 			Class("mb-3"),
@@ -28,7 +30,9 @@ func form(item *item.Item, categories category.Categories, errors validation.Err
 					true,
 					Class("form-control"),
 				),
-				Value(item.Date.Format(time.DateOnly)),
+				Value(
+					components.Date(item.Date),
+				),
 				components.Errors("date", errors),
 			),
 		),
@@ -47,7 +51,9 @@ func form(item *item.Item, categories category.Categories, errors validation.Err
 					true,
 					Class("form-control"),
 				),
-				Value("sum should be here"),
+				Value(
+					sum(item.Sum),
+				),
 			),
 		),
 		Div(

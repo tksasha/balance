@@ -21,7 +21,7 @@ func Index(categories category.Categories) Node {
 			},
 			Body: []Node{
 				Div(
-					Class("container mt-4"),
+					Class("container mt-4 mb-4"),
 					Div(
 						Class("card mb-3"),
 						Div(
