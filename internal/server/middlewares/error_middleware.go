@@ -2,6 +2,7 @@ package middlewares
 
 import (
 	"errors"
+	"log/slog"
 	"net/http"
 
 	"github.com/tksasha/balance/internal/core/common"
@@ -27,6 +28,8 @@ func (m *errorMiddleware) Wrap(next http.Handler) http.Handler {
 			case errors.Is(err, common.ErrResourceNotFound):
 				http.Error(w, "Resource Not Found", http.StatusNotFound)
 			default:
+				slog.Error("Internal Server Error", "error", err)
+
 				http.Error(w, "Internal Server Error", http.StatusInternalServerError)
 			}
 		}

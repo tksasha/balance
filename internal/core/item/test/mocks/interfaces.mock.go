@@ -14,6 +14,7 @@ import (
 	reflect "reflect"
 
 	item "github.com/tksasha/balance/internal/core/item"
+	month "github.com/tksasha/month"
 	gomock "go.uber.org/mock/gomock"
 )
 
@@ -85,18 +86,18 @@ func (mr *MockRepositoryMockRecorder) FindByID(ctx, id any) *gomock.Call {
 }
 
 // List mocks base method.
-func (m *MockRepository) List(ctx context.Context) (item.Items, error) {
+func (m *MockRepository) List(ctx context.Context, month month.Month) (item.Items, error) {
 	m.ctrl.T.Helper()
-	ret := m.ctrl.Call(m, "List", ctx)
+	ret := m.ctrl.Call(m, "List", ctx, month)
 	ret0, _ := ret[0].(item.Items)
 	ret1, _ := ret[1].(error)
 	return ret0, ret1
 }
 
 // List indicates an expected call of List.
-func (mr *MockRepositoryMockRecorder) List(ctx any) *gomock.Call {
+func (mr *MockRepositoryMockRecorder) List(ctx, month any) *gomock.Call {
 	mr.mock.ctrl.T.Helper()
-	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "List", reflect.TypeOf((*MockRepository)(nil).List), ctx)
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "List", reflect.TypeOf((*MockRepository)(nil).List), ctx, month)
 }
 
 // Update mocks base method.
@@ -182,18 +183,18 @@ func (mr *MockServiceMockRecorder) FindByID(ctx, input any) *gomock.Call {
 }
 
 // List mocks base method.
-func (m *MockService) List(ctx context.Context) (item.Items, error) {
+func (m *MockService) List(ctx context.Context, request item.IndexRequest) (item.Items, error) {
 	m.ctrl.T.Helper()
-	ret := m.ctrl.Call(m, "List", ctx)
+	ret := m.ctrl.Call(m, "List", ctx, request)
 	ret0, _ := ret[0].(item.Items)
 	ret1, _ := ret[1].(error)
 	return ret0, ret1
 }
 
 // List indicates an expected call of List.
-func (mr *MockServiceMockRecorder) List(ctx any) *gomock.Call {
+func (mr *MockServiceMockRecorder) List(ctx, request any) *gomock.Call {
 	mr.mock.ctrl.T.Helper()
-	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "List", reflect.TypeOf((*MockService)(nil).List), ctx)
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "List", reflect.TypeOf((*MockService)(nil).List), ctx, request)
 }
 
 // Update mocks base method.

@@ -14,3 +14,8 @@ type UpdateRequest struct {
 	CategoryID  string
 	Description string
 }
+
+type IndexRequest struct {
+	Year  string
+	Month string
+}

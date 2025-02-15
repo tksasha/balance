@@ -32,5 +32,10 @@ func (h *IndexHandler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 }
 
 func (h *IndexHandler) handle(r *http.Request) (item.Items, error) {
-	return h.service.List(r.Context())
+	request := item.IndexRequest{
+		Year:  r.PathValue("year"),
+		Month: r.PathValue("month"),
+	}
+
+	return h.service.List(r.Context(), request)
 }

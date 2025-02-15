@@ -6,9 +6,10 @@ import (
 
 	"github.com/tksasha/balance/internal/core/common/repositories"
 	"github.com/tksasha/balance/internal/core/item"
+	"github.com/tksasha/month"
 )
 
-func (r *Repository) List(ctx context.Context) (item.Items, error) {
+func (r *Repository) List(ctx context.Context, month month.Month) (item.Items, error) {
 	currency := repositories.GetCurrencyFromContext(ctx)
 
 	query := `
@@ -21,14 +22,16 @@ func (r *Repository) List(ctx context.Context) (item.Items, error) {
 		FROM
 			items
 		WHERE
-			items.currency=?
+			items.currency = ?
 		AND
 			items.deleted_at IS NULL
+		AND
+			items.date BETWEEN ? AND ?
 		ORDER BY
 			items.date DESC
 	`
 
-	rows, err := r.db.QueryContext(ctx, query, currency)
+	rows, err := r.db.QueryContext(ctx, query, currency, month.Begin, month.End)
 	if err != nil {
 		return nil, err
 	}

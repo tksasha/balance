@@ -13,6 +13,10 @@ github.com/mrxrsd/gojacego v1.0.0/go.mod h1:ZKyj95Kcm8aI1h5M6AUSV2HuTHf/l5YWeImg
 github.com/pmezard/go-difflib v1.0.0/go.mod h1:iKH77koFhYxTK1pcRnkKkqfTogsbg7gZNVY4sRDYZ/4=
 github.com/tksasha/calculator v0.0.8 h1:5KFmV0E6IEIY/gQjC9oLO8ASjNgvhZ+KLoHfkRBWIX4=
 github.com/tksasha/calculator v0.0.8/go.mod h1:dmh0Gmk/gu/S3qsVr06wOUZQI5WcPwQVYNdhDke4/kY=
+github.com/tksasha/month v0.0.2 h1:4s2dd+vhDgNLkjyeElBP/+yUgXqKNJZPdUwYMlNpswM=
+github.com/tksasha/month v0.0.2/go.mod h1:nbE6O9dHsYZL8TLLSdRq61hYo+FBCL+ePc6Hn5S3bz4=
+github.com/tksasha/month v0.0.3 h1:f7xRo4TtsEb11BfGwU5AwT/2kHi19zgy+MSZ/FsJZ1g=
+github.com/tksasha/month v0.0.3/go.mod h1:nbE6O9dHsYZL8TLLSdRq61hYo+FBCL+ePc6Hn5S3bz4=
 github.com/tksasha/utils v0.0.2 h1:Qrj+bKZK6GoI6kIgkkoKIWUTHlP5WAKZeti+PS3HFQs=
 github.com/tksasha/utils v0.0.2/go.mod h1:4uFmj/MGfOGUuIEy0xPpoXrOWBQqXzeD544+N3hHvWQ=
 github.com/yuin/goldmark v1.4.13/go.mod h1:6yULJ656Px+3vBD8DxQVa3kxgyrAnzto9xy5taEt/CY=
