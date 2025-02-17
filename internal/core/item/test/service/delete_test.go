@@ -5,6 +5,7 @@ import (
 	"testing"
 
 	categorymocks "github.com/tksasha/balance/internal/core/category/test/mocks"
+	"github.com/tksasha/balance/internal/core/common"
 	"github.com/tksasha/balance/internal/core/item/service"
 	"github.com/tksasha/balance/internal/core/item/test/mocks"
 	"go.uber.org/mock/gomock"
@@ -29,6 +30,14 @@ func TestDelete(t *testing.T) {
 
 	t.Run("returns error when id is zero", func(t *testing.T) {
 		err := service.Delete(ctx, "0")
+
+		assert.Error(t, err, "resource not found")
+	})
+
+	t.Run("returns error when item is not found", func(t *testing.T) {
+		itemRepository.EXPECT().Delete(ctx, 1038).Return(common.ErrRecordNotFound)
+
+		err := service.Delete(ctx, "1038")
 
 		assert.Error(t, err, "resource not found")
 	})

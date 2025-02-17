@@ -21,7 +21,7 @@ func (s *Service) findByID(ctx context.Context, input string) (*category.Categor
 
 	category, err := s.repository.FindByID(ctx, id)
 	if err != nil {
-		return nil, services.E(err)
+		return nil, services.MapError(err)
 	}
 
 	return category, nil

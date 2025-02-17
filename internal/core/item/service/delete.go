@@ -5,6 +5,7 @@ import (
 	"strconv"
 
 	"github.com/tksasha/balance/internal/core/common"
+	"github.com/tksasha/balance/internal/core/common/services"
 )
 
 func (s *Service) Delete(ctx context.Context, input string) error {
@@ -13,5 +14,7 @@ func (s *Service) Delete(ctx context.Context, input string) error {
 		return common.ErrResourceNotFound
 	}
 
-	return s.itemRepository.Delete(ctx, id)
+	return services.MapError(
+		s.itemRepository.Delete(ctx, id),
+	)
 }

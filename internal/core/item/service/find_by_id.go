@@ -21,7 +21,7 @@ func (s *Service) findByID(ctx context.Context, input string) (*item.Item, error
 
 	item, err := s.itemRepository.FindByID(ctx, id)
 	if err != nil {
-		return nil, services.E(err)
+		return nil, services.MapError(err)
 	}
 
 	return item, nil

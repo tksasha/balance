@@ -8,7 +8,11 @@ import (
 
 const AlreadyExists = "already exists"
 
-func E(err error) error {
+func MapError(err error) error {
+	if err == nil {
+		return nil
+	}
+
 	if errors.Is(err, common.ErrRecordNotFound) {
 		return common.ErrResourceNotFound
 	}
