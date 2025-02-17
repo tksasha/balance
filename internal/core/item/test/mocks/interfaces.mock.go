@@ -167,19 +167,19 @@ func (mr *MockServiceMockRecorder) Delete(ctx, input any) *gomock.Call {
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "Delete", reflect.TypeOf((*MockService)(nil).Delete), ctx, input)
 }
 
-// FindByID mocks base method.
-func (m *MockService) FindByID(ctx context.Context, input string) (*item.Item, error) {
+// Edit mocks base method.
+func (m *MockService) Edit(ctx context.Context, input string) (*item.Item, error) {
 	m.ctrl.T.Helper()
-	ret := m.ctrl.Call(m, "FindByID", ctx, input)
+	ret := m.ctrl.Call(m, "Edit", ctx, input)
 	ret0, _ := ret[0].(*item.Item)
 	ret1, _ := ret[1].(error)
 	return ret0, ret1
 }
 
-// FindByID indicates an expected call of FindByID.
-func (mr *MockServiceMockRecorder) FindByID(ctx, input any) *gomock.Call {
+// Edit indicates an expected call of Edit.
+func (mr *MockServiceMockRecorder) Edit(ctx, input any) *gomock.Call {
 	mr.mock.ctrl.T.Helper()
-	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "FindByID", reflect.TypeOf((*MockService)(nil).FindByID), ctx, input)
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "Edit", reflect.TypeOf((*MockService)(nil).Edit), ctx, input)
 }
 
 // Index mocks base method.

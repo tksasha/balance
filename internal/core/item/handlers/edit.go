@@ -42,5 +42,5 @@ func (h *EditHandler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 }
 
 func (h *EditHandler) handle(_ http.ResponseWriter, r *http.Request) (*item.Item, error) {
-	return h.service.FindByID(r.Context(), r.PathValue("id"))
+	return h.service.Edit(r.Context(), r.PathValue("id"))
 }
