@@ -1,8 +1,11 @@
 package components
 
 import (
+	"net/http"
+
 	"github.com/tksasha/balance/internal/core/category"
 	"github.com/tksasha/balance/internal/core/common/components"
+	"github.com/tksasha/balance/internal/core/index"
 	"github.com/tksasha/balance/internal/core/item"
 	. "maragu.dev/gomponents" //nolint:stylecheck
 	hx "maragu.dev/gomponents-htmx"
@@ -10,7 +13,7 @@ import (
 	. "maragu.dev/gomponents/html"       //nolint:stylecheck
 )
 
-func Index(categories category.Categories) Node {
+func Index(categories category.Categories, index *index.Index, request *http.Request) Node {
 	return HTML5(
 		HTML5Props{
 			Title:    "Balance",
@@ -22,6 +25,10 @@ func Index(categories category.Categories) Node {
 			Body: []Node{
 				Div(
 					Class("container mt-4 mb-4"),
+					Div(
+						Class("card mb-3"),
+						Months(index, request),
+					),
 					Div(
 						Class("card mb-3"),
 						Div(

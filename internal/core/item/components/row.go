@@ -2,6 +2,7 @@ package components
 
 import (
 	"github.com/tksasha/balance/internal/core/common/components"
+	"github.com/tksasha/balance/internal/core/common/helpers"
 	"github.com/tksasha/balance/internal/core/item"
 	. "maragu.dev/gomponents"      //nolint:stylecheck
 	. "maragu.dev/gomponents/html" //nolint:stylecheck
@@ -15,7 +16,10 @@ func row(item *item.Item) Node {
 		),
 		Td(
 			Class("text-end"),
-			editLink(item),
+			A(
+				Href(helpers.EditItemPath(item.ID)),
+				Text(sum(item.Sum)),
+			),
 		),
 		Td(
 			Text(item.CategoryName),

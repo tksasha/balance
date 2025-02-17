@@ -7,5 +7,5 @@ func sum(sum float64) string {
 		return ""
 	}
 
-	return components.Sum(sum)
+	return components.Money(sum)
 }

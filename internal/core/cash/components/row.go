@@ -14,7 +14,7 @@ func row(cash *cash.Cash) Node {
 		),
 		Td(
 			Text(
-				components.Sum(cash.Sum),
+				components.Money(cash.Sum),
 			),
 		),
 	)

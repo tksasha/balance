@@ -29,7 +29,7 @@ func (h *Handler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	err = components.Index(categories).Render(w)
+	err = components.Index(categories, index.New(), r).Render(w)
 
 	handlers.SetError(w, err)
 }
