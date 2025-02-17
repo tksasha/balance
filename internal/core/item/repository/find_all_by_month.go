@@ -9,7 +9,7 @@ import (
 	"github.com/tksasha/month"
 )
 
-func (r *Repository) List(ctx context.Context, month month.Month) (item.Items, error) {
+func (r *Repository) FindAllByMonth(ctx context.Context, month month.Month) (item.Items, error) {
 	currency := repositories.GetCurrencyFromContext(ctx)
 
 	query := `

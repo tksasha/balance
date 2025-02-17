@@ -70,6 +70,21 @@ func (mr *MockRepositoryMockRecorder) Delete(ctx, id any) *gomock.Call {
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "Delete", reflect.TypeOf((*MockRepository)(nil).Delete), ctx, id)
 }
 
+// FindAllByMonth mocks base method.
+func (m *MockRepository) FindAllByMonth(ctx context.Context, month month.Month) (item.Items, error) {
+	m.ctrl.T.Helper()
+	ret := m.ctrl.Call(m, "FindAllByMonth", ctx, month)
+	ret0, _ := ret[0].(item.Items)
+	ret1, _ := ret[1].(error)
+	return ret0, ret1
+}
+
+// FindAllByMonth indicates an expected call of FindAllByMonth.
+func (mr *MockRepositoryMockRecorder) FindAllByMonth(ctx, month any) *gomock.Call {
+	mr.mock.ctrl.T.Helper()
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "FindAllByMonth", reflect.TypeOf((*MockRepository)(nil).FindAllByMonth), ctx, month)
+}
+
 // FindByID mocks base method.
 func (m *MockRepository) FindByID(ctx context.Context, id int) (*item.Item, error) {
 	m.ctrl.T.Helper()
@@ -83,21 +98,6 @@ func (m *MockRepository) FindByID(ctx context.Context, id int) (*item.Item, erro
 func (mr *MockRepositoryMockRecorder) FindByID(ctx, id any) *gomock.Call {
 	mr.mock.ctrl.T.Helper()
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "FindByID", reflect.TypeOf((*MockRepository)(nil).FindByID), ctx, id)
-}
-
-// List mocks base method.
-func (m *MockRepository) List(ctx context.Context, month month.Month) (item.Items, error) {
-	m.ctrl.T.Helper()
-	ret := m.ctrl.Call(m, "List", ctx, month)
-	ret0, _ := ret[0].(item.Items)
-	ret1, _ := ret[1].(error)
-	return ret0, ret1
-}
-
-// List indicates an expected call of List.
-func (mr *MockRepositoryMockRecorder) List(ctx, month any) *gomock.Call {
-	mr.mock.ctrl.T.Helper()
-	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "List", reflect.TypeOf((*MockRepository)(nil).List), ctx, month)
 }
 
 // Update mocks base method.
@@ -182,19 +182,19 @@ func (mr *MockServiceMockRecorder) FindByID(ctx, input any) *gomock.Call {
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "FindByID", reflect.TypeOf((*MockService)(nil).FindByID), ctx, input)
 }
 
-// List mocks base method.
-func (m *MockService) List(ctx context.Context, request item.IndexRequest) (item.Items, error) {
+// Index mocks base method.
+func (m *MockService) Index(ctx context.Context, request item.IndexRequest) (item.Items, error) {
 	m.ctrl.T.Helper()
-	ret := m.ctrl.Call(m, "List", ctx, request)
+	ret := m.ctrl.Call(m, "Index", ctx, request)
 	ret0, _ := ret[0].(item.Items)
 	ret1, _ := ret[1].(error)
 	return ret0, ret1
 }
 
-// List indicates an expected call of List.
-func (mr *MockServiceMockRecorder) List(ctx, request any) *gomock.Call {
+// Index indicates an expected call of Index.
+func (mr *MockServiceMockRecorder) Index(ctx, request any) *gomock.Call {
 	mr.mock.ctrl.T.Helper()
-	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "List", reflect.TypeOf((*MockService)(nil).List), ctx, request)
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "Index", reflect.TypeOf((*MockService)(nil).Index), ctx, request)
 }
 
 // Update mocks base method.

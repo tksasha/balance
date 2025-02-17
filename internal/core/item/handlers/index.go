@@ -37,5 +37,5 @@ func (h *IndexHandler) handle(r *http.Request) (item.Items, error) {
 		Month: r.PathValue("month"),
 	}
 
-	return h.service.List(r.Context(), request)
+	return h.service.Index(r.Context(), request)
 }
