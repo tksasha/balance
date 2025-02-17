@@ -44,7 +44,6 @@ func TestItemEditHandler(t *testing.T) {
 		categoryToCreate := &category.Category{
 			ID:       5,
 			Currency: currencies.UAH,
-			Name:     "Food",
 		}
 
 		tests.CreateCategory(ctx, t, categoryToCreate)
@@ -52,9 +51,6 @@ func TestItemEditHandler(t *testing.T) {
 		itemToCreate := &item.Item{
 			ID:         1745,
 			Currency:   currencies.UAH,
-			Date:       tests.Date(t, "2025-02-13"),
-			Formula:    "2+3",
-			Sum:        5,
 			CategoryID: 5,
 		}
 
