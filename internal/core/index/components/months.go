@@ -1,25 +1,49 @@
 package components
 
 import (
+	"fmt"
 	"net/http"
 
 	"github.com/tksasha/balance/internal/core/common/helpers"
-	"github.com/tksasha/balance/internal/core/index"
 	. "maragu.dev/gomponents"      //nolint:stylecheck
 	. "maragu.dev/gomponents/html" //nolint:stylecheck
 )
 
-func Months(index *index.Index, request *http.Request) Node {
+type month struct {
+	number int
+	name   string
+}
+
+var months = []month{ //nolint:gochecknoglobals
+	{1, "Січень"},
+	{2, "Лютий"},
+	{3, "Березень"},
+	{4, "Квітень"},
+	{5, "Травень"},
+	{6, "Червень"},
+	{7, "Липень"},
+	{8, "Серпень"},
+	{9, "Вересень"},
+	{10, "Жовтень"},
+	{11, "Листопад"},
+	{12, "Грудень"},
+}
+
+func Months(helpers *helpers.Helpers, request *http.Request) Node {
 	return Div(
-		Map(index.Months, func(name string) Node {
-			return month(name, request)
+		Map(months, func(month month) Node {
+			return A(
+				If(
+					isActive(request.URL.Query().Get("month"), month.number),
+					Class("active"),
+				),
+				Href(helpers.ItemsPath(request, 0, month.number)),
+				Text(month.name),
+			)
 		}),
 	)
 }
 
-func month(name string, request *http.Request) Node {
-	return A(
-		Href(helpers.ItemsPath(request, 0, 0)),
-		Text(name),
-	)
+func isActive(active string, number int) bool {
+	return active == fmt.Sprintf("%02d", number)
 }

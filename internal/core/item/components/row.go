@@ -8,7 +8,7 @@ import (
 	. "maragu.dev/gomponents/html" //nolint:stylecheck
 )
 
-func row(item *item.Item) Node {
+func row(helpers *helpers.Helpers, item *item.Item) Node {
 	return Tr(
 		Td(
 			Class("text-center"),

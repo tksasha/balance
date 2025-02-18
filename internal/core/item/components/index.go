@@ -1,12 +1,13 @@
 package components
 
 import (
+	"github.com/tksasha/balance/internal/core/common/helpers"
 	"github.com/tksasha/balance/internal/core/item"
 	. "maragu.dev/gomponents"      //nolint: stylecheck
 	. "maragu.dev/gomponents/html" //nolint: stylecheck
 )
 
-func Index(items item.Items) Node {
+func Index(helpers *helpers.Helpers, items item.Items) Node {
 	return Table(
 		Class("table"),
 		THead(
@@ -18,7 +19,9 @@ func Index(items item.Items) Node {
 			),
 		),
 		TBody(
-			Map(items, row),
+			Map(items, func(item *item.Item) Node {
+				return row(helpers, item)
+			}),
 		),
 	)
 }

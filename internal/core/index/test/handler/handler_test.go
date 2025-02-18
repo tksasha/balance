@@ -5,6 +5,8 @@ import (
 	"net/http/httptest"
 	"testing"
 
+	"github.com/tksasha/balance/internal/core/common/helpers"
+	"github.com/tksasha/balance/internal/core/common/providers"
 	"github.com/tksasha/balance/internal/core/common/tests"
 	handlers "github.com/tksasha/balance/internal/core/index/handler"
 	"gotest.tools/v3/assert"
@@ -23,7 +25,11 @@ func TestIndexPageHandler_ServeHTTP(t *testing.T) {
 		_ = db2.Close()
 	}()
 
-	mux := tests.NewMux(t, "/", handlers.NewHandler(service, categoryService))
+	timeProvider := providers.NewTimeProvider()
+
+	helpers := helpers.New(timeProvider)
+
+	mux := tests.NewMux(t, "/", handlers.NewHandler(helpers, service, categoryService))
 
 	t.Run("renders 200 when there no errors", func(t *testing.T) {
 		request := tests.NewGetRequest(ctx, t, "/")

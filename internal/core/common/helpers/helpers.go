@@ -1,52 +1,34 @@
 package helpers
 
 import (
-	"fmt"
 	"net/http"
 	"net/url"
-	"strconv"
+
+	"github.com/tksasha/balance/internal/core/common/valueobjects"
 )
 
 const items = "/items"
 
-func ItemsPath(r *http.Request, year, month int) string {
-	u := base(items, r)
-
-	values := u.Query()
-
-	if year != 0 {
-		values.Set("year", fmt.Sprintf("%04d", year))
-	}
-
-	if month != 0 {
-		values.Set("month", fmt.Sprintf("%02d", month))
-	}
-
-	u.RawQuery = values.Encode()
-
-	return u.String()
+type Helpers struct {
+	currentDateProvider valueobjects.CurrentDateProvider
 }
 
-func EditItemPath(id int) string {
-	items := url.URL{
-		Path: items,
+func New(currentDateProvider valueobjects.CurrentDateProvider) *Helpers {
+	return &Helpers{
+		currentDateProvider: currentDateProvider,
 	}
-
-	items = *items.JoinPath(strconv.Itoa(id), "edit")
-
-	return items.String()
 }
 
-func base(path string, r *http.Request) url.URL {
+func base(path string, request *http.Request) url.URL {
 	url := url.URL{
 		Path: path,
 	}
 
-	if r == nil {
+	if request == nil {
 		return url
 	}
 
-	url.RawQuery = r.URL.Query().Encode()
+	url.RawQuery = request.URL.Query().Encode()
 
 	return url
 }

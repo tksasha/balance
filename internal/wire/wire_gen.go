@@ -14,6 +14,8 @@ import (
 	handlers2 "github.com/tksasha/balance/internal/core/category/handlers"
 	repository2 "github.com/tksasha/balance/internal/core/category/repository"
 	service2 "github.com/tksasha/balance/internal/core/category/service"
+	"github.com/tksasha/balance/internal/core/common/helpers"
+	"github.com/tksasha/balance/internal/core/common/providers"
 	handlers3 "github.com/tksasha/balance/internal/core/index/handler"
 	repository3 "github.com/tksasha/balance/internal/core/index/repository"
 	service3 "github.com/tksasha/balance/internal/core/index/service"
@@ -50,14 +52,16 @@ func InitializeServer() *server.Server {
 	handlersEditHandler := handlers2.NewEditHandler(service5)
 	handlersIndexHandler := handlers2.NewIndexHandler(service5)
 	handlersUpdateHandler := handlers2.NewUpdateHandler(service5)
+	timeProvider := providers.NewTimeProvider()
+	helpersHelpers := helpers.New(timeProvider)
 	repository6 := repository3.New(sqlDB)
 	service6 := service3.New(repository6)
-	handler := handlers3.NewHandler(service6, service5)
+	handler := handlers3.NewHandler(helpersHelpers, service6, service5)
 	repository7 := repository4.New(sqlDB)
 	service7 := service4.New(repository7, repository5)
 	createHandler2 := handlers4.NewCreateHandler(service7, service5)
 	editHandler2 := handlers4.NewEditHandler(service7, service5)
-	indexHandler2 := handlers4.NewIndexHandler(service7)
+	indexHandler2 := handlers4.NewIndexHandler(service7, helpersHelpers)
 	updateHandler2 := handlers4.NewUpdateHandler(service7, service5)
 	routesRoutes := routes.New(createHandler, deleteHandler, editHandler, indexHandler, newHandler, updateHandler, handlersCreateHandler, handlersDeleteHandler, handlersEditHandler, handlersIndexHandler, handlersUpdateHandler, handler, createHandler2, editHandler2, indexHandler2, updateHandler2)
 	v := middlewares.New()
