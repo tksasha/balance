@@ -10,8 +10,8 @@ type initMiddleware struct{}
 
 func (m *initMiddleware) Wrap(next http.Handler) http.Handler {
 	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
-		response := &response.Response{ResponseWriter: w}
+		wrapper := response.NewWrapper(w)
 
-		next.ServeHTTP(response, r)
+		next.ServeHTTP(wrapper, r)
 	})
 }

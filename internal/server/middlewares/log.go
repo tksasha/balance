@@ -3,6 +3,7 @@ package middlewares
 import (
 	"log/slog"
 	"net/http"
+	"time"
 
 	"github.com/tksasha/balance/internal/core/common/response"
 )
@@ -11,26 +12,23 @@ type logMiddleware struct{}
 
 func (m *logMiddleware) Wrap(next http.Handler) http.Handler {
 	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
-		response, ok := w.(*response.Response)
+		wrapper, ok := w.(*response.Wrapper)
 		if !ok {
-			slog.Error("invalid response writer", "response", response)
+			slog.Error("failed to assert wrapper", "wrapper", wrapper)
 
 			return
 		}
 
-		next.ServeHTTP(response, r)
+		start := time.Now()
 
-		code := http.StatusOK
-
-		if response.Code != 0 {
-			code = response.Code
-		}
+		next.ServeHTTP(wrapper, r)
 
 		slog.Info(
 			"request",
 			"method", r.Method,
 			"url", r.URL.String(),
-			"status", code,
+			"status", wrapper.Code,
+			"duration", time.Since(start),
 		)
 	})
 }

@@ -13,28 +13,28 @@ type errorMiddleware struct{}
 
 func (m *errorMiddleware) Wrap(next http.Handler) http.Handler {
 	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
-		response, ok := w.(*response.Response)
+		wrapper, ok := w.(*response.Wrapper)
 		if !ok {
-			slog.Error("invalid response writer", "response", response)
+			slog.Error("failed to assert wrapper", "wrapper", wrapper)
 		}
 
-		next.ServeHTTP(response, r)
+		next.ServeHTTP(wrapper, r)
 
-		err := response.Error
+		err := wrapper.Error
 		if err != nil {
 			switch {
 			case errors.Is(err, common.ErrParsingForm):
-				response.Code = http.StatusBadRequest
+				wrapper.Code = http.StatusBadRequest
 
-				http.Error(response, "Bad Request", response.Code)
+				http.Error(wrapper, "Bad Request", wrapper.Code)
 			case errors.Is(err, common.ErrResourceNotFound):
-				response.Code = http.StatusNotFound
+				wrapper.Code = http.StatusNotFound
 
-				http.Error(response, "Resource Not Found", response.Code)
+				http.Error(wrapper, "Resource Not Found", wrapper.Code)
 			default:
-				response.Code = http.StatusInternalServerError
+				wrapper.Code = http.StatusInternalServerError
 
-				http.Error(response, "Internal Server Error", response.Code)
+				http.Error(wrapper, "Internal Server Error", wrapper.Code)
 			}
 		}
 	})

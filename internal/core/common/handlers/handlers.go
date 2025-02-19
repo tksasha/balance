@@ -7,7 +7,7 @@ import (
 )
 
 func SetError(w http.ResponseWriter, err error) {
-	if response, ok := w.(*response.Response); ok {
-		response.Error = err
+	if wrapper, ok := w.(*response.Wrapper); ok {
+		wrapper.Error = err
 	}
 }
