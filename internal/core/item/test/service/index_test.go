@@ -25,9 +25,12 @@ func TestIndex(t *testing.T) {
 
 	ctx := t.Context()
 
-	month := month.New("2025", "02")
+	month := month.New("2024", "02")
 
-	request := item.IndexRequest{}
+	request := item.IndexRequest{
+		Year:  "2024",
+		Month: "02",
+	}
 
 	t.Run("returns error when find all by month fails", func(t *testing.T) {
 		itemRepository.EXPECT().FindAllByMonth(ctx, month).Return(nil, errors.New("find all by month error"))
