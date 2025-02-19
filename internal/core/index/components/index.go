@@ -27,7 +27,10 @@ func Index(helpers *helpers.Helpers, categories category.Categories, request *ht
 					Class("container mt-4 mb-4"),
 					Div(
 						Class("card mb-3"),
-						Months(helpers, request),
+						Div(
+							Class("card-body"),
+							Months(helpers, request),
+						),
 					),
 					Div(
 						Class("card mb-3"),
@@ -40,6 +43,7 @@ func Index(helpers *helpers.Helpers, categories category.Categories, request *ht
 						Class("card"),
 						Div(
 							Class("card-body"),
+							ID("items"),
 							hx.Get("/items"),
 							hx.Trigger("load"),
 							Div(Class("spinner-border htmx-indicator"), ID("htmx-indicator")),

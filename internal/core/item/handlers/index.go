@@ -36,8 +36,8 @@ func (h *IndexHandler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 
 func (h *IndexHandler) handle(r *http.Request) (item.Items, error) {
 	request := item.IndexRequest{
-		Year:  r.PathValue("year"),
-		Month: r.PathValue("month"),
+		Year:  r.URL.Query().Get("year"),
+		Month: r.URL.Query().Get("month"),
 	}
 
 	return h.service.Index(r.Context(), request)

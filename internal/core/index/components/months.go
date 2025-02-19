@@ -5,7 +5,8 @@ import (
 	"net/http"
 
 	"github.com/tksasha/balance/internal/core/common/helpers"
-	. "maragu.dev/gomponents"      //nolint:stylecheck
+	. "maragu.dev/gomponents" //nolint:stylecheck
+	hx "maragu.dev/gomponents-htmx"
 	. "maragu.dev/gomponents/html" //nolint:stylecheck
 )
 
@@ -39,6 +40,7 @@ func Months(helpers *helpers.Helpers, request *http.Request) Node {
 				),
 				Href(helpers.ItemsPath(request, 0, month.number)),
 				Text(month.name),
+				hx.Get(helpers.ItemsPath(request, 0, month.number)),
 			)
 		}),
 	)
