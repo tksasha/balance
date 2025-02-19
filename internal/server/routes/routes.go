@@ -40,7 +40,7 @@ func New(
 	mux.Handle("GET /assets/{$}", http.RedirectHandler("/", http.StatusMovedPermanently))
 	mux.Handle("GET /assets/", http.FileServerFS(assets))
 
-	mux.Handle("GET /...", indexPageHandler)
+	mux.Handle("GET /{$}", indexPageHandler)
 
 	mux.Handle("POST /items", itemCreateHandler)
 	mux.Handle("GET /items", itemIndexHandler)
