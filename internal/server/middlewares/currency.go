@@ -10,10 +10,6 @@ import (
 
 type currencyMiddleware struct{}
 
-func newCurrencyMiddleware() *currencyMiddleware {
-	return &currencyMiddleware{}
-}
-
 func (m *currencyMiddleware) Wrap(next http.Handler) http.Handler {
 	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 		code := strings.ToUpper(
