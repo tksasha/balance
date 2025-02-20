@@ -5,14 +5,14 @@ import (
 	"net/http"
 	"time"
 
-	"github.com/tksasha/balance/internal/core/common/response"
+	"github.com/tksasha/balance/internal/core/common"
 )
 
 type logMiddleware struct{}
 
 func (m *logMiddleware) Wrap(next http.Handler) http.Handler {
 	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
-		wrapper, ok := w.(*response.Wrapper)
+		wrapper, ok := w.(*common.ResponseWriterWrapper)
 		if !ok {
 			slog.Error("failed to assert wrapper", "wrapper", wrapper)
 

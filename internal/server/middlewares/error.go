@@ -6,14 +6,13 @@ import (
 	"net/http"
 
 	"github.com/tksasha/balance/internal/core/common"
-	"github.com/tksasha/balance/internal/core/common/response"
 )
 
 type errorMiddleware struct{}
 
 func (m *errorMiddleware) Wrap(next http.Handler) http.Handler {
 	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
-		wrapper, ok := w.(*response.Wrapper)
+		wrapper, ok := w.(*common.ResponseWriterWrapper)
 		if !ok {
 			slog.Error("failed to assert wrapper", "wrapper", wrapper)
 		}

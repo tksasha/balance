@@ -2,8 +2,6 @@ package common
 
 import (
 	"net/http"
-
-	"github.com/tksasha/balance/internal/core/common/response"
 )
 
 type BaseHandler struct{}
@@ -13,7 +11,7 @@ func NewBaseHandler() *BaseHandler {
 }
 
 func (h *BaseHandler) SetError(w http.ResponseWriter, err error) {
-	if wrapper, ok := w.(*response.Wrapper); ok {
+	if wrapper, ok := w.(*ResponseWriterWrapper); ok {
 		wrapper.Error = err
 	}
 }

@@ -3,14 +3,14 @@ package middlewares
 import (
 	"net/http"
 
-	"github.com/tksasha/balance/internal/core/common/response"
+	"github.com/tksasha/balance/internal/core/common"
 )
 
 type initMiddleware struct{}
 
 func (m *initMiddleware) Wrap(next http.Handler) http.Handler {
 	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
-		wrapper := response.NewWrapper(w)
+		wrapper := common.NewResponseWriterWrapper(w)
 
 		next.ServeHTTP(wrapper, r)
 	})
