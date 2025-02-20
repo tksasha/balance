@@ -16,7 +16,7 @@ type Repository interface {
 type Service interface {
 	List(ctx context.Context) (Cashes, error)
 	Create(ctx context.Context, request CreateRequest) (*Cash, error)
-	FindByID(ctx context.Context, id string) (*Cash, error)
+	Edit(ctx context.Context, id string) (*Cash, error)
 	Update(ctx context.Context, request UpdateRequest) (*Cash, error)
 	Delete(ctx context.Context, id string) error
 }

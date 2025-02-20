@@ -37,5 +37,5 @@ func (h *EditHandler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 }
 
 func (h *EditHandler) handle(r *http.Request) (*cash.Cash, error) {
-	return h.cashService.FindByID(r.Context(), r.PathValue("id"))
+	return h.cashService.Edit(r.Context(), r.PathValue("id"))
 }

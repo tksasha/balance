@@ -11,7 +11,7 @@ import (
 	"gotest.tools/v3/assert"
 )
 
-func TestFindByID(t *testing.T) {
+func TestEdit(t *testing.T) {
 	ctrl := gomock.NewController(t)
 
 	repository := mocks.NewMockRepository(ctrl)
@@ -21,7 +21,7 @@ func TestFindByID(t *testing.T) {
 	ctx := t.Context()
 
 	t.Run("returns error when id is invalid", func(t *testing.T) {
-		_, err := service.FindByID(ctx, "abc")
+		_, err := service.Edit(ctx, "abc")
 
 		assert.Error(t, err, "resource not found")
 	})
@@ -32,7 +32,7 @@ func TestFindByID(t *testing.T) {
 			FindByID(ctx, 1230).
 			Return(nil, common.ErrRecordNotFound)
 
-		_, err := service.FindByID(ctx, "1230")
+		_, err := service.Edit(ctx, "1230")
 
 		assert.Error(t, err, "resource not found")
 	})
@@ -45,7 +45,7 @@ func TestFindByID(t *testing.T) {
 			FindByID(ctx, 1230).
 			Return(cash, nil)
 
-		res, err := service.FindByID(ctx, "1230")
+		res, err := service.Edit(ctx, "1230")
 
 		assert.Equal(t, res, cash)
 		assert.NilError(t, err)
