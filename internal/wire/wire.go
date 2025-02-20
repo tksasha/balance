@@ -7,7 +7,7 @@ import (
 
 	"github.com/google/wire"
 	"github.com/tksasha/balance/internal/core/cash"
-	cashcomponent "github.com/tksasha/balance/internal/core/cash/component"
+	cashcomponents "github.com/tksasha/balance/internal/core/cash/components"
 	cashhandlers "github.com/tksasha/balance/internal/core/cash/handlers"
 	cashrepository "github.com/tksasha/balance/internal/core/cash/repository"
 	cashservice "github.com/tksasha/balance/internal/core/cash/service"
@@ -39,7 +39,7 @@ import (
 
 func InitializeServer() *server.Server {
 	wire.Build(
-		cashcomponent.New,
+		cashcomponents.NewCashComponent,
 		cashhandlers.NewCreateHandler,
 		cashhandlers.NewDeleteHandler,
 		cashhandlers.NewEditHandler,

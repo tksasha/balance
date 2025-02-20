@@ -8,7 +8,7 @@ package wire
 
 import (
 	"context"
-	"github.com/tksasha/balance/internal/core/cash/component"
+	components2 "github.com/tksasha/balance/internal/core/cash/components"
 	"github.com/tksasha/balance/internal/core/cash/handlers"
 	"github.com/tksasha/balance/internal/core/cash/repository"
 	"github.com/tksasha/balance/internal/core/cash/service"
@@ -18,11 +18,11 @@ import (
 	"github.com/tksasha/balance/internal/core/common/components"
 	"github.com/tksasha/balance/internal/core/common/helpers"
 	"github.com/tksasha/balance/internal/core/common/providers"
-	components2 "github.com/tksasha/balance/internal/core/indexpage/components"
+	components3 "github.com/tksasha/balance/internal/core/indexpage/components"
 	"github.com/tksasha/balance/internal/core/indexpage/handler"
 	repository3 "github.com/tksasha/balance/internal/core/indexpage/repository"
 	service3 "github.com/tksasha/balance/internal/core/indexpage/service"
-	components3 "github.com/tksasha/balance/internal/core/item/components"
+	components4 "github.com/tksasha/balance/internal/core/item/components"
 	handlers3 "github.com/tksasha/balance/internal/core/item/handlers"
 	repository4 "github.com/tksasha/balance/internal/core/item/repository"
 	service4 "github.com/tksasha/balance/internal/core/item/service"
@@ -46,13 +46,13 @@ func InitializeServer() *server.Server {
 	timeProvider := providers.NewTimeProvider()
 	helpersHelpers := helpers.New(timeProvider)
 	baseComponent := components.NewBaseComponent(helpersHelpers)
-	componentComponent := component.New(baseComponent)
-	createHandler := handlers.NewCreateHandler(serviceService, componentComponent)
+	cashComponent := components2.NewCashComponent(baseComponent)
+	createHandler := handlers.NewCreateHandler(serviceService, cashComponent)
 	deleteHandler := handlers.NewDeleteHandler(serviceService)
-	editHandler := handlers.NewEditHandler(serviceService, componentComponent)
-	listHandler := handlers.NewListHandler(serviceService, componentComponent)
-	newHandler := handlers.NewNewHandler(componentComponent)
-	updateHandler := handlers.NewUpdateHandler(serviceService, componentComponent)
+	editHandler := handlers.NewEditHandler(serviceService, cashComponent)
+	listHandler := handlers.NewListHandler(serviceService, cashComponent)
+	newHandler := handlers.NewNewHandler(cashComponent)
+	updateHandler := handlers.NewUpdateHandler(serviceService, cashComponent)
 	repository5 := repository2.New(sqlDB)
 	service5 := service2.New(repository5)
 	handlersCreateHandler := handlers2.NewCreateHandler(service5)
@@ -62,12 +62,12 @@ func InitializeServer() *server.Server {
 	handlersUpdateHandler := handlers2.NewUpdateHandler(service5)
 	repository6 := repository3.New(sqlDB)
 	service6 := service3.New(repository6)
-	monthsComponent := components2.NewMonthsComponent(baseComponent)
-	indexPageComponent := components2.NewIndexPageComponent(baseComponent, monthsComponent)
+	monthsComponent := components3.NewMonthsComponent(baseComponent)
+	indexPageComponent := components3.NewIndexPageComponent(baseComponent, monthsComponent)
 	handlerHandler := handler.New(service6, service5, indexPageComponent)
 	repository7 := repository4.New(sqlDB)
 	service7 := service4.New(repository7, repository5)
-	itemsComponent := components3.NewItemsComponent(baseComponent)
+	itemsComponent := components4.NewItemsComponent(baseComponent)
 	createHandler2 := handlers3.NewCreateHandler(service7, service5, itemsComponent)
 	editHandler2 := handlers3.NewEditHandler(service7, service5, itemsComponent)
 	listHandler2 := handlers3.NewListHandler(service7, itemsComponent)

@@ -4,15 +4,15 @@ import (
 	"net/http"
 
 	"github.com/tksasha/balance/internal/core/cash"
-	"github.com/tksasha/balance/internal/core/cash/component"
+	"github.com/tksasha/balance/internal/core/cash/components"
 	"github.com/tksasha/balance/internal/core/common/handlers"
 )
 
 type NewHandler struct {
-	cashComponent *component.Component
+	cashComponent *components.CashComponent
 }
 
-func NewNewHandler(cashComponent *component.Component) *NewHandler {
+func NewNewHandler(cashComponent *components.CashComponent) *NewHandler {
 	return &NewHandler{
 		cashComponent: cashComponent,
 	}

@@ -1,4 +1,4 @@
-package component
+package components
 
 import (
 	"github.com/tksasha/balance/internal/core/cash"
@@ -6,7 +6,7 @@ import (
 	. "maragu.dev/gomponents/html" //nolint:stylecheck
 )
 
-func (c *Component) List(cashes cash.Cashes) Node {
+func (c *CashComponent) List(cashes cash.Cashes) Node {
 	return Table(
 		THead(
 			Tr(

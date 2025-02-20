@@ -4,18 +4,18 @@ import (
 	"net/http"
 
 	"github.com/tksasha/balance/internal/core/cash"
-	"github.com/tksasha/balance/internal/core/cash/component"
+	"github.com/tksasha/balance/internal/core/cash/components"
 	"github.com/tksasha/balance/internal/core/common/handlers"
 )
 
 type ListHandler struct {
 	service       cash.Service
-	cashComponent *component.Component
+	cashComponent *components.CashComponent
 }
 
 func NewListHandler(
 	service cash.Service,
-	cashComponent *component.Component,
+	cashComponent *components.CashComponent,
 ) *ListHandler {
 	return &ListHandler{
 		service:       service,

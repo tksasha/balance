@@ -4,7 +4,7 @@ import (
 	"testing"
 
 	"github.com/tksasha/balance/internal/core/cash"
-	"github.com/tksasha/balance/internal/core/cash/component"
+	"github.com/tksasha/balance/internal/core/cash/components"
 	"github.com/tksasha/balance/internal/core/cash/handlers"
 	commoncomponents "github.com/tksasha/balance/internal/core/common/components"
 	"github.com/tksasha/balance/internal/core/common/helpers"
@@ -23,7 +23,7 @@ func NewCreateCashHandler(
 
 	baseComponent := commoncomponents.NewBaseComponent(helpers)
 
-	cashComponent := component.New(baseComponent)
+	cashComponent := components.NewCashComponent(baseComponent)
 
 	return handlers.NewCreateHandler(cashService, cashComponent)
 }
@@ -40,7 +40,7 @@ func NewEditCashHandler(
 
 	baseComponent := commoncomponents.NewBaseComponent(helpers)
 
-	cashComponent := component.New(baseComponent)
+	cashComponent := components.NewCashComponent(baseComponent)
 
 	return handlers.NewEditHandler(cashService, cashComponent)
 }
@@ -57,7 +57,7 @@ func NewListCashesHandler(
 
 	baseComponent := commoncomponents.NewBaseComponent(helpers)
 
-	cashComponent := component.New(baseComponent)
+	cashComponent := components.NewCashComponent(baseComponent)
 
 	return handlers.NewListHandler(cashService, cashComponent)
 }
@@ -73,7 +73,7 @@ func NewNewCasheHandler(
 
 	baseComponent := commoncomponents.NewBaseComponent(helpers)
 
-	cashComponent := component.New(baseComponent)
+	cashComponent := components.NewCashComponent(baseComponent)
 
 	return handlers.NewNewHandler(cashComponent)
 }
@@ -90,7 +90,7 @@ func NewUpdateCashHandler(
 
 	baseComponent := commoncomponents.NewBaseComponent(helpers)
 
-	cashComponent := component.New(baseComponent)
+	cashComponent := components.NewCashComponent(baseComponent)
 
 	return handlers.NewUpdateHandler(cashService, cashComponent)
 }

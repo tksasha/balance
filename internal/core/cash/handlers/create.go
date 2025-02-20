@@ -5,7 +5,7 @@ import (
 	"net/http"
 
 	"github.com/tksasha/balance/internal/core/cash"
-	"github.com/tksasha/balance/internal/core/cash/component"
+	"github.com/tksasha/balance/internal/core/cash/components"
 	"github.com/tksasha/balance/internal/core/common"
 	"github.com/tksasha/balance/internal/core/common/handlers"
 	"github.com/tksasha/balance/pkg/validation"
@@ -13,12 +13,12 @@ import (
 
 type CreateHandler struct {
 	service       cash.Service
-	cashComponent *component.Component
+	cashComponent *components.CashComponent
 }
 
 func NewCreateHandler(
 	service cash.Service,
-	cashComponent *component.Component,
+	cashComponent *components.CashComponent,
 ) *CreateHandler {
 	return &CreateHandler{
 		service:       service,
