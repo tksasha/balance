@@ -10,18 +10,18 @@ import (
 )
 
 type EditHandler struct {
-	service         item.Service
+	itemService     item.Service
 	categoryService category.Service
 	itemsComponent  *components.ItemsComponent
 }
 
 func NewEditHandler(
-	service item.Service,
+	itemService item.Service,
 	categoryService category.Service,
 	itemsComponent *components.ItemsComponent,
 ) *EditHandler {
 	return &EditHandler{
-		service:         service,
+		itemService:     itemService,
 		categoryService: categoryService,
 		itemsComponent:  itemsComponent,
 	}
@@ -48,5 +48,5 @@ func (h *EditHandler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 }
 
 func (h *EditHandler) handle(_ http.ResponseWriter, r *http.Request) (*item.Item, error) {
-	return h.service.Edit(r.Context(), r.PathValue("id"))
+	return h.itemService.Edit(r.Context(), r.PathValue("id"))
 }

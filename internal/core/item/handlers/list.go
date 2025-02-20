@@ -9,13 +9,16 @@ import (
 )
 
 type ListHandler struct {
-	service        item.Service
+	itemService    item.Service
 	itemsComponent *components.ItemsComponent
 }
 
-func NewListHandler(service item.Service, itemsComponent *components.ItemsComponent) *ListHandler {
+func NewListHandler(
+	itemService item.Service,
+	itemsComponent *components.ItemsComponent,
+) *ListHandler {
 	return &ListHandler{
-		service:        service,
+		itemService:    itemService,
 		itemsComponent: itemsComponent,
 	}
 }
@@ -39,5 +42,5 @@ func (h *ListHandler) handle(r *http.Request) (item.Items, error) {
 		Month: r.URL.Query().Get("month"),
 	}
 
-	return h.service.Index(r.Context(), request)
+	return h.itemService.Index(r.Context(), request)
 }

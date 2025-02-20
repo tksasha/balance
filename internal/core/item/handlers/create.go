@@ -13,18 +13,18 @@ import (
 )
 
 type CreateHandler struct {
-	service         item.Service
+	itemService     item.Service
 	categoryService category.Service
 	itemsComponent  *components.ItemsComponent
 }
 
 func NewCreateHandler(
-	service item.Service,
+	itemService item.Service,
 	categoryService category.Service,
 	itemsComponent *components.ItemsComponent,
 ) *CreateHandler {
 	return &CreateHandler{
-		service:         service,
+		itemService:     itemService,
 		categoryService: categoryService,
 		itemsComponent:  itemsComponent,
 	}
@@ -69,5 +69,5 @@ func (h *CreateHandler) handle(r *http.Request) (*item.Item, error) {
 		Description: r.FormValue("description"),
 	}
 
-	return h.service.Create(r.Context(), request)
+	return h.itemService.Create(r.Context(), request)
 }

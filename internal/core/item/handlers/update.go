@@ -5,7 +5,7 @@ import (
 	"net/http"
 
 	"github.com/tksasha/balance/internal/core/category"
-	apperrors "github.com/tksasha/balance/internal/core/common"
+	"github.com/tksasha/balance/internal/core/common"
 	"github.com/tksasha/balance/internal/core/common/handlers"
 	"github.com/tksasha/balance/internal/core/item"
 	"github.com/tksasha/balance/internal/core/item/components"
@@ -13,18 +13,18 @@ import (
 )
 
 type UpdateHandler struct {
-	service         item.Service
+	itemService     item.Service
 	categoryService category.Service
 	itemsComponent  *components.ItemsComponent
 }
 
 func NewUpdateHandler(
-	service item.Service,
+	itemService item.Service,
 	categoryService category.Service,
 	itemsComponent *components.ItemsComponent,
 ) *UpdateHandler {
 	return &UpdateHandler{
-		service:         service,
+		itemService:     itemService,
 		categoryService: categoryService,
 		itemsComponent:  itemsComponent,
 	}
@@ -57,7 +57,7 @@ func (h *UpdateHandler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 
 func (h *UpdateHandler) handle(r *http.Request) (*item.Item, error) {
 	if err := r.ParseForm(); err != nil {
-		return nil, apperrors.ErrParsingForm
+		return nil, common.ErrParsingForm
 	}
 
 	request := item.UpdateRequest{
@@ -68,5 +68,5 @@ func (h *UpdateHandler) handle(r *http.Request) (*item.Item, error) {
 		Description: r.FormValue("description"),
 	}
 
-	return h.service.Update(r.Context(), request)
+	return h.itemService.Update(r.Context(), request)
 }
