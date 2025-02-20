@@ -51,7 +51,7 @@ func InitializeServer() *server.Server {
 		categoryhandlers.NewCreateHandler,
 		categoryhandlers.NewDeleteHandler,
 		categoryhandlers.NewEditHandler,
-		categoryhandlers.NewIndexHandler,
+		categoryhandlers.NewListHandler,
 		categoryhandlers.NewUpdateHandler,
 		categoryrepository.New,
 		categoryservice.New,

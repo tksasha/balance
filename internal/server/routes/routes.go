@@ -27,7 +27,7 @@ func New(
 	categoryCreateHandler *category.CreateHandler,
 	categoryDeleteHandler *category.DeleteHandler,
 	categoryEditHandler *category.EditHandler,
-	categoryIndexHandler *category.IndexHandler,
+	categoryListHandler *category.ListHandler,
 	categoryUpdateHandler *category.UpdateHandler,
 	indexPageHandler *index.IndexHandler,
 	itemCreateHandler *item.CreateHandler,
@@ -48,7 +48,7 @@ func New(
 	mux.Handle("PATCH /items/{id}", itemUpdateHandler)
 
 	mux.Handle("POST /categories", categoryCreateHandler)
-	mux.Handle("GET /categories", categoryIndexHandler)
+	mux.Handle("GET /categories", categoryListHandler)
 	mux.Handle("GET /categories/{id}/edit", categoryEditHandler)
 	mux.Handle("PATCH /categories/{id}", categoryUpdateHandler)
 	mux.Handle("DELETE /categories/{id}", categoryDeleteHandler)

@@ -13,7 +13,7 @@ import (
 	"gotest.tools/v3/assert"
 )
 
-func TestCategoryIndexHandler(t *testing.T) {
+func TestCategoryListHandler(t *testing.T) {
 	ctx := t.Context()
 
 	service, db := tests.NewCategoryService(ctx, t)
@@ -21,7 +21,7 @@ func TestCategoryIndexHandler(t *testing.T) {
 		_ = db.Close()
 	}()
 
-	mux := tests.NewMux(t, "GET /categories", handlers.NewIndexHandler(service))
+	mux := tests.NewMux(t, "GET /categories", handlers.NewListHandler(service))
 
 	t.Run("responds 200 on no categories found", func(t *testing.T) {
 		tests.Cleanup(ctx, t)
