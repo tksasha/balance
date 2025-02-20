@@ -4,7 +4,6 @@ import (
 	"net/http"
 
 	"github.com/tksasha/balance/internal/core/category"
-	"github.com/tksasha/balance/internal/core/common/components"
 	"github.com/tksasha/balance/internal/core/item"
 	. "maragu.dev/gomponents"            //nolint:stylecheck
 	hx "maragu.dev/gomponents-htmx"      //nolint:stylecheck
@@ -18,8 +17,8 @@ func (c *IndexPageComponent) Index(req *http.Request, categories category.Catego
 			Title:    "Balance",
 			Language: "en",
 			Head: []Node{
-				components.Stylesheet("/assets/bootstrap.min.css"),
-				components.Stylesheet("/assets/application.css"),
+				Link(Rel("stylesheet"), Href("/assets/bootstrap.min.css")),
+				Link(Rel("stylesheet"), Href("/assets/application.css")),
 			},
 			Body: []Node{
 				Div(
