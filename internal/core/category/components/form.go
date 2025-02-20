@@ -8,7 +8,7 @@ import (
 	. "maragu.dev/gomponents/html" //nolint: stylecheck
 )
 
-func form(category *category.Category, errors validation.Errors) Node {
+func (c *CategoryComponent) form(category *category.Category, errors validation.Errors) Node {
 	return Form(
 		Div(
 			Class("mb-3"),

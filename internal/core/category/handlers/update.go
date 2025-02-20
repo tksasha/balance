@@ -12,12 +12,17 @@ import (
 )
 
 type UpdateHandler struct {
-	service category.Service
+	categoryService   category.Service
+	categoryComponent *components.CategoryComponent
 }
 
-func NewUpdateHandler(service category.Service) *UpdateHandler {
+func NewUpdateHandler(
+	categoryService category.Service,
+	categoryComponent *components.CategoryComponent,
+) *UpdateHandler {
 	return &UpdateHandler{
-		service: service,
+		categoryService:   categoryService,
+		categoryComponent: categoryComponent,
 	}
 }
 
@@ -31,7 +36,7 @@ func (h *UpdateHandler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 
 	var verrors validation.Errors
 	if errors.As(err, &verrors) {
-		err := components.Update(category, verrors).Render(w)
+		err := h.categoryComponent.Update(category, verrors).Render(w)
 
 		handlers.SetError(w, err)
 	}
@@ -52,5 +57,5 @@ func (h *UpdateHandler) handle(r *http.Request) (*category.Category, error) {
 		Supercategory: r.FormValue("supercategory"),
 	}
 
-	return h.service.Update(r.Context(), request)
+	return h.categoryService.Update(r.Context(), request)
 }
