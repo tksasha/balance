@@ -6,6 +6,6 @@ import (
 	. "maragu.dev/gomponents" //nolint:stylecheck
 )
 
-func Edit(item *item.Item, categories category.Categories) Node {
-	return form(item, categories, nil)
+func (c *ItemsComponent) Edit(item *item.Item, categories category.Categories) Node {
+	return c.form(item, categories, nil)
 }

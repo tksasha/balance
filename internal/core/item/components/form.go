@@ -9,7 +9,7 @@ import (
 	. "maragu.dev/gomponents/html" //nolint:stylecheck
 )
 
-func form(item *item.Item, categories category.Categories, errors validation.Errors) Node {
+func (c *ItemsComponent) form(item *item.Item, categories category.Categories, errors validation.Errors) Node {
 	_ = categories
 
 	return Form(
@@ -22,7 +22,7 @@ func form(item *item.Item, categories category.Categories, errors validation.Err
 				Text("Sum"),
 			),
 			Input(
-				Value(sum(item.Sum)),
+				Value(c.sum(item.Sum)),
 				components.Errors("sum", errors),
 			),
 		),

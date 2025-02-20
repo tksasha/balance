@@ -8,6 +8,7 @@ package wire
 
 import (
 	"context"
+	"github.com/tksasha/balance/internal/core/cash/component"
 	"github.com/tksasha/balance/internal/core/cash/handlers"
 	"github.com/tksasha/balance/internal/core/cash/repository"
 	"github.com/tksasha/balance/internal/core/cash/service"
@@ -42,12 +43,16 @@ func InitializeServer() *server.Server {
 	sqlDB := db.Open(contextContext, provider)
 	repositoryRepository := repository.New(sqlDB)
 	serviceService := service.New(repositoryRepository)
-	createHandler := handlers.NewCreateHandler(serviceService)
+	timeProvider := providers.NewTimeProvider()
+	helpersHelpers := helpers.New(timeProvider)
+	baseComponent := components.NewBaseComponent(helpersHelpers)
+	componentComponent := component.New(baseComponent)
+	createHandler := handlers.NewCreateHandler(serviceService, componentComponent)
 	deleteHandler := handlers.NewDeleteHandler(serviceService)
-	editHandler := handlers.NewEditHandler(serviceService)
-	indexHandler := handlers.NewIndexHandler(serviceService)
-	newHandler := handlers.NewNewHandler()
-	updateHandler := handlers.NewUpdateHandler(serviceService)
+	editHandler := handlers.NewEditHandler(serviceService, componentComponent)
+	indexHandler := handlers.NewIndexHandler(serviceService, componentComponent)
+	newHandler := handlers.NewNewHandler(componentComponent)
+	updateHandler := handlers.NewUpdateHandler(serviceService, componentComponent)
 	repository5 := repository2.New(sqlDB)
 	service5 := service2.New(repository5)
 	handlersCreateHandler := handlers2.NewCreateHandler(service5)
@@ -57,19 +62,16 @@ func InitializeServer() *server.Server {
 	handlersUpdateHandler := handlers2.NewUpdateHandler(service5)
 	repository6 := repository3.New(sqlDB)
 	service6 := service3.New(repository6)
-	timeProvider := providers.NewTimeProvider()
-	helpersHelpers := helpers.New(timeProvider)
-	baseComponent := components.NewBaseComponent(helpersHelpers)
 	monthsComponent := components2.NewMonthsComponent(baseComponent)
 	indexPageComponent := components2.NewIndexPageComponent(baseComponent, monthsComponent)
 	indexHandler2 := handlers3.NewIndexHandler(service6, service5, indexPageComponent)
 	repository7 := repository4.New(sqlDB)
 	service7 := service4.New(repository7, repository5)
-	createHandler2 := handlers4.NewCreateHandler(service7, service5)
-	editHandler2 := handlers4.NewEditHandler(service7, service5)
-	itemsComponent := components3.NewItemsComponent()
+	itemsComponent := components3.NewItemsComponent(baseComponent)
+	createHandler2 := handlers4.NewCreateHandler(service7, service5, itemsComponent)
+	editHandler2 := handlers4.NewEditHandler(service7, service5, itemsComponent)
 	indexHandler3 := handlers4.NewIndexHandler(service7, itemsComponent)
-	updateHandler2 := handlers4.NewUpdateHandler(service7, service5)
+	updateHandler2 := handlers4.NewUpdateHandler(service7, service5, itemsComponent)
 	routesRoutes := routes.New(createHandler, deleteHandler, editHandler, indexHandler, newHandler, updateHandler, handlersCreateHandler, handlersDeleteHandler, handlersEditHandler, handlersIndexHandler, handlersUpdateHandler, indexHandler2, createHandler2, editHandler2, indexHandler3, updateHandler2)
 	v := middlewares.New()
 	serverServer := server.New(configConfig, routesRoutes, v)

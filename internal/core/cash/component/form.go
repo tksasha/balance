@@ -1,4 +1,4 @@
-package components
+package component
 
 import (
 	"github.com/tksasha/balance/internal/core/cash"
@@ -8,7 +8,7 @@ import (
 	. "maragu.dev/gomponents/html" //nolint:stylecheck
 )
 
-func form(cash *cash.Cash, errors validation.Errors) Node {
+func (c *Component) form(cash *cash.Cash, errors validation.Errors) Node {
 	return Form(
 		Div(
 			Class("mb-3"),

@@ -5,19 +5,24 @@ import (
 	"net/http"
 
 	"github.com/tksasha/balance/internal/core/cash"
-	"github.com/tksasha/balance/internal/core/cash/components"
+	"github.com/tksasha/balance/internal/core/cash/component"
 	"github.com/tksasha/balance/internal/core/common"
 	"github.com/tksasha/balance/internal/core/common/handlers"
 	"github.com/tksasha/balance/pkg/validation"
 )
 
 type UpdateHandler struct {
-	service cash.Service
+	service       cash.Service
+	cashComponent *component.Component
 }
 
-func NewUpdateHandler(service cash.Service) *UpdateHandler {
+func NewUpdateHandler(
+	service cash.Service,
+	cashComponent *component.Component,
+) *UpdateHandler {
 	return &UpdateHandler{
-		service: service,
+		service:       service,
+		cashComponent: cashComponent,
 	}
 }
 
@@ -31,7 +36,7 @@ func (h *UpdateHandler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 
 	var verrors validation.Errors
 	if errors.As(err, &verrors) {
-		err := components.Update(cash, verrors).Render(w)
+		err := h.cashComponent.Update(cash, verrors).Render(w)
 
 		handlers.SetError(w, err)
 

@@ -39,7 +39,7 @@ func (c *ItemsComponent) row(item *item.Item) Node {
 			Class("text-end"),
 			A(
 				Href(c.Helpers.EditItemPath(item.ID)),
-				Text(sum(item.Sum)),
+				Text(c.sum(item.Sum)),
 			),
 		),
 		Td(
@@ -49,4 +49,12 @@ func (c *ItemsComponent) row(item *item.Item) Node {
 			Text(item.Description),
 		),
 	)
+}
+
+func (c *ItemsComponent) sum(sum float64) string {
+	if sum == 0.0 {
+		return ""
+	}
+
+	return c.Money(sum)
 }

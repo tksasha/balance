@@ -7,13 +7,12 @@ import (
 	"testing"
 
 	"github.com/tksasha/balance/internal/core/cash"
-	"github.com/tksasha/balance/internal/core/cash/handlers"
 	"github.com/tksasha/balance/internal/core/common/tests"
 	"github.com/tksasha/balance/pkg/currencies"
 	"gotest.tools/v3/assert"
 )
 
-func TestCashEditHandler(t *testing.T) { //nolint:funlen
+func TestCashEditHandler(t *testing.T) {
 	ctx := t.Context()
 
 	service, db := tests.NewCashService(ctx, t)
@@ -21,9 +20,7 @@ func TestCashEditHandler(t *testing.T) { //nolint:funlen
 		_ = db.Close()
 	}()
 
-	handler := handlers.NewEditHandler(service)
-
-	mux := tests.NewMux(t, "GET /cashes/{id}/edit", handler)
+	mux := tests.NewMux(t, "GET /cashes/{id}/edit", tests.NewEditCashHandler(t, service))
 
 	t.Run("renders 404 on invalid id", func(t *testing.T) {
 		request := tests.NewGetRequest(ctx, t, "/cashes/abc/edit")

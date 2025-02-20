@@ -8,7 +8,6 @@ import (
 	"github.com/tksasha/balance/internal/core/category"
 	"github.com/tksasha/balance/internal/core/common/tests"
 	"github.com/tksasha/balance/internal/core/item"
-	"github.com/tksasha/balance/internal/core/item/handlers"
 	"github.com/tksasha/balance/pkg/currencies"
 	"gotest.tools/v3/assert"
 )
@@ -26,7 +25,7 @@ func TestItemEditHandler(t *testing.T) {
 		_ = db2.Close()
 	}()
 
-	mux := tests.NewMux(t, "GET /items/{id}/edit", handlers.NewEditHandler(service, categoryService))
+	mux := tests.NewMux(t, "GET /items/{id}/edit", tests.NewEditItemHandler(t, service, categoryService))
 
 	t.Run("responds 404 when item not found", func(t *testing.T) {
 		request := tests.NewGetRequest(ctx, t, "/items/1514/edit?currency=usd")

@@ -1,6 +1,8 @@
 package components
 
 import (
+	"strconv"
+
 	"github.com/tksasha/balance/internal/core/category"
 	"github.com/tksasha/balance/internal/core/common/components"
 	"github.com/tksasha/balance/internal/core/item"
@@ -52,7 +54,7 @@ func (c *IndexPageComponent) form( //nolint:funlen
 					Class("form-control"),
 				),
 				Value(
-					sum(item.Sum),
+					c.sum(item.Sum),
 				),
 			),
 		),
@@ -66,13 +68,28 @@ func (c *IndexPageComponent) form( //nolint:funlen
 				Class("form-select"),
 				OptGroup(
 					Attr("Label", "Expense"),
-					Map(categories.Expense(), option),
+					Map(categories.Expense(), c.option),
 				),
 				OptGroup(
 					Attr("Label", "Income"),
-					Map(categories.Income(), option),
+					Map(categories.Income(), c.option),
 				),
 			),
 		),
 	)
+}
+
+func (c *IndexPageComponent) option(category *category.Category) Node {
+	return Option(
+		Value(strconv.Itoa(category.ID)),
+		Text(category.Name),
+	)
+}
+
+func (c *IndexPageComponent) sum(sum float64) string {
+	if sum == 0.0 {
+		return ""
+	}
+
+	return c.Money(sum)
 }

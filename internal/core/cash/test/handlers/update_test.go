@@ -7,7 +7,6 @@ import (
 	"testing"
 
 	"github.com/tksasha/balance/internal/core/cash"
-	"github.com/tksasha/balance/internal/core/cash/handlers"
 	"github.com/tksasha/balance/internal/core/common/tests"
 	"github.com/tksasha/balance/pkg/currencies"
 	"gotest.tools/v3/assert"
@@ -21,7 +20,7 @@ func TestCashUpdateHandler(t *testing.T) { //nolint:funlen
 		_ = db.Close()
 	}()
 
-	mux := tests.NewMux(t, "PATCH /cashes/{id}", handlers.NewUpdateHandler(service))
+	mux := tests.NewMux(t, "PATCH /cashes/{id}", tests.NewUpdateCashHandler(t, service))
 
 	t.Run("renders 404 when cash not found", func(t *testing.T) {
 		request := tests.NewPatchRequest(ctx, t, "/cashes/1439", nil)

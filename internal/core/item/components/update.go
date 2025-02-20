@@ -7,6 +7,6 @@ import (
 	. "maragu.dev/gomponents" //nolint:stylecheck
 )
 
-func Update(item *item.Item, categories category.Categories, errors validation.Errors) Node {
-	return form(item, categories, errors)
+func (c *ItemsComponent) Update(item *item.Item, categories category.Categories, errors validation.Errors) Node {
+	return c.form(item, categories, errors)
 }

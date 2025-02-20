@@ -8,7 +8,6 @@ import (
 
 	"github.com/tksasha/balance/internal/core/category"
 	"github.com/tksasha/balance/internal/core/common/tests"
-	"github.com/tksasha/balance/internal/core/item/handlers"
 	"github.com/tksasha/balance/pkg/currencies"
 	"gotest.tools/v3/assert"
 )
@@ -26,7 +25,7 @@ func TestItemCreateHandler(t *testing.T) { //nolint:funlen
 		_ = db2.Close()
 	}()
 
-	mux := tests.NewMux(t, "POST /items", handlers.NewCreateHandler(service, categoryService))
+	mux := tests.NewMux(t, "POST /items", tests.NewCreateItemHandler(t, service, categoryService))
 
 	t.Run("responds 400 on parse form fails", func(t *testing.T) {
 		request := tests.NewInvalidPostRequest(ctx, t, "/items")

@@ -12,12 +12,18 @@ import (
 type EditHandler struct {
 	service         item.Service
 	categoryService category.Service
+	itemsComponent  *components.ItemsComponent
 }
 
-func NewEditHandler(service item.Service, categoryService category.Service) *EditHandler {
+func NewEditHandler(
+	service item.Service,
+	categoryService category.Service,
+	itemsComponent *components.ItemsComponent,
+) *EditHandler {
 	return &EditHandler{
 		service:         service,
 		categoryService: categoryService,
+		itemsComponent:  itemsComponent,
 	}
 }
 
@@ -36,7 +42,7 @@ func (h *EditHandler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	err = components.Edit(item, categories).Render(w)
+	err = h.itemsComponent.Edit(item, categories).Render(w)
 
 	handlers.SetError(w, err)
 }

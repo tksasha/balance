@@ -7,6 +7,7 @@ import (
 
 	"github.com/google/wire"
 	"github.com/tksasha/balance/internal/core/cash"
+	cashcomponent "github.com/tksasha/balance/internal/core/cash/component"
 	cashhandlers "github.com/tksasha/balance/internal/core/cash/handlers"
 	cashrepository "github.com/tksasha/balance/internal/core/cash/repository"
 	cashservice "github.com/tksasha/balance/internal/core/cash/service"
@@ -38,9 +39,7 @@ import (
 
 func InitializeServer() *server.Server {
 	wire.Build(
-		helpers.New,
-		providers.NewTimeProvider,
-		commoncomponents.NewBaseComponent,
+		cashcomponent.New,
 		cashhandlers.NewCreateHandler,
 		cashhandlers.NewDeleteHandler,
 		cashhandlers.NewEditHandler,
@@ -56,15 +55,17 @@ func InitializeServer() *server.Server {
 		categoryhandlers.NewUpdateHandler,
 		categoryrepository.New,
 		categoryservice.New,
-		indexcomponents.NewIndexPageComponent,
-		indexcomponents.NewMonthsComponent,
-		itemcomponents.NewItemsComponent,
+		commoncomponents.NewBaseComponent,
 		config.New,
 		context.Background,
 		db.Open,
+		helpers.New,
+		indexcomponents.NewIndexPageComponent,
+		indexcomponents.NewMonthsComponent,
 		indexhandlers.NewIndexHandler,
 		indexrepository.New,
 		indexservice.New,
+		itemcomponents.NewItemsComponent,
 		itemhandlers.NewCreateHandler,
 		itemhandlers.NewEditHandler,
 		itemhandlers.NewIndexHandler,
@@ -73,6 +74,7 @@ func InitializeServer() *server.Server {
 		itemservice.New,
 		middlewares.New,
 		nameprovider.New,
+		providers.NewTimeProvider,
 		routes.New,
 		server.New,
 		wire.Bind(new(cash.Repository), new(*cashrepository.Repository)),

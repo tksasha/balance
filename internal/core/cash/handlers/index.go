@@ -4,17 +4,22 @@ import (
 	"net/http"
 
 	"github.com/tksasha/balance/internal/core/cash"
-	components "github.com/tksasha/balance/internal/core/cash/components"
+	"github.com/tksasha/balance/internal/core/cash/component"
 	"github.com/tksasha/balance/internal/core/common/handlers"
 )
 
 type IndexHandler struct {
-	service cash.Service
+	service       cash.Service
+	cashComponent *component.Component
 }
 
-func NewIndexHandler(service cash.Service) *IndexHandler {
+func NewIndexHandler(
+	service cash.Service,
+	cashComponent *component.Component,
+) *IndexHandler {
 	return &IndexHandler{
-		service: service,
+		service:       service,
+		cashComponent: cashComponent,
 	}
 }
 
@@ -26,7 +31,7 @@ func (h *IndexHandler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	err = components.Index(cashes).Render(w)
+	err = h.cashComponent.List(cashes).Render(w)
 
 	handlers.SetError(w, err)
 }

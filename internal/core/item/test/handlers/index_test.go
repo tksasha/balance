@@ -6,8 +6,6 @@ import (
 	"testing"
 
 	"github.com/tksasha/balance/internal/core/common/tests"
-	"github.com/tksasha/balance/internal/core/item/components"
-	"github.com/tksasha/balance/internal/core/item/handlers"
 	"gotest.tools/v3/assert"
 )
 
@@ -19,9 +17,7 @@ func TestItemIndexHandler(t *testing.T) {
 		_ = db.Close()
 	}()
 
-	itemsComponent := components.NewItemsComponent()
-
-	mux := tests.NewMux(t, "GET /items", handlers.NewIndexHandler(service, itemsComponent))
+	mux := tests.NewMux(t, "GET /items", tests.NewIndexItemsHandler(t, service))
 
 	t.Run("responds 200 on items found", func(t *testing.T) {
 		request := tests.NewGetRequest(ctx, t, "/items?currency=eur")

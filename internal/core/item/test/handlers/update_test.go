@@ -8,7 +8,6 @@ import (
 	"github.com/tksasha/balance/internal/core/category"
 	"github.com/tksasha/balance/internal/core/common/tests"
 	"github.com/tksasha/balance/internal/core/item"
-	"github.com/tksasha/balance/internal/core/item/handlers"
 	"github.com/tksasha/balance/pkg/currencies"
 	"gotest.tools/v3/assert"
 )
@@ -26,7 +25,7 @@ func TestItemUpdateHandler(t *testing.T) { //nolint:funlen
 		_ = db2.Close()
 	}()
 
-	mux := tests.NewMux(t, "PATCH /items/{id}", handlers.NewUpdateHandler(service, categoryService))
+	mux := tests.NewMux(t, "PATCH /items/{id}", tests.NewUpdateItemHandler(t, service, categoryService))
 
 	t.Run("responds 400 on invalid input", func(t *testing.T) {
 		tests.Cleanup(ctx, t)

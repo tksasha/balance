@@ -1,13 +1,12 @@
-package components
+package component
 
 import (
 	"github.com/tksasha/balance/internal/core/cash"
-	"github.com/tksasha/balance/internal/core/common/components"
 	. "maragu.dev/gomponents"      //nolint:stylecheck
 	. "maragu.dev/gomponents/html" //nolint:stylecheck
 )
 
-func Index(cashes cash.Cashes) Node {
+func (c *Component) List(cashes cash.Cashes) Node {
 	return Table(
 		THead(
 			Tr(
@@ -24,7 +23,7 @@ func Index(cashes cash.Cashes) Node {
 						Text(cash.Name),
 					),
 					Td(
-						Text(components.Money(cash.Sum)),
+						Text(c.Money(cash.Sum)),
 					),
 				)
 			}),

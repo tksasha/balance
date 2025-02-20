@@ -6,7 +6,6 @@ import (
 	"strings"
 	"testing"
 
-	"github.com/tksasha/balance/internal/core/cash/handlers"
 	"github.com/tksasha/balance/internal/core/common/tests"
 	"github.com/tksasha/balance/pkg/currencies"
 	"gotest.tools/v3/assert"
@@ -20,9 +19,7 @@ func TestCashCreateHandler(t *testing.T) { //nolint:funlen
 		_ = db.Close()
 	}()
 
-	handler := handlers.NewCreateHandler(service)
-
-	mux := tests.NewMux(t, "POST /cashes", handler)
+	mux := tests.NewMux(t, "POST /cashes", tests.NewCreateCashHandler(t, service))
 
 	t.Run("responds 400 whe parse form failed", func(t *testing.T) {
 		request := tests.NewInvalidPostRequest(ctx, t, "/cashes")

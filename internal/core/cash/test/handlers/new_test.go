@@ -5,7 +5,6 @@ import (
 	"net/http/httptest"
 	"testing"
 
-	"github.com/tksasha/balance/internal/core/cash/handlers"
 	"github.com/tksasha/balance/internal/core/common/tests"
 	"gotest.tools/v3/assert"
 )
@@ -13,7 +12,7 @@ import (
 func TestCashNewHandler(t *testing.T) {
 	ctx := t.Context()
 
-	mux := tests.NewMux(t, "GET /cashes/new", handlers.NewNewHandler())
+	mux := tests.NewMux(t, "GET /cashes/new", tests.NewNewCasheHandler(t))
 
 	t.Run("responds 200 when there are no errors", func(t *testing.T) {
 		request := tests.NewGetRequest(ctx, t, "/cashes/new")

@@ -4,17 +4,22 @@ import (
 	"net/http"
 
 	"github.com/tksasha/balance/internal/core/cash"
-	"github.com/tksasha/balance/internal/core/cash/components"
+	"github.com/tksasha/balance/internal/core/cash/component"
 	"github.com/tksasha/balance/internal/core/common/handlers"
 )
 
 type EditHandler struct {
-	service cash.Service
+	service       cash.Service
+	cashComponent *component.Component
 }
 
-func NewEditHandler(service cash.Service) *EditHandler {
+func NewEditHandler(
+	service cash.Service,
+	cashComponent *component.Component,
+) *EditHandler {
 	return &EditHandler{
-		service: service,
+		service:       service,
+		cashComponent: cashComponent,
 	}
 }
 
@@ -26,7 +31,7 @@ func (h *EditHandler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	err = components.Edit(cash).Render(w)
+	err = h.cashComponent.Edit(cash).Render(w)
 
 	handlers.SetError(w, err)
 }

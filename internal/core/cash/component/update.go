@@ -1,13 +1,14 @@
-package components
+package component
 
 import (
 	"github.com/tksasha/balance/internal/core/cash"
+	"github.com/tksasha/balance/pkg/validation"
 	. "maragu.dev/gomponents"      //nolint:stylecheck
 	. "maragu.dev/gomponents/html" //nolint:stylecheck
 )
 
-func Edit(cash *cash.Cash) Node {
+func (c *Component) Update(cash *cash.Cash, errors validation.Errors) Node {
 	return Div(
-		form(cash, nil),
+		c.form(cash, errors),
 	)
 }

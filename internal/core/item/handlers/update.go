@@ -15,12 +15,18 @@ import (
 type UpdateHandler struct {
 	service         item.Service
 	categoryService category.Service
+	itemsComponent  *components.ItemsComponent
 }
 
-func NewUpdateHandler(service item.Service, categoryService category.Service) *UpdateHandler {
+func NewUpdateHandler(
+	service item.Service,
+	categoryService category.Service,
+	itemsComponent *components.ItemsComponent,
+) *UpdateHandler {
 	return &UpdateHandler{
 		service:         service,
 		categoryService: categoryService,
+		itemsComponent:  itemsComponent,
 	}
 }
 
@@ -41,7 +47,7 @@ func (h *UpdateHandler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 			return
 		}
 
-		err = components.Update(item, categories, verrors).Render(w)
+		err = h.itemsComponent.Update(item, categories, verrors).Render(w)
 
 		handlers.SetError(w, err)
 	}
