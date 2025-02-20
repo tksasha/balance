@@ -6,14 +6,13 @@ import (
 
 	"github.com/tksasha/balance/internal/core/category"
 	"github.com/tksasha/balance/internal/core/common"
-	"github.com/tksasha/balance/internal/core/common/handlers"
 	"github.com/tksasha/balance/internal/core/item"
 	"github.com/tksasha/balance/internal/core/item/components"
 	"github.com/tksasha/balance/pkg/validation"
 )
 
 type CreateHandler struct {
-	*handlers.BaseHandler
+	*common.BaseHandler
 
 	itemService     item.Service
 	categoryService category.Service
@@ -21,7 +20,7 @@ type CreateHandler struct {
 }
 
 func NewCreateHandler(
-	baseHandler *handlers.BaseHandler,
+	baseHandler *common.BaseHandler,
 	itemService item.Service,
 	categoryService category.Service,
 	itemsComponent *components.ItemsComponent,

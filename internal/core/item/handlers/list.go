@@ -3,20 +3,20 @@ package handlers
 import (
 	"net/http"
 
-	"github.com/tksasha/balance/internal/core/common/handlers"
+	"github.com/tksasha/balance/internal/core/common"
 	"github.com/tksasha/balance/internal/core/item"
 	"github.com/tksasha/balance/internal/core/item/components"
 )
 
 type ListHandler struct {
-	*handlers.BaseHandler
+	*common.BaseHandler
 
 	itemService    item.Service
 	itemsComponent *components.ItemsComponent
 }
 
 func NewListHandler(
-	baseHandler *handlers.BaseHandler,
+	baseHandler *common.BaseHandler,
 	itemService item.Service,
 	itemsComponent *components.ItemsComponent,
 ) *ListHandler {

@@ -4,8 +4,8 @@ import (
 	"testing"
 
 	"github.com/tksasha/balance/internal/core/category"
+	"github.com/tksasha/balance/internal/core/common"
 	commoncomponents "github.com/tksasha/balance/internal/core/common/components"
-	commonhandlers "github.com/tksasha/balance/internal/core/common/handlers"
 	"github.com/tksasha/balance/internal/core/common/helpers"
 	"github.com/tksasha/balance/internal/core/common/providers"
 	"github.com/tksasha/balance/internal/core/item"
@@ -20,7 +20,7 @@ func NewCreateItemHandler(
 ) *handlers.CreateHandler {
 	t.Helper()
 
-	baseHandler := commonhandlers.NewBaseHandler()
+	baseHandler := common.NewBaseHandler()
 
 	currentDateProvider := providers.NewTimeProvider()
 
@@ -40,7 +40,7 @@ func NewEditItemHandler(
 ) *handlers.EditHandler {
 	t.Helper()
 
-	baseHandler := commonhandlers.NewBaseHandler()
+	baseHandler := common.NewBaseHandler()
 
 	currentDateProvider := providers.NewTimeProvider()
 
@@ -60,7 +60,7 @@ func NewUpdateItemHandler(
 ) *handlers.UpdateHandler {
 	t.Helper()
 
-	baseHandler := commonhandlers.NewBaseHandler()
+	baseHandler := common.NewBaseHandler()
 
 	currentDateProvider := providers.NewTimeProvider()
 
@@ -79,7 +79,7 @@ func NewListItemsHandler(
 ) *handlers.ListHandler {
 	t.Helper()
 
-	baseHandler := commonhandlers.NewBaseHandler()
+	baseHandler := common.NewBaseHandler()
 
 	currentDateProvider := providers.NewTimeProvider()
 
@@ -98,7 +98,7 @@ func NewDeleteItemHandler(
 ) *handlers.DeleteHandler {
 	t.Helper()
 
-	baseHandler := commonhandlers.NewBaseHandler()
+	baseHandler := common.NewBaseHandler()
 
 	return handlers.NewDeleteHandler(baseHandler, itemService)
 }

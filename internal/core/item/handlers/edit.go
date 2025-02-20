@@ -4,13 +4,13 @@ import (
 	"net/http"
 
 	"github.com/tksasha/balance/internal/core/category"
-	"github.com/tksasha/balance/internal/core/common/handlers"
+	"github.com/tksasha/balance/internal/core/common"
 	"github.com/tksasha/balance/internal/core/item"
 	"github.com/tksasha/balance/internal/core/item/components"
 )
 
 type EditHandler struct {
-	*handlers.BaseHandler
+	*common.BaseHandler
 
 	itemService     item.Service
 	categoryService category.Service
@@ -18,7 +18,7 @@ type EditHandler struct {
 }
 
 func NewEditHandler(
-	baseHandler *handlers.BaseHandler,
+	baseHandler *common.BaseHandler,
 	itemService item.Service,
 	categoryService category.Service,
 	itemsComponent *components.ItemsComponent,

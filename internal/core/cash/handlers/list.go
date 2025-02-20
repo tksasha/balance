@@ -5,18 +5,18 @@ import (
 
 	"github.com/tksasha/balance/internal/core/cash"
 	"github.com/tksasha/balance/internal/core/cash/components"
-	"github.com/tksasha/balance/internal/core/common/handlers"
+	"github.com/tksasha/balance/internal/core/common"
 )
 
 type ListHandler struct {
-	*handlers.BaseHandler
+	*common.BaseHandler
 
 	cashService   cash.Service
 	cashComponent *components.CashComponent
 }
 
 func NewListHandler(
-	baseHandler *handlers.BaseHandler,
+	baseHandler *common.BaseHandler,
 	cashService cash.Service,
 	cashComponent *components.CashComponent,
 ) *ListHandler {

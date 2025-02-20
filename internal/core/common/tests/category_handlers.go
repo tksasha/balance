@@ -6,8 +6,8 @@ import (
 	"github.com/tksasha/balance/internal/core/category"
 	"github.com/tksasha/balance/internal/core/category/components"
 	"github.com/tksasha/balance/internal/core/category/handlers"
+	"github.com/tksasha/balance/internal/core/common"
 	commoncomponents "github.com/tksasha/balance/internal/core/common/components"
-	commonhandlers "github.com/tksasha/balance/internal/core/common/handlers"
 	"github.com/tksasha/balance/internal/core/common/helpers"
 	"github.com/tksasha/balance/internal/core/common/providers"
 )
@@ -18,7 +18,7 @@ func NewListCategoriesHandler(
 ) *handlers.ListHandler {
 	t.Helper()
 
-	baseHandler := commonhandlers.NewBaseHandler()
+	baseHandler := common.NewBaseHandler()
 
 	currentDateProvider := providers.NewTimeProvider()
 
@@ -37,7 +37,7 @@ func NewCreateCategoryHandler(
 ) *handlers.CreateHandler {
 	t.Helper()
 
-	baseHandler := commonhandlers.NewBaseHandler()
+	baseHandler := common.NewBaseHandler()
 
 	currentDateProvider := providers.NewTimeProvider()
 
@@ -56,7 +56,7 @@ func NewEditCategoryHandler(
 ) *handlers.EditHandler {
 	t.Helper()
 
-	baseHandler := commonhandlers.NewBaseHandler()
+	baseHandler := common.NewBaseHandler()
 
 	currentDateProvider := providers.NewTimeProvider()
 
@@ -75,7 +75,7 @@ func NewUpdateCategoryHandler(
 ) *handlers.UpdateHandler {
 	t.Helper()
 
-	baseHandler := commonhandlers.NewBaseHandler()
+	baseHandler := common.NewBaseHandler()
 
 	currentDateProvider := providers.NewTimeProvider()
 
@@ -94,7 +94,7 @@ func NewCategoryDeleteHandler(
 ) *handlers.DeleteHandler {
 	t.Helper()
 
-	baseHandler := commonhandlers.NewBaseHandler()
+	baseHandler := common.NewBaseHandler()
 
 	return handlers.NewDeleteHandler(baseHandler, categoryService)
 }

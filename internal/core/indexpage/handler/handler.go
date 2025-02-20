@@ -4,13 +4,13 @@ import (
 	"net/http"
 
 	"github.com/tksasha/balance/internal/core/category"
-	"github.com/tksasha/balance/internal/core/common/handlers"
+	"github.com/tksasha/balance/internal/core/common"
 	"github.com/tksasha/balance/internal/core/indexpage"
 	"github.com/tksasha/balance/internal/core/indexpage/components"
 )
 
 type Handler struct {
-	*handlers.BaseHandler
+	*common.BaseHandler
 
 	indexPageService   indexpage.Service
 	categoryService    category.Service
@@ -18,7 +18,7 @@ type Handler struct {
 }
 
 func New(
-	baseHandler *handlers.BaseHandler,
+	baseHandler *common.BaseHandler,
 	indexPageService indexpage.Service,
 	categoryService category.Service,
 	indexPageComponent *components.IndexPageComponent,

@@ -4,8 +4,8 @@ import (
 	"testing"
 
 	"github.com/tksasha/balance/internal/core/category"
+	"github.com/tksasha/balance/internal/core/common"
 	commoncomponents "github.com/tksasha/balance/internal/core/common/components"
-	commonhandlers "github.com/tksasha/balance/internal/core/common/handlers"
 	"github.com/tksasha/balance/internal/core/common/helpers"
 	"github.com/tksasha/balance/internal/core/common/providers"
 	"github.com/tksasha/balance/internal/core/indexpage"
@@ -20,7 +20,7 @@ func NewIndexPageHandler(
 ) *handler.Handler {
 	t.Helper()
 
-	baseHandler := commonhandlers.NewBaseHandler()
+	baseHandler := common.NewBaseHandler()
 
 	currentDateProvider := providers.NewTimeProvider()
 
