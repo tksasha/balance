@@ -7,7 +7,7 @@ import (
 	"gotest.tools/v3/assert"
 )
 
-func TestEditItemPath(t *testing.T) {
+func TestEditItem(t *testing.T) {
 	component := component.New()
 
 	actual := component.EditItem(1730)
