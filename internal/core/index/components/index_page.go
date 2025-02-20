@@ -5,7 +5,6 @@ import (
 
 	"github.com/tksasha/balance/internal/core/category"
 	"github.com/tksasha/balance/internal/core/common/components"
-	"github.com/tksasha/balance/internal/core/common/helpers"
 	"github.com/tksasha/balance/internal/core/item"
 	. "maragu.dev/gomponents" //nolint:stylecheck
 	hx "maragu.dev/gomponents-htmx"
@@ -14,13 +13,13 @@ import (
 )
 
 type IndexPageComponent struct {
-	helpers         *helpers.Helpers
+	components.BaseComponent
+
 	monthsComponent *MonthsComponent
 }
 
-func NewIndexPageComponent(helpers *helpers.Helpers, monthsComponent *MonthsComponent) *IndexPageComponent {
+func NewIndexPageComponent(monthsComponent *MonthsComponent) *IndexPageComponent {
 	return &IndexPageComponent{
-		helpers:         helpers,
 		monthsComponent: monthsComponent,
 	}
 }
@@ -48,7 +47,7 @@ func (c *IndexPageComponent) Index(req *http.Request, categories category.Catego
 						Class("card mb-3"),
 						Div(
 							Class("card-body"),
-							form(&item.Item{}, categories, nil),
+							c.form(&item.Item{}, categories, nil),
 						),
 					),
 					Div(

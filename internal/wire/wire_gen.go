@@ -14,12 +14,14 @@ import (
 	handlers2 "github.com/tksasha/balance/internal/core/category/handlers"
 	repository2 "github.com/tksasha/balance/internal/core/category/repository"
 	service2 "github.com/tksasha/balance/internal/core/category/service"
+	"github.com/tksasha/balance/internal/core/common/components"
 	"github.com/tksasha/balance/internal/core/common/helpers"
 	"github.com/tksasha/balance/internal/core/common/providers"
-	"github.com/tksasha/balance/internal/core/index/components"
-	handlers3 "github.com/tksasha/balance/internal/core/index/handler"
+	components2 "github.com/tksasha/balance/internal/core/index/components"
+	handlers3 "github.com/tksasha/balance/internal/core/index/handlers"
 	repository3 "github.com/tksasha/balance/internal/core/index/repository"
 	service3 "github.com/tksasha/balance/internal/core/index/service"
+	components3 "github.com/tksasha/balance/internal/core/item/components"
 	handlers4 "github.com/tksasha/balance/internal/core/item/handlers"
 	repository4 "github.com/tksasha/balance/internal/core/item/repository"
 	service4 "github.com/tksasha/balance/internal/core/item/service"
@@ -57,16 +59,18 @@ func InitializeServer() *server.Server {
 	service6 := service3.New(repository6)
 	timeProvider := providers.NewTimeProvider()
 	helpersHelpers := helpers.New(timeProvider)
-	monthsComponent := components.NewMonthsComponent(helpersHelpers)
-	indexPageComponent := components.NewIndexPageComponent(helpersHelpers, monthsComponent)
-	handler := handlers3.NewHandler(service6, service5, indexPageComponent)
+	baseComponent := components.NewBaseComponent(helpersHelpers)
+	monthsComponent := components2.NewMonthsComponent(baseComponent)
+	indexPageComponent := components2.NewIndexPageComponent(monthsComponent)
+	indexHandler2 := handlers3.NewIndexHandler(service6, service5, indexPageComponent)
 	repository7 := repository4.New(sqlDB)
 	service7 := service4.New(repository7, repository5)
 	createHandler2 := handlers4.NewCreateHandler(service7, service5)
 	editHandler2 := handlers4.NewEditHandler(service7, service5)
-	indexHandler2 := handlers4.NewIndexHandler(service7, helpersHelpers)
+	itemsComponent := components3.NewItemsComponent()
+	indexHandler3 := handlers4.NewIndexHandler(service7, itemsComponent)
 	updateHandler2 := handlers4.NewUpdateHandler(service7, service5)
-	routesRoutes := routes.New(createHandler, deleteHandler, editHandler, indexHandler, newHandler, updateHandler, handlersCreateHandler, handlersDeleteHandler, handlersEditHandler, handlersIndexHandler, handlersUpdateHandler, handler, createHandler2, editHandler2, indexHandler2, updateHandler2)
+	routesRoutes := routes.New(createHandler, deleteHandler, editHandler, indexHandler, newHandler, updateHandler, handlersCreateHandler, handlersDeleteHandler, handlersEditHandler, handlersIndexHandler, handlersUpdateHandler, indexHandler2, createHandler2, editHandler2, indexHandler3, updateHandler2)
 	v := middlewares.New()
 	serverServer := server.New(configConfig, routesRoutes, v)
 	return serverServer

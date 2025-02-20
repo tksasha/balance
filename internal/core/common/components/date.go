@@ -2,7 +2,7 @@ package components
 
 import "time"
 
-func Date(date time.Time) string {
+func (c *BaseComponent) Date(date time.Time) string {
 	if date.IsZero() {
 		return ""
 	}

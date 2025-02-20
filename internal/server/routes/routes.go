@@ -6,7 +6,7 @@ import (
 
 	cash "github.com/tksasha/balance/internal/core/cash/handlers"
 	category "github.com/tksasha/balance/internal/core/category/handlers"
-	index "github.com/tksasha/balance/internal/core/index/handler"
+	index "github.com/tksasha/balance/internal/core/index/handlers"
 	item "github.com/tksasha/balance/internal/core/item/handlers"
 )
 
@@ -29,7 +29,7 @@ func New(
 	categoryEditHandler *category.EditHandler,
 	categoryIndexHandler *category.IndexHandler,
 	categoryUpdateHandler *category.UpdateHandler,
-	indexPageHandler *index.Handler,
+	indexPageHandler *index.IndexHandler,
 	itemCreateHandler *item.CreateHandler,
 	itemEditHandler *item.EditHandler,
 	itemIndexHandler *item.IndexHandler,

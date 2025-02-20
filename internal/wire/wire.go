@@ -14,15 +14,17 @@ import (
 	categoryhandlers "github.com/tksasha/balance/internal/core/category/handlers"
 	categoryrepository "github.com/tksasha/balance/internal/core/category/repository"
 	categoryservice "github.com/tksasha/balance/internal/core/category/service"
+	commoncomponents "github.com/tksasha/balance/internal/core/common/components"
 	"github.com/tksasha/balance/internal/core/common/helpers"
 	"github.com/tksasha/balance/internal/core/common/providers"
 	"github.com/tksasha/balance/internal/core/common/valueobjects"
 	"github.com/tksasha/balance/internal/core/index"
 	indexcomponents "github.com/tksasha/balance/internal/core/index/components"
-	indexhandler "github.com/tksasha/balance/internal/core/index/handler"
+	indexhandlers "github.com/tksasha/balance/internal/core/index/handlers"
 	indexrepository "github.com/tksasha/balance/internal/core/index/repository"
 	indexservice "github.com/tksasha/balance/internal/core/index/service"
 	"github.com/tksasha/balance/internal/core/item"
+	itemcomponents "github.com/tksasha/balance/internal/core/item/components"
 	itemhandlers "github.com/tksasha/balance/internal/core/item/handlers"
 	itemrepository "github.com/tksasha/balance/internal/core/item/repository"
 	itemservice "github.com/tksasha/balance/internal/core/item/service"
@@ -36,6 +38,9 @@ import (
 
 func InitializeServer() *server.Server {
 	wire.Build(
+		helpers.New,
+		providers.NewTimeProvider,
+		commoncomponents.NewBaseComponent,
 		cashhandlers.NewCreateHandler,
 		cashhandlers.NewDeleteHandler,
 		cashhandlers.NewEditHandler,
@@ -53,11 +58,11 @@ func InitializeServer() *server.Server {
 		categoryservice.New,
 		indexcomponents.NewIndexPageComponent,
 		indexcomponents.NewMonthsComponent,
+		itemcomponents.NewItemsComponent,
 		config.New,
 		context.Background,
 		db.Open,
-		helpers.New,
-		indexhandler.NewHandler,
+		indexhandlers.NewIndexHandler,
 		indexrepository.New,
 		indexservice.New,
 		itemhandlers.NewCreateHandler,
@@ -68,7 +73,6 @@ func InitializeServer() *server.Server {
 		itemservice.New,
 		middlewares.New,
 		nameprovider.New,
-		providers.NewTimeProvider,
 		routes.New,
 		server.New,
 		wire.Bind(new(cash.Repository), new(*cashrepository.Repository)),

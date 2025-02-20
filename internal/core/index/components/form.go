@@ -9,7 +9,7 @@ import (
 	. "maragu.dev/gomponents/html" //nolint:stylecheck
 )
 
-func form( //nolint:funlen
+func (c *IndexPageComponent) form( //nolint:funlen
 	item *item.Item,
 	categories category.Categories,
 	errors validation.Errors,
@@ -31,7 +31,7 @@ func form( //nolint:funlen
 					Class("form-control"),
 				),
 				Value(
-					components.Date(item.Date),
+					c.Date(item.Date),
 				),
 				components.Errors("date", errors),
 			),

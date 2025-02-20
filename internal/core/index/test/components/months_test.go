@@ -4,6 +4,7 @@ import (
 	"bytes"
 	"testing"
 
+	commoncomponents "github.com/tksasha/balance/internal/core/common/components"
 	"github.com/tksasha/balance/internal/core/common/helpers"
 	"github.com/tksasha/balance/internal/core/common/tests"
 	"github.com/tksasha/balance/internal/core/common/valueobjects/mocks"
@@ -22,7 +23,9 @@ func TestMonths(t *testing.T) {
 
 	helpers := helpers.New(currentDateProvider)
 
-	component := components.NewMonthsComponent(helpers)
+	baseComponent := commoncomponents.NewBaseComponent(helpers)
+
+	component := components.NewMonthsComponent(baseComponent)
 
 	ctx := t.Context()
 

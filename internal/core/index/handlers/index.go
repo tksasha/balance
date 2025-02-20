@@ -9,25 +9,25 @@ import (
 	"github.com/tksasha/balance/internal/core/index/components"
 )
 
-type Handler struct {
+type IndexHandler struct {
 	service            index.Service
 	categoryService    category.Service
 	indexPageComponent *components.IndexPageComponent
 }
 
-func NewHandler(
+func NewIndexHandler(
 	service index.Service,
 	categoryService category.Service,
 	indexPageComponent *components.IndexPageComponent,
-) *Handler {
-	return &Handler{
+) *IndexHandler {
+	return &IndexHandler{
 		service:            service,
 		categoryService:    categoryService,
 		indexPageComponent: indexPageComponent,
 	}
 }
 
-func (h *Handler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
+func (h *IndexHandler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 	categories, err := h.handle(r)
 	if err != nil {
 		handlers.SetError(w, err)
@@ -40,7 +40,7 @@ func (h *Handler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 	handlers.SetError(w, err)
 }
 
-func (h *Handler) handle(r *http.Request) (category.Categories, error) {
+func (h *IndexHandler) handle(r *http.Request) (category.Categories, error) {
 	categories, err := h.categoryService.List(r.Context())
 	if err != nil {
 		return nil, err
