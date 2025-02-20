@@ -12,12 +12,17 @@ import (
 )
 
 type CreateHandler struct {
-	service category.Service
+	categoryService   category.Service
+	categoryComponent *components.CategoryComponent
 }
 
-func NewCreateHandler(service category.Service) *CreateHandler {
+func NewCreateHandler(
+	categoryService category.Service,
+	categoryComponent *components.CategoryComponent,
+) *CreateHandler {
 	return &CreateHandler{
-		service: service,
+		categoryService:   categoryService,
+		categoryComponent: categoryComponent,
 	}
 }
 
@@ -31,7 +36,7 @@ func (h *CreateHandler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 
 	var verrors validation.Errors
 	if errors.As(err, &verrors) {
-		err := components.Create(category, verrors).Render(w)
+		err := h.categoryComponent.Create(category, verrors).Render(w)
 
 		handlers.SetError(w, err)
 
@@ -53,5 +58,5 @@ func (h *CreateHandler) handle(r *http.Request) (*category.Category, error) {
 		Supercategory: r.FormValue("supercategory"),
 	}
 
-	return h.service.Create(r.Context(), request)
+	return h.categoryService.Create(r.Context(), request)
 }

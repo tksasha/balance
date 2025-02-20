@@ -27,3 +27,20 @@ func NewListCategoriesHandler(
 
 	return handlers.NewListHandler(categoryService, categoryComponent)
 }
+
+func NewCreateCategoryHandler(
+	t *testing.T,
+	categoryService category.Service,
+) *handlers.CreateHandler {
+	t.Helper()
+
+	currentDateProvider := providers.NewTimeProvider()
+
+	helpers := helpers.New(currentDateProvider)
+
+	baseComponent := commoncomponents.NewBaseComponent(helpers)
+
+	categoryComponent := components.NewCategoryComponent(baseComponent)
+
+	return handlers.NewCreateHandler(categoryService, categoryComponent)
+}

@@ -5,7 +5,6 @@ import (
 	"net/http/httptest"
 	"testing"
 
-	"github.com/tksasha/balance/internal/core/category/handlers"
 	"github.com/tksasha/balance/internal/core/common/tests"
 	"github.com/tksasha/balance/pkg/currencies"
 	"gotest.tools/v3/assert"
@@ -15,12 +14,12 @@ import (
 func TestCategoryCreateHandler(t *testing.T) { //nolint:funlen
 	ctx := t.Context()
 
-	service, db := tests.NewCategoryService(ctx, t)
+	categoryService, db := tests.NewCategoryService(ctx, t)
 	defer func() {
 		_ = db.Close()
 	}()
 
-	mux := tests.NewMux(t, "POST /categories", handlers.NewCreateHandler(service))
+	mux := tests.NewMux(t, "POST /categories", tests.NewCreateCategoryHandler(t, categoryService))
 
 	t.Run("responds 400 when input data is invalid", func(t *testing.T) {
 		request := tests.NewInvalidPostRequest(ctx, t, "/categories")
