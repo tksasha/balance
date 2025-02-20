@@ -12,6 +12,7 @@ import (
 	cashrepository "github.com/tksasha/balance/internal/core/cash/repository"
 	cashservice "github.com/tksasha/balance/internal/core/cash/service"
 	"github.com/tksasha/balance/internal/core/category"
+	categorycomponents "github.com/tksasha/balance/internal/core/category/components"
 	categoryhandlers "github.com/tksasha/balance/internal/core/category/handlers"
 	categoryrepository "github.com/tksasha/balance/internal/core/category/repository"
 	categoryservice "github.com/tksasha/balance/internal/core/category/service"
@@ -48,6 +49,7 @@ func InitializeServer() *server.Server {
 		cashhandlers.NewUpdateHandler,
 		cashrepository.New,
 		cashservice.New,
+		categorycomponents.NewCategoryComponent,
 		categoryhandlers.NewCreateHandler,
 		categoryhandlers.NewDeleteHandler,
 		categoryhandlers.NewEditHandler,

@@ -7,7 +7,6 @@ import (
 	"testing"
 
 	"github.com/tksasha/balance/internal/core/category"
-	"github.com/tksasha/balance/internal/core/category/handlers"
 	"github.com/tksasha/balance/internal/core/common/tests"
 	"github.com/tksasha/balance/pkg/currencies"
 	"gotest.tools/v3/assert"
@@ -16,12 +15,12 @@ import (
 func TestCategoryListHandler(t *testing.T) {
 	ctx := t.Context()
 
-	service, db := tests.NewCategoryService(ctx, t)
+	categoryService, db := tests.NewCategoryService(ctx, t)
 	defer func() {
 		_ = db.Close()
 	}()
 
-	mux := tests.NewMux(t, "GET /categories", handlers.NewListHandler(service))
+	mux := tests.NewMux(t, "GET /categories", tests.NewListCategoriesHandler(t, categoryService))
 
 	t.Run("responds 200 on no categories found", func(t *testing.T) {
 		tests.Cleanup(ctx, t)

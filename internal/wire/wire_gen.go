@@ -2,7 +2,6 @@
 
 //go:generate go run -mod=mod github.com/google/wire/cmd/wire
 //go:build !wireinject
-// +build !wireinject
 
 package wire
 
@@ -12,17 +11,18 @@ import (
 	"github.com/tksasha/balance/internal/core/cash/handlers"
 	"github.com/tksasha/balance/internal/core/cash/repository"
 	"github.com/tksasha/balance/internal/core/cash/service"
+	components3 "github.com/tksasha/balance/internal/core/category/components"
 	handlers2 "github.com/tksasha/balance/internal/core/category/handlers"
 	repository2 "github.com/tksasha/balance/internal/core/category/repository"
 	service2 "github.com/tksasha/balance/internal/core/category/service"
 	"github.com/tksasha/balance/internal/core/common/components"
 	"github.com/tksasha/balance/internal/core/common/helpers"
 	"github.com/tksasha/balance/internal/core/common/providers"
-	components3 "github.com/tksasha/balance/internal/core/indexpage/components"
+	components4 "github.com/tksasha/balance/internal/core/indexpage/components"
 	"github.com/tksasha/balance/internal/core/indexpage/handler"
 	repository3 "github.com/tksasha/balance/internal/core/indexpage/repository"
 	service3 "github.com/tksasha/balance/internal/core/indexpage/service"
-	components4 "github.com/tksasha/balance/internal/core/item/components"
+	components5 "github.com/tksasha/balance/internal/core/item/components"
 	handlers3 "github.com/tksasha/balance/internal/core/item/handlers"
 	repository4 "github.com/tksasha/balance/internal/core/item/repository"
 	service4 "github.com/tksasha/balance/internal/core/item/service"
@@ -58,16 +58,17 @@ func InitializeServer() *server.Server {
 	handlersCreateHandler := handlers2.NewCreateHandler(service5)
 	handlersDeleteHandler := handlers2.NewDeleteHandler(service5)
 	handlersEditHandler := handlers2.NewEditHandler(service5)
-	handlersListHandler := handlers2.NewListHandler(service5)
+	categoryComponent := components3.NewCategoryComponent(baseComponent)
+	handlersListHandler := handlers2.NewListHandler(service5, categoryComponent)
 	handlersUpdateHandler := handlers2.NewUpdateHandler(service5)
 	repository6 := repository3.New(sqlDB)
 	service6 := service3.New(repository6)
-	monthsComponent := components3.NewMonthsComponent(baseComponent)
-	indexPageComponent := components3.NewIndexPageComponent(baseComponent, monthsComponent)
+	monthsComponent := components4.NewMonthsComponent(baseComponent)
+	indexPageComponent := components4.NewIndexPageComponent(baseComponent, monthsComponent)
 	handlerHandler := handler.New(service6, service5, indexPageComponent)
 	repository7 := repository4.New(sqlDB)
 	service7 := service4.New(repository7, repository5)
-	itemsComponent := components4.NewItemsComponent(baseComponent)
+	itemsComponent := components5.NewItemsComponent(baseComponent)
 	createHandler2 := handlers3.NewCreateHandler(service7, service5, itemsComponent)
 	editHandler2 := handlers3.NewEditHandler(service7, service5, itemsComponent)
 	listHandler2 := handlers3.NewListHandler(service7, itemsComponent)

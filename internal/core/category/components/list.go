@@ -6,7 +6,7 @@ import (
 	. "maragu.dev/gomponents/html" //nolint: stylecheck
 )
 
-func Index(categories category.Categories) Node {
+func (c *CategoryComponent) List(categories category.Categories) Node {
 	return Table(
 		Class("table"),
 		THead(
@@ -15,7 +15,15 @@ func Index(categories category.Categories) Node {
 			),
 		),
 		TBody(
-			Map(categories, row),
+			Map(categories, c.row),
+		),
+	)
+}
+
+func (c *CategoryComponent) row(category *category.Category) Node {
+	return Tr(
+		Td(
+			Text(category.Name),
 		),
 	)
 }
