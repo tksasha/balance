@@ -1,6 +1,7 @@
 package components
 
 import (
+	"github.com/tksasha/balance/internal/core/common/helpers"
 	"github.com/tksasha/balance/internal/core/item"
 	. "maragu.dev/gomponents" //nolint: stylecheck
 	hx "maragu.dev/gomponents-htmx"
@@ -38,7 +39,7 @@ func (c *ItemsComponent) row(item *item.Item) Node {
 		Td(
 			Class("text-end"),
 			A(
-				Href(c.Helpers.EditItemPath(item.ID)),
+				Href(helpers.EditItemPath(item.ID)),
 				Text(c.sum(item.Sum)),
 			),
 		),

@@ -7,7 +7,6 @@ import (
 	"github.com/tksasha/balance/internal/core/category/components"
 	"github.com/tksasha/balance/internal/core/category/handlers"
 	"github.com/tksasha/balance/internal/core/common"
-	"github.com/tksasha/balance/internal/core/common/helpers"
 )
 
 func NewListCategoriesHandler(
@@ -18,11 +17,7 @@ func NewListCategoriesHandler(
 
 	baseHandler := common.NewBaseHandler()
 
-	currentDateProvider := common.NewTimeProvider()
-
-	helpers := helpers.New(currentDateProvider)
-
-	baseComponent := common.NewBaseComponent(helpers)
+	baseComponent := common.NewBaseComponent()
 
 	categoryComponent := components.NewCategoryComponent(baseComponent)
 
@@ -37,11 +32,7 @@ func NewCreateCategoryHandler(
 
 	baseHandler := common.NewBaseHandler()
 
-	currentDateProvider := common.NewTimeProvider()
-
-	helpers := helpers.New(currentDateProvider)
-
-	baseComponent := common.NewBaseComponent(helpers)
+	baseComponent := common.NewBaseComponent()
 
 	categoryComponent := components.NewCategoryComponent(baseComponent)
 
@@ -56,11 +47,7 @@ func NewEditCategoryHandler(
 
 	baseHandler := common.NewBaseHandler()
 
-	currentDateProvider := common.NewTimeProvider()
-
-	helpers := helpers.New(currentDateProvider)
-
-	baseComponent := common.NewBaseComponent(helpers)
+	baseComponent := common.NewBaseComponent()
 
 	categoryComponent := components.NewCategoryComponent(baseComponent)
 
@@ -75,11 +62,7 @@ func NewUpdateCategoryHandler(
 
 	baseHandler := common.NewBaseHandler()
 
-	currentDateProvider := common.NewTimeProvider()
-
-	helpers := helpers.New(currentDateProvider)
-
-	baseComponent := common.NewBaseComponent(helpers)
+	baseComponent := common.NewBaseComponent()
 
 	categoryComponent := components.NewCategoryComponent(baseComponent)
 

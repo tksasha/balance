@@ -1,13 +1,10 @@
 package helpers
 
 import (
-	"fmt"
 	"net/http"
-
-	"github.com/tksasha/balance/internal/core/common/valueobjects"
 )
 
-func (h *Helpers) ItemsPath(request *http.Request, year, month int) string {
+func ItemsPath(request *http.Request, year, month int) string {
 	u := base(items, request)
 
 	values := u.Query()
@@ -17,18 +14,14 @@ func (h *Helpers) ItemsPath(request *http.Request, year, month int) string {
 		yearValue = request.URL.Query().Get("year")
 	}
 
-	parsedYear := valueobjects.NewYear(h.currentDateProvider).Parse(year, yearValue)
-
-	values.Set("year", fmt.Sprintf("%04d", parsedYear))
+	values.Set("year", Year(year, yearValue))
 
 	var monthValue string
 	if request != nil {
 		monthValue = request.URL.Query().Get("month")
 	}
 
-	parsedMonth := valueobjects.NewMonth(h.currentDateProvider).Parse(month, monthValue)
-
-	values.Set("month", fmt.Sprintf("%02d", parsedMonth))
+	values.Set("month", Month(month, monthValue))
 
 	u.RawQuery = values.Encode()
 

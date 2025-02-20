@@ -5,7 +5,7 @@ import (
 	"strconv"
 )
 
-func (h *Helpers) EditItemPath(id int) string {
+func EditItemPath(id int) string {
 	items := url.URL{
 		Path: items,
 	}

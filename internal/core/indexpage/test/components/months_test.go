@@ -5,25 +5,13 @@ import (
 	"testing"
 
 	"github.com/tksasha/balance/internal/core/common"
-	"github.com/tksasha/balance/internal/core/common/helpers"
 	"github.com/tksasha/balance/internal/core/common/tests"
-	"github.com/tksasha/balance/internal/core/common/valueobjects/mocks"
 	"github.com/tksasha/balance/internal/core/indexpage/components"
-	"go.uber.org/mock/gomock"
 	"gotest.tools/v3/golden"
 )
 
 func TestMonths(t *testing.T) {
-	controller := gomock.NewController(t)
-
-	currentDateProvider := mocks.NewMockCurrentDateProvider(controller)
-
-	currentDateProvider.EXPECT().CurrentYear().Return(2025).AnyTimes()
-	currentDateProvider.EXPECT().CurrentMonth().Return(3).AnyTimes()
-
-	helpers := helpers.New(currentDateProvider)
-
-	component := components.NewMonthsComponent(common.NewBaseComponent(helpers))
+	component := components.NewMonthsComponent(common.NewBaseComponent())
 
 	ctx := t.Context()
 

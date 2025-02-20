@@ -5,7 +5,6 @@ import (
 	"strings"
 	"time"
 
-	"github.com/tksasha/balance/internal/core/common/helpers"
 	"github.com/tksasha/balance/pkg/validation"
 	"golang.org/x/text/language"
 	"golang.org/x/text/message"
@@ -13,14 +12,10 @@ import (
 	. "maragu.dev/gomponents/html" //nolint:stylecheck
 )
 
-type BaseComponent struct {
-	Helpers *helpers.Helpers
-}
+type BaseComponent struct{}
 
-func NewBaseComponent(helpers *helpers.Helpers) *BaseComponent {
-	return &BaseComponent{
-		Helpers: helpers,
-	}
+func NewBaseComponent() *BaseComponent {
+	return &BaseComponent{}
 }
 
 func (c *BaseComponent) Date(date time.Time) string {

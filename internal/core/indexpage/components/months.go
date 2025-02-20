@@ -5,6 +5,7 @@ import (
 	"net/http"
 
 	"github.com/tksasha/balance/internal/core/common"
+	"github.com/tksasha/balance/internal/core/common/helpers"
 	"github.com/tksasha/month"
 	. "maragu.dev/gomponents" //nolint:stylecheck
 	hx "maragu.dev/gomponents-htmx"
@@ -37,9 +38,9 @@ func (c *MonthsComponent) Month(req *http.Request, month month.Month) Node {
 			c.isActive(req.URL.Query().Get("month"), month.Number),
 			Class("active"),
 		),
-		Href(c.Helpers.ItemsPath(req, 0, month.Number)),
+		Href(helpers.ItemsPath(req, 0, month.Number)),
 		Text(month.Name),
-		hx.Get(c.Helpers.ItemsPath(req, 0, month.Number)),
+		hx.Get(helpers.ItemsPath(req, 0, month.Number)),
 	)
 }
 

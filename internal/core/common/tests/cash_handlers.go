@@ -7,7 +7,6 @@ import (
 	"github.com/tksasha/balance/internal/core/cash/components"
 	"github.com/tksasha/balance/internal/core/cash/handlers"
 	"github.com/tksasha/balance/internal/core/common"
-	"github.com/tksasha/balance/internal/core/common/helpers"
 )
 
 func NewCreateCashHandler(
@@ -18,11 +17,7 @@ func NewCreateCashHandler(
 
 	baseHandler := common.NewBaseHandler()
 
-	currentDateProvider := common.NewTimeProvider()
-
-	helpers := helpers.New(currentDateProvider)
-
-	baseComponent := common.NewBaseComponent(helpers)
+	baseComponent := common.NewBaseComponent()
 
 	cashComponent := components.NewCashComponent(baseComponent)
 
@@ -37,11 +32,7 @@ func NewEditCashHandler(
 
 	baseHandler := common.NewBaseHandler()
 
-	currentDateProvider := common.NewTimeProvider()
-
-	helpers := helpers.New(currentDateProvider)
-
-	baseComponent := common.NewBaseComponent(helpers)
+	baseComponent := common.NewBaseComponent()
 
 	cashComponent := components.NewCashComponent(baseComponent)
 
@@ -56,11 +47,7 @@ func NewListCashesHandler(
 
 	baseHandler := common.NewBaseHandler()
 
-	currentDateProvider := common.NewTimeProvider()
-
-	helpers := helpers.New(currentDateProvider)
-
-	baseComponent := common.NewBaseComponent(helpers)
+	baseComponent := common.NewBaseComponent()
 
 	cashComponent := components.NewCashComponent(baseComponent)
 
@@ -74,11 +61,7 @@ func NewNewCasheHandler(
 
 	baseHandler := common.NewBaseHandler()
 
-	currentDateProvider := common.NewTimeProvider()
-
-	helpers := helpers.New(currentDateProvider)
-
-	baseComponent := common.NewBaseComponent(helpers)
+	baseComponent := common.NewBaseComponent()
 
 	cashComponent := components.NewCashComponent(baseComponent)
 
@@ -93,11 +76,7 @@ func NewUpdateCashHandler(
 
 	baseHandler := common.NewBaseHandler()
 
-	currentDateProvider := common.NewTimeProvider()
-
-	helpers := helpers.New(currentDateProvider)
-
-	baseComponent := common.NewBaseComponent(helpers)
+	baseComponent := common.NewBaseComponent()
 
 	cashComponent := components.NewCashComponent(baseComponent)
 

@@ -17,8 +17,6 @@ import (
 	categoryrepository "github.com/tksasha/balance/internal/core/category/repository"
 	categoryservice "github.com/tksasha/balance/internal/core/category/service"
 	"github.com/tksasha/balance/internal/core/common"
-	"github.com/tksasha/balance/internal/core/common/helpers"
-	"github.com/tksasha/balance/internal/core/common/valueobjects"
 	"github.com/tksasha/balance/internal/core/indexpage"
 	indexpagecomponents "github.com/tksasha/balance/internal/core/indexpage/components"
 	indexpagehandler "github.com/tksasha/balance/internal/core/indexpage/handler"
@@ -60,11 +58,9 @@ func InitializeServer() *server.Server {
 		common.NewBaseHandler,
 		common.NewBaseRepository,
 		common.NewBaseService,
-		common.NewTimeProvider,
 		config.New,
 		context.Background,
 		db.Open,
-		helpers.New,
 		indexpagecomponents.NewIndexPageComponent,
 		indexpagecomponents.NewMonthsComponent,
 		indexpagehandler.New,
@@ -90,7 +86,6 @@ func InitializeServer() *server.Server {
 		wire.Bind(new(indexpage.Service), new(*indexpageservice.Service)),
 		wire.Bind(new(item.Repository), new(*itemrepository.Repository)),
 		wire.Bind(new(item.Service), new(*itemservice.Service)),
-		wire.Bind(new(valueobjects.CurrentDateProvider), new(*common.TimeProvider)),
 	)
 
 	return nil

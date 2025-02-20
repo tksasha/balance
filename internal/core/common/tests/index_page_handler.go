@@ -5,7 +5,6 @@ import (
 
 	"github.com/tksasha/balance/internal/core/category"
 	"github.com/tksasha/balance/internal/core/common"
-	"github.com/tksasha/balance/internal/core/common/helpers"
 	"github.com/tksasha/balance/internal/core/indexpage"
 	"github.com/tksasha/balance/internal/core/indexpage/components"
 	"github.com/tksasha/balance/internal/core/indexpage/handler"
@@ -20,11 +19,7 @@ func NewIndexPageHandler(
 
 	baseHandler := common.NewBaseHandler()
 
-	currentDateProvider := common.NewTimeProvider()
-
-	helpers := helpers.New(currentDateProvider)
-
-	baseComponent := common.NewBaseComponent(helpers)
+	baseComponent := common.NewBaseComponent()
 
 	monthsComonents := components.NewMonthsComponent(baseComponent)
 
