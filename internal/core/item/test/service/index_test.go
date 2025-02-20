@@ -6,6 +6,7 @@ import (
 	"testing"
 
 	categorymocks "github.com/tksasha/balance/internal/core/category/test/mocks"
+	"github.com/tksasha/balance/internal/core/common"
 	"github.com/tksasha/balance/internal/core/item"
 	"github.com/tksasha/balance/internal/core/item/service"
 	"github.com/tksasha/balance/internal/core/item/test/mocks"
@@ -21,7 +22,7 @@ func TestIndex(t *testing.T) {
 
 	categoryRepository := categorymocks.NewMockRepository(controller)
 
-	service := service.New(itemRepository, categoryRepository)
+	service := service.New(common.NewBaseService(), itemRepository, categoryRepository)
 
 	ctx := t.Context()
 

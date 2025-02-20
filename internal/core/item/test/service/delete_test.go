@@ -18,7 +18,7 @@ func TestDelete(t *testing.T) {
 	itemRepository := mocks.NewMockRepository(ctrl)
 	categoryRepository := categorymocks.NewMockRepository(ctrl)
 
-	service := service.New(itemRepository, categoryRepository)
+	service := service.New(common.NewBaseService(), itemRepository, categoryRepository)
 
 	ctx := t.Context()
 

@@ -6,6 +6,7 @@ import (
 
 	"github.com/tksasha/balance/internal/core/category"
 	categorymocks "github.com/tksasha/balance/internal/core/category/test/mocks"
+	"github.com/tksasha/balance/internal/core/common"
 	"github.com/tksasha/balance/internal/core/common/tests"
 	"github.com/tksasha/balance/internal/core/item"
 	"github.com/tksasha/balance/internal/core/item/service"
@@ -20,7 +21,7 @@ func TestCreate(t *testing.T) { //nolint:funlen
 	itemRepository := mocks.NewMockRepository(ctrl)
 	categoryRepository := categorymocks.NewMockRepository(ctrl)
 
-	service := service.New(itemRepository, categoryRepository)
+	service := service.New(common.NewBaseService(), itemRepository, categoryRepository)
 
 	ctx := t.Context()
 

@@ -6,7 +6,6 @@ import (
 
 	"github.com/tksasha/balance/internal/core/cash"
 	"github.com/tksasha/balance/internal/core/common"
-	"github.com/tksasha/balance/internal/core/common/services"
 	"github.com/tksasha/balance/pkg/validation"
 )
 
@@ -29,7 +28,7 @@ func (s *Service) Update(ctx context.Context, request cash.UpdateRequest) (*cash
 		}
 
 		if exists {
-			validate.Set("name", services.AlreadyExists)
+			validate.Set("name", common.AlreadyExists)
 		}
 	}
 

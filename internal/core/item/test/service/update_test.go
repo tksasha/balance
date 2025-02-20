@@ -21,7 +21,7 @@ func TestUpdate(t *testing.T) { //nolint:funlen,maintidx
 	itemRepository := mocks.NewMockRepository(ctrl)
 	categoryRepository := categorymocks.NewMockRepository(ctrl)
 
-	service := service.New(itemRepository, categoryRepository)
+	service := service.New(common.NewBaseService(), itemRepository, categoryRepository)
 
 	ctx := t.Context()
 

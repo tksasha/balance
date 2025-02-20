@@ -7,17 +7,22 @@ import (
 
 	"github.com/tksasha/balance/internal/core/category"
 	"github.com/tksasha/balance/internal/core/common"
-	"github.com/tksasha/balance/internal/core/common/services"
 	"github.com/tksasha/balance/pkg/validation"
 )
 
 type Service struct {
+	*common.BaseService
+
 	repository category.Repository
 }
 
-func New(repository category.Repository) *Service {
+func New(
+	baseService *common.BaseService,
+	repository category.Repository,
+) *Service {
 	return &Service{
-		repository: repository,
+		BaseService: baseService,
+		repository:  repository,
 	}
 }
 
@@ -42,7 +47,7 @@ func (s *Service) nameAlreadyExists(
 	}
 
 	if category.ID != categoryID {
-		validation.Set("name", services.AlreadyExists)
+		validation.Set("name", common.AlreadyExists)
 	}
 
 	return nil
@@ -56,7 +61,7 @@ func (s *Service) findByID(ctx context.Context, input string) (*category.Categor
 
 	category, err := s.repository.FindByID(ctx, id)
 	if err != nil {
-		return nil, services.MapError(err)
+		return nil, s.MapError(err)
 	}
 
 	return category, nil

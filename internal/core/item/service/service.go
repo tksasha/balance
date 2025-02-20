@@ -6,18 +6,24 @@ import (
 
 	"github.com/tksasha/balance/internal/core/category"
 	"github.com/tksasha/balance/internal/core/common"
-	"github.com/tksasha/balance/internal/core/common/services"
 	"github.com/tksasha/balance/internal/core/item"
 	"github.com/tksasha/balance/pkg/validation"
 )
 
 type Service struct {
+	*common.BaseService
+
 	itemRepository     item.Repository
 	categoryRepository category.Repository
 }
 
-func New(itemRepository item.Repository, categoryRepository category.Repository) *Service {
+func New(
+	baseService *common.BaseService,
+	itemRepository item.Repository,
+	categoryRepository category.Repository,
+) *Service {
 	return &Service{
+		BaseService:        baseService,
 		itemRepository:     itemRepository,
 		categoryRepository: categoryRepository,
 	}
@@ -53,7 +59,7 @@ func (s *Service) findByID(ctx context.Context, input string) (*item.Item, error
 
 	item, err := s.itemRepository.FindByID(ctx, id)
 	if err != nil {
-		return nil, services.MapError(err)
+		return nil, s.MapError(err)
 	}
 
 	return item, nil

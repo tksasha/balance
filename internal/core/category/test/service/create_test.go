@@ -17,7 +17,7 @@ func TestCreate(t *testing.T) { //nolint:funlen
 
 	repository := mocks.NewMockRepository(ctrl)
 
-	service := service.New(repository)
+	service := service.New(common.NewBaseService(), repository)
 
 	ctx := t.Context()
 

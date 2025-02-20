@@ -2,7 +2,6 @@
 
 //go:generate go run -mod=mod github.com/google/wire/cmd/wire
 //go:build !wireinject
-// +build !wireinject
 
 package wire
 
@@ -16,6 +15,7 @@ import (
 	handlers3 "github.com/tksasha/balance/internal/core/category/handlers"
 	repository2 "github.com/tksasha/balance/internal/core/category/repository"
 	service2 "github.com/tksasha/balance/internal/core/category/service"
+	"github.com/tksasha/balance/internal/core/common"
 	"github.com/tksasha/balance/internal/core/common/components"
 	"github.com/tksasha/balance/internal/core/common/handlers"
 	"github.com/tksasha/balance/internal/core/common/helpers"
@@ -58,8 +58,9 @@ func InitializeServer() *server.Server {
 	listHandler := handlers2.NewListHandler(baseHandler, serviceService, cashComponent)
 	newHandler := handlers2.NewNewHandler(baseHandler, cashComponent)
 	updateHandler := handlers2.NewUpdateHandler(baseHandler, serviceService, cashComponent)
+	baseService := common.NewBaseService()
 	repository5 := repository2.New(baseRepository, sqlDB)
-	service5 := service2.New(repository5)
+	service5 := service2.New(baseService, repository5)
 	categoryComponent := components3.NewCategoryComponent(baseComponent)
 	handlersCreateHandler := handlers3.NewCreateHandler(baseHandler, service5, categoryComponent)
 	handlersDeleteHandler := handlers3.NewDeleteHandler(baseHandler, service5)
@@ -72,7 +73,7 @@ func InitializeServer() *server.Server {
 	indexPageComponent := components4.NewIndexPageComponent(baseComponent, monthsComponent)
 	handlerHandler := handler.New(baseHandler, service6, service5, indexPageComponent)
 	repository7 := repository4.New(baseRepository, sqlDB)
-	service7 := service4.New(repository7, repository5)
+	service7 := service4.New(baseService, repository7, repository5)
 	itemsComponent := components5.NewItemsComponent(baseComponent)
 	createHandler2 := handlers4.NewCreateHandler(baseHandler, service7, service5, itemsComponent)
 	editHandler2 := handlers4.NewEditHandler(baseHandler, service7, service5, itemsComponent)
