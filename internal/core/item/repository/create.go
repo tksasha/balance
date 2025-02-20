@@ -4,12 +4,11 @@ import (
 	"context"
 	"time"
 
-	"github.com/tksasha/balance/internal/core/common/repositories"
 	"github.com/tksasha/balance/internal/core/item"
 )
 
 func (r *Repository) Create(ctx context.Context, item *item.Item) error {
-	currency := repositories.GetCurrencyFromContext(ctx)
+	currency := r.GetCurrencyFromContext(ctx)
 
 	query := `
 		INSERT INTO items (

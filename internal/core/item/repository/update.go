@@ -5,12 +5,11 @@ import (
 	"time"
 
 	"github.com/tksasha/balance/internal/core/common"
-	"github.com/tksasha/balance/internal/core/common/repositories"
 	"github.com/tksasha/balance/internal/core/item"
 )
 
 func (r *Repository) Update(ctx context.Context, item *item.Item) error {
-	currency := repositories.GetCurrencyFromContext(ctx)
+	currency := r.GetCurrencyFromContext(ctx)
 
 	query := `
 		UPDATE items

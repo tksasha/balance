@@ -7,11 +7,10 @@ import (
 
 	"github.com/tksasha/balance/internal/core/category"
 	"github.com/tksasha/balance/internal/core/common"
-	"github.com/tksasha/balance/internal/core/common/repositories"
 )
 
 func (r *Repository) FindByName(ctx context.Context, name string) (*category.Category, error) {
-	currency := repositories.GetCurrencyFromContext(ctx)
+	currency := r.GetCurrencyFromContext(ctx)
 
 	query := `
 		SELECT

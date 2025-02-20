@@ -4,13 +4,12 @@ import (
 	"context"
 	"log/slog"
 
-	"github.com/tksasha/balance/internal/core/common/repositories"
 	"github.com/tksasha/balance/internal/core/item"
 	"github.com/tksasha/month"
 )
 
 func (r *Repository) FindAllByMonth(ctx context.Context, month month.Month) (item.Items, error) {
-	currency := repositories.GetCurrencyFromContext(ctx)
+	currency := r.GetCurrencyFromContext(ctx)
 
 	query := `
 		SELECT

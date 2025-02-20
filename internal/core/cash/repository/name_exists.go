@@ -4,12 +4,10 @@ import (
 	"context"
 	"database/sql"
 	"errors"
-
-	"github.com/tksasha/balance/internal/core/common/repositories"
 )
 
 func (r *Repository) NameExists(ctx context.Context, name string, id int) (bool, error) {
-	currency := repositories.GetCurrencyFromContext(ctx)
+	currency := r.GetCurrencyFromContext(ctx)
 
 	query := `
 		SELECT

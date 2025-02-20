@@ -2,12 +2,10 @@ package repository
 
 import (
 	"context"
-
-	"github.com/tksasha/balance/internal/core/common/repositories"
 )
 
 func (r *Repository) Expense(ctx context.Context) (float64, error) {
-	currency := repositories.GetCurrencyFromContext(ctx)
+	currency := r.GetCurrencyFromContext(ctx)
 
 	query := `
 		SELECT

@@ -6,12 +6,11 @@ import (
 	"errors"
 
 	"github.com/tksasha/balance/internal/core/common"
-	"github.com/tksasha/balance/internal/core/common/repositories"
 	"github.com/tksasha/balance/internal/core/item"
 )
 
 func (r *Repository) FindByID(ctx context.Context, id int) (*item.Item, error) {
-	currency := repositories.GetCurrencyFromContext(ctx)
+	currency := r.GetCurrencyFromContext(ctx)
 
 	query := `
 		SELECT

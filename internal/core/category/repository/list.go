@@ -5,11 +5,10 @@ import (
 	"log"
 
 	"github.com/tksasha/balance/internal/core/category"
-	"github.com/tksasha/balance/internal/core/common/repositories"
 )
 
 func (r *Repository) List(ctx context.Context) (category.Categories, error) {
-	currency := repositories.GetCurrencyFromContext(ctx)
+	currency := r.GetCurrencyFromContext(ctx)
 
 	query := `
 		SELECT

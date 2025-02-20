@@ -6,7 +6,13 @@ import (
 	"github.com/tksasha/balance/pkg/currencies"
 )
 
-func GetCurrencyFromContext(ctx context.Context) currencies.Currency {
+type BaseRepository struct{}
+
+func NewBaseRepository() *BaseRepository {
+	return &BaseRepository{}
+}
+
+func (r *BaseRepository) GetCurrencyFromContext(ctx context.Context) currencies.Currency {
 	currency, ok := ctx.Value(currencies.CurrencyContextValue{}).(currencies.Currency)
 	if !ok {
 		currency = currencies.DefaultCurrency

@@ -11,6 +11,7 @@ import (
 	"github.com/tksasha/balance/internal/core/category"
 	categoryrepository "github.com/tksasha/balance/internal/core/category/repository"
 	categoryservice "github.com/tksasha/balance/internal/core/category/service"
+	"github.com/tksasha/balance/internal/core/common/repositories"
 	"github.com/tksasha/balance/internal/core/indexpage"
 	indexpagerepository "github.com/tksasha/balance/internal/core/indexpage/repository"
 	indexpageservice "github.com/tksasha/balance/internal/core/indexpage/service"
@@ -22,9 +23,11 @@ import (
 func NewCashService(ctx context.Context, t *testing.T) (cash.Service, *sql.DB) {
 	t.Helper()
 
+	baseRepository := repositories.NewBaseRepository()
+
 	db := newDB(ctx, t)
 
-	repository := cashrepository.New(db)
+	repository := cashrepository.New(baseRepository, db)
 
 	return cashservice.New(repository), db
 }
@@ -32,9 +35,11 @@ func NewCashService(ctx context.Context, t *testing.T) (cash.Service, *sql.DB) {
 func NewCategoryService(ctx context.Context, t *testing.T) (category.Service, *sql.DB) {
 	t.Helper()
 
+	baseRepository := repositories.NewBaseRepository()
+
 	db := newDB(ctx, t)
 
-	repository := categoryrepository.New(db)
+	repository := categoryrepository.New(baseRepository, db)
 
 	return categoryservice.New(repository), db
 }
@@ -42,11 +47,13 @@ func NewCategoryService(ctx context.Context, t *testing.T) (category.Service, *s
 func NewItemService(ctx context.Context, t *testing.T) (item.Service, *sql.DB) {
 	t.Helper()
 
+	baseRepository := repositories.NewBaseRepository()
+
 	db := newDB(ctx, t)
 
-	itemRepository := itemrepository.New(db)
+	itemRepository := itemrepository.New(baseRepository, db)
 
-	categoryRepository := categoryrepository.New(db)
+	categoryRepository := categoryrepository.New(baseRepository, db)
 
 	return itemservice.New(itemRepository, categoryRepository), db
 }
@@ -54,9 +61,11 @@ func NewItemService(ctx context.Context, t *testing.T) (item.Service, *sql.DB) {
 func NewIndexPageService(ctx context.Context, t *testing.T) (indexpage.Service, *sql.DB) {
 	t.Helper()
 
+	baseRepository := repositories.NewBaseRepository()
+
 	db := newDB(ctx, t)
 
-	repository := indexpagerepository.New(db)
+	repository := indexpagerepository.New(baseRepository, db)
 
 	return indexpageservice.New(repository), db
 }

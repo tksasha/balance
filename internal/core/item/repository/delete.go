@@ -5,11 +5,10 @@ import (
 	"time"
 
 	"github.com/tksasha/balance/internal/core/common"
-	"github.com/tksasha/balance/internal/core/common/repositories"
 )
 
 func (r *Repository) Delete(ctx context.Context, id int) error {
-	currencies := repositories.GetCurrencyFromContext(ctx)
+	currencies := r.GetCurrencyFromContext(ctx)
 
 	query := `
 		UPDATE items
