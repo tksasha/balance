@@ -9,16 +9,16 @@ import (
 )
 
 type EditHandler struct {
-	service       cash.Service
+	cashService   cash.Service
 	cashComponent *components.CashComponent
 }
 
 func NewEditHandler(
-	service cash.Service,
+	cashService cash.Service,
 	cashComponent *components.CashComponent,
 ) *EditHandler {
 	return &EditHandler{
-		service:       service,
+		cashService:   cashService,
 		cashComponent: cashComponent,
 	}
 }
@@ -37,5 +37,5 @@ func (h *EditHandler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 }
 
 func (h *EditHandler) handle(r *http.Request) (*cash.Cash, error) {
-	return h.service.FindByID(r.Context(), r.PathValue("id"))
+	return h.cashService.FindByID(r.Context(), r.PathValue("id"))
 }

@@ -8,12 +8,12 @@ import (
 )
 
 type DeleteHandler struct {
-	service cash.Service
+	cashService cash.Service
 }
 
-func NewDeleteHandler(service cash.Service) *DeleteHandler {
+func NewDeleteHandler(cashService cash.Service) *DeleteHandler {
 	return &DeleteHandler{
-		service: service,
+		cashService: cashService,
 	}
 }
 
@@ -28,5 +28,5 @@ func (h *DeleteHandler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 }
 
 func (h *DeleteHandler) handle(r *http.Request) error {
-	return h.service.Delete(r.Context(), r.PathValue("id"))
+	return h.cashService.Delete(r.Context(), r.PathValue("id"))
 }

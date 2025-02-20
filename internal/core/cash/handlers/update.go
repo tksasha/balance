@@ -12,16 +12,16 @@ import (
 )
 
 type UpdateHandler struct {
-	service       cash.Service
+	cashService   cash.Service
 	cashComponent *components.CashComponent
 }
 
 func NewUpdateHandler(
-	service cash.Service,
+	cashService cash.Service,
 	cashComponent *components.CashComponent,
 ) *UpdateHandler {
 	return &UpdateHandler{
-		service:       service,
+		cashService:   cashService,
 		cashComponent: cashComponent,
 	}
 }
@@ -59,5 +59,5 @@ func (h *UpdateHandler) handle(r *http.Request) (*cash.Cash, error) {
 		Favorite:      r.FormValue("favorite"),
 	}
 
-	return h.service.Update(r.Context(), request)
+	return h.cashService.Update(r.Context(), request)
 }

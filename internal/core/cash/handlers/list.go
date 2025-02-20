@@ -9,16 +9,16 @@ import (
 )
 
 type ListHandler struct {
-	service       cash.Service
+	cashService   cash.Service
 	cashComponent *components.CashComponent
 }
 
 func NewListHandler(
-	service cash.Service,
+	cashService cash.Service,
 	cashComponent *components.CashComponent,
 ) *ListHandler {
 	return &ListHandler{
-		service:       service,
+		cashService:   cashService,
 		cashComponent: cashComponent,
 	}
 }
@@ -37,5 +37,5 @@ func (h *ListHandler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 }
 
 func (h *ListHandler) handle(r *http.Request) (cash.Cashes, error) {
-	return h.service.List(r.Context())
+	return h.cashService.List(r.Context())
 }

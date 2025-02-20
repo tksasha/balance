@@ -12,16 +12,16 @@ import (
 )
 
 type CreateHandler struct {
-	service       cash.Service
+	cashService   cash.Service
 	cashComponent *components.CashComponent
 }
 
 func NewCreateHandler(
-	service cash.Service,
+	cashService cash.Service,
 	cashComponent *components.CashComponent,
 ) *CreateHandler {
 	return &CreateHandler{
-		service:       service,
+		cashService:   cashService,
 		cashComponent: cashComponent,
 	}
 }
@@ -58,5 +58,5 @@ func (h *CreateHandler) handle(r *http.Request) (*cash.Cash, error) {
 		Favorite:      r.FormValue("favorite"),
 	}
 
-	return h.service.Create(r.Context(), request)
+	return h.cashService.Create(r.Context(), request)
 }
