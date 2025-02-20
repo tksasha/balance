@@ -19,7 +19,6 @@ import (
 	"github.com/tksasha/balance/internal/core/common/components"
 	"github.com/tksasha/balance/internal/core/common/helpers"
 	"github.com/tksasha/balance/internal/core/common/providers"
-	"github.com/tksasha/balance/internal/core/common/repositories"
 	components4 "github.com/tksasha/balance/internal/core/indexpage/components"
 	"github.com/tksasha/balance/internal/core/indexpage/handler"
 	repository3 "github.com/tksasha/balance/internal/core/indexpage/repository"
@@ -41,7 +40,7 @@ import (
 func InitializeServer() *server.Server {
 	configConfig := config.New()
 	baseHandler := common.NewBaseHandler()
-	baseRepository := repositories.NewBaseRepository()
+	baseRepository := common.NewBaseRepository()
 	contextContext := context.Background()
 	provider := nameprovider.New()
 	sqlDB := db.Open(contextContext, provider)

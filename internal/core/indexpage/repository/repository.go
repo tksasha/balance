@@ -3,17 +3,17 @@ package repository
 import (
 	"database/sql"
 
-	"github.com/tksasha/balance/internal/core/common/repositories"
+	"github.com/tksasha/balance/internal/core/common"
 )
 
 type Repository struct {
-	*repositories.BaseRepository
+	*common.BaseRepository
 
 	db *sql.DB
 }
 
 func New(
-	baseRepository *repositories.BaseRepository,
+	baseRepository *common.BaseRepository,
 	db *sql.DB,
 ) *Repository {
 	return &Repository{
