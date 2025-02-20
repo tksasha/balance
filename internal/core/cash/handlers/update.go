@@ -12,11 +12,14 @@ import (
 )
 
 type UpdateHandler struct {
+	*handlers.BaseHandler
+
 	cashService   cash.Service
 	cashComponent *components.CashComponent
 }
 
 func NewUpdateHandler(
+	baseHandler *handlers.BaseHandler,
 	cashService cash.Service,
 	cashComponent *components.CashComponent,
 ) *UpdateHandler {
@@ -38,12 +41,12 @@ func (h *UpdateHandler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 	if errors.As(err, &verrors) {
 		err := h.cashComponent.Update(cash, verrors).Render(w)
 
-		handlers.SetError(w, err)
+		h.SetError(w, err)
 
 		return
 	}
 
-	handlers.SetError(w, err)
+	h.SetError(w, err)
 }
 
 func (h *UpdateHandler) handle(r *http.Request) (*cash.Cash, error) {

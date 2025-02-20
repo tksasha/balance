@@ -17,6 +17,7 @@ import (
 	categoryrepository "github.com/tksasha/balance/internal/core/category/repository"
 	categoryservice "github.com/tksasha/balance/internal/core/category/service"
 	commoncomponents "github.com/tksasha/balance/internal/core/common/components"
+	"github.com/tksasha/balance/internal/core/common/handlers"
 	"github.com/tksasha/balance/internal/core/common/helpers"
 	"github.com/tksasha/balance/internal/core/common/providers"
 	"github.com/tksasha/balance/internal/core/common/valueobjects"
@@ -61,6 +62,7 @@ func InitializeServer() *server.Server {
 		config.New,
 		context.Background,
 		db.Open,
+		handlers.NewBaseHandler,
 		helpers.New,
 		indexpagecomponents.NewIndexPageComponent,
 		indexpagecomponents.NewMonthsComponent,

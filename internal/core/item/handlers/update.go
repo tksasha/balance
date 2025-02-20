@@ -13,17 +13,21 @@ import (
 )
 
 type UpdateHandler struct {
+	*handlers.BaseHandler
+
 	itemService     item.Service
 	categoryService category.Service
 	itemsComponent  *components.ItemsComponent
 }
 
 func NewUpdateHandler(
+	baseHandler *handlers.BaseHandler,
 	itemService item.Service,
 	categoryService category.Service,
 	itemsComponent *components.ItemsComponent,
 ) *UpdateHandler {
 	return &UpdateHandler{
+		BaseHandler:     baseHandler,
 		itemService:     itemService,
 		categoryService: categoryService,
 		itemsComponent:  itemsComponent,
@@ -42,17 +46,17 @@ func (h *UpdateHandler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 	if errors.As(err, &verrors) {
 		categories, err := h.categoryService.List(r.Context())
 		if err != nil {
-			handlers.SetError(w, err)
+			h.SetError(w, err)
 
 			return
 		}
 
 		err = h.itemsComponent.Update(item, categories, verrors).Render(w)
 
-		handlers.SetError(w, err)
+		h.SetError(w, err)
 	}
 
-	handlers.SetError(w, err)
+	h.SetError(w, err)
 }
 
 func (h *UpdateHandler) handle(r *http.Request) (*item.Item, error) {

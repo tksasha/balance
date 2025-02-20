@@ -10,17 +10,21 @@ import (
 )
 
 type Handler struct {
+	*handlers.BaseHandler
+
 	indexPageService   indexpage.Service
 	categoryService    category.Service
 	indexPageComponent *components.IndexPageComponent
 }
 
 func New(
+	baseHandler *handlers.BaseHandler,
 	indexPageService indexpage.Service,
 	categoryService category.Service,
 	indexPageComponent *components.IndexPageComponent,
 ) *Handler {
 	return &Handler{
+		BaseHandler:        baseHandler,
 		indexPageService:   indexPageService,
 		categoryService:    categoryService,
 		indexPageComponent: indexPageComponent,
@@ -30,14 +34,14 @@ func New(
 func (h *Handler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 	categories, err := h.handle(r)
 	if err != nil {
-		handlers.SetError(w, err)
+		h.SetError(w, err)
 
 		return
 	}
 
 	err = h.indexPageComponent.Index(r, categories).Render(w)
 
-	handlers.SetError(w, err)
+	h.SetError(w, err)
 }
 
 func (h *Handler) handle(r *http.Request) (category.Categories, error) {

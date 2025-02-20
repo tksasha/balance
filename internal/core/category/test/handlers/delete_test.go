@@ -6,7 +6,6 @@ import (
 	"testing"
 
 	"github.com/tksasha/balance/internal/core/category"
-	"github.com/tksasha/balance/internal/core/category/handlers"
 	"github.com/tksasha/balance/internal/core/common/tests"
 	"github.com/tksasha/balance/pkg/currencies"
 	"gotest.tools/v3/assert"
@@ -15,14 +14,12 @@ import (
 func TestCategoryDeleteHandler(t *testing.T) {
 	ctx := t.Context()
 
-	service, db := tests.NewCategoryService(ctx, t)
+	categoryService, db := tests.NewCategoryService(ctx, t)
 	defer func() {
 		_ = db.Close()
 	}()
 
-	handler := handlers.NewDeleteHandler(service)
-
-	mux := tests.NewMux(t, "DELETE /categories/{id}", handler)
+	mux := tests.NewMux(t, "DELETE /categories/{id}", tests.NewCategoryDeleteHandler(t, categoryService))
 
 	t.Run("responds 404 when category not found", func(t *testing.T) {
 		tests.Cleanup(ctx, t)

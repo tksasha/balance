@@ -8,18 +8,24 @@ import (
 )
 
 type DeleteHandler struct {
+	*handlers.BaseHandler
+
 	itemService item.Service
 }
 
-func NewDeleteHandler(itemService item.Service) *DeleteHandler {
+func NewDeleteHandler(
+	baseHandler *handlers.BaseHandler,
+	itemService item.Service,
+) *DeleteHandler {
 	return &DeleteHandler{
+		BaseHandler: baseHandler,
 		itemService: itemService,
 	}
 }
 
 func (h *DeleteHandler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 	if err := h.handle(r); err != nil {
-		handlers.SetError(w, err)
+		h.SetError(w, err)
 
 		return
 	}

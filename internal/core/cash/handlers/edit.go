@@ -9,15 +9,19 @@ import (
 )
 
 type EditHandler struct {
+	*handlers.BaseHandler
+
 	cashService   cash.Service
 	cashComponent *components.CashComponent
 }
 
 func NewEditHandler(
+	baseHandler *handlers.BaseHandler,
 	cashService cash.Service,
 	cashComponent *components.CashComponent,
 ) *EditHandler {
 	return &EditHandler{
+		BaseHandler:   baseHandler,
 		cashService:   cashService,
 		cashComponent: cashComponent,
 	}
@@ -26,14 +30,14 @@ func NewEditHandler(
 func (h *EditHandler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 	cash, err := h.handle(r)
 	if err != nil {
-		handlers.SetError(w, err)
+		h.SetError(w, err)
 
 		return
 	}
 
 	err = h.cashComponent.Edit(cash).Render(w)
 
-	handlers.SetError(w, err)
+	h.SetError(w, err)
 }
 
 func (h *EditHandler) handle(r *http.Request) (*cash.Cash, error) {

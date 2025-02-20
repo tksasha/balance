@@ -7,6 +7,7 @@ import (
 	"github.com/tksasha/balance/internal/core/cash/components"
 	"github.com/tksasha/balance/internal/core/cash/handlers"
 	commoncomponents "github.com/tksasha/balance/internal/core/common/components"
+	commonhandlers "github.com/tksasha/balance/internal/core/common/handlers"
 	"github.com/tksasha/balance/internal/core/common/helpers"
 	"github.com/tksasha/balance/internal/core/common/providers"
 )
@@ -17,6 +18,8 @@ func NewCreateCashHandler(
 ) *handlers.CreateHandler {
 	t.Helper()
 
+	baseHandler := commonhandlers.NewBaseHandler()
+
 	currentDateProvider := providers.NewTimeProvider()
 
 	helpers := helpers.New(currentDateProvider)
@@ -25,7 +28,7 @@ func NewCreateCashHandler(
 
 	cashComponent := components.NewCashComponent(baseComponent)
 
-	return handlers.NewCreateHandler(cashService, cashComponent)
+	return handlers.NewCreateHandler(baseHandler, cashService, cashComponent)
 }
 
 func NewEditCashHandler(
@@ -34,6 +37,8 @@ func NewEditCashHandler(
 ) *handlers.EditHandler {
 	t.Helper()
 
+	baseHandler := commonhandlers.NewBaseHandler()
+
 	currentDateProvider := providers.NewTimeProvider()
 
 	helpers := helpers.New(currentDateProvider)
@@ -42,7 +47,7 @@ func NewEditCashHandler(
 
 	cashComponent := components.NewCashComponent(baseComponent)
 
-	return handlers.NewEditHandler(cashService, cashComponent)
+	return handlers.NewEditHandler(baseHandler, cashService, cashComponent)
 }
 
 func NewListCashesHandler(
@@ -51,6 +56,8 @@ func NewListCashesHandler(
 ) *handlers.ListHandler {
 	t.Helper()
 
+	baseHandler := commonhandlers.NewBaseHandler()
+
 	currentDateProvider := providers.NewTimeProvider()
 
 	helpers := helpers.New(currentDateProvider)
@@ -59,7 +66,7 @@ func NewListCashesHandler(
 
 	cashComponent := components.NewCashComponent(baseComponent)
 
-	return handlers.NewListHandler(cashService, cashComponent)
+	return handlers.NewListHandler(baseHandler, cashService, cashComponent)
 }
 
 func NewNewCasheHandler(
@@ -67,6 +74,8 @@ func NewNewCasheHandler(
 ) *handlers.NewHandler {
 	t.Helper()
 
+	baseHandler := commonhandlers.NewBaseHandler()
+
 	currentDateProvider := providers.NewTimeProvider()
 
 	helpers := helpers.New(currentDateProvider)
@@ -75,7 +84,7 @@ func NewNewCasheHandler(
 
 	cashComponent := components.NewCashComponent(baseComponent)
 
-	return handlers.NewNewHandler(cashComponent)
+	return handlers.NewNewHandler(baseHandler, cashComponent)
 }
 
 func NewUpdateCashHandler(
@@ -84,6 +93,8 @@ func NewUpdateCashHandler(
 ) *handlers.UpdateHandler {
 	t.Helper()
 
+	baseHandler := commonhandlers.NewBaseHandler()
+
 	currentDateProvider := providers.NewTimeProvider()
 
 	helpers := helpers.New(currentDateProvider)
@@ -92,5 +103,14 @@ func NewUpdateCashHandler(
 
 	cashComponent := components.NewCashComponent(baseComponent)
 
-	return handlers.NewUpdateHandler(cashService, cashComponent)
+	return handlers.NewUpdateHandler(baseHandler, cashService, cashComponent)
+}
+
+func NewDeleteCashHandler(
+	t *testing.T,
+	cashService cash.Service,
+) *handlers.DeleteHandler {
+	t.Helper()
+
+	return handlers.NewDeleteHandler(commonhandlers.NewBaseHandler(), cashService)
 }

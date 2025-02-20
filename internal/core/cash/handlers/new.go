@@ -9,11 +9,17 @@ import (
 )
 
 type NewHandler struct {
+	*handlers.BaseHandler
+
 	cashComponent *components.CashComponent
 }
 
-func NewNewHandler(cashComponent *components.CashComponent) *NewHandler {
+func NewNewHandler(
+	baseHandler *handlers.BaseHandler,
+	cashComponent *components.CashComponent,
+) *NewHandler {
 	return &NewHandler{
+		BaseHandler:   baseHandler,
 		cashComponent: cashComponent,
 	}
 }
@@ -23,5 +29,5 @@ func (h *NewHandler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 
 	err := h.cashComponent.New(cash).Render(w)
 
-	handlers.SetError(w, err)
+	h.SetError(w, err)
 }

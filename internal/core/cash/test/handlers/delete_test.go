@@ -7,7 +7,6 @@ import (
 	"testing"
 
 	"github.com/tksasha/balance/internal/core/cash"
-	"github.com/tksasha/balance/internal/core/cash/handlers"
 	"github.com/tksasha/balance/internal/core/common/tests"
 	"github.com/tksasha/balance/pkg/currencies"
 	"gotest.tools/v3/assert"
@@ -16,14 +15,12 @@ import (
 func TestCashDeleteHandler(t *testing.T) {
 	ctx := t.Context()
 
-	service, db := tests.NewCashService(ctx, t)
+	cashService, db := tests.NewCashService(ctx, t)
 	defer func() {
 		_ = db.Close()
 	}()
 
-	handler := handlers.NewDeleteHandler(service)
-
-	mux := tests.NewMux(t, "DELETE /cashes/{id}", handler)
+	mux := tests.NewMux(t, "DELETE /cashes/{id}", tests.NewDeleteCashHandler(t, cashService))
 
 	t.Run("renders 404 when cash not found", func(t *testing.T) {
 		request := tests.NewDeleteRequest(ctx, t, "/cashes/1007")

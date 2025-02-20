@@ -8,7 +8,6 @@ import (
 	"github.com/tksasha/balance/internal/core/category"
 	"github.com/tksasha/balance/internal/core/common/tests"
 	"github.com/tksasha/balance/internal/core/item"
-	"github.com/tksasha/balance/internal/core/item/handlers"
 	"github.com/tksasha/balance/pkg/currencies"
 	"gotest.tools/v3/assert"
 )
@@ -21,7 +20,7 @@ func TestDeleteItemHandler(t *testing.T) {
 		_ = db.Close()
 	}()
 
-	mux := tests.NewMux(t, "DELETE /items/{id}", handlers.NewDeleteHandler(itemService))
+	mux := tests.NewMux(t, "DELETE /items/{id}", tests.NewDeleteItemHandler(t, itemService))
 
 	t.Run("renders 404 when item is not found", func(t *testing.T) {
 		request := tests.NewDeleteRequest(ctx, t, "/items/1043")

@@ -12,15 +12,19 @@ import (
 )
 
 type CreateHandler struct {
+	*handlers.BaseHandler
+
 	cashService   cash.Service
 	cashComponent *components.CashComponent
 }
 
 func NewCreateHandler(
+	baseHandler *handlers.BaseHandler,
 	cashService cash.Service,
 	cashComponent *components.CashComponent,
 ) *CreateHandler {
 	return &CreateHandler{
+		BaseHandler:   baseHandler,
 		cashService:   cashService,
 		cashComponent: cashComponent,
 	}
@@ -38,12 +42,12 @@ func (h *CreateHandler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 	if errors.As(err, &verrors) {
 		err := h.cashComponent.Create(cash, verrors).Render(w)
 
-		handlers.SetError(w, err)
+		h.SetError(w, err)
 
 		return
 	}
 
-	handlers.SetError(w, err)
+	h.SetError(w, err)
 }
 
 func (h *CreateHandler) handle(r *http.Request) (*cash.Cash, error) {
