@@ -8,7 +8,7 @@ import (
 	"github.com/tksasha/balance/internal/core/common/helpers"
 	"github.com/tksasha/balance/internal/core/common/tests"
 	"github.com/tksasha/balance/internal/core/common/valueobjects/mocks"
-	"github.com/tksasha/balance/internal/core/index/components"
+	"github.com/tksasha/balance/internal/core/indexpage/components"
 	"go.uber.org/mock/gomock"
 	"gotest.tools/v3/golden"
 )

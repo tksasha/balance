@@ -76,9 +76,9 @@ mockgen:
 		-package mocks \
 		-destination internal/core/item/test/mocks/interfaces.mock.go
 	@go run $(MOCKGEN) \
-		-source internal/core/index/interfaces.go \
+		-source internal/core/indexpage/interfaces.go \
 		-package mocks \
-		-destination internal/core/index/test/mocks/interfaces.mock.go
+		-destination internal/core/indexpage/test/mocks/interfaces.mock.go
 	@go run $(MOCKGEN) \
 		-source internal/core/common/valueobjects/interfaces.go \
 		-package mocks \

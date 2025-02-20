@@ -1,4 +1,4 @@
-package handlers_test
+package handler_test
 
 import (
 	"net/http"
@@ -9,10 +9,10 @@ import (
 	"gotest.tools/v3/assert"
 )
 
-func TestIndexPageHandler_ServeHTTP(t *testing.T) {
+func TestIndexPageHandler(t *testing.T) {
 	ctx := t.Context()
 
-	service, db := tests.NewIndexService(ctx, t)
+	service, db := tests.NewIndexPageService(ctx, t)
 	defer func() {
 		_ = db.Close()
 	}()

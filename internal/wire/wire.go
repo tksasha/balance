@@ -19,11 +19,11 @@ import (
 	"github.com/tksasha/balance/internal/core/common/helpers"
 	"github.com/tksasha/balance/internal/core/common/providers"
 	"github.com/tksasha/balance/internal/core/common/valueobjects"
-	"github.com/tksasha/balance/internal/core/index"
-	indexcomponents "github.com/tksasha/balance/internal/core/index/components"
-	indexhandlers "github.com/tksasha/balance/internal/core/index/handlers"
-	indexrepository "github.com/tksasha/balance/internal/core/index/repository"
-	indexservice "github.com/tksasha/balance/internal/core/index/service"
+	"github.com/tksasha/balance/internal/core/indexpage"
+	indexpagecomponents "github.com/tksasha/balance/internal/core/indexpage/components"
+	indexpagehandler "github.com/tksasha/balance/internal/core/indexpage/handler"
+	indexpagerepository "github.com/tksasha/balance/internal/core/indexpage/repository"
+	indexpageservice "github.com/tksasha/balance/internal/core/indexpage/service"
 	"github.com/tksasha/balance/internal/core/item"
 	itemcomponents "github.com/tksasha/balance/internal/core/item/components"
 	itemhandlers "github.com/tksasha/balance/internal/core/item/handlers"
@@ -60,11 +60,11 @@ func InitializeServer() *server.Server {
 		context.Background,
 		db.Open,
 		helpers.New,
-		indexcomponents.NewIndexPageComponent,
-		indexcomponents.NewMonthsComponent,
-		indexhandlers.NewIndexHandler,
-		indexrepository.New,
-		indexservice.New,
+		indexpagecomponents.NewIndexPageComponent,
+		indexpagecomponents.NewMonthsComponent,
+		indexpagehandler.New,
+		indexpagerepository.New,
+		indexpageservice.New,
 		itemcomponents.NewItemsComponent,
 		itemhandlers.NewCreateHandler,
 		itemhandlers.NewEditHandler,
@@ -82,8 +82,8 @@ func InitializeServer() *server.Server {
 		wire.Bind(new(category.Repository), new(*categoryrepository.Repository)),
 		wire.Bind(new(category.Service), new(*categoryservice.Service)),
 		wire.Bind(new(db.NameProvider), new(*nameprovider.Provider)),
-		wire.Bind(new(index.Repository), new(*indexrepository.Repository)),
-		wire.Bind(new(index.Service), new(*indexservice.Service)),
+		wire.Bind(new(indexpage.Repository), new(*indexpagerepository.Repository)),
+		wire.Bind(new(indexpage.Service), new(*indexpageservice.Service)),
 		wire.Bind(new(item.Repository), new(*itemrepository.Repository)),
 		wire.Bind(new(item.Service), new(*itemservice.Service)),
 		wire.Bind(new(valueobjects.CurrentDateProvider), new(*providers.TimeProvider)),

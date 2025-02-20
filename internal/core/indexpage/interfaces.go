@@ -1,4 +1,4 @@
-package index
+package indexpage
 
 import "context"
 

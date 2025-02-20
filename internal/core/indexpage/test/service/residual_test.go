@@ -4,8 +4,8 @@ import (
 	"errors"
 	"testing"
 
-	"github.com/tksasha/balance/internal/core/index/service"
-	"github.com/tksasha/balance/internal/core/index/test/mocks"
+	"github.com/tksasha/balance/internal/core/indexpage/service"
+	"github.com/tksasha/balance/internal/core/indexpage/test/mocks"
 	"go.uber.org/mock/gomock"
 	"gotest.tools/v3/assert"
 )

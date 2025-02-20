@@ -7,16 +7,16 @@ import (
 	commoncomponents "github.com/tksasha/balance/internal/core/common/components"
 	"github.com/tksasha/balance/internal/core/common/helpers"
 	"github.com/tksasha/balance/internal/core/common/providers"
-	"github.com/tksasha/balance/internal/core/index"
-	"github.com/tksasha/balance/internal/core/index/components"
-	"github.com/tksasha/balance/internal/core/index/handlers"
+	"github.com/tksasha/balance/internal/core/indexpage"
+	"github.com/tksasha/balance/internal/core/indexpage/components"
+	"github.com/tksasha/balance/internal/core/indexpage/handler"
 )
 
 func NewIndexPageHandler(
 	t *testing.T,
-	indexService index.Service,
+	indexPageService indexpage.Service,
 	categoryService category.Service,
-) *handlers.IndexHandler {
+) *handler.Handler {
 	t.Helper()
 
 	currentDateProvider := providers.NewTimeProvider()
@@ -29,5 +29,5 @@ func NewIndexPageHandler(
 
 	indexPageComponent := components.NewIndexPageComponent(baseComponent, monthsComonents)
 
-	return handlers.NewIndexHandler(indexService, categoryService, indexPageComponent)
+	return handler.New(indexPageService, categoryService, indexPageComponent)
 }
