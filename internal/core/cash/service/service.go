@@ -13,6 +13,12 @@ type Service struct {
 	repository cash.Repository
 }
 
+func New(repository cash.Repository) *Service {
+	return &Service{
+		repository: repository,
+	}
+}
+
 func (s *Service) findByID(ctx context.Context, input string) (*cash.Cash, error) {
 	id, err := strconv.Atoi(input)
 	if err != nil {
