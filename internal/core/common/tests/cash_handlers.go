@@ -9,7 +9,6 @@ import (
 	"github.com/tksasha/balance/internal/core/common"
 	commoncomponents "github.com/tksasha/balance/internal/core/common/components"
 	"github.com/tksasha/balance/internal/core/common/helpers"
-	"github.com/tksasha/balance/internal/core/common/providers"
 )
 
 func NewCreateCashHandler(
@@ -20,7 +19,7 @@ func NewCreateCashHandler(
 
 	baseHandler := common.NewBaseHandler()
 
-	currentDateProvider := providers.NewTimeProvider()
+	currentDateProvider := common.NewTimeProvider()
 
 	helpers := helpers.New(currentDateProvider)
 
@@ -39,7 +38,7 @@ func NewEditCashHandler(
 
 	baseHandler := common.NewBaseHandler()
 
-	currentDateProvider := providers.NewTimeProvider()
+	currentDateProvider := common.NewTimeProvider()
 
 	helpers := helpers.New(currentDateProvider)
 
@@ -58,7 +57,7 @@ func NewListCashesHandler(
 
 	baseHandler := common.NewBaseHandler()
 
-	currentDateProvider := providers.NewTimeProvider()
+	currentDateProvider := common.NewTimeProvider()
 
 	helpers := helpers.New(currentDateProvider)
 
@@ -76,7 +75,7 @@ func NewNewCasheHandler(
 
 	baseHandler := common.NewBaseHandler()
 
-	currentDateProvider := providers.NewTimeProvider()
+	currentDateProvider := common.NewTimeProvider()
 
 	helpers := helpers.New(currentDateProvider)
 
@@ -95,7 +94,7 @@ func NewUpdateCashHandler(
 
 	baseHandler := common.NewBaseHandler()
 
-	currentDateProvider := providers.NewTimeProvider()
+	currentDateProvider := common.NewTimeProvider()
 
 	helpers := helpers.New(currentDateProvider)
 

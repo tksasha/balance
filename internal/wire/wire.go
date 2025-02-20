@@ -19,7 +19,6 @@ import (
 	"github.com/tksasha/balance/internal/core/common"
 	"github.com/tksasha/balance/internal/core/common/components"
 	"github.com/tksasha/balance/internal/core/common/helpers"
-	"github.com/tksasha/balance/internal/core/common/providers"
 	"github.com/tksasha/balance/internal/core/common/valueobjects"
 	"github.com/tksasha/balance/internal/core/indexpage"
 	indexpagecomponents "github.com/tksasha/balance/internal/core/indexpage/components"
@@ -61,6 +60,7 @@ func InitializeServer() *server.Server {
 		common.NewBaseHandler,
 		common.NewBaseRepository,
 		common.NewBaseService,
+		common.NewTimeProvider,
 		components.NewBaseComponent,
 		config.New,
 		context.Background,
@@ -80,7 +80,6 @@ func InitializeServer() *server.Server {
 		itemservice.New,
 		middlewares.New,
 		nameprovider.New,
-		providers.NewTimeProvider,
 		routes.New,
 		server.New,
 		wire.Bind(new(cash.Repository), new(*cashrepository.Repository)),
@@ -92,7 +91,7 @@ func InitializeServer() *server.Server {
 		wire.Bind(new(indexpage.Service), new(*indexpageservice.Service)),
 		wire.Bind(new(item.Repository), new(*itemrepository.Repository)),
 		wire.Bind(new(item.Service), new(*itemservice.Service)),
-		wire.Bind(new(valueobjects.CurrentDateProvider), new(*providers.TimeProvider)),
+		wire.Bind(new(valueobjects.CurrentDateProvider), new(*common.TimeProvider)),
 	)
 
 	return nil
