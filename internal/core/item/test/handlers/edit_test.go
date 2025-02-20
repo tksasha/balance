@@ -15,7 +15,7 @@ import (
 func TestItemEditHandler(t *testing.T) {
 	ctx := t.Context()
 
-	service, db := tests.NewItemService(ctx, t)
+	itemService, db := tests.NewItemService(ctx, t)
 	defer func() {
 		_ = db.Close()
 	}()
@@ -25,7 +25,7 @@ func TestItemEditHandler(t *testing.T) {
 		_ = db2.Close()
 	}()
 
-	mux := tests.NewMux(t, "GET /items/{id}/edit", tests.NewEditItemHandler(t, service, categoryService))
+	mux := tests.NewMux(t, "GET /items/{id}/edit", tests.NewEditItemHandler(t, itemService, categoryService))
 
 	t.Run("responds 404 when item not found", func(t *testing.T) {
 		request := tests.NewGetRequest(ctx, t, "/items/1514/edit?currency=usd")

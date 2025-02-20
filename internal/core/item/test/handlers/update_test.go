@@ -15,7 +15,7 @@ import (
 func TestItemUpdateHandler(t *testing.T) { //nolint:funlen
 	ctx := t.Context()
 
-	service, db := tests.NewItemService(ctx, t)
+	itemService, db := tests.NewItemService(ctx, t)
 	defer func() {
 		_ = db.Close()
 	}()
@@ -25,7 +25,7 @@ func TestItemUpdateHandler(t *testing.T) { //nolint:funlen
 		_ = db2.Close()
 	}()
 
-	mux := tests.NewMux(t, "PATCH /items/{id}", tests.NewUpdateItemHandler(t, service, categoryService))
+	mux := tests.NewMux(t, "PATCH /items/{id}", tests.NewUpdateItemHandler(t, itemService, categoryService))
 
 	t.Run("responds 400 on invalid input", func(t *testing.T) {
 		tests.Cleanup(ctx, t)

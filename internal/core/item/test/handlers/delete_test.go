@@ -16,12 +16,12 @@ import (
 func TestDeleteItemHandler(t *testing.T) {
 	ctx := t.Context()
 
-	service, db := tests.NewItemService(ctx, t)
+	itemService, db := tests.NewItemService(ctx, t)
 	defer func() {
 		_ = db.Close()
 	}()
 
-	mux := tests.NewMux(t, "DELETE /items/{id}", handlers.NewDeleteHandler(service))
+	mux := tests.NewMux(t, "DELETE /items/{id}", handlers.NewDeleteHandler(itemService))
 
 	t.Run("renders 404 when item is not found", func(t *testing.T) {
 		request := tests.NewDeleteRequest(ctx, t, "/items/1043")

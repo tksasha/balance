@@ -15,7 +15,7 @@ import (
 func TestItemCreateHandler(t *testing.T) { //nolint:funlen
 	ctx := t.Context()
 
-	service, db := tests.NewItemService(ctx, t)
+	itemService, db := tests.NewItemService(ctx, t)
 	defer func() {
 		_ = db.Close()
 	}()
@@ -25,7 +25,7 @@ func TestItemCreateHandler(t *testing.T) { //nolint:funlen
 		_ = db2.Close()
 	}()
 
-	mux := tests.NewMux(t, "POST /items", tests.NewCreateItemHandler(t, service, categoryService))
+	mux := tests.NewMux(t, "POST /items", tests.NewCreateItemHandler(t, itemService, categoryService))
 
 	t.Run("responds 400 on parse form fails", func(t *testing.T) {
 		request := tests.NewInvalidPostRequest(ctx, t, "/items")

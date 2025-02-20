@@ -12,12 +12,12 @@ import (
 func TestItemListHandler(t *testing.T) {
 	ctx := t.Context()
 
-	service, db := tests.NewItemService(ctx, t)
+	itemService, db := tests.NewItemService(ctx, t)
 	defer func() {
 		_ = db.Close()
 	}()
 
-	mux := tests.NewMux(t, "GET /items", tests.NewListItemsHandler(t, service))
+	mux := tests.NewMux(t, "GET /items", tests.NewListItemsHandler(t, itemService))
 
 	t.Run("responds 200 on items found", func(t *testing.T) {
 		request := tests.NewGetRequest(ctx, t, "/items?currency=eur")
