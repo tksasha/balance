@@ -14,12 +14,14 @@ import (
 )
 
 type IndexPageComponent struct {
-	helpers *helpers.Helpers
+	helpers         *helpers.Helpers
+	monthsComponent *MonthsComponent
 }
 
-func NewIndexPageComponent(helpers *helpers.Helpers) *IndexPageComponent {
+func NewIndexPageComponent(helpers *helpers.Helpers, monthsComponent *MonthsComponent) *IndexPageComponent {
 	return &IndexPageComponent{
-		helpers: helpers,
+		helpers:         helpers,
+		monthsComponent: monthsComponent,
 	}
 }
 
@@ -39,7 +41,7 @@ func (c *IndexPageComponent) Index(req *http.Request, categories category.Catego
 						Class("card mb-3"),
 						Div(
 							Class("card-body"),
-							Months(c.helpers, req),
+							c.monthsComponent.Months(req),
 						),
 					),
 					Div(

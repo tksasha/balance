@@ -22,6 +22,8 @@ func TestMonths(t *testing.T) {
 
 	helpers := helpers.New(currentDateProvider)
 
+	component := components.NewMonthsComponent(helpers)
+
 	ctx := t.Context()
 
 	t.Run("renders months.html for empty request", func(t *testing.T) {
@@ -29,7 +31,7 @@ func TestMonths(t *testing.T) {
 
 		request := tests.NewGetRequest(ctx, t, "/")
 
-		if err := components.Months(helpers, request).Render(writer); err != nil {
+		if err := component.Months(request).Render(writer); err != nil {
 			t.Fatalf("failed to render months: %v", err)
 		}
 
@@ -41,7 +43,7 @@ func TestMonths(t *testing.T) {
 
 		request := tests.NewGetRequest(ctx, t, "/?currency=usd")
 
-		if err := components.Months(helpers, request).Render(writer); err != nil {
+		if err := component.Months(request).Render(writer); err != nil {
 			t.Fatalf("failed to render months: %v", err)
 		}
 

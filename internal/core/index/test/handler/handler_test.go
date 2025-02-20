@@ -30,7 +30,9 @@ func TestIndexPageHandler_ServeHTTP(t *testing.T) {
 
 	helpers := helpers.New(timeProvider)
 
-	indexPageComponent := components.NewIndexPageComponent(helpers)
+	monthsComonents := components.NewMonthsComponent(helpers)
+
+	indexPageComponent := components.NewIndexPageComponent(helpers, monthsComonents)
 
 	mux := tests.NewMux(t, "/", handlers.NewHandler(service, categoryService, indexPageComponent))
 
