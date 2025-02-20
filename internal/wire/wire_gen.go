@@ -70,9 +70,9 @@ func InitializeServer() *server.Server {
 	itemsComponent := components3.NewItemsComponent(baseComponent)
 	createHandler2 := handlers4.NewCreateHandler(service7, service5, itemsComponent)
 	editHandler2 := handlers4.NewEditHandler(service7, service5, itemsComponent)
-	handlersIndexHandler := handlers4.NewIndexHandler(service7, itemsComponent)
+	listHandler2 := handlers4.NewListHandler(service7, itemsComponent)
 	updateHandler2 := handlers4.NewUpdateHandler(service7, service5, itemsComponent)
-	routesRoutes := routes.New(createHandler, deleteHandler, editHandler, listHandler, newHandler, updateHandler, handlersCreateHandler, handlersDeleteHandler, handlersEditHandler, handlersListHandler, handlersUpdateHandler, indexHandler, createHandler2, editHandler2, handlersIndexHandler, updateHandler2)
+	routesRoutes := routes.New(createHandler, deleteHandler, editHandler, listHandler, newHandler, updateHandler, handlersCreateHandler, handlersDeleteHandler, handlersEditHandler, handlersListHandler, handlersUpdateHandler, indexHandler, createHandler2, editHandler2, listHandler2, updateHandler2)
 	v := middlewares.New()
 	serverServer := server.New(configConfig, routesRoutes, v)
 	return serverServer

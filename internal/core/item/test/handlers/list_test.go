@@ -9,7 +9,7 @@ import (
 	"gotest.tools/v3/assert"
 )
 
-func TestItemIndexHandler(t *testing.T) {
+func TestItemListHandler(t *testing.T) {
 	ctx := t.Context()
 
 	service, db := tests.NewItemService(ctx, t)
@@ -17,7 +17,7 @@ func TestItemIndexHandler(t *testing.T) {
 		_ = db.Close()
 	}()
 
-	mux := tests.NewMux(t, "GET /items", tests.NewIndexItemsHandler(t, service))
+	mux := tests.NewMux(t, "GET /items", tests.NewListItemsHandler(t, service))
 
 	t.Run("responds 200 on items found", func(t *testing.T) {
 		request := tests.NewGetRequest(ctx, t, "/items?currency=eur")
