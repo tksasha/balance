@@ -13,13 +13,17 @@ import (
 )
 
 type IndexPageComponent struct {
-	components.BaseComponent
+	*components.BaseComponent
 
 	monthsComponent *MonthsComponent
 }
 
-func NewIndexPageComponent(monthsComponent *MonthsComponent) *IndexPageComponent {
+func NewIndexPageComponent(
+	baseComponent *components.BaseComponent,
+	monthsComponent *MonthsComponent,
+) *IndexPageComponent {
 	return &IndexPageComponent{
+		BaseComponent:   baseComponent,
 		monthsComponent: monthsComponent,
 	}
 }

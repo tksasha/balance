@@ -61,7 +61,7 @@ func InitializeServer() *server.Server {
 	helpersHelpers := helpers.New(timeProvider)
 	baseComponent := components.NewBaseComponent(helpersHelpers)
 	monthsComponent := components2.NewMonthsComponent(baseComponent)
-	indexPageComponent := components2.NewIndexPageComponent(monthsComponent)
+	indexPageComponent := components2.NewIndexPageComponent(baseComponent, monthsComponent)
 	indexHandler2 := handlers3.NewIndexHandler(service6, service5, indexPageComponent)
 	repository7 := repository4.New(sqlDB)
 	service7 := service4.New(repository7, repository5)
