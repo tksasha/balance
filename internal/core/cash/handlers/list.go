@@ -8,22 +8,22 @@ import (
 	"github.com/tksasha/balance/internal/core/common/handlers"
 )
 
-type IndexHandler struct {
+type ListHandler struct {
 	service       cash.Service
 	cashComponent *component.Component
 }
 
-func NewIndexHandler(
+func NewListHandler(
 	service cash.Service,
 	cashComponent *component.Component,
-) *IndexHandler {
-	return &IndexHandler{
+) *ListHandler {
+	return &ListHandler{
 		service:       service,
 		cashComponent: cashComponent,
 	}
 }
 
-func (h *IndexHandler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
+func (h *ListHandler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 	cashes, err := h.handle(r)
 	if err != nil {
 		handlers.SetError(w, err)
@@ -36,6 +36,6 @@ func (h *IndexHandler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 	handlers.SetError(w, err)
 }
 
-func (h *IndexHandler) handle(r *http.Request) (cash.Cashes, error) {
+func (h *ListHandler) handle(r *http.Request) (cash.Cashes, error) {
 	return h.service.List(r.Context())
 }

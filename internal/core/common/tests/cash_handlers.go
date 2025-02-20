@@ -48,7 +48,7 @@ func NewEditCashHandler(
 func NewListCashesHandler(
 	t *testing.T,
 	cashService cash.Service,
-) *handlers.IndexHandler {
+) *handlers.ListHandler {
 	t.Helper()
 
 	currentDateProvider := providers.NewTimeProvider()
@@ -59,7 +59,7 @@ func NewListCashesHandler(
 
 	cashComponent := component.New(baseComponent)
 
-	return handlers.NewIndexHandler(cashService, cashComponent)
+	return handlers.NewListHandler(cashService, cashComponent)
 }
 
 func NewNewCasheHandler(

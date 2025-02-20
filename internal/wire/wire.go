@@ -43,7 +43,7 @@ func InitializeServer() *server.Server {
 		cashhandlers.NewCreateHandler,
 		cashhandlers.NewDeleteHandler,
 		cashhandlers.NewEditHandler,
-		cashhandlers.NewIndexHandler,
+		cashhandlers.NewListHandler,
 		cashhandlers.NewNewHandler,
 		cashhandlers.NewUpdateHandler,
 		cashrepository.New,

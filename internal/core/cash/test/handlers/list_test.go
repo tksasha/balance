@@ -9,7 +9,7 @@ import (
 	"gotest.tools/v3/assert"
 )
 
-func TestCashIndexHandler(t *testing.T) {
+func TestCashListHandler(t *testing.T) {
 	ctx := t.Context()
 
 	cashService, db := tests.NewCashService(ctx, t)
