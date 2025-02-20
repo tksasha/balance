@@ -5,22 +5,25 @@ import (
 
 	"github.com/tksasha/balance/internal/core/category"
 	"github.com/tksasha/balance/internal/core/common/handlers"
-	"github.com/tksasha/balance/internal/core/common/helpers"
 	"github.com/tksasha/balance/internal/core/index"
 	"github.com/tksasha/balance/internal/core/index/components"
 )
 
 type Handler struct {
-	helpers         *helpers.Helpers
-	service         index.Service
-	categoryService category.Service
+	service            index.Service
+	categoryService    category.Service
+	indexPageComponent *components.IndexPageComponent
 }
 
-func NewHandler(helpers *helpers.Helpers, service index.Service, categoryService category.Service) *Handler {
+func NewHandler(
+	service index.Service,
+	categoryService category.Service,
+	indexPageComponent *components.IndexPageComponent,
+) *Handler {
 	return &Handler{
-		helpers:         helpers,
-		service:         service,
-		categoryService: categoryService,
+		service:            service,
+		categoryService:    categoryService,
+		indexPageComponent: indexPageComponent,
 	}
 }
 
@@ -32,7 +35,7 @@ func (h *Handler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	err = components.Index(h.helpers, categories, r).Render(w)
+	err = h.indexPageComponent.Index(r, categories).Render(w)
 
 	handlers.SetError(w, err)
 }

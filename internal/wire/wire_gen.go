@@ -16,6 +16,7 @@ import (
 	service2 "github.com/tksasha/balance/internal/core/category/service"
 	"github.com/tksasha/balance/internal/core/common/helpers"
 	"github.com/tksasha/balance/internal/core/common/providers"
+	"github.com/tksasha/balance/internal/core/index/components"
 	handlers3 "github.com/tksasha/balance/internal/core/index/handler"
 	repository3 "github.com/tksasha/balance/internal/core/index/repository"
 	service3 "github.com/tksasha/balance/internal/core/index/service"
@@ -52,11 +53,12 @@ func InitializeServer() *server.Server {
 	handlersEditHandler := handlers2.NewEditHandler(service5)
 	handlersIndexHandler := handlers2.NewIndexHandler(service5)
 	handlersUpdateHandler := handlers2.NewUpdateHandler(service5)
-	timeProvider := providers.NewTimeProvider()
-	helpersHelpers := helpers.New(timeProvider)
 	repository6 := repository3.New(sqlDB)
 	service6 := service3.New(repository6)
-	handler := handlers3.NewHandler(helpersHelpers, service6, service5)
+	timeProvider := providers.NewTimeProvider()
+	helpersHelpers := helpers.New(timeProvider)
+	indexPageComponent := components.NewIndexPageComponent(helpersHelpers)
+	handler := handlers3.NewHandler(service6, service5, indexPageComponent)
 	repository7 := repository4.New(sqlDB)
 	service7 := service4.New(repository7, repository5)
 	createHandler2 := handlers4.NewCreateHandler(service7, service5)

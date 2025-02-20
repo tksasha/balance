@@ -13,7 +13,17 @@ import (
 	. "maragu.dev/gomponents/html"       //nolint:stylecheck
 )
 
-func Index(helpers *helpers.Helpers, categories category.Categories, request *http.Request) Node {
+type IndexPageComponent struct {
+	helpers *helpers.Helpers
+}
+
+func NewIndexPageComponent(helpers *helpers.Helpers) *IndexPageComponent {
+	return &IndexPageComponent{
+		helpers: helpers,
+	}
+}
+
+func (c *IndexPageComponent) Index(req *http.Request, categories category.Categories) Node {
 	return HTML5(
 		HTML5Props{
 			Title:    "Balance",
@@ -29,7 +39,7 @@ func Index(helpers *helpers.Helpers, categories category.Categories, request *ht
 						Class("card mb-3"),
 						Div(
 							Class("card-body"),
-							Months(helpers, request),
+							Months(c.helpers, req),
 						),
 					),
 					Div(

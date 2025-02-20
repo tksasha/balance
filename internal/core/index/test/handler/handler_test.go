@@ -8,6 +8,7 @@ import (
 	"github.com/tksasha/balance/internal/core/common/helpers"
 	"github.com/tksasha/balance/internal/core/common/providers"
 	"github.com/tksasha/balance/internal/core/common/tests"
+	"github.com/tksasha/balance/internal/core/index/components"
 	handlers "github.com/tksasha/balance/internal/core/index/handler"
 	"gotest.tools/v3/assert"
 )
@@ -29,7 +30,9 @@ func TestIndexPageHandler_ServeHTTP(t *testing.T) {
 
 	helpers := helpers.New(timeProvider)
 
-	mux := tests.NewMux(t, "/", handlers.NewHandler(helpers, service, categoryService))
+	indexPageComponent := components.NewIndexPageComponent(helpers)
+
+	mux := tests.NewMux(t, "/", handlers.NewHandler(service, categoryService, indexPageComponent))
 
 	t.Run("renders 200 when there no errors", func(t *testing.T) {
 		request := tests.NewGetRequest(ctx, t, "/")
