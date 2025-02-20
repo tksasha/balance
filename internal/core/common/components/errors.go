@@ -9,7 +9,7 @@ import (
 	. "maragu.dev/gomponents/html" //nolint:stylecheck
 )
 
-func Errors(attribute string, errors validation.Errors) Node {
+func (c *BaseComponent) Errors(attribute string, errors validation.Errors) Node {
 	if !has(attribute, errors) {
 		return nil
 	}

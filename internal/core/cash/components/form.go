@@ -2,7 +2,6 @@ package components
 
 import (
 	"github.com/tksasha/balance/internal/core/cash"
-	"github.com/tksasha/balance/internal/core/common/components"
 	"github.com/tksasha/balance/pkg/validation"
 	. "maragu.dev/gomponents"      //nolint:stylecheck
 	. "maragu.dev/gomponents/html" //nolint:stylecheck
@@ -22,7 +21,7 @@ func (c *CashComponent) form(cash *cash.Cash, errors validation.Errors) Node {
 				ID("cash_name"),
 				Value(cash.Name),
 			),
-			components.Errors("name", errors),
+			c.Errors("name", errors),
 		),
 		Div(
 			Class("mb-3"),

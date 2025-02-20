@@ -4,7 +4,6 @@ import (
 	"strconv"
 
 	"github.com/tksasha/balance/internal/core/category"
-	"github.com/tksasha/balance/internal/core/common/components"
 	"github.com/tksasha/balance/internal/core/item"
 	"github.com/tksasha/balance/pkg/validation"
 	. "maragu.dev/gomponents"      //nolint:stylecheck
@@ -35,7 +34,7 @@ func (c *IndexPageComponent) form( //nolint:funlen
 				Value(
 					c.Date(item.Date),
 				),
-				components.Errors("date", errors),
+				c.Errors("date", errors),
 			),
 		),
 		Div(

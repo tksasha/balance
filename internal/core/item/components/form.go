@@ -2,7 +2,6 @@ package components
 
 import (
 	"github.com/tksasha/balance/internal/core/category"
-	"github.com/tksasha/balance/internal/core/common/components"
 	"github.com/tksasha/balance/internal/core/item"
 	"github.com/tksasha/balance/pkg/validation"
 	. "maragu.dev/gomponents"      //nolint:stylecheck
@@ -15,7 +14,7 @@ func (c *ItemsComponent) form(item *item.Item, categories category.Categories, e
 	return Form(
 		Div(
 			Label(Text("Date")),
-			components.Errors("date", errors),
+			c.Errors("date", errors),
 		),
 		Div(
 			Label(
@@ -23,7 +22,7 @@ func (c *ItemsComponent) form(item *item.Item, categories category.Categories, e
 			),
 			Input(
 				Value(c.sum(item.Sum)),
-				components.Errors("sum", errors),
+				c.Errors("sum", errors),
 			),
 		),
 		Div(
