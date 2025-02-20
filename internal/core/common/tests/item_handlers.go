@@ -5,6 +5,7 @@ import (
 
 	"github.com/tksasha/balance/internal/core/category"
 	"github.com/tksasha/balance/internal/core/common"
+	"github.com/tksasha/balance/internal/core/common/component"
 	"github.com/tksasha/balance/internal/core/item"
 	"github.com/tksasha/balance/internal/core/item/components"
 	"github.com/tksasha/balance/internal/core/item/handlers"
@@ -17,13 +18,9 @@ func NewCreateItemHandler(
 ) *handlers.CreateHandler {
 	t.Helper()
 
-	baseHandler := common.NewBaseHandler()
+	itemsComponent := components.NewItemsComponent(component.New())
 
-	baseComponent := common.NewBaseComponent()
-
-	itemsComponent := components.NewItemsComponent(baseComponent)
-
-	return handlers.NewCreateHandler(baseHandler, itemService, categoryService, itemsComponent)
+	return handlers.NewCreateHandler(common.NewBaseHandler(), itemService, categoryService, itemsComponent)
 }
 
 func NewEditItemHandler(
@@ -33,13 +30,9 @@ func NewEditItemHandler(
 ) *handlers.EditHandler {
 	t.Helper()
 
-	baseHandler := common.NewBaseHandler()
+	itemsComponent := components.NewItemsComponent(component.New())
 
-	baseComponent := common.NewBaseComponent()
-
-	itemsComponent := components.NewItemsComponent(baseComponent)
-
-	return handlers.NewEditHandler(baseHandler, itemService, categoryService, itemsComponent)
+	return handlers.NewEditHandler(common.NewBaseHandler(), itemService, categoryService, itemsComponent)
 }
 
 func NewUpdateItemHandler(
@@ -49,37 +42,21 @@ func NewUpdateItemHandler(
 ) *handlers.UpdateHandler {
 	t.Helper()
 
-	baseHandler := common.NewBaseHandler()
+	itemsComponent := components.NewItemsComponent(component.New())
 
-	baseComponent := common.NewBaseComponent()
-
-	itemsComponent := components.NewItemsComponent(baseComponent)
-
-	return handlers.NewUpdateHandler(baseHandler, itemService, categoryService, itemsComponent)
+	return handlers.NewUpdateHandler(common.NewBaseHandler(), itemService, categoryService, itemsComponent)
 }
 
-func NewListItemsHandler(
-	t *testing.T,
-	itemService item.Service,
-) *handlers.ListHandler {
+func NewListItemsHandler(t *testing.T, itemService item.Service) *handlers.ListHandler {
 	t.Helper()
 
-	baseHandler := common.NewBaseHandler()
+	itemsComponent := components.NewItemsComponent(component.New())
 
-	baseComponent := common.NewBaseComponent()
-
-	itemsComponent := components.NewItemsComponent(baseComponent)
-
-	return handlers.NewListHandler(baseHandler, itemService, itemsComponent)
+	return handlers.NewListHandler(common.NewBaseHandler(), itemService, itemsComponent)
 }
 
-func NewDeleteItemHandler(
-	t *testing.T,
-	itemService item.Service,
-) *handlers.DeleteHandler {
+func NewDeleteItemHandler(t *testing.T, itemService item.Service) *handlers.DeleteHandler {
 	t.Helper()
 
-	baseHandler := common.NewBaseHandler()
-
-	return handlers.NewDeleteHandler(baseHandler, itemService)
+	return handlers.NewDeleteHandler(common.NewBaseHandler(), itemService)
 }

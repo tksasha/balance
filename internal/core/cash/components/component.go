@@ -1,13 +1,15 @@
 package components
 
-import "github.com/tksasha/balance/internal/core/common"
+import (
+	"github.com/tksasha/balance/internal/core/common/component"
+)
 
 type CashComponent struct {
-	*common.BaseComponent
+	*component.Component
 }
 
-func NewCashComponent(baseComponent *common.BaseComponent) *CashComponent {
+func NewCashComponent(component *component.Component) *CashComponent {
 	return &CashComponent{
-		BaseComponent: baseComponent,
+		Component: component,
 	}
 }

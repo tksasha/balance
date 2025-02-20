@@ -7,75 +7,43 @@ import (
 	"github.com/tksasha/balance/internal/core/category/components"
 	"github.com/tksasha/balance/internal/core/category/handlers"
 	"github.com/tksasha/balance/internal/core/common"
+	"github.com/tksasha/balance/internal/core/common/component"
 )
 
-func NewListCategoriesHandler(
-	t *testing.T,
-	categoryService category.Service,
-) *handlers.ListHandler {
+func NewListCategoriesHandler(t *testing.T, categoryService category.Service) *handlers.ListHandler {
 	t.Helper()
 
-	baseHandler := common.NewBaseHandler()
+	categoryComponent := components.NewCategoryComponent(component.New())
 
-	baseComponent := common.NewBaseComponent()
-
-	categoryComponent := components.NewCategoryComponent(baseComponent)
-
-	return handlers.NewListHandler(baseHandler, categoryService, categoryComponent)
+	return handlers.NewListHandler(common.NewBaseHandler(), categoryService, categoryComponent)
 }
 
-func NewCreateCategoryHandler(
-	t *testing.T,
-	categoryService category.Service,
-) *handlers.CreateHandler {
+func NewCreateCategoryHandler(t *testing.T, categoryService category.Service) *handlers.CreateHandler {
 	t.Helper()
 
-	baseHandler := common.NewBaseHandler()
+	categoryComponent := components.NewCategoryComponent(component.New())
 
-	baseComponent := common.NewBaseComponent()
-
-	categoryComponent := components.NewCategoryComponent(baseComponent)
-
-	return handlers.NewCreateHandler(baseHandler, categoryService, categoryComponent)
+	return handlers.NewCreateHandler(common.NewBaseHandler(), categoryService, categoryComponent)
 }
 
-func NewEditCategoryHandler(
-	t *testing.T,
-	categoryService category.Service,
-) *handlers.EditHandler {
+func NewEditCategoryHandler(t *testing.T, categoryService category.Service) *handlers.EditHandler {
 	t.Helper()
 
-	baseHandler := common.NewBaseHandler()
+	categoryComponent := components.NewCategoryComponent(component.New())
 
-	baseComponent := common.NewBaseComponent()
-
-	categoryComponent := components.NewCategoryComponent(baseComponent)
-
-	return handlers.NewEditHandler(baseHandler, categoryService, categoryComponent)
+	return handlers.NewEditHandler(common.NewBaseHandler(), categoryService, categoryComponent)
 }
 
-func NewUpdateCategoryHandler(
-	t *testing.T,
-	categoryService category.Service,
-) *handlers.UpdateHandler {
+func NewUpdateCategoryHandler(t *testing.T, categoryService category.Service) *handlers.UpdateHandler {
 	t.Helper()
 
-	baseHandler := common.NewBaseHandler()
+	categoryComponent := components.NewCategoryComponent(component.New())
 
-	baseComponent := common.NewBaseComponent()
-
-	categoryComponent := components.NewCategoryComponent(baseComponent)
-
-	return handlers.NewUpdateHandler(baseHandler, categoryService, categoryComponent)
+	return handlers.NewUpdateHandler(common.NewBaseHandler(), categoryService, categoryComponent)
 }
 
-func NewCategoryDeleteHandler(
-	t *testing.T,
-	categoryService category.Service,
-) *handlers.DeleteHandler {
+func NewCategoryDeleteHandler(t *testing.T, categoryService category.Service) *handlers.DeleteHandler {
 	t.Helper()
 
-	baseHandler := common.NewBaseHandler()
-
-	return handlers.NewDeleteHandler(baseHandler, categoryService)
+	return handlers.NewDeleteHandler(common.NewBaseHandler(), categoryService)
 }

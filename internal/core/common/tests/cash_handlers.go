@@ -7,86 +7,50 @@ import (
 	"github.com/tksasha/balance/internal/core/cash/components"
 	"github.com/tksasha/balance/internal/core/cash/handlers"
 	"github.com/tksasha/balance/internal/core/common"
+	"github.com/tksasha/balance/internal/core/common/component"
 )
 
-func NewCreateCashHandler(
-	t *testing.T,
-	cashService cash.Service,
-) *handlers.CreateHandler {
+func NewCreateCashHandler(t *testing.T, cashService cash.Service) *handlers.CreateHandler {
 	t.Helper()
 
-	baseHandler := common.NewBaseHandler()
+	cashComponent := components.NewCashComponent(component.New())
 
-	baseComponent := common.NewBaseComponent()
-
-	cashComponent := components.NewCashComponent(baseComponent)
-
-	return handlers.NewCreateHandler(baseHandler, cashService, cashComponent)
+	return handlers.NewCreateHandler(common.NewBaseHandler(), cashService, cashComponent)
 }
 
-func NewEditCashHandler(
-	t *testing.T,
-	cashService cash.Service,
-) *handlers.EditHandler {
+func NewEditCashHandler(t *testing.T, cashService cash.Service) *handlers.EditHandler {
 	t.Helper()
 
-	baseHandler := common.NewBaseHandler()
+	cashComponent := components.NewCashComponent(component.New())
 
-	baseComponent := common.NewBaseComponent()
-
-	cashComponent := components.NewCashComponent(baseComponent)
-
-	return handlers.NewEditHandler(baseHandler, cashService, cashComponent)
+	return handlers.NewEditHandler(common.NewBaseHandler(), cashService, cashComponent)
 }
 
-func NewListCashesHandler(
-	t *testing.T,
-	cashService cash.Service,
-) *handlers.ListHandler {
+func NewListCashesHandler(t *testing.T, cashService cash.Service) *handlers.ListHandler {
 	t.Helper()
 
-	baseHandler := common.NewBaseHandler()
+	cashComponent := components.NewCashComponent(component.New())
 
-	baseComponent := common.NewBaseComponent()
-
-	cashComponent := components.NewCashComponent(baseComponent)
-
-	return handlers.NewListHandler(baseHandler, cashService, cashComponent)
+	return handlers.NewListHandler(common.NewBaseHandler(), cashService, cashComponent)
 }
 
-func NewNewCasheHandler(
-	t *testing.T,
-) *handlers.NewHandler {
+func NewNewCasheHandler(t *testing.T) *handlers.NewHandler {
 	t.Helper()
 
-	baseHandler := common.NewBaseHandler()
+	cashComponent := components.NewCashComponent(component.New())
 
-	baseComponent := common.NewBaseComponent()
-
-	cashComponent := components.NewCashComponent(baseComponent)
-
-	return handlers.NewNewHandler(baseHandler, cashComponent)
+	return handlers.NewNewHandler(common.NewBaseHandler(), cashComponent)
 }
 
-func NewUpdateCashHandler(
-	t *testing.T,
-	cashService cash.Service,
-) *handlers.UpdateHandler {
+func NewUpdateCashHandler(t *testing.T, cashService cash.Service) *handlers.UpdateHandler {
 	t.Helper()
 
-	baseHandler := common.NewBaseHandler()
+	cashComponent := components.NewCashComponent(component.New())
 
-	baseComponent := common.NewBaseComponent()
-
-	cashComponent := components.NewCashComponent(baseComponent)
-
-	return handlers.NewUpdateHandler(baseHandler, cashService, cashComponent)
+	return handlers.NewUpdateHandler(common.NewBaseHandler(), cashService, cashComponent)
 }
 
-func NewDeleteCashHandler(
-	t *testing.T,
-	cashService cash.Service,
-) *handlers.DeleteHandler {
+func NewDeleteCashHandler(t *testing.T, cashService cash.Service) *handlers.DeleteHandler {
 	t.Helper()
 
 	return handlers.NewDeleteHandler(common.NewBaseHandler(), cashService)

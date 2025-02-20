@@ -1,13 +1,15 @@
 package components
 
-import "github.com/tksasha/balance/internal/core/common"
+import (
+	"github.com/tksasha/balance/internal/core/common/component"
+)
 
 type ItemsComponent struct {
-	*common.BaseComponent
+	*component.Component
 }
 
-func NewItemsComponent(baseComponent *common.BaseComponent) *ItemsComponent {
+func NewItemsComponent(component *component.Component) *ItemsComponent {
 	return &ItemsComponent{
-		BaseComponent: baseComponent,
+		Component: component,
 	}
 }

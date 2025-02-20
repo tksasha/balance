@@ -4,14 +4,14 @@ import (
 	"bytes"
 	"testing"
 
-	"github.com/tksasha/balance/internal/core/common"
+	"github.com/tksasha/balance/internal/core/common/component"
 	"github.com/tksasha/balance/internal/core/common/tests"
 	"github.com/tksasha/balance/internal/core/indexpage/components"
 	"gotest.tools/v3/golden"
 )
 
 func TestMonths(t *testing.T) {
-	component := components.NewMonthsComponent(common.NewBaseComponent())
+	component := components.NewMonthsComponent(component.New())
 
 	ctx := t.Context()
 
