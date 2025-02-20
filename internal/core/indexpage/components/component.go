@@ -1,17 +1,15 @@
 package components
 
-import (
-	"github.com/tksasha/balance/internal/core/common/components"
-)
+import "github.com/tksasha/balance/internal/core/common"
 
 type IndexPageComponent struct {
-	*components.BaseComponent
+	*common.BaseComponent
 
 	monthsComponent *MonthsComponent
 }
 
 func NewIndexPageComponent(
-	baseComponent *components.BaseComponent,
+	baseComponent *common.BaseComponent,
 	monthsComponent *MonthsComponent,
 ) *IndexPageComponent {
 	return &IndexPageComponent{

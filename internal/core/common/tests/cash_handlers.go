@@ -7,7 +7,6 @@ import (
 	"github.com/tksasha/balance/internal/core/cash/components"
 	"github.com/tksasha/balance/internal/core/cash/handlers"
 	"github.com/tksasha/balance/internal/core/common"
-	commoncomponents "github.com/tksasha/balance/internal/core/common/components"
 	"github.com/tksasha/balance/internal/core/common/helpers"
 )
 
@@ -23,7 +22,7 @@ func NewCreateCashHandler(
 
 	helpers := helpers.New(currentDateProvider)
 
-	baseComponent := commoncomponents.NewBaseComponent(helpers)
+	baseComponent := common.NewBaseComponent(helpers)
 
 	cashComponent := components.NewCashComponent(baseComponent)
 
@@ -42,7 +41,7 @@ func NewEditCashHandler(
 
 	helpers := helpers.New(currentDateProvider)
 
-	baseComponent := commoncomponents.NewBaseComponent(helpers)
+	baseComponent := common.NewBaseComponent(helpers)
 
 	cashComponent := components.NewCashComponent(baseComponent)
 
@@ -61,7 +60,7 @@ func NewListCashesHandler(
 
 	helpers := helpers.New(currentDateProvider)
 
-	baseComponent := commoncomponents.NewBaseComponent(helpers)
+	baseComponent := common.NewBaseComponent(helpers)
 
 	cashComponent := components.NewCashComponent(baseComponent)
 
@@ -79,7 +78,7 @@ func NewNewCasheHandler(
 
 	helpers := helpers.New(currentDateProvider)
 
-	baseComponent := commoncomponents.NewBaseComponent(helpers)
+	baseComponent := common.NewBaseComponent(helpers)
 
 	cashComponent := components.NewCashComponent(baseComponent)
 
@@ -98,7 +97,7 @@ func NewUpdateCashHandler(
 
 	helpers := helpers.New(currentDateProvider)
 
-	baseComponent := commoncomponents.NewBaseComponent(helpers)
+	baseComponent := common.NewBaseComponent(helpers)
 
 	cashComponent := components.NewCashComponent(baseComponent)
 

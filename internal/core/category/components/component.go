@@ -1,12 +1,12 @@
 package components
 
-import "github.com/tksasha/balance/internal/core/common/components"
+import "github.com/tksasha/balance/internal/core/common"
 
 type CategoryComponent struct {
-	*components.BaseComponent
+	*common.BaseComponent
 }
 
-func NewCategoryComponent(baseComponent *components.BaseComponent) *CategoryComponent {
+func NewCategoryComponent(baseComponent *common.BaseComponent) *CategoryComponent {
 	return &CategoryComponent{
 		BaseComponent: baseComponent,
 	}

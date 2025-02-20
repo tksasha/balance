@@ -7,7 +7,6 @@ import (
 	"github.com/tksasha/balance/internal/core/category/components"
 	"github.com/tksasha/balance/internal/core/category/handlers"
 	"github.com/tksasha/balance/internal/core/common"
-	commoncomponents "github.com/tksasha/balance/internal/core/common/components"
 	"github.com/tksasha/balance/internal/core/common/helpers"
 )
 
@@ -23,7 +22,7 @@ func NewListCategoriesHandler(
 
 	helpers := helpers.New(currentDateProvider)
 
-	baseComponent := commoncomponents.NewBaseComponent(helpers)
+	baseComponent := common.NewBaseComponent(helpers)
 
 	categoryComponent := components.NewCategoryComponent(baseComponent)
 
@@ -42,7 +41,7 @@ func NewCreateCategoryHandler(
 
 	helpers := helpers.New(currentDateProvider)
 
-	baseComponent := commoncomponents.NewBaseComponent(helpers)
+	baseComponent := common.NewBaseComponent(helpers)
 
 	categoryComponent := components.NewCategoryComponent(baseComponent)
 
@@ -61,7 +60,7 @@ func NewEditCategoryHandler(
 
 	helpers := helpers.New(currentDateProvider)
 
-	baseComponent := commoncomponents.NewBaseComponent(helpers)
+	baseComponent := common.NewBaseComponent(helpers)
 
 	categoryComponent := components.NewCategoryComponent(baseComponent)
 
@@ -80,7 +79,7 @@ func NewUpdateCategoryHandler(
 
 	helpers := helpers.New(currentDateProvider)
 
-	baseComponent := commoncomponents.NewBaseComponent(helpers)
+	baseComponent := common.NewBaseComponent(helpers)
 
 	categoryComponent := components.NewCategoryComponent(baseComponent)
 

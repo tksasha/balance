@@ -4,7 +4,7 @@ import (
 	"fmt"
 	"net/http"
 
-	"github.com/tksasha/balance/internal/core/common/components"
+	"github.com/tksasha/balance/internal/core/common"
 	"github.com/tksasha/month"
 	. "maragu.dev/gomponents" //nolint:stylecheck
 	hx "maragu.dev/gomponents-htmx"
@@ -12,10 +12,10 @@ import (
 )
 
 type MonthsComponent struct {
-	*components.BaseComponent
+	*common.BaseComponent
 }
 
-func NewMonthsComponent(baseComponent *components.BaseComponent) *MonthsComponent {
+func NewMonthsComponent(baseComponent *common.BaseComponent) *MonthsComponent {
 	return &MonthsComponent{
 		BaseComponent: baseComponent,
 	}

@@ -7,22 +7,21 @@ package wire
 
 import (
 	"context"
-	components2 "github.com/tksasha/balance/internal/core/cash/components"
+	"github.com/tksasha/balance/internal/core/cash/components"
 	"github.com/tksasha/balance/internal/core/cash/handlers"
 	"github.com/tksasha/balance/internal/core/cash/repository"
 	"github.com/tksasha/balance/internal/core/cash/service"
-	components3 "github.com/tksasha/balance/internal/core/category/components"
+	components2 "github.com/tksasha/balance/internal/core/category/components"
 	handlers2 "github.com/tksasha/balance/internal/core/category/handlers"
 	repository2 "github.com/tksasha/balance/internal/core/category/repository"
 	service2 "github.com/tksasha/balance/internal/core/category/service"
 	"github.com/tksasha/balance/internal/core/common"
-	"github.com/tksasha/balance/internal/core/common/components"
 	"github.com/tksasha/balance/internal/core/common/helpers"
-	components4 "github.com/tksasha/balance/internal/core/indexpage/components"
+	components3 "github.com/tksasha/balance/internal/core/indexpage/components"
 	"github.com/tksasha/balance/internal/core/indexpage/handler"
 	repository3 "github.com/tksasha/balance/internal/core/indexpage/repository"
 	service3 "github.com/tksasha/balance/internal/core/indexpage/service"
-	components5 "github.com/tksasha/balance/internal/core/item/components"
+	components4 "github.com/tksasha/balance/internal/core/item/components"
 	handlers3 "github.com/tksasha/balance/internal/core/item/handlers"
 	repository4 "github.com/tksasha/balance/internal/core/item/repository"
 	service4 "github.com/tksasha/balance/internal/core/item/service"
@@ -47,8 +46,8 @@ func InitializeServer() *server.Server {
 	serviceService := service.New(repositoryRepository)
 	timeProvider := common.NewTimeProvider()
 	helpersHelpers := helpers.New(timeProvider)
-	baseComponent := components.NewBaseComponent(helpersHelpers)
-	cashComponent := components2.NewCashComponent(baseComponent)
+	baseComponent := common.NewBaseComponent(helpersHelpers)
+	cashComponent := components.NewCashComponent(baseComponent)
 	createHandler := handlers.NewCreateHandler(baseHandler, serviceService, cashComponent)
 	deleteHandler := handlers.NewDeleteHandler(baseHandler, serviceService)
 	editHandler := handlers.NewEditHandler(baseHandler, serviceService, cashComponent)
@@ -58,7 +57,7 @@ func InitializeServer() *server.Server {
 	baseService := common.NewBaseService()
 	repository5 := repository2.New(baseRepository, sqlDB)
 	service5 := service2.New(baseService, repository5)
-	categoryComponent := components3.NewCategoryComponent(baseComponent)
+	categoryComponent := components2.NewCategoryComponent(baseComponent)
 	handlersCreateHandler := handlers2.NewCreateHandler(baseHandler, service5, categoryComponent)
 	handlersDeleteHandler := handlers2.NewDeleteHandler(baseHandler, service5)
 	handlersEditHandler := handlers2.NewEditHandler(baseHandler, service5, categoryComponent)
@@ -66,12 +65,12 @@ func InitializeServer() *server.Server {
 	handlersUpdateHandler := handlers2.NewUpdateHandler(baseHandler, service5, categoryComponent)
 	repository6 := repository3.New(baseRepository, sqlDB)
 	service6 := service3.New(repository6)
-	monthsComponent := components4.NewMonthsComponent(baseComponent)
-	indexPageComponent := components4.NewIndexPageComponent(baseComponent, monthsComponent)
+	monthsComponent := components3.NewMonthsComponent(baseComponent)
+	indexPageComponent := components3.NewIndexPageComponent(baseComponent, monthsComponent)
 	handlerHandler := handler.New(baseHandler, service6, service5, indexPageComponent)
 	repository7 := repository4.New(baseRepository, sqlDB)
 	service7 := service4.New(baseService, repository7, repository5)
-	itemsComponent := components5.NewItemsComponent(baseComponent)
+	itemsComponent := components4.NewItemsComponent(baseComponent)
 	createHandler2 := handlers3.NewCreateHandler(baseHandler, service7, service5, itemsComponent)
 	editHandler2 := handlers3.NewEditHandler(baseHandler, service7, service5, itemsComponent)
 	listHandler2 := handlers3.NewListHandler(baseHandler, service7, itemsComponent)
