@@ -6,8 +6,8 @@ import (
 	. "maragu.dev/gomponents/html" //nolint: stylecheck
 )
 
-func Edit(category *category.Category) Node {
+func (c *CategoryComponent) Edit(category *category.Category) Node {
 	return Div(
-		form(category, nil),
+		c.form(category, nil),
 	)
 }

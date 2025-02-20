@@ -6,7 +6,6 @@ import (
 	"testing"
 
 	"github.com/tksasha/balance/internal/core/category"
-	"github.com/tksasha/balance/internal/core/category/handlers"
 	"github.com/tksasha/balance/internal/core/common/tests"
 	"github.com/tksasha/balance/pkg/currencies"
 	"gotest.tools/v3/assert"
@@ -15,12 +14,12 @@ import (
 func TestCategoryEditHandler(t *testing.T) {
 	ctx := t.Context()
 
-	service, db := tests.NewCategoryService(ctx, t)
+	categoryService, db := tests.NewCategoryService(ctx, t)
 	defer func() {
 		_ = db.Close()
 	}()
 
-	mux := tests.NewMux(t, "GET /categories/{id}/edit", handlers.NewEditHandler(service))
+	mux := tests.NewMux(t, "GET /categories/{id}/edit", tests.NewEditCategoryHandler(t, categoryService))
 
 	t.Run("responds 404 on category not found", func(t *testing.T) {
 		tests.Cleanup(ctx, t)

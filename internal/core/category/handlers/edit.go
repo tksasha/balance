@@ -9,12 +9,17 @@ import (
 )
 
 type EditHandler struct {
-	service category.Service
+	categoryService   category.Service
+	categoryComponent *components.CategoryComponent
 }
 
-func NewEditHandler(service category.Service) *EditHandler {
+func NewEditHandler(
+	categoryService category.Service,
+	categoryComponent *components.CategoryComponent,
+) *EditHandler {
 	return &EditHandler{
-		service: service,
+		categoryService:   categoryService,
+		categoryComponent: categoryComponent,
 	}
 }
 
@@ -26,11 +31,11 @@ func (h *EditHandler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	err = components.Edit(category).Render(w)
+	err = h.categoryComponent.Edit(category).Render(w)
 
 	handlers.SetError(w, err)
 }
 
 func (h *EditHandler) handle(r *http.Request) (*category.Category, error) {
-	return h.service.FindByID(r.Context(), r.PathValue("id"))
+	return h.categoryService.Edit(r.Context(), r.PathValue("id"))
 }

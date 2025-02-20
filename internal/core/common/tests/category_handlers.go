@@ -44,3 +44,20 @@ func NewCreateCategoryHandler(
 
 	return handlers.NewCreateHandler(categoryService, categoryComponent)
 }
+
+func NewEditCategoryHandler(
+	t *testing.T,
+	categoryService category.Service,
+) *handlers.EditHandler {
+	t.Helper()
+
+	currentDateProvider := providers.NewTimeProvider()
+
+	helpers := helpers.New(currentDateProvider)
+
+	baseComponent := commoncomponents.NewBaseComponent(helpers)
+
+	categoryComponent := components.NewCategoryComponent(baseComponent)
+
+	return handlers.NewEditHandler(categoryService, categoryComponent)
+}

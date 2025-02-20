@@ -3,6 +3,7 @@ package service
 import (
 	"context"
 	"errors"
+	"strconv"
 
 	"github.com/tksasha/balance/internal/core/category"
 	"github.com/tksasha/balance/internal/core/common"
@@ -45,4 +46,18 @@ func (s *Service) nameAlreadyExists(
 	}
 
 	return nil
+}
+
+func (s *Service) findByID(ctx context.Context, input string) (*category.Category, error) {
+	id, err := strconv.Atoi(input)
+	if err != nil {
+		return nil, common.ErrResourceNotFound
+	}
+
+	category, err := s.repository.FindByID(ctx, id)
+	if err != nil {
+		return nil, services.MapError(err)
+	}
+
+	return category, nil
 }
