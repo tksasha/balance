@@ -182,19 +182,19 @@ func (mr *MockServiceMockRecorder) Edit(ctx, input any) *gomock.Call {
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "Edit", reflect.TypeOf((*MockService)(nil).Edit), ctx, input)
 }
 
-// Index mocks base method.
-func (m *MockService) Index(ctx context.Context, request item.IndexRequest) (item.Items, error) {
+// List mocks base method.
+func (m *MockService) List(ctx context.Context, request item.ListRequest) (item.Items, error) {
 	m.ctrl.T.Helper()
-	ret := m.ctrl.Call(m, "Index", ctx, request)
+	ret := m.ctrl.Call(m, "List", ctx, request)
 	ret0, _ := ret[0].(item.Items)
 	ret1, _ := ret[1].(error)
 	return ret0, ret1
 }
 
-// Index indicates an expected call of Index.
-func (mr *MockServiceMockRecorder) Index(ctx, request any) *gomock.Call {
+// List indicates an expected call of List.
+func (mr *MockServiceMockRecorder) List(ctx, request any) *gomock.Call {
 	mr.mock.ctrl.T.Helper()
-	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "Index", reflect.TypeOf((*MockService)(nil).Index), ctx, request)
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "List", reflect.TypeOf((*MockService)(nil).List), ctx, request)
 }
 
 // Update mocks base method.

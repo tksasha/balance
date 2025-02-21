@@ -15,7 +15,7 @@ import (
 	"gotest.tools/v3/assert"
 )
 
-func TestIndex(t *testing.T) {
+func TestList(t *testing.T) {
 	controller := gomock.NewController(t)
 
 	itemRepository := mocks.NewMockRepository(controller)
@@ -28,7 +28,7 @@ func TestIndex(t *testing.T) {
 
 	month := month.New("2024", "02")
 
-	request := item.IndexRequest{
+	request := item.ListRequest{
 		Year:  "2024",
 		Month: "02",
 	}
@@ -36,7 +36,7 @@ func TestIndex(t *testing.T) {
 	t.Run("returns error when find all by month fails", func(t *testing.T) {
 		itemRepository.EXPECT().FindAllByMonth(ctx, month).Return(nil, errors.New("find all by month error"))
 
-		_, err := service.Index(ctx, request)
+		_, err := service.List(ctx, request)
 
 		assert.Error(t, err, "find all by month error")
 	})
@@ -46,7 +46,7 @@ func TestIndex(t *testing.T) {
 
 		itemRepository.EXPECT().FindAllByMonth(ctx, month).Return(foundItems, nil)
 
-		items, err := service.Index(ctx, request)
+		items, err := service.List(ctx, request)
 
 		assert.NilError(t, err)
 		assert.Assert(t, slices.Equal(items, foundItems))

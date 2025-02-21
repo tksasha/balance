@@ -45,10 +45,10 @@ func (h *ListHandler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 }
 
 func (h *ListHandler) handle(r *http.Request) (item.Items, error) {
-	request := item.IndexRequest{
+	request := item.ListRequest{
 		Year:  r.URL.Query().Get("year"),
 		Month: r.URL.Query().Get("month"),
 	}
 
-	return h.itemService.Index(r.Context(), request)
+	return h.itemService.List(r.Context(), request)
 }

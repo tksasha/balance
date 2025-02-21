@@ -15,7 +15,7 @@ type UpdateRequest struct {
 	Description string
 }
 
-type IndexRequest struct {
+type ListRequest struct {
 	Year  string
 	Month string
 }

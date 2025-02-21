@@ -7,7 +7,7 @@ import (
 	"github.com/tksasha/month"
 )
 
-func (s *Service) Index(ctx context.Context, request item.IndexRequest) (item.Items, error) {
+func (s *Service) List(ctx context.Context, request item.ListRequest) (item.Items, error) {
 	month := month.New(request.Year, request.Month)
 
 	return s.itemRepository.FindAllByMonth(ctx, month)
