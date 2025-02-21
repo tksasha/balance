@@ -2,30 +2,25 @@ package components
 
 import (
 	"github.com/tksasha/balance/internal/core/item"
-	. "maragu.dev/gomponents" //nolint: stylecheck
-	hx "maragu.dev/gomponents-htmx"
+	. "maragu.dev/gomponents"      //nolint: stylecheck
 	. "maragu.dev/gomponents/html" //nolint: stylecheck
 )
 
-func (c *ItemsComponent) Index(items item.Items) Node {
-	return Span(
-		Table(
-			Class("table"),
-			ID("items"),
-			hx.SwapOOB("true"),
-			THead(
-				Tr(
-					Th(Class("text-center"), Text("Date")),
-					Th(Class("text-center"), Text("Sum")),
-					Th(Class("text-center"), Text("Category")),
-					Th(Class("text-center"), Text("Description")),
-				),
-			),
-			TBody(
-				Map(items, c.row),
+func (c *ItemsComponent) Index(items item.Items, node Node) Node {
+	return Table(
+		Class("table"),
+		THead(
+			Tr(
+				Th(Class("text-center"), Text("Date")),
+				Th(Class("text-center"), Text("Sum")),
+				Th(Class("text-center"), Text("Category")),
+				Th(Class("text-center"), Text("Description")),
 			),
 		),
-		Text("42"),
+		TBody(
+			Map(items, c.row),
+		),
+		Iff(node != nil, func() Node { return node }),
 	)
 }
 

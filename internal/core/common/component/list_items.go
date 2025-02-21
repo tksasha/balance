@@ -2,6 +2,7 @@ package component
 
 import (
 	"fmt"
+	"maps"
 	"net/url"
 	"strconv"
 	"time"
@@ -12,10 +13,14 @@ func (c *Component) ListItems(year, month int, values url.Values) string {
 		Path: "/items",
 	}
 
-	values.Set("month", c.month(month, values))
-	values.Set("year", c.year(year, values))
+	params := url.Values{}
 
-	path.RawQuery = values.Encode()
+	maps.Copy(params, values)
+
+	params.Set("month", c.month(month, params))
+	params.Set("year", c.year(year, params))
+
+	path.RawQuery = params.Encode()
 
 	return path.String()
 }

@@ -6,6 +6,7 @@ import (
 	"github.com/tksasha/balance/internal/core/category"
 	"github.com/tksasha/balance/internal/core/common"
 	"github.com/tksasha/balance/internal/core/common/component"
+	indexpagecomponents "github.com/tksasha/balance/internal/core/indexpage/components"
 	"github.com/tksasha/balance/internal/core/item"
 	"github.com/tksasha/balance/internal/core/item/components"
 	"github.com/tksasha/balance/internal/core/item/handlers"
@@ -47,12 +48,19 @@ func NewUpdateItemHandler(
 	return handlers.NewUpdateHandler(common.NewBaseHandler(), itemService, categoryService, itemsComponent)
 }
 
-func NewListItemsHandler(t *testing.T, itemService item.Service) *handlers.ListHandler {
+func NewListItemsHandler(
+	t *testing.T,
+	itemService item.Service,
+) *handlers.ListHandler {
 	t.Helper()
 
-	itemsComponent := components.NewItemsComponent(component.New())
+	component := component.New()
 
-	return handlers.NewListHandler(common.NewBaseHandler(), itemService, itemsComponent)
+	itemsComponent := components.NewItemsComponent(component)
+
+	monthsComponent := indexpagecomponents.NewMonthsComponent(component)
+
+	return handlers.NewListHandler(common.NewBaseHandler(), itemService, itemsComponent, monthsComponent)
 }
 
 func NewDeleteItemHandler(t *testing.T, itemService item.Service) *handlers.DeleteHandler {

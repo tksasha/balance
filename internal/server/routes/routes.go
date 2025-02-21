@@ -43,7 +43,7 @@ func New(
 	mux.Handle("GET /{$}", indexPageHandler)
 
 	mux.Handle("POST /items", itemCreateHandler)
-	mux.Handle("GET /items", itemListHandler)
+	mux.Handle("GET /items/{$}", itemListHandler)
 	mux.Handle("GET /items/{id}/edit", itemEditHandler)
 	mux.Handle("PATCH /items/{id}", itemUpdateHandler)
 

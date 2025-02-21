@@ -7,7 +7,7 @@ import (
 	"github.com/tksasha/balance/internal/core/common/component"
 	"github.com/tksasha/month"
 	. "maragu.dev/gomponents" //nolint:stylecheck
-	hx "maragu.dev/gomponents-htmx"
+	htmx "maragu.dev/gomponents-htmx"
 	. "maragu.dev/gomponents/html" //nolint:stylecheck
 )
 
@@ -22,12 +22,12 @@ func NewMonthsComponent(component *component.Component) *MonthsComponent {
 }
 
 func (c *MonthsComponent) Months(values url.Values) Node {
-	row := func(month month.Month) Node {
-		return c.Month(month, values)
-	}
-
 	return Div(
-		Map(month.All(), row),
+		ID("months"),
+		htmx.SwapOOB("true"),
+		Map(month.All(), func(month month.Month) Node {
+			return c.Month(month, values)
+		}),
 	)
 }
 
@@ -39,7 +39,8 @@ func (c *MonthsComponent) Month(month month.Month, values url.Values) Node {
 		),
 		Href(c.ListItems(0, month.Number, values)),
 		Text(month.Name),
-		hx.Get(c.ListItems(0, month.Number, values)),
+		htmx.Get(c.ListItems(0, month.Number, values)),
+		htmx.Target("#items"),
 	)
 }
 

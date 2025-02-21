@@ -4,6 +4,7 @@ import (
 	"net/http"
 
 	"github.com/tksasha/balance/internal/core/common"
+	indexpagecomponents "github.com/tksasha/balance/internal/core/indexpage/components"
 	"github.com/tksasha/balance/internal/core/item"
 	"github.com/tksasha/balance/internal/core/item/components"
 )
@@ -11,19 +12,22 @@ import (
 type ListHandler struct {
 	*common.BaseHandler
 
-	itemService    item.Service
-	itemsComponent *components.ItemsComponent
+	itemService     item.Service
+	itemsComponent  *components.ItemsComponent
+	monthsComponent *indexpagecomponents.MonthsComponent
 }
 
 func NewListHandler(
 	baseHandler *common.BaseHandler,
 	itemService item.Service,
 	itemsComponent *components.ItemsComponent,
+	monthsComponent *indexpagecomponents.MonthsComponent,
 ) *ListHandler {
 	return &ListHandler{
-		BaseHandler:    baseHandler,
-		itemService:    itemService,
-		itemsComponent: itemsComponent,
+		BaseHandler:     baseHandler,
+		itemService:     itemService,
+		itemsComponent:  itemsComponent,
+		monthsComponent: monthsComponent,
 	}
 }
 
@@ -35,7 +39,7 @@ func (h *ListHandler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	err = h.itemsComponent.Index(items).Render(w)
+	err = h.itemsComponent.Index(items, h.monthsComponent.Months(r.URL.Query())).Render(w)
 
 	h.SetError(w, err)
 }
