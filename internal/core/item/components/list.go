@@ -6,7 +6,7 @@ import (
 	. "maragu.dev/gomponents/html" //nolint: stylecheck
 )
 
-func (c *ItemsComponent) Index(items item.Items, node Node) Node {
+func (c *ItemsComponent) List(items item.Items, node Node) Node {
 	return Table(
 		Class("table"),
 		THead(

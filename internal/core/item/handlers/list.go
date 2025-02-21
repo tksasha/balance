@@ -39,7 +39,7 @@ func (h *ListHandler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	err = h.itemsComponent.Index(items, h.monthsComponent.Months(r.URL.Query())).Render(w)
+	err = h.itemsComponent.List(items, h.monthsComponent.Months(r.URL.Query())).Render(w)
 
 	h.SetError(w, err)
 }
