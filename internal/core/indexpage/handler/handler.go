@@ -39,7 +39,7 @@ func (h *Handler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	err = h.indexPageComponent.Index(r, categories).Render(w)
+	err = h.indexPageComponent.Index(categories, r.URL.Query()).Render(w)
 
 	h.SetError(w, err)
 }

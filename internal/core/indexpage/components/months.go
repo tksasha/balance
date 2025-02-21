@@ -2,7 +2,7 @@ package components
 
 import (
 	"fmt"
-	"net/http"
+	"net/url"
 
 	"github.com/tksasha/balance/internal/core/common/component"
 	"github.com/tksasha/month"
@@ -21,9 +21,9 @@ func NewMonthsComponent(component *component.Component) *MonthsComponent {
 	}
 }
 
-func (c *MonthsComponent) Months(req *http.Request) Node {
+func (c *MonthsComponent) Months(values url.Values) Node {
 	row := func(month month.Month) Node {
-		return c.Month(req, month)
+		return c.Month(month, values)
 	}
 
 	return Div(
@@ -31,15 +31,15 @@ func (c *MonthsComponent) Months(req *http.Request) Node {
 	)
 }
 
-func (c *MonthsComponent) Month(req *http.Request, month month.Month) Node {
+func (c *MonthsComponent) Month(month month.Month, values url.Values) Node {
 	return A(
 		If(
-			c.isActive(req.URL.Query().Get("month"), month.Number),
+			c.isActive(values.Get("month"), month.Number),
 			Class("active"),
 		),
-		Href(c.ListItems(0, month.Number, req)),
+		Href(c.ListItems(0, month.Number, values)),
 		Text(month.Name),
-		hx.Get(c.ListItems(0, month.Number, req)),
+		hx.Get(c.ListItems(0, month.Number, values)),
 	)
 }
 

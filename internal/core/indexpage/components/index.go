@@ -1,7 +1,7 @@
 package components
 
 import (
-	"net/http"
+	"net/url"
 
 	"github.com/tksasha/balance/internal/core/category"
 	"github.com/tksasha/balance/internal/core/item"
@@ -11,7 +11,7 @@ import (
 	. "maragu.dev/gomponents/html"       //nolint:stylecheck
 )
 
-func (c *IndexPageComponent) Index(req *http.Request, categories category.Categories) Node {
+func (c *IndexPageComponent) Index(categories category.Categories, values url.Values) Node {
 	return HTML5(
 		HTML5Props{
 			Title:    "Balance",
@@ -27,7 +27,7 @@ func (c *IndexPageComponent) Index(req *http.Request, categories category.Catego
 						Class("card mb-3"),
 						Div(
 							Class("card-body"),
-							c.monthsComponent.Months(req),
+							c.monthsComponent.Months(values),
 						),
 					),
 					Div(
