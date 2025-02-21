@@ -25,7 +25,6 @@ func NewMonthsComponent(component *component.Component) *MonthsComponent {
 func (c *MonthsComponent) Months(values url.Values) Node {
 	return Div(
 		ID("months"),
-		Class("row text-center"),
 		htmx.SwapOOB("true"),
 		Map(month.All(), func(month month.Month) Node {
 			return c.Month(month, values)
@@ -38,9 +37,7 @@ func (c *MonthsComponent) Month(month month.Month, values url.Values) Node {
 	current := err == nil && month.Number == val
 
 	classes := components.Classes{
-		"col":            true,
-		"link-success":   current,
-		"link-secondary": !current,
+		"active": current,
 	}
 
 	return A(

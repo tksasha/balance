@@ -36,7 +36,6 @@ func NewYearsComponent(component *component.Component) *YearsComponent {
 func (c *YearsComponent) Years(values url.Values) Node {
 	return Div(
 		ID("years"),
-		Class("row mt-2 text-center"),
 		htmx.SwapOOB("true"),
 		Map(c.years, func(year int) Node {
 			return c.year(year, values)
@@ -49,9 +48,7 @@ func (c *YearsComponent) year(year int, values url.Values) Node {
 	current := err == nil && year == val
 
 	classes := components.Classes{
-		"col":            true,
-		"link-secondary": !current,
-		"link-success":   current,
+		"active": current,
 	}
 
 	return A(

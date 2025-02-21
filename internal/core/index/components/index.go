@@ -17,20 +17,17 @@ func (c *IndexComponent) Index(categories category.Categories, values url.Values
 			Title:    "Balance",
 			Language: "en",
 			Head: []Node{
-				Link(Rel("stylesheet"), Href("/assets/bootstrap.min.css")),
-				Link(Rel("stylesheet"), Href("/assets/application.css")),
+				// Link(Rel("stylesheet"), Href("/assets/bootstrap.min.css")),
+				Link(Rel("stylesheet"), Href("/assets/application-28267bd7a3abb90cde33ecb57c0adb229888a59258f97d91a688ed1377a381c1.css")),
+				// Link(Rel("stylesheet"), Href("/assets/application.css")),
 			},
 			Body: []Node{
+				Header(
+					c.monthsComponent.Months(values),
+					c.yearsComponent.Years(values),
+				),
 				Div(
 					Class("container mt-4 mb-4"),
-					Div(
-						Class("card mb-3"),
-						Div(
-							Class("card-body"),
-							c.monthsComponent.Months(values),
-							c.yearsComponent.Years(values),
-						),
-					),
 					Div(
 						Class("card mb-3"),
 						Div(
@@ -43,7 +40,7 @@ func (c *IndexComponent) Index(categories category.Categories, values url.Values
 						Div(
 							Class("card-body"),
 							ID("items"),
-							htmx.Get("/items"),
+							htmx.Get(c.ListItems(0, 0, url.Values{})),
 							htmx.Trigger("load"),
 							Div(Class("spinner-border htmx-indicator"), ID("htmx-indicator")),
 						),
