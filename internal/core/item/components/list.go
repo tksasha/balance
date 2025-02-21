@@ -8,13 +8,13 @@ import (
 
 func (c *ItemsComponent) List(items item.Items, months Node, years Node) Node {
 	return Table(
-		Class("table"),
+		Class("table table-hover table-borderless"),
 		THead(
 			Tr(
-				Th(Class("text-center"), Text("Date")),
-				Th(Class("text-center"), Text("Sum")),
-				Th(Class("text-center"), Text("Category")),
-				Th(Class("text-center"), Text("Description")),
+				Th(Class("items-date"), Text("Дата")),
+				Th(Class("items-sum"), Text("Сума")),
+				Th(Class("items-category"), Text("Категорія")),
+				Th(Text("Опис")),
 			),
 		),
 		TBody(
@@ -28,17 +28,18 @@ func (c *ItemsComponent) List(items item.Items, months Node, years Node) Node {
 func (c *ItemsComponent) item(item *item.Item) Node {
 	return Tr(
 		Td(
-			Class("text-center"),
+			Class("items-date"),
 			Text(c.Date(item.Date)),
 		),
 		Td(
-			Class("text-end"),
+			Class("items-sum"),
 			A(
 				Href(c.EditItem(item.ID)),
 				Text(c.Money(item.Sum)),
 			),
 		),
 		Td(
+			Class("items-category"),
 			Text(item.CategoryName),
 		),
 		Td(
