@@ -5,13 +5,13 @@ import (
 
 	"github.com/tksasha/balance/internal/core/category"
 	"github.com/tksasha/balance/internal/core/item"
-	. "maragu.dev/gomponents"            //nolint:stylecheck
-	hx "maragu.dev/gomponents-htmx"      //nolint:stylecheck
+	. "maragu.dev/gomponents" //nolint:stylecheck
+	htmx "maragu.dev/gomponents-htmx"
 	. "maragu.dev/gomponents/components" //nolint:stylecheck
 	. "maragu.dev/gomponents/html"       //nolint:stylecheck
 )
 
-func (c *IndexPageComponent) Index(categories category.Categories, values url.Values) Node {
+func (c *IndexComponent) Index(categories category.Categories, values url.Values) Node {
 	return HTML5(
 		HTML5Props{
 			Title:    "Balance",
@@ -28,6 +28,7 @@ func (c *IndexPageComponent) Index(categories category.Categories, values url.Va
 						Div(
 							Class("card-body"),
 							c.monthsComponent.Months(values),
+							c.yearsComponent.Years(values),
 						),
 					),
 					Div(
@@ -42,8 +43,8 @@ func (c *IndexPageComponent) Index(categories category.Categories, values url.Va
 						Div(
 							Class("card-body"),
 							ID("items"),
-							hx.Get("/items"),
-							hx.Trigger("load"),
+							htmx.Get("/items"),
+							htmx.Trigger("load"),
 							Div(Class("spinner-border htmx-indicator"), ID("htmx-indicator")),
 						),
 					),

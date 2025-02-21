@@ -15,6 +15,7 @@ type ListHandler struct {
 	itemService     item.Service
 	itemsComponent  *components.ItemsComponent
 	monthsComponent *indexcomponents.MonthsComponent
+	yearsComponent  *indexcomponents.YearsComponent
 }
 
 func NewListHandler(
@@ -22,12 +23,14 @@ func NewListHandler(
 	itemService item.Service,
 	itemsComponent *components.ItemsComponent,
 	monthsComponent *indexcomponents.MonthsComponent,
+	yearsComponent *indexcomponents.YearsComponent,
 ) *ListHandler {
 	return &ListHandler{
 		BaseHandler:     baseHandler,
 		itemService:     itemService,
 		itemsComponent:  itemsComponent,
 		monthsComponent: monthsComponent,
+		yearsComponent:  yearsComponent,
 	}
 }
 
@@ -39,7 +42,11 @@ func (h *ListHandler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	err = h.itemsComponent.List(items, h.monthsComponent.Months(r.URL.Query())).Render(w)
+	months := h.monthsComponent.Months(r.URL.Query())
+
+	years := h.yearsComponent.Years(r.URL.Query())
+
+	err = h.itemsComponent.List(items, months, years).Render(w)
 
 	h.SetError(w, err)
 }

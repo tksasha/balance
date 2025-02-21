@@ -64,6 +64,7 @@ func InitializeServer() *server.Server {
 		db.Open,
 		indexcomponents.NewIndexComponent,
 		indexcomponents.NewMonthsComponent,
+		indexcomponents.NewYearsComponent,
 		indexhandler.New,
 		indexrepository.New,
 		indexservice.New,

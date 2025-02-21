@@ -22,7 +22,9 @@ func NewIndexPageHandler(
 
 	monthsComonents := components.NewMonthsComponent(component)
 
-	indexPageComponent := components.NewIndexComponent(component, monthsComonents)
+	yearsComponent := components.NewYearsComponent(component)
 
-	return handler.New(common.NewBaseHandler(), indexService, categoryService, indexPageComponent)
+	indexComponent := components.NewIndexComponent(component, monthsComonents, yearsComponent)
+
+	return handler.New(common.NewBaseHandler(), indexService, categoryService, indexComponent)
 }

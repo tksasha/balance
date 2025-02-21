@@ -60,7 +60,15 @@ func NewListItemsHandler(
 
 	monthsComponent := indexcomponents.NewMonthsComponent(component)
 
-	return handlers.NewListHandler(common.NewBaseHandler(), itemService, itemsComponent, monthsComponent)
+	yearsComponent := indexcomponents.NewYearsComponent(component)
+
+	return handlers.NewListHandler(
+		common.NewBaseHandler(),
+		itemService,
+		itemsComponent,
+		monthsComponent,
+		yearsComponent,
+	)
 }
 
 func NewDeleteItemHandler(t *testing.T, itemService item.Service) *handlers.DeleteHandler {

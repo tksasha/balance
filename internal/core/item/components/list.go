@@ -6,7 +6,7 @@ import (
 	. "maragu.dev/gomponents/html" //nolint: stylecheck
 )
 
-func (c *ItemsComponent) List(items item.Items, node Node) Node {
+func (c *ItemsComponent) List(items item.Items, months Node, years Node) Node {
 	return Table(
 		Class("table"),
 		THead(
@@ -18,13 +18,14 @@ func (c *ItemsComponent) List(items item.Items, node Node) Node {
 			),
 		),
 		TBody(
-			Map(items, c.row),
+			Map(items, c.item),
 		),
-		Iff(node != nil, func() Node { return node }),
+		Iff(months != nil, func() Node { return months }),
+		Iff(years != nil, func() Node { return years }),
 	)
 }
 
-func (c *ItemsComponent) row(item *item.Item) Node {
+func (c *ItemsComponent) item(item *item.Item) Node {
 	return Tr(
 		Td(
 			Class("text-center"),
