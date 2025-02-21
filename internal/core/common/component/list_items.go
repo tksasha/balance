@@ -2,34 +2,31 @@ package component
 
 import (
 	"fmt"
-	"net/http"
 	"net/url"
 	"strconv"
 	"time"
 )
 
-func (c *Component) ListItems(year, month int, req *http.Request) string {
+func (c *Component) ListItems(year, month int, values url.Values) string {
 	path := url.URL{
 		Path: "/items",
 	}
 
-	values := path.Query()
-
-	values.Set("month", c.month(month, req))
-	values.Set("year", c.year(year, req))
+	values.Set("month", c.month(month, values))
+	values.Set("year", c.year(year, values))
 
 	path.RawQuery = values.Encode()
 
 	return path.String()
 }
 
-func (c *Component) month(value int, req *http.Request) string {
+func (c *Component) month(value int, values url.Values) string {
 	var err error
 
 	month := value
 
 	if month == 0 {
-		month, err = strconv.Atoi(req.URL.Query().Get("month"))
+		month, err = strconv.Atoi(values.Get("month"))
 		if err != nil {
 			month = int(time.Now().Month())
 		}
@@ -38,13 +35,13 @@ func (c *Component) month(value int, req *http.Request) string {
 	return fmt.Sprintf("%02d", month)
 }
 
-func (c *Component) year(value int, req *http.Request) string {
+func (c *Component) year(value int, values url.Values) string {
 	var err error
 
 	year := value
 
 	if year == 0 {
-		year, err = strconv.Atoi(req.URL.Query().Get("year"))
+		year, err = strconv.Atoi(values.Get("year"))
 		if err != nil {
 			year = time.Now().Year()
 		}
