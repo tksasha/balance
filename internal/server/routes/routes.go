@@ -6,7 +6,7 @@ import (
 
 	cash "github.com/tksasha/balance/internal/core/cash/handlers"
 	category "github.com/tksasha/balance/internal/core/category/handlers"
-	indexpage "github.com/tksasha/balance/internal/core/indexpage/handler"
+	index "github.com/tksasha/balance/internal/core/index/handler"
 	item "github.com/tksasha/balance/internal/core/item/handlers"
 )
 
@@ -29,7 +29,7 @@ func New(
 	categoryEditHandler *category.EditHandler,
 	categoryListHandler *category.ListHandler,
 	categoryUpdateHandler *category.UpdateHandler,
-	indexPageHandler *indexpage.Handler,
+	indexHandler *index.Handler,
 	itemCreateHandler *item.CreateHandler,
 	itemEditHandler *item.EditHandler,
 	itemListHandler *item.ListHandler,
@@ -40,7 +40,7 @@ func New(
 	mux.Handle("GET /assets/{$}", http.RedirectHandler("/", http.StatusMovedPermanently))
 	mux.Handle("GET /assets/", http.FileServerFS(assets))
 
-	mux.Handle("GET /{$}", indexPageHandler)
+	mux.Handle("GET /{$}", indexHandler)
 
 	mux.Handle("POST /items", itemCreateHandler)
 	mux.Handle("GET /items/{$}", itemListHandler)

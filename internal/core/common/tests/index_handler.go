@@ -6,14 +6,14 @@ import (
 	"github.com/tksasha/balance/internal/core/category"
 	"github.com/tksasha/balance/internal/core/common"
 	"github.com/tksasha/balance/internal/core/common/component"
-	"github.com/tksasha/balance/internal/core/indexpage"
-	"github.com/tksasha/balance/internal/core/indexpage/components"
-	"github.com/tksasha/balance/internal/core/indexpage/handler"
+	"github.com/tksasha/balance/internal/core/index"
+	"github.com/tksasha/balance/internal/core/index/components"
+	"github.com/tksasha/balance/internal/core/index/handler"
 )
 
 func NewIndexPageHandler(
 	t *testing.T,
-	indexPageService indexpage.Service,
+	indexService index.Service,
 	categoryService category.Service,
 ) *handler.Handler {
 	t.Helper()
@@ -22,7 +22,7 @@ func NewIndexPageHandler(
 
 	monthsComonents := components.NewMonthsComponent(component)
 
-	indexPageComponent := components.NewIndexPageComponent(component, monthsComonents)
+	indexPageComponent := components.NewIndexComponent(component, monthsComonents)
 
-	return handler.New(common.NewBaseHandler(), indexPageService, categoryService, indexPageComponent)
+	return handler.New(common.NewBaseHandler(), indexService, categoryService, indexPageComponent)
 }

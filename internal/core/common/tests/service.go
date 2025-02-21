@@ -12,9 +12,9 @@ import (
 	categoryrepository "github.com/tksasha/balance/internal/core/category/repository"
 	categoryservice "github.com/tksasha/balance/internal/core/category/service"
 	"github.com/tksasha/balance/internal/core/common"
-	"github.com/tksasha/balance/internal/core/indexpage"
-	indexpagerepository "github.com/tksasha/balance/internal/core/indexpage/repository"
-	indexpageservice "github.com/tksasha/balance/internal/core/indexpage/service"
+	"github.com/tksasha/balance/internal/core/index"
+	indexrepository "github.com/tksasha/balance/internal/core/index/repository"
+	indexservice "github.com/tksasha/balance/internal/core/index/service"
 	"github.com/tksasha/balance/internal/core/item"
 	itemrepository "github.com/tksasha/balance/internal/core/item/repository"
 	itemservice "github.com/tksasha/balance/internal/core/item/service"
@@ -60,14 +60,14 @@ func NewItemService(ctx context.Context, t *testing.T) (item.Service, *sql.DB) {
 	return itemservice.New(common.NewBaseService(), itemRepository, categoryRepository), db
 }
 
-func NewIndexPageService(ctx context.Context, t *testing.T) (indexpage.Service, *sql.DB) {
+func NewIndexPageService(ctx context.Context, t *testing.T) (index.Service, *sql.DB) {
 	t.Helper()
 
 	baseRepository := common.NewBaseRepository()
 
 	db := newDB(ctx, t)
 
-	repository := indexpagerepository.New(baseRepository, db)
+	repository := indexrepository.New(baseRepository, db)
 
-	return indexpageservice.New(repository), db
+	return indexservice.New(repository), db
 }

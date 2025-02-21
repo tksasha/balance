@@ -4,14 +4,14 @@ import (
 	"github.com/tksasha/balance/internal/core/common/component"
 )
 
-type IndexPageComponent struct {
+type IndexComponent struct {
 	*component.Component
 
 	monthsComponent *MonthsComponent
 }
 
-func NewIndexPageComponent(component *component.Component, monthsComponent *MonthsComponent) *IndexPageComponent {
-	return &IndexPageComponent{
+func NewIndexComponent(component *component.Component, monthsComponent *MonthsComponent) *IndexComponent {
+	return &IndexComponent{
 		Component:       component,
 		monthsComponent: monthsComponent,
 	}

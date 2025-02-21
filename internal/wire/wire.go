@@ -18,11 +18,11 @@ import (
 	categoryservice "github.com/tksasha/balance/internal/core/category/service"
 	"github.com/tksasha/balance/internal/core/common"
 	"github.com/tksasha/balance/internal/core/common/component"
-	"github.com/tksasha/balance/internal/core/indexpage"
-	indexpagecomponents "github.com/tksasha/balance/internal/core/indexpage/components"
-	indexpagehandler "github.com/tksasha/balance/internal/core/indexpage/handler"
-	indexpagerepository "github.com/tksasha/balance/internal/core/indexpage/repository"
-	indexpageservice "github.com/tksasha/balance/internal/core/indexpage/service"
+	"github.com/tksasha/balance/internal/core/index"
+	indexcomponents "github.com/tksasha/balance/internal/core/index/components"
+	indexhandler "github.com/tksasha/balance/internal/core/index/handler"
+	indexrepository "github.com/tksasha/balance/internal/core/index/repository"
+	indexservice "github.com/tksasha/balance/internal/core/index/service"
 	"github.com/tksasha/balance/internal/core/item"
 	itemcomponents "github.com/tksasha/balance/internal/core/item/components"
 	itemhandlers "github.com/tksasha/balance/internal/core/item/handlers"
@@ -62,11 +62,11 @@ func InitializeServer() *server.Server {
 		config.New,
 		context.Background,
 		db.Open,
-		indexpagecomponents.NewIndexPageComponent,
-		indexpagecomponents.NewMonthsComponent,
-		indexpagehandler.New,
-		indexpagerepository.New,
-		indexpageservice.New,
+		indexcomponents.NewIndexComponent,
+		indexcomponents.NewMonthsComponent,
+		indexhandler.New,
+		indexrepository.New,
+		indexservice.New,
 		itemcomponents.NewItemsComponent,
 		itemhandlers.NewCreateHandler,
 		itemhandlers.NewEditHandler,
@@ -83,8 +83,8 @@ func InitializeServer() *server.Server {
 		wire.Bind(new(category.Repository), new(*categoryrepository.Repository)),
 		wire.Bind(new(category.Service), new(*categoryservice.Service)),
 		wire.Bind(new(db.NameProvider), new(*nameprovider.Provider)),
-		wire.Bind(new(indexpage.Repository), new(*indexpagerepository.Repository)),
-		wire.Bind(new(indexpage.Service), new(*indexpageservice.Service)),
+		wire.Bind(new(index.Repository), new(*indexrepository.Repository)),
+		wire.Bind(new(index.Service), new(*indexservice.Service)),
 		wire.Bind(new(item.Repository), new(*itemrepository.Repository)),
 		wire.Bind(new(item.Service), new(*itemservice.Service)),
 	)

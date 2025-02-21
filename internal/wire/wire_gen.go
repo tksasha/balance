@@ -18,10 +18,10 @@ import (
 	service2 "github.com/tksasha/balance/internal/core/category/service"
 	"github.com/tksasha/balance/internal/core/common"
 	"github.com/tksasha/balance/internal/core/common/component"
-	components3 "github.com/tksasha/balance/internal/core/indexpage/components"
-	"github.com/tksasha/balance/internal/core/indexpage/handler"
-	repository3 "github.com/tksasha/balance/internal/core/indexpage/repository"
-	service3 "github.com/tksasha/balance/internal/core/indexpage/service"
+	components3 "github.com/tksasha/balance/internal/core/index/components"
+	"github.com/tksasha/balance/internal/core/index/handler"
+	repository3 "github.com/tksasha/balance/internal/core/index/repository"
+	service3 "github.com/tksasha/balance/internal/core/index/service"
 	components4 "github.com/tksasha/balance/internal/core/item/components"
 	handlers3 "github.com/tksasha/balance/internal/core/item/handlers"
 	repository4 "github.com/tksasha/balance/internal/core/item/repository"
@@ -65,8 +65,8 @@ func InitializeServer() *server.Server {
 	repository6 := repository3.New(baseRepository, sqlDB)
 	service6 := service3.New(repository6)
 	monthsComponent := components3.NewMonthsComponent(componentComponent)
-	indexPageComponent := components3.NewIndexPageComponent(componentComponent, monthsComponent)
-	handlerHandler := handler.New(baseHandler, service6, service5, indexPageComponent)
+	indexComponent := components3.NewIndexComponent(componentComponent, monthsComponent)
+	handlerHandler := handler.New(baseHandler, service6, service5, indexComponent)
 	repository7 := repository4.New(baseRepository, sqlDB)
 	service7 := service4.New(baseService, repository7, repository5)
 	itemsComponent := components4.NewItemsComponent(componentComponent)

@@ -10,7 +10,7 @@ import (
 	. "maragu.dev/gomponents/html" //nolint:stylecheck
 )
 
-func (c *IndexPageComponent) form( //nolint:funlen
+func (c *IndexComponent) form( //nolint:funlen
 	item *item.Item,
 	categories category.Categories,
 	errors validation.Errors,
@@ -78,14 +78,14 @@ func (c *IndexPageComponent) form( //nolint:funlen
 	)
 }
 
-func (c *IndexPageComponent) option(category *category.Category) Node {
+func (c *IndexComponent) option(category *category.Category) Node {
 	return Option(
 		Value(strconv.Itoa(category.ID)),
 		Text(category.Name),
 	)
 }
 
-func (c *IndexPageComponent) sum(sum float64) string {
+func (c *IndexComponent) sum(sum float64) string {
 	if sum == 0.0 {
 		return ""
 	}

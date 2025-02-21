@@ -4,7 +4,7 @@ import (
 	"net/http"
 
 	"github.com/tksasha/balance/internal/core/common"
-	indexpagecomponents "github.com/tksasha/balance/internal/core/indexpage/components"
+	indexcomponents "github.com/tksasha/balance/internal/core/index/components"
 	"github.com/tksasha/balance/internal/core/item"
 	"github.com/tksasha/balance/internal/core/item/components"
 )
@@ -14,14 +14,14 @@ type ListHandler struct {
 
 	itemService     item.Service
 	itemsComponent  *components.ItemsComponent
-	monthsComponent *indexpagecomponents.MonthsComponent
+	monthsComponent *indexcomponents.MonthsComponent
 }
 
 func NewListHandler(
 	baseHandler *common.BaseHandler,
 	itemService item.Service,
 	itemsComponent *components.ItemsComponent,
-	monthsComponent *indexpagecomponents.MonthsComponent,
+	monthsComponent *indexcomponents.MonthsComponent,
 ) *ListHandler {
 	return &ListHandler{
 		BaseHandler:     baseHandler,

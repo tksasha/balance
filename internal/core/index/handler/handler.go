@@ -5,29 +5,29 @@ import (
 
 	"github.com/tksasha/balance/internal/core/category"
 	"github.com/tksasha/balance/internal/core/common"
-	"github.com/tksasha/balance/internal/core/indexpage"
-	"github.com/tksasha/balance/internal/core/indexpage/components"
+	"github.com/tksasha/balance/internal/core/index"
+	"github.com/tksasha/balance/internal/core/index/components"
 )
 
 type Handler struct {
 	*common.BaseHandler
 
-	indexPageService   indexpage.Service
-	categoryService    category.Service
-	indexPageComponent *components.IndexPageComponent
+	indexService    index.Service
+	categoryService category.Service
+	indexComponent  *components.IndexComponent
 }
 
 func New(
 	baseHandler *common.BaseHandler,
-	indexPageService indexpage.Service,
+	indexService index.Service,
 	categoryService category.Service,
-	indexPageComponent *components.IndexPageComponent,
+	indexComponent *components.IndexComponent,
 ) *Handler {
 	return &Handler{
-		BaseHandler:        baseHandler,
-		indexPageService:   indexPageService,
-		categoryService:    categoryService,
-		indexPageComponent: indexPageComponent,
+		BaseHandler:     baseHandler,
+		indexService:    indexService,
+		categoryService: categoryService,
+		indexComponent:  indexComponent,
 	}
 }
 
@@ -39,7 +39,7 @@ func (h *Handler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	err = h.indexPageComponent.Index(categories, r.URL.Query()).Render(w)
+	err = h.indexComponent.Index(categories, r.URL.Query()).Render(w)
 
 	h.SetError(w, err)
 }
