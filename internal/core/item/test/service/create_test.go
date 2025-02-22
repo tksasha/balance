@@ -1,6 +1,7 @@
 package service_test
 
 import (
+	"database/sql"
 	"errors"
 	"testing"
 
@@ -177,7 +178,7 @@ func TestCreate(t *testing.T) { //nolint:funlen
 			Formula:      "42.69+69.42",
 			Sum:          112.11,
 			CategoryID:   1244,
-			CategoryName: "Entrepreneurship",
+			CategoryName: sql.NullString{String: "Entrepreneurship"},
 			Description:  "health, beauty & wellness",
 		}
 
@@ -214,7 +215,7 @@ func TestCreate(t *testing.T) { //nolint:funlen
 			Formula:      "42.69+69.42",
 			Sum:          112.11,
 			CategoryID:   1307,
-			CategoryName: "Telecommunications",
+			CategoryName: sql.NullString{String: "Telecommunications"},
 			Description:  "arts, crafts & hobbies",
 		}
 

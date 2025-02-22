@@ -13,16 +13,18 @@ import (
 func (c *IndexComponent) Index(categories category.Categories, values url.Values) Node {
 	_ = c.form
 
-	css := "/assets/application-28267bd7a3abb90cde33ecb57c0adb229888a59258f97d91a688ed1377a381c1.css"
-
 	return HTML5(
 		HTML5Props{
 			Title:    "Balance",
 			Language: "en",
 			Head: []Node{
 				// Link(Rel("stylesheet"), Href("/assets/bootstrap.min.css")),
-				Link(Rel("stylesheet"), Href(css)),
+				Link(
+					Rel("stylesheet"),
+					Href("/assets/application-28267bd7a3abb90cde33ecb57c0adb229888a59258f97d91a688ed1377a381c1.css"),
+				),
 				// Link(Rel("stylesheet"), Href("/assets/application.css")),
+				Link(Rel("icon"), Type("image/x-icon"), Href("/assets/hryvnia.png")),
 			},
 			Body: []Node{
 				Header(
@@ -55,6 +57,7 @@ func (c *IndexComponent) Index(categories category.Categories, values url.Values
 						),
 					),
 				),
+				c.Modal(),
 				Script(Src("/assets/bootstrap.bundle.min.js")),
 				Script(Src("/assets/htmx.min.js")),
 			},

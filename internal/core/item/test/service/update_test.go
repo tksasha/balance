@@ -1,6 +1,7 @@
 package service_test
 
 import (
+	"database/sql"
 	"errors"
 	"testing"
 
@@ -284,7 +285,7 @@ func TestUpdate(t *testing.T) { //nolint:funlen,maintidx
 			Formula:      "2+2",
 			Sum:          4,
 			CategoryID:   1100,
-			CategoryName: "Beverages",
+			CategoryName: sql.NullString{String: "Beverages"},
 			Description:  "food, wine and flowers",
 		}
 
@@ -332,7 +333,7 @@ func TestUpdate(t *testing.T) { //nolint:funlen,maintidx
 			Formula:      "2+2",
 			Sum:          4,
 			CategoryID:   1100,
-			CategoryName: "Beverages",
+			CategoryName: sql.NullString{String: "Beverages"},
 			Description:  "food, wine and flowers",
 		}
 

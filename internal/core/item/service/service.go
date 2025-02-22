@@ -2,6 +2,7 @@ package service
 
 import (
 	"context"
+	"database/sql"
 	"strconv"
 
 	"github.com/tksasha/balance/internal/core/category"
@@ -46,7 +47,7 @@ func (s *Service) setCategory(
 		return err
 	}
 
-	item.CategoryName = category.Name
+	item.CategoryName = sql.NullString{String: category.Name}
 
 	return nil
 }

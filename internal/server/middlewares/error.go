@@ -33,6 +33,8 @@ func (m *errorMiddleware) Wrap(next http.Handler) http.Handler {
 			default:
 				wrapper.Code = http.StatusInternalServerError
 
+				slog.Error("internal server error", "error", err)
+
 				http.Error(wrapper, "Internal Server Error", wrapper.Code)
 			}
 		}

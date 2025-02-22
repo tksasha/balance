@@ -2,7 +2,8 @@ package components
 
 import (
 	"github.com/tksasha/balance/internal/core/item"
-	. "maragu.dev/gomponents"      //nolint: stylecheck
+	. "maragu.dev/gomponents" //nolint: stylecheck
+	htmx "maragu.dev/gomponents-htmx"
 	. "maragu.dev/gomponents/html" //nolint: stylecheck
 )
 
@@ -33,14 +34,20 @@ func (c *ItemsComponent) item(item *item.Item) Node {
 		),
 		Td(
 			Class("items-sum"),
-			A(
-				Href(c.EditItem(item.ID)),
+			Div(
+				Class("text-primary"),
 				Text(c.Money(item.Sum)),
+				Style("cursor: pointer"),
+				htmx.Get(c.EditItem(item.ID)),
+				htmx.Target("#modal-body"),
+				htmx.Trigger("click"),
+				Data("bs-toggle", "modal"),
+				Data("bs-target", "#modal"),
 			),
 		),
 		Td(
 			Class("items-category"),
-			Text(item.CategoryName),
+			Text(item.CategoryName.String),
 		),
 		Td(
 			Raw(c.Description(item.Description)),
