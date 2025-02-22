@@ -1,0 +1,9 @@
+#ajax-loader {
+  @extend .modal-backdrop;
+  @extend .modal-backdrop, .show;
+
+  text-align: center;
+  padding-top: 30%;
+  background-color: color("light");
+  display: none;
+}

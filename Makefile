@@ -85,7 +85,7 @@ wire:
 	@echo "wire gen"
 	@go run $(WIRE) internal/wire/wire.go
 
-.PHONY: migration
+.PHONY: migration # to create new migration
 migration:
 	@if [ -z "$(name)" ]; then echo "name is required"; exit 1; fi
 	touch "internal/db/migrations/$(shell date "+%Y%m%d%H%M%S")_$(name).sql"

@@ -1,0 +1,42 @@
+#item-inline-form {
+  .card-content {
+    overflow: hidden;
+    padding: 2%;
+  }
+}
+
+.item-inline-form-date,
+.item-inline-form-formula,
+.item-inline-form-category,
+.item-inline-form-description {
+  float: left;
+  margin: 0 1% 0 0;
+}
+
+.item-inline-form-date {
+  width: 10%;
+
+  input {
+    text-align: center;
+  }
+}
+
+.item-inline-form-formula {
+  width: 20%;
+
+  input {
+    text-align: right;
+  }
+}
+
+.item-inline-form-category {
+  width: 17%;
+
+  input.select-dropdown {
+    text-indent: 1px;
+  }
+}
+
+.item-inline-form-description {
+  width: 41%;
+}

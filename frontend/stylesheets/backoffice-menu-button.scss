@@ -1,0 +1,11 @@
+.backoffice-menu-button {
+  @extend .btn;
+  @extend .btn-primary;
+
+  display: block;
+  margin: 0 0 2% 0;
+
+  &:last-child {
+    margin-bottom: 0;
+  }
+}

@@ -1,0 +1,18 @@
+$colors: map-merge(
+  (
+    "primary":              $primary,
+    "light":                $light,
+    "grey-lighten-5":       #fafafa,
+    "grey-base":            #9e9e9e,
+    "shades-white":         #FFFFFF,
+    "deep-orange-darken-1": #f4511e,
+    "deep-orange-darken-3": #d84315,
+    "deep-orange-accent-4": #dd2c00,
+    "white":                $white
+  ),
+  $colors
+);
+
+@function color($color) {
+  @return map-get($colors, $color);
+}

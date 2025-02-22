@@ -1,0 +1,5 @@
+.tag {
+  @extend .btn, .btn-sm, .btn-outline-light, .me-1, .text-secondary;
+
+  font-size: 0.75rem;
+}

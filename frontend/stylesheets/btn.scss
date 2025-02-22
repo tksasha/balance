@@ -1,0 +1,11 @@
+.btn-primary {
+  --bs-btn-color: #{color("light")};
+  --bs-btn-bg: #{color("primary")};
+
+  --bs-btn-hover-color: #{color("white")};
+  --bs-btn-hover-bg: #{shade-color(color("primary"), 20%)};
+}
+
+.btn-outline-primary {
+  --bs-btn-hover-color: #{color("white")};
+}

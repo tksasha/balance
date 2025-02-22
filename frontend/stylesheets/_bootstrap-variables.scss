@@ -1,0 +1,14 @@
+$blue-grey-base:      #607d8b;
+$blue-grey-lighten-5: #eceff1;
+$teal-base:           #009688;
+
+$primary: $blue-grey-base;
+$info:    $teal-base;
+$light:   $blue-grey-lighten-5;
+
+$input-border-color: $light !default;
+
+$input-btn-focus-width: .1rem !default;
+$input-btn-focus-color: $light !default;
+
+$breadcrumb-padding-y: 0.46rem;

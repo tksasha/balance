@@ -1,0 +1,10 @@
+.link-to-backoffice {
+  @extend .btn;
+  @extend .btn-outline-primary;
+
+  position: fixed;
+  top: 10px;
+  right: 15px;
+
+  background: color("white");
+}

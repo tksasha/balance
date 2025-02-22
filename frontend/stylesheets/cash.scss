@@ -1,0 +1,21 @@
+.cash {
+  font-size: 14px;
+
+  white-space: nowrap;
+
+  tr {
+    line-height: 24px;
+  }
+
+  .sum {
+    @extend .text-end;
+  }
+
+  .summary {
+    font-weight: bold;
+
+    .sum {
+      @extend .text-end;
+    }
+  }
+}

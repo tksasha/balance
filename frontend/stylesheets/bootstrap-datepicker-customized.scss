@@ -1,0 +1,21 @@
+.datepicker.datepicker-dropdown {
+  font-size: 14px;
+  color: color("primary");
+
+  table {
+    tr {
+      td {
+        padding: 5px 10px;
+      }
+
+      td.active.day {
+        background-image: none;
+        background-color: color("primary");
+      }
+    }
+  }
+}
+
+.datepicker {
+  padding: 0.375rem 0.75rem;
+}

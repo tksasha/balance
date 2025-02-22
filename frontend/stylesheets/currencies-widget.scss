@@ -1,0 +1,27 @@
+#currencies-widget {
+  @extend .btn;
+  @extend .btn-outline-primary;
+
+  position: fixed;
+  top: 10px;
+  right: 60px;
+
+  text-transform: uppercase;
+
+  font-weight: bold;
+
+  background: color("white");
+}
+
+#currencies-widget-content {
+  display: none;
+}
+
+.currencies-widget-currency {
+  @extend .badge;
+  @extend .text-primary;
+
+  font-size: 100%;
+
+  padding: 0px;
+}

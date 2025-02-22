@@ -1,0 +1,18 @@
+.has-error {
+  label {
+    color: color("deep-orange-darken-3");
+  }
+
+  input {
+    border: none;
+    box-shadow: 0 0 2px 0 color("deep-orange-darken-1");
+
+    &:focus {
+      box-shadow: 0 0 4px 0 color("deep-orange-accent-4");
+    }
+  }
+
+  .error {
+    color: color("deep-orange-darken-3");
+  }
+}
