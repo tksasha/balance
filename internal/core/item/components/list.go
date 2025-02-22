@@ -43,7 +43,7 @@ func (c *ItemsComponent) item(item *item.Item) Node {
 			Text(item.CategoryName),
 		),
 		Td(
-			Text(item.Description),
+			Raw(c.Description(item.Description)),
 		),
 	)
 }

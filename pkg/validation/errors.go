@@ -4,7 +4,7 @@ import (
 	"fmt"
 	"strings"
 
-	utilsstrings "github.com/tksasha/utils/strings"
+	"github.com/tksasha/xstrings"
 )
 
 type Errors map[string][]string //nolint:errname
@@ -28,7 +28,7 @@ func (e Errors) Error() string {
 }
 
 func (e Errors) add(attribute, message string) {
-	attribute = utilsstrings.ToSnakeCase(attribute)
+	attribute = xstrings.ToSnakeCase(attribute)
 
 	e[attribute] = append(e[attribute], message)
 }
