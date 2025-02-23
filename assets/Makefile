@@ -7,4 +7,7 @@ build:
 		bootstrap/dist/js/bootstrap.js \
 		bootstrap/dist/js/bootstrap.js.map \
 		../internal/server/routes/assets/
+	@cp \
+		htmx/dist/htmx.js \
+		../internal/server/routes/assets
 	@echo "done"
