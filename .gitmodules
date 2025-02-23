@@ -1,8 +1,6 @@
 [submodule "assets/bootstrap"]
 	path = assets/bootstrap
 	url = git@github.com:twbs/bootstrap.git
-	branch = v5.3.3
 [submodule "assets/htmx"]
 	path = assets/htmx
 	url = git@github.com:bigskysoftware/htmx.git
-	branch = v2.0.4
