@@ -53,7 +53,7 @@ func (c *IndexComponent) Index(categories category.Categories, values url.Values
 					),
 				),
 				c.Modal(),
-				Script(Src("/assets/bootstrap.bundle.min.js")),
+				Script(Src("/assets/bootstrap.js")),
 				Script(Src("/assets/htmx.min.js")),
 			},
 		},

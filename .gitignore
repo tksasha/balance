@@ -1,6 +1,4 @@
 .env
-tags
 tmp/
 debug.go
 TODO.md
-node_modules/
