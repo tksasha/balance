@@ -51,7 +51,7 @@ func newListHandler(t *testing.T) (*handlers.ListHandler, *sql.DB) {
 
 	categoryRepository := repository.New(common.NewBaseRepository(), db)
 
-	categoryService := service.New(categoryRepository)
+	categoryService := service.New(common.NewBaseService(), categoryRepository)
 
 	categoryComponent := component.New(
 		commoncomponent.New(),

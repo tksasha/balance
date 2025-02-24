@@ -8,6 +8,7 @@ import (
 	"github.com/tksasha/balance/internal/backoffice/category"
 	"github.com/tksasha/balance/internal/backoffice/category/service"
 	"github.com/tksasha/balance/internal/backoffice/category/test/mocks"
+	"github.com/tksasha/balance/internal/common"
 	"go.uber.org/mock/gomock"
 	"gotest.tools/v3/assert"
 )
@@ -17,7 +18,7 @@ func TestList(t *testing.T) {
 
 	categoryRepository := mocks.NewMockRepository(controller)
 
-	service := service.New(categoryRepository)
+	service := service.New(common.NewBaseService(), categoryRepository)
 
 	ctx := t.Context()
 

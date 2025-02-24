@@ -3,7 +3,7 @@ package service
 import (
 	"context"
 
-	"github.com/tksasha/balance/internal/app/category"
+	"github.com/tksasha/balance/internal/backoffice/category"
 	"github.com/tksasha/validator"
 )
 

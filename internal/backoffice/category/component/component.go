@@ -2,12 +2,12 @@ package component
 
 import "github.com/tksasha/balance/internal/common/component"
 
-type Component struct {
+type CategoryComponent struct {
 	*component.Component
 }
 
-func New(component *component.Component) *Component {
-	return &Component{
+func New(component *component.Component) *CategoryComponent {
+	return &CategoryComponent{
 		Component: component,
 	}
 }

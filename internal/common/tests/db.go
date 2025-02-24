@@ -38,6 +38,20 @@ func Cleanup(ctx context.Context, t *testing.T) {
 	})
 }
 
+func Cleanup2(ctx context.Context, t *testing.T, db *sql.DB) {
+	t.Helper()
+
+	t.Cleanup(func() {
+		tables := []string{"items", "categories", "cashes"}
+
+		for _, table := range tables {
+			if _, err := db.ExecContext(ctx, "DELETE FROM "+table); err != nil { //nolint:gosec
+				t.Fatalf("failed to truncate %s, error: %v", table, err)
+			}
+		}
+	})
+}
+
 func FindCashByName(ctx context.Context, t *testing.T, currency currency.Currency, name string) *cash.Cash {
 	t.Helper()
 
@@ -204,6 +218,36 @@ func FindCategoryByName(
 	}()
 
 	ctx = currencyContext(ctx, t, currency)
+
+	query := `
+		SELECT id, name, income, visible, currency, supercategory, deleted_at
+		FROM categories
+		WHERE name=? AND currency=?
+	`
+
+	category := &category.Category{}
+
+	if err := db.
+		QueryRowContext(ctx, query, name, currency).
+		Scan(
+			&category.ID,
+			&category.Name,
+			&category.Income,
+			&category.Visible,
+			&category.Currency,
+			&category.Supercategory,
+			&category.DeletedAt,
+		); err != nil {
+		t.Fatalf("failed to find category by name, error: %v", err)
+	}
+
+	return category
+}
+
+func FindCategoryByName2(t *testing.T, db *sql.DB, currency currency.Currency, name string) *category.Category {
+	t.Helper()
+
+	ctx := t.Context()
 
 	query := `
 		SELECT id, name, income, visible, currency, supercategory, deleted_at

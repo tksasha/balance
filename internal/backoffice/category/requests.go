@@ -1,7 +1,6 @@
 package category
 
-type UpdateRequest struct {
-	ID            string
+type CreateRequest struct {
 	Name          string
 	Income        string
 	Visible       string

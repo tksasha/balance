@@ -12,13 +12,13 @@ type ListHandler struct {
 	*common.BaseHandler
 
 	service   category.Service
-	component *component.Component
+	component *component.CategoryComponent
 }
 
 func NewListHandler(
 	baseHandler *common.BaseHandler,
 	service category.Service,
-	component *component.Component,
+	component *component.CategoryComponent,
 ) *ListHandler {
 	return &ListHandler{
 		BaseHandler: baseHandler,

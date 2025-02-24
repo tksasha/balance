@@ -3,7 +3,7 @@ package repository
 import (
 	"context"
 
-	"github.com/tksasha/balance/internal/app/category"
+	"github.com/tksasha/balance/internal/backoffice/category"
 )
 
 func (r *Repository) Create(ctx context.Context, category *category.Category) error {

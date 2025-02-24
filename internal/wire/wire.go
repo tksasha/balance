@@ -44,6 +44,7 @@ import (
 func InitializeServer() *server.Server {
 	wire.Build(
 		backofficeCategoryComponent.New,
+		backofficeCategoryHandlers.NewCreateHandler,
 		backofficeCategoryHandlers.NewListHandler,
 		backofficeCategoryRepository.New,
 		backofficeCategoryService.New,
@@ -57,7 +58,6 @@ func InitializeServer() *server.Server {
 		cashrepository.New,
 		cashservice.New,
 		categorycomponents.NewCategoryComponent,
-		categoryhandlers.NewCreateHandler,
 		categoryhandlers.NewDeleteHandler,
 		categoryhandlers.NewEditHandler,
 		categoryhandlers.NewListHandler,

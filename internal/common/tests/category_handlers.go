@@ -18,14 +18,6 @@ func NewListCategoriesHandler(t *testing.T, categoryService category.Service) *h
 	return handlers.NewListHandler(common.NewBaseHandler(), categoryService, categoryComponent)
 }
 
-func NewCreateCategoryHandler(t *testing.T, categoryService category.Service) *handlers.CreateHandler {
-	t.Helper()
-
-	categoryComponent := components.NewCategoryComponent(component.New())
-
-	return handlers.NewCreateHandler(common.NewBaseHandler(), categoryService, categoryComponent)
-}
-
 func NewEditCategoryHandler(t *testing.T, categoryService category.Service) *handlers.EditHandler {
 	t.Helper()
 
