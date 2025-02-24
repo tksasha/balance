@@ -84,6 +84,21 @@ func (mr *MockRepositoryMockRecorder) FindAll(ctx any) *gomock.Call {
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "FindAll", reflect.TypeOf((*MockRepository)(nil).FindAll), ctx)
 }
 
+// FindByID mocks base method.
+func (m *MockRepository) FindByID(ctx context.Context, id int) (*category.Category, error) {
+	m.ctrl.T.Helper()
+	ret := m.ctrl.Call(m, "FindByID", ctx, id)
+	ret0, _ := ret[0].(*category.Category)
+	ret1, _ := ret[1].(error)
+	return ret0, ret1
+}
+
+// FindByID indicates an expected call of FindByID.
+func (mr *MockRepositoryMockRecorder) FindByID(ctx, id any) *gomock.Call {
+	mr.mock.ctrl.T.Helper()
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "FindByID", reflect.TypeOf((*MockRepository)(nil).FindByID), ctx, id)
+}
+
 // FindByName mocks base method.
 func (m *MockRepository) FindByName(ctx context.Context, name string) (*category.Category, error) {
 	m.ctrl.T.Helper()
@@ -150,6 +165,21 @@ func (m *MockService) Delete(ctx context.Context, id string) error {
 func (mr *MockServiceMockRecorder) Delete(ctx, id any) *gomock.Call {
 	mr.mock.ctrl.T.Helper()
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "Delete", reflect.TypeOf((*MockService)(nil).Delete), ctx, id)
+}
+
+// Edit mocks base method.
+func (m *MockService) Edit(ctx context.Context, id string) (*category.Category, error) {
+	m.ctrl.T.Helper()
+	ret := m.ctrl.Call(m, "Edit", ctx, id)
+	ret0, _ := ret[0].(*category.Category)
+	ret1, _ := ret[1].(error)
+	return ret0, ret1
+}
+
+// Edit indicates an expected call of Edit.
+func (mr *MockServiceMockRecorder) Edit(ctx, id any) *gomock.Call {
+	mr.mock.ctrl.T.Helper()
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "Edit", reflect.TypeOf((*MockService)(nil).Edit), ctx, id)
 }
 
 // List mocks base method.

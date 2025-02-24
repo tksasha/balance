@@ -124,21 +124,6 @@ func (m *MockService) EXPECT() *MockServiceMockRecorder {
 	return m.recorder
 }
 
-// Edit mocks base method.
-func (m *MockService) Edit(ctx context.Context, id string) (*category.Category, error) {
-	m.ctrl.T.Helper()
-	ret := m.ctrl.Call(m, "Edit", ctx, id)
-	ret0, _ := ret[0].(*category.Category)
-	ret1, _ := ret[1].(error)
-	return ret0, ret1
-}
-
-// Edit indicates an expected call of Edit.
-func (mr *MockServiceMockRecorder) Edit(ctx, id any) *gomock.Call {
-	mr.mock.ctrl.T.Helper()
-	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "Edit", reflect.TypeOf((*MockService)(nil).Edit), ctx, id)
-}
-
 // List mocks base method.
 func (m *MockService) List(ctx context.Context) (category.Categories, error) {
 	m.ctrl.T.Helper()

@@ -13,6 +13,5 @@ type Repository interface {
 
 type Service interface {
 	List(ctx context.Context) (Categories, error)
-	Edit(ctx context.Context, id string) (*Category, error)
 	Update(ctx context.Context, request UpdateRequest) (*Category, error)
 }

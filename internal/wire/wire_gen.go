@@ -2,6 +2,7 @@
 
 //go:generate go run -mod=mod github.com/google/wire/cmd/wire
 //go:build !wireinject
+// +build !wireinject
 
 package wire
 
@@ -53,20 +54,20 @@ func InitializeServer() *server.Server {
 	categoryComponent := component2.New(componentComponent)
 	createHandler := handlers.NewCreateHandler(baseHandler, serviceService, categoryComponent)
 	deleteHandler := handlers.NewDeleteHandler(baseHandler, serviceService)
+	editHandler := handlers.NewEditHandler(baseHandler, serviceService, categoryComponent)
 	listHandler := handlers.NewListHandler(baseHandler, serviceService, categoryComponent)
 	repository6 := repository2.New(baseRepository, sqlDB)
 	service6 := service2.New(repository6)
 	cashComponent := components.NewCashComponent(componentComponent)
 	handlersCreateHandler := handlers2.NewCreateHandler(baseHandler, service6, cashComponent)
 	handlersDeleteHandler := handlers2.NewDeleteHandler(baseHandler, service6)
-	editHandler := handlers2.NewEditHandler(baseHandler, service6, cashComponent)
+	handlersEditHandler := handlers2.NewEditHandler(baseHandler, service6, cashComponent)
 	handlersListHandler := handlers2.NewListHandler(baseHandler, service6, cashComponent)
 	newHandler := handlers2.NewNewHandler(baseHandler, cashComponent)
 	updateHandler := handlers2.NewUpdateHandler(baseHandler, service6, cashComponent)
 	repository7 := repository3.New(baseRepository, sqlDB)
 	service7 := service3.New(baseService, repository7)
 	componentsCategoryComponent := components2.NewCategoryComponent(componentComponent)
-	handlersEditHandler := handlers3.NewEditHandler(baseHandler, service7, componentsCategoryComponent)
 	listHandler2 := handlers3.NewListHandler(baseHandler, service7, componentsCategoryComponent)
 	handlersUpdateHandler := handlers3.NewUpdateHandler(baseHandler, service7, componentsCategoryComponent)
 	repository8 := repository4.New(baseRepository, sqlDB)
@@ -82,7 +83,7 @@ func InitializeServer() *server.Server {
 	editHandler2 := handlers4.NewEditHandler(baseHandler, service9, service7, itemsComponent)
 	listHandler3 := handlers4.NewListHandler(baseHandler, service9, itemsComponent, monthsComponent, yearsComponent)
 	updateHandler2 := handlers4.NewUpdateHandler(baseHandler, service9, service7, itemsComponent)
-	routesRoutes := routes.New(createHandler, deleteHandler, listHandler, handlersCreateHandler, handlersDeleteHandler, editHandler, handlersListHandler, newHandler, updateHandler, handlersEditHandler, listHandler2, handlersUpdateHandler, handlerHandler, createHandler2, editHandler2, listHandler3, updateHandler2)
+	routesRoutes := routes.New(createHandler, deleteHandler, editHandler, listHandler, handlersCreateHandler, handlersDeleteHandler, handlersEditHandler, handlersListHandler, newHandler, updateHandler, listHandler2, handlersUpdateHandler, handlerHandler, createHandler2, editHandler2, listHandler3, updateHandler2)
 	v := middlewares.New()
 	serverServer := server.New(configConfig, routesRoutes, v)
 	return serverServer

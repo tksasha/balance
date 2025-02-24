@@ -7,10 +7,12 @@ type Repository interface {
 	FindByName(ctx context.Context, name string) (*Category, error)
 	Create(ctx context.Context, category *Category) error
 	Delete(ctx context.Context, id int) error
+	FindByID(ctx context.Context, id int) (*Category, error)
 }
 
 type Service interface {
 	List(ctx context.Context) (Categories, error)
 	Create(ctx context.Context, request CreateRequest) (*Category, error)
 	Delete(ctx context.Context, id string) error
+	Edit(ctx context.Context, id string) (*Category, error)
 }

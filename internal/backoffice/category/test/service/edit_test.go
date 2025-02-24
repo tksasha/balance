@@ -4,9 +4,9 @@ import (
 	"errors"
 	"testing"
 
-	"github.com/tksasha/balance/internal/app/category"
-	"github.com/tksasha/balance/internal/app/category/service"
-	"github.com/tksasha/balance/internal/app/category/test/mocks"
+	"github.com/tksasha/balance/internal/backoffice/category"
+	"github.com/tksasha/balance/internal/backoffice/category/service"
+	"github.com/tksasha/balance/internal/backoffice/category/test/mocks"
 	"github.com/tksasha/balance/internal/common"
 	"go.uber.org/mock/gomock"
 	"gotest.tools/v3/assert"
