@@ -7,6 +7,8 @@ package wire
 
 import (
 	"context"
+	"github.com/tksasha/balance/internal/common"
+	"github.com/tksasha/balance/internal/common/component"
 	"github.com/tksasha/balance/internal/core/cash/components"
 	"github.com/tksasha/balance/internal/core/cash/handlers"
 	"github.com/tksasha/balance/internal/core/cash/repository"
@@ -15,8 +17,6 @@ import (
 	handlers2 "github.com/tksasha/balance/internal/core/category/handlers"
 	repository2 "github.com/tksasha/balance/internal/core/category/repository"
 	service2 "github.com/tksasha/balance/internal/core/category/service"
-	"github.com/tksasha/balance/internal/core/common"
-	"github.com/tksasha/balance/internal/core/common/component"
 	components3 "github.com/tksasha/balance/internal/core/index/components"
 	"github.com/tksasha/balance/internal/core/index/handler"
 	repository3 "github.com/tksasha/balance/internal/core/index/repository"

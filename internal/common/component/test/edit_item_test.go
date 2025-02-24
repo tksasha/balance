@@ -3,7 +3,7 @@ package component_test
 import (
 	"testing"
 
-	"github.com/tksasha/balance/internal/core/common/component"
+	"github.com/tksasha/balance/internal/common/component"
 	"gotest.tools/v3/assert"
 )
 

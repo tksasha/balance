@@ -5,8 +5,8 @@ import (
 	"errors"
 	"strconv"
 
-	"github.com/tksasha/balance/internal/core/cash"
 	"github.com/tksasha/balance/internal/common"
+	"github.com/tksasha/balance/internal/core/cash"
 )
 
 type Service struct {

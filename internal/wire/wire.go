@@ -6,6 +6,8 @@ import (
 	"context"
 
 	"github.com/google/wire"
+	"github.com/tksasha/balance/internal/common"
+	"github.com/tksasha/balance/internal/common/component"
 	"github.com/tksasha/balance/internal/core/cash"
 	cashcomponents "github.com/tksasha/balance/internal/core/cash/components"
 	cashhandlers "github.com/tksasha/balance/internal/core/cash/handlers"
@@ -16,8 +18,6 @@ import (
 	categoryhandlers "github.com/tksasha/balance/internal/core/category/handlers"
 	categoryrepository "github.com/tksasha/balance/internal/core/category/repository"
 	categoryservice "github.com/tksasha/balance/internal/core/category/service"
-	"github.com/tksasha/balance/internal/common"
-	"github.com/tksasha/balance/internal/common/component"
 	"github.com/tksasha/balance/internal/core/index"
 	indexcomponents "github.com/tksasha/balance/internal/core/index/components"
 	indexhandler "github.com/tksasha/balance/internal/core/index/handler"

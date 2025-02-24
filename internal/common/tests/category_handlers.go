@@ -3,11 +3,11 @@ package tests
 import (
 	"testing"
 
+	"github.com/tksasha/balance/internal/common"
+	"github.com/tksasha/balance/internal/common/component"
 	"github.com/tksasha/balance/internal/core/category"
 	"github.com/tksasha/balance/internal/core/category/components"
 	"github.com/tksasha/balance/internal/core/category/handlers"
-	"github.com/tksasha/balance/internal/common"
-	"github.com/tksasha/balance/internal/common/component"
 )
 
 func NewListCategoriesHandler(t *testing.T, categoryService category.Service) *handlers.ListHandler {

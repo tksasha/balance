@@ -5,8 +5,8 @@ import (
 	"database/sql"
 	"errors"
 
-	"github.com/tksasha/balance/internal/core/category"
 	"github.com/tksasha/balance/internal/common"
+	"github.com/tksasha/balance/internal/core/category"
 )
 
 func (r *Repository) FindByID(ctx context.Context, id int) (*category.Category, error) {

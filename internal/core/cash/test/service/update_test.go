@@ -4,11 +4,11 @@ import (
 	"errors"
 	"testing"
 
+	"github.com/tksasha/balance/internal/common"
 	"github.com/tksasha/balance/internal/common/currency"
 	"github.com/tksasha/balance/internal/core/cash"
 	"github.com/tksasha/balance/internal/core/cash/service"
 	"github.com/tksasha/balance/internal/core/cash/test/mocks"
-	"github.com/tksasha/balance/internal/common"
 	"go.uber.org/mock/gomock"
 	"gotest.tools/v3/assert"
 )

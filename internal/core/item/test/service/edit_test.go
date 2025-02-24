@@ -3,8 +3,8 @@ package service_test
 import (
 	"testing"
 
-	categorymocks "github.com/tksasha/balance/internal/core/category/test/mocks"
 	"github.com/tksasha/balance/internal/common"
+	categorymocks "github.com/tksasha/balance/internal/core/category/test/mocks"
 	"github.com/tksasha/balance/internal/core/item"
 	"github.com/tksasha/balance/internal/core/item/service"
 	"github.com/tksasha/balance/internal/core/item/test/mocks"

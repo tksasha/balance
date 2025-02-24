@@ -3,8 +3,8 @@ package repository
 import (
 	"context"
 
-	"github.com/tksasha/balance/internal/core/category"
 	"github.com/tksasha/balance/internal/common"
+	"github.com/tksasha/balance/internal/core/category"
 )
 
 func (r *Repository) Update(ctx context.Context, category *category.Category) error {

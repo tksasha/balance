@@ -3,9 +3,9 @@ package tests
 import (
 	"testing"
 
-	"github.com/tksasha/balance/internal/core/category"
 	"github.com/tksasha/balance/internal/common"
 	"github.com/tksasha/balance/internal/common/component"
+	"github.com/tksasha/balance/internal/core/category"
 	"github.com/tksasha/balance/internal/core/index"
 	"github.com/tksasha/balance/internal/core/index/components"
 	"github.com/tksasha/balance/internal/core/index/handler"

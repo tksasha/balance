@@ -3,8 +3,8 @@ package repository
 import (
 	"context"
 
-	"github.com/tksasha/balance/internal/core/cash"
 	"github.com/tksasha/balance/internal/common"
+	"github.com/tksasha/balance/internal/core/cash"
 )
 
 func (r *Repository) Update(ctx context.Context, cash *cash.Cash) error {

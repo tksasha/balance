@@ -5,8 +5,8 @@ import (
 	"database/sql"
 	"errors"
 
-	"github.com/tksasha/balance/internal/core/cash"
 	"github.com/tksasha/balance/internal/common"
+	"github.com/tksasha/balance/internal/core/cash"
 )
 
 func (r *Repository) FindByID(ctx context.Context, id int) (*cash.Cash, error) {

@@ -4,8 +4,8 @@ import (
 	"errors"
 	"testing"
 
-	categorymocks "github.com/tksasha/balance/internal/core/category/test/mocks"
 	"github.com/tksasha/balance/internal/common"
+	categorymocks "github.com/tksasha/balance/internal/core/category/test/mocks"
 	"github.com/tksasha/balance/internal/core/item/service"
 	"github.com/tksasha/balance/internal/core/item/test/mocks"
 	"go.uber.org/mock/gomock"
