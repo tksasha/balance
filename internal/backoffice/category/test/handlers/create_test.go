@@ -16,7 +16,6 @@ import (
 	"github.com/tksasha/balance/internal/common"
 	commonComponent "github.com/tksasha/balance/internal/common/component"
 	"github.com/tksasha/balance/internal/common/currency"
-	"github.com/tksasha/balance/internal/common/tests"
 	"github.com/tksasha/balance/internal/db"
 	nameprovider "github.com/tksasha/balance/internal/db/nameprovider/test"
 	"gotest.tools/v3/assert"
@@ -33,7 +32,7 @@ func TestCategoryCreateHandler(t *testing.T) { //nolint:funlen
 		}
 	}()
 
-	mux := tests.NewMux(t, "POST /backoffice/categories", handler)
+	mux := mux(t, "POST /backoffice/categories", handler)
 
 	t.Run("responds 400 when input data is invalid", func(t *testing.T) {
 		body := strings.NewReader("%")
@@ -66,14 +65,17 @@ func TestCategoryCreateHandler(t *testing.T) { //nolint:funlen
 
 		mux.ServeHTTP(recorder, request)
 
-		responseBody := tests.GetResponseBody(t, recorder.Body)
+		responseBody, err := io.ReadAll(recorder.Body)
+		if err != nil {
+			t.Fatal(err)
+		}
 
 		assert.Equal(t, recorder.Code, http.StatusOK)
-		assert.Assert(t, is.Contains(responseBody, "name: is required"))
+		assert.Assert(t, is.Contains(string(responseBody), "name: is required"))
 	})
 
 	t.Run("responds 201 on successful create", func(t *testing.T) {
-		tests.Cleanup2(ctx, t, db)
+		cleanup(t, db)
 
 		formData := url.Values{
 			"name":          {"Miscellaneous"},
@@ -81,8 +83,6 @@ func TestCategoryCreateHandler(t *testing.T) { //nolint:funlen
 			"visible":       {"true"},
 			"supercategory": {"3"},
 		}
-
-		t.Logf("%s", formData.Encode())
 
 		body := strings.NewReader(formData.Encode())
 
@@ -97,16 +97,9 @@ func TestCategoryCreateHandler(t *testing.T) { //nolint:funlen
 
 		mux.ServeHTTP(recorder, request)
 
-		responseBody, err := io.ReadAll(recorder.Body)
-		if err != nil {
-			t.Fatal(err)
-		}
-
-		t.Logf("%s", responseBody)
-
 		assert.Equal(t, recorder.Code, http.StatusCreated)
 
-		category := tests.FindCategoryByName(ctx, t, currency.EUR, "Miscellaneous")
+		category := findCategoryByName(t, db, currency.EUR, "Miscellaneous")
 
 		assert.Equal(t, category.ID, 1)
 		assert.Equal(t, category.Name, "Miscellaneous")
