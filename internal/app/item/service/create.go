@@ -4,7 +4,7 @@ import (
 	"context"
 
 	"github.com/tksasha/balance/internal/app/item"
-	"github.com/tksasha/balance/pkg/validation"
+	"github.com/tksasha/validator"
 )
 
 func (s *Service) Create(ctx context.Context, request item.CreateRequest) (*item.Item, error) {
@@ -12,7 +12,7 @@ func (s *Service) Create(ctx context.Context, request item.CreateRequest) (*item
 		Description: request.Description,
 	}
 
-	validate := validation.New()
+	validate := validator.New()
 
 	item.Date = validate.Date("date", request.Date)
 

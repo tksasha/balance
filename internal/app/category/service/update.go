@@ -4,7 +4,7 @@ import (
 	"context"
 
 	"github.com/tksasha/balance/internal/app/category"
-	"github.com/tksasha/balance/pkg/validation"
+	"github.com/tksasha/validator"
 )
 
 func (s *Service) Update(ctx context.Context, request category.UpdateRequest) (*category.Category, error) {
@@ -13,7 +13,7 @@ func (s *Service) Update(ctx context.Context, request category.UpdateRequest) (*
 		return nil, err
 	}
 
-	validate := validation.New()
+	validate := validator.New()
 
 	category.Name = validate.Presence("name", request.Name)
 

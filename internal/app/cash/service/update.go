@@ -6,7 +6,7 @@ import (
 
 	"github.com/tksasha/balance/internal/app/cash"
 	"github.com/tksasha/balance/internal/common"
-	"github.com/tksasha/balance/pkg/validation"
+	"github.com/tksasha/validator"
 )
 
 func (s *Service) Update(ctx context.Context, request cash.UpdateRequest) (*cash.Cash, error) {
@@ -15,7 +15,7 @@ func (s *Service) Update(ctx context.Context, request cash.UpdateRequest) (*cash
 		return nil, err
 	}
 
-	validate := validation.New()
+	validate := validator.New()
 
 	cash.Formula, cash.Sum = validate.Formula("sum", request.Formula)
 

@@ -4,12 +4,12 @@ import (
 	"fmt"
 	"strings"
 
-	"github.com/tksasha/balance/pkg/validation"
+	"github.com/tksasha/validator"
 	. "maragu.dev/gomponents"      //nolint:stylecheck
 	. "maragu.dev/gomponents/html" //nolint:stylecheck
 )
 
-func (c *Component) Errors(attribute string, errors validation.Errors) Node {
+func (c *Component) Errors(attribute string, errors validator.Errors) Node {
 	if !has(attribute, errors) {
 		return nil
 	}
@@ -20,7 +20,7 @@ func (c *Component) Errors(attribute string, errors validation.Errors) Node {
 	)
 }
 
-func has(attribute string, errors validation.Errors) bool {
+func has(attribute string, errors validator.Errors) bool {
 	if errors == nil {
 		return false
 	}
@@ -28,7 +28,7 @@ func has(attribute string, errors validation.Errors) bool {
 	return errors.Has(attribute)
 }
 
-func get(attribute string, errors validation.Errors) string {
+func get(attribute string, errors validator.Errors) string {
 	if errors == nil {
 		return ""
 	}

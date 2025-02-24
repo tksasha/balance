@@ -5,13 +5,13 @@ import (
 
 	"github.com/tksasha/balance/internal/app/cash"
 	"github.com/tksasha/balance/internal/common"
-	"github.com/tksasha/balance/pkg/validation"
+	"github.com/tksasha/validator"
 )
 
 func (s *Service) Create(ctx context.Context, request cash.CreateRequest) (*cash.Cash, error) {
 	cash := &cash.Cash{}
 
-	validate := validation.New()
+	validate := validator.New()
 
 	cash.Name = validate.Presence("name", request.Name)
 

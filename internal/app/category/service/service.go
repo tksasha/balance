@@ -7,7 +7,7 @@ import (
 
 	"github.com/tksasha/balance/internal/app/category"
 	"github.com/tksasha/balance/internal/common"
-	"github.com/tksasha/balance/pkg/validation"
+	"github.com/tksasha/validator"
 )
 
 type Service struct {
@@ -30,7 +30,7 @@ func (s *Service) nameAlreadyExists(
 	ctx context.Context,
 	name string,
 	categoryID int,
-	validation *validation.Validation,
+	validator *validator.Validator,
 ) error {
 	if name == "" {
 		return nil
@@ -47,7 +47,7 @@ func (s *Service) nameAlreadyExists(
 	}
 
 	if category.ID != categoryID {
-		validation.Set("name", common.AlreadyExists)
+		validator.Set("name", common.AlreadyExists)
 	}
 
 	return nil

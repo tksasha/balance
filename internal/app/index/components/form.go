@@ -5,7 +5,7 @@ import (
 
 	"github.com/tksasha/balance/internal/app/category"
 	"github.com/tksasha/balance/internal/app/item"
-	"github.com/tksasha/balance/pkg/validation"
+	"github.com/tksasha/validator"
 	. "maragu.dev/gomponents"      //nolint:stylecheck
 	. "maragu.dev/gomponents/html" //nolint:stylecheck
 )
@@ -13,7 +13,7 @@ import (
 func (c *IndexComponent) form( //nolint:funlen
 	item *item.Item,
 	categories category.Categories,
-	errors validation.Errors,
+	errors validator.Errors,
 ) Node {
 	return Form(
 		Div(
