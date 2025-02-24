@@ -13,14 +13,14 @@ type Handler struct {
 	*common.BaseHandler
 
 	indexService    index.Service
-	categoryService category.Service
+	categoryService index.CategoryService
 	indexComponent  *components.IndexComponent
 }
 
 func New(
 	baseHandler *common.BaseHandler,
 	indexService index.Service,
-	categoryService category.Service,
+	categoryService index.CategoryService,
 	indexComponent *components.IndexComponent,
 ) *Handler {
 	return &Handler{

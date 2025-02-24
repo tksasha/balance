@@ -3,7 +3,6 @@ package tests
 import (
 	"testing"
 
-	"github.com/tksasha/balance/internal/app/category"
 	indexcomponents "github.com/tksasha/balance/internal/app/index/components"
 	"github.com/tksasha/balance/internal/app/item"
 	"github.com/tksasha/balance/internal/app/item/components"
@@ -15,7 +14,7 @@ import (
 func NewCreateItemHandler(
 	t *testing.T,
 	itemService item.Service,
-	categoryService category.Service,
+	categoryService item.CategoryService,
 ) *handlers.CreateHandler {
 	t.Helper()
 
@@ -27,7 +26,7 @@ func NewCreateItemHandler(
 func NewEditItemHandler(
 	t *testing.T,
 	itemService item.Service,
-	categoryService category.Service,
+	categoryService item.CategoryService,
 ) *handlers.EditHandler {
 	t.Helper()
 
@@ -39,7 +38,7 @@ func NewEditItemHandler(
 func NewUpdateItemHandler(
 	t *testing.T,
 	itemService item.Service,
-	categoryService category.Service,
+	categoryService item.CategoryService,
 ) *handlers.UpdateHandler {
 	t.Helper()
 

@@ -5,7 +5,6 @@ import (
 	"database/sql"
 	"strconv"
 
-	"github.com/tksasha/balance/internal/app/category"
 	"github.com/tksasha/balance/internal/app/item"
 	"github.com/tksasha/balance/internal/common"
 	"github.com/tksasha/validator"
@@ -15,13 +14,13 @@ type Service struct {
 	*common.BaseService
 
 	itemRepository     item.Repository
-	categoryRepository category.Repository
+	categoryRepository item.CategoryRepository
 }
 
 func New(
 	baseService *common.BaseService,
 	itemRepository item.Repository,
-	categoryRepository category.Repository,
+	categoryRepository item.CategoryRepository,
 ) *Service {
 	return &Service{
 		BaseService:        baseService,

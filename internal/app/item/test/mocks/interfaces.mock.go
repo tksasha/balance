@@ -13,6 +13,7 @@ import (
 	context "context"
 	reflect "reflect"
 
+	category "github.com/tksasha/balance/internal/app/category"
 	item "github.com/tksasha/balance/internal/app/item"
 	month "github.com/tksasha/month"
 	gomock "go.uber.org/mock/gomock"
@@ -210,4 +211,82 @@ func (m *MockService) Update(ctx context.Context, request item.UpdateRequest) (*
 func (mr *MockServiceMockRecorder) Update(ctx, request any) *gomock.Call {
 	mr.mock.ctrl.T.Helper()
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "Update", reflect.TypeOf((*MockService)(nil).Update), ctx, request)
+}
+
+// MockCategoryRepository is a mock of CategoryRepository interface.
+type MockCategoryRepository struct {
+	ctrl     *gomock.Controller
+	recorder *MockCategoryRepositoryMockRecorder
+	isgomock struct{}
+}
+
+// MockCategoryRepositoryMockRecorder is the mock recorder for MockCategoryRepository.
+type MockCategoryRepositoryMockRecorder struct {
+	mock *MockCategoryRepository
+}
+
+// NewMockCategoryRepository creates a new mock instance.
+func NewMockCategoryRepository(ctrl *gomock.Controller) *MockCategoryRepository {
+	mock := &MockCategoryRepository{ctrl: ctrl}
+	mock.recorder = &MockCategoryRepositoryMockRecorder{mock}
+	return mock
+}
+
+// EXPECT returns an object that allows the caller to indicate expected use.
+func (m *MockCategoryRepository) EXPECT() *MockCategoryRepositoryMockRecorder {
+	return m.recorder
+}
+
+// FindByID mocks base method.
+func (m *MockCategoryRepository) FindByID(ctx context.Context, id int) (*category.Category, error) {
+	m.ctrl.T.Helper()
+	ret := m.ctrl.Call(m, "FindByID", ctx, id)
+	ret0, _ := ret[0].(*category.Category)
+	ret1, _ := ret[1].(error)
+	return ret0, ret1
+}
+
+// FindByID indicates an expected call of FindByID.
+func (mr *MockCategoryRepositoryMockRecorder) FindByID(ctx, id any) *gomock.Call {
+	mr.mock.ctrl.T.Helper()
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "FindByID", reflect.TypeOf((*MockCategoryRepository)(nil).FindByID), ctx, id)
+}
+
+// MockCategoryService is a mock of CategoryService interface.
+type MockCategoryService struct {
+	ctrl     *gomock.Controller
+	recorder *MockCategoryServiceMockRecorder
+	isgomock struct{}
+}
+
+// MockCategoryServiceMockRecorder is the mock recorder for MockCategoryService.
+type MockCategoryServiceMockRecorder struct {
+	mock *MockCategoryService
+}
+
+// NewMockCategoryService creates a new mock instance.
+func NewMockCategoryService(ctrl *gomock.Controller) *MockCategoryService {
+	mock := &MockCategoryService{ctrl: ctrl}
+	mock.recorder = &MockCategoryServiceMockRecorder{mock}
+	return mock
+}
+
+// EXPECT returns an object that allows the caller to indicate expected use.
+func (m *MockCategoryService) EXPECT() *MockCategoryServiceMockRecorder {
+	return m.recorder
+}
+
+// List mocks base method.
+func (m *MockCategoryService) List(ctx context.Context) (category.Categories, error) {
+	m.ctrl.T.Helper()
+	ret := m.ctrl.Call(m, "List", ctx)
+	ret0, _ := ret[0].(category.Categories)
+	ret1, _ := ret[1].(error)
+	return ret0, ret1
+}
+
+// List indicates an expected call of List.
+func (mr *MockCategoryServiceMockRecorder) List(ctx any) *gomock.Call {
+	mr.mock.ctrl.T.Helper()
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "List", reflect.TypeOf((*MockCategoryService)(nil).List), ctx)
 }

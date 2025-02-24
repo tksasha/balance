@@ -1,31 +1,39 @@
 package handlers_test
 
 import (
+	"database/sql"
 	"net/http"
 	"net/http/httptest"
 	"testing"
 	"time"
 
 	"github.com/tksasha/balance/internal/app/category"
+	categoryrepository "github.com/tksasha/balance/internal/app/category/repository"
+	categoryservice "github.com/tksasha/balance/internal/app/category/service"
+	"github.com/tksasha/balance/internal/app/item/components"
+	"github.com/tksasha/balance/internal/app/item/handlers"
+	"github.com/tksasha/balance/internal/app/item/repository"
+	"github.com/tksasha/balance/internal/app/item/service"
+	"github.com/tksasha/balance/internal/common"
+	commoncomponent "github.com/tksasha/balance/internal/common/component"
 	"github.com/tksasha/balance/internal/common/currency"
 	"github.com/tksasha/balance/internal/common/tests"
+	"github.com/tksasha/balance/internal/db"
+	nameprovider "github.com/tksasha/balance/internal/db/nameprovider/test"
 	"gotest.tools/v3/assert"
 )
 
 func TestItemCreateHandler(t *testing.T) { //nolint:funlen
+	handler, db := newCreateHandler(t)
+	defer func() {
+		if err := db.Close(); err != nil {
+			t.Fatal(err)
+		}
+	}()
+
+	mux := mux(t, "POST /items", handler)
+
 	ctx := t.Context()
-
-	itemService, db := tests.NewItemService(ctx, t)
-	defer func() {
-		_ = db.Close()
-	}()
-
-	categoryService, db2 := tests.NewCategoryService(ctx, t)
-	defer func() {
-		_ = db2.Close()
-	}()
-
-	mux := tests.NewMux(t, "POST /items", tests.NewCreateItemHandler(t, itemService, categoryService))
 
 	t.Run("responds 400 on parse form fails", func(t *testing.T) {
 		request := tests.NewInvalidPostRequest(ctx, t, "/items")
@@ -60,7 +68,7 @@ func TestItemCreateHandler(t *testing.T) { //nolint:funlen
 			Currency: currency.USD,
 		}
 
-		tests.CreateCategory(ctx, t, categoryToCreate)
+		createCategory(t, db, categoryToCreate)
 
 		params := tests.Params{
 			"date":        "2024-10-16",
@@ -87,4 +95,24 @@ func TestItemCreateHandler(t *testing.T) { //nolint:funlen
 		assert.Equal(t, item.Sum, 112.11)
 		assert.Equal(t, item.Description, "paper clips, notebooks, and pens")
 	})
+}
+
+func newCreateHandler(t *testing.T) (*handlers.CreateHandler, *sql.DB) {
+	t.Helper()
+
+	db := db.Open(t.Context(), nameprovider.New())
+
+	itemRepository := repository.New(common.NewBaseRepository(), db)
+
+	categoryRepository := categoryrepository.New(common.NewBaseRepository(), db)
+
+	itemService := service.New(common.NewBaseService(), itemRepository, categoryRepository)
+
+	categoryService := categoryservice.New(common.NewBaseService(), categoryRepository)
+
+	itemComponent := components.NewItemsComponent(commoncomponent.New())
+
+	handler := handlers.NewCreateHandler(common.NewBaseHandler(), itemService, categoryService, itemComponent)
+
+	return handler, db
 }

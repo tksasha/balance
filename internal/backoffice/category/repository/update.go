@@ -3,7 +3,7 @@ package repository
 import (
 	"context"
 
-	"github.com/tksasha/balance/internal/app/category"
+	"github.com/tksasha/balance/internal/backoffice/category"
 	"github.com/tksasha/balance/internal/common"
 )
 
@@ -11,7 +11,8 @@ func (r *Repository) Update(ctx context.Context, category *category.Category) er
 	currency := r.GetCurrencyFromContext(ctx)
 
 	query := `
-		UPDATE categories
+		UPDATE
+			categories
 		SET
 		    name = ?,
 		    income = ?,

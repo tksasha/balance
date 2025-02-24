@@ -35,9 +35,7 @@ func TestCategoryCreateHandler(t *testing.T) { //nolint:funlen
 	ctx := t.Context()
 
 	t.Run("responds 400 when input data is invalid", func(t *testing.T) {
-		body := strings.NewReader("%")
-
-		request, err := http.NewRequestWithContext(ctx, http.MethodPost, "/backoffice/categories", body)
+		request, err := http.NewRequestWithContext(ctx, http.MethodPost, "/backoffice/categories", nil)
 		if err != nil {
 			t.Fatal(err)
 		}

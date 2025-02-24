@@ -1,31 +1,39 @@
 package handlers_test
 
 import (
+	"database/sql"
 	"net/http"
 	"net/http/httptest"
 	"testing"
 
 	"github.com/tksasha/balance/internal/app/category"
+	categoryrepository "github.com/tksasha/balance/internal/app/category/repository"
+	categoryservice "github.com/tksasha/balance/internal/app/category/service"
 	"github.com/tksasha/balance/internal/app/item"
+	"github.com/tksasha/balance/internal/app/item/components"
+	"github.com/tksasha/balance/internal/app/item/handlers"
+	"github.com/tksasha/balance/internal/app/item/repository"
+	"github.com/tksasha/balance/internal/app/item/service"
+	"github.com/tksasha/balance/internal/common"
+	commoncomponent "github.com/tksasha/balance/internal/common/component"
 	"github.com/tksasha/balance/internal/common/currency"
 	"github.com/tksasha/balance/internal/common/tests"
+	"github.com/tksasha/balance/internal/db"
+	nameprovider "github.com/tksasha/balance/internal/db/nameprovider/test"
 	"gotest.tools/v3/assert"
 )
 
 func TestItemUpdateHandler(t *testing.T) { //nolint:funlen
+	handler, db := newUpdateHandler(t)
+	defer func() {
+		if err := db.Close(); err != nil {
+			t.Fatal(err)
+		}
+	}()
+
+	mux := tests.NewMux(t, "PATCH /items/{id}", handler)
+
 	ctx := t.Context()
-
-	itemService, db := tests.NewItemService(ctx, t)
-	defer func() {
-		_ = db.Close()
-	}()
-
-	categoryService, db2 := tests.NewCategoryService(ctx, t)
-	defer func() {
-		_ = db2.Close()
-	}()
-
-	mux := tests.NewMux(t, "PATCH /items/{id}", tests.NewUpdateItemHandler(t, itemService, categoryService))
 
 	t.Run("responds 400 on invalid input", func(t *testing.T) {
 		tests.Cleanup(ctx, t)
@@ -62,7 +70,7 @@ func TestItemUpdateHandler(t *testing.T) { //nolint:funlen
 			Currency: currency.EUR,
 		}
 
-		tests.CreateCategory(ctx, t, categoryToCreate)
+		createCategory(t, db, categoryToCreate)
 
 		itemToCreate := &item.Item{
 			ID:         1143,
@@ -91,4 +99,24 @@ func TestItemUpdateHandler(t *testing.T) { //nolint:funlen
 
 		assert.Equal(t, item.ID, 1143)
 	})
+}
+
+func newUpdateHandler(t *testing.T) (*handlers.UpdateHandler, *sql.DB) {
+	t.Helper()
+
+	db := db.Open(t.Context(), nameprovider.New())
+
+	itemRepository := repository.New(common.NewBaseRepository(), db)
+
+	categoryRepository := categoryrepository.New(common.NewBaseRepository(), db)
+
+	itemService := service.New(common.NewBaseService(), itemRepository, categoryRepository)
+
+	categoryService := categoryservice.New(common.NewBaseService(), categoryRepository)
+
+	itemComponent := components.NewItemsComponent(commoncomponent.New())
+
+	handler := handlers.NewUpdateHandler(common.NewBaseHandler(), itemService, categoryService, itemComponent)
+
+	return handler, db
 }

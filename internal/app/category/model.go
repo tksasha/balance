@@ -1,19 +1,14 @@
 package category
 
 import (
-	"database/sql"
-
 	"github.com/tksasha/balance/internal/common/currency"
 )
 
 type Category struct {
-	ID            int
-	Name          string
-	Income        bool
-	Visible       bool
-	Currency      currency.Currency
-	Supercategory int
-	DeletedAt     sql.NullTime
+	ID       int
+	Currency currency.Currency
+	Name     string
+	Income   bool
 }
 
 type Categories []*Category

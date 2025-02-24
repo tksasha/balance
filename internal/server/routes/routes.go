@@ -5,7 +5,6 @@ import (
 	"net/http"
 
 	cash "github.com/tksasha/balance/internal/app/cash/handlers"
-	category "github.com/tksasha/balance/internal/app/category/handlers"
 	index "github.com/tksasha/balance/internal/app/index/handler"
 	item "github.com/tksasha/balance/internal/app/item/handlers"
 	backofficeCategory "github.com/tksasha/balance/internal/backoffice/category/handlers"
@@ -23,14 +22,13 @@ func New(
 	backofficeCategoryDeleteHandler *backofficeCategory.DeleteHandler,
 	backofficeCategoryEditHandler *backofficeCategory.EditHandler,
 	backofficeCategoryListHandler *backofficeCategory.ListHandler,
+	backofficeCategoryUpdateHandler *backofficeCategory.UpdateHandler,
 	cashCreateHandler *cash.CreateHandler,
 	cashDeleteHandler *cash.DeleteHandler,
 	cashEditHandler *cash.EditHandler,
 	cashListHandler *cash.ListHandler,
 	cashNewHandler *cash.NewHandler,
 	cashUpdateHandler *cash.UpdateHandler,
-	categoryListHandler *category.ListHandler,
-	categoryUpdateHandler *category.UpdateHandler,
 	indexHandler *index.Handler,
 	itemCreateHandler *item.CreateHandler,
 	itemEditHandler *item.EditHandler,
@@ -49,9 +47,6 @@ func New(
 	mux.Handle("GET /items/{id}/edit", itemEditHandler)
 	mux.Handle("PATCH /items/{id}", itemUpdateHandler)
 
-	mux.Handle("GET /categories", categoryListHandler)
-	mux.Handle("PATCH /categories/{id}", categoryUpdateHandler)
-
 	mux.Handle("DELETE /cashes/{id}", cashDeleteHandler)
 	mux.Handle("GET /cashes", cashListHandler)
 	mux.Handle("GET /cashes/new", cashNewHandler)
@@ -63,6 +58,7 @@ func New(
 	mux.Handle("POST /backoffice/categories", backofficeCategoryCreateHandler)
 	mux.Handle("DELETE /backoffice/categories/{id}", backofficeCategoryDeleteHandler)
 	mux.Handle("GET /backoffice/categories/{id}/edit", backofficeCategoryEditHandler)
+	mux.Handle("PATCH /backoffice/categories/{id}", backofficeCategoryUpdateHandler)
 
 	return &Routes{
 		Mux: mux,

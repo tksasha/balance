@@ -1,6 +1,10 @@
 package index
 
-import "context"
+import (
+	"context"
+
+	"github.com/tksasha/balance/internal/app/category"
+)
 
 type Repository interface {
 	Income(ctx context.Context) (float64, error)
@@ -11,4 +15,8 @@ type Repository interface {
 type Service interface {
 	Residual(ctx context.Context) (float64, error)
 	Balance(ctx context.Context) (float64, error)
+}
+
+type CategoryService interface {
+	List(ctx context.Context) (category.Categories, error)
 }

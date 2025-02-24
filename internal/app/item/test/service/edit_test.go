@@ -3,7 +3,6 @@ package service_test
 import (
 	"testing"
 
-	categorymocks "github.com/tksasha/balance/internal/app/category/test/mocks"
 	"github.com/tksasha/balance/internal/app/item"
 	"github.com/tksasha/balance/internal/app/item/service"
 	"github.com/tksasha/balance/internal/app/item/test/mocks"
@@ -17,7 +16,7 @@ func TestEdit(t *testing.T) {
 
 	itemRepository := mocks.NewMockRepository(controller)
 
-	categoryRepository := categorymocks.NewMockRepository(controller)
+	categoryRepository := mocks.NewMockCategoryRepository(controller)
 
 	service := service.New(common.NewBaseService(), itemRepository, categoryRepository)
 

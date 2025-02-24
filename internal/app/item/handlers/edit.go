@@ -3,7 +3,6 @@ package handlers
 import (
 	"net/http"
 
-	"github.com/tksasha/balance/internal/app/category"
 	"github.com/tksasha/balance/internal/app/item"
 	"github.com/tksasha/balance/internal/app/item/components"
 	"github.com/tksasha/balance/internal/common"
@@ -13,14 +12,14 @@ type EditHandler struct {
 	*common.BaseHandler
 
 	itemService     item.Service
-	categoryService category.Service
+	categoryService item.CategoryService
 	itemsComponent  *components.ItemsComponent
 }
 
 func NewEditHandler(
 	baseHandler *common.BaseHandler,
 	itemService item.Service,
-	categoryService category.Service,
+	categoryService item.CategoryService,
 	itemsComponent *components.ItemsComponent,
 ) *EditHandler {
 	return &EditHandler{

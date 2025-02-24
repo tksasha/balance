@@ -12,8 +12,6 @@ import (
 	cashrepository "github.com/tksasha/balance/internal/app/cash/repository"
 	cashservice "github.com/tksasha/balance/internal/app/cash/service"
 	"github.com/tksasha/balance/internal/app/category"
-	categorycomponents "github.com/tksasha/balance/internal/app/category/components"
-	categoryhandlers "github.com/tksasha/balance/internal/app/category/handlers"
 	categoryrepository "github.com/tksasha/balance/internal/app/category/repository"
 	categoryservice "github.com/tksasha/balance/internal/app/category/service"
 	"github.com/tksasha/balance/internal/app/index"
@@ -48,6 +46,7 @@ func InitializeServer() *server.Server {
 		backofficeCategoryHandlers.NewDeleteHandler,
 		backofficeCategoryHandlers.NewEditHandler,
 		backofficeCategoryHandlers.NewListHandler,
+		backofficeCategoryHandlers.NewUpdateHandler,
 		backofficeCategoryRepository.New,
 		backofficeCategoryService.New,
 		cashcomponents.NewCashComponent,
@@ -59,9 +58,6 @@ func InitializeServer() *server.Server {
 		cashhandlers.NewUpdateHandler,
 		cashrepository.New,
 		cashservice.New,
-		categorycomponents.NewCategoryComponent,
-		categoryhandlers.NewListHandler,
-		categoryhandlers.NewUpdateHandler,
 		categoryrepository.New,
 		categoryservice.New,
 		common.NewBaseHandler,
@@ -93,10 +89,12 @@ func InitializeServer() *server.Server {
 		wire.Bind(new(cash.Repository), new(*cashrepository.Repository)),
 		wire.Bind(new(cash.Service), new(*cashservice.Service)),
 		wire.Bind(new(category.Repository), new(*categoryrepository.Repository)),
-		wire.Bind(new(category.Service), new(*categoryservice.Service)),
 		wire.Bind(new(db.NameProvider), new(*nameprovider.Provider)),
+		wire.Bind(new(index.CategoryService), new(*categoryservice.Service)),
 		wire.Bind(new(index.Repository), new(*indexrepository.Repository)),
 		wire.Bind(new(index.Service), new(*indexservice.Service)),
+		wire.Bind(new(item.CategoryRepository), new(*categoryrepository.Repository)),
+		wire.Bind(new(item.CategoryService), new(*categoryservice.Service)),
 		wire.Bind(new(item.Repository), new(*itemrepository.Repository)),
 		wire.Bind(new(item.Service), new(*itemservice.Service)),
 	)

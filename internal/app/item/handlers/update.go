@@ -4,7 +4,6 @@ import (
 	"errors"
 	"net/http"
 
-	"github.com/tksasha/balance/internal/app/category"
 	"github.com/tksasha/balance/internal/app/item"
 	"github.com/tksasha/balance/internal/app/item/components"
 	"github.com/tksasha/balance/internal/common"
@@ -15,14 +14,14 @@ type UpdateHandler struct {
 	*common.BaseHandler
 
 	itemService     item.Service
-	categoryService category.Service
+	categoryService item.CategoryService
 	itemsComponent  *components.ItemsComponent
 }
 
 func NewUpdateHandler(
 	baseHandler *common.BaseHandler,
 	itemService item.Service,
-	categoryService category.Service,
+	categoryService item.CategoryService,
 	itemsComponent *components.ItemsComponent,
 ) *UpdateHandler {
 	return &UpdateHandler{

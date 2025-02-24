@@ -6,7 +6,6 @@ import (
 	"testing"
 
 	"github.com/tksasha/balance/internal/app/cash"
-	"github.com/tksasha/balance/internal/app/category"
 	"github.com/tksasha/balance/internal/app/item"
 	"github.com/tksasha/balance/internal/common/currency"
 	"github.com/tksasha/balance/internal/db"
@@ -28,20 +27,6 @@ func Cleanup(ctx context.Context, t *testing.T) {
 			_ = db.Close()
 		}()
 
-		tables := []string{"items", "categories", "cashes"}
-
-		for _, table := range tables {
-			if _, err := db.ExecContext(ctx, "DELETE FROM "+table); err != nil { //nolint:gosec
-				t.Fatalf("failed to truncate %s, error: %v", table, err)
-			}
-		}
-	})
-}
-
-func Cleanup2(ctx context.Context, t *testing.T, db *sql.DB) {
-	t.Helper()
-
-	t.Cleanup(func() {
 		tables := []string{"items", "categories", "cashes"}
 
 		for _, table := range tables {
@@ -145,133 +130,6 @@ func FindCashByID(ctx context.Context, t *testing.T, currency currency.Currency,
 	}
 
 	return cash
-}
-
-func CreateCategory(ctx context.Context, t *testing.T, category *category.Category) {
-	t.Helper()
-
-	db := newDB(ctx, t)
-	defer func() {
-		_ = db.Close()
-	}()
-
-	if _, err := db.ExecContext(
-		ctx,
-		"INSERT INTO categories(id, name, income, visible, currency, supercategory) VALUES(?, ?, ?, ?, ?, ?)",
-		category.ID,
-		category.Name,
-		category.Income,
-		category.Visible,
-		category.Currency,
-		category.Supercategory,
-	); err != nil {
-		t.Fatalf("failed to create category, error: %v", err)
-	}
-}
-
-func FindCategoryByID(ctx context.Context, t *testing.T, currency currency.Currency, id int) *category.Category {
-	t.Helper()
-
-	db := newDB(ctx, t)
-	defer func() {
-		_ = db.Close()
-	}()
-
-	ctx = currencyContext(ctx, t, currency)
-
-	query := `
-		SELECT id, name, income, visible, currency, supercategory, deleted_at
-		FROM categories
-		WHERE id=? AND currency=?
-	`
-
-	category := &category.Category{}
-
-	if err := db.
-		QueryRowContext(ctx, query, id, currency).
-		Scan(
-			&category.ID,
-			&category.Name,
-			&category.Income,
-			&category.Visible,
-			&category.Currency,
-			&category.Supercategory,
-			&category.DeletedAt,
-		); err != nil {
-		t.Fatalf("failed to find category by id, error: %v", err)
-	}
-
-	return category
-}
-
-func FindCategoryByName(
-	ctx context.Context,
-	t *testing.T,
-	currency currency.Currency,
-	name string,
-) *category.Category {
-	t.Helper()
-
-	db := newDB(ctx, t)
-	defer func() {
-		_ = db.Close()
-	}()
-
-	ctx = currencyContext(ctx, t, currency)
-
-	query := `
-		SELECT id, name, income, visible, currency, supercategory, deleted_at
-		FROM categories
-		WHERE name=? AND currency=?
-	`
-
-	category := &category.Category{}
-
-	if err := db.
-		QueryRowContext(ctx, query, name, currency).
-		Scan(
-			&category.ID,
-			&category.Name,
-			&category.Income,
-			&category.Visible,
-			&category.Currency,
-			&category.Supercategory,
-			&category.DeletedAt,
-		); err != nil {
-		t.Fatalf("failed to find category by name, error: %v", err)
-	}
-
-	return category
-}
-
-func FindCategoryByName2(t *testing.T, db *sql.DB, currency currency.Currency, name string) *category.Category {
-	t.Helper()
-
-	ctx := t.Context()
-
-	query := `
-		SELECT id, name, income, visible, currency, supercategory, deleted_at
-		FROM categories
-		WHERE name=? AND currency=?
-	`
-
-	category := &category.Category{}
-
-	if err := db.
-		QueryRowContext(ctx, query, name, currency).
-		Scan(
-			&category.ID,
-			&category.Name,
-			&category.Income,
-			&category.Visible,
-			&category.Currency,
-			&category.Supercategory,
-			&category.DeletedAt,
-		); err != nil {
-		t.Fatalf("failed to find category by name, error: %v", err)
-	}
-
-	return category
 }
 
 func FindItemByDate(ctx context.Context, t *testing.T, currency currency.Currency, date string) *item.Item {

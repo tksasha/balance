@@ -3,6 +3,7 @@ package item
 import (
 	"context"
 
+	"github.com/tksasha/balance/internal/app/category"
 	"github.com/tksasha/month"
 )
 
@@ -20,4 +21,12 @@ type Service interface {
 	Edit(ctx context.Context, input string) (*Item, error)
 	Update(ctx context.Context, request UpdateRequest) (*Item, error)
 	Delete(ctx context.Context, input string) error
+}
+
+type CategoryRepository interface {
+	FindByID(ctx context.Context, id int) (*category.Category, error)
+}
+
+type CategoryService interface {
+	List(ctx context.Context) (category.Categories, error)
 }

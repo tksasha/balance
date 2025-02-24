@@ -6,7 +6,6 @@ import (
 	"testing"
 
 	"github.com/tksasha/balance/internal/app/category"
-	categorymocks "github.com/tksasha/balance/internal/app/category/test/mocks"
 	"github.com/tksasha/balance/internal/app/item"
 	"github.com/tksasha/balance/internal/app/item/service"
 	"github.com/tksasha/balance/internal/app/item/test/mocks"
@@ -20,7 +19,7 @@ func TestCreate(t *testing.T) { //nolint:funlen
 	ctrl := gomock.NewController(t)
 
 	itemRepository := mocks.NewMockRepository(ctrl)
-	categoryRepository := categorymocks.NewMockRepository(ctrl)
+	categoryRepository := mocks.NewMockCategoryRepository(ctrl)
 
 	service := service.New(common.NewBaseService(), itemRepository, categoryRepository)
 

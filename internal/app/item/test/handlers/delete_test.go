@@ -40,7 +40,7 @@ func TestDeleteItemHandler(t *testing.T) {
 			Currency: currency.UAH,
 		}
 
-		tests.CreateCategory(ctx, t, categoryToCreate)
+		createCategory(t, db, categoryToCreate)
 
 		itemToCreate := &item.Item{
 			ID:         1045,

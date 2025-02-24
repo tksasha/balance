@@ -3,7 +3,6 @@ package tests
 import (
 	"testing"
 
-	"github.com/tksasha/balance/internal/app/category"
 	"github.com/tksasha/balance/internal/app/index"
 	"github.com/tksasha/balance/internal/app/index/components"
 	"github.com/tksasha/balance/internal/app/index/handler"
@@ -14,7 +13,7 @@ import (
 func NewIndexPageHandler(
 	t *testing.T,
 	indexService index.Service,
-	categoryService category.Service,
+	categoryService index.CategoryService,
 ) *handler.Handler {
 	t.Helper()
 

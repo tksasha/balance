@@ -17,9 +17,7 @@ func (r *Repository) FindByID(ctx context.Context, id int) (*category.Category, 
 		    id,
 		    name,
 		    income,
-		    visible,
-		    currency,
-		    supercategory
+		    currency
 		FROM
 		    categories
 		WHERE
@@ -35,9 +33,7 @@ func (r *Repository) FindByID(ctx context.Context, id int) (*category.Category, 
 		&category.ID,
 		&category.Name,
 		&category.Income,
-		&category.Visible,
 		&category.Currency,
-		&category.Supercategory,
 	); err != nil {
 		if errors.Is(err, sql.ErrNoRows) {
 			return nil, common.ErrRecordNotFound
