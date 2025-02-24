@@ -6,8 +6,8 @@ import (
 	"github.com/tksasha/balance/internal/core/cash"
 	"github.com/tksasha/balance/internal/core/cash/components"
 	"github.com/tksasha/balance/internal/core/cash/handlers"
-	"github.com/tksasha/balance/internal/core/common"
-	"github.com/tksasha/balance/internal/core/common/component"
+	"github.com/tksasha/balance/internal/common"
+	"github.com/tksasha/balance/internal/common/component"
 )
 
 func NewCreateCashHandler(t *testing.T, cashService cash.Service) *handlers.CreateHandler {

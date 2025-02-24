@@ -6,7 +6,7 @@ import (
 
 	"github.com/tksasha/balance/internal/core/cash/service"
 	"github.com/tksasha/balance/internal/core/cash/test/mocks"
-	"github.com/tksasha/balance/internal/core/common"
+	"github.com/tksasha/balance/internal/common"
 	"go.uber.org/mock/gomock"
 	"gotest.tools/v3/assert"
 )

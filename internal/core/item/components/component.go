@@ -1,7 +1,7 @@
 package components
 
 import (
-	"github.com/tksasha/balance/internal/core/common/component"
+	"github.com/tksasha/balance/internal/common/component"
 )
 
 type ItemsComponent struct {

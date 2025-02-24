@@ -8,7 +8,7 @@ import (
 
 	"github.com/tksasha/balance/internal/common/currency"
 	"github.com/tksasha/balance/internal/core/cash"
-	"github.com/tksasha/balance/internal/core/common/tests"
+	"github.com/tksasha/balance/internal/common/tests"
 	"gotest.tools/v3/assert"
 )
 

@@ -5,7 +5,7 @@ import (
 	"log/slog"
 	"net/http"
 
-	"github.com/tksasha/balance/internal/core/common"
+	"github.com/tksasha/balance/internal/common"
 )
 
 type errorMiddleware struct{}

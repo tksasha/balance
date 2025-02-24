@@ -5,7 +5,7 @@ import (
 	"net/url"
 	"testing"
 
-	"github.com/tksasha/balance/internal/core/common/component"
+	"github.com/tksasha/balance/internal/common/component"
 	"github.com/tksasha/balance/internal/core/index/components"
 	"gotest.tools/v3/golden"
 )

@@ -5,7 +5,7 @@ import (
 	"net/http"
 	"time"
 
-	"github.com/tksasha/balance/internal/core/common"
+	"github.com/tksasha/balance/internal/common"
 )
 
 type logMiddleware struct{}

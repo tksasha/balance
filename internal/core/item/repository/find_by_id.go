@@ -5,7 +5,7 @@ import (
 	"database/sql"
 	"errors"
 
-	"github.com/tksasha/balance/internal/core/common"
+	"github.com/tksasha/balance/internal/common"
 	"github.com/tksasha/balance/internal/core/item"
 )
 

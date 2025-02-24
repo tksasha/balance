@@ -3,7 +3,7 @@ package repository
 import (
 	"database/sql"
 
-	"github.com/tksasha/balance/internal/core/common"
+	"github.com/tksasha/balance/internal/common"
 )
 
 type Repository struct {

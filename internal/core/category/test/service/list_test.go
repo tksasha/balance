@@ -8,7 +8,7 @@ import (
 	"github.com/tksasha/balance/internal/core/category"
 	"github.com/tksasha/balance/internal/core/category/service"
 	"github.com/tksasha/balance/internal/core/category/test/mocks"
-	"github.com/tksasha/balance/internal/core/common"
+	"github.com/tksasha/balance/internal/common"
 	"go.uber.org/mock/gomock"
 	"gotest.tools/v3/assert"
 )

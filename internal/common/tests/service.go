@@ -11,7 +11,7 @@ import (
 	"github.com/tksasha/balance/internal/core/category"
 	categoryrepository "github.com/tksasha/balance/internal/core/category/repository"
 	categoryservice "github.com/tksasha/balance/internal/core/category/service"
-	"github.com/tksasha/balance/internal/core/common"
+	"github.com/tksasha/balance/internal/common"
 	"github.com/tksasha/balance/internal/core/index"
 	indexrepository "github.com/tksasha/balance/internal/core/index/repository"
 	indexservice "github.com/tksasha/balance/internal/core/index/service"

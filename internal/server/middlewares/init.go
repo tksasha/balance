@@ -3,7 +3,7 @@ package middlewares
 import (
 	"net/http"
 
-	"github.com/tksasha/balance/internal/core/common"
+	"github.com/tksasha/balance/internal/common"
 )
 
 type initMiddleware struct{}

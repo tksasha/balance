@@ -5,7 +5,7 @@ import (
 	"errors"
 
 	"github.com/tksasha/balance/internal/core/cash"
-	"github.com/tksasha/balance/internal/core/common"
+	"github.com/tksasha/balance/internal/common"
 	"github.com/tksasha/balance/pkg/validation"
 )
 

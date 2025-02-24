@@ -4,7 +4,7 @@ import (
 	"net/url"
 	"strconv"
 
-	"github.com/tksasha/balance/internal/core/common/component"
+	"github.com/tksasha/balance/internal/common/component"
 	"github.com/tksasha/month"
 	. "maragu.dev/gomponents" //nolint:stylecheck
 	htmx "maragu.dev/gomponents-htmx"

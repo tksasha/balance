@@ -4,7 +4,7 @@ import (
 	"context"
 	"time"
 
-	"github.com/tksasha/balance/internal/core/common"
+	"github.com/tksasha/balance/internal/common"
 )
 
 func (r *Repository) Delete(ctx context.Context, id int) error {

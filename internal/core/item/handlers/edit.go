@@ -4,7 +4,7 @@ import (
 	"net/http"
 
 	"github.com/tksasha/balance/internal/core/category"
-	"github.com/tksasha/balance/internal/core/common"
+	"github.com/tksasha/balance/internal/common"
 	"github.com/tksasha/balance/internal/core/item"
 	"github.com/tksasha/balance/internal/core/item/components"
 )

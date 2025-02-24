@@ -5,7 +5,7 @@ import (
 	"errors"
 	"strconv"
 
-	"github.com/tksasha/balance/internal/core/common"
+	"github.com/tksasha/balance/internal/common"
 )
 
 func (s *Service) Delete(ctx context.Context, input string) error {
