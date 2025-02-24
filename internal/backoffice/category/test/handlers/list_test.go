@@ -12,7 +12,6 @@ import (
 	"github.com/tksasha/balance/internal/backoffice/category/service"
 	"github.com/tksasha/balance/internal/common"
 	commoncomponent "github.com/tksasha/balance/internal/common/component"
-	"github.com/tksasha/balance/internal/common/tests"
 	"github.com/tksasha/balance/internal/db"
 	nameprovider "github.com/tksasha/balance/internal/db/nameprovider/test"
 	"gotest.tools/v3/assert"
@@ -26,7 +25,7 @@ func TestListCategories(t *testing.T) {
 		}
 	}()
 
-	mux := tests.NewMux(t, "GET /backoffice/categories", handler)
+	mux := mux(t, "GET /backoffice/categories", handler)
 
 	ctx := t.Context()
 

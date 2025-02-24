@@ -18,8 +18,6 @@ import (
 )
 
 func TestCategoryDeleteHandler(t *testing.T) {
-	ctx := t.Context()
-
 	handler, db := newDeleteHandler(t)
 	defer func() {
 		if err := db.Close(); err != nil {
@@ -28,6 +26,8 @@ func TestCategoryDeleteHandler(t *testing.T) {
 	}()
 
 	mux := mux(t, "DELETE /backoffice/categories/{id}", handler)
+
+	ctx := t.Context()
 
 	t.Run("responds 404 when category not found", func(t *testing.T) {
 		request, err := http.NewRequestWithContext(ctx, http.MethodDelete, "/backoffice/categories/1348", nil)

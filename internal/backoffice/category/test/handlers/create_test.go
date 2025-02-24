@@ -23,8 +23,6 @@ import (
 )
 
 func TestCategoryCreateHandler(t *testing.T) { //nolint:funlen
-	ctx := t.Context()
-
 	handler, db := newCreateHandler(t)
 	defer func() {
 		if err := db.Close(); err != nil {
@@ -33,6 +31,8 @@ func TestCategoryCreateHandler(t *testing.T) { //nolint:funlen
 	}()
 
 	mux := mux(t, "POST /backoffice/categories", handler)
+
+	ctx := t.Context()
 
 	t.Run("responds 400 when input data is invalid", func(t *testing.T) {
 		body := strings.NewReader("%")
