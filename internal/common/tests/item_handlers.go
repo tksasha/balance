@@ -3,13 +3,13 @@ package tests
 import (
 	"testing"
 
+	"github.com/tksasha/balance/internal/app/category"
+	indexcomponents "github.com/tksasha/balance/internal/app/index/components"
+	"github.com/tksasha/balance/internal/app/item"
+	"github.com/tksasha/balance/internal/app/item/components"
+	"github.com/tksasha/balance/internal/app/item/handlers"
 	"github.com/tksasha/balance/internal/common"
 	"github.com/tksasha/balance/internal/common/component"
-	"github.com/tksasha/balance/internal/core/category"
-	indexcomponents "github.com/tksasha/balance/internal/core/index/components"
-	"github.com/tksasha/balance/internal/core/item"
-	"github.com/tksasha/balance/internal/core/item/components"
-	"github.com/tksasha/balance/internal/core/item/handlers"
 )
 
 func NewCreateItemHandler(

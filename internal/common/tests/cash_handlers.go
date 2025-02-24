@@ -3,11 +3,11 @@ package tests
 import (
 	"testing"
 
+	"github.com/tksasha/balance/internal/app/cash"
+	"github.com/tksasha/balance/internal/app/cash/components"
+	"github.com/tksasha/balance/internal/app/cash/handlers"
 	"github.com/tksasha/balance/internal/common"
 	"github.com/tksasha/balance/internal/common/component"
-	"github.com/tksasha/balance/internal/core/cash"
-	"github.com/tksasha/balance/internal/core/cash/components"
-	"github.com/tksasha/balance/internal/core/cash/handlers"
 )
 
 func NewCreateCashHandler(t *testing.T, cashService cash.Service) *handlers.CreateHandler {

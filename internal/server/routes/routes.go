@@ -4,10 +4,10 @@ import (
 	"embed"
 	"net/http"
 
-	cash "github.com/tksasha/balance/internal/core/cash/handlers"
-	category "github.com/tksasha/balance/internal/core/category/handlers"
-	index "github.com/tksasha/balance/internal/core/index/handler"
-	item "github.com/tksasha/balance/internal/core/item/handlers"
+	cash "github.com/tksasha/balance/internal/app/cash/handlers"
+	category "github.com/tksasha/balance/internal/app/category/handlers"
+	index "github.com/tksasha/balance/internal/app/index/handler"
+	item "github.com/tksasha/balance/internal/app/item/handlers"
 )
 
 //go:embed assets

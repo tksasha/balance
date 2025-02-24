@@ -5,10 +5,10 @@ import (
 	"database/sql"
 	"testing"
 
+	"github.com/tksasha/balance/internal/app/cash"
+	"github.com/tksasha/balance/internal/app/category"
+	"github.com/tksasha/balance/internal/app/item"
 	"github.com/tksasha/balance/internal/common/currency"
-	"github.com/tksasha/balance/internal/core/cash"
-	"github.com/tksasha/balance/internal/core/category"
-	"github.com/tksasha/balance/internal/core/item"
 	"github.com/tksasha/balance/internal/db"
 	nameprovider "github.com/tksasha/balance/internal/db/nameprovider/test"
 )
