@@ -33,9 +33,3 @@ func NewUpdateCategoryHandler(t *testing.T, categoryService category.Service) *h
 
 	return handlers.NewUpdateHandler(common.NewBaseHandler(), categoryService, categoryComponent)
 }
-
-func NewCategoryDeleteHandler(t *testing.T, categoryService category.Service) *handlers.DeleteHandler {
-	t.Helper()
-
-	return handlers.NewDeleteHandler(common.NewBaseHandler(), categoryService)
-}
