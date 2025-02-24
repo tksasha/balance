@@ -1,4 +1,4 @@
-package currencies
+package currency
 
 import "strings"
 
@@ -7,14 +7,14 @@ const (
 	USD
 	EUR
 
-	DefaultCurrency = UAH
+	Default = UAH
 )
 
 type Currency int
 
-type CurrencyContextValue struct{}
+type ContextValue struct{}
 
-func GetCurrencyByCode(code string) Currency {
+func GetByCode(code string) Currency {
 	return map[string]Currency{
 		"uah": UAH,
 		"usd": USD,

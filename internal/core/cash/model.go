@@ -3,12 +3,12 @@ package cash
 import (
 	"database/sql"
 
-	"github.com/tksasha/balance/pkg/currencies"
+	"github.com/tksasha/balance/internal/common/currency"
 )
 
 type Cash struct {
 	ID            int
-	Currency      currencies.Currency
+	Currency      currency.Currency
 	Formula       string
 	Sum           float64
 	Name          string

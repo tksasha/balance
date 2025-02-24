@@ -4,21 +4,21 @@ import (
 	"context"
 	"testing"
 
-	"github.com/tksasha/balance/pkg/currencies"
+	"github.com/tksasha/balance/internal/common/currency"
 )
 
-func currencyContext(ctx context.Context, t *testing.T, currency currencies.Currency) context.Context {
+func currencyContext(ctx context.Context, t *testing.T, curr currency.Currency) context.Context {
 	t.Helper()
 
-	switch currency {
-	case currencies.UAH:
-		return context.WithValue(ctx, currencies.CurrencyContextValue{}, currencies.UAH)
-	case currencies.USD:
-		return context.WithValue(ctx, currencies.CurrencyContextValue{}, currencies.USD)
-	case currencies.EUR:
-		return context.WithValue(ctx, currencies.CurrencyContextValue{}, currencies.EUR)
+	switch curr {
+	case currency.UAH:
+		return context.WithValue(ctx, currency.ContextValue{}, currency.UAH)
+	case currency.USD:
+		return context.WithValue(ctx, currency.ContextValue{}, currency.USD)
+	case currency.EUR:
+		return context.WithValue(ctx, currency.ContextValue{}, currency.EUR)
 	default:
-		t.Fatalf("invalid currency: %v", currency)
+		t.Fatalf("invalid currency: %v", curr)
 	}
 
 	return nil

@@ -6,9 +6,9 @@ import (
 	"strings"
 	"testing"
 
+	"github.com/tksasha/balance/internal/common/currency"
 	"github.com/tksasha/balance/internal/core/category"
 	"github.com/tksasha/balance/internal/core/common/tests"
-	"github.com/tksasha/balance/pkg/currencies"
 	"gotest.tools/v3/assert"
 )
 
@@ -41,7 +41,7 @@ func TestCategoryUpdateHandler(t *testing.T) { //nolint:funlen
 			categoryToCreate := &category.Category{
 				ID:       id,
 				Name:     name,
-				Currency: currencies.USD,
+				Currency: currency.USD,
 			}
 
 			tests.CreateCategory(ctx, t, categoryToCreate)
@@ -69,7 +69,7 @@ func TestCategoryUpdateHandler(t *testing.T) { //nolint:funlen
 			Name:          "Paraphernalia",
 			Income:        false,
 			Visible:       false,
-			Currency:      currencies.USD,
+			Currency:      currency.USD,
 			Supercategory: 5,
 		}
 
@@ -90,13 +90,13 @@ func TestCategoryUpdateHandler(t *testing.T) { //nolint:funlen
 
 		assert.Equal(t, recorder.Code, http.StatusNoContent)
 
-		category := tests.FindCategoryByID(ctx, t, currencies.USD, 1208)
+		category := tests.FindCategoryByID(ctx, t, currency.USD, 1208)
 
 		assert.Equal(t, category.ID, 1208)
 		assert.Equal(t, category.Name, "Heterogeneous")
 		assert.Equal(t, category.Income, true)
 		assert.Equal(t, category.Visible, true)
-		assert.Equal(t, category.Currency, currencies.USD)
+		assert.Equal(t, category.Currency, currency.USD)
 		assert.Equal(t, category.Supercategory, 4)
 	})
 }

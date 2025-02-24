@@ -6,8 +6,8 @@ import (
 	"strings"
 	"testing"
 
+	"github.com/tksasha/balance/internal/common/currency"
 	"github.com/tksasha/balance/internal/core/common/tests"
-	"github.com/tksasha/balance/pkg/currencies"
 	"gotest.tools/v3/assert"
 )
 
@@ -64,13 +64,13 @@ func TestCashCreateHandler(t *testing.T) { //nolint:funlen
 
 		assert.Equal(t, recorder.Code, http.StatusCreated)
 
-		cash := tests.FindCashByName(ctx, t, currencies.USD, "Bonds")
+		cash := tests.FindCashByName(ctx, t, currency.USD, "Bonds")
 
 		assert.Equal(t, cash.ID, 1)
 		assert.Equal(t, cash.Name, "Bonds")
 		assert.Equal(t, cash.Formula, "2+3")
 		assert.Equal(t, cash.Sum, 5.0)
-		assert.Equal(t, cash.Currency, currencies.USD)
+		assert.Equal(t, cash.Currency, currency.USD)
 		assert.Equal(t, cash.Supercategory, 2)
 		assert.Equal(t, cash.Favorite, true)
 	})

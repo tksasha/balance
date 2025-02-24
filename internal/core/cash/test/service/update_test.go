@@ -4,11 +4,11 @@ import (
 	"errors"
 	"testing"
 
+	"github.com/tksasha/balance/internal/common/currency"
 	"github.com/tksasha/balance/internal/core/cash"
 	"github.com/tksasha/balance/internal/core/cash/service"
 	"github.com/tksasha/balance/internal/core/cash/test/mocks"
 	"github.com/tksasha/balance/internal/core/common"
-	"github.com/tksasha/balance/pkg/currencies"
 	"go.uber.org/mock/gomock"
 	"gotest.tools/v3/assert"
 )
@@ -260,7 +260,7 @@ func TestUpdate(t *testing.T) { //nolint:funlen
 
 		cash := &cash.Cash{
 			ID:       1540,
-			Currency: currencies.USD,
+			Currency: currency.USD,
 		}
 
 		cashRepository.
@@ -283,7 +283,7 @@ func TestUpdate(t *testing.T) { //nolint:funlen
 		assert.NilError(t, err)
 
 		assert.Equal(t, res.ID, 1540)
-		assert.Equal(t, res.Currency, currencies.USD)
+		assert.Equal(t, res.Currency, currency.USD)
 		assert.Equal(t, res.Formula, "2+3")
 		assert.Equal(t, res.Sum, 5.0)
 		assert.Equal(t, res.Name, "Bonds")

@@ -6,9 +6,9 @@ import (
 	"strings"
 	"testing"
 
+	"github.com/tksasha/balance/internal/common/currency"
 	"github.com/tksasha/balance/internal/core/category"
 	"github.com/tksasha/balance/internal/core/common/tests"
-	"github.com/tksasha/balance/pkg/currencies"
 	"gotest.tools/v3/assert"
 )
 
@@ -41,7 +41,7 @@ func TestCategoryListHandler(t *testing.T) {
 			categoryToCreate := &category.Category{
 				ID:       id,
 				Name:     name,
-				Currency: currencies.EUR,
+				Currency: currency.EUR,
 				Visible:  true,
 			}
 

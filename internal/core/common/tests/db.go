@@ -5,12 +5,12 @@ import (
 	"database/sql"
 	"testing"
 
+	"github.com/tksasha/balance/internal/common/currency"
 	"github.com/tksasha/balance/internal/core/cash"
 	"github.com/tksasha/balance/internal/core/category"
 	"github.com/tksasha/balance/internal/core/item"
 	"github.com/tksasha/balance/internal/db"
 	nameprovider "github.com/tksasha/balance/internal/db/nameprovider/test"
-	"github.com/tksasha/balance/pkg/currencies"
 )
 
 func newDB(ctx context.Context, t *testing.T) *sql.DB {
@@ -38,7 +38,7 @@ func Cleanup(ctx context.Context, t *testing.T) {
 	})
 }
 
-func FindCashByName(ctx context.Context, t *testing.T, currency currencies.Currency, name string) *cash.Cash {
+func FindCashByName(ctx context.Context, t *testing.T, currency currency.Currency, name string) *cash.Cash {
 	t.Helper()
 
 	ctx = currencyContext(ctx, t, currency)
@@ -97,7 +97,7 @@ func CreateCash(ctx context.Context, t *testing.T, cash *cash.Cash) {
 	}
 }
 
-func FindCashByID(ctx context.Context, t *testing.T, currency currencies.Currency, id int) *cash.Cash {
+func FindCashByID(ctx context.Context, t *testing.T, currency currency.Currency, id int) *cash.Cash {
 	t.Helper()
 
 	db := newDB(ctx, t)
@@ -155,7 +155,7 @@ func CreateCategory(ctx context.Context, t *testing.T, category *category.Catego
 	}
 }
 
-func FindCategoryByID(ctx context.Context, t *testing.T, currency currencies.Currency, id int) *category.Category {
+func FindCategoryByID(ctx context.Context, t *testing.T, currency currency.Currency, id int) *category.Category {
 	t.Helper()
 
 	db := newDB(ctx, t)
@@ -193,7 +193,7 @@ func FindCategoryByID(ctx context.Context, t *testing.T, currency currencies.Cur
 func FindCategoryByName(
 	ctx context.Context,
 	t *testing.T,
-	currency currencies.Currency,
+	currency currency.Currency,
 	name string,
 ) *category.Category {
 	t.Helper()
@@ -230,7 +230,7 @@ func FindCategoryByName(
 	return category
 }
 
-func FindItemByDate(ctx context.Context, t *testing.T, currency currencies.Currency, date string) *item.Item {
+func FindItemByDate(ctx context.Context, t *testing.T, currency currency.Currency, date string) *item.Item {
 	t.Helper()
 
 	db := newDB(ctx, t)

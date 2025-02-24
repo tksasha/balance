@@ -6,9 +6,9 @@ import (
 	"strings"
 	"testing"
 
+	"github.com/tksasha/balance/internal/common/currency"
 	"github.com/tksasha/balance/internal/core/cash"
 	"github.com/tksasha/balance/internal/core/common/tests"
-	"github.com/tksasha/balance/pkg/currencies"
 	"gotest.tools/v3/assert"
 )
 
@@ -49,7 +49,7 @@ func TestCashEditHandler(t *testing.T) {
 
 		cash := &cash.Cash{
 			ID:            1300,
-			Currency:      currencies.EUR,
+			Currency:      currency.EUR,
 			Formula:       "2+3",
 			Sum:           5,
 			Name:          "Bonds",

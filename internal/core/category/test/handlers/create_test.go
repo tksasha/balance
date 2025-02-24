@@ -5,8 +5,8 @@ import (
 	"net/http/httptest"
 	"testing"
 
+	"github.com/tksasha/balance/internal/common/currency"
 	"github.com/tksasha/balance/internal/core/common/tests"
-	"github.com/tksasha/balance/pkg/currencies"
 	"gotest.tools/v3/assert"
 	is "gotest.tools/v3/assert/cmp"
 )
@@ -64,13 +64,13 @@ func TestCategoryCreateHandler(t *testing.T) { //nolint:funlen
 
 		assert.Equal(t, recorder.Code, http.StatusCreated)
 
-		category := tests.FindCategoryByName(ctx, t, currencies.EUR, "Miscellaneous")
+		category := tests.FindCategoryByName(ctx, t, currency.EUR, "Miscellaneous")
 
 		assert.Equal(t, category.ID, 1)
 		assert.Equal(t, category.Name, "Miscellaneous")
 		assert.Equal(t, category.Income, true)
 		assert.Equal(t, category.Visible, true)
-		assert.Equal(t, category.Currency, currencies.EUR)
+		assert.Equal(t, category.Currency, currency.EUR)
 		assert.Equal(t, category.Supercategory, 3)
 	})
 }

@@ -4,7 +4,7 @@ import (
 	"database/sql"
 	"time"
 
-	"github.com/tksasha/balance/pkg/currencies"
+	"github.com/tksasha/balance/internal/common/currency"
 )
 
 type Item struct {
@@ -15,7 +15,7 @@ type Item struct {
 	CategoryID   int
 	CategoryName sql.NullString
 	Description  string
-	Currency     currencies.Currency
+	Currency     currency.Currency
 }
 
 type Items []*Item

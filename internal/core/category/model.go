@@ -3,7 +3,7 @@ package category
 import (
 	"database/sql"
 
-	"github.com/tksasha/balance/pkg/currencies"
+	"github.com/tksasha/balance/internal/common/currency"
 )
 
 type Category struct {
@@ -11,7 +11,7 @@ type Category struct {
 	Name          string
 	Income        bool
 	Visible       bool
-	Currency      currencies.Currency
+	Currency      currency.Currency
 	Supercategory int
 	DeletedAt     sql.NullTime
 }

@@ -5,9 +5,9 @@ import (
 	"net/http/httptest"
 	"testing"
 
+	"github.com/tksasha/balance/internal/common/currency"
 	"github.com/tksasha/balance/internal/core/category"
 	"github.com/tksasha/balance/internal/core/common/tests"
-	"github.com/tksasha/balance/pkg/currencies"
 	"gotest.tools/v3/assert"
 )
 
@@ -39,7 +39,7 @@ func TestCategoryDeleteHandler(t *testing.T) {
 		categoryToCreate := &category.Category{
 			ID:       1411,
 			Name:     "Miscellaneous",
-			Currency: currencies.EUR,
+			Currency: currency.EUR,
 		}
 
 		tests.CreateCategory(ctx, t, categoryToCreate)
@@ -52,11 +52,11 @@ func TestCategoryDeleteHandler(t *testing.T) {
 
 		assert.Equal(t, recorder.Code, http.StatusNoContent)
 
-		category := tests.FindCategoryByID(ctx, t, currencies.EUR, 1411)
+		category := tests.FindCategoryByID(ctx, t, currency.EUR, 1411)
 
 		assert.Equal(t, category.ID, 1411)
 		assert.Equal(t, category.Name, "Miscellaneous")
-		assert.Equal(t, category.Currency, currencies.EUR)
+		assert.Equal(t, category.Currency, currency.EUR)
 		assert.Assert(t, !category.DeletedAt.Time.IsZero())
 	})
 }

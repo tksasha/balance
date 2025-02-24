@@ -5,10 +5,10 @@ import (
 	"net/http/httptest"
 	"testing"
 
+	"github.com/tksasha/balance/internal/common/currency"
 	"github.com/tksasha/balance/internal/core/category"
 	"github.com/tksasha/balance/internal/core/common/tests"
 	"github.com/tksasha/balance/internal/core/item"
-	"github.com/tksasha/balance/pkg/currencies"
 	"gotest.tools/v3/assert"
 )
 
@@ -59,7 +59,7 @@ func TestItemUpdateHandler(t *testing.T) { //nolint:funlen
 		categoryToCreate := &category.Category{
 			ID:       1148,
 			Name:     "Pharmaceutical",
-			Currency: currencies.EUR,
+			Currency: currency.EUR,
 		}
 
 		tests.CreateCategory(ctx, t, categoryToCreate)
@@ -67,7 +67,7 @@ func TestItemUpdateHandler(t *testing.T) { //nolint:funlen
 		itemToCreate := &item.Item{
 			ID:         1143,
 			CategoryID: 1148,
-			Currency:   currencies.EUR,
+			Currency:   currency.EUR,
 		}
 
 		tests.CreateItem(ctx, t, itemToCreate)
@@ -87,7 +87,7 @@ func TestItemUpdateHandler(t *testing.T) { //nolint:funlen
 
 		assert.Equal(t, recorder.Code, http.StatusNoContent)
 
-		item := tests.FindItemByDate(ctx, t, currencies.EUR, "2025-01-25")
+		item := tests.FindItemByDate(ctx, t, currency.EUR, "2025-01-25")
 
 		assert.Equal(t, item.ID, 1143)
 	})

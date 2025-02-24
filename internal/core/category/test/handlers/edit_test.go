@@ -5,9 +5,9 @@ import (
 	"net/http/httptest"
 	"testing"
 
+	"github.com/tksasha/balance/internal/common/currency"
 	"github.com/tksasha/balance/internal/core/category"
 	"github.com/tksasha/balance/internal/core/common/tests"
-	"github.com/tksasha/balance/pkg/currencies"
 	"gotest.tools/v3/assert"
 )
 
@@ -39,7 +39,7 @@ func TestCategoryEditHandler(t *testing.T) {
 		categoryToCreate := &category.Category{
 			ID:       1010,
 			Name:     "Xenomorphic",
-			Currency: currencies.EUR,
+			Currency: currency.EUR,
 		}
 
 		tests.CreateCategory(ctx, t, categoryToCreate)

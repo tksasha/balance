@@ -6,9 +6,9 @@ import (
 	"strings"
 	"testing"
 
+	"github.com/tksasha/balance/internal/common/currency"
 	"github.com/tksasha/balance/internal/core/cash"
 	"github.com/tksasha/balance/internal/core/common/tests"
-	"github.com/tksasha/balance/pkg/currencies"
 	"gotest.tools/v3/assert"
 )
 
@@ -47,7 +47,7 @@ func TestCashUpdateHandler(t *testing.T) { //nolint:funlen
 
 		cashToCreate := &cash.Cash{
 			ID:       1418,
-			Currency: currencies.USD,
+			Currency: currency.USD,
 		}
 
 		tests.CreateCash(ctx, t, cashToCreate)
@@ -74,7 +74,7 @@ func TestCashUpdateHandler(t *testing.T) { //nolint:funlen
 
 		cashToCreate := &cash.Cash{
 			ID:            1442,
-			Currency:      currencies.UAH,
+			Currency:      currency.UAH,
 			Formula:       "2+3",
 			Sum:           5,
 			Name:          "Bonds",

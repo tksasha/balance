@@ -5,10 +5,10 @@ import (
 	"net/http/httptest"
 	"testing"
 
+	"github.com/tksasha/balance/internal/common/currency"
 	"github.com/tksasha/balance/internal/core/category"
 	"github.com/tksasha/balance/internal/core/common/tests"
 	"github.com/tksasha/balance/internal/core/item"
-	"github.com/tksasha/balance/pkg/currencies"
 	"gotest.tools/v3/assert"
 )
 
@@ -42,14 +42,14 @@ func TestItemEditHandler(t *testing.T) {
 
 		categoryToCreate := &category.Category{
 			ID:       5,
-			Currency: currencies.UAH,
+			Currency: currency.UAH,
 		}
 
 		tests.CreateCategory(ctx, t, categoryToCreate)
 
 		itemToCreate := &item.Item{
 			ID:         1745,
-			Currency:   currencies.UAH,
+			Currency:   currency.UAH,
 			CategoryID: 5,
 		}
 

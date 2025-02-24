@@ -6,9 +6,9 @@ import (
 	"net/http/httptest"
 	"testing"
 
+	"github.com/tksasha/balance/internal/common/currency"
 	"github.com/tksasha/balance/internal/core/cash"
 	"github.com/tksasha/balance/internal/core/common/tests"
-	"github.com/tksasha/balance/pkg/currencies"
 	"gotest.tools/v3/assert"
 )
 
@@ -37,7 +37,7 @@ func TestCashDeleteHandler(t *testing.T) {
 
 		cashToCreate := &cash.Cash{
 			ID:        1011,
-			Currency:  currencies.UAH,
+			Currency:  currency.UAH,
 			DeletedAt: sql.NullTime{},
 		}
 
@@ -51,7 +51,7 @@ func TestCashDeleteHandler(t *testing.T) {
 
 		assert.Equal(t, recorder.Code, http.StatusNoContent)
 
-		cash := tests.FindCashByID(ctx, t, currencies.UAH, 1011)
+		cash := tests.FindCashByID(ctx, t, currency.UAH, 1011)
 
 		assert.Equal(t, cash.ID, 1011)
 		assert.Assert(t, cash.DeletedAt.Valid)

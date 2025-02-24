@@ -6,9 +6,9 @@ import (
 	"testing"
 	"time"
 
+	"github.com/tksasha/balance/internal/common/currency"
 	"github.com/tksasha/balance/internal/core/category"
 	"github.com/tksasha/balance/internal/core/common/tests"
-	"github.com/tksasha/balance/pkg/currencies"
 	"gotest.tools/v3/assert"
 )
 
@@ -57,7 +57,7 @@ func TestItemCreateHandler(t *testing.T) { //nolint:funlen
 		categoryToCreate := &category.Category{
 			ID:       1101,
 			Name:     "Accoutrements",
-			Currency: currencies.USD,
+			Currency: currency.USD,
 		}
 
 		tests.CreateCategory(ctx, t, categoryToCreate)
@@ -77,12 +77,12 @@ func TestItemCreateHandler(t *testing.T) { //nolint:funlen
 
 		assert.Equal(t, recorder.Code, http.StatusNoContent)
 
-		item := tests.FindItemByDate(ctx, t, currencies.USD, "2024-10-16")
+		item := tests.FindItemByDate(ctx, t, currency.USD, "2024-10-16")
 
 		assert.Equal(t, item.Date.Format(time.DateOnly), "2024-10-16")
 		assert.Equal(t, item.CategoryID, 1101)
 		assert.Equal(t, item.CategoryName.String, "Accoutrements")
-		assert.Equal(t, item.Currency, currencies.USD)
+		assert.Equal(t, item.Currency, currency.USD)
 		assert.Equal(t, item.Formula, "42.69+69.42")
 		assert.Equal(t, item.Sum, 112.11)
 		assert.Equal(t, item.Description, "paper clips, notebooks, and pens")
