@@ -47,7 +47,7 @@ func (s *Service) setCategory(
 		return err
 	}
 
-	item.CategoryName = sql.NullString{String: category.Name}
+	item.CategoryName = sql.NullString{String: category.Name, Valid: true}
 
 	return nil
 }
