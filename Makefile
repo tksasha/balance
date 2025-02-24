@@ -79,6 +79,10 @@ mockgen:
 		-source internal/app/index/interfaces.go \
 		-package mocks \
 		-destination internal/app/index/test/mocks/interfaces.mock.go
+	@go run $(MOCKGEN) \
+		-source internal/backoffice/category/interfaces.go \
+		-package mocks \
+		-destination internal/backoffice/category/test/mocks/interfaces.mock.go
 
 .PHONY: wire
 wire:

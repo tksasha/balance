@@ -26,6 +26,11 @@ import (
 	itemhandlers "github.com/tksasha/balance/internal/app/item/handlers"
 	itemrepository "github.com/tksasha/balance/internal/app/item/repository"
 	itemservice "github.com/tksasha/balance/internal/app/item/service"
+	backofficeCategory "github.com/tksasha/balance/internal/backoffice/category"
+	backofficeCategoryComponent "github.com/tksasha/balance/internal/backoffice/category/component"
+	backofficeCategoryHandlers "github.com/tksasha/balance/internal/backoffice/category/handlers"
+	backofficeCategoryRepository "github.com/tksasha/balance/internal/backoffice/category/repository"
+	backofficeCategoryService "github.com/tksasha/balance/internal/backoffice/category/service"
 	"github.com/tksasha/balance/internal/common"
 	"github.com/tksasha/balance/internal/common/component"
 	"github.com/tksasha/balance/internal/db"
@@ -38,6 +43,10 @@ import (
 
 func InitializeServer() *server.Server {
 	wire.Build(
+		backofficeCategoryComponent.New,
+		backofficeCategoryHandlers.NewListHandler,
+		backofficeCategoryRepository.New,
+		backofficeCategoryService.New,
 		cashcomponents.NewCashComponent,
 		cashhandlers.NewCreateHandler,
 		cashhandlers.NewDeleteHandler,
@@ -79,6 +88,8 @@ func InitializeServer() *server.Server {
 		nameprovider.New,
 		routes.New,
 		server.New,
+		wire.Bind(new(backofficeCategory.Repository), new(*backofficeCategoryRepository.Repository)),
+		wire.Bind(new(backofficeCategory.Service), new(*backofficeCategoryService.Service)),
 		wire.Bind(new(cash.Repository), new(*cashrepository.Repository)),
 		wire.Bind(new(cash.Service), new(*cashservice.Service)),
 		wire.Bind(new(category.Repository), new(*categoryrepository.Repository)),

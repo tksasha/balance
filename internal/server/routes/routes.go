@@ -8,6 +8,7 @@ import (
 	category "github.com/tksasha/balance/internal/app/category/handlers"
 	index "github.com/tksasha/balance/internal/app/index/handler"
 	item "github.com/tksasha/balance/internal/app/item/handlers"
+	backofficeCategory "github.com/tksasha/balance/internal/backoffice/category/handlers"
 )
 
 //go:embed assets
@@ -18,6 +19,7 @@ type Routes struct {
 }
 
 func New(
+	backofficeCategoryListHandler *backofficeCategory.ListHandler,
 	cashCreateHandler *cash.CreateHandler,
 	cashDeleteHandler *cash.DeleteHandler,
 	cashEditHandler *cash.EditHandler,
@@ -59,6 +61,8 @@ func New(
 	mux.Handle("GET /cashes/{id}/edit", cashEditHandler)
 	mux.Handle("PATCH /cashes/{id}", cashUpdateHandler)
 	mux.Handle("POST /cash", cashCreateHandler)
+
+	mux.Handle("GET /backoffice/categories", backofficeCategoryListHandler)
 
 	return &Routes{
 		Mux: mux,
