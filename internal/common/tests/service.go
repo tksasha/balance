@@ -21,11 +21,9 @@ import (
 func NewCashService(ctx context.Context, t *testing.T) (cash.Service, *sql.DB) {
 	t.Helper()
 
-	baseRepository := common.NewBaseRepository()
-
 	db := newDB(ctx, t)
 
-	repository := cashrepository.New(baseRepository, db)
+	repository := cashrepository.New(db)
 
 	return cashservice.New(repository), db
 }
@@ -33,13 +31,11 @@ func NewCashService(ctx context.Context, t *testing.T) (cash.Service, *sql.DB) {
 func NewItemService(ctx context.Context, t *testing.T) (item.Service, *sql.DB) {
 	t.Helper()
 
-	baseRepository := common.NewBaseRepository()
-
 	db := newDB(ctx, t)
 
-	itemRepository := itemrepository.New(baseRepository, db)
+	itemRepository := itemrepository.New(db)
 
-	categoryRepository := categoryrepository.New(baseRepository, db)
+	categoryRepository := categoryrepository.New(db)
 
 	return itemservice.New(common.NewBaseService(), itemRepository, categoryRepository), db
 }
@@ -47,11 +43,9 @@ func NewItemService(ctx context.Context, t *testing.T) (item.Service, *sql.DB) {
 func NewIndexPageService(ctx context.Context, t *testing.T) (index.Service, *sql.DB) {
 	t.Helper()
 
-	baseRepository := common.NewBaseRepository()
-
 	db := newDB(ctx, t)
 
-	repository := indexrepository.New(baseRepository, db)
+	repository := indexrepository.New(db)
 
 	return indexservice.New(repository), db
 }

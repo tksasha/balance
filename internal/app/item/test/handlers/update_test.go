@@ -106,9 +106,9 @@ func newUpdateHandler(t *testing.T) (*handlers.UpdateHandler, *sql.DB) {
 
 	db := db.Open(t.Context(), nameprovider.New())
 
-	itemRepository := repository.New(common.NewBaseRepository(), db)
+	itemRepository := repository.New(db)
 
-	categoryRepository := categoryrepository.New(common.NewBaseRepository(), db)
+	categoryRepository := categoryrepository.New(db)
 
 	itemService := service.New(common.NewBaseService(), itemRepository, categoryRepository)
 

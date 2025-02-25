@@ -60,7 +60,6 @@ func InitializeServer() *server.Server {
 		cashservice.New,
 		categoryrepository.New,
 		categoryservice.New,
-		common.NewBaseRepository,
 		common.NewBaseService,
 		component.New,
 		config.New,

@@ -48,11 +48,11 @@ func newIndexHandler(t *testing.T) (*handler.Handler, *sql.DB) {
 
 	db := db.Open(t.Context(), nameprovider.New())
 
-	indexRepository := repository.New(common.NewBaseRepository(), db)
+	indexRepository := repository.New(db)
 
 	indexService := service.New(indexRepository)
 
-	categoryRepository := categoryrepository.New(common.NewBaseRepository(), db)
+	categoryRepository := categoryrepository.New(db)
 
 	categoryService := categoryservice.New(common.NewBaseService(), categoryRepository)
 

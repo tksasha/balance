@@ -1,4 +1,4 @@
-package common
+package repository
 
 import (
 	"context"
@@ -6,13 +6,13 @@ import (
 	"github.com/tksasha/balance/internal/common/currency"
 )
 
-type BaseRepository struct{}
+type Repository struct{}
 
-func NewBaseRepository() *BaseRepository {
-	return &BaseRepository{}
+func New() *Repository {
+	return &Repository{}
 }
 
-func (r *BaseRepository) GetCurrencyFromContext(ctx context.Context) currency.Currency {
+func (r *Repository) GetCurrencyFromContext(ctx context.Context) currency.Currency {
 	curr, ok := ctx.Value(currency.ContextValue{}).(currency.Currency)
 	if !ok {
 		curr = currency.Default
