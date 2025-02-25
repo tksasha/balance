@@ -12,7 +12,7 @@ import (
 	"github.com/tksasha/balance/internal/backoffice/category/service"
 	"github.com/tksasha/balance/internal/common/currency"
 	"github.com/tksasha/balance/internal/db"
-	nameprovider "github.com/tksasha/balance/internal/db/nameprovider/test"
+	"github.com/tksasha/balance/internal/db/nameprovider"
 	"gotest.tools/v3/assert"
 )
 
@@ -80,7 +80,7 @@ func TestCategoryDeleteHandler(t *testing.T) {
 func newDeleteHandler(t *testing.T) (*handlers.DeleteHandler, *sql.DB) {
 	t.Helper()
 
-	db := db.Open(t.Context(), nameprovider.New())
+	db := db.Open(t.Context(), nameprovider.NewTestProvider())
 
 	categoryRepository := repository.New(db)
 

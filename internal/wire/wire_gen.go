@@ -39,8 +39,8 @@ import (
 func InitializeServer() *server.Server {
 	configConfig := config.New()
 	contextContext := context.Background()
-	provider := nameprovider.New()
-	sqlDB := db.Open(contextContext, provider)
+	nameProvider := nameprovider.New()
+	sqlDB := db.Open(contextContext, nameProvider)
 	repositoryRepository := repository.New(sqlDB)
 	serviceService := service.New(repositoryRepository)
 	componentComponent := component.New()

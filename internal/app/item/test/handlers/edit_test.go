@@ -18,7 +18,7 @@ import (
 	"github.com/tksasha/balance/internal/common/currency"
 	"github.com/tksasha/balance/internal/common/tests"
 	"github.com/tksasha/balance/internal/db"
-	nameprovider "github.com/tksasha/balance/internal/db/nameprovider/test"
+	"github.com/tksasha/balance/internal/db/nameprovider"
 	"gotest.tools/v3/assert"
 )
 
@@ -75,7 +75,7 @@ func TestItemEditHandler(t *testing.T) {
 func newEditHandler(t *testing.T) (*handlers.EditHandler, *sql.DB) {
 	t.Helper()
 
-	db := db.Open(t.Context(), nameprovider.New())
+	db := db.Open(t.Context(), nameprovider.NewTestProvider())
 
 	itemRepository := repository.New(db)
 

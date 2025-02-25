@@ -14,7 +14,7 @@ import (
 	commonComponent "github.com/tksasha/balance/internal/common/component"
 	"github.com/tksasha/balance/internal/common/currency"
 	"github.com/tksasha/balance/internal/db"
-	nameprovider "github.com/tksasha/balance/internal/db/nameprovider/test"
+	"github.com/tksasha/balance/internal/db/nameprovider"
 	"gotest.tools/v3/assert"
 )
 
@@ -70,7 +70,7 @@ func TestCategoryEditHandler(t *testing.T) {
 func newEditHandler(t *testing.T) (*handlers.EditHandler, *sql.DB) {
 	t.Helper()
 
-	db := db.Open(t.Context(), nameprovider.New())
+	db := db.Open(t.Context(), nameprovider.NewTestProvider())
 
 	categoryRepository := repository.New(db)
 
