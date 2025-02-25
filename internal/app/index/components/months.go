@@ -16,9 +16,9 @@ type MonthsComponent struct {
 	*component.Component
 }
 
-func NewMonthsComponent(component *component.Component) *MonthsComponent {
+func NewMonthsComponent() *MonthsComponent {
 	return &MonthsComponent{
-		Component: component,
+		Component: component.New(),
 	}
 }
 

@@ -7,12 +7,11 @@ import (
 
 	"github.com/tksasha/balance/internal/backoffice/cash/components"
 	"github.com/tksasha/balance/internal/backoffice/cash/handlers"
-	"github.com/tksasha/balance/internal/common/tests"
 	"gotest.tools/v3/assert"
 )
 
 func TestCashNewHandler(t *testing.T) {
-	mux := tests.NewMux(t, "GET /cashes/new", newNewHandler(t))
+	mux := mux(t, "GET /cashes/new", newNewHandler(t))
 
 	ctx := t.Context()
 

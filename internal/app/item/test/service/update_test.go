@@ -4,13 +4,13 @@ import (
 	"database/sql"
 	"errors"
 	"testing"
+	"time"
 
 	"github.com/tksasha/balance/internal/app/category"
 	"github.com/tksasha/balance/internal/app/item"
 	"github.com/tksasha/balance/internal/app/item/service"
 	"github.com/tksasha/balance/internal/app/item/test/mocks"
 	"github.com/tksasha/balance/internal/common"
-	"github.com/tksasha/balance/internal/common/tests"
 	"go.uber.org/mock/gomock"
 	"gotest.tools/v3/assert"
 )
@@ -280,7 +280,7 @@ func TestUpdate(t *testing.T) { //nolint:funlen,maintidx
 
 		itemToUpdate := &item.Item{
 			ID:           1051,
-			Date:         tests.Date(t, "2025-01-25"),
+			Date:         time.Date(2025, 1, 25, 0, 0, 0, 0, time.UTC),
 			Formula:      "2+2",
 			Sum:          4,
 			CategoryID:   1100,
@@ -328,7 +328,7 @@ func TestUpdate(t *testing.T) { //nolint:funlen,maintidx
 
 		itemToUpdate := &item.Item{
 			ID:           1051,
-			Date:         tests.Date(t, "2025-01-25"),
+			Date:         time.Date(2025, 1, 25, 0, 0, 0, 0, time.UTC),
 			Formula:      "2+2",
 			Sum:          4,
 			CategoryID:   1100,

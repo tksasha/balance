@@ -8,9 +8,9 @@ type ItemsComponent struct {
 	*component.Component
 }
 
-func NewItemsComponent(component *component.Component) *ItemsComponent {
+func NewItemsComponent() *ItemsComponent {
 	return &ItemsComponent{
-		Component: component,
+		Component: component.New(),
 	}
 }
 

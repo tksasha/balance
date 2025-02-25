@@ -12,8 +12,6 @@ import (
 	"github.com/tksasha/balance/internal/app/index/handler"
 	"github.com/tksasha/balance/internal/app/index/repository"
 	"github.com/tksasha/balance/internal/app/index/service"
-	commoncomponent "github.com/tksasha/balance/internal/common/component"
-	"github.com/tksasha/balance/internal/common/tests"
 	"github.com/tksasha/balance/internal/db"
 	"github.com/tksasha/balance/internal/db/nameprovider"
 	"gotest.tools/v3/assert"
@@ -32,7 +30,10 @@ func TestIndexHandler(t *testing.T) {
 	ctx := t.Context()
 
 	t.Run("renders 200 when there no errors", func(t *testing.T) {
-		request := tests.NewGetRequest(ctx, t, "/")
+		request, err := http.NewRequestWithContext(ctx, http.MethodGet, "/", nil)
+		if err != nil {
+			t.Fatal(err)
+		}
 
 		recorder := httptest.NewRecorder()
 
@@ -55,13 +56,11 @@ func newIndexHandler(t *testing.T) (*handler.Handler, *sql.DB) {
 
 	categoryService := categoryservice.New(categoryRepository)
 
-	commonComponent := commoncomponent.New()
+	monthsComponent := components.NewMonthsComponent()
 
-	monthsComponent := components.NewMonthsComponent(commonComponent)
+	yearsComponent := components.NewYearsComponent()
 
-	yearsComponent := components.NewYearsComponent(commonComponent)
-
-	indexComponent := components.NewIndexComponent(commonComponent, monthsComponent, yearsComponent)
+	indexComponent := components.NewIndexComponent(monthsComponent, yearsComponent)
 
 	handler := handler.New(indexService, categoryService, indexComponent)
 

@@ -6,12 +6,11 @@ import (
 	"testing"
 
 	"github.com/tksasha/balance/internal/app/index/components"
-	"github.com/tksasha/balance/internal/common/component"
 	"gotest.tools/v3/golden"
 )
 
 func TestYears(t *testing.T) {
-	component := components.NewYearsComponent(component.New())
+	component := components.NewYearsComponent()
 
 	testdata := map[string]string{
 		"":    "years.html",

@@ -4,6 +4,8 @@ import (
 	"database/sql"
 	"net/http"
 	"net/http/httptest"
+	"net/url"
+	"strings"
 	"testing"
 	"time"
 
@@ -14,9 +16,7 @@ import (
 	"github.com/tksasha/balance/internal/app/item/handlers"
 	"github.com/tksasha/balance/internal/app/item/repository"
 	"github.com/tksasha/balance/internal/app/item/service"
-	commoncomponent "github.com/tksasha/balance/internal/common/component"
 	"github.com/tksasha/balance/internal/common/currency"
-	"github.com/tksasha/balance/internal/common/tests"
 	"github.com/tksasha/balance/internal/db"
 	"github.com/tksasha/balance/internal/db/nameprovider"
 	"gotest.tools/v3/assert"
@@ -35,7 +35,10 @@ func TestItemCreateHandler(t *testing.T) { //nolint:funlen
 	ctx := t.Context()
 
 	t.Run("responds 400 on parse form fails", func(t *testing.T) {
-		request := tests.NewInvalidPostRequest(ctx, t, "/items")
+		request, err := http.NewRequestWithContext(ctx, http.MethodPost, "/items", nil)
+		if err != nil {
+			t.Fatal(err)
+		}
 
 		recorder := httptest.NewRecorder()
 
@@ -45,11 +48,14 @@ func TestItemCreateHandler(t *testing.T) { //nolint:funlen
 	})
 
 	t.Run("renders errors on invalid input", func(t *testing.T) {
-		tests.Cleanup(ctx, t)
+		cleanup(t, db)
 
-		params := tests.Params{"date": ""}
+		values := url.Values{"date": {""}}
 
-		request := tests.NewPostRequest(ctx, t, "/items", params)
+		request, err := http.NewRequestWithContext(ctx, http.MethodPost, "/items", strings.NewReader(values.Encode()))
+		if err != nil {
+			t.Fatal(err)
+		}
 
 		recorder := httptest.NewRecorder()
 
@@ -59,7 +65,7 @@ func TestItemCreateHandler(t *testing.T) { //nolint:funlen
 	})
 
 	t.Run("responds 204 when item created", func(t *testing.T) {
-		tests.Cleanup(ctx, t)
+		cleanup(t, db)
 
 		categoryToCreate := &category.Category{
 			ID:       1101,
@@ -69,14 +75,24 @@ func TestItemCreateHandler(t *testing.T) { //nolint:funlen
 
 		createCategory(t, db, categoryToCreate)
 
-		params := tests.Params{
-			"date":        "2024-10-16",
-			"formula":     "42.69+69.42",
-			"category_id": "1101",
-			"description": "paper clips, notebooks, and pens",
+		values := url.Values{
+			"date":        {"2024-10-16"},
+			"formula":     {"42.69+69.42"},
+			"category_id": {"1101"},
+			"description": {"paper clips, notebooks, and pens"},
 		}
 
-		request := tests.NewPostRequest(ctx, t, "/items?currency=usd", params)
+		request, err := http.NewRequestWithContext(
+			ctx,
+			http.MethodPost,
+			"/items?currency=usd",
+			strings.NewReader(values.Encode()),
+		)
+		if err != nil {
+			t.Fatal(err)
+		}
+
+		request.Header.Add("Content-Type", "application/x-www-form-urlencoded")
 
 		recorder := httptest.NewRecorder()
 
@@ -84,7 +100,7 @@ func TestItemCreateHandler(t *testing.T) { //nolint:funlen
 
 		assert.Equal(t, recorder.Code, http.StatusNoContent)
 
-		item := tests.FindItemByDate(ctx, t, currency.USD, "2024-10-16")
+		item := findItemByDate(t, db, currency.USD, "2024-10-16")
 
 		assert.Equal(t, item.Date.Format(time.DateOnly), "2024-10-16")
 		assert.Equal(t, item.CategoryID, 1101)
@@ -109,7 +125,7 @@ func newCreateHandler(t *testing.T) (*handlers.CreateHandler, *sql.DB) {
 
 	categoryService := categoryservice.New(categoryRepository)
 
-	itemComponent := components.NewItemsComponent(commoncomponent.New())
+	itemComponent := components.NewItemsComponent()
 
 	handler := handlers.NewCreateHandler(itemService, categoryService, itemComponent)
 

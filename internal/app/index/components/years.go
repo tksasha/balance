@@ -20,7 +20,7 @@ type YearsComponent struct {
 	years []int
 }
 
-func NewYearsComponent(component *component.Component) *YearsComponent {
+func NewYearsComponent() *YearsComponent {
 	var years []int
 
 	for year := yearFrom; year <= time.Now().Year(); year++ {
@@ -28,7 +28,7 @@ func NewYearsComponent(component *component.Component) *YearsComponent {
 	}
 
 	return &YearsComponent{
-		Component: component,
+		Component: component.New(),
 		years:     years,
 	}
 }

@@ -4,6 +4,8 @@ import (
 	"database/sql"
 	"net/http"
 	"net/http/httptest"
+	"net/url"
+	"strings"
 	"testing"
 
 	"github.com/tksasha/balance/internal/app/category"
@@ -14,9 +16,7 @@ import (
 	"github.com/tksasha/balance/internal/app/item/handlers"
 	"github.com/tksasha/balance/internal/app/item/repository"
 	"github.com/tksasha/balance/internal/app/item/service"
-	commoncomponent "github.com/tksasha/balance/internal/common/component"
 	"github.com/tksasha/balance/internal/common/currency"
-	"github.com/tksasha/balance/internal/common/tests"
 	"github.com/tksasha/balance/internal/db"
 	"github.com/tksasha/balance/internal/db/nameprovider"
 	"gotest.tools/v3/assert"
@@ -30,14 +30,17 @@ func TestItemUpdateHandler(t *testing.T) { //nolint:funlen
 		}
 	}()
 
-	mux := tests.NewMux(t, "PATCH /items/{id}", handler)
+	mux := mux(t, "PATCH /items/{id}", handler)
 
 	ctx := t.Context()
 
 	t.Run("responds 400 on invalid input", func(t *testing.T) {
-		tests.Cleanup(ctx, t)
+		cleanup(t, db)
 
-		request := tests.NewInvalidPatchRequest(ctx, t, "/items/1138")
+		request, err := http.NewRequestWithContext(ctx, http.MethodPatch, "/items/1138", nil)
+		if err != nil {
+			t.Fatal(err)
+		}
 
 		recorder := httptest.NewRecorder()
 
@@ -47,11 +50,19 @@ func TestItemUpdateHandler(t *testing.T) { //nolint:funlen
 	})
 
 	t.Run("responds 404 on no item found", func(t *testing.T) {
-		tests.Cleanup(ctx, t)
+		cleanup(t, db)
 
-		params := tests.Params{"date": "2025-01-25"}
+		values := url.Values{"date": {"2025-01-25"}}
 
-		request := tests.NewPatchRequest(ctx, t, "/items/1218", params)
+		request, err := http.NewRequestWithContext(
+			ctx,
+			http.MethodPatch,
+			"/items/1218",
+			strings.NewReader(values.Encode()),
+		)
+		if err != nil {
+			t.Fatal(err)
+		}
 
 		recorder := httptest.NewRecorder()
 
@@ -61,7 +72,7 @@ func TestItemUpdateHandler(t *testing.T) { //nolint:funlen
 	})
 
 	t.Run("responds 204 on successful update", func(t *testing.T) {
-		tests.Cleanup(ctx, t)
+		cleanup(t, db)
 
 		categoryToCreate := &category.Category{
 			ID:       1148,
@@ -77,16 +88,26 @@ func TestItemUpdateHandler(t *testing.T) { //nolint:funlen
 			Currency:   currency.EUR,
 		}
 
-		tests.CreateItem(ctx, t, itemToCreate)
+		createItem(t, db, itemToCreate)
 
-		params := tests.Params{
-			"date":        "2025-01-25",
-			"formula":     "24 + 11 + 49",
-			"category_id": "1148",
-			"description": "pizza, ninja and disco",
+		values := url.Values{
+			"date":        {"2025-01-25"},
+			"formula":     {"24 + 11 + 49"},
+			"category_id": {"1148"},
+			"description": {"pizza, ninja and disco"},
 		}
 
-		request := tests.NewPatchRequest(ctx, t, "/items/1143?currency=eur", params)
+		request, err := http.NewRequestWithContext(
+			ctx,
+			http.MethodPatch,
+			"/items/1143?currency=eur",
+			strings.NewReader(values.Encode()),
+		)
+		if err != nil {
+			t.Fatal(err)
+		}
+
+		request.Header.Add("Content-Type", "application/x-www-form-urlencoded")
 
 		recorder := httptest.NewRecorder()
 
@@ -94,7 +115,7 @@ func TestItemUpdateHandler(t *testing.T) { //nolint:funlen
 
 		assert.Equal(t, recorder.Code, http.StatusNoContent)
 
-		item := tests.FindItemByDate(ctx, t, currency.EUR, "2025-01-25")
+		item := findItemByDate(t, db, currency.EUR, "2025-01-25")
 
 		assert.Equal(t, item.ID, 1143)
 	})
@@ -113,7 +134,7 @@ func newUpdateHandler(t *testing.T) (*handlers.UpdateHandler, *sql.DB) {
 
 	categoryService := categoryservice.New(categoryRepository)
 
-	itemComponent := components.NewItemsComponent(commoncomponent.New())
+	itemComponent := components.NewItemsComponent()
 
 	handler := handlers.NewUpdateHandler(itemService, categoryService, itemComponent)
 

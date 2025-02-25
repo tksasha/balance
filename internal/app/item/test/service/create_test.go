@@ -4,12 +4,12 @@ import (
 	"database/sql"
 	"errors"
 	"testing"
+	"time"
 
 	"github.com/tksasha/balance/internal/app/category"
 	"github.com/tksasha/balance/internal/app/item"
 	"github.com/tksasha/balance/internal/app/item/service"
 	"github.com/tksasha/balance/internal/app/item/test/mocks"
-	"github.com/tksasha/balance/internal/common/tests"
 	"go.uber.org/mock/gomock"
 	"gotest.tools/v3/assert"
 )
@@ -172,7 +172,7 @@ func TestCreate(t *testing.T) { //nolint:funlen
 			Return(category, nil)
 
 		item := &item.Item{
-			Date:         tests.Date(t, "2025-01-23"),
+			Date:         time.Date(2025, 1, 23, 0, 0, 0, 0, time.UTC),
 			Formula:      "42.69+69.42",
 			Sum:          112.11,
 			CategoryID:   1244,
@@ -209,7 +209,7 @@ func TestCreate(t *testing.T) { //nolint:funlen
 			Return(category, nil)
 
 		item := &item.Item{
-			Date:         tests.Date(t, "2025-01-23"),
+			Date:         time.Date(2025, 0o1, 23, 0, 0, 0, 0, time.UTC),
 			Formula:      "42.69+69.42",
 			Sum:          112.11,
 			CategoryID:   1307,

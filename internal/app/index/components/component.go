@@ -11,13 +11,9 @@ type IndexComponent struct {
 	yearsComponent  *YearsComponent
 }
 
-func NewIndexComponent(
-	component *component.Component,
-	monthsComponent *MonthsComponent,
-	yearsComponent *YearsComponent,
-) *IndexComponent {
+func NewIndexComponent(monthsComponent *MonthsComponent, yearsComponent *YearsComponent) *IndexComponent {
 	return &IndexComponent{
-		Component:       component,
+		Component:       component.New(),
 		monthsComponent: monthsComponent,
 		yearsComponent:  yearsComponent,
 	}
