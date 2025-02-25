@@ -6,11 +6,11 @@ import (
 	"github.com/tksasha/balance/internal/app/category"
 	"github.com/tksasha/balance/internal/app/index"
 	"github.com/tksasha/balance/internal/app/index/components"
-	"github.com/tksasha/balance/internal/common"
+	"github.com/tksasha/balance/internal/common/handler"
 )
 
 type Handler struct {
-	*common.BaseHandler
+	*handler.Handler
 
 	indexService    index.Service
 	categoryService index.CategoryService
@@ -18,13 +18,12 @@ type Handler struct {
 }
 
 func New(
-	baseHandler *common.BaseHandler,
 	indexService index.Service,
 	categoryService index.CategoryService,
 	indexComponent *components.IndexComponent,
 ) *Handler {
 	return &Handler{
-		BaseHandler:     baseHandler,
+		Handler:         handler.New(),
 		indexService:    indexService,
 		categoryService: categoryService,
 		indexComponent:  indexComponent,

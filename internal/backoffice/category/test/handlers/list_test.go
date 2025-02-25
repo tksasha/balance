@@ -56,7 +56,7 @@ func newListHandler(t *testing.T) (*handlers.ListHandler, *sql.DB) {
 		commoncomponent.New(),
 	)
 
-	handler := handlers.NewListHandler(common.NewBaseHandler(), categoryService, categoryComponent)
+	handler := handlers.NewListHandler(categoryService, categoryComponent)
 
 	return handler, db
 }

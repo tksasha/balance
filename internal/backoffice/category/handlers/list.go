@@ -5,25 +5,24 @@ import (
 
 	"github.com/tksasha/balance/internal/backoffice/category"
 	"github.com/tksasha/balance/internal/backoffice/category/component"
-	"github.com/tksasha/balance/internal/common"
+	"github.com/tksasha/balance/internal/common/handler"
 )
 
 type ListHandler struct {
-	*common.BaseHandler
+	*handler.Handler
 
 	service   category.Service
 	component *component.CategoryComponent
 }
 
 func NewListHandler(
-	baseHandler *common.BaseHandler,
 	service category.Service,
 	component *component.CategoryComponent,
 ) *ListHandler {
 	return &ListHandler{
-		BaseHandler: baseHandler,
-		service:     service,
-		component:   component,
+		Handler:   handler.New(),
+		service:   service,
+		component: component,
 	}
 }
 

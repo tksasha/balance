@@ -7,23 +7,23 @@ import (
 	"github.com/tksasha/balance/internal/backoffice/category"
 	"github.com/tksasha/balance/internal/backoffice/category/component"
 	"github.com/tksasha/balance/internal/common"
+	"github.com/tksasha/balance/internal/common/handler"
 	"github.com/tksasha/validator"
 )
 
 type CreateHandler struct {
-	*common.BaseHandler
+	*handler.Handler
 
 	categoryService   category.Service
 	categoryComponent *component.CategoryComponent
 }
 
 func NewCreateHandler(
-	baseHandler *common.BaseHandler,
 	categoryService category.Service,
 	categoryComponent *component.CategoryComponent,
 ) *CreateHandler {
 	return &CreateHandler{
-		BaseHandler:       baseHandler,
+		Handler:           handler.New(),
 		categoryService:   categoryService,
 		categoryComponent: categoryComponent,
 	}

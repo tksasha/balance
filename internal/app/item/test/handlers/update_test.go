@@ -116,7 +116,7 @@ func newUpdateHandler(t *testing.T) (*handlers.UpdateHandler, *sql.DB) {
 
 	itemComponent := components.NewItemsComponent(commoncomponent.New())
 
-	handler := handlers.NewUpdateHandler(common.NewBaseHandler(), itemService, categoryService, itemComponent)
+	handler := handlers.NewUpdateHandler(itemService, categoryService, itemComponent)
 
 	return handler, db
 }

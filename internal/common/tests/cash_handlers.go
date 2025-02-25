@@ -6,7 +6,6 @@ import (
 	"github.com/tksasha/balance/internal/app/cash"
 	"github.com/tksasha/balance/internal/app/cash/components"
 	"github.com/tksasha/balance/internal/app/cash/handlers"
-	"github.com/tksasha/balance/internal/common"
 	"github.com/tksasha/balance/internal/common/component"
 )
 
@@ -15,7 +14,7 @@ func NewCreateCashHandler(t *testing.T, cashService cash.Service) *handlers.Crea
 
 	cashComponent := components.NewCashComponent(component.New())
 
-	return handlers.NewCreateHandler(common.NewBaseHandler(), cashService, cashComponent)
+	return handlers.NewCreateHandler(cashService, cashComponent)
 }
 
 func NewEditCashHandler(t *testing.T, cashService cash.Service) *handlers.EditHandler {
@@ -23,7 +22,7 @@ func NewEditCashHandler(t *testing.T, cashService cash.Service) *handlers.EditHa
 
 	cashComponent := components.NewCashComponent(component.New())
 
-	return handlers.NewEditHandler(common.NewBaseHandler(), cashService, cashComponent)
+	return handlers.NewEditHandler(cashService, cashComponent)
 }
 
 func NewListCashesHandler(t *testing.T, cashService cash.Service) *handlers.ListHandler {
@@ -31,7 +30,7 @@ func NewListCashesHandler(t *testing.T, cashService cash.Service) *handlers.List
 
 	cashComponent := components.NewCashComponent(component.New())
 
-	return handlers.NewListHandler(common.NewBaseHandler(), cashService, cashComponent)
+	return handlers.NewListHandler(cashService, cashComponent)
 }
 
 func NewNewCasheHandler(t *testing.T) *handlers.NewHandler {
@@ -39,7 +38,7 @@ func NewNewCasheHandler(t *testing.T) *handlers.NewHandler {
 
 	cashComponent := components.NewCashComponent(component.New())
 
-	return handlers.NewNewHandler(common.NewBaseHandler(), cashComponent)
+	return handlers.NewNewHandler(cashComponent)
 }
 
 func NewUpdateCashHandler(t *testing.T, cashService cash.Service) *handlers.UpdateHandler {
@@ -47,11 +46,11 @@ func NewUpdateCashHandler(t *testing.T, cashService cash.Service) *handlers.Upda
 
 	cashComponent := components.NewCashComponent(component.New())
 
-	return handlers.NewUpdateHandler(common.NewBaseHandler(), cashService, cashComponent)
+	return handlers.NewUpdateHandler(cashService, cashComponent)
 }
 
 func NewDeleteCashHandler(t *testing.T, cashService cash.Service) *handlers.DeleteHandler {
 	t.Helper()
 
-	return handlers.NewDeleteHandler(common.NewBaseHandler(), cashService)
+	return handlers.NewDeleteHandler(cashService)
 }

@@ -4,21 +4,20 @@ import (
 	"net/http"
 
 	"github.com/tksasha/balance/internal/backoffice/category"
-	"github.com/tksasha/balance/internal/common"
+	"github.com/tksasha/balance/internal/common/handler"
 )
 
 type DeleteHandler struct {
-	*common.BaseHandler
+	*handler.Handler
 
 	categoryService category.Service
 }
 
 func NewDeleteHandler(
-	baseHandler *common.BaseHandler,
 	categoryService category.Service,
 ) *DeleteHandler {
 	return &DeleteHandler{
-		BaseHandler:     baseHandler,
+		Handler:         handler.New(),
 		categoryService: categoryService,
 	}
 }

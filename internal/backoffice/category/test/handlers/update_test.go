@@ -174,7 +174,7 @@ func newUpdateHandler(t *testing.T) (*handlers.UpdateHandler, *sql.DB) {
 
 	categoryComponent := component.New(commonComponent.New())
 
-	handler := handlers.NewUpdateHandler(common.NewBaseHandler(), categoryService, categoryComponent)
+	handler := handlers.NewUpdateHandler(categoryService, categoryComponent)
 
 	return handler, db
 }

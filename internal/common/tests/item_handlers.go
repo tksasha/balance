@@ -7,7 +7,6 @@ import (
 	"github.com/tksasha/balance/internal/app/item"
 	"github.com/tksasha/balance/internal/app/item/components"
 	"github.com/tksasha/balance/internal/app/item/handlers"
-	"github.com/tksasha/balance/internal/common"
 	"github.com/tksasha/balance/internal/common/component"
 )
 
@@ -20,7 +19,7 @@ func NewCreateItemHandler(
 
 	itemsComponent := components.NewItemsComponent(component.New())
 
-	return handlers.NewCreateHandler(common.NewBaseHandler(), itemService, categoryService, itemsComponent)
+	return handlers.NewCreateHandler(itemService, categoryService, itemsComponent)
 }
 
 func NewEditItemHandler(
@@ -32,7 +31,7 @@ func NewEditItemHandler(
 
 	itemsComponent := components.NewItemsComponent(component.New())
 
-	return handlers.NewEditHandler(common.NewBaseHandler(), itemService, categoryService, itemsComponent)
+	return handlers.NewEditHandler(itemService, categoryService, itemsComponent)
 }
 
 func NewUpdateItemHandler(
@@ -44,7 +43,7 @@ func NewUpdateItemHandler(
 
 	itemsComponent := components.NewItemsComponent(component.New())
 
-	return handlers.NewUpdateHandler(common.NewBaseHandler(), itemService, categoryService, itemsComponent)
+	return handlers.NewUpdateHandler(itemService, categoryService, itemsComponent)
 }
 
 func NewListItemsHandler(
@@ -62,7 +61,6 @@ func NewListItemsHandler(
 	yearsComponent := indexcomponents.NewYearsComponent(component)
 
 	return handlers.NewListHandler(
-		common.NewBaseHandler(),
 		itemService,
 		itemsComponent,
 		monthsComponent,
@@ -73,5 +71,5 @@ func NewListItemsHandler(
 func NewDeleteItemHandler(t *testing.T, itemService item.Service) *handlers.DeleteHandler {
 	t.Helper()
 
-	return handlers.NewDeleteHandler(common.NewBaseHandler(), itemService)
+	return handlers.NewDeleteHandler(itemService)
 }

@@ -6,7 +6,6 @@ import (
 	"github.com/tksasha/balance/internal/app/index"
 	"github.com/tksasha/balance/internal/app/index/components"
 	"github.com/tksasha/balance/internal/app/index/handler"
-	"github.com/tksasha/balance/internal/common"
 	"github.com/tksasha/balance/internal/common/component"
 )
 
@@ -25,5 +24,5 @@ func NewIndexPageHandler(
 
 	indexComponent := components.NewIndexComponent(component, monthsComonents, yearsComponent)
 
-	return handler.New(common.NewBaseHandler(), indexService, categoryService, indexComponent)
+	return handler.New(indexService, categoryService, indexComponent)
 }

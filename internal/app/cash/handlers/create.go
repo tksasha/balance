@@ -7,23 +7,23 @@ import (
 	"github.com/tksasha/balance/internal/app/cash"
 	"github.com/tksasha/balance/internal/app/cash/components"
 	"github.com/tksasha/balance/internal/common"
+	"github.com/tksasha/balance/internal/common/handler"
 	"github.com/tksasha/validator"
 )
 
 type CreateHandler struct {
-	*common.BaseHandler
+	*handler.Handler
 
 	cashService   cash.Service
 	cashComponent *components.CashComponent
 }
 
 func NewCreateHandler(
-	baseHandler *common.BaseHandler,
 	cashService cash.Service,
 	cashComponent *components.CashComponent,
 ) *CreateHandler {
 	return &CreateHandler{
-		BaseHandler:   baseHandler,
+		Handler:       handler.New(),
 		cashService:   cashService,
 		cashComponent: cashComponent,
 	}

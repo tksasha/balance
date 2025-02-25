@@ -119,7 +119,7 @@ func newCreateHandler(t *testing.T) (*handlers.CreateHandler, *sql.DB) {
 
 	categoryComponent := component.New(commonComponent.New())
 
-	handler := handlers.NewCreateHandler(common.NewBaseHandler(), categoryService, categoryComponent)
+	handler := handlers.NewCreateHandler(categoryService, categoryComponent)
 
 	return handler, db
 }

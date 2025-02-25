@@ -2,7 +2,6 @@
 
 //go:generate go run -mod=mod github.com/google/wire/cmd/wire
 //go:build !wireinject
-// +build !wireinject
 
 package wire
 
@@ -40,7 +39,6 @@ import (
 
 func InitializeServer() *server.Server {
 	configConfig := config.New()
-	baseHandler := common.NewBaseHandler()
 	baseService := common.NewBaseService()
 	baseRepository := common.NewBaseRepository()
 	contextContext := context.Background()
@@ -50,20 +48,20 @@ func InitializeServer() *server.Server {
 	serviceService := service.New(baseService, repositoryRepository)
 	componentComponent := component.New()
 	categoryComponent := component2.New(componentComponent)
-	createHandler := handlers.NewCreateHandler(baseHandler, serviceService, categoryComponent)
-	deleteHandler := handlers.NewDeleteHandler(baseHandler, serviceService)
-	editHandler := handlers.NewEditHandler(baseHandler, serviceService, categoryComponent)
-	listHandler := handlers.NewListHandler(baseHandler, serviceService, categoryComponent)
-	updateHandler := handlers.NewUpdateHandler(baseHandler, serviceService, categoryComponent)
+	createHandler := handlers.NewCreateHandler(serviceService, categoryComponent)
+	deleteHandler := handlers.NewDeleteHandler(serviceService)
+	editHandler := handlers.NewEditHandler(serviceService, categoryComponent)
+	listHandler := handlers.NewListHandler(serviceService, categoryComponent)
+	updateHandler := handlers.NewUpdateHandler(serviceService, categoryComponent)
 	repository6 := repository2.New(baseRepository, sqlDB)
 	service6 := service2.New(repository6)
 	cashComponent := components.NewCashComponent(componentComponent)
-	handlersCreateHandler := handlers2.NewCreateHandler(baseHandler, service6, cashComponent)
-	handlersDeleteHandler := handlers2.NewDeleteHandler(baseHandler, service6)
-	handlersEditHandler := handlers2.NewEditHandler(baseHandler, service6, cashComponent)
-	handlersListHandler := handlers2.NewListHandler(baseHandler, service6, cashComponent)
-	newHandler := handlers2.NewNewHandler(baseHandler, cashComponent)
-	handlersUpdateHandler := handlers2.NewUpdateHandler(baseHandler, service6, cashComponent)
+	handlersCreateHandler := handlers2.NewCreateHandler(service6, cashComponent)
+	handlersDeleteHandler := handlers2.NewDeleteHandler(service6)
+	handlersEditHandler := handlers2.NewEditHandler(service6, cashComponent)
+	handlersListHandler := handlers2.NewListHandler(service6, cashComponent)
+	newHandler := handlers2.NewNewHandler(cashComponent)
+	handlersUpdateHandler := handlers2.NewUpdateHandler(service6, cashComponent)
 	repository7 := repository3.New(baseRepository, sqlDB)
 	service7 := service3.New(repository7)
 	repository8 := repository4.New(baseRepository, sqlDB)
@@ -71,14 +69,14 @@ func InitializeServer() *server.Server {
 	monthsComponent := components2.NewMonthsComponent(componentComponent)
 	yearsComponent := components2.NewYearsComponent(componentComponent)
 	indexComponent := components2.NewIndexComponent(componentComponent, monthsComponent, yearsComponent)
-	handlerHandler := handler.New(baseHandler, service7, service8, indexComponent)
+	handlerHandler := handler.New(service7, service8, indexComponent)
 	repository9 := repository5.New(baseRepository, sqlDB)
 	service9 := service5.New(baseService, repository9, repository8)
 	itemsComponent := components3.NewItemsComponent(componentComponent)
-	createHandler2 := handlers3.NewCreateHandler(baseHandler, service9, service8, itemsComponent)
-	editHandler2 := handlers3.NewEditHandler(baseHandler, service9, service8, itemsComponent)
-	listHandler2 := handlers3.NewListHandler(baseHandler, service9, itemsComponent, monthsComponent, yearsComponent)
-	updateHandler2 := handlers3.NewUpdateHandler(baseHandler, service9, service8, itemsComponent)
+	createHandler2 := handlers3.NewCreateHandler(service9, service8, itemsComponent)
+	editHandler2 := handlers3.NewEditHandler(service9, service8, itemsComponent)
+	listHandler2 := handlers3.NewListHandler(service9, itemsComponent, monthsComponent, yearsComponent)
+	updateHandler2 := handlers3.NewUpdateHandler(service9, service8, itemsComponent)
 	routesRoutes := routes.New(createHandler, deleteHandler, editHandler, listHandler, updateHandler, handlersCreateHandler, handlersDeleteHandler, handlersEditHandler, handlersListHandler, newHandler, handlersUpdateHandler, handlerHandler, createHandler2, editHandler2, listHandler2, updateHandler2)
 	v := middlewares.New()
 	serverServer := server.New(configConfig, routesRoutes, v)

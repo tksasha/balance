@@ -64,7 +64,7 @@ func newIndexHandler(t *testing.T) (*handler.Handler, *sql.DB) {
 
 	indexComponent := components.NewIndexComponent(commonComponent, monthsComponent, yearsComponent)
 
-	handler := handler.New(common.NewBaseHandler(), indexService, categoryService, indexComponent)
+	handler := handler.New(indexService, categoryService, indexComponent)
 
 	return handler, db
 }

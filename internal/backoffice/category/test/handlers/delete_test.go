@@ -87,7 +87,7 @@ func newDeleteHandler(t *testing.T) (*handlers.DeleteHandler, *sql.DB) {
 
 	categoryService := service.New(common.NewBaseService(), categoryRepository)
 
-	handler := handlers.NewDeleteHandler(common.NewBaseHandler(), categoryService)
+	handler := handlers.NewDeleteHandler(categoryService)
 
 	return handler, db
 }

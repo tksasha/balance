@@ -88,7 +88,7 @@ func newEditHandler(t *testing.T) (*handlers.EditHandler, *sql.DB) {
 
 	itemComponent := components.NewItemsComponent(commoncomponent.New())
 
-	handler := handlers.NewEditHandler(common.NewBaseHandler(), itemService, categoryService, itemComponent)
+	handler := handlers.NewEditHandler(itemService, categoryService, itemComponent)
 
 	return handler, db
 }
