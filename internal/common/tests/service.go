@@ -15,7 +15,6 @@ import (
 	"github.com/tksasha/balance/internal/app/item"
 	itemrepository "github.com/tksasha/balance/internal/app/item/repository"
 	itemservice "github.com/tksasha/balance/internal/app/item/service"
-	"github.com/tksasha/balance/internal/common"
 )
 
 func NewCashService(ctx context.Context, t *testing.T) (cash.Service, *sql.DB) {
@@ -37,7 +36,7 @@ func NewItemService(ctx context.Context, t *testing.T) (item.Service, *sql.DB) {
 
 	categoryRepository := categoryrepository.New(db)
 
-	return itemservice.New(common.NewBaseService(), itemRepository, categoryRepository), db
+	return itemservice.New(itemRepository, categoryRepository), db
 }
 
 func NewIndexPageService(ctx context.Context, t *testing.T) (index.Service, *sql.DB) {

@@ -17,7 +17,7 @@ func TestEdit(t *testing.T) {
 
 	repository := mocks.NewMockRepository(ctrl)
 
-	service := service.New(common.NewBaseService(), repository)
+	service := service.New(repository)
 
 	ctx := t.Context()
 

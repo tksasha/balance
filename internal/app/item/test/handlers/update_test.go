@@ -14,7 +14,6 @@ import (
 	"github.com/tksasha/balance/internal/app/item/handlers"
 	"github.com/tksasha/balance/internal/app/item/repository"
 	"github.com/tksasha/balance/internal/app/item/service"
-	"github.com/tksasha/balance/internal/common"
 	commoncomponent "github.com/tksasha/balance/internal/common/component"
 	"github.com/tksasha/balance/internal/common/currency"
 	"github.com/tksasha/balance/internal/common/tests"
@@ -110,9 +109,9 @@ func newUpdateHandler(t *testing.T) (*handlers.UpdateHandler, *sql.DB) {
 
 	categoryRepository := categoryrepository.New(db)
 
-	itemService := service.New(common.NewBaseService(), itemRepository, categoryRepository)
+	itemService := service.New(itemRepository, categoryRepository)
 
-	categoryService := categoryservice.New(common.NewBaseService(), categoryRepository)
+	categoryService := categoryservice.New(categoryRepository)
 
 	itemComponent := components.NewItemsComponent(commoncomponent.New())
 

@@ -4,7 +4,7 @@ import (
 	"context"
 
 	"github.com/tksasha/balance/internal/app/cash"
-	"github.com/tksasha/balance/internal/common"
+	"github.com/tksasha/balance/internal/common/service"
 	"github.com/tksasha/validator"
 )
 
@@ -22,7 +22,7 @@ func (s *Service) Create(ctx context.Context, request cash.CreateRequest) (*cash
 		}
 
 		if exists {
-			validate.Set("name", common.AlreadyExists)
+			validate.Set("name", service.AlreadyExists)
 		}
 	}
 

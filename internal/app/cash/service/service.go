@@ -7,14 +7,18 @@ import (
 
 	"github.com/tksasha/balance/internal/app/cash"
 	"github.com/tksasha/balance/internal/common"
+	"github.com/tksasha/balance/internal/common/service"
 )
 
 type Service struct {
+	*service.Service
+
 	repository cash.Repository
 }
 
 func New(repository cash.Repository) *Service {
 	return &Service{
+		Service:    service.New(),
 		repository: repository,
 	}
 }

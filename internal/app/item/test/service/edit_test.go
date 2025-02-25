@@ -18,7 +18,7 @@ func TestEdit(t *testing.T) {
 
 	categoryRepository := mocks.NewMockCategoryRepository(controller)
 
-	service := service.New(common.NewBaseService(), itemRepository, categoryRepository)
+	service := service.New(itemRepository, categoryRepository)
 
 	ctx := t.Context()
 

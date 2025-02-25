@@ -10,7 +10,6 @@ import (
 	"github.com/tksasha/balance/internal/backoffice/category/handlers"
 	"github.com/tksasha/balance/internal/backoffice/category/repository"
 	"github.com/tksasha/balance/internal/backoffice/category/service"
-	"github.com/tksasha/balance/internal/common"
 	"github.com/tksasha/balance/internal/common/currency"
 	"github.com/tksasha/balance/internal/db"
 	nameprovider "github.com/tksasha/balance/internal/db/nameprovider/test"
@@ -85,7 +84,7 @@ func newDeleteHandler(t *testing.T) (*handlers.DeleteHandler, *sql.DB) {
 
 	categoryRepository := repository.New(db)
 
-	categoryService := service.New(common.NewBaseService(), categoryRepository)
+	categoryService := service.New(categoryRepository)
 
 	handler := handlers.NewDeleteHandler(categoryService)
 

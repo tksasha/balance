@@ -12,7 +12,6 @@ import (
 	"github.com/tksasha/balance/internal/app/index/handler"
 	"github.com/tksasha/balance/internal/app/index/repository"
 	"github.com/tksasha/balance/internal/app/index/service"
-	"github.com/tksasha/balance/internal/common"
 	commoncomponent "github.com/tksasha/balance/internal/common/component"
 	"github.com/tksasha/balance/internal/common/tests"
 	"github.com/tksasha/balance/internal/db"
@@ -54,7 +53,7 @@ func newIndexHandler(t *testing.T) (*handler.Handler, *sql.DB) {
 
 	categoryRepository := categoryrepository.New(db)
 
-	categoryService := categoryservice.New(common.NewBaseService(), categoryRepository)
+	categoryService := categoryservice.New(categoryRepository)
 
 	commonComponent := commoncomponent.New()
 

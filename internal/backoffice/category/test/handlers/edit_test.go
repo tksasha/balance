@@ -11,7 +11,6 @@ import (
 	"github.com/tksasha/balance/internal/backoffice/category/handlers"
 	"github.com/tksasha/balance/internal/backoffice/category/repository"
 	"github.com/tksasha/balance/internal/backoffice/category/service"
-	"github.com/tksasha/balance/internal/common"
 	commonComponent "github.com/tksasha/balance/internal/common/component"
 	"github.com/tksasha/balance/internal/common/currency"
 	"github.com/tksasha/balance/internal/db"
@@ -75,7 +74,7 @@ func newEditHandler(t *testing.T) (*handlers.EditHandler, *sql.DB) {
 
 	categoryRepository := repository.New(db)
 
-	categoryService := service.New(common.NewBaseService(), categoryRepository)
+	categoryService := service.New(categoryRepository)
 
 	categoryComponent := component.New(commonComponent.New())
 

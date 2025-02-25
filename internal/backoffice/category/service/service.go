@@ -7,19 +7,20 @@ import (
 
 	"github.com/tksasha/balance/internal/backoffice/category"
 	"github.com/tksasha/balance/internal/common"
+	"github.com/tksasha/balance/internal/common/service"
 	"github.com/tksasha/validator"
 )
 
 type Service struct {
-	*common.BaseService
+	*service.Service
 
 	repository category.Repository
 }
 
-func New(baseService *common.BaseService, repository category.Repository) *Service {
+func New(repository category.Repository) *Service {
 	return &Service{
-		BaseService: baseService,
-		repository:  repository,
+		Service:    service.New(),
+		repository: repository,
 	}
 }
 
@@ -44,7 +45,7 @@ func (s *Service) nameAlreadyExists(
 	}
 
 	if category.ID != categoryID {
-		validator.Set("name", common.AlreadyExists)
+		validator.Set("name", service.AlreadyExists)
 	}
 
 	return nil

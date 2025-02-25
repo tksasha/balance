@@ -10,7 +10,6 @@ import (
 	"github.com/tksasha/balance/internal/backoffice/category/handlers"
 	"github.com/tksasha/balance/internal/backoffice/category/repository"
 	"github.com/tksasha/balance/internal/backoffice/category/service"
-	"github.com/tksasha/balance/internal/common"
 	commoncomponent "github.com/tksasha/balance/internal/common/component"
 	"github.com/tksasha/balance/internal/db"
 	nameprovider "github.com/tksasha/balance/internal/db/nameprovider/test"
@@ -50,7 +49,7 @@ func newListHandler(t *testing.T) (*handlers.ListHandler, *sql.DB) {
 
 	categoryRepository := repository.New(db)
 
-	categoryService := service.New(common.NewBaseService(), categoryRepository)
+	categoryService := service.New(categoryRepository)
 
 	categoryComponent := component.New(
 		commoncomponent.New(),

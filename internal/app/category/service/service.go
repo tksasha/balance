@@ -2,21 +2,18 @@ package service
 
 import (
 	"github.com/tksasha/balance/internal/app/category"
-	"github.com/tksasha/balance/internal/common"
+	"github.com/tksasha/balance/internal/common/service"
 )
 
 type Service struct {
-	*common.BaseService
+	*service.Service
 
 	repository category.Repository
 }
 
-func New(
-	baseService *common.BaseService,
-	repository category.Repository,
-) *Service {
+func New(repository category.Repository) *Service {
 	return &Service{
-		BaseService: baseService,
-		repository:  repository,
+		Service:    service.New(),
+		repository: repository,
 	}
 }

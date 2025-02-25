@@ -9,7 +9,6 @@ import (
 	"github.com/tksasha/balance/internal/app/item"
 	"github.com/tksasha/balance/internal/app/item/service"
 	"github.com/tksasha/balance/internal/app/item/test/mocks"
-	"github.com/tksasha/balance/internal/common"
 	"github.com/tksasha/balance/internal/common/tests"
 	"go.uber.org/mock/gomock"
 	"gotest.tools/v3/assert"
@@ -21,7 +20,7 @@ func TestCreate(t *testing.T) { //nolint:funlen
 	itemRepository := mocks.NewMockRepository(ctrl)
 	categoryRepository := mocks.NewMockCategoryRepository(ctrl)
 
-	service := service.New(common.NewBaseService(), itemRepository, categoryRepository)
+	service := service.New(itemRepository, categoryRepository)
 
 	ctx := t.Context()
 

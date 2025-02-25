@@ -7,23 +7,23 @@ import (
 
 	"github.com/tksasha/balance/internal/app/item"
 	"github.com/tksasha/balance/internal/common"
+	"github.com/tksasha/balance/internal/common/service"
 	"github.com/tksasha/validator"
 )
 
 type Service struct {
-	*common.BaseService
+	*service.Service
 
 	itemRepository     item.Repository
 	categoryRepository item.CategoryRepository
 }
 
 func New(
-	baseService *common.BaseService,
 	itemRepository item.Repository,
 	categoryRepository item.CategoryRepository,
 ) *Service {
 	return &Service{
-		BaseService:        baseService,
+		Service:            service.New(),
 		itemRepository:     itemRepository,
 		categoryRepository: categoryRepository,
 	}
