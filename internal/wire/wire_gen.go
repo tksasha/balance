@@ -2,7 +2,6 @@
 
 //go:generate go run -mod=mod github.com/google/wire/cmd/wire
 //go:build !wireinject
-// +build !wireinject
 
 package wire
 
@@ -51,6 +50,7 @@ func InitializeServer() *server.Server {
 	cashComponent := components.NewCashComponent()
 	createHandler := handlers.NewCreateHandler(serviceService, cashComponent)
 	deleteHandler := handlers.NewDeleteHandler(serviceService)
+	editHandler := handlers.NewEditHandler(serviceService, cashComponent)
 	listHandler := handlers.NewListHandler(serviceService, cashComponent)
 	newHandler := handlers.NewNewHandler(cashComponent)
 	repository7 := repository2.New(sqlDB)
@@ -59,13 +59,13 @@ func InitializeServer() *server.Server {
 	categoryComponent := component2.New(componentComponent)
 	handlersCreateHandler := handlers2.NewCreateHandler(service7, categoryComponent)
 	handlersDeleteHandler := handlers2.NewDeleteHandler(service7)
-	editHandler := handlers2.NewEditHandler(service7, categoryComponent)
+	handlersEditHandler := handlers2.NewEditHandler(service7, categoryComponent)
 	handlersListHandler := handlers2.NewListHandler(service7, categoryComponent)
 	updateHandler := handlers2.NewUpdateHandler(service7, categoryComponent)
 	repository8 := repository3.New(sqlDB)
 	service8 := service3.New(repository8)
 	componentsCashComponent := components2.NewCashComponent()
-	handlersEditHandler := handlers3.NewEditHandler(service8, componentsCashComponent)
+	editHandler2 := handlers3.NewEditHandler(service8, componentsCashComponent)
 	handlersUpdateHandler := handlers3.NewUpdateHandler(service8, componentsCashComponent)
 	repository9 := repository4.New(sqlDB)
 	service9 := service4.New(repository9)
@@ -79,10 +79,10 @@ func InitializeServer() *server.Server {
 	service11 := service6.New(repository11, repository10)
 	itemsComponent := components4.NewItemsComponent(componentComponent)
 	createHandler2 := handlers4.NewCreateHandler(service11, service10, itemsComponent)
-	editHandler2 := handlers4.NewEditHandler(service11, service10, itemsComponent)
+	editHandler3 := handlers4.NewEditHandler(service11, service10, itemsComponent)
 	listHandler2 := handlers4.NewListHandler(service11, itemsComponent, monthsComponent, yearsComponent)
 	updateHandler2 := handlers4.NewUpdateHandler(service11, service10, itemsComponent)
-	routesRoutes := routes.New(createHandler, deleteHandler, listHandler, newHandler, handlersCreateHandler, handlersDeleteHandler, editHandler, handlersListHandler, updateHandler, handlersEditHandler, handlersUpdateHandler, handlerHandler, createHandler2, editHandler2, listHandler2, updateHandler2)
+	routesRoutes := routes.New(createHandler, deleteHandler, editHandler, listHandler, newHandler, handlersCreateHandler, handlersDeleteHandler, handlersEditHandler, handlersListHandler, updateHandler, editHandler2, handlersUpdateHandler, handlerHandler, createHandler2, editHandler3, listHandler2, updateHandler2)
 	v := middlewares.New()
 	serverServer := server.New(configConfig, routesRoutes, v)
 	return serverServer

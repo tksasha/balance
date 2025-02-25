@@ -48,6 +48,7 @@ func InitializeServer() *server.Server {
 		backofficecashcomponents.NewCashComponent,
 		backofficecashhandlers.NewCreateHandler,
 		backofficecashhandlers.NewDeleteHandler,
+		backofficecashhandlers.NewEditHandler,
 		backofficecashhandlers.NewListHandler,
 		backofficecashhandlers.NewNewHandler,
 		backofficecashrepository.New,
