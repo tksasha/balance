@@ -1,11 +1,10 @@
-package components
+package component
 
 import (
 	"net/url"
 	"strconv"
 	"time"
 
-	"github.com/tksasha/balance/internal/common/component"
 	. "maragu.dev/gomponents" //nolint:stylecheck
 	htmx "maragu.dev/gomponents-htmx"
 	"maragu.dev/gomponents/components"
@@ -14,36 +13,23 @@ import (
 
 const yearFrom = 2015
 
-type YearsComponent struct {
-	*component.Component
-
-	years []int
-}
-
-func NewYearsComponent() *YearsComponent {
+func (c *IndexComponent) Years(values url.Values) Node {
 	var years []int
 
 	for year := yearFrom; year <= time.Now().Year(); year++ {
 		years = append(years, year)
 	}
 
-	return &YearsComponent{
-		Component: component.New(),
-		years:     years,
-	}
-}
-
-func (c *YearsComponent) Years(values url.Values) Node {
 	return Div(
 		ID("years"),
 		htmx.SwapOOB("true"),
-		Map(c.years, func(year int) Node {
+		Map(years, func(year int) Node {
 			return c.year(year, values)
 		}),
 	)
 }
 
-func (c *YearsComponent) year(year int, values url.Values) Node {
+func (c *IndexComponent) year(year int, values url.Values) Node {
 	val, err := strconv.Atoi(values.Get("year"))
 	current := err == nil && year == val
 

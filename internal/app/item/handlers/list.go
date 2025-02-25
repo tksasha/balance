@@ -3,7 +3,7 @@ package handlers
 import (
 	"net/http"
 
-	indexcomponents "github.com/tksasha/balance/internal/app/index/components"
+	indexcomponent "github.com/tksasha/balance/internal/app/index/component"
 	"github.com/tksasha/balance/internal/app/item"
 	"github.com/tksasha/balance/internal/app/item/components"
 	"github.com/tksasha/balance/internal/common/handler"
@@ -12,24 +12,21 @@ import (
 type ListHandler struct {
 	*handler.Handler
 
-	itemService     item.Service
-	itemsComponent  *components.ItemsComponent
-	monthsComponent *indexcomponents.MonthsComponent
-	yearsComponent  *indexcomponents.YearsComponent
+	itemService    item.Service
+	itemsComponent *components.ItemsComponent
+	indexComponent *indexcomponent.IndexComponent
 }
 
 func NewListHandler(
 	itemService item.Service,
 	itemsComponent *components.ItemsComponent,
-	monthsComponent *indexcomponents.MonthsComponent,
-	yearsComponent *indexcomponents.YearsComponent,
+	indexComponent *indexcomponent.IndexComponent,
 ) *ListHandler {
 	return &ListHandler{
-		Handler:         handler.New(),
-		itemService:     itemService,
-		itemsComponent:  itemsComponent,
-		monthsComponent: monthsComponent,
-		yearsComponent:  yearsComponent,
+		Handler:        handler.New(),
+		itemService:    itemService,
+		itemsComponent: itemsComponent,
+		indexComponent: indexComponent,
 	}
 }
 
@@ -41,9 +38,9 @@ func (h *ListHandler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	months := h.monthsComponent.Months(r.URL.Query())
+	months := h.indexComponent.Months(r.URL.Query())
 
-	years := h.yearsComponent.Years(r.URL.Query())
+	years := h.indexComponent.Years(r.URL.Query())
 
 	err = h.itemsComponent.List(items, months, years).Render(w)
 

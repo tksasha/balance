@@ -7,7 +7,7 @@ import (
 	"testing"
 
 	categoryrepository "github.com/tksasha/balance/internal/app/category/repository"
-	indexcomponents "github.com/tksasha/balance/internal/app/index/components"
+	indexcomponent "github.com/tksasha/balance/internal/app/index/component"
 	"github.com/tksasha/balance/internal/app/item/components"
 	"github.com/tksasha/balance/internal/app/item/handlers"
 	"github.com/tksasha/balance/internal/app/item/repository"
@@ -56,11 +56,9 @@ func newListHandler(t *testing.T) (*handlers.ListHandler, *sql.DB) {
 
 	itemsComponent := components.NewItemsComponent()
 
-	monthsComponent := indexcomponents.NewMonthsComponent()
+	indexComponent := indexcomponent.NewIndexComponent()
 
-	yearsComponent := indexcomponents.NewYearsComponent()
-
-	handler := handlers.NewListHandler(itemService, itemsComponent, monthsComponent, yearsComponent)
+	handler := handlers.NewListHandler(itemService, itemsComponent, indexComponent)
 
 	return handler, db
 }

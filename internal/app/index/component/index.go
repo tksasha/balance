@@ -1,4 +1,4 @@
-package components
+package component
 
 import (
 	"net/url"
@@ -23,8 +23,8 @@ func (c *IndexComponent) Index(categories category.Categories, values url.Values
 			},
 			Body: []Node{
 				Header(
-					c.monthsComponent.Months(values),
-					c.yearsComponent.Years(values),
+					c.Months(values),
+					c.Years(values),
 				),
 				// Div(
 				// 	Class("card mb-3"),

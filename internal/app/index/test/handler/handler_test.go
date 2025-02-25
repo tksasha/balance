@@ -8,7 +8,7 @@ import (
 
 	categoryrepository "github.com/tksasha/balance/internal/app/category/repository"
 	categoryservice "github.com/tksasha/balance/internal/app/category/service"
-	"github.com/tksasha/balance/internal/app/index/components"
+	"github.com/tksasha/balance/internal/app/index/component"
 	"github.com/tksasha/balance/internal/app/index/handler"
 	"github.com/tksasha/balance/internal/app/index/repository"
 	"github.com/tksasha/balance/internal/app/index/service"
@@ -56,11 +56,7 @@ func newIndexHandler(t *testing.T) (*handler.Handler, *sql.DB) {
 
 	categoryService := categoryservice.New(categoryRepository)
 
-	monthsComponent := components.NewMonthsComponent()
-
-	yearsComponent := components.NewYearsComponent()
-
-	indexComponent := components.NewIndexComponent(monthsComponent, yearsComponent)
+	indexComponent := component.NewIndexComponent()
 
 	handler := handler.New(indexService, categoryService, indexComponent)
 

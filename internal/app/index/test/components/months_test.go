@@ -5,12 +5,12 @@ import (
 	"net/url"
 	"testing"
 
-	"github.com/tksasha/balance/internal/app/index/components"
+	"github.com/tksasha/balance/internal/app/index/component"
 	"gotest.tools/v3/golden"
 )
 
 func TestMonths(t *testing.T) {
-	component := components.NewMonthsComponent()
+	component := component.NewIndexComponent()
 
 	testdata := map[string]string{
 		"":    "months.html",
