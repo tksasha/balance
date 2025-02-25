@@ -41,17 +41,17 @@ func (m *MockRepository) EXPECT() *MockRepositoryMockRecorder {
 	return m.recorder
 }
 
-// List mocks base method.
-func (m *MockRepository) List(ctx context.Context) (category.Categories, error) {
+// FindAll mocks base method.
+func (m *MockRepository) FindAll(ctx context.Context) (category.Categories, error) {
 	m.ctrl.T.Helper()
-	ret := m.ctrl.Call(m, "List", ctx)
+	ret := m.ctrl.Call(m, "FindAll", ctx)
 	ret0, _ := ret[0].(category.Categories)
 	ret1, _ := ret[1].(error)
 	return ret0, ret1
 }
 
-// List indicates an expected call of List.
-func (mr *MockRepositoryMockRecorder) List(ctx any) *gomock.Call {
+// FindAll indicates an expected call of FindAll.
+func (mr *MockRepositoryMockRecorder) FindAll(ctx any) *gomock.Call {
 	mr.mock.ctrl.T.Helper()
-	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "List", reflect.TypeOf((*MockRepository)(nil).List), ctx)
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "FindAll", reflect.TypeOf((*MockRepository)(nil).FindAll), ctx)
 }

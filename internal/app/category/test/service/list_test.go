@@ -21,15 +21,15 @@ func TestList(t *testing.T) {
 
 	ctx := t.Context()
 
-	t.Run("returns error when list categories failed", func(t *testing.T) {
+	t.Run("returns error when find all categories failed", func(t *testing.T) {
 		repository.
 			EXPECT().
-			List(ctx).
-			Return(nil, errors.New("list categories error"))
+			FindAll(ctx).
+			Return(nil, errors.New("find all categories error"))
 
 		_, err := service.List(ctx)
 
-		assert.Error(t, err, "list categories error")
+		assert.Error(t, err, "find all categories error")
 	})
 
 	t.Run("returns categories when list succeeded", func(t *testing.T) {
@@ -37,7 +37,7 @@ func TestList(t *testing.T) {
 
 		repository.
 			EXPECT().
-			List(ctx).
+			FindAll(ctx).
 			Return(expected, nil)
 
 		result, err := service.List(ctx)

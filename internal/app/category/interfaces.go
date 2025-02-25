@@ -5,5 +5,5 @@ import (
 )
 
 type Repository interface {
-	List(ctx context.Context) (Categories, error)
+	FindAll(ctx context.Context) (Categories, error)
 }

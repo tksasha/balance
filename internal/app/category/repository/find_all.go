@@ -7,7 +7,7 @@ import (
 	"github.com/tksasha/balance/internal/app/category"
 )
 
-func (r *Repository) List(ctx context.Context) (category.Categories, error) {
+func (r *Repository) FindAll(ctx context.Context) (category.Categories, error) {
 	currency := r.GetCurrencyFromContext(ctx)
 
 	query := `
