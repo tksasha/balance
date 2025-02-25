@@ -5,7 +5,7 @@ import (
 	"net/http"
 	"testing"
 
-	"github.com/tksasha/balance/internal/app/cash"
+	"github.com/tksasha/balance/internal/backoffice/cash"
 	"github.com/tksasha/balance/internal/common/currency"
 	"github.com/tksasha/balance/internal/server/middlewares"
 )
@@ -69,6 +69,79 @@ func findCashByName(t *testing.T, db *sql.DB, currency currency.Currency, name s
 			&cash.DeletedAt,
 		); err != nil {
 		t.Fatalf("failed to find cash by name: %v", err)
+	}
+
+	return cash
+}
+
+func createCash(t *testing.T, db *sql.DB, cash *cash.Cash) {
+	t.Helper()
+
+	query := `
+		INSERT INTO
+		    cashes (
+		        id,
+		        currency,
+		        formula,
+		        sum,
+		        name,
+		        supercategory,
+		        favorite
+		    )
+		VALUES
+		    (?, ?, ?, ?, ?, ?, ?)
+	`
+
+	if _, err := db.ExecContext(
+		t.Context(),
+		query,
+		cash.ID,
+		cash.Currency,
+		cash.Formula,
+		cash.Sum,
+		cash.Name,
+		cash.Supercategory,
+		cash.Favorite,
+	); err != nil {
+		t.Fatalf("failed to create cash: %v", err)
+	}
+}
+
+func findCashByID(t *testing.T, db *sql.DB, currency currency.Currency, id int) *cash.Cash {
+	t.Helper()
+
+	query := `
+		SELECT
+			id,
+			currency,
+			formula,
+			sum,
+			name,
+			supercategory,
+			favorite,
+			deleted_at
+		FROM
+			cashes
+		WHERE
+			id=?
+			AND currency=?
+	`
+
+	cash := &cash.Cash{}
+
+	if err := db.
+		QueryRowContext(t.Context(), query, id, currency).
+		Scan(
+			&cash.ID,
+			&cash.Currency,
+			&cash.Formula,
+			&cash.Sum,
+			&cash.Name,
+			&cash.Supercategory,
+			&cash.Favorite,
+			&cash.DeletedAt,
+		); err != nil {
+		t.Fatalf("failed to find cash by id, error: %v", err)
 	}
 
 	return cash

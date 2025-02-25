@@ -39,9 +39,3 @@ func NewUpdateCashHandler(t *testing.T, cashService cash.Service) *handlers.Upda
 
 	return handlers.NewUpdateHandler(cashService, cashComponent)
 }
-
-func NewDeleteCashHandler(t *testing.T, cashService cash.Service) *handlers.DeleteHandler {
-	t.Helper()
-
-	return handlers.NewDeleteHandler(cashService)
-}
