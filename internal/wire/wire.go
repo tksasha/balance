@@ -24,11 +24,16 @@ import (
 	itemhandlers "github.com/tksasha/balance/internal/app/item/handlers"
 	itemrepository "github.com/tksasha/balance/internal/app/item/repository"
 	itemservice "github.com/tksasha/balance/internal/app/item/service"
-	backofficeCategory "github.com/tksasha/balance/internal/backoffice/category"
-	backofficeCategoryComponent "github.com/tksasha/balance/internal/backoffice/category/component"
-	backofficeCategoryHandlers "github.com/tksasha/balance/internal/backoffice/category/handlers"
-	backofficeCategoryRepository "github.com/tksasha/balance/internal/backoffice/category/repository"
-	backofficeCategoryService "github.com/tksasha/balance/internal/backoffice/category/service"
+	backofficecash "github.com/tksasha/balance/internal/backoffice/cash"
+	backofficecashcomponents "github.com/tksasha/balance/internal/backoffice/cash/components"
+	backofficecashhandlers "github.com/tksasha/balance/internal/backoffice/cash/handlers"
+	backofficecashrepository "github.com/tksasha/balance/internal/backoffice/cash/repository"
+	backofficecashservice "github.com/tksasha/balance/internal/backoffice/cash/service"
+	backofficecategory "github.com/tksasha/balance/internal/backoffice/category"
+	backofficecategorycomponent "github.com/tksasha/balance/internal/backoffice/category/component"
+	backofficecategoryhandlers "github.com/tksasha/balance/internal/backoffice/category/handlers"
+	backofficecategoryrepository "github.com/tksasha/balance/internal/backoffice/category/repository"
+	backofficecategoryservice "github.com/tksasha/balance/internal/backoffice/category/service"
 	"github.com/tksasha/balance/internal/common/component"
 	"github.com/tksasha/balance/internal/db"
 	"github.com/tksasha/balance/internal/db/nameprovider"
@@ -40,16 +45,19 @@ import (
 
 func InitializeServer() *server.Server {
 	wire.Build(
-		backofficeCategoryComponent.New,
-		backofficeCategoryHandlers.NewCreateHandler,
-		backofficeCategoryHandlers.NewDeleteHandler,
-		backofficeCategoryHandlers.NewEditHandler,
-		backofficeCategoryHandlers.NewListHandler,
-		backofficeCategoryHandlers.NewUpdateHandler,
-		backofficeCategoryRepository.New,
-		backofficeCategoryService.New,
+		backofficecashcomponents.NewCashComponent,
+		backofficecashhandlers.NewCreateHandler,
+		backofficecashrepository.New,
+		backofficecashservice.New,
+		backofficecategorycomponent.New,
+		backofficecategoryhandlers.NewCreateHandler,
+		backofficecategoryhandlers.NewDeleteHandler,
+		backofficecategoryhandlers.NewEditHandler,
+		backofficecategoryhandlers.NewListHandler,
+		backofficecategoryhandlers.NewUpdateHandler,
+		backofficecategoryrepository.New,
+		backofficecategoryservice.New,
 		cashcomponents.NewCashComponent,
-		cashhandlers.NewCreateHandler,
 		cashhandlers.NewDeleteHandler,
 		cashhandlers.NewEditHandler,
 		cashhandlers.NewListHandler,
@@ -80,8 +88,10 @@ func InitializeServer() *server.Server {
 		nameprovider.New,
 		routes.New,
 		server.New,
-		wire.Bind(new(backofficeCategory.Repository), new(*backofficeCategoryRepository.Repository)),
-		wire.Bind(new(backofficeCategory.Service), new(*backofficeCategoryService.Service)),
+		wire.Bind(new(backofficecash.Repository), new(*backofficecashrepository.Repository)),
+		wire.Bind(new(backofficecash.Service), new(*backofficecashservice.Service)),
+		wire.Bind(new(backofficecategory.Repository), new(*backofficecategoryrepository.Repository)),
+		wire.Bind(new(backofficecategory.Service), new(*backofficecategoryservice.Service)),
 		wire.Bind(new(cash.Repository), new(*cashrepository.Repository)),
 		wire.Bind(new(cash.Service), new(*cashservice.Service)),
 		wire.Bind(new(category.Repository), new(*categoryrepository.Repository)),

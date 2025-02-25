@@ -7,7 +7,8 @@ import (
 	cash "github.com/tksasha/balance/internal/app/cash/handlers"
 	index "github.com/tksasha/balance/internal/app/index/handler"
 	item "github.com/tksasha/balance/internal/app/item/handlers"
-	backofficeCategory "github.com/tksasha/balance/internal/backoffice/category/handlers"
+	backofficecash "github.com/tksasha/balance/internal/backoffice/cash/handlers"
+	backofficecategory "github.com/tksasha/balance/internal/backoffice/category/handlers"
 )
 
 //go:embed assets
@@ -18,12 +19,12 @@ type Routes struct {
 }
 
 func New(
-	backofficeCategoryCreateHandler *backofficeCategory.CreateHandler,
-	backofficeCategoryDeleteHandler *backofficeCategory.DeleteHandler,
-	backofficeCategoryEditHandler *backofficeCategory.EditHandler,
-	backofficeCategoryListHandler *backofficeCategory.ListHandler,
-	backofficeCategoryUpdateHandler *backofficeCategory.UpdateHandler,
-	cashCreateHandler *cash.CreateHandler,
+	backofficeCashCreateHandler *backofficecash.CreateHandler,
+	backofficeCategoryCreateHandler *backofficecategory.CreateHandler,
+	backofficeCategoryDeleteHandler *backofficecategory.DeleteHandler,
+	backofficeCategoryEditHandler *backofficecategory.EditHandler,
+	backofficeCategoryListHandler *backofficecategory.ListHandler,
+	backofficeCategoryUpdateHandler *backofficecategory.UpdateHandler,
 	cashDeleteHandler *cash.DeleteHandler,
 	cashEditHandler *cash.EditHandler,
 	cashListHandler *cash.ListHandler,
@@ -52,7 +53,8 @@ func New(
 	mux.Handle("GET /cashes/new", cashNewHandler)
 	mux.Handle("GET /cashes/{id}/edit", cashEditHandler)
 	mux.Handle("PATCH /cashes/{id}", cashUpdateHandler)
-	mux.Handle("POST /cash", cashCreateHandler)
+
+	mux.Handle("POST /backoffice/cash", backofficeCashCreateHandler)
 
 	mux.Handle("GET /backoffice/categories", backofficeCategoryListHandler)
 	mux.Handle("POST /backoffice/categories", backofficeCategoryCreateHandler)
