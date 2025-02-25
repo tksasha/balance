@@ -1,7 +1,7 @@
 package components
 
 import (
-	"github.com/tksasha/balance/internal/app/cash"
+	"github.com/tksasha/balance/internal/backoffice/cash"
 	. "maragu.dev/gomponents"      //nolint:stylecheck
 	. "maragu.dev/gomponents/html" //nolint:stylecheck
 )

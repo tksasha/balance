@@ -16,14 +16,6 @@ func NewEditCashHandler(t *testing.T, cashService cash.Service) *handlers.EditHa
 	return handlers.NewEditHandler(cashService, cashComponent)
 }
 
-func NewListCashesHandler(t *testing.T, cashService cash.Service) *handlers.ListHandler {
-	t.Helper()
-
-	cashComponent := components.NewCashComponent()
-
-	return handlers.NewListHandler(cashService, cashComponent)
-}
-
 func NewUpdateCashHandler(t *testing.T, cashService cash.Service) *handlers.UpdateHandler {
 	t.Helper()
 

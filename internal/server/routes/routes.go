@@ -21,6 +21,7 @@ type Routes struct {
 func New(
 	backofficeCashCreateHandler *backofficecash.CreateHandler,
 	backofficeCashDeleteHandler *backofficecash.DeleteHandler,
+	backofficeCashListHandler *backofficecash.ListHandler,
 	backofficeCashNewHandler *backofficecash.NewHandler,
 	backofficeCategoryCreateHandler *backofficecategory.CreateHandler,
 	backofficeCategoryDeleteHandler *backofficecategory.DeleteHandler,
@@ -28,7 +29,6 @@ func New(
 	backofficeCategoryListHandler *backofficecategory.ListHandler,
 	backofficeCategoryUpdateHandler *backofficecategory.UpdateHandler,
 	cashEditHandler *cash.EditHandler,
-	cashListHandler *cash.ListHandler,
 	cashUpdateHandler *cash.UpdateHandler,
 	indexHandler *index.Handler,
 	itemCreateHandler *item.CreateHandler,
@@ -48,10 +48,10 @@ func New(
 	mux.Handle("GET /items/{id}/edit", itemEditHandler)
 	mux.Handle("PATCH /items/{id}", itemUpdateHandler)
 
-	mux.Handle("GET /cashes", cashListHandler)
 	mux.Handle("GET /cashes/{id}/edit", cashEditHandler)
 	mux.Handle("PATCH /cashes/{id}", cashUpdateHandler)
 
+	mux.Handle("GET /backoffice/cashes", backofficeCashListHandler)
 	mux.Handle("GET /backoffice/cashes/new", backofficeCashNewHandler)
 	mux.Handle("POST /backoffice/cash", backofficeCashCreateHandler)
 	mux.Handle("DELETE /backoffice/cashes/{id}", backofficeCashDeleteHandler)

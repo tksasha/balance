@@ -5,9 +5,9 @@ import (
 	"slices"
 	"testing"
 
-	"github.com/tksasha/balance/internal/app/cash"
-	"github.com/tksasha/balance/internal/app/cash/service"
-	"github.com/tksasha/balance/internal/app/cash/test/mocks"
+	"github.com/tksasha/balance/internal/backoffice/cash"
+	"github.com/tksasha/balance/internal/backoffice/cash/service"
+	"github.com/tksasha/balance/internal/backoffice/cash/test/mocks"
 	"go.uber.org/mock/gomock"
 	"gotest.tools/v3/assert"
 )

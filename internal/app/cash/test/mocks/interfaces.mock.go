@@ -41,34 +41,6 @@ func (m *MockRepository) EXPECT() *MockRepositoryMockRecorder {
 	return m.recorder
 }
 
-// Create mocks base method.
-func (m *MockRepository) Create(ctx context.Context, cash *cash.Cash) error {
-	m.ctrl.T.Helper()
-	ret := m.ctrl.Call(m, "Create", ctx, cash)
-	ret0, _ := ret[0].(error)
-	return ret0
-}
-
-// Create indicates an expected call of Create.
-func (mr *MockRepositoryMockRecorder) Create(ctx, cash any) *gomock.Call {
-	mr.mock.ctrl.T.Helper()
-	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "Create", reflect.TypeOf((*MockRepository)(nil).Create), ctx, cash)
-}
-
-// Delete mocks base method.
-func (m *MockRepository) Delete(ctx context.Context, id int) error {
-	m.ctrl.T.Helper()
-	ret := m.ctrl.Call(m, "Delete", ctx, id)
-	ret0, _ := ret[0].(error)
-	return ret0
-}
-
-// Delete indicates an expected call of Delete.
-func (mr *MockRepositoryMockRecorder) Delete(ctx, id any) *gomock.Call {
-	mr.mock.ctrl.T.Helper()
-	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "Delete", reflect.TypeOf((*MockRepository)(nil).Delete), ctx, id)
-}
-
 // FindByID mocks base method.
 func (m *MockRepository) FindByID(ctx context.Context, id int) (*cash.Cash, error) {
 	m.ctrl.T.Helper()
@@ -82,21 +54,6 @@ func (m *MockRepository) FindByID(ctx context.Context, id int) (*cash.Cash, erro
 func (mr *MockRepositoryMockRecorder) FindByID(ctx, id any) *gomock.Call {
 	mr.mock.ctrl.T.Helper()
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "FindByID", reflect.TypeOf((*MockRepository)(nil).FindByID), ctx, id)
-}
-
-// List mocks base method.
-func (m *MockRepository) List(ctx context.Context) (cash.Cashes, error) {
-	m.ctrl.T.Helper()
-	ret := m.ctrl.Call(m, "List", ctx)
-	ret0, _ := ret[0].(cash.Cashes)
-	ret1, _ := ret[1].(error)
-	return ret0, ret1
-}
-
-// List indicates an expected call of List.
-func (mr *MockRepositoryMockRecorder) List(ctx any) *gomock.Call {
-	mr.mock.ctrl.T.Helper()
-	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "List", reflect.TypeOf((*MockRepository)(nil).List), ctx)
 }
 
 // NameExists mocks base method.
@@ -152,35 +109,6 @@ func (m *MockService) EXPECT() *MockServiceMockRecorder {
 	return m.recorder
 }
 
-// Create mocks base method.
-func (m *MockService) Create(ctx context.Context, request cash.CreateRequest) (*cash.Cash, error) {
-	m.ctrl.T.Helper()
-	ret := m.ctrl.Call(m, "Create", ctx, request)
-	ret0, _ := ret[0].(*cash.Cash)
-	ret1, _ := ret[1].(error)
-	return ret0, ret1
-}
-
-// Create indicates an expected call of Create.
-func (mr *MockServiceMockRecorder) Create(ctx, request any) *gomock.Call {
-	mr.mock.ctrl.T.Helper()
-	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "Create", reflect.TypeOf((*MockService)(nil).Create), ctx, request)
-}
-
-// Delete mocks base method.
-func (m *MockService) Delete(ctx context.Context, id string) error {
-	m.ctrl.T.Helper()
-	ret := m.ctrl.Call(m, "Delete", ctx, id)
-	ret0, _ := ret[0].(error)
-	return ret0
-}
-
-// Delete indicates an expected call of Delete.
-func (mr *MockServiceMockRecorder) Delete(ctx, id any) *gomock.Call {
-	mr.mock.ctrl.T.Helper()
-	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "Delete", reflect.TypeOf((*MockService)(nil).Delete), ctx, id)
-}
-
 // Edit mocks base method.
 func (m *MockService) Edit(ctx context.Context, id string) (*cash.Cash, error) {
 	m.ctrl.T.Helper()
@@ -194,21 +122,6 @@ func (m *MockService) Edit(ctx context.Context, id string) (*cash.Cash, error) {
 func (mr *MockServiceMockRecorder) Edit(ctx, id any) *gomock.Call {
 	mr.mock.ctrl.T.Helper()
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "Edit", reflect.TypeOf((*MockService)(nil).Edit), ctx, id)
-}
-
-// List mocks base method.
-func (m *MockService) List(ctx context.Context) (cash.Cashes, error) {
-	m.ctrl.T.Helper()
-	ret := m.ctrl.Call(m, "List", ctx)
-	ret0, _ := ret[0].(cash.Cashes)
-	ret1, _ := ret[1].(error)
-	return ret0, ret1
-}
-
-// List indicates an expected call of List.
-func (mr *MockServiceMockRecorder) List(ctx any) *gomock.Call {
-	mr.mock.ctrl.T.Helper()
-	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "List", reflect.TypeOf((*MockService)(nil).List), ctx)
 }
 
 // Update mocks base method.
