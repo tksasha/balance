@@ -3,7 +3,6 @@ package component
 import (
 	"net/url"
 	"strconv"
-	"time"
 
 	. "maragu.dev/gomponents" //nolint:stylecheck
 	htmx "maragu.dev/gomponents-htmx"
@@ -11,19 +10,11 @@ import (
 	. "maragu.dev/gomponents/html" //nolint:stylecheck
 )
 
-const yearFrom = 2015
-
 func (c *IndexComponent) Years(values url.Values) Node {
-	var years []int
-
-	for year := yearFrom; year <= time.Now().Year(); year++ {
-		years = append(years, year)
-	}
-
 	return Div(
 		ID("years"),
 		htmx.SwapOOB("true"),
-		Map(years, func(year int) Node {
+		Map(c.years, func(year int) Node {
 			return c.year(year, values)
 		}),
 	)

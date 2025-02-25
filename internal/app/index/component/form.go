@@ -5,7 +5,6 @@ import (
 
 	"github.com/tksasha/balance/internal/app/category"
 	"github.com/tksasha/balance/internal/app/item"
-	"github.com/tksasha/validator"
 	. "maragu.dev/gomponents"      //nolint:stylecheck
 	. "maragu.dev/gomponents/html" //nolint:stylecheck
 )
@@ -13,7 +12,6 @@ import (
 func (c *IndexComponent) form( //nolint:funlen
 	item *item.Item,
 	categories category.Categories,
-	errors validator.Errors,
 ) Node {
 	return Form(
 		Div(
@@ -34,7 +32,6 @@ func (c *IndexComponent) form( //nolint:funlen
 				Value(
 					c.Date(item.Date),
 				),
-				c.Errors("date", errors),
 			),
 		),
 		Div(
