@@ -24,14 +24,6 @@ func NewListCashesHandler(t *testing.T, cashService cash.Service) *handlers.List
 	return handlers.NewListHandler(cashService, cashComponent)
 }
 
-func NewNewCasheHandler(t *testing.T) *handlers.NewHandler {
-	t.Helper()
-
-	cashComponent := components.NewCashComponent()
-
-	return handlers.NewNewHandler(cashComponent)
-}
-
 func NewUpdateCashHandler(t *testing.T, cashService cash.Service) *handlers.UpdateHandler {
 	t.Helper()
 
