@@ -16,8 +16,7 @@ func (r *Repository) Update(ctx context.Context, cash *cash.Cash) error {
 		    formula = ?,
 		    sum = ?,
 		    name = ?,
-		    supercategory = ?,
-		    favorite = ?
+		    supercategory = ?
 		WHERE
 		    id = ?
 		    AND currency = ?
@@ -30,7 +29,6 @@ func (r *Repository) Update(ctx context.Context, cash *cash.Cash) error {
 		cash.Sum,
 		cash.Name,
 		cash.Supercategory,
-		cash.Favorite,
 		cash.ID,
 		currency,
 	)

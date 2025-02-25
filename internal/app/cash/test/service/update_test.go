@@ -161,68 +161,11 @@ func TestUpdate(t *testing.T) { //nolint:funlen
 		assert.Error(t, err, "name: already exists")
 	})
 
-	t.Run("returns error when supercategory is invalid", func(t *testing.T) {
-		request := cash.UpdateRequest{
-			ID:            "1540",
-			Formula:       "2+3",
-			Name:          "Bonds",
-			Supercategory: "abc",
-		}
-
-		cash := &cash.Cash{
-			ID: 1540,
-		}
-
-		cashRepository.
-			EXPECT().
-			FindByID(ctx, 1540).
-			Return(cash, nil)
-
-		cashRepository.
-			EXPECT().
-			NameExists(ctx, "Bonds", 1540).
-			Return(false, nil)
-
-		_, err := service.Update(ctx, request)
-
-		assert.Error(t, err, "supercategory: is invalid")
-	})
-
-	t.Run("returns error when favorite is invalid", func(t *testing.T) {
-		request := cash.UpdateRequest{
-			ID:            "1540",
-			Formula:       "2+3",
-			Name:          "Bonds",
-			Supercategory: "1548",
-			Favorite:      "abc",
-		}
-
-		cash := &cash.Cash{
-			ID: 1540,
-		}
-
-		cashRepository.
-			EXPECT().
-			FindByID(ctx, 1540).
-			Return(cash, nil)
-
-		cashRepository.
-			EXPECT().
-			NameExists(ctx, "Bonds", 1540).
-			Return(false, nil)
-
-		_, err := service.Update(ctx, request)
-
-		assert.Error(t, err, "favorite: is invalid")
-	})
-
 	t.Run("returns error when update failed", func(t *testing.T) {
 		request := cash.UpdateRequest{
-			ID:            "1540",
-			Formula:       "2+3",
-			Name:          "Bonds",
-			Supercategory: "1548",
-			Favorite:      "true",
+			ID:      "1540",
+			Formula: "2+3",
+			Name:    "Bonds",
 		}
 
 		cash := &cash.Cash{
@@ -251,11 +194,9 @@ func TestUpdate(t *testing.T) { //nolint:funlen
 
 	t.Run("returns updated cash when update succeeded", func(t *testing.T) {
 		request := cash.UpdateRequest{
-			ID:            "1540",
-			Formula:       "2+3",
-			Name:          "Bonds",
-			Supercategory: "1548",
-			Favorite:      "true",
+			ID:      "1540",
+			Formula: "2+3",
+			Name:    "Bonds",
 		}
 
 		cash := &cash.Cash{
@@ -287,7 +228,5 @@ func TestUpdate(t *testing.T) { //nolint:funlen
 		assert.Equal(t, res.Formula, "2+3")
 		assert.Equal(t, res.Sum, 5.0)
 		assert.Equal(t, res.Name, "Bonds")
-		assert.Equal(t, res.Supercategory, 1548)
-		assert.Equal(t, res.Favorite, true)
 	})
 }

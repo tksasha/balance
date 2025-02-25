@@ -32,10 +32,6 @@ func (s *Service) Update(ctx context.Context, request cash.UpdateRequest) (*cash
 		}
 	}
 
-	cash.Supercategory = validate.Integer("supercategory", request.Supercategory)
-
-	cash.Favorite = validate.Boolean("favorite", request.Favorite)
-
 	if validate.HasErrors() {
 		return cash, validate.Errors
 	}

@@ -1,8 +1,6 @@
 package cash
 
 import (
-	"database/sql"
-
 	"github.com/tksasha/balance/internal/common/currency"
 )
 
@@ -13,8 +11,6 @@ type Cash struct {
 	Sum           float64
 	Name          string
 	Supercategory int
-	Favorite      bool
-	DeletedAt     sql.NullTime
 }
 
 type Cashes []*Cash

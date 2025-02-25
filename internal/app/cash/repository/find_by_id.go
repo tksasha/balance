@@ -19,8 +19,7 @@ func (r *Repository) FindByID(ctx context.Context, id int) (*cash.Cash, error) {
 		    name,
 		    formula,
 		    sum,
-		    supercategory,
-		    favorite
+		    supercategory
 		FROM
 		    cashes
 		WHERE
@@ -40,7 +39,6 @@ func (r *Repository) FindByID(ctx context.Context, id int) (*cash.Cash, error) {
 		&cash.Formula,
 		&cash.Sum,
 		&cash.Supercategory,
-		&cash.Favorite,
 	); err != nil {
 		if errors.Is(err, sql.ErrNoRows) {
 			return nil, common.ErrRecordNotFound

@@ -55,11 +55,9 @@ func (h *UpdateHandler) handle(r *http.Request) (*cash.Cash, error) {
 	}
 
 	request := cash.UpdateRequest{
-		ID:            r.PathValue("id"),
-		Formula:       r.FormValue("formula"),
-		Name:          r.FormValue("name"),
-		Supercategory: r.FormValue("supercategory"),
-		Favorite:      r.FormValue("favorite"),
+		ID:      r.PathValue("id"),
+		Formula: r.FormValue("formula"),
+		Name:    r.FormValue("name"),
 	}
 
 	return h.cashService.Update(r.Context(), request)

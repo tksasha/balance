@@ -1,9 +1,7 @@
 package cash
 
 type UpdateRequest struct {
-	ID            string
-	Formula       string
-	Name          string
-	Supercategory string
-	Favorite      string
+	ID      string
+	Formula string
+	Name    string
 }

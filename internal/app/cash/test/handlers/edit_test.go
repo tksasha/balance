@@ -1,29 +1,41 @@
 package handlers_test
 
 import (
+	"database/sql"
+	"io"
 	"net/http"
 	"net/http/httptest"
 	"strings"
 	"testing"
 
 	"github.com/tksasha/balance/internal/app/cash"
+	"github.com/tksasha/balance/internal/app/cash/components"
+	"github.com/tksasha/balance/internal/app/cash/handlers"
+	"github.com/tksasha/balance/internal/app/cash/repository"
+	"github.com/tksasha/balance/internal/app/cash/service"
 	"github.com/tksasha/balance/internal/common/currency"
-	"github.com/tksasha/balance/internal/common/tests"
+	"github.com/tksasha/balance/internal/db"
+	"github.com/tksasha/balance/internal/db/nameprovider"
 	"gotest.tools/v3/assert"
 )
 
-func TestCashEditHandler(t *testing.T) {
-	ctx := t.Context()
-
-	service, db := tests.NewCashService(ctx, t)
+func TestCashEditHandler(t *testing.T) { //nolint:funlen
+	handler, db := newEditHandler(t)
 	defer func() {
-		_ = db.Close()
+		if err := db.Close(); err != nil {
+			t.Fatal(err)
+		}
 	}()
 
-	mux := tests.NewMux(t, "GET /cashes/{id}/edit", tests.NewEditCashHandler(t, service))
+	mux := mux(t, "GET /cashes/{id}/edit", handler)
+
+	ctx := t.Context()
 
 	t.Run("renders 404 on invalid id", func(t *testing.T) {
-		request := tests.NewGetRequest(ctx, t, "/cashes/abc/edit")
+		request, err := http.NewRequestWithContext(ctx, http.MethodGet, "/cashes/abc/edit", nil)
+		if err != nil {
+			t.Fatal(err)
+		}
 
 		recorder := httptest.NewRecorder()
 
@@ -33,9 +45,10 @@ func TestCashEditHandler(t *testing.T) {
 	})
 
 	t.Run("renders 404 on not found", func(t *testing.T) {
-		tests.Cleanup(ctx, t)
-
-		request := tests.NewGetRequest(ctx, t, "/cashes/1255/edit")
+		request, err := http.NewRequestWithContext(ctx, http.MethodGet, "/cashes/1255/edit", nil)
+		if err != nil {
+			t.Fatal(err)
+		}
 
 		recorder := httptest.NewRecorder()
 
@@ -45,21 +58,23 @@ func TestCashEditHandler(t *testing.T) {
 	})
 
 	t.Run("renders form on success", func(t *testing.T) {
-		tests.Cleanup(ctx, t)
+		cleanup(t, db)
 
-		cash := &cash.Cash{
+		cashToCreate := &cash.Cash{
 			ID:            1300,
 			Currency:      currency.EUR,
 			Formula:       "2+3",
 			Sum:           5,
 			Name:          "Bonds",
 			Supercategory: 6,
-			Favorite:      true,
 		}
 
-		tests.CreateCash(ctx, t, cash)
+		createCash(t, db, cashToCreate)
 
-		request := tests.NewGetRequest(ctx, t, "/cashes/1300/edit?currency=eur")
+		request, err := http.NewRequestWithContext(ctx, http.MethodGet, "/cashes/1300/edit?currency=eur", nil)
+		if err != nil {
+			t.Fatal(err)
+		}
 
 		recorder := httptest.NewRecorder()
 
@@ -67,9 +82,30 @@ func TestCashEditHandler(t *testing.T) {
 
 		assert.Equal(t, recorder.Code, http.StatusOK)
 
-		body := tests.GetResponseBody(t, recorder.Body)
+		response, err := io.ReadAll(recorder.Body)
+		if err != nil {
+			t.Fatal(err)
+		}
+
+		body := string(response)
 
 		assert.Assert(t, strings.Contains(body, "Bonds"))
 		assert.Assert(t, strings.Contains(body, "2+3"))
 	})
+}
+
+func newEditHandler(t *testing.T) (*handlers.EditHandler, *sql.DB) {
+	t.Helper()
+
+	db := db.Open(t.Context(), nameprovider.NewTestProvider())
+
+	cashRepository := repository.New(db)
+
+	cashService := service.New(cashRepository)
+
+	cashComponent := components.NewCashComponent()
+
+	handler := handlers.NewEditHandler(cashService, cashComponent)
+
+	return handler, db
 }
