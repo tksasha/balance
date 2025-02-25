@@ -28,7 +28,8 @@ func cleanup(t *testing.T, db *sql.DB) {
 	t.Helper()
 
 	t.Cleanup(func() {
-		if _, err := db.Exec(`DELETE FROM categories`); err != nil {
+		_, err := db.Exec(`DELETE FROM items; DELETE FROM categories;`)
+		if err != nil {
 			t.Fatal(err)
 		}
 	})

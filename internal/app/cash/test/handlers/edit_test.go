@@ -5,7 +5,6 @@ import (
 	"io"
 	"net/http"
 	"net/http/httptest"
-	"strings"
 	"testing"
 
 	"github.com/tksasha/balance/internal/app/cash"
@@ -17,6 +16,7 @@ import (
 	"github.com/tksasha/balance/internal/db"
 	"github.com/tksasha/balance/internal/db/nameprovider"
 	"gotest.tools/v3/assert"
+	"gotest.tools/v3/golden"
 )
 
 func TestCashEditHandler(t *testing.T) { //nolint:funlen
@@ -87,10 +87,7 @@ func TestCashEditHandler(t *testing.T) { //nolint:funlen
 			t.Fatal(err)
 		}
 
-		body := string(response)
-
-		assert.Assert(t, strings.Contains(body, "Bonds"))
-		assert.Assert(t, strings.Contains(body, "2+3"))
+		golden.Assert(t, string(response), "edit.html")
 	})
 }
 

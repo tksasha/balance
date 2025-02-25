@@ -80,9 +80,9 @@ func TestCategoryUpdateHandler(t *testing.T) { //nolint:funlen
 			createCategory(t, db, categoryToCreate)
 		}
 
-		formData := url.Values{"name": {"Paraphernalia"}}
+		values := url.Values{"name": {"Paraphernalia"}}
 
-		body := strings.NewReader(formData.Encode())
+		body := strings.NewReader(values.Encode())
 
 		request, err := http.NewRequestWithContext(
 			ctx,

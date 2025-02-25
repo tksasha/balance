@@ -46,7 +46,7 @@ func cleanup(t *testing.T, db *sql.DB) {
 	queries := []string{`DELETE FROM items`, `DELETE FROM categories`}
 
 	for _, query := range queries {
-		if _, err := db.ExecContext(t.Context(), query); err != nil {
+		if _, err := db.Exec(query); err != nil {
 			t.Fatal(err)
 		}
 	}
