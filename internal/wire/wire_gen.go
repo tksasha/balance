@@ -8,17 +8,17 @@ package wire
 
 import (
 	"context"
-	components2 "github.com/tksasha/balance/internal/app/cash/components"
+	component3 "github.com/tksasha/balance/internal/app/cash/component"
 	handlers3 "github.com/tksasha/balance/internal/app/cash/handlers"
 	repository3 "github.com/tksasha/balance/internal/app/cash/repository"
 	service3 "github.com/tksasha/balance/internal/app/cash/service"
 	repository5 "github.com/tksasha/balance/internal/app/category/repository"
 	service5 "github.com/tksasha/balance/internal/app/category/service"
-	components3 "github.com/tksasha/balance/internal/app/index/components"
+	components2 "github.com/tksasha/balance/internal/app/index/components"
 	"github.com/tksasha/balance/internal/app/index/handler"
 	repository4 "github.com/tksasha/balance/internal/app/index/repository"
 	service4 "github.com/tksasha/balance/internal/app/index/service"
-	components4 "github.com/tksasha/balance/internal/app/item/components"
+	components3 "github.com/tksasha/balance/internal/app/item/components"
 	handlers4 "github.com/tksasha/balance/internal/app/item/handlers"
 	repository6 "github.com/tksasha/balance/internal/app/item/repository"
 	service6 "github.com/tksasha/balance/internal/app/item/service"
@@ -66,20 +66,20 @@ func InitializeServer() *server.Server {
 	handlersUpdateHandler := handlers2.NewUpdateHandler(service7, categoryComponent)
 	repository8 := repository3.New(sqlDB)
 	service8 := service3.New(repository8)
-	componentsCashComponent := components2.NewCashComponent()
-	editHandler2 := handlers3.NewEditHandler(service8, componentsCashComponent)
-	updateHandler2 := handlers3.NewUpdateHandler(service8, componentsCashComponent)
+	componentCashComponent := component3.NewCashComponent()
+	editHandler2 := handlers3.NewEditHandler(service8, componentCashComponent)
+	updateHandler2 := handlers3.NewUpdateHandler(service8, componentCashComponent)
 	repository9 := repository4.New(sqlDB)
 	service9 := service4.New(repository9)
 	repository10 := repository5.New(sqlDB)
 	service10 := service5.New(repository10)
-	monthsComponent := components3.NewMonthsComponent()
-	yearsComponent := components3.NewYearsComponent()
-	indexComponent := components3.NewIndexComponent(monthsComponent, yearsComponent)
+	monthsComponent := components2.NewMonthsComponent()
+	yearsComponent := components2.NewYearsComponent()
+	indexComponent := components2.NewIndexComponent(monthsComponent, yearsComponent)
 	handlerHandler := handler.New(service9, service10, indexComponent)
 	repository11 := repository6.New(sqlDB)
 	service11 := service6.New(repository11, repository10)
-	itemsComponent := components4.NewItemsComponent()
+	itemsComponent := components3.NewItemsComponent()
 	createHandler2 := handlers4.NewCreateHandler(service11, service10, itemsComponent)
 	editHandler3 := handlers4.NewEditHandler(service11, service10, itemsComponent)
 	listHandler2 := handlers4.NewListHandler(service11, itemsComponent, monthsComponent, yearsComponent)

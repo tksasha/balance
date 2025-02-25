@@ -5,7 +5,7 @@ import (
 	"net/http"
 
 	"github.com/tksasha/balance/internal/app/cash"
-	"github.com/tksasha/balance/internal/app/cash/components"
+	"github.com/tksasha/balance/internal/app/cash/component"
 	"github.com/tksasha/balance/internal/common"
 	"github.com/tksasha/balance/internal/common/handler"
 	"github.com/tksasha/validator"
@@ -15,12 +15,12 @@ type UpdateHandler struct {
 	*handler.Handler
 
 	cashService   cash.Service
-	cashComponent *components.CashComponent
+	cashComponent *component.CashComponent
 }
 
 func NewUpdateHandler(
 	cashService cash.Service,
-	cashComponent *components.CashComponent,
+	cashComponent *component.CashComponent,
 ) *UpdateHandler {
 	return &UpdateHandler{
 		Handler:       handler.New(),

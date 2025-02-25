@@ -4,7 +4,7 @@ import (
 	"net/http"
 
 	"github.com/tksasha/balance/internal/app/cash"
-	"github.com/tksasha/balance/internal/app/cash/components"
+	"github.com/tksasha/balance/internal/app/cash/component"
 	"github.com/tksasha/balance/internal/common/handler"
 )
 
@@ -12,12 +12,12 @@ type EditHandler struct {
 	*handler.Handler
 
 	cashService   cash.Service
-	cashComponent *components.CashComponent
+	cashComponent *component.CashComponent
 }
 
 func NewEditHandler(
 	cashService cash.Service,
-	cashComponent *components.CashComponent,
+	cashComponent *component.CashComponent,
 ) *EditHandler {
 	return &EditHandler{
 		Handler:       handler.New(),
