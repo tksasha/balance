@@ -45,7 +45,7 @@ func (s *Service) nameAlreadyExists(
 	}
 
 	if category.ID != categoryID {
-		validator.Set("name", service.AlreadyExists)
+		validator.Set("name", common.AlreadyExists)
 	}
 
 	return nil

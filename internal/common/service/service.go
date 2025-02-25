@@ -6,8 +6,6 @@ import (
 	"github.com/tksasha/balance/internal/common"
 )
 
-const AlreadyExists = "already exists"
-
 type Service struct{}
 
 func New() *Service {
