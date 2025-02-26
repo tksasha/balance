@@ -15,8 +15,8 @@ github.com/tksasha/calculator v0.0.8 h1:5KFmV0E6IEIY/gQjC9oLO8ASjNgvhZ+KLoHfkRBW
 github.com/tksasha/calculator v0.0.8/go.mod h1:dmh0Gmk/gu/S3qsVr06wOUZQI5WcPwQVYNdhDke4/kY=
 github.com/tksasha/month v0.0.7 h1:PA/Dp/WoUyYoy2IxI0tRdrHeywsjAMBDsPgoRWU87rs=
 github.com/tksasha/month v0.0.7/go.mod h1:nbE6O9dHsYZL8TLLSdRq61hYo+FBCL+ePc6Hn5S3bz4=
-github.com/tksasha/validator v0.0.1 h1:RWsbz5cii8GzVyBUxLognfrHks1kAoSoSgdaOrW5FuI=
-github.com/tksasha/validator v0.0.1/go.mod h1:/YbJH42Uoi3FDoIvX0wUBMh2XZ5avuPj8KNlHS/3scM=
+github.com/tksasha/validator v0.0.3 h1:uIhnNLzXEmjsAPWSz+06U21F33URejEA13CeQNNShrs=
+github.com/tksasha/validator v0.0.3/go.mod h1:/YbJH42Uoi3FDoIvX0wUBMh2XZ5avuPj8KNlHS/3scM=
 github.com/tksasha/xstrings v0.0.4 h1:HnjqEHyFa9N8dHGmddSi3U1L0NcJUI1R9fwUfwkrTIs=
 github.com/tksasha/xstrings v0.0.4/go.mod h1:217iIw2FzncxVqDdKPNkPl51IgUESFom1XuyD6cEtpw=
 github.com/yuin/goldmark v1.4.13/go.mod h1:6yULJ656Px+3vBD8DxQVa3kxgyrAnzto9xy5taEt/CY=
