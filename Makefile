@@ -33,7 +33,7 @@ lint:
 .PHONY: test
 test:
 	@echo "go test"
-	@go test ./...
+	@go test ./... -count=1
 
 .PHONY: air
 air:
