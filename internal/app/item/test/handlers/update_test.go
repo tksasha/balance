@@ -110,7 +110,7 @@ func TestItemUpdateHandler(t *testing.T) { //nolint:funlen
 			t.Fatal(err)
 		}
 
-		golden.Assert(t, string(response), "edit-with-errors.html")
+		golden.Assert(t, string(response), "update-with-errors.html")
 	})
 
 	t.Run("renders updated item if it is valid", func(t *testing.T) {
