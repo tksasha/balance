@@ -11,7 +11,9 @@ import (
 )
 
 func (c *Component) Form(item *item.Item, errors validator.Errors) Node {
-	return Form()
+	return Form(
+		c.Date(item.Date, errors.Get("date")),
+	)
 }
 
 func (c *Component) Date(date time.Time, message *string) Node {
