@@ -35,6 +35,7 @@ func (c *CashComponent) form(cash *cash.Cash, errors validator.Errors) Node {
 				ID("cash_id"),
 				Value(cash.Formula),
 			),
+			c.Errors("sum", errors),
 		),
 		Button(
 			Type("submit"),

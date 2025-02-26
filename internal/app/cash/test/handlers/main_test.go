@@ -6,6 +6,7 @@ import (
 	"testing"
 
 	"github.com/tksasha/balance/internal/app/cash"
+	"github.com/tksasha/balance/internal/common/currency"
 	"github.com/tksasha/balance/internal/server/middlewares"
 )
 
@@ -62,4 +63,38 @@ func createCash(t *testing.T, db *sql.DB, cash *cash.Cash) {
 	); err != nil {
 		t.Fatalf("failed to create cash: %v", err)
 	}
+}
+
+func findCashByID(t *testing.T, db *sql.DB, currency currency.Currency, id int) *cash.Cash {
+	t.Helper()
+
+	query := `
+		SELECT
+			id,
+			currency,
+			formula,
+			sum,
+			name,
+			supercategory
+		FROM
+			cashes
+		WHERE
+			id = ?
+			AND currency = ?
+	`
+
+	cash := &cash.Cash{}
+
+	if err := db.QueryRowContext(t.Context(), query, id, currency).Scan(
+		&cash.ID,
+		&cash.Currency,
+		&cash.Formula,
+		&cash.Sum,
+		&cash.Name,
+		&cash.Supercategory,
+	); err != nil {
+		t.Fatal(err)
+	}
+
+	return cash
 }

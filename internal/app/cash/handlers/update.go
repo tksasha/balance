@@ -32,14 +32,16 @@ func NewUpdateHandler(
 func (h *UpdateHandler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 	cash, err := h.handle(r)
 	if err == nil {
-		w.WriteHeader(http.StatusNoContent)
+		err := h.cashComponent.Update(cash).Render(w)
+
+		h.SetError(w, err)
 
 		return
 	}
 
 	var verrors validator.Errors
 	if errors.As(err, &verrors) {
-		err := h.cashComponent.Update(cash, verrors).Render(w)
+		err := h.cashComponent.Edit(cash, verrors).Render(w)
 
 		h.SetError(w, err)
 

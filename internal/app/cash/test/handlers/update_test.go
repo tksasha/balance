@@ -18,6 +18,7 @@ import (
 	"github.com/tksasha/balance/internal/db"
 	"github.com/tksasha/balance/internal/db/nameprovider"
 	"gotest.tools/v3/assert"
+	"gotest.tools/v3/golden"
 )
 
 func TestCashUpdateHandler(t *testing.T) { //nolint:funlen
@@ -35,12 +36,9 @@ func TestCashUpdateHandler(t *testing.T) { //nolint:funlen
 	t.Run("renders 404 when cash not found", func(t *testing.T) {
 		values := url.Values{}
 
-		request, err := http.NewRequestWithContext(
-			ctx,
-			http.MethodPatch,
-			"/cashes/1439",
-			strings.NewReader(values.Encode()),
-		)
+		body := strings.NewReader(values.Encode())
+
+		request, err := http.NewRequestWithContext(ctx, http.MethodPatch, "/cashes/1439", body)
 		if err != nil {
 			t.Fatal(err)
 		}
@@ -75,16 +73,11 @@ func TestCashUpdateHandler(t *testing.T) { //nolint:funlen
 
 		createCash(t, db, cashToCreate)
 
-		values := url.Values{
-			"name": {""},
-		}
+		values := url.Values{}
 
-		request, err := http.NewRequestWithContext(
-			ctx,
-			http.MethodPatch,
-			"/cashes/1418?currency=usd",
-			strings.NewReader(values.Encode()),
-		)
+		body := strings.NewReader(values.Encode())
+
+		request, err := http.NewRequestWithContext(ctx, http.MethodPatch, "/cashes/1418?currency=usd", body)
 		if err != nil {
 			t.Fatal(err)
 		}
@@ -102,12 +95,10 @@ func TestCashUpdateHandler(t *testing.T) { //nolint:funlen
 			t.Fatal(err)
 		}
 
-		body := string(response)
-
-		assert.Assert(t, strings.Contains(body, "name: is required"))
+		golden.Assert(t, string(response), "edit-with-errors.html")
 	})
 
-	t.Run("renders 204 when cash updated", func(t *testing.T) {
+	t.Run("renders updated cash when it updates", func(t *testing.T) {
 		cleanup(t, db)
 
 		cashToCreate := &cash.Cash{
@@ -122,18 +113,13 @@ func TestCashUpdateHandler(t *testing.T) { //nolint:funlen
 		createCash(t, db, cashToCreate)
 
 		values := url.Values{
-			"formula":       {"3+4"},
-			"name":          {"Stocks"},
-			"supercategory": {"3"},
-			"favorite":      {"true"},
+			"formula": {"3+4"},
+			"name":    {"Stocks"},
 		}
 
-		request, err := http.NewRequestWithContext(
-			ctx,
-			http.MethodPatch,
-			"/cashes/1442",
-			strings.NewReader(values.Encode()),
-		)
+		body := strings.NewReader(values.Encode())
+
+		request, err := http.NewRequestWithContext(ctx, http.MethodPatch, "/cashes/1442", body)
 		if err != nil {
 			t.Fatal(err)
 		}
@@ -144,7 +130,22 @@ func TestCashUpdateHandler(t *testing.T) { //nolint:funlen
 
 		mux.ServeHTTP(recorder, request)
 
-		assert.Equal(t, recorder.Code, http.StatusNoContent)
+		assert.Equal(t, recorder.Code, http.StatusOK)
+
+		response, err := io.ReadAll(recorder.Body)
+		if err != nil {
+			t.Fatal(err)
+		}
+
+		golden.Assert(t, string(response), "update.html")
+
+		cash := findCashByID(t, db, currency.UAH, 1442)
+
+		assert.Equal(t, cash.ID, 1442)
+		assert.Equal(t, cash.Currency, currency.UAH)
+		assert.Equal(t, cash.Formula, "3+4")
+		assert.Equal(t, cash.Sum, 7.0)
+		assert.Equal(t, cash.Supercategory, 2)
 	})
 }
 

@@ -35,6 +35,10 @@ test:
 	@echo "go test"
 	@go test ./... -count=1
 
+.PHONY: update
+update:
+	@go test ./... -update
+
 .PHONY: air
 air:
 	@echo "go air"

@@ -34,7 +34,7 @@ func (h *EditHandler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	err = h.cashComponent.Edit(cash).Render(w)
+	err = h.cashComponent.Edit(cash, nil).Render(w)
 
 	h.SetError(w, err)
 }
