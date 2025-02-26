@@ -18,7 +18,7 @@ import (
 	"gotest.tools/v3/assert"
 )
 
-func TestDeleteItemHandler(t *testing.T) { //nolint:dupl
+func TestDeleteItemHandler(t *testing.T) {
 	handler, db := newDeleteHandler(t)
 	defer func() {
 		if err := db.Close(); err != nil {

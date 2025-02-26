@@ -17,13 +17,15 @@ func (c *ItemsComponent) form(item *item.Item, categories category.Categories, e
 			c.Errors("date", errors),
 		),
 		Div(
-			Label(
-				Text("Sum"),
-			),
+			Label(Text("Sum")),
 			Input(
 				Value(c.sum(item.Sum)),
 				c.Errors("sum", errors),
 			),
+		),
+		Div(
+			Label(Text("Категорія")),
+			c.Errors("category", errors),
 		),
 		Div(
 			Input(Value(item.Description)),
