@@ -35,7 +35,9 @@ func NewCreateHandler(
 func (h *CreateHandler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 	item, err := h.handle(r)
 	if err == nil {
-		w.WriteHeader(http.StatusNoContent)
+		err = h.itemsComponent.Create(item).Render(w)
+
+		h.SetError(w, err)
 
 		return
 	}
@@ -49,7 +51,7 @@ func (h *CreateHandler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 			return
 		}
 
-		err = h.itemsComponent.Create(item, categories, verrors).Render(w)
+		err = h.itemsComponent.Edit(item, categories, verrors).Render(w)
 
 		h.SetError(w, err)
 

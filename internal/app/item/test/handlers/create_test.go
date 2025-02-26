@@ -2,6 +2,7 @@ package handlers_test
 
 import (
 	"database/sql"
+	"io"
 	"net/http"
 	"net/http/httptest"
 	"net/url"
@@ -20,6 +21,7 @@ import (
 	"github.com/tksasha/balance/internal/db"
 	"github.com/tksasha/balance/internal/db/nameprovider"
 	"gotest.tools/v3/assert"
+	"gotest.tools/v3/golden"
 )
 
 func TestItemCreateHandler(t *testing.T) { //nolint:funlen
@@ -47,12 +49,12 @@ func TestItemCreateHandler(t *testing.T) { //nolint:funlen
 		assert.Equal(t, http.StatusBadRequest, recorder.Code)
 	})
 
-	t.Run("renders errors on invalid input", func(t *testing.T) {
-		cleanup(t, db)
-
+	t.Run("renders edit with errors when input is invalid", func(t *testing.T) {
 		values := url.Values{"date": {""}}
 
-		request, err := http.NewRequestWithContext(ctx, http.MethodPost, "/items", strings.NewReader(values.Encode()))
+		body := strings.NewReader(values.Encode())
+
+		request, err := http.NewRequestWithContext(ctx, http.MethodPost, "/items", body)
 		if err != nil {
 			t.Fatal(err)
 		}
@@ -62,9 +64,16 @@ func TestItemCreateHandler(t *testing.T) { //nolint:funlen
 		mux.ServeHTTP(recorder, request)
 
 		assert.Equal(t, http.StatusOK, recorder.Code)
+
+		response, err := io.ReadAll(recorder.Body)
+		if err != nil {
+			t.Fatal(err)
+		}
+
+		golden.Assert(t, string(response), "create-with-errors.html")
 	})
 
-	t.Run("responds 204 when item created", func(t *testing.T) {
+	t.Run("renders created item", func(t *testing.T) {
 		cleanup(t, db)
 
 		categoryToCreate := &category.Category{
@@ -82,12 +91,9 @@ func TestItemCreateHandler(t *testing.T) { //nolint:funlen
 			"description": {"paper clips, notebooks, and pens"},
 		}
 
-		request, err := http.NewRequestWithContext(
-			ctx,
-			http.MethodPost,
-			"/items?currency=usd",
-			strings.NewReader(values.Encode()),
-		)
+		body := strings.NewReader(values.Encode())
+
+		request, err := http.NewRequestWithContext(ctx, http.MethodPost, "/items?currency=usd", body)
 		if err != nil {
 			t.Fatal(err)
 		}
@@ -98,16 +104,23 @@ func TestItemCreateHandler(t *testing.T) { //nolint:funlen
 
 		mux.ServeHTTP(recorder, request)
 
-		assert.Equal(t, recorder.Code, http.StatusNoContent)
+		assert.Equal(t, recorder.Code, http.StatusOK)
+
+		response, err := io.ReadAll(recorder.Body)
+		if err != nil {
+			t.Fatal(err)
+		}
+
+		golden.Assert(t, string(response), "create.html")
 
 		item := findItemByDate(t, db, currency.USD, "2024-10-16")
 
-		assert.Equal(t, item.Date.Format(time.DateOnly), "2024-10-16")
-		assert.Equal(t, item.CategoryID, 1101)
-		assert.Equal(t, item.CategoryName.String, "Accoutrements")
 		assert.Equal(t, item.Currency, currency.USD)
+		assert.Equal(t, item.Date.Format(time.DateOnly), "2024-10-16")
 		assert.Equal(t, item.Formula, "42.69+69.42")
 		assert.Equal(t, item.Sum, 112.11)
+		assert.Equal(t, item.CategoryID, 1101)
+		assert.Equal(t, item.CategoryName.String, "Accoutrements")
 		assert.Equal(t, item.Description, "paper clips, notebooks, and pens")
 	})
 }

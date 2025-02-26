@@ -28,5 +28,10 @@ func (c *ItemsComponent) form(item *item.Item, categories category.Categories, e
 		Div(
 			Input(Value(item.Description)),
 		),
+		Button(
+			Type("submit"),
+			If(item.ID == 0, Text("Створити")),
+			If(item.ID != 0, Text("Оновити")),
+		),
 	)
 }
