@@ -2,11 +2,13 @@ package handlers_test
 
 import (
 	"database/sql"
+	"io"
 	"net/http"
 	"net/http/httptest"
 	"net/url"
 	"strings"
 	"testing"
+	"time"
 
 	"github.com/tksasha/balance/internal/app/category"
 	categoryrepository "github.com/tksasha/balance/internal/app/category/repository"
@@ -20,6 +22,7 @@ import (
 	"github.com/tksasha/balance/internal/db"
 	"github.com/tksasha/balance/internal/db/nameprovider"
 	"gotest.tools/v3/assert"
+	"gotest.tools/v3/golden"
 )
 
 func TestItemUpdateHandler(t *testing.T) { //nolint:funlen
@@ -50,16 +53,11 @@ func TestItemUpdateHandler(t *testing.T) { //nolint:funlen
 	})
 
 	t.Run("responds 404 on no item found", func(t *testing.T) {
-		cleanup(t, db)
+		values := url.Values{}
 
-		values := url.Values{"date": {"2025-01-25"}}
+		body := strings.NewReader(values.Encode())
 
-		request, err := http.NewRequestWithContext(
-			ctx,
-			http.MethodPatch,
-			"/items/1218",
-			strings.NewReader(values.Encode()),
-		)
+		request, err := http.NewRequestWithContext(ctx, http.MethodPatch, "/items/1218", body)
 		if err != nil {
 			t.Fatal(err)
 		}
@@ -71,7 +69,51 @@ func TestItemUpdateHandler(t *testing.T) { //nolint:funlen
 		assert.Equal(t, recorder.Code, http.StatusNotFound)
 	})
 
-	t.Run("responds 204 on successful update", func(t *testing.T) {
+	t.Run("renders edit with errors when input is invalid", func(t *testing.T) {
+		cleanup(t, db)
+
+		categoryToCreate := &category.Category{
+			ID:       1157,
+			Currency: currency.UAH,
+			Name:     "Food",
+		}
+
+		createCategory(t, db, categoryToCreate)
+
+		itemToCreate := &item.Item{
+			ID:         1158,
+			Currency:   currency.UAH,
+			CategoryID: 1157,
+		}
+
+		createItem(t, db, itemToCreate)
+
+		values := url.Values{}
+
+		body := strings.NewReader(values.Encode())
+
+		request, err := http.NewRequestWithContext(ctx, http.MethodPatch, "/items/1158", body)
+		if err != nil {
+			t.Fatal(err)
+		}
+
+		request.Header.Add("Content-Type", "application/x-www-form-urlencoded")
+
+		recorder := httptest.NewRecorder()
+
+		mux.ServeHTTP(recorder, request)
+
+		assert.Equal(t, recorder.Code, http.StatusOK)
+
+		response, err := io.ReadAll(recorder.Body)
+		if err != nil {
+			t.Fatal(err)
+		}
+
+		golden.Assert(t, string(response), "edit-with-errors.html")
+	})
+
+	t.Run("renders updated item if it is valid", func(t *testing.T) {
 		cleanup(t, db)
 
 		categoryToCreate := &category.Category{
@@ -97,12 +139,9 @@ func TestItemUpdateHandler(t *testing.T) { //nolint:funlen
 			"description": {"pizza, ninja and disco"},
 		}
 
-		request, err := http.NewRequestWithContext(
-			ctx,
-			http.MethodPatch,
-			"/items/1143?currency=eur",
-			strings.NewReader(values.Encode()),
-		)
+		body := strings.NewReader(values.Encode())
+
+		request, err := http.NewRequestWithContext(ctx, http.MethodPatch, "/items/1143?currency=eur", body)
 		if err != nil {
 			t.Fatal(err)
 		}
@@ -113,11 +152,25 @@ func TestItemUpdateHandler(t *testing.T) { //nolint:funlen
 
 		mux.ServeHTTP(recorder, request)
 
-		assert.Equal(t, recorder.Code, http.StatusNoContent)
+		assert.Equal(t, recorder.Code, http.StatusOK)
+
+		response, err := io.ReadAll(recorder.Body)
+		if err != nil {
+			t.Fatal(err)
+		}
+
+		golden.Assert(t, string(response), "update.html")
 
 		item := findItemByDate(t, db, currency.EUR, "2025-01-25")
 
 		assert.Equal(t, item.ID, 1143)
+		assert.Equal(t, item.Currency, currency.EUR)
+		assert.Equal(t, item.Date, time.Date(2025, 1, 25, 0, 0, 0, 0, time.UTC))
+		assert.Equal(t, item.Formula, "24 + 11 + 49")
+		assert.Equal(t, item.Sum, 84.0)
+		assert.Equal(t, item.CategoryID, 1148)
+		assert.Equal(t, item.CategoryName.String, "Pharmaceutical")
+		assert.Equal(t, item.Description, "pizza, ninja and disco")
 	})
 }
 

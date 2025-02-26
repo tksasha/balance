@@ -27,30 +27,32 @@ func (c *ItemsComponent) List(items item.Items, months Node, years Node) Node {
 }
 
 func (c *ItemsComponent) item(item *item.Item) Node {
-	return Tr(
-		Td(
-			Class("items-date"),
-			Text(c.Date(item.Date)),
-		),
-		Td(
-			Class("items-sum"),
-			Div(
-				Class("text-primary"),
-				Text(c.Money(item.Sum)),
-				Style("cursor: pointer"),
-				htmx.Get(c.EditItem(item.ID)),
-				htmx.Target("#modal-body"),
-				htmx.Trigger("click"),
-				Data("bs-toggle", "modal"),
-				Data("bs-target", "#modal"),
+	return c.Template(
+		Tr(
+			Td(
+				Class("items-date"),
+				Text(c.Date(item.Date)),
 			),
-		),
-		Td(
-			Class("items-category"),
-			Text(item.CategoryName.String),
-		),
-		Td(
-			Raw(c.Description(item.Description)),
+			Td(
+				Class("items-sum"),
+				Div(
+					Class("text-primary"),
+					Text(c.Money(item.Sum)),
+					Style("cursor: pointer"),
+					htmx.Get(c.EditItem(item.ID)),
+					htmx.Target("#modal-body"),
+					htmx.Trigger("click"),
+					Data("bs-toggle", "modal"),
+					Data("bs-target", "#modal"),
+				),
+			),
+			Td(
+				Class("items-category"),
+				Text(item.CategoryName.String),
+			),
+			Td(
+				Raw(c.Description(item.Description)),
+			),
 		),
 	)
 }

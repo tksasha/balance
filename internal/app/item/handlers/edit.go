@@ -44,7 +44,7 @@ func (h *EditHandler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	err = h.itemsComponent.Edit(item, categories).Render(w)
+	err = h.itemsComponent.Edit(item, categories, nil).Render(w)
 
 	h.SetError(w, err)
 }

@@ -18,10 +18,8 @@ func (c *ItemsComponent) form(item *item.Item, categories category.Categories, e
 		),
 		Div(
 			Label(Text("Sum")),
-			Input(
-				Value(c.sum(item.Sum)),
-				c.Errors("sum", errors),
-			),
+			Input(Value(c.sum(item.Sum))),
+			c.Errors("sum", errors),
 		),
 		Div(
 			Label(Text("Категорія")),

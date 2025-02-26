@@ -43,12 +43,8 @@ func createCategory(t *testing.T, db *sql.DB, category *category.Category) {
 func cleanup(t *testing.T, db *sql.DB) {
 	t.Helper()
 
-	queries := []string{`DELETE FROM items`, `DELETE FROM categories`}
-
-	for _, query := range queries {
-		if _, err := db.Exec(query); err != nil {
-			t.Fatal(err)
-		}
+	if _, err := db.Exec(`DELETE FROM items; DELETE FROM categories`); err != nil {
+		t.Fatal(err)
 	}
 }
 

@@ -35,7 +35,9 @@ func NewUpdateHandler(
 func (h *UpdateHandler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 	item, err := h.handle(r)
 	if err == nil {
-		w.WriteHeader(http.StatusNoContent)
+		err := h.itemsComponent.Update(item).Render(w)
+
+		h.SetError(w, err)
 
 		return
 	}
@@ -49,7 +51,7 @@ func (h *UpdateHandler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 			return
 		}
 
-		err = h.itemsComponent.Update(item, categories, verrors).Render(w)
+		err = h.itemsComponent.Edit(item, categories, verrors).Render(w)
 
 		h.SetError(w, err)
 	}
