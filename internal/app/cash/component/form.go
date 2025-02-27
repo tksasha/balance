@@ -7,7 +7,7 @@ import (
 	. "maragu.dev/gomponents/html" //nolint:stylecheck
 )
 
-func (c *CashComponent) form(cash *cash.Cash, errors validation.Errors) Node {
+func (c *Component) form(cash *cash.Cash, errors validation.Errors) Node {
 	return Form(
 		Div(
 			Class("mb-3"),

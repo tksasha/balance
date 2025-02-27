@@ -10,7 +10,6 @@ import (
 	"testing"
 
 	"github.com/tksasha/balance/internal/app/cash"
-	"github.com/tksasha/balance/internal/app/cash/component"
 	"github.com/tksasha/balance/internal/app/cash/handlers"
 	"github.com/tksasha/balance/internal/app/cash/repository"
 	"github.com/tksasha/balance/internal/app/cash/service"
@@ -158,9 +157,7 @@ func newUpdateHandler(t *testing.T) (*handlers.UpdateHandler, *sql.DB) {
 
 	cashService := service.New(cashRepository)
 
-	cashComponent := component.NewCashComponent()
-
-	handler := handlers.NewUpdateHandler(cashService, cashComponent)
+	handler := handlers.NewUpdateHandler(cashService)
 
 	return handler, db
 }

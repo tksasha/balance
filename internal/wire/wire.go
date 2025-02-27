@@ -7,7 +7,6 @@ import (
 
 	"github.com/google/wire"
 	"github.com/tksasha/balance/internal/app/cash"
-	cashcomponent "github.com/tksasha/balance/internal/app/cash/component"
 	cashhandlers "github.com/tksasha/balance/internal/app/cash/handlers"
 	cashrepository "github.com/tksasha/balance/internal/app/cash/repository"
 	cashservice "github.com/tksasha/balance/internal/app/cash/service"
@@ -60,7 +59,6 @@ func InitializeServer() *server.Server {
 		backofficecategoryhandlers.NewUpdateHandler,
 		backofficecategoryrepository.New,
 		backofficecategoryservice.New,
-		cashcomponent.NewCashComponent,
 		cashhandlers.NewEditHandler,
 		cashhandlers.NewUpdateHandler,
 		cashrepository.New,

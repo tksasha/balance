@@ -7,7 +7,6 @@ package wire
 
 import (
 	"context"
-	component3 "github.com/tksasha/balance/internal/app/cash/component"
 	handlers3 "github.com/tksasha/balance/internal/app/cash/handlers"
 	repository3 "github.com/tksasha/balance/internal/app/cash/repository"
 	service3 "github.com/tksasha/balance/internal/app/cash/service"
@@ -63,9 +62,8 @@ func InitializeServer() *server.Server {
 	handlersUpdateHandler := handlers2.NewUpdateHandler(service7, categoryComponent)
 	repository8 := repository3.New(sqlDB)
 	service8 := service3.New(repository8)
-	componentCashComponent := component3.NewCashComponent()
-	editHandler2 := handlers3.NewEditHandler(service8, componentCashComponent)
-	updateHandler2 := handlers3.NewUpdateHandler(service8, componentCashComponent)
+	editHandler2 := handlers3.NewEditHandler(service8)
+	updateHandler2 := handlers3.NewUpdateHandler(service8)
 	repository9 := repository4.New(sqlDB)
 	service9 := service4.New(repository9)
 	repository10 := repository5.New(sqlDB)

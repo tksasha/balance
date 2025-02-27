@@ -7,11 +7,11 @@ import (
 	. "maragu.dev/gomponents/html" //nolint:stylecheck
 )
 
-func (c *CashComponent) List(cashes cash.Cashes) Node {
+func (c *Component) List(cashes cash.Cashes) Node {
 	return Map(cashes, c.Cash)
 }
 
-func (c *CashComponent) Cash(cash *cash.Cash) Node {
+func (c *Component) Cash(cash *cash.Cash) Node {
 	return c.Template(
 		Tr(
 			Td(Text(cash.Name)),
