@@ -34,10 +34,8 @@ func (c *Component) Index(cashes cash.Cashes, categories category.Categories, va
 				// 		c.form(&item.Item{}, categories, nil),
 				// 	),
 				// ),
-				Div(
-					Class("container-fluid"),
-					Div(
-						Class("row mt-4"),
+				Div(Class("container-fluid"),
+					Div(Class("row mt-4"),
 						c.cashes(cashes),
 					),
 				),
