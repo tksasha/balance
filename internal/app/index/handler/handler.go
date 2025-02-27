@@ -14,19 +14,18 @@ type Handler struct {
 
 	indexService    index.Service
 	categoryService index.CategoryService
-	indexComponent  *component.IndexComponent
+	component       *component.Component
 }
 
 func New(
 	indexService index.Service,
 	categoryService index.CategoryService,
-	indexComponent *component.IndexComponent,
 ) *Handler {
 	return &Handler{
 		Handler:         handler.New(),
 		indexService:    indexService,
 		categoryService: categoryService,
-		indexComponent:  indexComponent,
+		component:       component.New(),
 	}
 }
 
@@ -38,7 +37,7 @@ func (h *Handler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	err = h.indexComponent.Index(categories, r.URL.Query()).Render(w)
+	err = h.component.Index(categories, r.URL.Query()).Render(w)
 
 	h.SetError(w, err)
 }

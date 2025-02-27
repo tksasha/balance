@@ -2,6 +2,7 @@
 
 //go:generate go run -mod=mod github.com/google/wire/cmd/wire
 //go:build !wireinject
+// +build !wireinject
 
 package wire
 
@@ -13,7 +14,6 @@ import (
 	service3 "github.com/tksasha/balance/internal/app/cash/service"
 	repository5 "github.com/tksasha/balance/internal/app/category/repository"
 	service5 "github.com/tksasha/balance/internal/app/category/service"
-	component4 "github.com/tksasha/balance/internal/app/index/component"
 	"github.com/tksasha/balance/internal/app/index/handler"
 	repository4 "github.com/tksasha/balance/internal/app/index/repository"
 	service4 "github.com/tksasha/balance/internal/app/index/service"
@@ -72,14 +72,13 @@ func InitializeServer() *server.Server {
 	service9 := service4.New(repository9)
 	repository10 := repository5.New(sqlDB)
 	service10 := service5.New(repository10)
-	indexComponent := component4.NewIndexComponent()
-	handlerHandler := handler.New(service9, service10, indexComponent)
+	handlerHandler := handler.New(service9, service10)
 	repository11 := repository6.New(sqlDB)
 	service11 := service6.New(repository11, repository10)
+	createHandler2 := handlers4.NewCreateHandler(service11, service10)
+	editHandler3 := handlers4.NewEditHandler(service11, service10)
+	listHandler2 := handlers4.NewListHandler(service11)
 	itemsComponent := components2.NewItemsComponent()
-	createHandler2 := handlers4.NewCreateHandler(service11, service10, itemsComponent)
-	editHandler3 := handlers4.NewEditHandler(service11, service10, itemsComponent)
-	listHandler2 := handlers4.NewListHandler(service11, itemsComponent, indexComponent)
 	updateHandler3 := handlers4.NewUpdateHandler(service11, service10, itemsComponent)
 	routesRoutes := routes.New(createHandler, deleteHandler, editHandler, listHandler, newHandler, updateHandler, handlersCreateHandler, handlersDeleteHandler, handlersEditHandler, handlersListHandler, handlersUpdateHandler, editHandler2, updateHandler2, handlerHandler, createHandler2, editHandler3, listHandler2, updateHandler3)
 	v := middlewares.New()

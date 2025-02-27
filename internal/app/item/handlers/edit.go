@@ -5,7 +5,6 @@ import (
 
 	"github.com/tksasha/balance/internal/app/item"
 	"github.com/tksasha/balance/internal/app/item/component"
-	"github.com/tksasha/balance/internal/app/item/components"
 	"github.com/tksasha/balance/internal/common/handler"
 )
 
@@ -14,20 +13,17 @@ type EditHandler struct {
 
 	itemService     item.Service
 	categoryService item.CategoryService
-	itemsComponent  *components.ItemsComponent
 	component       *component.Component
 }
 
 func NewEditHandler(
 	itemService item.Service,
 	categoryService item.CategoryService,
-	itemsComponent *components.ItemsComponent,
 ) *EditHandler {
 	return &EditHandler{
 		Handler:         handler.New(),
 		itemService:     itemService,
 		categoryService: categoryService,
-		itemsComponent:  itemsComponent,
 		component:       component.New(),
 	}
 }

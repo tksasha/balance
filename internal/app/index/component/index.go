@@ -10,7 +10,7 @@ import (
 	. "maragu.dev/gomponents/html"       //nolint:stylecheck
 )
 
-func (c *IndexComponent) Index(categories category.Categories, values url.Values) Node {
+func (c *Component) Index(categories category.Categories, values url.Values) Node {
 	_ = c.form
 
 	return HTML5(

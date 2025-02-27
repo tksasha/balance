@@ -7,7 +7,6 @@ import (
 
 	"github.com/tksasha/balance/internal/app/item"
 	"github.com/tksasha/balance/internal/app/item/component"
-	"github.com/tksasha/balance/internal/app/item/components"
 	"github.com/tksasha/balance/internal/common"
 	"github.com/tksasha/balance/internal/common/handler"
 	"github.com/tksasha/validation"
@@ -18,20 +17,17 @@ type CreateHandler struct {
 
 	itemService     item.Service
 	categoryService item.CategoryService
-	itemsComponent  *components.ItemsComponent
 	component       *component.Component
 }
 
 func NewCreateHandler(
 	itemService item.Service,
 	categoryService item.CategoryService,
-	itemsComponent *components.ItemsComponent,
 ) *CreateHandler {
 	return &CreateHandler{
 		Handler:         handler.New(),
 		itemService:     itemService,
 		categoryService: categoryService,
-		itemsComponent:  itemsComponent,
 		component:       component.New(),
 	}
 }
@@ -51,7 +47,7 @@ func (h *CreateHandler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 			return
 		}
 
-		err = h.itemsComponent.List(items, nil, nil).Render(w)
+		err = h.component.List(items, nil, nil).Render(w)
 
 		h.SetError(w, err)
 

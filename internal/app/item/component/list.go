@@ -1,4 +1,4 @@
-package components
+package component
 
 import (
 	"github.com/tksasha/balance/internal/app/item"
@@ -7,7 +7,7 @@ import (
 	. "maragu.dev/gomponents/html" //nolint: stylecheck
 )
 
-func (c *ItemsComponent) List(items item.Items, months Node, years Node) Node {
+func (c *Component) List(items item.Items, months Node, years Node) Node {
 	return Table(
 		Class("table table-hover table-borderless"),
 		THead(
@@ -18,15 +18,13 @@ func (c *ItemsComponent) List(items item.Items, months Node, years Node) Node {
 				Th(Text("Опис")),
 			),
 		),
-		TBody(
-			Map(items, c.item),
-		),
+		TBody(Map(items, c.item)),
 		Iff(months != nil, func() Node { return months }),
 		Iff(years != nil, func() Node { return years }),
 	)
 }
 
-func (c *ItemsComponent) item(item *item.Item) Node {
+func (c *Component) item(item *item.Item) Node {
 	return c.Template(
 		Tr(
 			Td(

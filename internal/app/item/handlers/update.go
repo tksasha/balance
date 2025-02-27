@@ -38,7 +38,7 @@ func NewUpdateHandler(
 func (h *UpdateHandler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 	item, err := h.handle(r)
 	if err == nil {
-		err := h.itemsComponent.Update(item).Render(w)
+		err := h.component.Update(item).Render(w)
 
 		h.SetError(w, err)
 

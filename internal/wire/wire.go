@@ -15,7 +15,6 @@ import (
 	categoryrepository "github.com/tksasha/balance/internal/app/category/repository"
 	categoryservice "github.com/tksasha/balance/internal/app/category/service"
 	"github.com/tksasha/balance/internal/app/index"
-	indexcomponent "github.com/tksasha/balance/internal/app/index/component"
 	indexhandler "github.com/tksasha/balance/internal/app/index/handler"
 	indexrepository "github.com/tksasha/balance/internal/app/index/repository"
 	indexservice "github.com/tksasha/balance/internal/app/index/service"
@@ -73,7 +72,6 @@ func InitializeServer() *server.Server {
 		config.New,
 		context.Background,
 		db.Open,
-		indexcomponent.NewIndexComponent,
 		indexhandler.New,
 		indexrepository.New,
 		indexservice.New,

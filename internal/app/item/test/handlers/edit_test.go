@@ -11,7 +11,6 @@ import (
 	categoryrepository "github.com/tksasha/balance/internal/app/category/repository"
 	categoryservice "github.com/tksasha/balance/internal/app/category/service"
 	"github.com/tksasha/balance/internal/app/item"
-	"github.com/tksasha/balance/internal/app/item/components"
 	"github.com/tksasha/balance/internal/app/item/handlers"
 	"github.com/tksasha/balance/internal/app/item/repository"
 	"github.com/tksasha/balance/internal/app/item/service"
@@ -98,9 +97,7 @@ func newEditHandler(t *testing.T) (*handlers.EditHandler, *sql.DB) {
 
 	categoryService := categoryservice.New(categoryRepository)
 
-	itemComponent := components.NewItemsComponent()
-
-	handler := handlers.NewEditHandler(itemService, categoryService, itemComponent)
+	handler := handlers.NewEditHandler(itemService, categoryService)
 
 	return handler, db
 }

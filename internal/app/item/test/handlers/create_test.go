@@ -13,7 +13,6 @@ import (
 	"github.com/tksasha/balance/internal/app/category"
 	categoryrepository "github.com/tksasha/balance/internal/app/category/repository"
 	categoryservice "github.com/tksasha/balance/internal/app/category/service"
-	"github.com/tksasha/balance/internal/app/item/components"
 	"github.com/tksasha/balance/internal/app/item/handlers"
 	"github.com/tksasha/balance/internal/app/item/repository"
 	"github.com/tksasha/balance/internal/app/item/service"
@@ -138,9 +137,7 @@ func newCreateHandler(t *testing.T) (*handlers.CreateHandler, *sql.DB) {
 
 	categoryService := categoryservice.New(categoryRepository)
 
-	itemComponent := components.NewItemsComponent()
-
-	handler := handlers.NewCreateHandler(itemService, categoryService, itemComponent)
+	handler := handlers.NewCreateHandler(itemService, categoryService)
 
 	return handler, db
 }

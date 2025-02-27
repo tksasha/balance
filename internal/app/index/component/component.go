@@ -8,20 +8,20 @@ import (
 
 const yearFrom = 2015
 
-type IndexComponent struct {
+type Component struct {
 	*component.Component
 
 	years []int
 }
 
-func NewIndexComponent() *IndexComponent {
+func New() *Component {
 	var years []int
 
 	for year := yearFrom; year <= time.Now().Year(); year++ {
 		years = append(years, year)
 	}
 
-	return &IndexComponent{
+	return &Component{
 		Component: component.New(),
 		years:     years,
 	}

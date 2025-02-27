@@ -10,7 +10,7 @@ import (
 	. "maragu.dev/gomponents/html" //nolint:stylecheck
 )
 
-func (c *IndexComponent) Years(values url.Values) Node {
+func (c *Component) Years(values url.Values) Node {
 	return Div(
 		ID("years"),
 		htmx.SwapOOB("true"),
@@ -20,7 +20,7 @@ func (c *IndexComponent) Years(values url.Values) Node {
 	)
 }
 
-func (c *IndexComponent) year(year int, values url.Values) Node {
+func (c *Component) year(year int, values url.Values) Node {
 	val, err := strconv.Atoi(values.Get("year"))
 	current := err == nil && year == val
 

@@ -10,7 +10,7 @@ import (
 )
 
 func TestYears(t *testing.T) {
-	component := component.NewIndexComponent()
+	component := component.New()
 
 	testdata := map[string]string{
 		"":    "years.html",
