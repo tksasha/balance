@@ -22,7 +22,6 @@ import (
 	itemrepository "github.com/tksasha/balance/internal/app/item/repository"
 	itemservice "github.com/tksasha/balance/internal/app/item/service"
 	backofficecash "github.com/tksasha/balance/internal/backoffice/cash"
-	backofficecashcomponents "github.com/tksasha/balance/internal/backoffice/cash/components"
 	backofficecashhandlers "github.com/tksasha/balance/internal/backoffice/cash/handlers"
 	backofficecashrepository "github.com/tksasha/balance/internal/backoffice/cash/repository"
 	backofficecashservice "github.com/tksasha/balance/internal/backoffice/cash/service"
@@ -42,7 +41,6 @@ import (
 
 func InitializeServer() *server.Server {
 	wire.Build(
-		backofficecashcomponents.NewCashComponent,
 		backofficecashhandlers.NewCreateHandler,
 		backofficecashhandlers.NewDeleteHandler,
 		backofficecashhandlers.NewEditHandler,

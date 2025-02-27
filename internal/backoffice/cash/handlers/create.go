@@ -5,7 +5,7 @@ import (
 	"net/http"
 
 	"github.com/tksasha/balance/internal/backoffice/cash"
-	"github.com/tksasha/balance/internal/backoffice/cash/components"
+	"github.com/tksasha/balance/internal/backoffice/cash/component"
 	"github.com/tksasha/balance/internal/common"
 	"github.com/tksasha/balance/internal/common/handler"
 	"github.com/tksasha/validation"
@@ -14,18 +14,17 @@ import (
 type CreateHandler struct {
 	*handler.Handler
 
-	cashService   cash.Service
-	cashComponent *components.CashComponent
+	cashService cash.Service
+	component   *component.Component
 }
 
 func NewCreateHandler(
 	cashService cash.Service,
-	cashComponent *components.CashComponent,
 ) *CreateHandler {
 	return &CreateHandler{
-		Handler:       handler.New(),
-		cashService:   cashService,
-		cashComponent: cashComponent,
+		Handler:     handler.New(),
+		cashService: cashService,
+		component:   component.New(),
 	}
 }
 
@@ -39,7 +38,7 @@ func (h *CreateHandler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 
 	var verrors validation.Errors
 	if errors.As(err, &verrors) {
-		err := h.cashComponent.Create(cash, verrors).Render(w)
+		err := h.component.Create(cash, verrors).Render(w)
 
 		h.SetError(w, err)
 

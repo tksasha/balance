@@ -5,7 +5,6 @@ import (
 	"net/http/httptest"
 	"testing"
 
-	"github.com/tksasha/balance/internal/backoffice/cash/components"
 	"github.com/tksasha/balance/internal/backoffice/cash/handlers"
 	"gotest.tools/v3/assert"
 )
@@ -32,9 +31,7 @@ func TestCashNewHandler(t *testing.T) {
 func newNewHandler(t *testing.T) *handlers.NewHandler {
 	t.Helper()
 
-	cashComponent := components.NewCashComponent()
-
-	handler := handlers.NewNewHandler(cashComponent)
+	handler := handlers.NewNewHandler()
 
 	return handler
 }

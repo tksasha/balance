@@ -18,7 +18,6 @@ import (
 	handlers4 "github.com/tksasha/balance/internal/app/item/handlers"
 	repository6 "github.com/tksasha/balance/internal/app/item/repository"
 	service6 "github.com/tksasha/balance/internal/app/item/service"
-	"github.com/tksasha/balance/internal/backoffice/cash/components"
 	"github.com/tksasha/balance/internal/backoffice/cash/handlers"
 	"github.com/tksasha/balance/internal/backoffice/cash/repository"
 	"github.com/tksasha/balance/internal/backoffice/cash/service"
@@ -44,13 +43,12 @@ func InitializeServer() *server.Server {
 	sqlDB := db.Open(contextContext, nameProvider)
 	repositoryRepository := repository.New(sqlDB)
 	serviceService := service.New(repositoryRepository)
-	cashComponent := components.NewCashComponent()
-	createHandler := handlers.NewCreateHandler(serviceService, cashComponent)
+	createHandler := handlers.NewCreateHandler(serviceService)
 	deleteHandler := handlers.NewDeleteHandler(serviceService)
-	editHandler := handlers.NewEditHandler(serviceService, cashComponent)
-	listHandler := handlers.NewListHandler(serviceService, cashComponent)
-	newHandler := handlers.NewNewHandler(cashComponent)
-	updateHandler := handlers.NewUpdateHandler(serviceService, cashComponent)
+	editHandler := handlers.NewEditHandler(serviceService)
+	listHandler := handlers.NewListHandler(serviceService)
+	newHandler := handlers.NewNewHandler()
+	updateHandler := handlers.NewUpdateHandler(serviceService)
 	repository7 := repository2.New(sqlDB)
 	service7 := service2.New(repository7)
 	componentComponent := component.New()

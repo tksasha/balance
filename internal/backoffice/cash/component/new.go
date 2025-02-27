@@ -1,4 +1,4 @@
-package components
+package component
 
 import (
 	"github.com/tksasha/balance/internal/backoffice/cash"
@@ -6,7 +6,7 @@ import (
 	. "maragu.dev/gomponents/html" //nolint:stylecheck
 )
 
-func (c *CashComponent) New(cash *cash.Cash) Node {
+func (c *Component) New(cash *cash.Cash) Node {
 	return Div(
 		c.form(cash, nil),
 	)

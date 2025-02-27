@@ -9,7 +9,6 @@ import (
 	"strings"
 	"testing"
 
-	"github.com/tksasha/balance/internal/backoffice/cash/components"
 	"github.com/tksasha/balance/internal/backoffice/cash/handlers"
 	"github.com/tksasha/balance/internal/backoffice/cash/repository"
 	"github.com/tksasha/balance/internal/backoffice/cash/service"
@@ -119,9 +118,7 @@ func newCreateHandler(t *testing.T) (*handlers.CreateHandler, *sql.DB) {
 
 	cashService := service.New(cashRepository)
 
-	cashComponent := components.NewCashComponent()
-
-	handler := handlers.NewCreateHandler(cashService, cashComponent)
+	handler := handlers.NewCreateHandler(cashService)
 
 	return handler, db
 }

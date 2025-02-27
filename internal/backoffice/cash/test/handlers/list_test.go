@@ -6,7 +6,6 @@ import (
 	"net/http/httptest"
 	"testing"
 
-	"github.com/tksasha/balance/internal/backoffice/cash/components"
 	"github.com/tksasha/balance/internal/backoffice/cash/handlers"
 	"github.com/tksasha/balance/internal/backoffice/cash/repository"
 	"github.com/tksasha/balance/internal/backoffice/cash/service"
@@ -50,9 +49,7 @@ func newListHandler(t *testing.T) (*handlers.ListHandler, *sql.DB) {
 
 	cashService := service.New(cashRepository)
 
-	cashComponent := components.NewCashComponent()
-
-	handler := handlers.NewListHandler(cashService, cashComponent)
+	handler := handlers.NewListHandler(cashService)
 
 	return handler, db
 }
