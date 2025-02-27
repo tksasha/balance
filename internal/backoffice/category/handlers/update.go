@@ -8,7 +8,7 @@ import (
 	"github.com/tksasha/balance/internal/backoffice/category/component"
 	"github.com/tksasha/balance/internal/common"
 	"github.com/tksasha/balance/internal/common/handler"
-	"github.com/tksasha/validator"
+	"github.com/tksasha/validation"
 )
 
 type UpdateHandler struct {
@@ -37,7 +37,7 @@ func (h *UpdateHandler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	var verrors validator.Errors
+	var verrors validation.Errors
 	if errors.As(err, &verrors) {
 		err := h.categoryComponent.Update(category, verrors).Render(w)
 

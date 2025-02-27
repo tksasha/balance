@@ -8,7 +8,7 @@ import (
 	"github.com/tksasha/balance/internal/app/item"
 	"github.com/tksasha/balance/internal/common"
 	"github.com/tksasha/balance/internal/common/service"
-	"github.com/tksasha/validator"
+	"github.com/tksasha/validation"
 )
 
 type Service struct {
@@ -33,9 +33,9 @@ func (s *Service) setCategory(
 	ctx context.Context,
 	item *item.Item,
 	categoryID string,
-	validate *validator.Validator,
+	validation *validation.Validation,
 ) error {
-	item.CategoryID = validate.Integer("category", categoryID)
+	item.CategoryID = validation.Integer("category", categoryID)
 
 	if item.CategoryID == 0 {
 		return nil

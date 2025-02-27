@@ -7,7 +7,7 @@ require (
 	github.com/joho/godotenv v1.5.1
 	github.com/mattn/go-sqlite3 v1.14.24
 	github.com/tksasha/month v0.0.7
-	github.com/tksasha/validator v0.0.3
+	github.com/tksasha/validation v0.0.4
 	go.uber.org/mock v0.5.0
 	golang.org/x/text v0.22.0
 	gotest.tools/v3 v3.5.2

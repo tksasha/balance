@@ -3,12 +3,12 @@ package components
 import (
 	"github.com/tksasha/balance/internal/app/category"
 	"github.com/tksasha/balance/internal/app/item"
-	"github.com/tksasha/validator"
+	"github.com/tksasha/validation"
 	. "maragu.dev/gomponents"      //nolint:stylecheck
 	. "maragu.dev/gomponents/html" //nolint:stylecheck
 )
 
-func (c *ItemsComponent) form(item *item.Item, categories category.Categories, errors validator.Errors) Node {
+func (c *ItemsComponent) form(item *item.Item, categories category.Categories, errors validation.Errors) Node {
 	_ = categories
 
 	return Form(

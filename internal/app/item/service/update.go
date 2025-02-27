@@ -4,7 +4,7 @@ import (
 	"context"
 
 	"github.com/tksasha/balance/internal/app/item"
-	"github.com/tksasha/validator"
+	"github.com/tksasha/validation"
 )
 
 func (s *Service) Update(ctx context.Context, request item.UpdateRequest) (*item.Item, error) {
@@ -13,22 +13,22 @@ func (s *Service) Update(ctx context.Context, request item.UpdateRequest) (*item
 		return nil, err
 	}
 
-	validate := validator.New()
+	validation := validation.New()
 
-	item.Date = validate.Date("date", request.Date)
+	item.Date = validation.Date("date", request.Date)
 
-	item.Formula, item.Sum = validate.Formula("sum", request.Formula)
+	item.Formula, item.Sum = validation.Formula("sum", request.Formula)
 
-	_ = validate.Presence("category", request.CategoryID)
+	_ = validation.Presence("category", request.CategoryID)
 
-	if err := s.setCategory(ctx, item, request.CategoryID, validate); err != nil {
+	if err := s.setCategory(ctx, item, request.CategoryID, validation); err != nil {
 		return nil, err
 	}
 
 	item.Description = request.Description
 
-	if validate.HasErrors() {
-		return item, validate.Errors
+	if validation.Errors.Exists() {
+		return item, validation.Errors
 	}
 
 	if err := s.itemRepository.Update(ctx, item); err != nil {

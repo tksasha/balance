@@ -8,7 +8,7 @@ import (
 	"github.com/tksasha/balance/internal/backoffice/cash/components"
 	"github.com/tksasha/balance/internal/common"
 	"github.com/tksasha/balance/internal/common/handler"
-	"github.com/tksasha/validator"
+	"github.com/tksasha/validation"
 )
 
 type CreateHandler struct {
@@ -37,7 +37,7 @@ func (h *CreateHandler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	var verrors validator.Errors
+	var verrors validation.Errors
 	if errors.As(err, &verrors) {
 		err := h.cashComponent.Create(cash, verrors).Render(w)
 

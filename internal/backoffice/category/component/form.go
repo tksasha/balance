@@ -2,12 +2,12 @@ package component
 
 import (
 	"github.com/tksasha/balance/internal/backoffice/category"
-	"github.com/tksasha/validator"
+	"github.com/tksasha/validation"
 	. "maragu.dev/gomponents"      //nolint: stylecheck
 	. "maragu.dev/gomponents/html" //nolint: stylecheck
 )
 
-func (c *CategoryComponent) form(category *category.Category, errors validator.Errors) Node {
+func (c *CategoryComponent) form(category *category.Category, errors validation.Errors) Node {
 	return Form(
 		Div(
 			Class("mb-3"),

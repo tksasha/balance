@@ -4,7 +4,7 @@ import (
 	"context"
 
 	"github.com/tksasha/balance/internal/backoffice/category"
-	"github.com/tksasha/validator"
+	"github.com/tksasha/validation"
 )
 
 func (s *Service) Create(ctx context.Context, request category.CreateRequest) (*category.Category, error) {
@@ -12,22 +12,22 @@ func (s *Service) Create(ctx context.Context, request category.CreateRequest) (*
 		Name: request.Name,
 	}
 
-	validate := validator.New()
+	validation := validation.New()
 
-	validate.Presence("name", category.Name)
+	validation.Presence("name", category.Name)
 
-	if err := s.nameAlreadyExists(ctx, category.Name, 0, validate); err != nil {
+	if err := s.nameAlreadyExists(ctx, category.Name, 0, validation); err != nil {
 		return nil, err
 	}
 
-	category.Supercategory = validate.Integer("supercategory", request.Supercategory)
+	category.Supercategory = validation.Integer("supercategory", request.Supercategory)
 
-	category.Income = validate.Boolean("income", request.Income)
+	category.Income = validation.Boolean("income", request.Income)
 
-	category.Visible = validate.Boolean("visible", request.Visible)
+	category.Visible = validation.Boolean("visible", request.Visible)
 
-	if validate.HasErrors() {
-		return category, validate.Errors
+	if validation.Errors.Exists() {
+		return category, validation.Errors
 	}
 
 	if err := s.repository.Create(ctx, category); err != nil {

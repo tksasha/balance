@@ -5,15 +5,15 @@ import (
 
 	"github.com/tksasha/balance/internal/backoffice/cash"
 	"github.com/tksasha/balance/internal/common"
-	"github.com/tksasha/validator"
+	"github.com/tksasha/validation"
 )
 
 func (s *Service) Create(ctx context.Context, request cash.CreateRequest) (*cash.Cash, error) {
 	cash := &cash.Cash{}
 
-	validate := validator.New()
+	validation := validation.New()
 
-	cash.Name = validate.Presence("name", request.Name)
+	cash.Name = validation.Presence("name", request.Name)
 
 	if cash.Name != "" {
 		exists, err := s.repository.NameExists(ctx, cash.Name, 0)
@@ -22,18 +22,18 @@ func (s *Service) Create(ctx context.Context, request cash.CreateRequest) (*cash
 		}
 
 		if exists {
-			validate.Set("name", common.AlreadyExists)
+			validation.Errors.Set("name", common.AlreadyExists)
 		}
 	}
 
-	cash.Formula, cash.Sum = validate.Formula("formula", request.Formula)
+	cash.Formula, cash.Sum = validation.Formula("formula", request.Formula)
 
-	cash.Supercategory = validate.Integer("supercategory", request.Supercategory)
+	cash.Supercategory = validation.Integer("supercategory", request.Supercategory)
 
-	cash.Favorite = validate.Boolean("favorite", request.Favorite)
+	cash.Favorite = validation.Boolean("favorite", request.Favorite)
 
-	if validate.HasErrors() {
-		return cash, validate.Errors
+	if validation.Errors.Exists() {
+		return cash, validation.Errors
 	}
 
 	return cash, s.repository.Create(ctx, cash)

@@ -6,7 +6,7 @@ import (
 
 	"github.com/tksasha/balance/internal/backoffice/cash"
 	"github.com/tksasha/balance/internal/common"
-	"github.com/tksasha/validator"
+	"github.com/tksasha/validation"
 )
 
 func (s *Service) Update(ctx context.Context, request cash.UpdateRequest) (*cash.Cash, error) {
@@ -15,11 +15,11 @@ func (s *Service) Update(ctx context.Context, request cash.UpdateRequest) (*cash
 		return nil, err
 	}
 
-	validate := validator.New()
+	validation := validation.New()
 
-	cash.Formula, cash.Sum = validate.Formula("sum", request.Formula)
+	cash.Formula, cash.Sum = validation.Formula("sum", request.Formula)
 
-	cash.Name = validate.Presence("name", request.Name)
+	cash.Name = validation.Presence("name", request.Name)
 
 	if cash.Name != "" {
 		exists, err := s.repository.NameExists(ctx, cash.Name, cash.ID)
@@ -28,16 +28,16 @@ func (s *Service) Update(ctx context.Context, request cash.UpdateRequest) (*cash
 		}
 
 		if exists {
-			validate.Set("name", common.AlreadyExists)
+			validation.Errors.Set("name", common.AlreadyExists)
 		}
 	}
 
-	cash.Supercategory = validate.Integer("supercategory", request.Supercategory)
+	cash.Supercategory = validation.Integer("supercategory", request.Supercategory)
 
-	cash.Favorite = validate.Boolean("favorite", request.Favorite)
+	cash.Favorite = validation.Boolean("favorite", request.Favorite)
 
-	if validate.HasErrors() {
-		return cash, validate.Errors
+	if validation.Errors.Exists() {
+		return cash, validation.Errors
 	}
 
 	if err := s.repository.Update(ctx, cash); err != nil {
