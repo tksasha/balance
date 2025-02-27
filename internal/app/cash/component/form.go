@@ -7,41 +7,11 @@ import (
 	. "maragu.dev/gomponents/html" //nolint:stylecheck
 )
 
-func (c *Component) form(cash *cash.Cash, errors validation.Errors) Node {
+func (c *Component) form(node Node, cash *cash.Cash, errors validation.Errors) Node {
 	return Form(
-		Div(
-			Class("mb-3"),
-			Label(
-				For("cash_name"),
-				Class("form-label"),
-				Text("Name"),
-			),
-			Input(
-				Class("form-control"),
-				ID("cash_name"),
-				Value(cash.Name),
-			),
-			c.Errors("name", errors),
-		),
-		Div(
-			Class("mb-3"),
-			Label(
-				For("cash_sum"),
-				Class("form-label"),
-				Text("Sum"),
-			),
-			Input(
-				Class("form-control"),
-				ID("cash_id"),
-				Value(cash.Formula),
-			),
-			c.Errors("sum", errors),
-		),
-		Button(
-			Type("submit"),
-			Class("btn btn-primary"),
-			If(cash.ID == 0, Text("Create")),
-			If(cash.ID != 0, Text("Update")),
-		),
+		node,
+		c.Input("Назва", "name", cash.Name, errors.Get("name")),
+		c.Input("Сума", "formula", cash.Formula, errors.Get("sum")),
+		c.Submit(cash.ID),
 	)
 }

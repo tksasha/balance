@@ -6,5 +6,5 @@ import (
 )
 
 func (c *Component) Update(cash *cash.Cash) Node {
-	return c.Cash(cash)
+	return c.cash(cash)
 }

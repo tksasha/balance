@@ -12177,6 +12177,11 @@ header a.active {
   text-align: center;
 }
 
+.link {
+  color: #607d8b;
+  cursor: pointer;
+}
+
 .link-to-backoffice {
   position: fixed;
   top: 10px;

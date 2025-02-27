@@ -3,6 +3,7 @@ package component
 import (
 	"net/url"
 
+	"github.com/tksasha/balance/internal/app/cash"
 	"github.com/tksasha/balance/internal/app/category"
 	. "maragu.dev/gomponents" //nolint:stylecheck
 	htmx "maragu.dev/gomponents-htmx"
@@ -10,7 +11,7 @@ import (
 	. "maragu.dev/gomponents/html"       //nolint:stylecheck
 )
 
-func (c *Component) Index(categories category.Categories, values url.Values) Node {
+func (c *Component) Index(cashes cash.Cashes, categories category.Categories, values url.Values) Node {
 	_ = c.form
 
 	return HTML5(
@@ -33,6 +34,13 @@ func (c *Component) Index(categories category.Categories, values url.Values) Nod
 				// 		c.form(&item.Item{}, categories, nil),
 				// 	),
 				// ),
+				Div(
+					Class("container-fluid"),
+					Div(
+						Class("row mt-4"),
+						c.cashes(cashes),
+					),
+				),
 				Div(
 					Class("container"),
 					Div(

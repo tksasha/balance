@@ -8,16 +8,16 @@ import (
 )
 
 func (c *Component) List(cashes cash.Cashes) Node {
-	return Map(cashes, c.Cash)
+	return Map(cashes, c.cash)
 }
 
-func (c *Component) Cash(cash *cash.Cash) Node {
+func (c *Component) cash(cash *cash.Cash) Node {
 	return c.Template(
 		Tr(
 			Td(Text(cash.Name)),
 			Td(
 				Div(
-					htmx.Get(c.EditCash(cash.ID)),
+					htmx.Get(c.editPath(cash.ID)),
 					Text(c.Money(cash.Sum)),
 				),
 			),

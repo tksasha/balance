@@ -13,6 +13,7 @@ import (
 	context "context"
 	reflect "reflect"
 
+	cash "github.com/tksasha/balance/internal/app/cash"
 	category "github.com/tksasha/balance/internal/app/category"
 	gomock "go.uber.org/mock/gomock"
 )
@@ -177,4 +178,43 @@ func (m *MockCategoryService) List(ctx context.Context) (category.Categories, er
 func (mr *MockCategoryServiceMockRecorder) List(ctx any) *gomock.Call {
 	mr.mock.ctrl.T.Helper()
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "List", reflect.TypeOf((*MockCategoryService)(nil).List), ctx)
+}
+
+// MockCashService is a mock of CashService interface.
+type MockCashService struct {
+	ctrl     *gomock.Controller
+	recorder *MockCashServiceMockRecorder
+	isgomock struct{}
+}
+
+// MockCashServiceMockRecorder is the mock recorder for MockCashService.
+type MockCashServiceMockRecorder struct {
+	mock *MockCashService
+}
+
+// NewMockCashService creates a new mock instance.
+func NewMockCashService(ctrl *gomock.Controller) *MockCashService {
+	mock := &MockCashService{ctrl: ctrl}
+	mock.recorder = &MockCashServiceMockRecorder{mock}
+	return mock
+}
+
+// EXPECT returns an object that allows the caller to indicate expected use.
+func (m *MockCashService) EXPECT() *MockCashServiceMockRecorder {
+	return m.recorder
+}
+
+// List mocks base method.
+func (m *MockCashService) List(ctx context.Context) (cash.Cashes, error) {
+	m.ctrl.T.Helper()
+	ret := m.ctrl.Call(m, "List", ctx)
+	ret0, _ := ret[0].(cash.Cashes)
+	ret1, _ := ret[1].(error)
+	return ret0, ret1
+}
+
+// List indicates an expected call of List.
+func (mr *MockCashServiceMockRecorder) List(ctx any) *gomock.Call {
+	mr.mock.ctrl.T.Helper()
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "List", reflect.TypeOf((*MockCashService)(nil).List), ctx)
 }

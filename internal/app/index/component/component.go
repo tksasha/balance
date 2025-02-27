@@ -1,9 +1,12 @@
 package component
 
 import (
+	"strconv"
 	"time"
 
 	"github.com/tksasha/balance/internal/common/component"
+	. "maragu.dev/gomponents"      //nolint:stylecheck
+	. "maragu.dev/gomponents/html" //nolint:stylecheck
 )
 
 const yearFrom = 2015
@@ -25,4 +28,12 @@ func New() *Component {
 		Component: component.New(),
 		years:     years,
 	}
+}
+
+func (c *Component) id(name string, id int) Node {
+	return ID(name + "-" + strconv.Itoa(id))
+}
+
+func (c *Component) editCashPath(id int) string {
+	return "/cashes/" + strconv.Itoa(id) + "/edit"
 }

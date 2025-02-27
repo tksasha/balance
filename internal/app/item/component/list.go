@@ -34,7 +34,7 @@ func (c *Component) item(item *item.Item) Node {
 				Div(Class("text-primary"),
 					Text(c.Money(item.Sum)),
 					Style("cursor: pointer"),
-					htmx.Get(c.EditItem(item.ID)),
+					htmx.Get(c.editPath(item.ID)),
 					htmx.Target("#modal-body"),
 					htmx.Trigger("click"),
 					Data("bs-toggle", "modal"),
