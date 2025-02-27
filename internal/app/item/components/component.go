@@ -13,11 +13,3 @@ func NewItemsComponent() *ItemsComponent {
 		Component: component.New(),
 	}
 }
-
-func (c *ItemsComponent) sum(sum float64) string {
-	if sum == 0.0 {
-		return ""
-	}
-
-	return c.Money(sum)
-}

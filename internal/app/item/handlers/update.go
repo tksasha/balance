@@ -5,6 +5,7 @@ import (
 	"net/http"
 
 	"github.com/tksasha/balance/internal/app/item"
+	"github.com/tksasha/balance/internal/app/item/component"
 	"github.com/tksasha/balance/internal/app/item/components"
 	"github.com/tksasha/balance/internal/common"
 	"github.com/tksasha/balance/internal/common/handler"
@@ -17,6 +18,7 @@ type UpdateHandler struct {
 	itemService     item.Service
 	categoryService item.CategoryService
 	itemsComponent  *components.ItemsComponent
+	component       *component.Component
 }
 
 func NewUpdateHandler(
@@ -29,6 +31,7 @@ func NewUpdateHandler(
 		itemService:     itemService,
 		categoryService: categoryService,
 		itemsComponent:  itemsComponent,
+		component:       component.New(),
 	}
 }
 
@@ -51,7 +54,7 @@ func (h *UpdateHandler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 			return
 		}
 
-		err = h.itemsComponent.Edit(item, categories, verrors).Render(w)
+		err = h.component.Edit(item, categories, verrors).Render(w)
 
 		h.SetError(w, err)
 

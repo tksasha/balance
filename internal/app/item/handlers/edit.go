@@ -4,6 +4,7 @@ import (
 	"net/http"
 
 	"github.com/tksasha/balance/internal/app/item"
+	"github.com/tksasha/balance/internal/app/item/component"
 	"github.com/tksasha/balance/internal/app/item/components"
 	"github.com/tksasha/balance/internal/common/handler"
 )
@@ -14,6 +15,7 @@ type EditHandler struct {
 	itemService     item.Service
 	categoryService item.CategoryService
 	itemsComponent  *components.ItemsComponent
+	component       *component.Component
 }
 
 func NewEditHandler(
@@ -26,6 +28,7 @@ func NewEditHandler(
 		itemService:     itemService,
 		categoryService: categoryService,
 		itemsComponent:  itemsComponent,
+		component:       component.New(),
 	}
 }
 
@@ -44,7 +47,7 @@ func (h *EditHandler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	err = h.itemsComponent.Edit(item, categories, nil).Render(w)
+	err = h.component.Edit(item, categories, nil).Render(w)
 
 	h.SetError(w, err)
 }

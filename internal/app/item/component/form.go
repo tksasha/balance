@@ -11,7 +11,7 @@ import (
 	. "maragu.dev/gomponents/html" //nolint:stylecheck
 )
 
-func (c *Component) Form(item *item.Item, categories category.Categories, errors validation.Errors) Node {
+func (c *Component) form(item *item.Item, categories category.Categories, errors validation.Errors) Node {
 	return Form(
 		c.Input("Дата", "date", item.Date.Format(time.DateOnly), errors.Get("date")),
 		c.Input("Сума", "formula", item.Formula, errors.Get("sum")),
