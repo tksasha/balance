@@ -27,14 +27,11 @@ func (c *Component) List(items item.Items, months Node, years Node) Node {
 func (c *Component) item(item *item.Item) Node {
 	return c.Template(
 		Tr(
-			Td(
-				Class("items-date"),
+			Td(Class("items-date"),
 				Text(c.Date(item.Date)),
 			),
-			Td(
-				Class("items-sum"),
-				Div(
-					Class("text-primary"),
+			Td(Class("items-sum"),
+				Div(Class("text-primary"),
 					Text(c.Money(item.Sum)),
 					Style("cursor: pointer"),
 					htmx.Get(c.EditItem(item.ID)),
@@ -44,13 +41,10 @@ func (c *Component) item(item *item.Item) Node {
 					Data("bs-target", "#modal"),
 				),
 			),
-			Td(
-				Class("items-category"),
+			Td(Class("items-category"),
 				Text(item.CategoryName.String),
 			),
-			Td(
-				Raw(c.Description(item.Description)),
-			),
+			Td(c.Description(item.Description)),
 		),
 	)
 }

@@ -1,6 +1,7 @@
 package component_test
 
 import (
+	"bytes"
 	"testing"
 
 	"github.com/tksasha/balance/internal/common/component"
@@ -24,8 +25,12 @@ func TestDescription(t *testing.T) {
 	component := component.New()
 
 	for description, expected := range testmap {
-		actual := component.Description(description)
+		w := bytes.NewBuffer([]byte{})
 
-		assert.Equal(t, actual, expected)
+		if err := component.Description(description).Render(w); err != nil {
+			t.Fatal(err)
+		}
+
+		assert.Equal(t, w.String(), expected)
 	}
 }
