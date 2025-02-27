@@ -4,13 +4,13 @@ import (
 	"time"
 
 	"github.com/tksasha/balance/internal/app/item"
-	"github.com/tksasha/validator"
+	"github.com/tksasha/validation"
 	. "maragu.dev/gomponents" //nolint:stylecheck
 	"maragu.dev/gomponents/components"
 	. "maragu.dev/gomponents/html" //nolint:stylecheck
 )
 
-func (c *Component) Form(item *item.Item, errors validator.Errors) Node {
+func (c *Component) Form(item *item.Item, errors validation.Errors) Node {
 	return Form(
 		c.Date(item.Date, errors.Get("date")),
 	)
