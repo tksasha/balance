@@ -19,7 +19,6 @@ import (
 	indexrepository "github.com/tksasha/balance/internal/app/index/repository"
 	indexservice "github.com/tksasha/balance/internal/app/index/service"
 	"github.com/tksasha/balance/internal/app/item"
-	itemcomponents "github.com/tksasha/balance/internal/app/item/components"
 	itemhandlers "github.com/tksasha/balance/internal/app/item/handlers"
 	itemrepository "github.com/tksasha/balance/internal/app/item/repository"
 	itemservice "github.com/tksasha/balance/internal/app/item/service"
@@ -75,7 +74,6 @@ func InitializeServer() *server.Server {
 		indexhandler.New,
 		indexrepository.New,
 		indexservice.New,
-		itemcomponents.NewItemsComponent,
 		itemhandlers.NewCreateHandler,
 		itemhandlers.NewEditHandler,
 		itemhandlers.NewListHandler,

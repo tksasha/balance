@@ -2,7 +2,6 @@
 
 //go:generate go run -mod=mod github.com/google/wire/cmd/wire
 //go:build !wireinject
-// +build !wireinject
 
 package wire
 
@@ -17,7 +16,6 @@ import (
 	"github.com/tksasha/balance/internal/app/index/handler"
 	repository4 "github.com/tksasha/balance/internal/app/index/repository"
 	service4 "github.com/tksasha/balance/internal/app/index/service"
-	components2 "github.com/tksasha/balance/internal/app/item/components"
 	handlers4 "github.com/tksasha/balance/internal/app/item/handlers"
 	repository6 "github.com/tksasha/balance/internal/app/item/repository"
 	service6 "github.com/tksasha/balance/internal/app/item/service"
@@ -78,8 +76,7 @@ func InitializeServer() *server.Server {
 	createHandler2 := handlers4.NewCreateHandler(service11, service10)
 	editHandler3 := handlers4.NewEditHandler(service11, service10)
 	listHandler2 := handlers4.NewListHandler(service11)
-	itemsComponent := components2.NewItemsComponent()
-	updateHandler3 := handlers4.NewUpdateHandler(service11, service10, itemsComponent)
+	updateHandler3 := handlers4.NewUpdateHandler(service11, service10)
 	routesRoutes := routes.New(createHandler, deleteHandler, editHandler, listHandler, newHandler, updateHandler, handlersCreateHandler, handlersDeleteHandler, handlersEditHandler, handlersListHandler, handlersUpdateHandler, editHandler2, updateHandler2, handlerHandler, createHandler2, editHandler3, listHandler2, updateHandler3)
 	v := middlewares.New()
 	serverServer := server.New(configConfig, routesRoutes, v)
