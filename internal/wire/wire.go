@@ -26,11 +26,9 @@ import (
 	backofficecashrepository "github.com/tksasha/balance/internal/backoffice/cash/repository"
 	backofficecashservice "github.com/tksasha/balance/internal/backoffice/cash/service"
 	backofficecategory "github.com/tksasha/balance/internal/backoffice/category"
-	backofficecategorycomponent "github.com/tksasha/balance/internal/backoffice/category/component"
 	backofficecategoryhandlers "github.com/tksasha/balance/internal/backoffice/category/handlers"
 	backofficecategoryrepository "github.com/tksasha/balance/internal/backoffice/category/repository"
 	backofficecategoryservice "github.com/tksasha/balance/internal/backoffice/category/service"
-	"github.com/tksasha/balance/internal/common/component"
 	"github.com/tksasha/balance/internal/db"
 	"github.com/tksasha/balance/internal/db/nameprovider"
 	"github.com/tksasha/balance/internal/server"
@@ -49,7 +47,6 @@ func InitializeServer() *server.Server {
 		backofficecashhandlers.NewUpdateHandler,
 		backofficecashrepository.New,
 		backofficecashservice.New,
-		backofficecategorycomponent.New,
 		backofficecategoryhandlers.NewCreateHandler,
 		backofficecategoryhandlers.NewDeleteHandler,
 		backofficecategoryhandlers.NewEditHandler,
@@ -63,7 +60,6 @@ func InitializeServer() *server.Server {
 		cashservice.New,
 		categoryrepository.New,
 		categoryservice.New,
-		component.New,
 		config.New,
 		context.Background,
 		db.Open,

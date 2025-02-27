@@ -6,11 +6,9 @@ import (
 	"net/http/httptest"
 	"testing"
 
-	"github.com/tksasha/balance/internal/backoffice/category/component"
 	"github.com/tksasha/balance/internal/backoffice/category/handlers"
 	"github.com/tksasha/balance/internal/backoffice/category/repository"
 	"github.com/tksasha/balance/internal/backoffice/category/service"
-	commoncomponent "github.com/tksasha/balance/internal/common/component"
 	"github.com/tksasha/balance/internal/db"
 	"github.com/tksasha/balance/internal/db/nameprovider"
 	"gotest.tools/v3/assert"
@@ -51,11 +49,7 @@ func newListHandler(t *testing.T) (*handlers.ListHandler, *sql.DB) {
 
 	categoryService := service.New(categoryRepository)
 
-	categoryComponent := component.New(
-		commoncomponent.New(),
-	)
-
-	handler := handlers.NewListHandler(categoryService, categoryComponent)
+	handler := handlers.NewListHandler(categoryService)
 
 	return handler, db
 }

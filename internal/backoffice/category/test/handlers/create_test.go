@@ -9,11 +9,9 @@ import (
 	"strings"
 	"testing"
 
-	"github.com/tksasha/balance/internal/backoffice/category/component"
 	"github.com/tksasha/balance/internal/backoffice/category/handlers"
 	"github.com/tksasha/balance/internal/backoffice/category/repository"
 	"github.com/tksasha/balance/internal/backoffice/category/service"
-	commonComponent "github.com/tksasha/balance/internal/common/component"
 	"github.com/tksasha/balance/internal/common/currency"
 	"github.com/tksasha/balance/internal/db"
 	"github.com/tksasha/balance/internal/db/nameprovider"
@@ -115,9 +113,7 @@ func newCreateHandler(t *testing.T) (*handlers.CreateHandler, *sql.DB) {
 
 	categoryService := service.New(categoryRepository)
 
-	categoryComponent := component.New(commonComponent.New())
-
-	handler := handlers.NewCreateHandler(categoryService, categoryComponent)
+	handler := handlers.NewCreateHandler(categoryService)
 
 	return handler, db
 }

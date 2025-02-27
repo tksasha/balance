@@ -14,18 +14,17 @@ import (
 type UpdateHandler struct {
 	*handler.Handler
 
-	categoryService   category.Service
-	categoryComponent *component.CategoryComponent
+	categoryService category.Service
+	component       *component.Component
 }
 
 func NewUpdateHandler(
 	categoryService category.Service,
-	categoryComponent *component.CategoryComponent,
 ) *UpdateHandler {
 	return &UpdateHandler{
-		Handler:           handler.New(),
-		categoryService:   categoryService,
-		categoryComponent: categoryComponent,
+		Handler:         handler.New(),
+		categoryService: categoryService,
+		component:       component.New(),
 	}
 }
 
@@ -39,7 +38,7 @@ func (h *UpdateHandler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 
 	var verrors validation.Errors
 	if errors.As(err, &verrors) {
-		err := h.categoryComponent.Update(category, verrors).Render(w)
+		err := h.component.Update(category, verrors).Render(w)
 
 		h.SetError(w, err)
 	}

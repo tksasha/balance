@@ -12,17 +12,16 @@ type ListHandler struct {
 	*handler.Handler
 
 	service   category.Service
-	component *component.CategoryComponent
+	component *component.Component
 }
 
 func NewListHandler(
 	service category.Service,
-	component *component.CategoryComponent,
 ) *ListHandler {
 	return &ListHandler{
 		Handler:   handler.New(),
 		service:   service,
-		component: component,
+		component: component.New(),
 	}
 }
 
