@@ -5,34 +5,55 @@ import (
 	"testing"
 	"time"
 
+	"github.com/tksasha/balance/internal/app/category"
+	"github.com/tksasha/balance/internal/app/item"
 	"github.com/tksasha/balance/internal/app/item/component"
+	"github.com/tksasha/validation"
 	"gotest.tools/v3/golden"
 )
 
-func TestDate(t *testing.T) {
+func TestForm(t *testing.T) {
 	component := component.New()
 
-	date := time.Date(2025, 2, 26, 0, 0, 0, 0, time.UTC)
+	errors := validation.Errors{}
 
-	t.Run("when date is invalid", func(t *testing.T) {
+	categories := category.Categories{
+		{ID: 1045, Name: "Beverages", Income: false},
+		{ID: 1046, Name: "Food", Income: false},
+		{ID: 1048, Name: "Rent", Income: false},
+		{ID: 1049, Name: "Salary", Income: true},
+		{ID: 1050, Name: "Cashback", Income: true},
+	}
+
+	t.Run("when create item", func(t *testing.T) {
+		item := &item.Item{
+			ID:      0,
+			Date:    time.Date(2025, 2, 27, 0, 0, 0, 0, time.UTC),
+			Formula: "3+4",
+		}
+
 		w := bytes.NewBuffer([]byte{})
 
-		message := "date: is required"
-
-		if err := component.Date(date, &message).Render(w); err != nil {
+		if err := component.Form(item, categories, errors).Render(w); err != nil {
 			t.Fatal(err)
 		}
 
-		golden.Assert(t, w.String(), "date-with-errors.html")
+		golden.Assert(t, w.String(), "form-create.html")
 	})
 
-	t.Run("when date is valid", func(t *testing.T) {
+	t.Run("when update item", func(t *testing.T) {
+		item := &item.Item{
+			ID:      1027,
+			Date:    time.Date(2025, 2, 27, 0, 0, 0, 0, time.UTC),
+			Formula: "3+4",
+		}
+
 		w := bytes.NewBuffer([]byte{})
 
-		if err := component.Date(date, nil).Render(w); err != nil {
+		if err := component.Form(item, categories, errors).Render(w); err != nil {
 			t.Fatal(err)
 		}
 
-		golden.Assert(t, w.String(), "date.html")
+		golden.Assert(t, w.String(), "form-update.html")
 	})
 }
