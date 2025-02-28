@@ -130,6 +130,7 @@ func TestCashUpdateHandler(t *testing.T) { //nolint:funlen
 		mux.ServeHTTP(recorder, request)
 
 		assert.Equal(t, recorder.Code, http.StatusOK)
+		assert.Equal(t, recorder.Header().Get("Hx-Trigger-After-Swap"), "balance.cash.updated")
 
 		response, err := io.ReadAll(recorder.Body)
 		if err != nil {

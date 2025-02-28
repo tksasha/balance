@@ -31,6 +31,8 @@ func NewUpdateHandler(
 func (h *UpdateHandler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 	cash, err := h.handle(r)
 	if err == nil {
+		w.Header().Add("Hx-Trigger-After-Swap", "balance.cash.updated")
+
 		err := h.component.Update(cash).Render(w)
 
 		h.SetError(w, err)

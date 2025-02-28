@@ -6,5 +6,5 @@ import (
 )
 
 func (c *Component) Update(cash *cash.Cash) Node {
-	return c.cash(cash)
+	return c.ModalBody(c.Template(c.cash(cash)))
 }

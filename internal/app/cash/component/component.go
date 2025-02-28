@@ -16,6 +16,14 @@ func New() *Component {
 	}
 }
 
-func (c *Component) editPath(id int) string {
+func (c *Component) cashUpdatePath(id int) string {
+	return "/cashes/" + strconv.Itoa(id)
+}
+
+func (c *Component) cashEditPath(id int) string {
 	return "/cashes/" + strconv.Itoa(id) + "/edit"
+}
+
+func (c *Component) cashID(id int) string {
+	return "cash-" + strconv.Itoa(id)
 }

@@ -9,7 +9,7 @@ import (
 
 func (c *Component) Edit(cash *cash.Cash, errors validation.Errors) Node {
 	nodes := []Node{
-		htmx.Patch(c.editPath(cash.ID)),
+		htmx.Patch(c.cashUpdatePath(cash.ID)),
 		htmx.Target("#modal-body"),
 		htmx.Swap("outerHTML"),
 	}

@@ -7,30 +7,12 @@ import (
 	. "maragu.dev/gomponents/html" //nolint:stylecheck
 )
 
-func (c *Component) cashes(cashes cash.Cashes) Node {
-	return Div(Class("container-fluid"),
-		Div(Class("row mt-4"),
-			Div(Class("col-3"),
-				Div(Class("card cash"),
-					Div(Class("card-body"),
-						Table(Class("w-100 summarize"),
-							TBody(
-								Map(cashes, c.cash),
-							),
-						),
-					),
-				),
-			),
-		),
-	)
-}
-
 func (c *Component) cash(cash *cash.Cash) Node {
-	return Tr(c.id("cash", cash.ID),
+	return Tr(ID(c.cashID(cash.ID)), htmx.SwapOOB("true"),
 		Td(Text(cash.Name)),
 		Td(Class("sum"),
 			Div(Class("link"),
-				htmx.Get(c.editCashPath(cash.ID)),
+				htmx.Get(c.cashEditPath(cash.ID)),
 				htmx.Target("#modal-body"),
 				Data("bs-toggle", "modal"),
 				Data("bs-target", "#modal"),

@@ -18,12 +18,14 @@ func (c *Component) Modal() Node {
 func (c *Component) ModalDialog() Node {
 	return Div(
 		Class("modal-dialog modal-lg modal-dialog-centered"),
-		Div(
-			Class("modal-content"),
-			Div(
-				ID("modal-body"),
-				Class("modal-body"),
-			),
+		Div(Class("modal-content"),
+			c.ModalBody(nil),
 		),
+	)
+}
+
+func (c *Component) ModalBody(node Node) Node {
+	return Div(ID("modal-body"), Class("modal-body"),
+		Iff(node != nil, func() Node { return node }),
 	)
 }
