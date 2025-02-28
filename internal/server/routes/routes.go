@@ -3,6 +3,7 @@ package routes
 import (
 	"embed"
 	"net/http"
+	"time"
 
 	cash "github.com/tksasha/balance/internal/app/cash/handlers"
 	index "github.com/tksasha/balance/internal/app/index/handler"
@@ -41,7 +42,14 @@ func New(
 	mux := http.NewServeMux()
 
 	mux.Handle("GET /assets/{$}", http.RedirectHandler("/", http.StatusMovedPermanently))
-	mux.Handle("GET /assets/", http.FileServerFS(assets))
+
+	mux.HandleFunc("GET /assets/", func(w http.ResponseWriter, r *http.Request) {
+		w.Header().Set("Cache-Control", "public, max-age=31536000")
+
+		w.Header().Set("Expires", time.Now().AddDate(1, 0, 0).Format(http.TimeFormat))
+
+		http.FileServerFS(assets).ServeHTTP(w, r)
+	})
 
 	mux.Handle("GET /{$}", indexHandler)
 
