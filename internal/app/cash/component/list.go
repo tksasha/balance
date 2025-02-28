@@ -7,15 +7,11 @@ import (
 )
 
 func (c *Component) List(cashes cash.Cashes) Node {
-	return Div(Class("container-fluid"),
-		Div(Class("row mt-4"),
-			Div(Class("col-3"),
-				Div(Class("card cash"),
-					Div(Class("card-body"),
-						Table(Class("w-100 summarize"),
-							TBody(Map(cashes, c.cash)),
-						),
-					),
+	return Div(Class("col-3"),
+		Div(Class("card cash"),
+			Div(Class("card-body"),
+				Table(Class("w-100 summarize"),
+					TBody(Map(cashes, c.cash)),
 				),
 			),
 		),

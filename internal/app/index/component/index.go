@@ -22,8 +22,8 @@ func (c *Component) Index(cashes cash.Cashes, categories category.Categories, va
 			},
 			Body: []Node{
 				If(true, c.header(values)),
-				If(true, c.cashComponent.List(cashes)),
-				If(true, c.form(&item.Item{}, categories)),
+				If(true, c.cashes(0.0, 0.0, cashes)),
+				If(false, c.form(&item.Item{}, categories)),
 				If(false, c.items()),
 				c.Modal(),
 				Script(Src("/assets/bootstrap-0f43271223c74d330702ce94a39ed70d04e8fd36.js")),

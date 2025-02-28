@@ -3,6 +3,7 @@ package component
 import (
 	"time"
 
+	balancecomponent "github.com/tksasha/balance/internal/app/balance/component"
 	cashcomponent "github.com/tksasha/balance/internal/app/cash/component"
 	"github.com/tksasha/balance/internal/common/component"
 )
@@ -12,8 +13,9 @@ const yearFrom = 2015
 type Component struct {
 	*component.Component
 
-	cashComponent *cashcomponent.Component
-	years         []int
+	balanceComponent *balancecomponent.Component
+	cashComponent    *cashcomponent.Component
+	years            []int
 }
 
 func New() *Component {
@@ -24,8 +26,9 @@ func New() *Component {
 	}
 
 	return &Component{
-		Component:     component.New(),
-		cashComponent: cashcomponent.New(),
-		years:         years,
+		Component:        component.New(),
+		balanceComponent: balancecomponent.New(),
+		cashComponent:    cashcomponent.New(),
+		years:            years,
 	}
 }
