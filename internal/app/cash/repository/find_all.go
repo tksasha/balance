@@ -18,7 +18,8 @@ func (r *Repository) FindAll(ctx context.Context) (cash.Cashes, error) {
 		FROM
 			cashes
 		WHERE
-			currency = ?
+			deleted_at IS NULL
+			AND currency = ?
 	`
 
 	rows, err := r.db.QueryContext(ctx, query, currency)

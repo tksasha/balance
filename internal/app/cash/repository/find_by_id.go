@@ -23,8 +23,8 @@ func (r *Repository) FindByID(ctx context.Context, id int) (*cash.Cash, error) {
 		FROM
 		    cashes
 		WHERE
-		    currency = ?
-		    AND deleted_at IS NULL
+			deleted_at IS NULL
+			AND currency = ?
 		    AND id = ?
 	`
 

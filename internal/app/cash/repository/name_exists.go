@@ -15,8 +15,8 @@ func (r *Repository) NameExists(ctx context.Context, name string, id int) (bool,
 		FROM
 			cashes
 		WHERE
-			currency = ?
-			AND deleted_at IS NULL
+			deleted_at IS NULL
+			AND currency = ?
 			AND name = ?
 			AND id != ?
 	`

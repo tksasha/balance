@@ -18,7 +18,8 @@ func (r *Repository) Update(ctx context.Context, cash *cash.Cash) error {
 		    name = ?,
 		    supercategory = ?
 		WHERE
-		    id = ?
+			deleted_at IS NULL
+		    AND id = ?
 		    AND currency = ?
 	`
 
