@@ -5,6 +5,7 @@ import (
 
 	"github.com/tksasha/balance/internal/app/cash"
 	"github.com/tksasha/balance/internal/app/category"
+	"github.com/tksasha/balance/internal/app/item"
 	. "maragu.dev/gomponents" //nolint:stylecheck
 	htmx "maragu.dev/gomponents-htmx"
 	. "maragu.dev/gomponents/components" //nolint:stylecheck
@@ -12,8 +13,6 @@ import (
 )
 
 func (c *Component) Index(cashes cash.Cashes, categories category.Categories, values url.Values) Node {
-	_ = c.form
-
 	return HTML5(
 		HTML5Props{
 			Title:    "Balance",
@@ -23,44 +22,21 @@ func (c *Component) Index(cashes cash.Cashes, categories category.Categories, va
 				Link(Rel("icon"), Type("image/x-icon"), Href("/assets/hryvnia.png")),
 			},
 			Body: []Node{
-				Header(
-					c.Months(values),
-					c.Years(values),
-				),
-				// Div(
-				// 	Class("card mb-3"),
-				// 	Div(
-				// 		Class("card-body"),
-				// 		c.form(&item.Item{}, categories, nil),
-				// 	),
-				// ),
-				Div(Class("container-fluid"),
-					Div(Class("row mt-4"),
-						c.cashes(cashes),
+				c.header(values),
+				If(true, c.cashes(cashes)),
+				If(false, c.form(&item.Item{}, categories)),
+				If(false, c.items()),
+				If(
+					true,
+					Div(ID("items"), Style("display: none"),
+						htmx.Get("/items/?month=02&year=2025"), // TODO: fix me
+						htmx.Trigger("load"),
 					),
-				),
-				Div(
-					Class("container"),
-					Div(
-						Class("row mt-4 mb-5"),
-						Div(
-							Class("col"),
-							Div(
-								Class("card items"),
-								Div(
-									Class("card-body"),
-									ID("items"),
-									htmx.Get(c.ListItems(0, 0, url.Values{})),
-									htmx.Trigger("load"),
-									Div(Class("spinner-border htmx-indicator"), ID("htmx-indicator")),
-								),
-							),
-						),
-					),
-				),
+				), // TODO: delme
 				c.Modal(),
 				Script(Src("/assets/bootstrap.js")),
 				Script(Src("/assets/htmx.js")),
+				Script(Src("/assets/application.js")),
 			},
 		},
 	)
