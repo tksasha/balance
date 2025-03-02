@@ -1,12 +1,6 @@
 MAIN=cmd/balance/main.go
 OUTPUT=balance
 
-AIR=github.com/air-verse/air@latest
-FORMATTER=mvdan.cc/gofumpt@latest
-LINTER=github.com/golangci/golangci-lint/cmd/golangci-lint@latest
-MOCKGEN=go.uber.org/mock/mockgen@latest
-WIRE=github.com/google/wire/cmd/wire@latest
-
 .PHONY: default
 default: vet fix fmt lint test
 
@@ -23,12 +17,12 @@ fix:
 .PHONY: fmt
 fmt:
 	@echo "go fmt"
-	@go run $(FORMATTER) -l -w .
+	@go tool -modfile=go.tool.mod gofumpt -l -w .
 
 .PHONY: lint
 lint:
 	@echo "go lint"
-	@go run $(LINTER) run
+	@go tool -modfile=go.tool.mod -modfile=go.tool.mod golangci-lint run
 
 .PHONY: test
 test:
@@ -37,12 +31,11 @@ test:
 
 .PHONY: update
 update:
-	@go test ./... -update
+	go test ./... -update
 
 .PHONY: air
 air:
-	@echo "go air"
-	@go run $(AIR)
+	go tool -modfile=go.tool.mod air
 
 .PHONY: run
 run:
@@ -67,37 +60,44 @@ gen: wire mockgen
 
 .PHONY: mockgen
 mockgen:
-	@go run $(MOCKGEN) \
+	@go tool -modfile=go.tool.mod mockgen \
 		-source internal/app/cash/interfaces.go \
 		-package mocks \
 		-destination internal/app/cash/test/mocks/interfaces.mock.go
-	@go run $(MOCKGEN) \
+	@go tool -modfile=go.tool.mod mockgen \
 		-source internal/app/category/interfaces.go \
 		-package mocks \
 		-destination internal/app/category/test/mocks/interfaces.mock.go
-	@go run $(MOCKGEN) \
+	@go tool -modfile=go.tool.mod mockgen \
 		-source internal/app/item/interfaces.go \
 		-package mocks \
 		-destination internal/app/item/test/mocks/interfaces.mock.go
-	@go run $(MOCKGEN) \
+	@go tool -modfile=go.tool.mod mockgen \
 		-source internal/app/index/interfaces.go \
 		-package mocks \
 		-destination internal/app/index/test/mocks/interfaces.mock.go
-	@go run $(MOCKGEN) \
+	@go tool -modfile=go.tool.mod mockgen \
 		-source internal/backoffice/category/interfaces.go \
 		-package mocks \
 		-destination internal/backoffice/category/test/mocks/interfaces.mock.go
-	@go run $(MOCKGEN) \
+	@go tool -modfile=go.tool.mod mockgen \
 		-source internal/backoffice/cash/interfaces.go \
 		-package mocks \
 		-destination internal/backoffice/cash/test/mocks/interfaces.mock.go
 
 .PHONY: wire
 wire:
-	@echo "wire gen"
-	@go run $(WIRE) internal/wire/wire.go
+	@go tool -modfile=go.tool.mod wire internal/wire/wire.go
 
 .PHONY: migration # to create new migration
 migration:
 	@if [ -z "$(name)" ]; then echo "name is required"; exit 1; fi
 	touch "internal/db/migrations/$(shell date "+%Y%m%d%H%M%S")_$(name).sql"
+
+.PHONY: prepare
+prepare:
+	go get -tool github.com/air-verse/air@latest
+	go get -tool github.com/golangci/golangci-lint/cmd/golangci-lint@latest
+	go get -tool github.com/google/wire/cmd/wire@latest
+	go get -tool go.uber.org/mock/mockgen@latest
+	go get -tool mvdan.cc/gofumpt@latest
