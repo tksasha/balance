@@ -4,7 +4,7 @@ import (
 	"bytes"
 	"testing"
 
-	"github.com/tksasha/balance/internal/common/component"
+	"github.com/tksasha/balance/internal/app/item/component"
 	"gotest.tools/v3/assert"
 )
 
