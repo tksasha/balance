@@ -32,7 +32,7 @@ func New(
 }
 
 func (h *Handler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
-	residual, balance, err := h.balanceService.Balance(r.Context())
+	balance, err := h.balanceService.Balance(r.Context())
 	if err != nil {
 		h.SetError(w, err)
 
@@ -53,7 +53,7 @@ func (h *Handler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	err = h.component.Index(residual, balance, cashes, categories, r.URL.Query()).Render(w)
+	err = h.component.Index(balance, cashes, categories, r.URL.Query()).Render(w)
 
 	h.SetError(w, err)
 }

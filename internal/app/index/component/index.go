@@ -3,6 +3,7 @@ package component
 import (
 	"net/url"
 
+	"github.com/tksasha/balance/internal/app/balance"
 	"github.com/tksasha/balance/internal/app/cash"
 	"github.com/tksasha/balance/internal/app/category"
 	"github.com/tksasha/balance/internal/app/item"
@@ -12,8 +13,7 @@ import (
 )
 
 func (c *Component) Index(
-	residual,
-	balance float64,
+	balance *balance.Balance,
 	cashes cash.Cashes,
 	categories category.Categories,
 	values url.Values,
@@ -28,7 +28,7 @@ func (c *Component) Index(
 			},
 			Body: []Node{
 				If(false, c.header(values)),
-				If(true, c.cashes(residual, balance, cashes)),
+				If(true, c.cashes(balance, cashes)),
 				If(false, c.form(&item.Item{}, categories)),
 				If(false, c.items()),
 				c.Modal(),

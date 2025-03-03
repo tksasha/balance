@@ -22,7 +22,7 @@ func TestBalance(t *testing.T) {
 	t.Run("returns error when calculate income failed", func(t *testing.T) {
 		repository.EXPECT().Income(ctx).Return(0.0, errors.New("calculate income error"))
 
-		_, _, err := service.Balance(ctx)
+		_, err := service.Balance(ctx)
 
 		assert.Error(t, err, "calculate income error")
 	})
@@ -32,7 +32,7 @@ func TestBalance(t *testing.T) {
 
 		repository.EXPECT().Expense(ctx).Return(0.0, errors.New("calculate expense error"))
 
-		_, _, err := service.Balance(ctx)
+		_, err := service.Balance(ctx)
 
 		assert.Error(t, err, "calculate expense error")
 	})
@@ -44,7 +44,7 @@ func TestBalance(t *testing.T) {
 
 		repository.EXPECT().Cashes(ctx).Return(0.0, errors.New("calculate cashes error"))
 
-		_, _, err := service.Balance(ctx)
+		_, err := service.Balance(ctx)
 
 		assert.Error(t, err, "calculate cashes error")
 	})
@@ -56,10 +56,10 @@ func TestBalance(t *testing.T) {
 
 		repository.EXPECT().Cashes(ctx).Return(33.33, nil)
 
-		residual, balance, err := service.Balance(ctx)
+		balance, err := service.Balance(ctx)
 
 		assert.NilError(t, err)
-		assert.Equal(t, residual, 55.55)
-		assert.Equal(t, balance, -22.22)
+		assert.Equal(t, balance.Residual, 55.55)
+		assert.Equal(t, balance.Balance, -22.22)
 	})
 }

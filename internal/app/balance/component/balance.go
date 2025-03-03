@@ -1,11 +1,12 @@
 package component
 
 import (
+	"github.com/tksasha/balance/internal/app/balance"
 	. "maragu.dev/gomponents"      //nolint:stylecheck
 	. "maragu.dev/gomponents/html" //nolint:stylecheck
 )
 
-func (c *Component) Balance(residual, balance float64) Node {
+func (c *Component) Balance(balance *balance.Balance) Node {
 	return Div(Class("col-3"),
 		Div(Class("card cash"),
 			Div(Class("card-body"),
@@ -17,7 +18,7 @@ func (c *Component) Balance(residual, balance float64) Node {
 							),
 							Td(Class("sum"),
 								Div(Class("link"),
-									Text(c.Money(residual)),
+									Text(c.Money(balance.Residual)),
 								),
 							),
 						),
@@ -27,7 +28,7 @@ func (c *Component) Balance(residual, balance float64) Node {
 							),
 							Td(Class("sum"),
 								Div(Class("link"),
-									Text(c.Money(balance)),
+									Text(c.Money(balance.Balance)),
 								),
 							),
 						),

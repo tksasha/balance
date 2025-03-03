@@ -3,6 +3,7 @@ package index
 import (
 	"context"
 
+	"github.com/tksasha/balance/internal/app/balance"
 	"github.com/tksasha/balance/internal/app/cash"
 	"github.com/tksasha/balance/internal/app/category"
 )
@@ -16,5 +17,5 @@ type CashService interface {
 }
 
 type BalanceService interface {
-	Balance(ctx context.Context) (float64, float64, error)
+	Balance(ctx context.Context) (*balance.Balance, error)
 }
