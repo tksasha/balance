@@ -34,7 +34,7 @@ func (c *Component) Index(
 				c.Modal(),
 				Script(Src("/assets/bootstrap-0f43271223c74d330702ce94a39ed70d04e8fd36.js")),
 				Script(Src("/assets/htmx-ac810f4cc51114714079b5051f1bb57802a9625b.js")),
-				Script(Src("/assets/application.js")),
+				Script(Src("/assets/application-02005eb566d0689befc6cffc9b68fa08e3524d8d.js")),
 			},
 		},
 	)
