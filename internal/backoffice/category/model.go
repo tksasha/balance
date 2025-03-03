@@ -9,6 +9,7 @@ import (
 type Category struct {
 	ID            int
 	Name          string
+	Slug          string
 	Income        bool
 	Visible       bool
 	Currency      currency.Currency

@@ -8,6 +8,7 @@ require (
 	github.com/mattn/go-sqlite3 v1.14.24
 	github.com/tksasha/month v0.0.7
 	github.com/tksasha/validation v0.0.4
+	github.com/tksasha/xstrings v0.0.6
 	go.uber.org/mock v0.5.0
 	golang.org/x/text v0.22.0
 	gotest.tools/v3 v3.5.2
@@ -19,5 +20,4 @@ require (
 	github.com/google/go-cmp v0.6.0 // indirect
 	github.com/mrxrsd/gojacego v1.0.0 // indirect
 	github.com/tksasha/calculator v0.0.8 // indirect
-	github.com/tksasha/xstrings v0.0.4 // indirect
 )

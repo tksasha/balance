@@ -15,6 +15,7 @@ func (r *Repository) Update(ctx context.Context, category *category.Category) er
 			categories
 		SET
 		    name = ?,
+			slug = ?,
 		    income = ?,
 		    visible = ?,
 		    supercategory = ?
@@ -27,6 +28,7 @@ func (r *Repository) Update(ctx context.Context, category *category.Category) er
 		ctx,
 		query,
 		category.Name,
+		category.Slug,
 		category.Income,
 		category.Visible,
 		category.Supercategory,
