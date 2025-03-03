@@ -6,7 +6,7 @@ import (
 	"testing"
 	"time"
 
-	"github.com/tksasha/balance/internal/common/component"
+	"github.com/tksasha/balance/internal/app/index/component"
 	"gotest.tools/v3/assert"
 )
 

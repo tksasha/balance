@@ -1,4 +1,4 @@
-package components_test
+package component_test
 
 import (
 	"bytes"

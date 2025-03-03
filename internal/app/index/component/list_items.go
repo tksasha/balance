@@ -17,15 +17,15 @@ func (c *Component) ListItems(year, month int, values url.Values) string {
 
 	maps.Copy(params, values)
 
-	params.Set("month", c.month(month, params))
-	params.Set("year", c.year(year, params))
+	params.Set("month", c.getMonth(month, params))
+	params.Set("year", c.getYear(year, params))
 
 	path.RawQuery = params.Encode()
 
 	return path.String()
 }
 
-func (c *Component) month(value int, values url.Values) string {
+func (c *Component) getMonth(value int, values url.Values) string {
 	var err error
 
 	month := value
@@ -40,7 +40,7 @@ func (c *Component) month(value int, values url.Values) string {
 	return fmt.Sprintf("%02d", month)
 }
 
-func (c *Component) year(value int, values url.Values) string {
+func (c *Component) getYear(value int, values url.Values) string {
 	var err error
 
 	year := value
