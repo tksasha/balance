@@ -17,6 +17,7 @@ import (
 	"github.com/tksasha/balance/internal/db"
 	"github.com/tksasha/balance/internal/db/nameprovider"
 	"gotest.tools/v3/assert"
+	"gotest.tools/v3/golden"
 )
 
 func TestCashUpdateHandler(t *testing.T) { //nolint:funlen
@@ -103,9 +104,7 @@ func TestCashUpdateHandler(t *testing.T) { //nolint:funlen
 			t.Fatal(err)
 		}
 
-		body := string(response)
-
-		assert.Assert(t, strings.Contains(body, "name: is required"))
+		golden.Assert(t, string(response), "update-with-errors.html")
 	})
 
 	t.Run("renders 204 when cash updated", func(t *testing.T) {

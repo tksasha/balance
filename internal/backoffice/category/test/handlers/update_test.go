@@ -17,6 +17,7 @@ import (
 	"github.com/tksasha/balance/internal/db"
 	"github.com/tksasha/balance/internal/db/nameprovider"
 	"gotest.tools/v3/assert"
+	"gotest.tools/v3/golden"
 )
 
 func TestCategoryUpdateHandler(t *testing.T) { //nolint:funlen
@@ -100,12 +101,12 @@ func TestCategoryUpdateHandler(t *testing.T) { //nolint:funlen
 
 		assert.Equal(t, recorder.Code, http.StatusOK)
 
-		responseBody, err := io.ReadAll(recorder.Body)
+		response, err := io.ReadAll(recorder.Body)
 		if err != nil {
 			t.Fatal(err)
 		}
 
-		assert.Assert(t, strings.Contains(string(responseBody), "name: already exists"))
+		golden.Assert(t, string(response), "update-with-errors.html")
 	})
 
 	t.Run("responds 204 when category updated", func(t *testing.T) {

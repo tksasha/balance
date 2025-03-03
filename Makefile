@@ -33,7 +33,7 @@ test:
 
 .PHONY: update
 update:
-	go test ./... -update
+	@go test ./... -update
 
 .PHONY: air
 air:

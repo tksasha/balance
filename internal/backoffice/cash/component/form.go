@@ -8,6 +8,8 @@ import (
 )
 
 func (c *Component) form(cash *cash.Cash, errors validation.Errors) Node {
+	_ = errors
+
 	return Form(
 		Div(
 			Class("mb-3"),
@@ -21,7 +23,6 @@ func (c *Component) form(cash *cash.Cash, errors validation.Errors) Node {
 				ID("cash_name"),
 				Value(cash.Name),
 			),
-			c.Errors("name", errors),
 		),
 		Div(
 			Class("mb-3"),

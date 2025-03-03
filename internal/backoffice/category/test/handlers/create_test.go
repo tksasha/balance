@@ -16,7 +16,7 @@ import (
 	"github.com/tksasha/balance/internal/db"
 	"github.com/tksasha/balance/internal/db/nameprovider"
 	"gotest.tools/v3/assert"
-	is "gotest.tools/v3/assert/cmp"
+	"gotest.tools/v3/golden"
 )
 
 func TestCategoryCreateHandler(t *testing.T) { //nolint:funlen
@@ -60,13 +60,14 @@ func TestCategoryCreateHandler(t *testing.T) { //nolint:funlen
 
 		mux.ServeHTTP(recorder, request)
 
-		responseBody, err := io.ReadAll(recorder.Body)
+		assert.Equal(t, recorder.Code, http.StatusOK)
+
+		response, err := io.ReadAll(recorder.Body)
 		if err != nil {
 			t.Fatal(err)
 		}
 
-		assert.Equal(t, recorder.Code, http.StatusOK)
-		assert.Assert(t, is.Contains(string(responseBody), "name: is required"))
+		golden.Assert(t, string(response), "create-with-errors.html")
 	})
 
 	t.Run("responds 201 on successful create", func(t *testing.T) {

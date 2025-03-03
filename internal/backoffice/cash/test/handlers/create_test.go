@@ -16,6 +16,7 @@ import (
 	"github.com/tksasha/balance/internal/db"
 	"github.com/tksasha/balance/internal/db/nameprovider"
 	"gotest.tools/v3/assert"
+	"gotest.tools/v3/golden"
 )
 
 func TestCashCreateHandler(t *testing.T) { //nolint:funlen
@@ -60,13 +61,14 @@ func TestCashCreateHandler(t *testing.T) { //nolint:funlen
 
 		mux.ServeHTTP(recorder, request)
 
-		body, err := io.ReadAll(recorder.Body)
+		assert.Equal(t, recorder.Code, http.StatusOK)
+
+		response, err := io.ReadAll(recorder.Body)
 		if err != nil {
 			t.Fatal(err)
 		}
 
-		assert.Equal(t, recorder.Code, http.StatusOK)
-		assert.Assert(t, strings.Contains(string(body), "name: is required"))
+		golden.Assert(t, string(response), "create-with-errors.html")
 	})
 
 	t.Run("responds 201 when create succeeded", func(t *testing.T) {
