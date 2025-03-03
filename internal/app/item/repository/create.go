@@ -17,10 +17,11 @@ func (r *Repository) Create(ctx context.Context, item *item.Item) error {
 			sum,
 			category_id,
 			category_name,
+			category_slug,
 			description,
 			currency
 		)
-		VALUES (?, ?, ?, ?, ?, ?, ?)
+		VALUES (?, ?, ?, ?, ?, ?, ?, ?)
 	`
 
 	if _, err := r.db.ExecContext(
@@ -31,6 +32,7 @@ func (r *Repository) Create(ctx context.Context, item *item.Item) error {
 		item.Sum,
 		item.CategoryID,
 		item.CategoryName,
+		item.CategorySlug,
 		item.Description,
 		currency,
 	); err != nil {

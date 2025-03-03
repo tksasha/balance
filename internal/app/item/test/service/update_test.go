@@ -285,6 +285,7 @@ func TestUpdate(t *testing.T) { //nolint:funlen,maintidx
 			Sum:          4,
 			CategoryID:   1100,
 			CategoryName: sql.NullString{String: "Beverages", Valid: true},
+			CategorySlug: "beverages",
 			Description:  "food, wine and flowers",
 		}
 
@@ -333,6 +334,7 @@ func TestUpdate(t *testing.T) { //nolint:funlen,maintidx
 			Sum:          4,
 			CategoryID:   1100,
 			CategoryName: sql.NullString{String: "Beverages", Valid: true},
+			CategorySlug: "beverages",
 			Description:  "food, wine and flowers",
 		}
 

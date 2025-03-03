@@ -169,6 +169,7 @@ func TestItemUpdateHandler(t *testing.T) { //nolint:funlen
 		assert.Equal(t, item.Sum, 84.0)
 		assert.Equal(t, item.CategoryID, 1148)
 		assert.Equal(t, item.CategoryName.String, "Pharmaceutical")
+		assert.Equal(t, item.CategorySlug, "pharmaceutical")
 		assert.Equal(t, item.Description, "pizza, ninja and disco")
 	})
 }

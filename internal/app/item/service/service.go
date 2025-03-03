@@ -9,6 +9,7 @@ import (
 	"github.com/tksasha/balance/internal/common"
 	"github.com/tksasha/balance/internal/common/service"
 	"github.com/tksasha/validation"
+	"github.com/tksasha/xstrings"
 )
 
 type Service struct {
@@ -47,6 +48,8 @@ func (s *Service) setCategory(
 	}
 
 	item.CategoryName = sql.NullString{String: category.Name, Valid: true}
+
+	item.CategorySlug = xstrings.Transliterate(item.CategoryName.String)
 
 	return nil
 }

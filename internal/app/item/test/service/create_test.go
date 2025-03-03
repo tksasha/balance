@@ -171,18 +171,19 @@ func TestCreate(t *testing.T) { //nolint:funlen
 			FindByID(ctx, 1244).
 			Return(category, nil)
 
-		item := &item.Item{
+		itemToCreate := &item.Item{
 			Date:         time.Date(2025, 1, 23, 0, 0, 0, 0, time.UTC),
 			Formula:      "42.69+69.42",
 			Sum:          112.11,
 			CategoryID:   1244,
 			CategoryName: sql.NullString{String: "Entrepreneurship", Valid: true},
+			CategorySlug: "entrepreneurship",
 			Description:  "health, beauty & wellness",
 		}
 
 		itemRepository.
 			EXPECT().
-			Create(ctx, item).
+			Create(ctx, itemToCreate).
 			Return(errors.New("create item error"))
 
 		_, err := service.Create(ctx, request)
@@ -208,18 +209,19 @@ func TestCreate(t *testing.T) { //nolint:funlen
 			FindByID(ctx, 1307).
 			Return(category, nil)
 
-		item := &item.Item{
+		itemToCreate := &item.Item{
 			Date:         time.Date(2025, 0o1, 23, 0, 0, 0, 0, time.UTC),
 			Formula:      "42.69+69.42",
 			Sum:          112.11,
 			CategoryID:   1307,
 			CategoryName: sql.NullString{String: "Telecommunications", Valid: true},
+			CategorySlug: "telecommunications",
 			Description:  "arts, crafts & hobbies",
 		}
 
 		itemRepository.
 			EXPECT().
-			Create(ctx, item).
+			Create(ctx, itemToCreate).
 			Return(nil)
 
 		_, err := service.Create(ctx, request)

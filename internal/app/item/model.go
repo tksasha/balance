@@ -14,6 +14,7 @@ type Item struct {
 	Sum          float64
 	CategoryID   int
 	CategoryName sql.NullString
+	CategorySlug string
 	Description  string
 	Currency     currency.Currency
 }

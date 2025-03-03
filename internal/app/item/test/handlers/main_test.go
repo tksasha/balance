@@ -58,6 +58,7 @@ func findItemByDate(t *testing.T, db *sql.DB, currency currency.Currency, date s
 			date,
 			category_id,
 			category_name,
+			category_slug,
 			formula,
 			sum,
 			description
@@ -76,6 +77,7 @@ func findItemByDate(t *testing.T, db *sql.DB, currency currency.Currency, date s
 		&item.Date,
 		&item.CategoryID,
 		&item.CategoryName,
+		&item.CategorySlug,
 		&item.Formula,
 		&item.Sum,
 		&item.Description,
