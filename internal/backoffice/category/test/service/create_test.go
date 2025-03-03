@@ -90,8 +90,9 @@ func TestCreate(t *testing.T) { //nolint:funlen
 			Supercategory: "58",
 		}
 
-		category := &category.Category{
+		categoryToCreate := &category.Category{
 			Name:          "Confectionery",
+			Slug:          "confectionery",
 			Supercategory: 58,
 		}
 
@@ -102,7 +103,7 @@ func TestCreate(t *testing.T) { //nolint:funlen
 
 		repository.
 			EXPECT().
-			Create(ctx, category).
+			Create(ctx, categoryToCreate).
 			Return(errors.New("create category error"))
 
 		_, err := service.Create(ctx, request)
@@ -118,8 +119,9 @@ func TestCreate(t *testing.T) { //nolint:funlen
 			Supercategory: "23",
 		}
 
-		category := &category.Category{
+		categoryToCreate := &category.Category{
 			Name:          "Haberdashery",
+			Slug:          "haberdashery",
 			Income:        true,
 			Visible:       true,
 			Supercategory: 23,
@@ -132,7 +134,7 @@ func TestCreate(t *testing.T) { //nolint:funlen
 
 		repository.
 			EXPECT().
-			Create(ctx, category).
+			Create(ctx, categoryToCreate).
 			Return(nil)
 
 		_, err := service.Create(ctx, request)

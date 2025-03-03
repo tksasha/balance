@@ -11,15 +11,16 @@ func (r *Repository) Create(ctx context.Context, category *category.Category) er
 
 	query := `
 		INSERT INTO
-		    categories (name, income, visible, currency, supercategory)
+		    categories (name, slug, income, visible, currency, supercategory)
 		VALUES
-		    (?, ?, ?, ?, ?)
+		    (?, ?, ?, ?, ?, ?)
 	`
 
 	result, err := r.db.ExecContext(
 		ctx,
 		query,
 		category.Name,
+		category.Slug,
 		category.Income,
 		category.Visible,
 		currency,

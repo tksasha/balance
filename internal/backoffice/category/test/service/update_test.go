@@ -160,6 +160,7 @@ func TestUpdate(t *testing.T) { //nolint:funlen
 		categoryToUpdate := &category.Category{
 			ID:   1524,
 			Name: "Miscellaneous",
+			Slug: "miscellaneous",
 		}
 
 		repository.
@@ -202,6 +203,7 @@ func TestUpdate(t *testing.T) { //nolint:funlen
 		categoryToUpdate := &category.Category{
 			ID:            1529,
 			Name:          "Stationery",
+			Slug:          "stationery",
 			Income:        true,
 			Visible:       true,
 			Supercategory: 3,

@@ -47,6 +47,7 @@ func TestCategoryDeleteHandler(t *testing.T) {
 		categoryToCreate := &category.Category{
 			ID:       1411,
 			Name:     "Miscellaneous",
+			Slug:     "miscellaneous",
 			Currency: currency.EUR,
 		}
 

@@ -154,6 +154,7 @@ func TestCategoryUpdateHandler(t *testing.T) { //nolint:funlen
 
 		assert.Equal(t, category.ID, 1208)
 		assert.Equal(t, category.Name, "Heterogeneous")
+		assert.Equal(t, category.Slug, "heterogeneous")
 		assert.Equal(t, category.Income, true)
 		assert.Equal(t, category.Visible, true)
 		assert.Equal(t, category.Currency, currency.USD)

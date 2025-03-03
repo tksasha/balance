@@ -5,6 +5,7 @@ import (
 
 	"github.com/tksasha/balance/internal/backoffice/category"
 	"github.com/tksasha/validation"
+	"github.com/tksasha/xstrings"
 )
 
 func (s *Service) Update(ctx context.Context, request category.UpdateRequest) (*category.Category, error) {
@@ -16,6 +17,8 @@ func (s *Service) Update(ctx context.Context, request category.UpdateRequest) (*
 	validation := validation.New()
 
 	category.Name = validation.Presence("name", request.Name)
+
+	category.Slug = xstrings.Transliterate(category.Name)
 
 	if err := s.nameAlreadyExists(ctx, category.Name, category.ID, validation); err != nil {
 		return nil, err

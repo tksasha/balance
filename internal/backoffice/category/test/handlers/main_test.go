@@ -38,11 +38,27 @@ func cleanup(t *testing.T, db *sql.DB) {
 func createCategory(t *testing.T, db *sql.DB, category *category.Category) {
 	t.Helper()
 
+	query := `
+		INSERT INTO
+		    categories (
+		        id,
+		        name,
+		        slug,
+		        income,
+		        visible,
+		        currency,
+		        supercategory
+		    )
+		VALUES
+		    (?, ?, ?, ?, ?, ?, ?)
+	`
+
 	if _, err := db.ExecContext(
 		t.Context(),
-		"INSERT INTO categories(id, name, income, visible, currency, supercategory) VALUES(?, ?, ?, ?, ?, ?)",
+		query,
 		category.ID,
 		category.Name,
+		category.Slug,
 		category.Income,
 		category.Visible,
 		category.Currency,
@@ -59,6 +75,7 @@ func findCategoryByID(t *testing.T, db *sql.DB, currency currency.Currency, id i
 		SELECT
 			id,
 			name,
+			slug,
 			income,
 			visible,
 			currency,
@@ -78,6 +95,7 @@ func findCategoryByID(t *testing.T, db *sql.DB, currency currency.Currency, id i
 		Scan(
 			&category.ID,
 			&category.Name,
+			&category.Slug,
 			&category.Income,
 			&category.Visible,
 			&category.Currency,
@@ -94,9 +112,20 @@ func findCategoryByName(t *testing.T, db *sql.DB, currency currency.Currency, na
 	t.Helper()
 
 	query := `
-		SELECT id, name, income, visible, currency, supercategory, deleted_at
-		FROM categories
-		WHERE name=? AND currency=?
+		SELECT
+			id,
+			name,
+			slug,
+			income,
+			visible,
+			currency,
+			supercategory,
+			deleted_at
+		FROM
+			categories
+		WHERE
+			name=?
+			AND currency=?
 	`
 
 	category := &category.Category{}
@@ -106,6 +135,7 @@ func findCategoryByName(t *testing.T, db *sql.DB, currency currency.Currency, na
 		Scan(
 			&category.ID,
 			&category.Name,
+			&category.Slug,
 			&category.Income,
 			&category.Visible,
 			&category.Currency,

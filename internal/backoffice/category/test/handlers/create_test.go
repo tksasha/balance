@@ -98,6 +98,7 @@ func TestCategoryCreateHandler(t *testing.T) { //nolint:funlen
 		category := findCategoryByName(t, db, currency.EUR, "Miscellaneous")
 
 		assert.Equal(t, category.Name, "Miscellaneous")
+		assert.Equal(t, category.Slug, "miscellaneous")
 		assert.Equal(t, category.Income, true)
 		assert.Equal(t, category.Visible, true)
 		assert.Equal(t, category.Currency, currency.EUR)
