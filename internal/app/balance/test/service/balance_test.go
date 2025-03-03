@@ -4,8 +4,8 @@ import (
 	"errors"
 	"testing"
 
-	"github.com/tksasha/balance/internal/app/index/service"
-	"github.com/tksasha/balance/internal/app/index/test/mocks"
+	"github.com/tksasha/balance/internal/app/balance/service"
+	"github.com/tksasha/balance/internal/app/balance/test/mocks"
 	"go.uber.org/mock/gomock"
 	"gotest.tools/v3/assert"
 )
@@ -22,7 +22,7 @@ func TestBalance(t *testing.T) {
 	t.Run("returns error when calculate income failed", func(t *testing.T) {
 		repository.EXPECT().Income(ctx).Return(0.0, errors.New("calculate income error"))
 
-		_, err := service.Balance(ctx)
+		_, _, err := service.Balance(ctx)
 
 		assert.Error(t, err, "calculate income error")
 	})
@@ -32,7 +32,7 @@ func TestBalance(t *testing.T) {
 
 		repository.EXPECT().Expense(ctx).Return(0.0, errors.New("calculate expense error"))
 
-		_, err := service.Balance(ctx)
+		_, _, err := service.Balance(ctx)
 
 		assert.Error(t, err, "calculate expense error")
 	})
@@ -44,7 +44,7 @@ func TestBalance(t *testing.T) {
 
 		repository.EXPECT().Cashes(ctx).Return(0.0, errors.New("calculate cashes error"))
 
-		_, err := service.Balance(ctx)
+		_, _, err := service.Balance(ctx)
 
 		assert.Error(t, err, "calculate cashes error")
 	})
@@ -56,9 +56,10 @@ func TestBalance(t *testing.T) {
 
 		repository.EXPECT().Cashes(ctx).Return(33.33, nil)
 
-		balance, err := service.Balance(ctx)
+		residual, balance, err := service.Balance(ctx)
 
 		assert.NilError(t, err)
+		assert.Equal(t, residual, 55.55)
 		assert.Equal(t, balance, -22.22)
 	})
 }

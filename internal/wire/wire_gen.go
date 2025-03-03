@@ -7,14 +7,14 @@ package wire
 
 import (
 	"context"
+	repository4 "github.com/tksasha/balance/internal/app/balance/repository"
+	service4 "github.com/tksasha/balance/internal/app/balance/service"
 	handlers3 "github.com/tksasha/balance/internal/app/cash/handlers"
 	repository3 "github.com/tksasha/balance/internal/app/cash/repository"
 	service3 "github.com/tksasha/balance/internal/app/cash/service"
 	repository5 "github.com/tksasha/balance/internal/app/category/repository"
 	service5 "github.com/tksasha/balance/internal/app/category/service"
 	"github.com/tksasha/balance/internal/app/index/handler"
-	repository4 "github.com/tksasha/balance/internal/app/index/repository"
-	service4 "github.com/tksasha/balance/internal/app/index/service"
 	handlers4 "github.com/tksasha/balance/internal/app/item/handlers"
 	repository6 "github.com/tksasha/balance/internal/app/item/repository"
 	service6 "github.com/tksasha/balance/internal/app/item/service"

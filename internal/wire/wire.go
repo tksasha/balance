@@ -6,6 +6,9 @@ import (
 	"context"
 
 	"github.com/google/wire"
+	"github.com/tksasha/balance/internal/app/balance"
+	balancerepository "github.com/tksasha/balance/internal/app/balance/repository"
+	balanceservice "github.com/tksasha/balance/internal/app/balance/service"
 	"github.com/tksasha/balance/internal/app/cash"
 	cashhandlers "github.com/tksasha/balance/internal/app/cash/handlers"
 	cashrepository "github.com/tksasha/balance/internal/app/cash/repository"
@@ -15,8 +18,6 @@ import (
 	categoryservice "github.com/tksasha/balance/internal/app/category/service"
 	"github.com/tksasha/balance/internal/app/index"
 	indexhandler "github.com/tksasha/balance/internal/app/index/handler"
-	indexrepository "github.com/tksasha/balance/internal/app/index/repository"
-	indexservice "github.com/tksasha/balance/internal/app/index/service"
 	"github.com/tksasha/balance/internal/app/item"
 	itemhandlers "github.com/tksasha/balance/internal/app/item/handlers"
 	itemrepository "github.com/tksasha/balance/internal/app/item/repository"
@@ -54,6 +55,8 @@ func InitializeServer() *server.Server {
 		backofficecategoryhandlers.NewUpdateHandler,
 		backofficecategoryrepository.New,
 		backofficecategoryservice.New,
+		balancerepository.New,
+		balanceservice.New,
 		cashhandlers.NewEditHandler,
 		cashhandlers.NewUpdateHandler,
 		cashrepository.New,
@@ -64,8 +67,6 @@ func InitializeServer() *server.Server {
 		context.Background,
 		db.Open,
 		indexhandler.New,
-		indexrepository.New,
-		indexservice.New,
 		itemhandlers.NewCreateHandler,
 		itemhandlers.NewEditHandler,
 		itemhandlers.NewListHandler,
@@ -80,14 +81,14 @@ func InitializeServer() *server.Server {
 		wire.Bind(new(backofficecash.Service), new(*backofficecashservice.Service)),
 		wire.Bind(new(backofficecategory.Repository), new(*backofficecategoryrepository.Repository)),
 		wire.Bind(new(backofficecategory.Service), new(*backofficecategoryservice.Service)),
+		wire.Bind(new(balance.Repository), new(*balancerepository.Repository)),
 		wire.Bind(new(cash.Repository), new(*cashrepository.Repository)),
 		wire.Bind(new(cash.Service), new(*cashservice.Service)),
 		wire.Bind(new(category.Repository), new(*categoryrepository.Repository)),
 		wire.Bind(new(db.NameProvider), new(*nameprovider.NameProvider)),
+		wire.Bind(new(index.BalanceService), new(*balanceservice.Service)),
 		wire.Bind(new(index.CashService), new(*cashservice.Service)),
 		wire.Bind(new(index.CategoryService), new(*categoryservice.Service)),
-		wire.Bind(new(index.Repository), new(*indexrepository.Repository)),
-		wire.Bind(new(index.Service), new(*indexservice.Service)),
 		wire.Bind(new(item.CategoryRepository), new(*categoryrepository.Repository)),
 		wire.Bind(new(item.CategoryService), new(*categoryservice.Service)),
 		wire.Bind(new(item.Repository), new(*itemrepository.Repository)),

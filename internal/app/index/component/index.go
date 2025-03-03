@@ -11,7 +11,13 @@ import (
 	. "maragu.dev/gomponents/html"       //nolint:stylecheck
 )
 
-func (c *Component) Index(cashes cash.Cashes, categories category.Categories, values url.Values) Node {
+func (c *Component) Index(
+	residual,
+	balance float64,
+	cashes cash.Cashes,
+	categories category.Categories,
+	values url.Values,
+) Node {
 	return HTML5(
 		HTML5Props{
 			Title:    "Balance",
@@ -21,8 +27,8 @@ func (c *Component) Index(cashes cash.Cashes, categories category.Categories, va
 				Link(Rel("icon"), Type("image/x-icon"), Href("/assets/hryvnia.png")),
 			},
 			Body: []Node{
-				If(true, c.header(values)),
-				If(true, c.cashes(0.0, 0.0, cashes)),
+				If(false, c.header(values)),
+				If(true, c.cashes(residual, balance, cashes)),
 				If(false, c.form(&item.Item{}, categories)),
 				If(false, c.items()),
 				c.Modal(),

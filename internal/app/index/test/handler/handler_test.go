@@ -6,13 +6,13 @@ import (
 	"net/http/httptest"
 	"testing"
 
+	balancerepository "github.com/tksasha/balance/internal/app/balance/repository"
+	balanceservice "github.com/tksasha/balance/internal/app/balance/service"
 	cashrepository "github.com/tksasha/balance/internal/app/cash/repository"
 	cashservice "github.com/tksasha/balance/internal/app/cash/service"
 	categoryrepository "github.com/tksasha/balance/internal/app/category/repository"
 	categoryservice "github.com/tksasha/balance/internal/app/category/service"
 	"github.com/tksasha/balance/internal/app/index/handler"
-	"github.com/tksasha/balance/internal/app/index/repository"
-	"github.com/tksasha/balance/internal/app/index/service"
 	"github.com/tksasha/balance/internal/db"
 	"github.com/tksasha/balance/internal/db/nameprovider"
 	"gotest.tools/v3/assert"
@@ -49,19 +49,19 @@ func newIndexHandler(t *testing.T) (*handler.Handler, *sql.DB) {
 
 	db := db.Open(t.Context(), nameprovider.NewTestProvider())
 
-	indexRepository := repository.New(db)
+	balanceService := balanceservice.New(
+		balancerepository.New(db),
+	)
 
-	service := service.New(indexRepository)
+	cashService := cashservice.New(
+		cashrepository.New(db),
+	)
 
-	cashRepository := cashrepository.New(db)
+	categoryService := categoryservice.New(
+		categoryrepository.New(db),
+	)
 
-	categoryRepository := categoryrepository.New(db)
-
-	cashService := cashservice.New(cashRepository)
-
-	categoryService := categoryservice.New(categoryRepository)
-
-	handler := handler.New(service, cashService, categoryService)
+	handler := handler.New(balanceService, cashService, categoryService)
 
 	return handler, db
 }

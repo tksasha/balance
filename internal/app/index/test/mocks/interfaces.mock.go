@@ -18,129 +18,6 @@ import (
 	gomock "go.uber.org/mock/gomock"
 )
 
-// MockRepository is a mock of Repository interface.
-type MockRepository struct {
-	ctrl     *gomock.Controller
-	recorder *MockRepositoryMockRecorder
-	isgomock struct{}
-}
-
-// MockRepositoryMockRecorder is the mock recorder for MockRepository.
-type MockRepositoryMockRecorder struct {
-	mock *MockRepository
-}
-
-// NewMockRepository creates a new mock instance.
-func NewMockRepository(ctrl *gomock.Controller) *MockRepository {
-	mock := &MockRepository{ctrl: ctrl}
-	mock.recorder = &MockRepositoryMockRecorder{mock}
-	return mock
-}
-
-// EXPECT returns an object that allows the caller to indicate expected use.
-func (m *MockRepository) EXPECT() *MockRepositoryMockRecorder {
-	return m.recorder
-}
-
-// Cashes mocks base method.
-func (m *MockRepository) Cashes(ctx context.Context) (float64, error) {
-	m.ctrl.T.Helper()
-	ret := m.ctrl.Call(m, "Cashes", ctx)
-	ret0, _ := ret[0].(float64)
-	ret1, _ := ret[1].(error)
-	return ret0, ret1
-}
-
-// Cashes indicates an expected call of Cashes.
-func (mr *MockRepositoryMockRecorder) Cashes(ctx any) *gomock.Call {
-	mr.mock.ctrl.T.Helper()
-	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "Cashes", reflect.TypeOf((*MockRepository)(nil).Cashes), ctx)
-}
-
-// Expense mocks base method.
-func (m *MockRepository) Expense(ctx context.Context) (float64, error) {
-	m.ctrl.T.Helper()
-	ret := m.ctrl.Call(m, "Expense", ctx)
-	ret0, _ := ret[0].(float64)
-	ret1, _ := ret[1].(error)
-	return ret0, ret1
-}
-
-// Expense indicates an expected call of Expense.
-func (mr *MockRepositoryMockRecorder) Expense(ctx any) *gomock.Call {
-	mr.mock.ctrl.T.Helper()
-	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "Expense", reflect.TypeOf((*MockRepository)(nil).Expense), ctx)
-}
-
-// Income mocks base method.
-func (m *MockRepository) Income(ctx context.Context) (float64, error) {
-	m.ctrl.T.Helper()
-	ret := m.ctrl.Call(m, "Income", ctx)
-	ret0, _ := ret[0].(float64)
-	ret1, _ := ret[1].(error)
-	return ret0, ret1
-}
-
-// Income indicates an expected call of Income.
-func (mr *MockRepositoryMockRecorder) Income(ctx any) *gomock.Call {
-	mr.mock.ctrl.T.Helper()
-	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "Income", reflect.TypeOf((*MockRepository)(nil).Income), ctx)
-}
-
-// MockService is a mock of Service interface.
-type MockService struct {
-	ctrl     *gomock.Controller
-	recorder *MockServiceMockRecorder
-	isgomock struct{}
-}
-
-// MockServiceMockRecorder is the mock recorder for MockService.
-type MockServiceMockRecorder struct {
-	mock *MockService
-}
-
-// NewMockService creates a new mock instance.
-func NewMockService(ctrl *gomock.Controller) *MockService {
-	mock := &MockService{ctrl: ctrl}
-	mock.recorder = &MockServiceMockRecorder{mock}
-	return mock
-}
-
-// EXPECT returns an object that allows the caller to indicate expected use.
-func (m *MockService) EXPECT() *MockServiceMockRecorder {
-	return m.recorder
-}
-
-// Balance mocks base method.
-func (m *MockService) Balance(ctx context.Context) (float64, error) {
-	m.ctrl.T.Helper()
-	ret := m.ctrl.Call(m, "Balance", ctx)
-	ret0, _ := ret[0].(float64)
-	ret1, _ := ret[1].(error)
-	return ret0, ret1
-}
-
-// Balance indicates an expected call of Balance.
-func (mr *MockServiceMockRecorder) Balance(ctx any) *gomock.Call {
-	mr.mock.ctrl.T.Helper()
-	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "Balance", reflect.TypeOf((*MockService)(nil).Balance), ctx)
-}
-
-// Residual mocks base method.
-func (m *MockService) Residual(ctx context.Context) (float64, error) {
-	m.ctrl.T.Helper()
-	ret := m.ctrl.Call(m, "Residual", ctx)
-	ret0, _ := ret[0].(float64)
-	ret1, _ := ret[1].(error)
-	return ret0, ret1
-}
-
-// Residual indicates an expected call of Residual.
-func (mr *MockServiceMockRecorder) Residual(ctx any) *gomock.Call {
-	mr.mock.ctrl.T.Helper()
-	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "Residual", reflect.TypeOf((*MockService)(nil).Residual), ctx)
-}
-
 // MockCategoryService is a mock of CategoryService interface.
 type MockCategoryService struct {
 	ctrl     *gomock.Controller
@@ -217,4 +94,44 @@ func (m *MockCashService) List(ctx context.Context) (cash.Cashes, error) {
 func (mr *MockCashServiceMockRecorder) List(ctx any) *gomock.Call {
 	mr.mock.ctrl.T.Helper()
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "List", reflect.TypeOf((*MockCashService)(nil).List), ctx)
+}
+
+// MockBalanceService is a mock of BalanceService interface.
+type MockBalanceService struct {
+	ctrl     *gomock.Controller
+	recorder *MockBalanceServiceMockRecorder
+	isgomock struct{}
+}
+
+// MockBalanceServiceMockRecorder is the mock recorder for MockBalanceService.
+type MockBalanceServiceMockRecorder struct {
+	mock *MockBalanceService
+}
+
+// NewMockBalanceService creates a new mock instance.
+func NewMockBalanceService(ctrl *gomock.Controller) *MockBalanceService {
+	mock := &MockBalanceService{ctrl: ctrl}
+	mock.recorder = &MockBalanceServiceMockRecorder{mock}
+	return mock
+}
+
+// EXPECT returns an object that allows the caller to indicate expected use.
+func (m *MockBalanceService) EXPECT() *MockBalanceServiceMockRecorder {
+	return m.recorder
+}
+
+// Balance mocks base method.
+func (m *MockBalanceService) Balance(ctx context.Context) (float64, float64, error) {
+	m.ctrl.T.Helper()
+	ret := m.ctrl.Call(m, "Balance", ctx)
+	ret0, _ := ret[0].(float64)
+	ret1, _ := ret[1].(float64)
+	ret2, _ := ret[2].(error)
+	return ret0, ret1, ret2
+}
+
+// Balance indicates an expected call of Balance.
+func (mr *MockBalanceServiceMockRecorder) Balance(ctx any) *gomock.Call {
+	mr.mock.ctrl.T.Helper()
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "Balance", reflect.TypeOf((*MockBalanceService)(nil).Balance), ctx)
 }

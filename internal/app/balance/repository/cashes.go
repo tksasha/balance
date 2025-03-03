@@ -9,7 +9,7 @@ func (r *Repository) Cashes(ctx context.Context) (float64, error) {
 
 	query := `
 		SELECT
-			sum(sum)
+			COALESCE(SUM(sum), 0)
 		FROM
 			cashes
 		WHERE

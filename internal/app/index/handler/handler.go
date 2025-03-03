@@ -11,20 +11,20 @@ import (
 type Handler struct {
 	*handler.Handler
 
-	indexService    index.Service
+	balanceService  index.BalanceService
 	cashService     index.CashService
 	categoryService index.CategoryService
 	component       *component.Component
 }
 
 func New(
-	indexService index.Service,
+	balanceService index.BalanceService,
 	cashService index.CashService,
 	categoryService index.CategoryService,
 ) *Handler {
 	return &Handler{
 		Handler:         handler.New(),
-		indexService:    indexService,
+		balanceService:  balanceService,
 		cashService:     cashService,
 		categoryService: categoryService,
 		component:       component.New(),
@@ -32,6 +32,13 @@ func New(
 }
 
 func (h *Handler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
+	residual, balance, err := h.balanceService.Balance(r.Context())
+	if err != nil {
+		h.SetError(w, err)
+
+		return
+	}
+
 	cashes, err := h.cashService.List(r.Context())
 	if err != nil {
 		h.SetError(w, err)
@@ -46,7 +53,7 @@ func (h *Handler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	err = h.component.Index(cashes, categories, r.URL.Query()).Render(w)
+	err = h.component.Index(residual, balance, cashes, categories, r.URL.Query()).Render(w)
 
 	h.SetError(w, err)
 }

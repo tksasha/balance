@@ -4,19 +4,19 @@ import (
 	"context"
 )
 
-func (r *Repository) Income(ctx context.Context) (float64, error) {
+func (r *Repository) Expense(ctx context.Context) (float64, error) {
 	currency := r.GetCurrencyFromContext(ctx)
 
 	query := `
 		SELECT
-		    sum(items.sum)
+		    COALESCE(SUM(items.sum), 0)
 		FROM
 		    items
 		    INNER JOIN categories ON categories.id = items.category_id
 		WHERE
 		    items.currency = ?
 		    AND items.deleted_at IS NULL
-		    AND categories.income = 1
+		    AND categories.income = 0
 	`
 
 	row := r.db.QueryRowContext(ctx, query, currency)
