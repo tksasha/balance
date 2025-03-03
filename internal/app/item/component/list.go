@@ -28,7 +28,7 @@ func (c *Component) item(item *item.Item) Node {
 	return c.Template(
 		Tr(
 			Td(Class("items-date"),
-				Text(c.Date(item.Date)),
+				Text(date(item.Date)),
 			),
 			Td(Class("items-sum"),
 				Div(Class("text-primary"),

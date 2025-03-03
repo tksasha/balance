@@ -23,7 +23,6 @@ func (c *Component) form(item *item.Item, categories category.Categories) Node {
 								Input(
 									If(true, Class("form-control invalid")),
 									If(true, Class("form-control")),
-									Value(c.Date(item.Date)),
 								),
 							),
 							Div(Class("mb-3"),
