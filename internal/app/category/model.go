@@ -8,6 +8,7 @@ type Category struct {
 	ID       int
 	Currency currency.Currency
 	Name     string
+	Slug     string
 	Income   bool
 }
 

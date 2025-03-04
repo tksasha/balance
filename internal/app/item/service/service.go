@@ -2,14 +2,12 @@ package service
 
 import (
 	"context"
-	"database/sql"
 	"strconv"
 
 	"github.com/tksasha/balance/internal/app/item"
 	"github.com/tksasha/balance/internal/common"
 	"github.com/tksasha/balance/internal/common/service"
 	"github.com/tksasha/validation"
-	"github.com/tksasha/xstrings"
 )
 
 type Service struct {
@@ -47,9 +45,9 @@ func (s *Service) setCategory(
 		return err
 	}
 
-	item.CategoryName = sql.NullString{String: category.Name, Valid: true}
+	item.CategoryName = category.Name
 
-	item.CategorySlug = xstrings.Transliterate(item.CategoryName.String)
+	item.CategorySlug = category.Slug
 
 	return nil
 }

@@ -42,7 +42,7 @@ func (c *Component) item(item *item.Item) Node {
 				),
 			),
 			Td(Class("items-category"),
-				Text(item.CategoryName.String),
+				Text(item.CategoryName),
 			),
 			Td(c.Description(item.Description)),
 		),

@@ -1,7 +1,6 @@
 package service_test
 
 import (
-	"database/sql"
 	"errors"
 	"testing"
 	"time"
@@ -164,6 +163,7 @@ func TestCreate(t *testing.T) { //nolint:funlen
 		category := &category.Category{
 			ID:   1244,
 			Name: "Entrepreneurship",
+			Slug: "entrepreneurship",
 		}
 
 		categoryRepository.
@@ -176,7 +176,7 @@ func TestCreate(t *testing.T) { //nolint:funlen
 			Formula:      "42.69+69.42",
 			Sum:          112.11,
 			CategoryID:   1244,
-			CategoryName: sql.NullString{String: "Entrepreneurship", Valid: true},
+			CategoryName: "Entrepreneurship",
 			CategorySlug: "entrepreneurship",
 			Description:  "health, beauty & wellness",
 		}
@@ -202,6 +202,7 @@ func TestCreate(t *testing.T) { //nolint:funlen
 		category := &category.Category{
 			ID:   1244,
 			Name: "Telecommunications",
+			Slug: "telecommunications",
 		}
 
 		categoryRepository.
@@ -214,7 +215,7 @@ func TestCreate(t *testing.T) { //nolint:funlen
 			Formula:      "42.69+69.42",
 			Sum:          112.11,
 			CategoryID:   1307,
-			CategoryName: sql.NullString{String: "Telecommunications", Valid: true},
+			CategoryName: "Telecommunications",
 			CategorySlug: "telecommunications",
 			Description:  "arts, crafts & hobbies",
 		}

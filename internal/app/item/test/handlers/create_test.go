@@ -78,6 +78,7 @@ func TestItemCreateHandler(t *testing.T) { //nolint:funlen
 		categoryToCreate := &category.Category{
 			ID:       1101,
 			Name:     "Accoutrements",
+			Slug:     "accoutrements",
 			Currency: currency.USD,
 		}
 
@@ -119,7 +120,7 @@ func TestItemCreateHandler(t *testing.T) { //nolint:funlen
 		assert.Equal(t, item.Formula, "42.69+69.42")
 		assert.Equal(t, item.Sum, 112.11)
 		assert.Equal(t, item.CategoryID, 1101)
-		assert.Equal(t, item.CategoryName.String, "Accoutrements")
+		assert.Equal(t, item.CategoryName, "Accoutrements")
 		assert.Equal(t, item.CategorySlug, "accoutrements")
 		assert.Equal(t, item.Description, "paper clips, notebooks, and pens")
 	})

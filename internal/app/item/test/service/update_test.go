@@ -1,7 +1,6 @@
 package service_test
 
 import (
-	"database/sql"
 	"errors"
 	"testing"
 	"time"
@@ -271,6 +270,7 @@ func TestUpdate(t *testing.T) { //nolint:funlen,maintidx
 		category := &category.Category{
 			ID:   1100,
 			Name: "Beverages",
+			Slug: "beverages",
 		}
 
 		categoryRepository.
@@ -284,7 +284,7 @@ func TestUpdate(t *testing.T) { //nolint:funlen,maintidx
 			Formula:      "2+2",
 			Sum:          4,
 			CategoryID:   1100,
-			CategoryName: sql.NullString{String: "Beverages", Valid: true},
+			CategoryName: "Beverages",
 			CategorySlug: "beverages",
 			Description:  "food, wine and flowers",
 		}
@@ -320,6 +320,7 @@ func TestUpdate(t *testing.T) { //nolint:funlen,maintidx
 		category := &category.Category{
 			ID:   1100,
 			Name: "Beverages",
+			Slug: "beverages",
 		}
 
 		categoryRepository.
@@ -333,7 +334,7 @@ func TestUpdate(t *testing.T) { //nolint:funlen,maintidx
 			Formula:      "2+2",
 			Sum:          4,
 			CategoryID:   1100,
-			CategoryName: sql.NullString{String: "Beverages", Valid: true},
+			CategoryName: "Beverages",
 			CategorySlug: "beverages",
 			Description:  "food, wine and flowers",
 		}

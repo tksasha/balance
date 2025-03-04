@@ -30,9 +30,10 @@ func createCategory(t *testing.T, db *sql.DB, category *category.Category) {
 
 	if _, err := db.ExecContext(
 		t.Context(),
-		"INSERT INTO categories(id, name, income, currency) VALUES(?, ?, ?, ?)",
+		"INSERT INTO categories(id, name, slug, income, currency) VALUES(?, ?, ?, ?, ?)",
 		category.ID,
 		category.Name,
+		category.Slug,
 		category.Income,
 		category.Currency,
 	); err != nil {
@@ -93,9 +94,9 @@ func createItem(t *testing.T, db *sql.DB, item *item.Item) {
 
 	query := `
 		INSERT INTO
-		    items (id, currency, date, category_id, sum, description)
+		    items (id, currency, date, category_id, category_name, category_slug, sum, description)
 		VALUES
-		    (?, ?, ?, ?, ?, ?)
+		    (?, ?, ?, ?, ?, ?, ?, ?)
 	`
 
 	result, err := db.ExecContext(
@@ -105,6 +106,8 @@ func createItem(t *testing.T, db *sql.DB, item *item.Item) {
 		item.Currency,
 		item.Date,
 		item.CategoryID,
+		item.CategoryName,
+		item.CategorySlug,
 		item.Sum,
 		item.Description,
 	)

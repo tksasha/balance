@@ -14,15 +14,16 @@ func (r *Repository) FindByID(ctx context.Context, id int) (*category.Category, 
 
 	query := `
 		SELECT
-		    id,
-		    name,
-		    income,
-		    currency
+			id,
+			name,
+			slug,
+			income,
+			currency
 		FROM
-		    categories
+			categories
 		WHERE
-		    id = ?
-		    AND currency = ?
+			id = ?
+			AND currency = ?
 	`
 
 	row := r.db.QueryRowContext(ctx, query, id, currency)
@@ -32,6 +33,7 @@ func (r *Repository) FindByID(ctx context.Context, id int) (*category.Category, 
 	if err := row.Scan(
 		&category.ID,
 		&category.Name,
+		&category.Slug,
 		&category.Income,
 		&category.Currency,
 	); err != nil {
