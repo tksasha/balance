@@ -1,25 +1,38 @@
 package component
 
 import (
+	"maps"
+	"slices"
+
 	"github.com/tksasha/balance/internal/app/categoryreport"
 	. "maragu.dev/gomponents"      //nolint:stylecheck
 	. "maragu.dev/gomponents/html" //nolint:stylecheck
 )
 
-func (c *Component) Show(entities categoryreport.Entities) Node {
-	return Div(Class("container-fluid"),
-		Div(Class("clearfix mt-4"),
-			Div(Class("card consolidation"),
-				Div(Class("card-body"),
-					Div(Class("card-text"),
-						Table(
-							TBody(
-								Map(entities, c.entity),
-							),
-						),
+func (c *Component) Show(entities categoryreport.MappedEntities) Node {
+	keys := slices.Collect(maps.Keys(entities))
+
+	slices.Sort(keys)
+
+	nodes := []Node{}
+
+	for _, key := range keys {
+		node := Div(Class("card consolidation"),
+			Div(Class("card-body"),
+				Div(Class("card-text"),
+					Table(
+						TBody(Map(entities[key], c.entity)),
 					),
 				),
 			),
+		)
+
+		nodes = append(nodes, node)
+	}
+
+	return Div(Class("container-fluid"),
+		Div(Class("clearfix mt-4"),
+			Map(nodes, func(node Node) Node { return node }),
 		),
 	)
 }

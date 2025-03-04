@@ -8,3 +8,5 @@ type Entity struct {
 }
 
 type Entities []*Entity
+
+type MappedEntities map[int]Entities

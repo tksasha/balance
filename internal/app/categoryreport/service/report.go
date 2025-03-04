@@ -8,7 +8,7 @@ import (
 	"github.com/tksasha/month"
 )
 
-func (s *Service) Report(ctx context.Context, request categoryreport.Request) (categoryreport.Entities, error) {
+func (s *Service) Report(ctx context.Context, request categoryreport.Request) (categoryreport.MappedEntities, error) {
 	month := month.New(request.Year, request.Month)
 
 	filters := categoryreport.Filters{
@@ -16,5 +16,16 @@ func (s *Service) Report(ctx context.Context, request categoryreport.Request) (c
 		To:   month.End.Format(time.DateOnly),
 	}
 
-	return s.repository.Group(ctx, filters)
+	entities, err := s.repository.Group(ctx, filters)
+	if err != nil {
+		return nil, err
+	}
+
+	mapped := categoryreport.MappedEntities{}
+
+	for _, entity := range entities {
+		mapped[entity.Supercategory] = append(mapped[entity.Supercategory], entity)
+	}
+
+	return mapped, nil
 }

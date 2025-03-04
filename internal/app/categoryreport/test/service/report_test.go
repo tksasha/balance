@@ -2,7 +2,6 @@ package service_test
 
 import (
 	"errors"
-	"slices"
 	"testing"
 
 	"github.com/tksasha/balance/internal/app/categoryreport"
@@ -12,7 +11,7 @@ import (
 	"gotest.tools/v3/assert"
 )
 
-func TestReport(t *testing.T) {
+func TestReport(t *testing.T) { //nolint:funlen
 	controller := gomock.NewController(t)
 
 	repository := mocks.NewMockRepository(controller)
@@ -40,13 +39,40 @@ func TestReport(t *testing.T) {
 	})
 
 	t.Run("when repository returns entities", func(t *testing.T) {
-		expected := categoryreport.Entities{}
+		entities := categoryreport.Entities{
+			{CategoryName: "Food", CategorySlug: "food", Sum: 11.11, Supercategory: 1},
+			{CategoryName: "Beverages", CategorySlug: "beverages", Sum: 22.22, Supercategory: 1},
+			{CategoryName: "Rent", CategorySlug: "rent", Sum: 33.33, Supercategory: 2},
+			{CategoryName: "Salary", CategorySlug: "salary", Sum: 44.44, Supercategory: 0},
+			{CategoryName: "Stocks", CategorySlug: "stocks", Sum: 55.55, Supercategory: 0},
+			{CategoryName: "Bonds", CategorySlug: "bonds", Sum: 66.66, Supercategory: 0},
+		}
 
-		repository.EXPECT().Group(ctx, filters).Return(expected, nil)
+		repository.EXPECT().Group(ctx, filters).Return(entities, nil)
 
 		actual, err := service.Report(ctx, request)
 
+		expected := map[int]categoryreport.Entities{
+			0: {
+				{CategoryName: "Salary", CategorySlug: "salary", Sum: 44.44, Supercategory: 0},
+				{CategoryName: "Stocks", CategorySlug: "stocks", Sum: 55.55, Supercategory: 0},
+				{CategoryName: "Bonds", CategorySlug: "bonds", Sum: 66.66, Supercategory: 0},
+			},
+			1: {
+				{CategoryName: "Food", CategorySlug: "food", Sum: 11.11, Supercategory: 1},
+				{CategoryName: "Beverages", CategorySlug: "beverages", Sum: 22.22, Supercategory: 1},
+			},
+			2: {
+				{CategoryName: "Rent", CategorySlug: "rent", Sum: 33.33, Supercategory: 2},
+			},
+		}
+
 		assert.NilError(t, err)
-		assert.Assert(t, slices.Equal(actual, expected))
+
+		for supercategory := range expected {
+			for idx := range expected[supercategory] {
+				assert.Equal(t, *actual[supercategory][idx], *expected[supercategory][idx])
+			}
+		}
 	})
 }

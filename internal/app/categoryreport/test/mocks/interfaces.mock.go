@@ -81,10 +81,10 @@ func (m *MockService) EXPECT() *MockServiceMockRecorder {
 }
 
 // Report mocks base method.
-func (m *MockService) Report(ctx context.Context, request categoryreport.Request) (categoryreport.Entities, error) {
+func (m *MockService) Report(ctx context.Context, request categoryreport.Request) (categoryreport.MappedEntities, error) {
 	m.ctrl.T.Helper()
 	ret := m.ctrl.Call(m, "Report", ctx, request)
-	ret0, _ := ret[0].(categoryreport.Entities)
+	ret0, _ := ret[0].(categoryreport.MappedEntities)
 	ret1, _ := ret[1].(error)
 	return ret0, ret1
 }

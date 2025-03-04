@@ -7,5 +7,5 @@ type Repository interface {
 }
 
 type Service interface {
-	Report(ctx context.Context, request Request) (Entities, error)
+	Report(ctx context.Context, request Request) (MappedEntities, error)
 }
