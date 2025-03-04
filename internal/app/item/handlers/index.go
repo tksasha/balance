@@ -40,7 +40,7 @@ func (h *IndexHandler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 
 	years := h.indexComponent.Years(r.URL.Query())
 
-	err = h.component.List(items, months, years).Render(w)
+	err = h.component.Index(items, months, years).Render(w)
 
 	h.SetError(w, err)
 }

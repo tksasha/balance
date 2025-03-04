@@ -7,7 +7,7 @@ import (
 	. "maragu.dev/gomponents/html" //nolint: stylecheck
 )
 
-func (c *Component) List(items item.Items, months Node, years Node) Node {
+func (c *Component) Index(items item.Items, months Node, years Node) Node {
 	return Table(
 		Class("table table-hover table-borderless"),
 		THead(

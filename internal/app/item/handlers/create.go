@@ -47,7 +47,7 @@ func (h *CreateHandler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 			return
 		}
 
-		err = h.component.List(items, nil, nil).Render(w)
+		err = h.component.Index(items, nil, nil).Render(w)
 
 		h.SetError(w, err)
 
