@@ -15,8 +15,8 @@ import (
 	"gotest.tools/v3/assert"
 )
 
-func TestItemListHandler(t *testing.T) {
-	handler, db := newListHandler(t)
+func TestItemIndexHandler(t *testing.T) {
+	handler, db := newIndexHandler(t)
 	defer func() {
 		if err := db.Close(); err != nil {
 			t.Fatal(err)
@@ -41,7 +41,7 @@ func TestItemListHandler(t *testing.T) {
 	})
 }
 
-func newListHandler(t *testing.T) (*handlers.ListHandler, *sql.DB) {
+func newIndexHandler(t *testing.T) (*handlers.IndexHandler, *sql.DB) {
 	t.Helper()
 
 	db := db.Open(t.Context(), nameprovider.NewTestProvider())
@@ -52,7 +52,7 @@ func newListHandler(t *testing.T) (*handlers.ListHandler, *sql.DB) {
 
 	itemService := service.New(itemRepository, categoryRepository)
 
-	handler := handlers.NewListHandler(itemService)
+	handler := handlers.NewIndexHandler(itemService)
 
 	return handler, db
 }

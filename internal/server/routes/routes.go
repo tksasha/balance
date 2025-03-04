@@ -36,7 +36,7 @@ func New(
 	indexHandler *index.Handler,
 	itemCreateHandler *item.CreateHandler,
 	itemEditHandler *item.EditHandler,
-	itemListHandler *item.ListHandler,
+	itemIndexHandler *item.IndexHandler,
 	itemUpdateHandler *item.UpdateHandler,
 ) *Routes {
 	mux := http.NewServeMux()
@@ -54,7 +54,7 @@ func New(
 	mux.Handle("GET /{$}", indexHandler)
 
 	mux.Handle("POST /items", itemCreateHandler)
-	mux.Handle("GET /items/{$}", itemListHandler)
+	mux.Handle("GET /items/{$}", itemIndexHandler)
 	mux.Handle("GET /items/{id}/edit", itemEditHandler)
 	mux.Handle("PATCH /items/{id}", itemUpdateHandler)
 

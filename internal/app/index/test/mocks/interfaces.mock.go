@@ -13,6 +13,7 @@ import (
 	context "context"
 	reflect "reflect"
 
+	balance "github.com/tksasha/balance/internal/app/balance"
 	cash "github.com/tksasha/balance/internal/app/cash"
 	category "github.com/tksasha/balance/internal/app/category"
 	gomock "go.uber.org/mock/gomock"
@@ -121,13 +122,12 @@ func (m *MockBalanceService) EXPECT() *MockBalanceServiceMockRecorder {
 }
 
 // Balance mocks base method.
-func (m *MockBalanceService) Balance(ctx context.Context) (float64, float64, error) {
+func (m *MockBalanceService) Balance(ctx context.Context) (*balance.Balance, error) {
 	m.ctrl.T.Helper()
 	ret := m.ctrl.Call(m, "Balance", ctx)
-	ret0, _ := ret[0].(float64)
-	ret1, _ := ret[1].(float64)
-	ret2, _ := ret[2].(error)
-	return ret0, ret1, ret2
+	ret0, _ := ret[0].(*balance.Balance)
+	ret1, _ := ret[1].(error)
+	return ret0, ret1
 }
 
 // Balance indicates an expected call of Balance.

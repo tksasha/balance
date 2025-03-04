@@ -9,7 +9,7 @@ import (
 	"github.com/tksasha/balance/internal/common/handler"
 )
 
-type ListHandler struct {
+type IndexHandler struct {
 	*handler.Handler
 
 	itemService    item.Service
@@ -17,10 +17,10 @@ type ListHandler struct {
 	indexComponent *indexcomponent.Component
 }
 
-func NewListHandler(
+func NewIndexHandler(
 	itemService item.Service,
-) *ListHandler {
-	return &ListHandler{
+) *IndexHandler {
+	return &IndexHandler{
 		Handler:        handler.New(),
 		itemService:    itemService,
 		component:      component.New(),
@@ -28,7 +28,7 @@ func NewListHandler(
 	}
 }
 
-func (h *ListHandler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
+func (h *IndexHandler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 	items, err := h.handle(r)
 	if err != nil {
 		h.SetError(w, err)
@@ -45,7 +45,7 @@ func (h *ListHandler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 	h.SetError(w, err)
 }
 
-func (h *ListHandler) handle(r *http.Request) (item.Items, error) {
+func (h *IndexHandler) handle(r *http.Request) (item.Items, error) {
 	request := item.ListRequest{
 		Year:  r.URL.Query().Get("year"),
 		Month: r.URL.Query().Get("month"),
