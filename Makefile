@@ -107,3 +107,8 @@ prepare:
 	go get -tool $(MODFILE) github.com/google/wire/cmd/wire@latest
 	go get -tool $(MODFILE) go.uber.org/mock/mockgen@latest
 	go get -tool $(MODFILE) mvdan.cc/gofumpt@latest
+
+.PHONY: structure
+structure:
+	@if [ -z "$(db)" ]; then echo "db is required"; exit 1; fi
+	@sqlite3 $(db) ".schema --indent" > internal/db/structure.sql
