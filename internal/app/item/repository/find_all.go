@@ -5,10 +5,9 @@ import (
 	"log/slog"
 
 	"github.com/tksasha/balance/internal/app/item"
-	"github.com/tksasha/month"
 )
 
-func (r *Repository) FindAllByMonth(ctx context.Context, month month.Month) (item.Items, error) {
+func (r *Repository) FindAll(ctx context.Context, filters item.Filters) (item.Items, error) {
 	currency := r.GetCurrencyFromContext(ctx)
 
 	query := `
@@ -16,21 +15,27 @@ func (r *Repository) FindAllByMonth(ctx context.Context, month month.Month) (ite
 			items.id,
 			items.date,
 			items.sum,
-			COALESCE(items.category_name, ""),
+			items.category_name,
 			items.description
 		FROM
 			items
 		WHERE
-			items.currency = ?
-		AND
 			items.deleted_at IS NULL
-		AND
-			items.date BETWEEN ? AND ?
-		ORDER BY
-			items.date DESC
+			AND items.currency = ?
+			AND items.date between ? AND ?
 	`
 
-	rows, err := r.db.QueryContext(ctx, query, currency, month.Begin, month.End)
+	args := []any{currency, filters.From, filters.To}
+
+	if filters.Category != nil {
+		query += ` AND items.category_slug = ?`
+
+		args = append(args, filters.Category)
+	}
+
+	query += ` ORDER BY date DESC`
+
+	rows, err := r.db.QueryContext(ctx, query, args...)
 	if err != nil {
 		return nil, err
 	}

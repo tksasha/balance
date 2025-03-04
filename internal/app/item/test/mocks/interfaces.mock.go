@@ -15,7 +15,6 @@ import (
 
 	category "github.com/tksasha/balance/internal/app/category"
 	item "github.com/tksasha/balance/internal/app/item"
-	month "github.com/tksasha/month"
 	gomock "go.uber.org/mock/gomock"
 )
 
@@ -71,19 +70,19 @@ func (mr *MockRepositoryMockRecorder) Delete(ctx, id any) *gomock.Call {
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "Delete", reflect.TypeOf((*MockRepository)(nil).Delete), ctx, id)
 }
 
-// FindAllByMonth mocks base method.
-func (m *MockRepository) FindAllByMonth(ctx context.Context, month month.Month) (item.Items, error) {
+// FindAll mocks base method.
+func (m *MockRepository) FindAll(ctx context.Context, filters item.Filters) (item.Items, error) {
 	m.ctrl.T.Helper()
-	ret := m.ctrl.Call(m, "FindAllByMonth", ctx, month)
+	ret := m.ctrl.Call(m, "FindAll", ctx, filters)
 	ret0, _ := ret[0].(item.Items)
 	ret1, _ := ret[1].(error)
 	return ret0, ret1
 }
 
-// FindAllByMonth indicates an expected call of FindAllByMonth.
-func (mr *MockRepositoryMockRecorder) FindAllByMonth(ctx, month any) *gomock.Call {
+// FindAll indicates an expected call of FindAll.
+func (mr *MockRepositoryMockRecorder) FindAll(ctx, filters any) *gomock.Call {
 	mr.mock.ctrl.T.Helper()
-	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "FindAllByMonth", reflect.TypeOf((*MockRepository)(nil).FindAllByMonth), ctx, month)
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "FindAll", reflect.TypeOf((*MockRepository)(nil).FindAll), ctx, filters)
 }
 
 // FindByID mocks base method.

@@ -8,7 +8,6 @@ import (
 	"github.com/tksasha/balance/internal/app/item"
 	"github.com/tksasha/balance/internal/app/item/service"
 	"github.com/tksasha/balance/internal/app/item/test/mocks"
-	"github.com/tksasha/month"
 	"go.uber.org/mock/gomock"
 	"gotest.tools/v3/assert"
 )
@@ -24,15 +23,18 @@ func TestList(t *testing.T) {
 
 	ctx := t.Context()
 
-	month := month.New("2024", "02")
-
 	request := item.ListRequest{
 		Year:  "2024",
 		Month: "02",
 	}
 
+	filters := item.Filters{
+		From: "2024-02-01",
+		To:   "2024-02-29",
+	}
+
 	t.Run("returns error when find all by month fails", func(t *testing.T) {
-		itemRepository.EXPECT().FindAllByMonth(ctx, month).Return(nil, errors.New("find all by month error"))
+		itemRepository.EXPECT().FindAll(ctx, filters).Return(nil, errors.New("find all by month error"))
 
 		_, err := service.List(ctx, request)
 
@@ -42,7 +44,7 @@ func TestList(t *testing.T) {
 	t.Run("returns items when find all by month is successful", func(t *testing.T) {
 		foundItems := item.Items{}
 
-		itemRepository.EXPECT().FindAllByMonth(ctx, month).Return(foundItems, nil)
+		itemRepository.EXPECT().FindAll(ctx, filters).Return(foundItems, nil)
 
 		items, err := service.List(ctx, request)
 

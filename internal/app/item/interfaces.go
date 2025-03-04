@@ -4,11 +4,10 @@ import (
 	"context"
 
 	"github.com/tksasha/balance/internal/app/category"
-	"github.com/tksasha/month"
 )
 
 type Repository interface {
-	FindAllByMonth(ctx context.Context, month month.Month) (Items, error)
+	FindAll(ctx context.Context, filters Filters) (Items, error)
 	Create(ctx context.Context, item *Item) error
 	FindByID(ctx context.Context, id int) (*Item, error)
 	Update(ctx context.Context, item *Item) error
