@@ -16,6 +16,10 @@ import (
 	"github.com/tksasha/balance/internal/app/category"
 	categoryrepository "github.com/tksasha/balance/internal/app/category/repository"
 	categoryservice "github.com/tksasha/balance/internal/app/category/service"
+	"github.com/tksasha/balance/internal/app/categoryreport"
+	categoryreporthandlers "github.com/tksasha/balance/internal/app/categoryreport/handlers"
+	categoryreportrepository "github.com/tksasha/balance/internal/app/categoryreport/repository"
+	categoryreportservice "github.com/tksasha/balance/internal/app/categoryreport/service"
 	"github.com/tksasha/balance/internal/app/index"
 	indexhandler "github.com/tksasha/balance/internal/app/index/handler"
 	"github.com/tksasha/balance/internal/app/item"
@@ -61,6 +65,9 @@ func InitializeServer() *server.Server {
 		cashhandlers.NewUpdateHandler,
 		cashrepository.New,
 		cashservice.New,
+		categoryreporthandlers.NewShowHandler,
+		categoryreportrepository.New,
+		categoryreportservice.New,
 		categoryrepository.New,
 		categoryservice.New,
 		config.New,
@@ -85,6 +92,8 @@ func InitializeServer() *server.Server {
 		wire.Bind(new(cash.Repository), new(*cashrepository.Repository)),
 		wire.Bind(new(cash.Service), new(*cashservice.Service)),
 		wire.Bind(new(category.Repository), new(*categoryrepository.Repository)),
+		wire.Bind(new(categoryreport.Repository), new(*categoryreportrepository.Repository)),
+		wire.Bind(new(categoryreport.Service), new(*categoryreportservice.Service)),
 		wire.Bind(new(db.NameProvider), new(*nameprovider.NameProvider)),
 		wire.Bind(new(index.BalanceService), new(*balanceservice.Service)),
 		wire.Bind(new(index.CashService), new(*cashservice.Service)),
