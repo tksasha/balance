@@ -28,7 +28,7 @@ func (c *Component) Index(
 			},
 			Body: []Node{
 				If(false, c.header(values)),
-				If(false, c.cashes(balance, cashes)),
+				If(true, c.cashes(balance, cashes)),
 				If(true, c.categoryReport()),
 				If(false, c.form(&item.Item{}, categories)),
 				If(false, c.items()),

@@ -21,7 +21,7 @@ func (c *Component) Show(entities categoryreport.MappedEntities) Node {
 			Div(Class("card-body"),
 				Div(Class("card-text"),
 					Table(
-						TBody(Map(entities[key], c.entity)),
+						TBody(c.entities(entities[key])),
 					),
 				),
 			),
@@ -35,6 +35,24 @@ func (c *Component) Show(entities categoryreport.MappedEntities) Node {
 			Map(nodes, func(node Node) Node { return node }),
 		),
 	)
+}
+
+func (c *Component) entities(entities categoryreport.Entities) Node {
+	var nodes []Node
+
+	nodes = append(nodes, Map(entities, c.entity))
+
+	if len(entities) > 1 {
+		var sum float64
+
+		for _, entity := range entities {
+			sum += entity.Sum
+		}
+
+		nodes = append(nodes, c.Summary(sum))
+	}
+
+	return Map(nodes, func(node Node) Node { return node })
 }
 
 func (c *Component) entity(entity *categoryreport.Entity) Node {
