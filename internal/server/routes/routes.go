@@ -63,7 +63,7 @@ func New(
 	mux.Handle("GET /cashes/{id}/edit", cashEditHandler)
 	mux.Handle("PATCH /cashes/{id}", cashUpdateHandler)
 
-	mux.Handle("GET /categoryreport/{$}", categoryReportShowHandler)
+	mux.Handle("GET /categoryreport", categoryReportShowHandler)
 
 	mux.Handle("GET /backoffice/cashes", backofficeCashListHandler)
 	mux.Handle("GET /backoffice/cashes/new", backofficeCashNewHandler)
