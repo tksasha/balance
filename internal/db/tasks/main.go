@@ -1,5 +1,9 @@
 package main
 
+import "log"
+
 func main() {
-	setCategoriesSlug()
+	if err := setCategoriesSlug(); err != nil {
+		log.Fatal(err)
+	}
 }
