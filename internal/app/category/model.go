@@ -5,11 +5,12 @@ import (
 )
 
 type Category struct {
-	ID       int
-	Currency currency.Currency
-	Name     string
-	Slug     string
-	Income   bool
+	ID            int
+	Currency      currency.Currency
+	Name          string
+	Slug          string
+	Income        bool
+	Supercategory int
 }
 
 type Categories []*Category

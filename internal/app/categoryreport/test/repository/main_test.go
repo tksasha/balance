@@ -13,7 +13,7 @@ import (
 func createCategory(t *testing.T, db *sql.DB, category *category.Category) {
 	t.Helper()
 
-	query := `INSERT INTO categories(id, name, slug) VALUES(?, ?, ?)`
+	query := `INSERT INTO categories(id, name, slug, income, supercategory) VALUES(?, ?, ?, ?, ?)`
 
 	result, err := db.ExecContext(
 		t.Context(),
@@ -21,6 +21,8 @@ func createCategory(t *testing.T, db *sql.DB, category *category.Category) {
 		category.ID,
 		category.Name,
 		category.Slug,
+		category.Income,
+		category.Supercategory,
 	)
 	if err != nil {
 		t.Fatal(err)

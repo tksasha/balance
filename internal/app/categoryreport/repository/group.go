@@ -12,17 +12,21 @@ func (r *Repository) Group(ctx context.Context, filters categoryreport.Filters) 
 
 	query := `
 		SELECT
-			category_name,
-			category_slug,
-			SUM(items.sum)
+			items.category_name,
+			items.category_slug,
+			SUM(items.sum),
+			IIF(categories.income, 0, categories.supercategory) AS supercategory
 		FROM
 			items
+		INNER JOIN
+			categories
+			ON categories.id = items.category_id
 		WHERE
-			deleted_at IS NULL
-			AND currency = ?
-			AND date BETWEEN ? AND ?
+			items.deleted_at IS NULL
+			AND items.currency = ?
+			AND items.date BETWEEN ? AND ?
 		GROUP BY
-			category_name
+			items.category_id
 	`
 
 	rows, err := r.db.QueryContext(ctx, query, currency, filters.From, filters.To)
@@ -41,7 +45,12 @@ func (r *Repository) Group(ctx context.Context, filters categoryreport.Filters) 
 	for rows.Next() {
 		entity := &categoryreport.Entity{}
 
-		if err := rows.Scan(&entity.CategoryName, &entity.CategorySlug, &entity.Sum); err != nil {
+		if err := rows.Scan(
+			&entity.CategoryName,
+			&entity.CategorySlug,
+			&entity.Sum,
+			&entity.Supercategory,
+		); err != nil {
 			return nil, err
 		}
 
