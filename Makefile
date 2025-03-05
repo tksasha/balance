@@ -1,6 +1,7 @@
 MAIN=cmd/balance/main.go
 OUTPUT=balance
 
+MODULE=github.com/tksasha/balance
 MODFILE=-modfile go.tool.mod
 
 .PHONY: default
@@ -19,12 +20,12 @@ fix:
 .PHONY: fmt
 fmt:
 	@echo "go fmt"
-	@go tool $(MODFILE) gofumpt -l -w .
+	@go tool -modfile go.tool.mod gofumpt -l -w .
 
 .PHONY: lint
 lint:
 	@echo "go lint"
-	@go tool $(MODFILE) golangci-lint run
+	@go tool -modfile go.tool.mod golangci-lint run
 
 .PHONY: test
 test:
@@ -37,7 +38,7 @@ update:
 
 .PHONY: air
 air:
-	@go tool $(MODFILE) air
+	@go tool -modfile go.tool.mod air
 
 .PHONY: run
 run:
@@ -62,42 +63,42 @@ gen: wire mockgen
 
 .PHONY: mockgen
 mockgen:
-	@go tool $(MODFILE) mockgen \
+	@go tool -modfile go.tool.mod mockgen \
 		-source internal/app/cash/interfaces.go \
 		-package mocks \
 		-destination internal/app/cash/test/mocks/interfaces.mock.go
-	@go tool $(MODFILE) mockgen \
+	@go tool -modfile go.tool.mod mockgen \
 		-source internal/app/category/interfaces.go \
 		-package mocks \
 		-destination internal/app/category/test/mocks/interfaces.mock.go
-	@go tool $(MODFILE) mockgen \
+	@go tool -modfile go.tool.mod mockgen \
 		-source internal/app/item/interfaces.go \
 		-package mocks \
 		-destination internal/app/item/test/mocks/interfaces.mock.go
-	@go tool $(MODFILE) mockgen \
+	@go tool -modfile go.tool.mod mockgen \
 		-source internal/app/index/interfaces.go \
 		-package mocks \
 		-destination internal/app/index/test/mocks/interfaces.mock.go
-	@go tool $(MODFILE) mockgen \
+	@go tool -modfile go.tool.mod mockgen \
 		-source internal/backoffice/category/interfaces.go \
 		-package mocks \
 		-destination internal/backoffice/category/test/mocks/interfaces.mock.go
-	@go tool $(MODFILE) mockgen \
+	@go tool -modfile go.tool.mod mockgen \
 		-source internal/backoffice/cash/interfaces.go \
 		-package mocks \
 		-destination internal/backoffice/cash/test/mocks/interfaces.mock.go
-	@go tool $(MODFILE) mockgen \
+	@go tool -modfile go.tool.mod mockgen \
 		-source internal/app/balance/interfaces.go \
 		-package mocks \
 		-destination internal/app/balance/test/mocks/interfaces.mock.go
-	@go tool $(MODFILE) mockgen \
+	@go tool -modfile go.tool.mod mockgen \
 		-source internal/app/categoryreport/interfaces.go \
 		-package mocks \
 		-destination internal/app/categoryreport/test/mocks/interfaces.mock.go
 
 .PHONY: wire
 wire:
-	@go tool $(MODFILE) wire internal/wire/wire.go
+	@go tool -modfile go.tool.mod wire internal/wire/wire.go
 
 .PHONY: migration # to create new migration
 migration:
@@ -106,11 +107,13 @@ migration:
 
 .PHONY: prepare
 prepare:
-	go get -tool $(MODFILE) github.com/air-verse/air@latest
-	go get -tool $(MODFILE) github.com/golangci/golangci-lint/cmd/golangci-lint@latest
-	go get -tool $(MODFILE) github.com/google/wire/cmd/wire@latest
-	go get -tool $(MODFILE) go.uber.org/mock/mockgen@latest
-	go get -tool $(MODFILE) mvdan.cc/gofumpt@latest
+	@if [ ! -f go.mod ]; then go mod init $(MODULE); go mod tidy; fi
+	@if [ ! -f go.tool.mod ]; then go mod init -modfile go.tool.mod $(MODULE); go mod tidy; fi
+	go get -tool -modfile go.tool.mod github.com/air-verse/air@latest
+	go get -tool -modfile go.tool.mod github.com/golangci/golangci-lint/cmd/golangci-lint@latest
+	go get -tool -modfile go.tool.mod github.com/google/wire/cmd/wire@latest
+	go get -tool -modfile go.tool.mod go.uber.org/mock/mockgen@latest
+	go get -tool -modfile go.tool.mod mvdan.cc/gofumpt@latest
 
 .PHONY: structure
 structure:
