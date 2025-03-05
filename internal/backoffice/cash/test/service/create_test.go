@@ -38,10 +38,7 @@ func TestCreate(t *testing.T) { //nolint:funlen
 			Name: "Bonds",
 		}
 
-		cashRepository.
-			EXPECT().
-			NameExists(ctx, "Bonds", 0).
-			Return(false, errors.New("check name existence error"))
+		cashRepository.EXPECT().NameExists(ctx, "Bonds", 0).Return(false, errors.New("check name existence error"))
 
 		_, err := service.Create(ctx, request)
 
@@ -54,10 +51,7 @@ func TestCreate(t *testing.T) { //nolint:funlen
 			Formula: "2+3",
 		}
 
-		cashRepository.
-			EXPECT().
-			NameExists(ctx, "Bonds", 0).
-			Return(true, nil)
+		cashRepository.EXPECT().NameExists(ctx, "Bonds", 0).Return(true, nil)
 
 		_, err := service.Create(ctx, request)
 
@@ -70,10 +64,7 @@ func TestCreate(t *testing.T) { //nolint:funlen
 			Formula: "",
 		}
 
-		cashRepository.
-			EXPECT().
-			NameExists(ctx, "Bonds", 0).
-			Return(false, nil)
+		cashRepository.EXPECT().NameExists(ctx, "Bonds", 0).Return(false, nil)
 
 		_, err := service.Create(ctx, request)
 
@@ -86,10 +77,7 @@ func TestCreate(t *testing.T) { //nolint:funlen
 			Formula: "abc",
 		}
 
-		cashRepository.
-			EXPECT().
-			NameExists(ctx, "Bonds", 0).
-			Return(false, nil)
+		cashRepository.EXPECT().NameExists(ctx, "Bonds", 0).Return(false, nil)
 
 		_, err := service.Create(ctx, request)
 
@@ -103,10 +91,7 @@ func TestCreate(t *testing.T) { //nolint:funlen
 			Supercategory: "abc",
 		}
 
-		cashRepository.
-			EXPECT().
-			NameExists(ctx, "Bonds", 0).
-			Return(false, nil)
+		cashRepository.EXPECT().NameExists(ctx, "Bonds", 0).Return(false, nil)
 
 		_, err := service.Create(ctx, request)
 
@@ -121,13 +106,17 @@ func TestCreate(t *testing.T) { //nolint:funlen
 			Favorite:      "true",
 		}
 
-		cashRepository.
-			EXPECT().
-			NameExists(ctx, "Bonds", 0).
-			Return(false, nil)
+		cashRepository.EXPECT().NameExists(ctx, "Bonds", 0).Return(false, nil)
 
-		// TODO: fix me
-		cashRepository.EXPECT().Create(ctx, gomock.Any()).Return(errors.New("create cash error"))
+		cashToCreate := &cash.Cash{
+			Name:          "Bonds",
+			Formula:       "2+3",
+			Sum:           5,
+			Supercategory: 1242,
+			Favorite:      true,
+		}
+
+		cashRepository.EXPECT().Create(ctx, cashToCreate).Return(errors.New("create cash error"))
 
 		_, err := service.Create(ctx, request)
 
@@ -142,13 +131,17 @@ func TestCreate(t *testing.T) { //nolint:funlen
 			Favorite:      "true",
 		}
 
-		cashRepository.
-			EXPECT().
-			NameExists(ctx, "Bonds", 0).
-			Return(false, nil)
+		cashRepository.EXPECT().NameExists(ctx, "Bonds", 0).Return(false, nil)
 
-		// TODO: fix me
-		cashRepository.EXPECT().Create(ctx, gomock.Any()).Return(nil)
+		cashToCreate := &cash.Cash{
+			Name:          "Bonds",
+			Formula:       "2+3",
+			Sum:           5,
+			Supercategory: 1242,
+			Favorite:      true,
+		}
+
+		cashRepository.EXPECT().Create(ctx, cashToCreate).Return(nil)
 
 		_, err := service.Create(ctx, request)
 
