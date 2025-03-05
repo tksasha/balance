@@ -6,10 +6,10 @@ import (
 	. "maragu.dev/gomponents/html" //nolint:stylecheck
 )
 
-func (c *Component) categoryReport() Node {
+func (c *Component) categories() Node {
 	return Div(
 		htmx.Trigger("load"),
-		htmx.Get("/categoryreport"),
+		htmx.Get("/categories"),
 		htmx.Swap("outerHTML"),
 	)
 }

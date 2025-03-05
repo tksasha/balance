@@ -25,7 +25,7 @@ func (c *Component) Index(
 			Body: []Node{
 				If(false, c.header(values)),
 				If(true, c.balance()),
-				If(true, c.categoryReport()),
+				If(true, c.categories()),
 				If(false, c.form(&item.Item{}, categories)),
 				If(false, c.items()),
 				c.Modal(),

@@ -1,6 +1,9 @@
 package category
 
 import (
+	"maps"
+	"slices"
+
 	"github.com/tksasha/balance/internal/common/currency"
 )
 
@@ -11,6 +14,7 @@ type Category struct {
 	Slug          string
 	Income        bool
 	Supercategory int
+	Sum           float64
 }
 
 type Categories []*Category
@@ -37,4 +41,28 @@ func (c Categories) Expense() Categories {
 	}
 
 	return categories
+}
+
+func (c Categories) HasMoreThanOne() bool {
+	return len(c) > 1
+}
+
+func (c Categories) Sum() float64 {
+	var sum float64
+
+	for _, entity := range c {
+		sum += entity.Sum
+	}
+
+	return sum
+}
+
+type GroupedCategories map[int]Categories
+
+func (e GroupedCategories) Keys() []int {
+	keys := slices.Collect(maps.Keys(e))
+
+	slices.Sort(keys)
+
+	return keys
 }

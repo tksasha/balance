@@ -4,18 +4,18 @@ import (
 	"slices"
 	"testing"
 
-	"github.com/tksasha/balance/internal/app/categoryreport"
+	"github.com/tksasha/balance/internal/app/category"
 	"gotest.tools/v3/assert"
 )
 
 func TestKeys(t *testing.T) {
-	entities := categoryreport.MappedEntities{
+	categories := category.GroupedCategories{
 		1: {},
 		2: {},
 		0: {},
 	}
 
-	actual := entities.Keys()
+	actual := categories.Keys()
 
 	expected := []int{0, 1, 2}
 

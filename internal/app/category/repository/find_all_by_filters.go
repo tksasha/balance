@@ -4,10 +4,10 @@ import (
 	"context"
 	"log/slog"
 
-	"github.com/tksasha/balance/internal/app/categoryreport"
+	"github.com/tksasha/balance/internal/app/category"
 )
 
-func (r *Repository) Group(ctx context.Context, filters categoryreport.Filters) (categoryreport.Entities, error) {
+func (r *Repository) FindAllByFilters(ctx context.Context, filters category.Filters) (category.Categories, error) {
 	currency := r.GetCurrencyFromContext(ctx)
 
 	query := `
@@ -40,26 +40,26 @@ func (r *Repository) Group(ctx context.Context, filters categoryreport.Filters) 
 		}
 	}()
 
-	entities := categoryreport.Entities{}
+	categories := category.Categories{}
 
 	for rows.Next() {
-		entity := &categoryreport.Entity{}
+		category := &category.Category{}
 
 		if err := rows.Scan(
-			&entity.CategoryName,
-			&entity.CategorySlug,
-			&entity.Sum,
-			&entity.Supercategory,
+			&category.Name,
+			&category.Slug,
+			&category.Sum,
+			&category.Supercategory,
 		); err != nil {
 			return nil, err
 		}
 
-		entities = append(entities, entity)
+		categories = append(categories, category)
 	}
 
 	if err := rows.Err(); err != nil {
 		return nil, err
 	}
 
-	return entities, nil
+	return categories, nil
 }

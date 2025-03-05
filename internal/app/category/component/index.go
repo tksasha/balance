@@ -1,20 +1,20 @@
 package component
 
 import (
-	"github.com/tksasha/balance/internal/app/categoryreport"
+	"github.com/tksasha/balance/internal/app/category"
 	. "maragu.dev/gomponents"      //nolint:stylecheck
 	. "maragu.dev/gomponents/html" //nolint:stylecheck
 )
 
-func (c *Component) Show(entities categoryreport.MappedEntities) Node {
+func (c *Component) Index(categories category.GroupedCategories) Node {
 	nodes := []Node{}
 
-	for _, key := range entities.Keys() {
+	for _, key := range categories.Keys() {
 		node := Div(Class("card consolidation"),
 			Div(Class("card-body"),
 				Div(Class("card-text"),
 					Table(
-						TBody(c.entities(entities[key])),
+						TBody(c.entities(categories[key])),
 					),
 				),
 			),
@@ -30,7 +30,7 @@ func (c *Component) Show(entities categoryreport.MappedEntities) Node {
 	)
 }
 
-func (c *Component) entities(entities categoryreport.Entities) Node {
+func (c *Component) entities(entities category.Categories) Node {
 	var nodes []Node
 
 	nodes = append(nodes, Map(entities, c.entity))
@@ -42,10 +42,10 @@ func (c *Component) entities(entities categoryreport.Entities) Node {
 	return c.Map(nodes)
 }
 
-func (c *Component) entity(entity *categoryreport.Entity) Node {
+func (c *Component) entity(entity *category.Category) Node {
 	return Tr(
 		Td(Class("name"),
-			Text(entity.CategoryName),
+			Text(entity.Name),
 		),
 		Td(Class("sum"),
 			Div(Class("link"),

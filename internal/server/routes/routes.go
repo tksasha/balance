@@ -7,7 +7,7 @@ import (
 
 	balance "github.com/tksasha/balance/internal/app/balance/handler"
 	cash "github.com/tksasha/balance/internal/app/cash/handlers"
-	categoryreport "github.com/tksasha/balance/internal/app/categoryreport/handlers"
+	category "github.com/tksasha/balance/internal/app/category/handlers"
 	index "github.com/tksasha/balance/internal/app/index/handler"
 	item "github.com/tksasha/balance/internal/app/item/handlers"
 	backofficecash "github.com/tksasha/balance/internal/backoffice/cash/handlers"
@@ -37,7 +37,7 @@ func New( //nolint:funlen
 	cashEditHandler *cash.EditHandler,
 	cashIndexHandler *cash.IndexHandler,
 	cashUpdateHandler *cash.UpdateHandler,
-	categoryReportShowHandler *categoryreport.ShowHandler,
+	categoryIndexHandler *category.IndexHandler,
 	indexHandler *index.Handler,
 	itemCreateHandler *item.CreateHandler,
 	itemEditHandler *item.EditHandler,
@@ -67,7 +67,7 @@ func New( //nolint:funlen
 	mux.Handle("GET /cashes/{id}/edit", cashEditHandler)
 	mux.Handle("PATCH /cashes/{id}", cashUpdateHandler)
 
-	mux.Handle("GET /categoryreport", categoryReportShowHandler)
+	mux.Handle("GET /categories", categoryIndexHandler)
 
 	mux.Handle("GET /balance", balanceShowHandler)
 
