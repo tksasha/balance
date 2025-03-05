@@ -13,7 +13,7 @@ import (
 	"gotest.tools/v3/assert"
 )
 
-func TestUpdate(t *testing.T) { //nolint:funlen,maintidx
+func TestUpdate(t *testing.T) { //nolint:funlen
 	ctrl := gomock.NewController(t)
 
 	itemRepository := mocks.NewMockRepository(ctrl)
@@ -38,10 +38,7 @@ func TestUpdate(t *testing.T) { //nolint:funlen,maintidx
 			ID: "1027",
 		}
 
-		itemRepository.
-			EXPECT().
-			FindByID(ctx, 1027).
-			Return(nil, common.ErrRecordNotFound)
+		itemRepository.EXPECT().FindByID(ctx, 1027).Return(nil, common.ErrRecordNotFound)
 
 		_, err := service.Update(ctx, request)
 
@@ -53,10 +50,7 @@ func TestUpdate(t *testing.T) { //nolint:funlen,maintidx
 			ID: "1049",
 		}
 
-		itemRepository.
-			EXPECT().
-			FindByID(ctx, 1049).
-			Return(nil, errors.New("find item by id error"))
+		itemRepository.EXPECT().FindByID(ctx, 1049).Return(nil, errors.New("find item by id error"))
 
 		_, err := service.Update(ctx, request)
 
@@ -73,20 +67,14 @@ func TestUpdate(t *testing.T) { //nolint:funlen,maintidx
 
 		item := &item.Item{}
 
-		itemRepository.
-			EXPECT().
-			FindByID(ctx, 1051).
-			Return(item, nil)
+		itemRepository.EXPECT().FindByID(ctx, 1051).Return(item, nil)
 
 		category := &category.Category{
 			ID:   1052,
 			Name: "Tools",
 		}
 
-		categoryRepository.
-			EXPECT().
-			FindByID(ctx, 1052).
-			Return(category, nil)
+		categoryRepository.EXPECT().FindByID(ctx, 1052).Return(category, nil)
 
 		_, err := service.Update(ctx, request)
 
@@ -103,20 +91,14 @@ func TestUpdate(t *testing.T) { //nolint:funlen,maintidx
 
 		item := &item.Item{}
 
-		itemRepository.
-			EXPECT().
-			FindByID(ctx, 1051).
-			Return(item, nil)
+		itemRepository.EXPECT().FindByID(ctx, 1051).Return(item, nil)
 
 		category := &category.Category{
 			ID:   1052,
 			Name: "Tools",
 		}
 
-		categoryRepository.
-			EXPECT().
-			FindByID(ctx, 1052).
-			Return(category, nil)
+		categoryRepository.EXPECT().FindByID(ctx, 1052).Return(category, nil)
 
 		_, err := service.Update(ctx, request)
 
@@ -133,20 +115,14 @@ func TestUpdate(t *testing.T) { //nolint:funlen,maintidx
 
 		item := &item.Item{}
 
-		itemRepository.
-			EXPECT().
-			FindByID(ctx, 1051).
-			Return(item, nil)
+		itemRepository.EXPECT().FindByID(ctx, 1051).Return(item, nil)
 
 		category := &category.Category{
 			ID:   1052,
 			Name: "Tools",
 		}
 
-		categoryRepository.
-			EXPECT().
-			FindByID(ctx, 1052).
-			Return(category, nil)
+		categoryRepository.EXPECT().FindByID(ctx, 1052).Return(category, nil)
 
 		_, err := service.Update(ctx, request)
 
@@ -163,20 +139,14 @@ func TestUpdate(t *testing.T) { //nolint:funlen,maintidx
 
 		item := &item.Item{}
 
-		itemRepository.
-			EXPECT().
-			FindByID(ctx, 1051).
-			Return(item, nil)
+		itemRepository.EXPECT().FindByID(ctx, 1051).Return(item, nil)
 
 		category := &category.Category{
 			ID:   1052,
 			Name: "Tools",
 		}
 
-		categoryRepository.
-			EXPECT().
-			FindByID(ctx, 1052).
-			Return(category, nil)
+		categoryRepository.EXPECT().FindByID(ctx, 1052).Return(category, nil)
 
 		_, err := service.Update(ctx, request)
 
@@ -193,10 +163,7 @@ func TestUpdate(t *testing.T) { //nolint:funlen,maintidx
 
 		item := &item.Item{}
 
-		itemRepository.
-			EXPECT().
-			FindByID(ctx, 1051).
-			Return(item, nil)
+		itemRepository.EXPECT().FindByID(ctx, 1051).Return(item, nil)
 
 		_, err := service.Update(ctx, request)
 
@@ -213,10 +180,7 @@ func TestUpdate(t *testing.T) { //nolint:funlen,maintidx
 
 		item := &item.Item{}
 
-		itemRepository.
-			EXPECT().
-			FindByID(ctx, 1051).
-			Return(item, nil)
+		itemRepository.EXPECT().FindByID(ctx, 1051).Return(item, nil)
 
 		_, err := service.Update(ctx, request)
 
@@ -233,15 +197,9 @@ func TestUpdate(t *testing.T) { //nolint:funlen,maintidx
 
 		item := &item.Item{}
 
-		itemRepository.
-			EXPECT().
-			FindByID(ctx, 1051).
-			Return(item, nil)
+		itemRepository.EXPECT().FindByID(ctx, 1051).Return(item, nil)
 
-		categoryRepository.
-			EXPECT().
-			FindByID(ctx, 1100).
-			Return(nil, errors.New("find category by id error"))
+		categoryRepository.EXPECT().FindByID(ctx, 1100).Return(nil, errors.New("find category by id error"))
 
 		_, err := service.Update(ctx, request)
 
@@ -302,10 +260,7 @@ func TestUpdate(t *testing.T) { //nolint:funlen,maintidx
 			ID: 1051,
 		}
 
-		itemRepository.
-			EXPECT().
-			FindByID(ctx, 1051).
-			Return(itemFound, nil)
+		itemRepository.EXPECT().FindByID(ctx, 1051).Return(itemFound, nil)
 
 		category := &category.Category{
 			ID:   1100,
@@ -313,13 +268,20 @@ func TestUpdate(t *testing.T) { //nolint:funlen,maintidx
 			Slug: "beverages",
 		}
 
-		categoryRepository.
-			EXPECT().
-			FindByID(ctx, 1100).
-			Return(category, nil)
+		categoryRepository.EXPECT().FindByID(ctx, 1100).Return(category, nil)
 
-		// TODO: fix me
-		itemRepository.EXPECT().Update(ctx, gomock.Any()).Return(nil)
+		itemToUpdate := &item.Item{
+			ID:           1051,
+			Date:         date(t, "2025-01-25"),
+			Formula:      "2+2",
+			Sum:          4,
+			CategoryID:   1100,
+			CategoryName: "Beverages",
+			CategorySlug: "beverages",
+			Description:  "food, wine and flowers",
+		}
+
+		itemRepository.EXPECT().Update(ctx, itemToUpdate).Return(nil)
 
 		_, err := service.Update(ctx, request)
 
