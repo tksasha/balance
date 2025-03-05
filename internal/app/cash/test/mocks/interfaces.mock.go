@@ -139,6 +139,21 @@ func (mr *MockServiceMockRecorder) Edit(ctx, id any) *gomock.Call {
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "Edit", reflect.TypeOf((*MockService)(nil).Edit), ctx, id)
 }
 
+// List mocks base method.
+func (m *MockService) List(ctx context.Context) (cash.Cashes, error) {
+	m.ctrl.T.Helper()
+	ret := m.ctrl.Call(m, "List", ctx)
+	ret0, _ := ret[0].(cash.Cashes)
+	ret1, _ := ret[1].(error)
+	return ret0, ret1
+}
+
+// List indicates an expected call of List.
+func (mr *MockServiceMockRecorder) List(ctx any) *gomock.Call {
+	mr.mock.ctrl.T.Helper()
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "List", reflect.TypeOf((*MockService)(nil).List), ctx)
+}
+
 // Update mocks base method.
 func (m *MockService) Update(ctx context.Context, request cash.UpdateRequest) (*cash.Cash, error) {
 	m.ctrl.T.Helper()

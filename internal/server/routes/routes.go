@@ -35,6 +35,7 @@ func New( //nolint:funlen
 	backofficeCategoryUpdateHandler *backofficecategory.UpdateHandler,
 	balanceShowHandler *balance.ShowHandler,
 	cashEditHandler *cash.EditHandler,
+	cashIndexHandler *cash.IndexHandler,
 	cashUpdateHandler *cash.UpdateHandler,
 	categoryReportShowHandler *categoryreport.ShowHandler,
 	indexHandler *index.Handler,
@@ -58,10 +59,11 @@ func New( //nolint:funlen
 	mux.Handle("GET /{$}", indexHandler)
 
 	mux.Handle("POST /items", itemCreateHandler)
-	mux.Handle("GET /items/{$}", itemIndexHandler)
+	mux.Handle("GET /items", itemIndexHandler)
 	mux.Handle("GET /items/{id}/edit", itemEditHandler)
 	mux.Handle("PATCH /items/{id}", itemUpdateHandler)
 
+	mux.Handle("GET /cashes", cashIndexHandler)
 	mux.Handle("GET /cashes/{id}/edit", cashEditHandler)
 	mux.Handle("PATCH /cashes/{id}", cashUpdateHandler)
 

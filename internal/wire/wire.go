@@ -64,6 +64,7 @@ func InitializeServer() *server.Server {
 		balancerepository.New,
 		balanceservice.New,
 		cashhandlers.NewEditHandler,
+		cashhandlers.NewIndexHandler,
 		cashhandlers.NewUpdateHandler,
 		cashrepository.New,
 		cashservice.New,
