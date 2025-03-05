@@ -3,11 +3,12 @@ package service
 import (
 	"context"
 
+	"github.com/shopspring/decimal"
 	"github.com/tksasha/balance/internal/app/balance"
 )
 
 func (s *Service) Balance(ctx context.Context) (*balance.Balance, error) {
-	residual, err := s.residual(ctx)
+	atEnd, err := s.atEnd(ctx)
 	if err != nil {
 		return nil, err
 	}
@@ -18,21 +19,21 @@ func (s *Service) Balance(ctx context.Context) (*balance.Balance, error) {
 	}
 
 	return &balance.Balance{
-		Residual: residual,
-		Balance:  cashes - residual,
+		AtEnd:   atEnd,
+		Balance: cashes.Sub(atEnd),
 	}, nil
 }
 
-func (s *Service) residual(ctx context.Context) (float64, error) {
+func (s *Service) atEnd(ctx context.Context) (decimal.Decimal, error) {
 	income, err := s.repository.Income(ctx)
 	if err != nil {
-		return 0, err
+		return decimal.NewFromInt(0), err
 	}
 
 	expense, err := s.repository.Expense(ctx)
 	if err != nil {
-		return 0, err
+		return decimal.NewFromInt(0), err
 	}
 
-	return income - expense, nil
+	return income.Sub(expense), nil
 }

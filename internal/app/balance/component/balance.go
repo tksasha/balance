@@ -17,7 +17,7 @@ func (c *Component) Balance(balance *balance.Balance) Node {
 								Text("Залишок на кінець"),
 							),
 							Td(Class("sum"),
-								Text(c.Money(balance.Residual)),
+								Text(c.Money(balance.AtEnd)),
 							),
 						),
 						Tr(Class("balance"),

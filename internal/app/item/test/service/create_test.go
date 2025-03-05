@@ -174,7 +174,7 @@ func TestCreate(t *testing.T) { //nolint:funlen
 		itemToCreate := &item.Item{
 			Date:         time.Date(2025, 1, 23, 0, 0, 0, 0, time.UTC),
 			Formula:      "42.69+69.42",
-			Sum:          112.11,
+			Sum:          dec(t, 112.11),
 			CategoryID:   1244,
 			CategoryName: "Entrepreneurship",
 			CategorySlug: "entrepreneurship",
@@ -213,7 +213,7 @@ func TestCreate(t *testing.T) { //nolint:funlen
 		itemToCreate := &item.Item{
 			Date:         time.Date(2025, 0o1, 23, 0, 0, 0, 0, time.UTC),
 			Formula:      "42.69+69.42",
-			Sum:          112.11,
+			Sum:          dec(t, 112.11),
 			CategoryID:   1307,
 			CategoryName: "Telecommunications",
 			CategorySlug: "telecommunications",

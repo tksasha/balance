@@ -3,12 +3,14 @@ package categoryreport
 import (
 	"maps"
 	"slices"
+
+	"github.com/shopspring/decimal"
 )
 
 type Entity struct {
 	CategoryName  string
 	CategorySlug  string
-	Sum           float64
+	Sum           decimal.Decimal
 	Supercategory int
 }
 
@@ -18,11 +20,11 @@ func (e Entities) HasMoreThanOne() bool {
 	return len(e) > 1
 }
 
-func (e Entities) Sum() float64 {
-	var sum float64
+func (e Entities) Sum() decimal.Decimal {
+	var sum decimal.Decimal
 
 	for _, entity := range e {
-		sum += entity.Sum
+		sum = sum.Add(entity.Sum)
 	}
 
 	return sum

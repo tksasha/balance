@@ -2,25 +2,27 @@
 
 //go:generate go run -mod=mod github.com/google/wire/cmd/wire
 //go:build !wireinject
+// +build !wireinject
 
 package wire
 
 import (
 	"context"
-	repository4 "github.com/tksasha/balance/internal/app/balance/repository"
-	service4 "github.com/tksasha/balance/internal/app/balance/service"
+	"github.com/tksasha/balance/internal/app/balance/handler"
+	repository3 "github.com/tksasha/balance/internal/app/balance/repository"
+	service3 "github.com/tksasha/balance/internal/app/balance/service"
 	handlers3 "github.com/tksasha/balance/internal/app/cash/handlers"
-	repository3 "github.com/tksasha/balance/internal/app/cash/repository"
-	service3 "github.com/tksasha/balance/internal/app/cash/service"
-	repository5 "github.com/tksasha/balance/internal/app/category/repository"
-	service5 "github.com/tksasha/balance/internal/app/category/service"
-	handlers5 "github.com/tksasha/balance/internal/app/categoryreport/handlers"
-	repository7 "github.com/tksasha/balance/internal/app/categoryreport/repository"
-	service7 "github.com/tksasha/balance/internal/app/categoryreport/service"
-	"github.com/tksasha/balance/internal/app/index/handler"
-	handlers4 "github.com/tksasha/balance/internal/app/item/handlers"
-	repository6 "github.com/tksasha/balance/internal/app/item/repository"
-	service6 "github.com/tksasha/balance/internal/app/item/service"
+	repository4 "github.com/tksasha/balance/internal/app/cash/repository"
+	service4 "github.com/tksasha/balance/internal/app/cash/service"
+	repository6 "github.com/tksasha/balance/internal/app/category/repository"
+	service6 "github.com/tksasha/balance/internal/app/category/service"
+	handlers4 "github.com/tksasha/balance/internal/app/categoryreport/handlers"
+	repository5 "github.com/tksasha/balance/internal/app/categoryreport/repository"
+	service5 "github.com/tksasha/balance/internal/app/categoryreport/service"
+	handler2 "github.com/tksasha/balance/internal/app/index/handler"
+	handlers5 "github.com/tksasha/balance/internal/app/item/handlers"
+	repository7 "github.com/tksasha/balance/internal/app/item/repository"
+	service7 "github.com/tksasha/balance/internal/app/item/service"
 	"github.com/tksasha/balance/internal/backoffice/cash/handlers"
 	"github.com/tksasha/balance/internal/backoffice/cash/repository"
 	"github.com/tksasha/balance/internal/backoffice/cash/service"
@@ -59,23 +61,24 @@ func InitializeServer() *server.Server {
 	handlersUpdateHandler := handlers2.NewUpdateHandler(service8)
 	repository9 := repository3.New(sqlDB)
 	service9 := service3.New(repository9)
-	editHandler2 := handlers3.NewEditHandler(service9)
-	updateHandler2 := handlers3.NewUpdateHandler(service9)
+	showHandler := handler.NewShowHandler(service9)
 	repository10 := repository4.New(sqlDB)
 	service10 := service4.New(repository10)
+	editHandler2 := handlers3.NewEditHandler(service10)
+	updateHandler2 := handlers3.NewUpdateHandler(service10)
 	repository11 := repository5.New(sqlDB)
 	service11 := service5.New(repository11)
-	handlerHandler := handler.New(service10, service9, service11)
+	handlersShowHandler := handlers4.NewShowHandler(service11)
 	repository12 := repository6.New(sqlDB)
-	service12 := service6.New(repository12, repository11)
-	createHandler2 := handlers4.NewCreateHandler(service12, service11)
-	editHandler3 := handlers4.NewEditHandler(service12, service11)
-	indexHandler := handlers4.NewIndexHandler(service12)
-	updateHandler3 := handlers4.NewUpdateHandler(service12, service11)
+	service12 := service6.New(repository12)
+	handlerHandler := handler2.New(service9, service10, service12)
 	repository13 := repository7.New(sqlDB)
-	service13 := service7.New(repository13)
-	showHandler := handlers5.NewShowHandler(service13)
-	routesRoutes := routes.New(createHandler, deleteHandler, editHandler, listHandler, newHandler, updateHandler, handlersCreateHandler, handlersDeleteHandler, handlersEditHandler, handlersListHandler, handlersUpdateHandler, editHandler2, updateHandler2, handlerHandler, createHandler2, editHandler3, indexHandler, updateHandler3, showHandler)
+	service13 := service7.New(repository13, repository12)
+	createHandler2 := handlers5.NewCreateHandler(service13, service12)
+	editHandler3 := handlers5.NewEditHandler(service13, service12)
+	indexHandler := handlers5.NewIndexHandler(service13)
+	updateHandler3 := handlers5.NewUpdateHandler(service13, service12)
+	routesRoutes := routes.New(createHandler, deleteHandler, editHandler, listHandler, newHandler, updateHandler, handlersCreateHandler, handlersDeleteHandler, handlersEditHandler, handlersListHandler, handlersUpdateHandler, showHandler, editHandler2, updateHandler2, handlersShowHandler, handlerHandler, createHandler2, editHandler3, indexHandler, updateHandler3)
 	v := middlewares.New()
 	serverServer := server.New(configConfig, routesRoutes, v)
 	return serverServer

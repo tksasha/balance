@@ -118,7 +118,7 @@ func TestItemCreateHandler(t *testing.T) { //nolint:funlen
 		assert.Equal(t, item.Currency, currency.USD)
 		assert.Equal(t, item.Date.Format(time.DateOnly), "2024-10-16")
 		assert.Equal(t, item.Formula, "42.69+69.42")
-		assert.Equal(t, item.Sum, 112.11)
+		assert.Assert(t, eq(t, item.Sum, 112.11))
 		assert.Equal(t, item.CategoryID, 1101)
 		assert.Equal(t, item.CategoryName, "Accoutrements")
 		assert.Equal(t, item.CategorySlug, "accoutrements")

@@ -7,6 +7,7 @@ import (
 
 	"github.com/google/wire"
 	"github.com/tksasha/balance/internal/app/balance"
+	balancehandler "github.com/tksasha/balance/internal/app/balance/handler"
 	balancerepository "github.com/tksasha/balance/internal/app/balance/repository"
 	balanceservice "github.com/tksasha/balance/internal/app/balance/service"
 	"github.com/tksasha/balance/internal/app/cash"
@@ -59,6 +60,7 @@ func InitializeServer() *server.Server {
 		backofficecategoryhandlers.NewUpdateHandler,
 		backofficecategoryrepository.New,
 		backofficecategoryservice.New,
+		balancehandler.NewShowHandler,
 		balancerepository.New,
 		balanceservice.New,
 		cashhandlers.NewEditHandler,
@@ -89,6 +91,7 @@ func InitializeServer() *server.Server {
 		wire.Bind(new(backofficecategory.Repository), new(*backofficecategoryrepository.Repository)),
 		wire.Bind(new(backofficecategory.Service), new(*backofficecategoryservice.Service)),
 		wire.Bind(new(balance.Repository), new(*balancerepository.Repository)),
+		wire.Bind(new(balance.Service), new(*balanceservice.Service)),
 		wire.Bind(new(cash.Repository), new(*cashrepository.Repository)),
 		wire.Bind(new(cash.Service), new(*cashservice.Service)),
 		wire.Bind(new(category.Repository), new(*categoryrepository.Repository)),

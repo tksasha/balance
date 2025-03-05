@@ -63,7 +63,7 @@ func TestCashEditHandler(t *testing.T) { //nolint:funlen
 			ID:            1300,
 			Currency:      currency.EUR,
 			Formula:       "2+3",
-			Sum:           5,
+			Sum:           dec(t, 5),
 			Name:          "Bonds",
 			Supercategory: 6,
 			Favorite:      true,

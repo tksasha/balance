@@ -20,7 +20,7 @@ func TestBalance(t *testing.T) {
 	ctx := t.Context()
 
 	t.Run("returns error when calculate income failed", func(t *testing.T) {
-		repository.EXPECT().Income(ctx).Return(0.0, errors.New("calculate income error"))
+		repository.EXPECT().Income(ctx).Return(dec(t, 0.0), errors.New("calculate income error"))
 
 		_, err := service.Balance(ctx)
 
@@ -28,9 +28,9 @@ func TestBalance(t *testing.T) {
 	})
 
 	t.Run("returns error when calculate expense failed", func(t *testing.T) {
-		repository.EXPECT().Income(ctx).Return(99.99, nil)
+		repository.EXPECT().Income(ctx).Return(dec(t, 99.99), nil)
 
-		repository.EXPECT().Expense(ctx).Return(0.0, errors.New("calculate expense error"))
+		repository.EXPECT().Expense(ctx).Return(dec(t, 0.0), errors.New("calculate expense error"))
 
 		_, err := service.Balance(ctx)
 
@@ -38,11 +38,11 @@ func TestBalance(t *testing.T) {
 	})
 
 	t.Run("returns error when calculate cashes failed", func(t *testing.T) {
-		repository.EXPECT().Income(ctx).Return(99.99, nil)
+		repository.EXPECT().Income(ctx).Return(dec(t, 99.99), nil)
 
-		repository.EXPECT().Expense(ctx).Return(44.44, nil)
+		repository.EXPECT().Expense(ctx).Return(dec(t, 44.44), nil)
 
-		repository.EXPECT().Cashes(ctx).Return(0.0, errors.New("calculate cashes error"))
+		repository.EXPECT().Cashes(ctx).Return(dec(t, 0.0), errors.New("calculate cashes error"))
 
 		_, err := service.Balance(ctx)
 
@@ -50,16 +50,16 @@ func TestBalance(t *testing.T) {
 	})
 
 	t.Run("returns balance when no errors", func(t *testing.T) {
-		repository.EXPECT().Income(ctx).Return(99.99, nil)
+		repository.EXPECT().Income(ctx).Return(dec(t, 99.99), nil)
 
-		repository.EXPECT().Expense(ctx).Return(44.44, nil)
+		repository.EXPECT().Expense(ctx).Return(dec(t, 44.44), nil)
 
-		repository.EXPECT().Cashes(ctx).Return(33.33, nil)
+		repository.EXPECT().Cashes(ctx).Return(dec(t, 33.33), nil)
 
 		balance, err := service.Balance(ctx)
 
 		assert.NilError(t, err)
-		assert.Equal(t, balance.Residual, 55.55)
-		assert.Equal(t, balance.Balance, -22.22)
+		assert.Assert(t, eq(t, balance.AtEnd, 55.55))
+		assert.Assert(t, eq(t, balance.Balance, -22.22))
 	})
 }

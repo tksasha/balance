@@ -4,6 +4,7 @@ import (
 	"errors"
 	"testing"
 
+	"github.com/shopspring/decimal"
 	"github.com/tksasha/balance/internal/app/categoryreport"
 	"github.com/tksasha/balance/internal/app/categoryreport/service"
 	"github.com/tksasha/balance/internal/app/categoryreport/test/mocks"
@@ -40,12 +41,12 @@ func TestReport(t *testing.T) { //nolint:funlen
 
 	t.Run("when repository returns entities", func(t *testing.T) {
 		entities := categoryreport.Entities{
-			{CategoryName: "Food", CategorySlug: "food", Sum: 11.11, Supercategory: 1},
-			{CategoryName: "Beverages", CategorySlug: "beverages", Sum: 22.22, Supercategory: 1},
-			{CategoryName: "Rent", CategorySlug: "rent", Sum: 33.33, Supercategory: 2},
-			{CategoryName: "Salary", CategorySlug: "salary", Sum: 44.44, Supercategory: 0},
-			{CategoryName: "Stocks", CategorySlug: "stocks", Sum: 55.55, Supercategory: 0},
-			{CategoryName: "Bonds", CategorySlug: "bonds", Sum: 66.66, Supercategory: 0},
+			{CategoryName: "Food", CategorySlug: "food", Sum: dec(t, 11.11), Supercategory: 1},
+			{CategoryName: "Beverages", CategorySlug: "beverages", Sum: dec(t, 22.22), Supercategory: 1},
+			{CategoryName: "Rent", CategorySlug: "rent", Sum: dec(t, 33.33), Supercategory: 2},
+			{CategoryName: "Salary", CategorySlug: "salary", Sum: dec(t, 44.44), Supercategory: 0},
+			{CategoryName: "Stocks", CategorySlug: "stocks", Sum: dec(t, 55.55), Supercategory: 0},
+			{CategoryName: "Bonds", CategorySlug: "bonds", Sum: dec(t, 66.66), Supercategory: 0},
 		}
 
 		repository.EXPECT().Group(ctx, filters).Return(entities, nil)
@@ -54,16 +55,16 @@ func TestReport(t *testing.T) { //nolint:funlen
 
 		expected := map[int]categoryreport.Entities{
 			0: {
-				{CategoryName: "Salary", CategorySlug: "salary", Sum: 44.44, Supercategory: 0},
-				{CategoryName: "Stocks", CategorySlug: "stocks", Sum: 55.55, Supercategory: 0},
-				{CategoryName: "Bonds", CategorySlug: "bonds", Sum: 66.66, Supercategory: 0},
+				{CategoryName: "Salary", CategorySlug: "salary", Sum: dec(t, 44.44), Supercategory: 0},
+				{CategoryName: "Stocks", CategorySlug: "stocks", Sum: dec(t, 55.55), Supercategory: 0},
+				{CategoryName: "Bonds", CategorySlug: "bonds", Sum: dec(t, 66.66), Supercategory: 0},
 			},
 			1: {
-				{CategoryName: "Food", CategorySlug: "food", Sum: 11.11, Supercategory: 1},
-				{CategoryName: "Beverages", CategorySlug: "beverages", Sum: 22.22, Supercategory: 1},
+				{CategoryName: "Food", CategorySlug: "food", Sum: dec(t, 11.11), Supercategory: 1},
+				{CategoryName: "Beverages", CategorySlug: "beverages", Sum: dec(t, 22.22), Supercategory: 1},
 			},
 			2: {
-				{CategoryName: "Rent", CategorySlug: "rent", Sum: 33.33, Supercategory: 2},
+				{CategoryName: "Rent", CategorySlug: "rent", Sum: dec(t, 33.33), Supercategory: 2},
 			},
 		}
 
@@ -71,8 +72,17 @@ func TestReport(t *testing.T) { //nolint:funlen
 
 		for supercategory := range expected {
 			for idx := range expected[supercategory] {
-				assert.Equal(t, *actual[supercategory][idx], *expected[supercategory][idx])
+				assert.Equal(t, actual[supercategory][idx].CategoryName, expected[supercategory][idx].CategoryName)
+				assert.Equal(t, actual[supercategory][idx].CategorySlug, expected[supercategory][idx].CategorySlug)
+				assert.Assert(t, actual[supercategory][idx].Sum.Equal(expected[supercategory][idx].Sum))
+				assert.Equal(t, actual[supercategory][idx].Supercategory, expected[supercategory][idx].Supercategory)
 			}
 		}
 	})
+}
+
+func dec(t *testing.T, f float64) decimal.Decimal {
+	t.Helper()
+
+	return decimal.NewFromFloat(f)
 }

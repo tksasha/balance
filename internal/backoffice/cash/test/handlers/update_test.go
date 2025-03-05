@@ -114,7 +114,7 @@ func TestCashUpdateHandler(t *testing.T) { //nolint:funlen
 			ID:            1442,
 			Currency:      currency.UAH,
 			Formula:       "2+3",
-			Sum:           5,
+			Sum:           dec(t, 5),
 			Name:          "Bonds",
 			Supercategory: 2,
 			Favorite:      false,

@@ -226,7 +226,7 @@ func TestUpdate(t *testing.T) { //nolint:funlen
 		assert.Equal(t, res.ID, 1540)
 		assert.Equal(t, res.Currency, currency.USD)
 		assert.Equal(t, res.Formula, "2+3")
-		assert.Equal(t, res.Sum, 5.0)
+		assert.Assert(t, eq(t, res.Sum, 5.0))
 		assert.Equal(t, res.Name, "Bonds")
 	})
 }

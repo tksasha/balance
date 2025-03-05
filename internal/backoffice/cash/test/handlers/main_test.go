@@ -5,6 +5,7 @@ import (
 	"net/http"
 	"testing"
 
+	"github.com/shopspring/decimal"
 	"github.com/tksasha/balance/internal/backoffice/cash"
 	"github.com/tksasha/balance/internal/common/currency"
 	"github.com/tksasha/balance/internal/server/middlewares"
@@ -145,4 +146,16 @@ func findCashByID(t *testing.T, db *sql.DB, currency currency.Currency, id int) 
 	}
 
 	return cash
+}
+
+func dec(t *testing.T, f float64) decimal.Decimal {
+	t.Helper()
+
+	return decimal.NewFromFloat(f)
+}
+
+func eq(t *testing.T, d decimal.Decimal, f float64) bool {
+	t.Helper()
+
+	return decimal.NewFromFloat(f).Equal(d)
 }

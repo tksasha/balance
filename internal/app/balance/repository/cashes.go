@@ -2,9 +2,11 @@ package repository
 
 import (
 	"context"
+
+	"github.com/shopspring/decimal"
 )
 
-func (r *Repository) Cashes(ctx context.Context) (float64, error) {
+func (r *Repository) Cashes(ctx context.Context) (decimal.Decimal, error) {
 	currency := r.GetCurrencyFromContext(ctx)
 
 	query := `
@@ -19,10 +21,10 @@ func (r *Repository) Cashes(ctx context.Context) (float64, error) {
 
 	row := r.db.QueryRowContext(ctx, query, currency)
 
-	var cashes float64
+	var cashes decimal.Decimal
 
 	if err := row.Scan(&cashes); err != nil {
-		return 0.0, err
+		return decimal.NewFromInt(0), err
 	}
 
 	return cashes, nil

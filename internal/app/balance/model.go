@@ -1,6 +1,10 @@
 package balance
 
+import (
+	"github.com/shopspring/decimal"
+)
+
 type Balance struct {
-	Residual float64
-	Balance  float64
+	AtEnd   decimal.Decimal
+	Balance decimal.Decimal
 }

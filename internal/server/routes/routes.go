@@ -5,6 +5,7 @@ import (
 	"net/http"
 	"time"
 
+	balance "github.com/tksasha/balance/internal/app/balance/handler"
 	cash "github.com/tksasha/balance/internal/app/cash/handlers"
 	categoryreport "github.com/tksasha/balance/internal/app/categoryreport/handlers"
 	index "github.com/tksasha/balance/internal/app/index/handler"
@@ -20,7 +21,7 @@ type Routes struct {
 	Mux *http.ServeMux
 }
 
-func New(
+func New( //nolint:funlen
 	backofficeCashCreateHandler *backofficecash.CreateHandler,
 	backofficeCashDeleteHandler *backofficecash.DeleteHandler,
 	backofficeCashEditHandler *backofficecash.EditHandler,
@@ -32,14 +33,15 @@ func New(
 	backofficeCategoryEditHandler *backofficecategory.EditHandler,
 	backofficeCategoryListHandler *backofficecategory.ListHandler,
 	backofficeCategoryUpdateHandler *backofficecategory.UpdateHandler,
+	balanceShowHandler *balance.ShowHandler,
 	cashEditHandler *cash.EditHandler,
 	cashUpdateHandler *cash.UpdateHandler,
+	categoryReportShowHandler *categoryreport.ShowHandler,
 	indexHandler *index.Handler,
 	itemCreateHandler *item.CreateHandler,
 	itemEditHandler *item.EditHandler,
 	itemIndexHandler *item.IndexHandler,
 	itemUpdateHandler *item.UpdateHandler,
-	categoryReportShowHandler *categoryreport.ShowHandler,
 ) *Routes {
 	mux := http.NewServeMux()
 
@@ -64,6 +66,8 @@ func New(
 	mux.Handle("PATCH /cashes/{id}", cashUpdateHandler)
 
 	mux.Handle("GET /categoryreport", categoryReportShowHandler)
+
+	mux.Handle("GET /balance", balanceShowHandler)
 
 	mux.Handle("GET /backoffice/cashes", backofficeCashListHandler)
 	mux.Handle("GET /backoffice/cashes/new", backofficeCashNewHandler)

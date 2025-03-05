@@ -4,6 +4,7 @@ import (
 	"bytes"
 	"testing"
 
+	"github.com/shopspring/decimal"
 	"github.com/tksasha/balance/internal/app/cash"
 	"github.com/tksasha/balance/internal/app/cash/component"
 	"github.com/tksasha/validation"
@@ -34,7 +35,7 @@ func TestEdit(t *testing.T) {
 		cash := &cash.Cash{
 			ID:   1531,
 			Name: "Stocks",
-			Sum:  15.32,
+			Sum:  decimal.NewFromFloat(15.32),
 		}
 
 		w := bytes.NewBuffer([]byte{})
