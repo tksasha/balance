@@ -261,10 +261,7 @@ func TestUpdate(t *testing.T) { //nolint:funlen,maintidx
 			ID: 1051,
 		}
 
-		itemRepository.
-			EXPECT().
-			FindByID(ctx, 1051).
-			Return(itemFound, nil)
+		itemRepository.EXPECT().FindByID(ctx, 1051).Return(itemFound, nil)
 
 		category := &category.Category{
 			ID:   1100,
@@ -272,15 +269,20 @@ func TestUpdate(t *testing.T) { //nolint:funlen,maintidx
 			Slug: "beverages",
 		}
 
-		categoryRepository.
-			EXPECT().
-			FindByID(ctx, 1100).
-			Return(category, nil)
+		categoryRepository.EXPECT().FindByID(ctx, 1100).Return(category, nil)
 
-		itemRepository.
-			EXPECT().
-			Update(ctx, gomock.Any()). // TODO: fix me
-			Return(errors.New("update category error"))
+		itemToUpdate := &item.Item{
+			ID:           1051,
+			Date:         date(t, "2025-01-25"),
+			Formula:      "2+2",
+			Sum:          4,
+			CategoryID:   1100,
+			CategoryName: "Beverages",
+			CategorySlug: "beverages",
+			Description:  "food, wine and flowers",
+		}
+
+		itemRepository.EXPECT().Update(ctx, itemToUpdate).Return(errors.New("update category error"))
 
 		_, err := service.Update(ctx, request)
 
