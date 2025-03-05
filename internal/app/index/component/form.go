@@ -3,7 +3,6 @@ package component
 import (
 	"strconv"
 
-	"github.com/shopspring/decimal"
 	"github.com/tksasha/balance/internal/app/category"
 	"github.com/tksasha/balance/internal/app/item"
 	. "maragu.dev/gomponents"      //nolint:stylecheck
@@ -66,8 +65,8 @@ func (c *Component) option(category *category.Category) Node {
 	)
 }
 
-func (c *Component) sum(sum decimal.Decimal) string {
-	if sum.Equal(decimal.NewFromInt(0)) {
+func (c *Component) sum(sum float64) string {
+	if sum == 0.0 {
 		return ""
 	}
 

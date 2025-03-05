@@ -20,20 +20,28 @@ func (s *Service) Balance(ctx context.Context) (*balance.Balance, error) {
 
 	return &balance.Balance{
 		AtEnd:   atEnd,
-		Balance: cashes.Sub(atEnd),
+		Balance: sub(cashes, atEnd),
 	}, nil
 }
 
-func (s *Service) atEnd(ctx context.Context) (decimal.Decimal, error) {
+func (s *Service) atEnd(ctx context.Context) (float64, error) {
 	income, err := s.repository.Income(ctx)
 	if err != nil {
-		return decimal.NewFromInt(0), err
+		return 0, err
 	}
 
 	expense, err := s.repository.Expense(ctx)
 	if err != nil {
-		return decimal.NewFromInt(0), err
+		return 0, err
 	}
 
-	return income.Sub(expense), nil
+	return sub(income, expense), nil
+}
+
+func sub(l, r float64) float64 {
+	sub, _ := decimal.NewFromFloat(l).Sub(
+		decimal.NewFromFloat(r),
+	).Float64()
+
+	return sub
 }

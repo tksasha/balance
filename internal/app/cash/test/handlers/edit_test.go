@@ -7,7 +7,6 @@ import (
 	"net/http/httptest"
 	"testing"
 
-	"github.com/shopspring/decimal"
 	"github.com/tksasha/balance/internal/app/cash"
 	"github.com/tksasha/balance/internal/app/cash/handlers"
 	"github.com/tksasha/balance/internal/app/cash/repository"
@@ -64,7 +63,7 @@ func TestCashEditHandler(t *testing.T) { //nolint:funlen
 			ID:            1300,
 			Currency:      currency.EUR,
 			Formula:       "2+3",
-			Sum:           decimal.NewFromInt(5),
+			Sum:           5,
 			Name:          "Bonds",
 			Supercategory: 6,
 		}

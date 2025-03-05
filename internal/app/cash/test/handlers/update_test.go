@@ -104,7 +104,7 @@ func TestCashUpdateHandler(t *testing.T) { //nolint:funlen
 			ID:            1442,
 			Currency:      currency.UAH,
 			Formula:       "2+3",
-			Sum:           dec(t, 5),
+			Sum:           5,
 			Name:          "Bonds",
 			Supercategory: 2,
 		}
@@ -144,7 +144,7 @@ func TestCashUpdateHandler(t *testing.T) { //nolint:funlen
 		assert.Equal(t, cash.ID, 1442)
 		assert.Equal(t, cash.Currency, currency.UAH)
 		assert.Equal(t, cash.Formula, "3+4")
-		assert.Assert(t, eq(t, cash.Sum, 7.0))
+		assert.Equal(t, cash.Sum, 7.0)
 		assert.Equal(t, cash.Supercategory, 2)
 	})
 }

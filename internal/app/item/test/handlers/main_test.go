@@ -5,7 +5,6 @@ import (
 	"net/http"
 	"testing"
 
-	"github.com/shopspring/decimal"
 	"github.com/tksasha/balance/internal/app/category"
 	"github.com/tksasha/balance/internal/app/item"
 	"github.com/tksasha/balance/internal/common/currency"
@@ -124,10 +123,4 @@ func createItem(t *testing.T, db *sql.DB, item *item.Item) {
 	if id == 0 {
 		t.Fatal("failed to create item")
 	}
-}
-
-func eq(t *testing.T, d decimal.Decimal, f float64) bool {
-	t.Helper()
-
-	return decimal.NewFromFloat(f).Equal(d)
 }

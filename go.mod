@@ -8,7 +8,7 @@ require (
 	github.com/mattn/go-sqlite3 v1.14.24
 	github.com/shopspring/decimal v1.4.0
 	github.com/tksasha/month v0.0.8
-	github.com/tksasha/validation v0.0.5
+	github.com/tksasha/validation v0.0.6
 	github.com/tksasha/xstrings v0.0.6
 	go.uber.org/mock v0.5.0
 	golang.org/x/text v0.22.0
@@ -20,5 +20,5 @@ require (
 require (
 	github.com/google/go-cmp v0.6.0 // indirect
 	github.com/mrxrsd/gojacego v1.0.0 // indirect
-	github.com/tksasha/calculator v0.0.9 // indirect
+	github.com/tksasha/calculator v0.0.10 // indirect
 )

@@ -13,7 +13,6 @@ import (
 	context "context"
 	reflect "reflect"
 
-	decimal "github.com/shopspring/decimal"
 	balance "github.com/tksasha/balance/internal/app/balance"
 	gomock "go.uber.org/mock/gomock"
 )
@@ -43,10 +42,10 @@ func (m *MockRepository) EXPECT() *MockRepositoryMockRecorder {
 }
 
 // Cashes mocks base method.
-func (m *MockRepository) Cashes(ctx context.Context) (decimal.Decimal, error) {
+func (m *MockRepository) Cashes(ctx context.Context) (float64, error) {
 	m.ctrl.T.Helper()
 	ret := m.ctrl.Call(m, "Cashes", ctx)
-	ret0, _ := ret[0].(decimal.Decimal)
+	ret0, _ := ret[0].(float64)
 	ret1, _ := ret[1].(error)
 	return ret0, ret1
 }
@@ -58,10 +57,10 @@ func (mr *MockRepositoryMockRecorder) Cashes(ctx any) *gomock.Call {
 }
 
 // Expense mocks base method.
-func (m *MockRepository) Expense(ctx context.Context) (decimal.Decimal, error) {
+func (m *MockRepository) Expense(ctx context.Context) (float64, error) {
 	m.ctrl.T.Helper()
 	ret := m.ctrl.Call(m, "Expense", ctx)
-	ret0, _ := ret[0].(decimal.Decimal)
+	ret0, _ := ret[0].(float64)
 	ret1, _ := ret[1].(error)
 	return ret0, ret1
 }
@@ -73,10 +72,10 @@ func (mr *MockRepositoryMockRecorder) Expense(ctx any) *gomock.Call {
 }
 
 // Income mocks base method.
-func (m *MockRepository) Income(ctx context.Context) (decimal.Decimal, error) {
+func (m *MockRepository) Income(ctx context.Context) (float64, error) {
 	m.ctrl.T.Helper()
 	ret := m.ctrl.Call(m, "Income", ctx)
-	ret0, _ := ret[0].(decimal.Decimal)
+	ret0, _ := ret[0].(float64)
 	ret1, _ := ret[1].(error)
 	return ret0, ret1
 }

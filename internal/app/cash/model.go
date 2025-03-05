@@ -1,7 +1,6 @@
 package cash
 
 import (
-	"github.com/shopspring/decimal"
 	"github.com/tksasha/balance/internal/common/currency"
 )
 
@@ -9,7 +8,7 @@ type Cash struct {
 	ID            int
 	Currency      currency.Currency
 	Formula       string
-	Sum           decimal.Decimal
+	Sum           float64
 	Name          string
 	Supercategory int
 }
@@ -20,11 +19,11 @@ func (c Cashes) HasMoreThanOne() bool {
 	return len(c) > 1
 }
 
-func (c Cashes) Sum() decimal.Decimal {
-	var sum decimal.Decimal
+func (c Cashes) Sum() float64 {
+	var sum float64
 
 	for _, cash := range c {
-		sum = sum.Add(cash.Sum)
+		sum += cash.Sum
 	}
 
 	return sum

@@ -104,7 +104,7 @@ func TestCashCreateHandler(t *testing.T) { //nolint:funlen
 		assert.Equal(t, cash.ID, 1)
 		assert.Equal(t, cash.Name, "Bonds")
 		assert.Equal(t, cash.Formula, "2+3")
-		assert.Assert(t, eq(t, cash.Sum, 5.0))
+		assert.Equal(t, cash.Sum, 5.0)
 		assert.Equal(t, cash.Currency, currency.USD)
 		assert.Equal(t, cash.Supercategory, 2)
 		assert.Equal(t, cash.Favorite, true)
