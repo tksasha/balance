@@ -71,7 +71,7 @@ func InitializeServer() *server.Server {
 	handlersShowHandler := handlers4.NewShowHandler(service11)
 	repository12 := repository6.New(sqlDB)
 	service12 := service6.New(repository12)
-	handlerHandler := handler2.New(service9, service10, service12)
+	handlerHandler := handler2.New(service12)
 	repository13 := repository7.New(sqlDB)
 	service13 := service7.New(repository13, repository12)
 	createHandler2 := handlers5.NewCreateHandler(service13, service12)

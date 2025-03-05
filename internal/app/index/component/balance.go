@@ -1,13 +1,12 @@
 package component
 
 import (
-	"github.com/tksasha/balance/internal/app/cash"
 	. "maragu.dev/gomponents" //nolint:stylecheck
 	htmx "maragu.dev/gomponents-htmx"
 	. "maragu.dev/gomponents/html" //nolint:stylecheck
 )
 
-func (c *Component) balance(cashes cash.Cashes) Node {
+func (c *Component) balance() Node {
 	return Div(Class("container-fluid"),
 		Div(Class("row mt-4"),
 			Div(
@@ -15,7 +14,11 @@ func (c *Component) balance(cashes cash.Cashes) Node {
 				htmx.Get("/balance"),
 				htmx.Swap("outerHTML"),
 			),
-			c.cashComponent.List(cashes),
+			Div(
+				htmx.Trigger("load"),
+				htmx.Get("/cashes"),
+				htmx.Swap("outerHTML"),
+			),
 		),
 	)
 }

@@ -3,7 +3,6 @@ package component
 import (
 	"net/url"
 
-	"github.com/tksasha/balance/internal/app/cash"
 	"github.com/tksasha/balance/internal/app/category"
 	"github.com/tksasha/balance/internal/app/item"
 	. "maragu.dev/gomponents"            //nolint:stylecheck
@@ -12,7 +11,6 @@ import (
 )
 
 func (c *Component) Index(
-	cashes cash.Cashes,
 	categories category.Categories,
 	values url.Values,
 ) Node {
@@ -26,7 +24,7 @@ func (c *Component) Index(
 			},
 			Body: []Node{
 				If(false, c.header(values)),
-				If(true, c.balance(cashes)),
+				If(true, c.balance()),
 				If(true, c.categoryReport()),
 				If(false, c.form(&item.Item{}, categories)),
 				If(false, c.items()),

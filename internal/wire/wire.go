@@ -98,8 +98,6 @@ func InitializeServer() *server.Server {
 		wire.Bind(new(categoryreport.Repository), new(*categoryreportrepository.Repository)),
 		wire.Bind(new(categoryreport.Service), new(*categoryreportservice.Service)),
 		wire.Bind(new(db.NameProvider), new(*nameprovider.NameProvider)),
-		wire.Bind(new(index.BalanceService), new(*balanceservice.Service)),
-		wire.Bind(new(index.CashService), new(*cashservice.Service)),
 		wire.Bind(new(index.CategoryService), new(*categoryservice.Service)),
 		wire.Bind(new(item.CategoryRepository), new(*categoryrepository.Repository)),
 		wire.Bind(new(item.CategoryService), new(*categoryservice.Service)),
