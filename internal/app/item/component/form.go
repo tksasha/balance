@@ -15,14 +15,19 @@ func (c *Component) form(item *item.Item, categories category.Categories, errors
 	return Form(
 		c.Input("Дата", "date", item.Date.Format(time.DateOnly), errors.Get("date")),
 		c.Input("Сума", "formula", item.Formula, errors.Get("sum")),
-		c.categories(item.CategoryID, categories, errors.Get("category")),
+		Div(Class("mb-3"),
+			c.categories(item.CategoryID, categories, errors.Get("category")),
+		),
 		c.Input("Опис", "description", item.Description, errors.Get("description")),
 		c.Submit(item.ID),
 	)
 }
 
 func (c *Component) categories(selected int, categories category.Categories, message *string) Node {
-	return Div(Class("mb-3"),
+	var nodes []Node
+
+	nodes = append(
+		nodes,
 		Select(Class("form-select"), Name("category"),
 			OptGroup(Label(Text("Видатки")),
 				Map(categories.Expense(), func(category *category.Category) Node {
@@ -35,8 +40,12 @@ func (c *Component) categories(selected int, categories category.Categories, mes
 				}),
 			),
 		),
-		Iff(message != nil, func() Node { return Div(Class("invalid-feebback"), Text(*message)) }),
 	)
+	if message != nil {
+		nodes = append(nodes, Div(Class("invalid-feebback"), Text(*message)))
+	}
+
+	return c.Map(nodes)
 }
 
 func (c *Component) category(category *category.Category, selected int) Node {

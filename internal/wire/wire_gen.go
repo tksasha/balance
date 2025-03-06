@@ -73,8 +73,9 @@ func InitializeServer() *server.Server {
 	createHandler2 := handlers5.NewCreateHandler(service11, service10)
 	editHandler3 := handlers5.NewEditHandler(service11, service10)
 	indexHandler2 := handlers5.NewIndexHandler(service11)
+	handlersNewHandler := handlers5.NewNewHandler(service10)
 	updateHandler3 := handlers5.NewUpdateHandler(service11, service10)
-	routesRoutes := routes.New(createHandler, deleteHandler, editHandler, listHandler, newHandler, updateHandler, handlersCreateHandler, handlersDeleteHandler, handlersEditHandler, handlersListHandler, handlersUpdateHandler, showHandler, editHandler2, indexHandler, updateHandler2, handlersIndexHandler, handlerHandler, createHandler2, editHandler3, indexHandler2, updateHandler3)
+	routesRoutes := routes.New(createHandler, deleteHandler, editHandler, listHandler, newHandler, updateHandler, handlersCreateHandler, handlersDeleteHandler, handlersEditHandler, handlersListHandler, handlersUpdateHandler, showHandler, editHandler2, indexHandler, updateHandler2, handlersIndexHandler, handlerHandler, createHandler2, editHandler3, indexHandler2, handlersNewHandler, updateHandler3)
 	v := middlewares.New()
 	serverServer := server.New(configConfig, routesRoutes, v)
 	return serverServer

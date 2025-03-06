@@ -74,6 +74,7 @@ func InitializeServer() *server.Server {
 		itemhandlers.NewCreateHandler,
 		itemhandlers.NewEditHandler,
 		itemhandlers.NewIndexHandler,
+		itemhandlers.NewNewHandler,
 		itemhandlers.NewUpdateHandler,
 		itemrepository.New,
 		itemservice.New,

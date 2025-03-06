@@ -19,9 +19,9 @@ func (c *Component) Index(values url.Values) Node {
 			},
 			Body: []Node{
 				If(false, c.header(values)),
+				If(true, c.form()),
 				If(true, c.balance()),
 				If(true, c.categories()),
-				If(true, c.form()),
 				If(false, c.items()),
 				c.Modal(),
 				Script(Src("/assets/bootstrap-0f43271223c74d330702ce94a39ed70d04e8fd36.js")),

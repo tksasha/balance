@@ -63,7 +63,7 @@ func (h *CreateHandler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 			return
 		}
 
-		err = h.component.New(resource, categories, verrors).Render(w)
+		err = h.component.Create(resource, categories, verrors).Render(w)
 
 		h.SetError(w, err)
 

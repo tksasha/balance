@@ -42,6 +42,7 @@ func New( //nolint:funlen
 	itemCreateHandler *item.CreateHandler,
 	itemEditHandler *item.EditHandler,
 	itemIndexHandler *item.IndexHandler,
+	itemNewHandler *item.NewHandler,
 	itemUpdateHandler *item.UpdateHandler,
 ) *Routes {
 	mux := http.NewServeMux()
@@ -58,6 +59,7 @@ func New( //nolint:funlen
 
 	mux.Handle("GET /{$}", indexHandler)
 
+	mux.Handle("GET /items/new", itemNewHandler)
 	mux.Handle("POST /items", itemCreateHandler)
 	mux.Handle("GET /items", itemIndexHandler)
 	mux.Handle("GET /items/{id}/edit", itemEditHandler)

@@ -2,11 +2,27 @@ package component
 
 import (
 	"github.com/tksasha/balance/internal/app/category"
-	"github.com/tksasha/balance/internal/app/item"
-	"github.com/tksasha/validation"
-	. "maragu.dev/gomponents" //nolint:stylecheck
+	. "maragu.dev/gomponents"      //nolint:stylecheck
+	. "maragu.dev/gomponents/html" //nolint:stylecheck
 )
 
-func (c *Component) New(item *item.Item, categories category.Categories, errors validation.Errors) Node {
-	return c.form(item, categories, errors)
+func (c *Component) New(categories category.Categories) Node {
+	return Form(Class("new_item"),
+		Div(Class("item-inline-form-date"),
+			Input(Class("form-control datepicker"), Placeholder("Дата"), Name("date")),
+		),
+		Div(Class("item-inline-form-formula"),
+			Input(Class("form-control"), Placeholder("Сума"), Name("formula")),
+		),
+		Div(Class("item-inline-form-category"),
+			c.categories(0, categories, nil),
+		),
+		Div(Class("item-inline-form-description"),
+			Input(Class("form-control"), Placeholder("Примітка"), Name("description")),
+		),
+		Div(
+			Class("float-right"),
+			Button(Class("btn btn-primary"), Text("Створити")),
+		),
+	)
 }
