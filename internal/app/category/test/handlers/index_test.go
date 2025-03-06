@@ -10,6 +10,7 @@ import (
 	"github.com/tksasha/balance/internal/app/category/handlers"
 	"github.com/tksasha/balance/internal/app/category/repository"
 	"github.com/tksasha/balance/internal/app/category/service"
+	"github.com/tksasha/balance/internal/app/item"
 	"github.com/tksasha/balance/internal/db"
 	"github.com/tksasha/balance/internal/db/nameprovider"
 	"github.com/tksasha/balance/internal/server/middlewares"
@@ -46,11 +47,17 @@ func TestIndexHandler(t *testing.T) {
 	t.Run("render index.html", func(t *testing.T) {
 		cleanup(t, db)
 
-		createCategory(t, db, &category.Category{Name: "Food", Slug: "food"})
-		createCategory(t, db, &category.Category{Name: "Beverages", Slug: "beverages"})
-		createCategory(t, db, &category.Category{Name: "Salary", Slug: "salary"})
+		createCategory(t, db, &category.Category{ID: 1, Name: "Food", Slug: "food"})
+		createCategory(t, db, &category.Category{ID: 2, Name: "Beverages", Slug: "beverages"})
+		createCategory(t, db, &category.Category{ID: 3, Name: "Salary", Slug: "salary", Income: true})
 
-		request, err := http.NewRequestWithContext(ctx, http.MethodGet, "/categories", nil)
+		createItem(t, db, &item.Item{Date: date(t, "2025-03-01"), Sum: 11.11, CategoryID: 1})
+		createItem(t, db, &item.Item{Date: date(t, "2025-03-02"), Sum: 22.22, CategoryID: 2})
+		createItem(t, db, &item.Item{Date: date(t, "2025-03-03"), Sum: 33.33, CategoryID: 3})
+
+		url := "/categories?year=2025&month=03"
+
+		request, err := http.NewRequestWithContext(ctx, http.MethodGet, url, nil)
 		if err != nil {
 			t.Fatal(err)
 		}
