@@ -4,3 +4,9 @@
 [submodule "assets/htmx"]
 	path = assets/htmx
 	url = git@github.com:bigskysoftware/htmx.git
+[submodule "assets/bootstrap-datepicker"]
+	path = assets/bootstrap-datepicker
+	url = git@github.com:uxsolutions/bootstrap-datepicker.git
+[submodule "assets/jquery"]
+	path = assets/jquery
+	url = git@github.com:jquery/jquery.git

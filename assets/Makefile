@@ -1,7 +1,7 @@
 DEST=../internal/server/routes/assets/
 
 .PHONY: build
-build: clean compile copy
+build: clean compile install
 	@echo "done"
 
 @PHONY: clean
@@ -15,26 +15,58 @@ compile:
 	@sass --quiet \
 		--no-source-map \
 		stylesheets/application.scss:stylesheets/application.css
-	@esbuild \
-		--log-level=silent \
-		--bundle javascripts/*.js \
-		--outfile=javascripts/application.js
 
-.PHONY: copy
-copy:
-	@echo "copy"
-	@mv \
-		stylesheets/application.css \
-		$(DEST)/application-$(shell sha1sum stylesheets/application.css|cut -d' ' -f1).css
+.PHONY: install
+install: bootstrap datepicker htmx hryvnia jquery application
+	@echo "install"
+
+define hashname
+$(notdir $(basename $(1))-$(shell sha1sum $(1)|cut -d' ' -f1)$(suffix $(1)))
+endef
+
+.PHONY: bootstrap
+bootstrap:
 	@cp \
 		bootstrap/dist/js/bootstrap.js \
-		$(DEST)/bootstrap-$(shell sha1sum bootstrap/dist/js/bootstrap.js|cut -d' ' -f1).js
+		$(DEST)/$(call hashname,bootstrap/dist/js/bootstrap.js)
 	@cp \
 		bootstrap/dist/js/bootstrap.js.map \
 		$(DEST)
+
+.PHONY: datepicker
+datepicker:
 	@cp \
-		htmx/dist/htmx.js \
-		$(DEST)/htmx-$(shell sha1sum htmx/dist/htmx.js|cut -d' ' -f1).js
+		bootstrap-datepicker/dist/css/bootstrap-datepicker.min.css \
+		$(DEST)/$(call hashname,bootstrap-datepicker/dist/css/bootstrap-datepicker.min.css)
+	@cp \
+		bootstrap-datepicker/dist/js/bootstrap-datepicker.min.js \
+		$(DEST)/$(call hashname,bootstrap-datepicker/dist/js/bootstrap-datepicker.min.js)
+	@cp \
+		bootstrap-datepicker/dist/locales/bootstrap-datepicker.uk.min.js \
+		$(DEST)/$(call hashname,bootstrap-datepicker/dist/locales/bootstrap-datepicker.uk.min.js)
+
+.PHONY: htmx
+htmx:
+	@cp \
+		htmx/dist/htmx.min.js \
+		$(DEST)/$(call hashname,htmx/dist/htmx.min.js)
+
+.PHONY: hryvnia
+hryvnia:
+	@cp images/hryvnia.png $(DEST)/$(call hashname,images/hryvnia.png)
+
+
+.PHONY: jquery
+jquery:
+		@cp \
+			jquery/dist/jquery.min.js \
+			$(DEST)/$(call hashname,jquery/dist/jquery.min.js)
+
+.PHONY: application
+application:
 	@mv \
+		stylesheets/application.css \
+		$(DEST)/$(call hashname,stylesheets/application.css)
+	@cp \
 		javascripts/application.js \
-		$(DEST)/application-$(shell sha1sum javascripts/application.js|cut -d' ' -f1).js
+		$(DEST)/$(call hashname,javascripts/application.js)

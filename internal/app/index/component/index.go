@@ -14,8 +14,16 @@ func (c *Component) Index(values url.Values) Node {
 			Title:    "Balance",
 			Language: "en",
 			Head: []Node{
+				Link(
+					Rel("stylesheet"),
+					Href("/assets/bootstrap-datepicker.min-cc8d75acca2a852e945170726a1ed804b63853ad.css"),
+				),
+				Link(
+					Rel("icon"),
+					Type("image/x-icon"),
+					Href("/assets/hryvnia-c8a5df41852f327f0ad50d3dddf29acf85597d22.png"),
+				),
 				Link(Rel("stylesheet"), Href("/assets/application-a98def7283f33f69527a05b02b65a2f2c8b52d7d.css")),
-				Link(Rel("icon"), Type("image/x-icon"), Href("/assets/hryvnia.png")),
 			},
 			Body: []Node{
 				If(false, c.header(values)),
@@ -25,8 +33,11 @@ func (c *Component) Index(values url.Values) Node {
 				If(false, c.items()),
 				c.Modal(),
 				Script(Src("/assets/bootstrap-0f43271223c74d330702ce94a39ed70d04e8fd36.js")),
-				Script(Src("/assets/htmx-ac810f4cc51114714079b5051f1bb57802a9625b.js")),
-				Script(Src("/assets/application-02005eb566d0689befc6cffc9b68fa08e3524d8d.js")),
+				Script(Src("/assets/htmx.min-03a1ffdf83a11fab58acf6bcdf51233fdf14abd5.js")),
+				Script(Src("/assets/jquery.min-5a9dcfbef655a2668e78baebeaa8dc6f41d8dabb.js")),
+				Script(Src("/assets/bootstrap-datepicker.min-cdff2c53b8ff6b44eb16e842bd4b86541a7853f6.js")),
+				Script(Src("/assets/bootstrap-datepicker.uk.min-d58d82ad3cc17da5ff61d0d8559c3b397c941638.js")),
+				Script(Src("/assets/application-bef598be8460b7c813bb8112210ec371635dedf3.js")),
 			},
 		},
 	)

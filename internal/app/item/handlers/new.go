@@ -31,6 +31,8 @@ func (h *NewHandler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
+	w.Header().Set("Hx-Trigger-After-Swap", "balance.item.initialized")
+
 	if err := h.component.New(categories).Render(w); err != nil {
 		h.SetError(w, err)
 
