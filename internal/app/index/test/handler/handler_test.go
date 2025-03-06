@@ -5,29 +5,13 @@ import (
 	"net/http/httptest"
 	"testing"
 
-	categoryrepository "github.com/tksasha/balance/internal/app/category/repository"
-	categoryservice "github.com/tksasha/balance/internal/app/category/service"
 	"github.com/tksasha/balance/internal/app/index/handler"
-	"github.com/tksasha/balance/internal/db"
-	"github.com/tksasha/balance/internal/db/nameprovider"
 	"github.com/tksasha/balance/internal/server/middlewares"
 	"gotest.tools/v3/assert"
 )
 
 func TestIndexHandler(t *testing.T) {
-	db := db.Open(t.Context(), nameprovider.NewTestProvider())
-
-	defer func() {
-		if err := db.Close(); err != nil {
-			t.Fatal(err)
-		}
-	}()
-
-	categoryService := categoryservice.New(
-		categoryrepository.New(db),
-	)
-
-	indexHandler := handler.New(categoryService)
+	indexHandler := handler.New()
 
 	mux := http.NewServeMux()
 

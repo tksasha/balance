@@ -75,10 +75,6 @@ mockgen:
 		-package mocks \
 		-destination internal/app/item/test/mocks/interfaces.mock.go
 	@go tool -modfile go.tool.mod mockgen \
-		-source internal/app/index/interfaces.go \
-		-package mocks \
-		-destination internal/app/index/test/mocks/interfaces.mock.go
-	@go tool -modfile go.tool.mod mockgen \
 		-source internal/backoffice/category/interfaces.go \
 		-package mocks \
 		-destination internal/backoffice/category/test/mocks/interfaces.mock.go

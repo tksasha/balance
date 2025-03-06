@@ -18,7 +18,6 @@ import (
 	categoryhandlers "github.com/tksasha/balance/internal/app/category/handlers"
 	categoryrepository "github.com/tksasha/balance/internal/app/category/repository"
 	categoryservice "github.com/tksasha/balance/internal/app/category/service"
-	"github.com/tksasha/balance/internal/app/index"
 	indexhandler "github.com/tksasha/balance/internal/app/index/handler"
 	"github.com/tksasha/balance/internal/app/item"
 	itemhandlers "github.com/tksasha/balance/internal/app/item/handlers"
@@ -93,7 +92,6 @@ func InitializeServer() *server.Server {
 		wire.Bind(new(category.Repository), new(*categoryrepository.Repository)),
 		wire.Bind(new(category.Service), new(*categoryservice.Service)),
 		wire.Bind(new(db.NameProvider), new(*nameprovider.NameProvider)),
-		wire.Bind(new(index.CategoryService), new(*categoryservice.Service)),
 		wire.Bind(new(item.CategoryRepository), new(*categoryrepository.Repository)),
 		wire.Bind(new(item.CategoryService), new(*categoryservice.Service)),
 		wire.Bind(new(item.Repository), new(*itemrepository.Repository)),

@@ -3,37 +3,25 @@ package handler
 import (
 	"net/http"
 
-	"github.com/tksasha/balance/internal/app/index"
 	"github.com/tksasha/balance/internal/app/index/component"
-	"github.com/tksasha/balance/internal/common/handler"
+	commonhandler "github.com/tksasha/balance/internal/common/handler"
 )
 
 type Handler struct {
-	*handler.Handler
+	*commonhandler.Handler
 
-	categoryService index.CategoryService
-	component       *component.Component
+	component *component.Component
 }
 
-func New(
-	categoryService index.CategoryService,
-) *Handler {
+func New() *Handler {
 	return &Handler{
-		Handler:         handler.New(),
-		categoryService: categoryService,
-		component:       component.New(),
+		Handler:   commonhandler.New(),
+		component: component.New(),
 	}
 }
 
 func (h *Handler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
-	categories, err := h.categoryService.List(r.Context())
-	if err != nil {
-		h.SetError(w, err)
-
-		return
-	}
-
-	err = h.component.Index(categories, r.URL.Query()).Render(w)
+	err := h.component.Index(r.URL.Query()).Render(w)
 
 	h.SetError(w, err)
 }

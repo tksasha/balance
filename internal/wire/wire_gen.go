@@ -2,7 +2,6 @@
 
 //go:generate go run -mod=mod github.com/google/wire/cmd/wire
 //go:build !wireinject
-// +build !wireinject
 
 package wire
 
@@ -68,7 +67,7 @@ func InitializeServer() *server.Server {
 	repository10 := repository5.New(sqlDB)
 	service10 := service5.New(repository10)
 	handlersIndexHandler := handlers4.NewIndexHandler(service10)
-	handlerHandler := handler2.New(service10)
+	handlerHandler := handler2.New()
 	repository11 := repository6.New(sqlDB)
 	service11 := service6.New(repository11, repository10)
 	createHandler2 := handlers5.NewCreateHandler(service11, service10)

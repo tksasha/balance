@@ -3,17 +3,12 @@ package component
 import (
 	"net/url"
 
-	"github.com/tksasha/balance/internal/app/category"
-	"github.com/tksasha/balance/internal/app/item"
 	. "maragu.dev/gomponents"            //nolint:stylecheck
 	. "maragu.dev/gomponents/components" //nolint:stylecheck
 	. "maragu.dev/gomponents/html"       //nolint:stylecheck
 )
 
-func (c *Component) Index(
-	categories category.Categories,
-	values url.Values,
-) Node {
+func (c *Component) Index(values url.Values) Node {
 	return HTML5(
 		HTML5Props{
 			Title:    "Balance",
@@ -26,7 +21,7 @@ func (c *Component) Index(
 				If(false, c.header(values)),
 				If(true, c.balance()),
 				If(true, c.categories()),
-				If(false, c.form(&item.Item{}, categories)),
+				If(true, c.form()),
 				If(false, c.items()),
 				c.Modal(),
 				Script(Src("/assets/bootstrap-0f43271223c74d330702ce94a39ed70d04e8fd36.js")),
