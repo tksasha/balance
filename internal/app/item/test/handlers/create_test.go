@@ -104,14 +104,7 @@ func TestItemCreateHandler(t *testing.T) { //nolint:funlen
 
 		mux.ServeHTTP(recorder, request)
 
-		assert.Equal(t, recorder.Code, http.StatusOK)
-
-		response, err := io.ReadAll(recorder.Body)
-		if err != nil {
-			t.Fatal(err)
-		}
-
-		golden.Assert(t, string(response), "create.html")
+		assert.Equal(t, recorder.Code, http.StatusCreated)
 
 		item := findItemByDate(t, db, currency.USD, "2024-10-16")
 

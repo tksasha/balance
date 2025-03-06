@@ -26,11 +26,11 @@ func (c *Component) Index(values url.Values) Node {
 				Link(Rel("stylesheet"), Href("/assets/application-a98def7283f33f69527a05b02b65a2f2c8b52d7d.css")),
 			},
 			Body: []Node{
-				If(false, c.header(values)),
+				If(true, c.header(values)),
 				If(true, c.form()),
 				If(true, c.balance()),
 				If(true, c.categories()),
-				If(false, c.items()),
+				If(true, c.items()),
 				c.Modal(),
 				Script(Src("/assets/bootstrap-0f43271223c74d330702ce94a39ed70d04e8fd36.js")),
 				Script(Src("/assets/htmx.min-03a1ffdf83a11fab58acf6bcdf51233fdf14abd5.js")),

@@ -7,7 +7,7 @@ import (
 	. "maragu.dev/gomponents/html" //nolint: stylecheck
 )
 
-func (c *Component) Index(items item.Items, months Node, years Node) Node {
+func (c *Component) Index(items item.Items) Node {
 	return Table(
 		Class("table table-hover table-borderless"),
 		THead(
@@ -19,8 +19,6 @@ func (c *Component) Index(items item.Items, months Node, years Node) Node {
 			),
 		),
 		TBody(Map(items, c.item)),
-		Iff(months != nil, func() Node { return months }),
-		Iff(years != nil, func() Node { return years }),
 	)
 }
 

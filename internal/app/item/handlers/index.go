@@ -3,7 +3,6 @@ package handlers
 import (
 	"net/http"
 
-	indexcomponent "github.com/tksasha/balance/internal/app/index/component"
 	"github.com/tksasha/balance/internal/app/item"
 	"github.com/tksasha/balance/internal/app/item/component"
 	"github.com/tksasha/balance/internal/common/handler"
@@ -12,19 +11,17 @@ import (
 type IndexHandler struct {
 	*handler.Handler
 
-	itemService    item.Service
-	component      *component.Component
-	indexComponent *indexcomponent.Component
+	itemService item.Service
+	component   *component.Component
 }
 
 func NewIndexHandler(
 	itemService item.Service,
 ) *IndexHandler {
 	return &IndexHandler{
-		Handler:        handler.New(),
-		itemService:    itemService,
-		component:      component.New(),
-		indexComponent: indexcomponent.New(),
+		Handler:     handler.New(),
+		itemService: itemService,
+		component:   component.New(),
 	}
 }
 
@@ -36,11 +33,7 @@ func (h *IndexHandler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	months := h.indexComponent.Months(r.URL.Query())
-
-	years := h.indexComponent.Years(r.URL.Query())
-
-	err = h.component.Index(items, months, years).Render(w)
+	err = h.component.Index(items).Render(w)
 
 	h.SetError(w, err)
 }

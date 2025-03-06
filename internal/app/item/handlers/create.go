@@ -3,7 +3,6 @@ package handlers
 import (
 	"errors"
 	"net/http"
-	"strconv"
 
 	"github.com/tksasha/balance/internal/app/item"
 	"github.com/tksasha/balance/internal/app/item/component"
@@ -35,21 +34,7 @@ func NewCreateHandler(
 func (h *CreateHandler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 	resource, err := h.handle(r)
 	if err == nil {
-		listRequest := item.ListRequest{
-			Month: strconv.Itoa(int(resource.Date.Month())),
-			Year:  strconv.Itoa(resource.Date.Year()),
-		}
-
-		items, err := h.itemService.List(r.Context(), listRequest)
-		if err != nil {
-			h.SetError(w, err)
-
-			return
-		}
-
-		err = h.component.Index(items, nil, nil).Render(w)
-
-		h.SetError(w, err)
+		w.WriteHeader(http.StatusCreated)
 
 		return
 	}
