@@ -2,7 +2,6 @@ MAIN=cmd/balance/main.go
 OUTPUT=balance
 
 MODULE=github.com/tksasha/balance
-MODFILE=-modfile go.tool.mod
 
 .PHONY: default
 default: vet fix fmt lint test
@@ -104,7 +103,7 @@ migration:
 .PHONY: prepare
 prepare:
 	@if [ ! -f go.mod ]; then go mod init $(MODULE); go mod tidy; fi
-	@if [ ! -f go.tool.mod ]; then go mod init -modfile go.tool.mod $(MODULE); go mod tidy; fi
+	@if [ ! -f go.tool.mod ]; then go mod init -modfile go.tool.mod $(MODULE); go mod tidy -modfile go.tool.mod; fi
 	go get -tool -modfile go.tool.mod github.com/air-verse/air@latest
 	go get -tool -modfile go.tool.mod github.com/golangci/golangci-lint/cmd/golangci-lint@latest
 	go get -tool -modfile go.tool.mod github.com/google/wire/cmd/wire@latest

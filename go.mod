@@ -11,9 +11,9 @@ require (
 	github.com/tksasha/validation v0.0.6
 	github.com/tksasha/xstrings v0.0.6
 	go.uber.org/mock v0.5.0
-	golang.org/x/text v0.22.0
+	golang.org/x/text v0.23.0
 	gotest.tools/v3 v3.5.2
-	maragu.dev/gomponents v1.0.0
+	maragu.dev/gomponents v1.1.0
 	maragu.dev/gomponents-htmx v0.6.1
 )
 
