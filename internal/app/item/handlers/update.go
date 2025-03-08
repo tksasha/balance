@@ -9,7 +9,7 @@ import (
 	"github.com/tksasha/balance/internal/app/item"
 	"github.com/tksasha/balance/internal/app/item/component"
 	"github.com/tksasha/balance/internal/common"
-	"github.com/tksasha/balance/internal/common/currency"
+	"github.com/tksasha/balance/internal/common/component/path"
 	"github.com/tksasha/balance/internal/common/handler"
 	"github.com/tksasha/validation"
 )
@@ -54,10 +54,11 @@ func (h *UpdateHandler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 		w.Header().Add(
 			"Hx-Trigger-After-Swap",
 			fmt.Sprintf(
-				`{"balance.item.updated":{"currency":"%s","month":"%s","year":"%s"}}`,
-				currency.GetCode(item.Currency),
-				strconv.Itoa(int(item.Date.Month())),
-				strconv.Itoa(item.Date.Year()),
+				`{"balance.item.updated":{"categoriesPath":"%s"}}`,
+				path.Categories(path.Params{
+					"month": strconv.Itoa(int(item.Date.Month())),
+					"year":  strconv.Itoa(item.Date.Year()),
+				}),
 			),
 		)
 

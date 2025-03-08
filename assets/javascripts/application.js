@@ -12,6 +12,8 @@ document.addEventListener("balance.item.updated", async (e) => {
   hideModal();
 
   await htmx.ajax("GET", "/balance", { target: "#balance", swap: "outerHTML" });
+
+  await htmx.ajax("GET", e.detail.categoriesPath, { "target": "#categories", swap: "outerHTML" })
 });
 
 document.addEventListener("balance.item.initialized", (e) => {

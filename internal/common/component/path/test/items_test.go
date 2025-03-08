@@ -1,4 +1,4 @@
-package test_test
+package path_test
 
 import (
 	"fmt"

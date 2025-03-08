@@ -23,7 +23,7 @@ func (c *Component) Index(categories category.GroupedCategories) Node {
 		nodes = append(nodes, node)
 	}
 
-	return Div(Class("container-fluid"),
+	return Div(Class("container-fluid"), ID("categories"),
 		Div(Class("clearfix mt-4"),
 			c.Map(nodes),
 		),
