@@ -16,6 +16,7 @@ func (r *Repository) FindByID(ctx context.Context, id int) (*item.Item, error) {
 		SELECT
 		    id,
 		    date,
+			formula,
 		    sum,
 		    category_id,
 		    category_name,
@@ -35,6 +36,7 @@ func (r *Repository) FindByID(ctx context.Context, id int) (*item.Item, error) {
 		Scan(
 			&item.ID,
 			&item.Date,
+			&item.Formula,
 			&item.Sum,
 			&item.CategoryID,
 			&item.CategoryName,

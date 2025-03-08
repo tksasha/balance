@@ -94,9 +94,9 @@ func createItem(t *testing.T, db *sql.DB, item *item.Item) {
 
 	query := `
 		INSERT INTO
-		    items (id, currency, date, category_id, category_name, category_slug, sum, description)
+		    items (id, currency, date, category_id, category_name, category_slug, sum, formula, description)
 		VALUES
-		    (?, ?, ?, ?, ?, ?, ?, ?)
+		    (?, ?, ?, ?, ?, ?, ?, ?, ?)
 	`
 
 	result, err := db.ExecContext(
@@ -109,6 +109,7 @@ func createItem(t *testing.T, db *sql.DB, item *item.Item) {
 		item.CategoryName,
 		item.CategorySlug,
 		item.Sum,
+		item.Formula,
 		item.Description,
 	)
 	if err != nil {

@@ -1,5 +1,5 @@
 const BOOTSTRAP_DATEPICKER_DEFAULTS = {
-  format: 'dd.mm.yyyy', autoclose: true, language: 'uk', todayHighlight: true
+  format: "dd.mm.yyyy", autoclose: true, language: "uk", todayHighlight: true
 };
 
 const hideModal = (event) => {
@@ -7,6 +7,12 @@ const hideModal = (event) => {
 };
 
 document.addEventListener("balance.cash.updated", hideModal);
+
+document.addEventListener("balance.item.updated", async (e) => {
+  hideModal();
+
+  await htmx.ajax("GET", "/balance", { target: "#balance", swap: "outerHTML" });
+});
 
 document.addEventListener("balance.item.initialized", (e) => {
   $(".datepicker").datepicker(BOOTSTRAP_DATEPICKER_DEFAULTS);

@@ -38,3 +38,11 @@ func Items(params Params, current url.Values) string {
 
 	return path.String()
 }
+
+func EditItem(id int) string {
+	return itemsPath + "/" + strconv.Itoa(id) + "/edit"
+}
+
+func UpdateItem(id int) string {
+	return itemsPath + "/" + strconv.Itoa(id)
+}

@@ -6,8 +6,10 @@ import (
 
 	"github.com/tksasha/balance/internal/app/category"
 	"github.com/tksasha/balance/internal/app/item"
+	"github.com/tksasha/balance/internal/common/component/path"
 	"github.com/tksasha/validation"
-	. "maragu.dev/gomponents"      //nolint:stylecheck
+	. "maragu.dev/gomponents" //nolint:stylecheck
+	htmx "maragu.dev/gomponents-htmx"
 	. "maragu.dev/gomponents/html" //nolint:stylecheck
 )
 
@@ -20,6 +22,7 @@ func (c *Component) form(item *item.Item, categories category.Categories, errors
 		),
 		c.Input("Опис", "description", item.Description, errors.Get("description")),
 		c.Submit(item.ID),
+		htmx.Patch(path.UpdateItem(item.ID)),
 	)
 }
 
@@ -28,7 +31,7 @@ func (c *Component) categories(selected int, categories category.Categories, mes
 
 	nodes = append(
 		nodes,
-		Select(Class("form-select"), Name("category"),
+		Select(Class("form-select"), Name("category_id"),
 			OptGroup(Label(Text("Видатки")),
 				Map(categories.Expense(), func(category *category.Category) Node {
 					return c.category(category, selected)

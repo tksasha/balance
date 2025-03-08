@@ -2,11 +2,14 @@ package handlers
 
 import (
 	"errors"
+	"fmt"
 	"net/http"
+	"strconv"
 
 	"github.com/tksasha/balance/internal/app/item"
 	"github.com/tksasha/balance/internal/app/item/component"
 	"github.com/tksasha/balance/internal/common"
+	"github.com/tksasha/balance/internal/common/currency"
 	"github.com/tksasha/balance/internal/common/handler"
 	"github.com/tksasha/validation"
 )
@@ -32,8 +35,32 @@ func NewUpdateHandler(
 }
 
 func (h *UpdateHandler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
-	item, err := h.handle(r)
+	if err := r.ParseForm(); err != nil {
+		h.SetError(w, common.ErrParsingForm)
+
+		return
+	}
+
+	request := item.UpdateRequest{
+		ID:          r.PathValue("id"),
+		Date:        r.FormValue("date"),
+		Formula:     r.FormValue("formula"),
+		CategoryID:  r.FormValue("category_id"),
+		Description: r.FormValue("description"),
+	}
+
+	item, err := h.itemService.Update(r.Context(), request)
 	if err == nil {
+		w.Header().Add(
+			"Hx-Trigger-After-Swap",
+			fmt.Sprintf(
+				`{"balance.item.updated":{"currency":"%s","month":"%s","year":"%s"}}`,
+				currency.GetCode(item.Currency),
+				strconv.Itoa(int(item.Date.Month())),
+				strconv.Itoa(item.Date.Year()),
+			),
+		)
+
 		err := h.component.Update(item).Render(w)
 
 		h.SetError(w, err)
@@ -58,20 +85,4 @@ func (h *UpdateHandler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 	}
 
 	h.SetError(w, err)
-}
-
-func (h *UpdateHandler) handle(r *http.Request) (*item.Item, error) {
-	if err := r.ParseForm(); err != nil {
-		return nil, common.ErrParsingForm
-	}
-
-	request := item.UpdateRequest{
-		ID:          r.PathValue("id"),
-		Date:        r.FormValue("date"),
-		Formula:     r.FormValue("formula"),
-		CategoryID:  r.FormValue("category_id"),
-		Description: r.FormValue("description"),
-	}
-
-	return h.itemService.Update(r.Context(), request)
 }

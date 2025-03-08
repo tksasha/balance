@@ -29,7 +29,7 @@ func NewEditHandler(
 }
 
 func (h *EditHandler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
-	item, err := h.handle(w, r)
+	item, err := h.itemService.Edit(r.Context(), r.PathValue("id"))
 	if err != nil {
 		h.SetError(w, err)
 
@@ -46,8 +46,4 @@ func (h *EditHandler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 	err = h.component.Edit(item, categories, nil).Render(w)
 
 	h.SetError(w, err)
-}
-
-func (h *EditHandler) handle(_ http.ResponseWriter, r *http.Request) (*item.Item, error) {
-	return h.itemService.Edit(r.Context(), r.PathValue("id"))
 }

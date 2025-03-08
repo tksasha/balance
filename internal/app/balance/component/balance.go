@@ -7,7 +7,7 @@ import (
 )
 
 func (c *Component) Balance(balance *balance.Balance) Node {
-	return Div(Class("col-3"),
+	return Div(Class("col-3"), ID("balance"),
 		Div(Class("card cash"),
 			Div(Class("card-body"),
 				Table(Class("w-100"),
