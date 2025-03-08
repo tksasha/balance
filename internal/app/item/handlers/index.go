@@ -1,6 +1,7 @@
 package handlers
 
 import (
+	"fmt"
 	"net/http"
 
 	"github.com/tksasha/balance/internal/app/item"
@@ -26,23 +27,23 @@ func NewIndexHandler(
 }
 
 func (h *IndexHandler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
-	items, err := h.handle(r)
+	month, year := r.URL.Query().Get("month"), r.URL.Query().Get("year")
+
+	request := item.ListRequest{Month: month, Year: year}
+
+	items, err := h.itemService.List(r.Context(), request)
 	if err != nil {
 		h.SetError(w, err)
 
 		return
 	}
 
+	w.Header().Add(
+		"Hx-Trigger-After-Swap",
+		fmt.Sprintf(`{"balance.items.shown":{"month":"%s","year":"%s"}}`, month, year),
+	)
+
 	err = h.component.Index(items).Render(w)
 
 	h.SetError(w, err)
-}
-
-func (h *IndexHandler) handle(r *http.Request) (item.Items, error) {
-	request := item.ListRequest{
-		Year:  r.URL.Query().Get("year"),
-		Month: r.URL.Query().Get("month"),
-	}
-
-	return h.itemService.List(r.Context(), request)
 }

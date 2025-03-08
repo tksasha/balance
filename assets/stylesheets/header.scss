@@ -12,7 +12,7 @@ header {
     padding-bottom: 7px;
   }
 
-  a {
+  div.link {
     @extend .btn;
     @extend .btn-sm;
     padding: 2px 8px;

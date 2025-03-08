@@ -2435,7 +2435,7 @@ textarea.form-control-lg {
   clip: rect(0, 0, 0, 0);
   pointer-events: none;
 }
-.btn-check[disabled] + .btn, .btn-check[disabled] + .tag, .btn-check[disabled] + .supercategory, .btn-check[disabled] + .link-to-backoffice, header .btn-check[disabled] + a, .btn-check[disabled] + #currencies-widget, .btn-check[disabled] + .backoffice-menu-button, .btn-check:disabled + .btn, .btn-check:disabled + .tag, .btn-check:disabled + .supercategory, .btn-check:disabled + .link-to-backoffice, header .btn-check:disabled + a, .btn-check:disabled + #currencies-widget, .btn-check:disabled + .backoffice-menu-button {
+.btn-check[disabled] + .btn, .btn-check[disabled] + .tag, .btn-check[disabled] + .supercategory, .btn-check[disabled] + .link-to-backoffice, header .btn-check[disabled] + div.link, .btn-check[disabled] + #currencies-widget, .btn-check[disabled] + .backoffice-menu-button, .btn-check:disabled + .btn, .btn-check:disabled + .tag, .btn-check:disabled + .supercategory, .btn-check:disabled + .link-to-backoffice, header .btn-check:disabled + div.link, .btn-check:disabled + #currencies-widget, .btn-check:disabled + .backoffice-menu-button {
   pointer-events: none;
   filter: none;
   opacity: 0.65;
@@ -2636,11 +2636,11 @@ textarea.form-control-lg {
 .input-group > .form-floating:focus-within {
   z-index: 5;
 }
-.input-group .btn, .input-group .tag, .input-group .supercategory, .input-group .link-to-backoffice, .input-group header a, header .input-group a, .input-group #currencies-widget, .input-group .backoffice-menu-button {
+.input-group .btn, .input-group .tag, .input-group .supercategory, .input-group .link-to-backoffice, .input-group header div.link, header .input-group div.link, .input-group #currencies-widget, .input-group .backoffice-menu-button {
   position: relative;
   z-index: 2;
 }
-.input-group .btn:focus, .input-group .tag:focus, .input-group .supercategory:focus, .input-group .link-to-backoffice:focus, .input-group header a:focus, header .input-group a:focus, .input-group #currencies-widget:focus, .input-group .backoffice-menu-button:focus {
+.input-group .btn:focus, .input-group .tag:focus, .input-group .supercategory:focus, .input-group .link-to-backoffice:focus, .input-group header div.link:focus, header .input-group div.link:focus, .input-group #currencies-widget:focus, .input-group .backoffice-menu-button:focus {
   z-index: 5;
 }
 
@@ -2666,7 +2666,7 @@ textarea.form-control-lg {
 .input-group-lg > .tag,
 .input-group-lg > .supercategory,
 .input-group-lg > .link-to-backoffice,
-header .input-group-lg > a,
+header .input-group-lg > div.link,
 .input-group-lg > #currencies-widget,
 .input-group-lg > .backoffice-menu-button {
   padding: 0.5rem 1rem;
@@ -2681,7 +2681,7 @@ header .input-group-lg > a,
 .input-group-sm > .tag,
 .input-group-sm > .supercategory,
 .input-group-sm > .link-to-backoffice,
-header .input-group-sm > a,
+header .input-group-sm > div.link,
 .input-group-sm > #currencies-widget,
 .input-group-sm > .backoffice-menu-button {
   padding: 0.25rem 0.5rem;
@@ -2899,7 +2899,7 @@ header .input-group-sm > a,
   z-index: 4;
 }
 
-.btn, .tag, .supercategory, .link-to-backoffice, header a, #currencies-widget, .backoffice-menu-button {
+.btn, .tag, .supercategory, .link-to-backoffice, header div.link, #currencies-widget, .backoffice-menu-button {
   --bs-btn-padding-x: 0.75rem;
   --bs-btn-padding-y: 0.375rem;
   --bs-btn-font-family: ;
@@ -2933,44 +2933,44 @@ header .input-group-sm > a,
   transition: color 0.15s ease-in-out, background-color 0.15s ease-in-out, border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
 }
 @media (prefers-reduced-motion: reduce) {
-  .btn, .tag, .supercategory, .link-to-backoffice, header a, #currencies-widget, .backoffice-menu-button {
+  .btn, .tag, .supercategory, .link-to-backoffice, header div.link, #currencies-widget, .backoffice-menu-button {
     transition: none;
   }
 }
-.btn:hover, .tag:hover, .supercategory:hover, .link-to-backoffice:hover, header a:hover, #currencies-widget:hover, .backoffice-menu-button:hover {
+.btn:hover, .tag:hover, .supercategory:hover, .link-to-backoffice:hover, header div.link:hover, #currencies-widget:hover, .backoffice-menu-button:hover {
   color: var(--bs-btn-hover-color);
   background-color: var(--bs-btn-hover-bg);
   border-color: var(--bs-btn-hover-border-color);
 }
-.btn-check + .btn:hover, .btn-check + .tag:hover, .btn-check + .supercategory:hover, .btn-check + .link-to-backoffice:hover, header .btn-check + a:hover, .btn-check + #currencies-widget:hover, .btn-check + .backoffice-menu-button:hover {
+.btn-check + .btn:hover, .btn-check + .tag:hover, .btn-check + .supercategory:hover, .btn-check + .link-to-backoffice:hover, header .btn-check + div.link:hover, .btn-check + #currencies-widget:hover, .btn-check + .backoffice-menu-button:hover {
   color: var(--bs-btn-color);
   background-color: var(--bs-btn-bg);
   border-color: var(--bs-btn-border-color);
 }
-.btn:focus-visible, .tag:focus-visible, .supercategory:focus-visible, .link-to-backoffice:focus-visible, header a:focus-visible, #currencies-widget:focus-visible, .backoffice-menu-button:focus-visible {
+.btn:focus-visible, .tag:focus-visible, .supercategory:focus-visible, .link-to-backoffice:focus-visible, header div.link:focus-visible, #currencies-widget:focus-visible, .backoffice-menu-button:focus-visible {
   color: var(--bs-btn-hover-color);
   background-color: var(--bs-btn-hover-bg);
   border-color: var(--bs-btn-hover-border-color);
   outline: 0;
   box-shadow: var(--bs-btn-focus-box-shadow);
 }
-.btn-check:focus-visible + .btn, .btn-check:focus-visible + .tag, .btn-check:focus-visible + .supercategory, .btn-check:focus-visible + .link-to-backoffice, header .btn-check:focus-visible + a, .btn-check:focus-visible + #currencies-widget, .btn-check:focus-visible + .backoffice-menu-button {
+.btn-check:focus-visible + .btn, .btn-check:focus-visible + .tag, .btn-check:focus-visible + .supercategory, .btn-check:focus-visible + .link-to-backoffice, header .btn-check:focus-visible + div.link, .btn-check:focus-visible + #currencies-widget, .btn-check:focus-visible + .backoffice-menu-button {
   border-color: var(--bs-btn-hover-border-color);
   outline: 0;
   box-shadow: var(--bs-btn-focus-box-shadow);
 }
-.btn-check:checked + .btn, .btn-check:checked + .tag, .btn-check:checked + .supercategory, .btn-check:checked + .link-to-backoffice, header .btn-check:checked + a, .btn-check:checked + #currencies-widget, .btn-check:checked + .backoffice-menu-button, :not(.btn-check) + .btn:active, :not(.btn-check) + .tag:active, :not(.btn-check) + .supercategory:active, :not(.btn-check) + .link-to-backoffice:active, header :not(.btn-check) + a:active, :not(.btn-check) + #currencies-widget:active, :not(.btn-check) + .backoffice-menu-button:active, .btn:first-child:active, .tag:first-child:active, .supercategory:first-child:active, .link-to-backoffice:first-child:active, header a:first-child:active, #currencies-widget:first-child:active, .backoffice-menu-button:first-child:active, .btn.active, .active.tag, .active.supercategory, .active.link-to-backoffice, header a.active, .active#currencies-widget, .active.backoffice-menu-button, .btn.show, .show.tag, .show.supercategory, .show.link-to-backoffice, header a.show, .show#currencies-widget, .show.backoffice-menu-button, .btn#ajax-loader, #ajax-loader.tag, #ajax-loader.supercategory, #ajax-loader.link-to-backoffice, header a#ajax-loader, #ajax-loader.backoffice-menu-button {
+.btn-check:checked + .btn, .btn-check:checked + .tag, .btn-check:checked + .supercategory, .btn-check:checked + .link-to-backoffice, header .btn-check:checked + div.link, .btn-check:checked + #currencies-widget, .btn-check:checked + .backoffice-menu-button, :not(.btn-check) + .btn:active, :not(.btn-check) + .tag:active, :not(.btn-check) + .supercategory:active, :not(.btn-check) + .link-to-backoffice:active, header :not(.btn-check) + div.link:active, :not(.btn-check) + #currencies-widget:active, :not(.btn-check) + .backoffice-menu-button:active, .btn:first-child:active, .tag:first-child:active, .supercategory:first-child:active, .link-to-backoffice:first-child:active, header div.link:first-child:active, #currencies-widget:first-child:active, .backoffice-menu-button:first-child:active, .btn.active, .active.tag, .active.supercategory, .active.link-to-backoffice, header div.active.link, .active#currencies-widget, .active.backoffice-menu-button, .btn.show, .show.tag, .show.supercategory, .show.link-to-backoffice, header div.show.link, .show#currencies-widget, .show.backoffice-menu-button, .btn#ajax-loader, #ajax-loader.tag, #ajax-loader.supercategory, #ajax-loader.link-to-backoffice, header div#ajax-loader.link, #ajax-loader.backoffice-menu-button {
   color: var(--bs-btn-active-color);
   background-color: var(--bs-btn-active-bg);
   border-color: var(--bs-btn-active-border-color);
 }
-.btn-check:checked + .btn:focus-visible, .btn-check:checked + .tag:focus-visible, .btn-check:checked + .supercategory:focus-visible, .btn-check:checked + .link-to-backoffice:focus-visible, header .btn-check:checked + a:focus-visible, .btn-check:checked + #currencies-widget:focus-visible, .btn-check:checked + .backoffice-menu-button:focus-visible, :not(.btn-check) + .btn:active:focus-visible, :not(.btn-check) + .tag:active:focus-visible, :not(.btn-check) + .supercategory:active:focus-visible, :not(.btn-check) + .link-to-backoffice:active:focus-visible, header :not(.btn-check) + a:active:focus-visible, :not(.btn-check) + #currencies-widget:active:focus-visible, :not(.btn-check) + .backoffice-menu-button:active:focus-visible, .btn:first-child:active:focus-visible, .tag:first-child:active:focus-visible, .supercategory:first-child:active:focus-visible, .link-to-backoffice:first-child:active:focus-visible, header a:first-child:active:focus-visible, #currencies-widget:first-child:active:focus-visible, .backoffice-menu-button:first-child:active:focus-visible, .btn.active:focus-visible, .active.tag:focus-visible, .active.supercategory:focus-visible, .active.link-to-backoffice:focus-visible, header a.active:focus-visible, .active#currencies-widget:focus-visible, .active.backoffice-menu-button:focus-visible, .btn.show:focus-visible, .show.tag:focus-visible, .show.supercategory:focus-visible, .show.link-to-backoffice:focus-visible, header a.show:focus-visible, .show#currencies-widget:focus-visible, .show.backoffice-menu-button:focus-visible, .btn#ajax-loader:focus-visible, #ajax-loader.tag:focus-visible, #ajax-loader.supercategory:focus-visible, #ajax-loader.link-to-backoffice:focus-visible, header a#ajax-loader:focus-visible, #ajax-loader.backoffice-menu-button:focus-visible {
+.btn-check:checked + .btn:focus-visible, .btn-check:checked + .tag:focus-visible, .btn-check:checked + .supercategory:focus-visible, .btn-check:checked + .link-to-backoffice:focus-visible, header .btn-check:checked + div.link:focus-visible, .btn-check:checked + #currencies-widget:focus-visible, .btn-check:checked + .backoffice-menu-button:focus-visible, :not(.btn-check) + .btn:active:focus-visible, :not(.btn-check) + .tag:active:focus-visible, :not(.btn-check) + .supercategory:active:focus-visible, :not(.btn-check) + .link-to-backoffice:active:focus-visible, header :not(.btn-check) + div.link:active:focus-visible, :not(.btn-check) + #currencies-widget:active:focus-visible, :not(.btn-check) + .backoffice-menu-button:active:focus-visible, .btn:first-child:active:focus-visible, .tag:first-child:active:focus-visible, .supercategory:first-child:active:focus-visible, .link-to-backoffice:first-child:active:focus-visible, header div.link:first-child:active:focus-visible, #currencies-widget:first-child:active:focus-visible, .backoffice-menu-button:first-child:active:focus-visible, .btn.active:focus-visible, .active.tag:focus-visible, .active.supercategory:focus-visible, .active.link-to-backoffice:focus-visible, header div.active.link:focus-visible, .active#currencies-widget:focus-visible, .active.backoffice-menu-button:focus-visible, .btn.show:focus-visible, .show.tag:focus-visible, .show.supercategory:focus-visible, .show.link-to-backoffice:focus-visible, header div.show.link:focus-visible, .show#currencies-widget:focus-visible, .show.backoffice-menu-button:focus-visible, .btn#ajax-loader:focus-visible, #ajax-loader.tag:focus-visible, #ajax-loader.supercategory:focus-visible, #ajax-loader.link-to-backoffice:focus-visible, header div#ajax-loader.link:focus-visible, #ajax-loader.backoffice-menu-button:focus-visible {
   box-shadow: var(--bs-btn-focus-box-shadow);
 }
-.btn-check:checked:focus-visible + .btn, .btn-check:checked:focus-visible + .tag, .btn-check:checked:focus-visible + .supercategory, .btn-check:checked:focus-visible + .link-to-backoffice, header .btn-check:checked:focus-visible + a, .btn-check:checked:focus-visible + #currencies-widget, .btn-check:checked:focus-visible + .backoffice-menu-button {
+.btn-check:checked:focus-visible + .btn, .btn-check:checked:focus-visible + .tag, .btn-check:checked:focus-visible + .supercategory, .btn-check:checked:focus-visible + .link-to-backoffice, header .btn-check:checked:focus-visible + div.link, .btn-check:checked:focus-visible + #currencies-widget, .btn-check:checked:focus-visible + .backoffice-menu-button {
   box-shadow: var(--bs-btn-focus-box-shadow);
 }
-.btn:disabled, .tag:disabled, .link-to-backoffice:disabled, header a:disabled, #currencies-widget:disabled, .backoffice-menu-button:disabled, .btn.disabled, .disabled.tag, .supercategory, .disabled.link-to-backoffice, header a.disabled, .disabled#currencies-widget, #currencies-widget.supercategory, .disabled.backoffice-menu-button, fieldset:disabled .btn, fieldset:disabled .tag, fieldset:disabled .link-to-backoffice, fieldset:disabled header a, header fieldset:disabled a, fieldset:disabled #currencies-widget, fieldset:disabled .backoffice-menu-button {
+.btn:disabled, .tag:disabled, .link-to-backoffice:disabled, header div.link:disabled, #currencies-widget:disabled, .backoffice-menu-button:disabled, .btn.disabled, .disabled.tag, .supercategory, .disabled.link-to-backoffice, header div.disabled.link, header div.link.supercategory, .disabled#currencies-widget, #currencies-widget.supercategory, .disabled.backoffice-menu-button, fieldset:disabled .btn, fieldset:disabled .tag, fieldset:disabled .link-to-backoffice, fieldset:disabled header div.link, header fieldset:disabled div.link, fieldset:disabled #currencies-widget, fieldset:disabled .backoffice-menu-button {
   color: var(--bs-btn-disabled-color);
   pointer-events: none;
   background-color: var(--bs-btn-disabled-bg);
@@ -2978,7 +2978,7 @@ header .input-group-sm > a,
   opacity: var(--bs-btn-disabled-opacity);
 }
 
-.btn-primary, header a.active, .backoffice-menu-button {
+.btn-primary, header div.link.active, .backoffice-menu-button {
   --bs-btn-color: #000;
   --bs-btn-bg: #607d8b;
   --bs-btn-border-color: #607d8b;
@@ -3272,14 +3272,14 @@ header .input-group-sm > a,
   color: var(--bs-btn-hover-color);
 }
 
-.btn-lg, .btn-group-lg > .btn, .btn-group-lg > .tag, .btn-group-lg > .supercategory, .btn-group-lg > .link-to-backoffice, header .btn-group-lg > a, .btn-group-lg > #currencies-widget, .btn-group-lg > .backoffice-menu-button {
+.btn-lg, .btn-group-lg > .btn, .btn-group-lg > .tag, .btn-group-lg > .supercategory, .btn-group-lg > .link-to-backoffice, header .btn-group-lg > div.link, .btn-group-lg > #currencies-widget, .btn-group-lg > .backoffice-menu-button {
   --bs-btn-padding-y: 0.5rem;
   --bs-btn-padding-x: 1rem;
   --bs-btn-font-size: 1.25rem;
   --bs-btn-border-radius: var(--bs-border-radius-lg);
 }
 
-.btn-sm, .tag, .supercategory, header a, .btn-group-sm > .btn, .btn-group-sm > .tag, .btn-group-sm > .supercategory, .btn-group-sm > .link-to-backoffice, header .btn-group-sm > a, .btn-group-sm > #currencies-widget, .btn-group-sm > .backoffice-menu-button {
+.btn-sm, .tag, .supercategory, header div.link, .btn-group-sm > .btn, .btn-group-sm > .tag, .btn-group-sm > .supercategory, .btn-group-sm > .link-to-backoffice, header .btn-group-sm > div.link, .btn-group-sm > #currencies-widget, .btn-group-sm > .backoffice-menu-button {
   --bs-btn-padding-y: 0.25rem;
   --bs-btn-padding-x: 0.5rem;
   --bs-btn-font-size: 0.875rem;
@@ -3646,93 +3646,93 @@ header .input-group-sm > a,
   display: inline-flex;
   vertical-align: middle;
 }
-.btn-group > .btn, .btn-group > .tag, .btn-group > .supercategory, .btn-group > .link-to-backoffice, header .btn-group > a, .btn-group > #currencies-widget, .btn-group > .backoffice-menu-button,
+.btn-group > .btn, .btn-group > .tag, .btn-group > .supercategory, .btn-group > .link-to-backoffice, header .btn-group > div.link, .btn-group > #currencies-widget, .btn-group > .backoffice-menu-button,
 .btn-group-vertical > .btn,
 .btn-group-vertical > .tag,
 .btn-group-vertical > .supercategory,
 .btn-group-vertical > .link-to-backoffice,
-header .btn-group-vertical > a,
+header .btn-group-vertical > div.link,
 .btn-group-vertical > #currencies-widget,
 .btn-group-vertical > .backoffice-menu-button {
   position: relative;
   flex: 1 1 auto;
 }
-.btn-group > .btn-check:checked + .btn, .btn-group > .btn-check:checked + .tag, .btn-group > .btn-check:checked + .supercategory, .btn-group > .btn-check:checked + .link-to-backoffice, header .btn-group > .btn-check:checked + a, .btn-group > .btn-check:checked + #currencies-widget, .btn-group > .btn-check:checked + .backoffice-menu-button,
+.btn-group > .btn-check:checked + .btn, .btn-group > .btn-check:checked + .tag, .btn-group > .btn-check:checked + .supercategory, .btn-group > .btn-check:checked + .link-to-backoffice, header .btn-group > .btn-check:checked + div.link, .btn-group > .btn-check:checked + #currencies-widget, .btn-group > .btn-check:checked + .backoffice-menu-button,
 .btn-group > .btn-check:focus + .btn,
 .btn-group > .btn-check:focus + .tag,
 .btn-group > .btn-check:focus + .supercategory,
 .btn-group > .btn-check:focus + .link-to-backoffice,
-header .btn-group > .btn-check:focus + a,
+header .btn-group > .btn-check:focus + div.link,
 .btn-group > .btn-check:focus + #currencies-widget,
 .btn-group > .btn-check:focus + .backoffice-menu-button,
 .btn-group > .btn:hover,
 .btn-group > .tag:hover,
 .btn-group > .supercategory:hover,
 .btn-group > .link-to-backoffice:hover,
-header .btn-group > a:hover,
+header .btn-group > div.link:hover,
 .btn-group > #currencies-widget:hover,
 .btn-group > .backoffice-menu-button:hover,
 .btn-group > .btn:focus,
 .btn-group > .tag:focus,
 .btn-group > .supercategory:focus,
 .btn-group > .link-to-backoffice:focus,
-header .btn-group > a:focus,
+header .btn-group > div.link:focus,
 .btn-group > #currencies-widget:focus,
 .btn-group > .backoffice-menu-button:focus,
 .btn-group > .btn:active,
 .btn-group > .tag:active,
 .btn-group > .supercategory:active,
 .btn-group > .link-to-backoffice:active,
-header .btn-group > a:active,
+header .btn-group > div.link:active,
 .btn-group > #currencies-widget:active,
 .btn-group > .backoffice-menu-button:active,
 .btn-group > .btn.active,
 .btn-group > .active.tag,
 .btn-group > .active.supercategory,
 .btn-group > .active.link-to-backoffice,
-header .btn-group > a.active,
+header .btn-group > div.active.link,
 .btn-group > .active#currencies-widget,
 .btn-group > .active.backoffice-menu-button,
 .btn-group-vertical > .btn-check:checked + .btn,
 .btn-group-vertical > .btn-check:checked + .tag,
 .btn-group-vertical > .btn-check:checked + .supercategory,
 .btn-group-vertical > .btn-check:checked + .link-to-backoffice,
-header .btn-group-vertical > .btn-check:checked + a,
+header .btn-group-vertical > .btn-check:checked + div.link,
 .btn-group-vertical > .btn-check:checked + #currencies-widget,
 .btn-group-vertical > .btn-check:checked + .backoffice-menu-button,
 .btn-group-vertical > .btn-check:focus + .btn,
 .btn-group-vertical > .btn-check:focus + .tag,
 .btn-group-vertical > .btn-check:focus + .supercategory,
 .btn-group-vertical > .btn-check:focus + .link-to-backoffice,
-header .btn-group-vertical > .btn-check:focus + a,
+header .btn-group-vertical > .btn-check:focus + div.link,
 .btn-group-vertical > .btn-check:focus + #currencies-widget,
 .btn-group-vertical > .btn-check:focus + .backoffice-menu-button,
 .btn-group-vertical > .btn:hover,
 .btn-group-vertical > .tag:hover,
 .btn-group-vertical > .supercategory:hover,
 .btn-group-vertical > .link-to-backoffice:hover,
-header .btn-group-vertical > a:hover,
+header .btn-group-vertical > div.link:hover,
 .btn-group-vertical > #currencies-widget:hover,
 .btn-group-vertical > .backoffice-menu-button:hover,
 .btn-group-vertical > .btn:focus,
 .btn-group-vertical > .tag:focus,
 .btn-group-vertical > .supercategory:focus,
 .btn-group-vertical > .link-to-backoffice:focus,
-header .btn-group-vertical > a:focus,
+header .btn-group-vertical > div.link:focus,
 .btn-group-vertical > #currencies-widget:focus,
 .btn-group-vertical > .backoffice-menu-button:focus,
 .btn-group-vertical > .btn:active,
 .btn-group-vertical > .tag:active,
 .btn-group-vertical > .supercategory:active,
 .btn-group-vertical > .link-to-backoffice:active,
-header .btn-group-vertical > a:active,
+header .btn-group-vertical > div.link:active,
 .btn-group-vertical > #currencies-widget:active,
 .btn-group-vertical > .backoffice-menu-button:active,
 .btn-group-vertical > .btn.active,
 .btn-group-vertical > .active.tag,
 .btn-group-vertical > .active.supercategory,
 .btn-group-vertical > .active.link-to-backoffice,
-header .btn-group-vertical > a.active,
+header .btn-group-vertical > div.active.link,
 .btn-group-vertical > .active#currencies-widget,
 .btn-group-vertical > .active.backoffice-menu-button {
   z-index: 1;
@@ -3750,41 +3750,41 @@ header .btn-group-vertical > a.active,
 .btn-group {
   border-radius: var(--bs-border-radius);
 }
-.btn-group > :not(.btn-check:first-child) + .btn, .btn-group > :not(.btn-check:first-child) + .tag, .btn-group > :not(.btn-check:first-child) + .supercategory, .btn-group > :not(.btn-check:first-child) + .link-to-backoffice, header .btn-group > :not(.btn-check:first-child) + a, .btn-group > :not(.btn-check:first-child) + #currencies-widget, .btn-group > :not(.btn-check:first-child) + .backoffice-menu-button,
+.btn-group > :not(.btn-check:first-child) + .btn, .btn-group > :not(.btn-check:first-child) + .tag, .btn-group > :not(.btn-check:first-child) + .supercategory, .btn-group > :not(.btn-check:first-child) + .link-to-backoffice, header .btn-group > :not(.btn-check:first-child) + div.link, .btn-group > :not(.btn-check:first-child) + #currencies-widget, .btn-group > :not(.btn-check:first-child) + .backoffice-menu-button,
 .btn-group > .btn-group:not(:first-child) {
   margin-left: calc(var(--bs-border-width) * -1);
 }
-.btn-group > .btn:not(:last-child):not(.dropdown-toggle), .btn-group > .tag:not(:last-child):not(.dropdown-toggle), .btn-group > .supercategory:not(:last-child):not(.dropdown-toggle), .btn-group > .link-to-backoffice:not(:last-child):not(.dropdown-toggle), header .btn-group > a:not(:last-child):not(.dropdown-toggle), .btn-group > #currencies-widget:not(:last-child):not(.dropdown-toggle), .btn-group > .backoffice-menu-button:not(:last-child):not(.dropdown-toggle),
+.btn-group > .btn:not(:last-child):not(.dropdown-toggle), .btn-group > .tag:not(:last-child):not(.dropdown-toggle), .btn-group > .supercategory:not(:last-child):not(.dropdown-toggle), .btn-group > .link-to-backoffice:not(:last-child):not(.dropdown-toggle), header .btn-group > div.link:not(:last-child):not(.dropdown-toggle), .btn-group > #currencies-widget:not(:last-child):not(.dropdown-toggle), .btn-group > .backoffice-menu-button:not(:last-child):not(.dropdown-toggle),
 .btn-group > .btn.dropdown-toggle-split:first-child,
 .btn-group > .dropdown-toggle-split.tag:first-child,
 .btn-group > .dropdown-toggle-split.supercategory:first-child,
 .btn-group > .dropdown-toggle-split.link-to-backoffice:first-child,
-header .btn-group > a.dropdown-toggle-split:first-child,
+header .btn-group > div.dropdown-toggle-split.link:first-child,
 .btn-group > .dropdown-toggle-split#currencies-widget:first-child,
 .btn-group > .dropdown-toggle-split.backoffice-menu-button:first-child,
 .btn-group > .btn-group:not(:last-child) > .btn,
 .btn-group > .btn-group:not(:last-child) > .tag,
 .btn-group > .btn-group:not(:last-child) > .supercategory,
 .btn-group > .btn-group:not(:last-child) > .link-to-backoffice,
-header .btn-group > .btn-group:not(:last-child) > a,
+header .btn-group > .btn-group:not(:last-child) > div.link,
 .btn-group > .btn-group:not(:last-child) > #currencies-widget,
 .btn-group > .btn-group:not(:last-child) > .backoffice-menu-button {
   border-top-right-radius: 0;
   border-bottom-right-radius: 0;
 }
-.btn-group > .btn:nth-child(n+3), .btn-group > .tag:nth-child(n+3), .btn-group > .supercategory:nth-child(n+3), .btn-group > .link-to-backoffice:nth-child(n+3), header .btn-group > a:nth-child(n+3), .btn-group > #currencies-widget:nth-child(n+3), .btn-group > .backoffice-menu-button:nth-child(n+3),
+.btn-group > .btn:nth-child(n+3), .btn-group > .tag:nth-child(n+3), .btn-group > .supercategory:nth-child(n+3), .btn-group > .link-to-backoffice:nth-child(n+3), header .btn-group > div.link:nth-child(n+3), .btn-group > #currencies-widget:nth-child(n+3), .btn-group > .backoffice-menu-button:nth-child(n+3),
 .btn-group > :not(.btn-check) + .btn,
 .btn-group > :not(.btn-check) + .tag,
 .btn-group > :not(.btn-check) + .supercategory,
 .btn-group > :not(.btn-check) + .link-to-backoffice,
-header .btn-group > :not(.btn-check) + a,
+header .btn-group > :not(.btn-check) + div.link,
 .btn-group > :not(.btn-check) + #currencies-widget,
 .btn-group > :not(.btn-check) + .backoffice-menu-button,
 .btn-group > .btn-group:not(:first-child) > .btn,
 .btn-group > .btn-group:not(:first-child) > .tag,
 .btn-group > .btn-group:not(:first-child) > .supercategory,
 .btn-group > .btn-group:not(:first-child) > .link-to-backoffice,
-header .btn-group > .btn-group:not(:first-child) > a,
+header .btn-group > .btn-group:not(:first-child) > div.link,
 .btn-group > .btn-group:not(:first-child) > #currencies-widget,
 .btn-group > .btn-group:not(:first-child) > .backoffice-menu-button {
   border-top-left-radius: 0;
@@ -3802,12 +3802,12 @@ header .btn-group > .btn-group:not(:first-child) > a,
   margin-right: 0;
 }
 
-.btn-sm + .dropdown-toggle-split, .tag + .dropdown-toggle-split, .supercategory + .dropdown-toggle-split, header a + .dropdown-toggle-split, .btn-group-sm > .btn + .dropdown-toggle-split, .btn-group-sm > .link-to-backoffice + .dropdown-toggle-split, header .btn-group-sm > a + .dropdown-toggle-split, .btn-group-sm > #currencies-widget + .dropdown-toggle-split, .btn-group-sm > .backoffice-menu-button + .dropdown-toggle-split {
+.btn-sm + .dropdown-toggle-split, .tag + .dropdown-toggle-split, .supercategory + .dropdown-toggle-split, header div.link + .dropdown-toggle-split, .btn-group-sm > .btn + .dropdown-toggle-split, .btn-group-sm > .link-to-backoffice + .dropdown-toggle-split, .btn-group-sm > #currencies-widget + .dropdown-toggle-split, .btn-group-sm > .backoffice-menu-button + .dropdown-toggle-split {
   padding-right: 0.375rem;
   padding-left: 0.375rem;
 }
 
-.btn-lg + .dropdown-toggle-split, .btn-group-lg > .btn + .dropdown-toggle-split, .btn-group-lg > .tag + .dropdown-toggle-split, .btn-group-lg > .supercategory + .dropdown-toggle-split, .btn-group-lg > .link-to-backoffice + .dropdown-toggle-split, header .btn-group-lg > a + .dropdown-toggle-split, .btn-group-lg > #currencies-widget + .dropdown-toggle-split, .btn-group-lg > .backoffice-menu-button + .dropdown-toggle-split {
+.btn-lg + .dropdown-toggle-split, .btn-group-lg > .btn + .dropdown-toggle-split, .btn-group-lg > .tag + .dropdown-toggle-split, .btn-group-lg > .supercategory + .dropdown-toggle-split, .btn-group-lg > .link-to-backoffice + .dropdown-toggle-split, header .btn-group-lg > div.link + .dropdown-toggle-split, .btn-group-lg > #currencies-widget + .dropdown-toggle-split, .btn-group-lg > .backoffice-menu-button + .dropdown-toggle-split {
   padding-right: 0.75rem;
   padding-left: 0.75rem;
 }
@@ -3817,31 +3817,31 @@ header .btn-group > .btn-group:not(:first-child) > a,
   align-items: flex-start;
   justify-content: center;
 }
-.btn-group-vertical > .btn, .btn-group-vertical > .tag, .btn-group-vertical > .supercategory, .btn-group-vertical > .link-to-backoffice, header .btn-group-vertical > a, .btn-group-vertical > #currencies-widget, .btn-group-vertical > .backoffice-menu-button,
+.btn-group-vertical > .btn, .btn-group-vertical > .tag, .btn-group-vertical > .supercategory, .btn-group-vertical > .link-to-backoffice, header .btn-group-vertical > div.link, .btn-group-vertical > #currencies-widget, .btn-group-vertical > .backoffice-menu-button,
 .btn-group-vertical > .btn-group {
   width: 100%;
 }
-.btn-group-vertical > .btn:not(:first-child), .btn-group-vertical > .tag:not(:first-child), .btn-group-vertical > .supercategory:not(:first-child), .btn-group-vertical > .link-to-backoffice:not(:first-child), header .btn-group-vertical > a:not(:first-child), .btn-group-vertical > #currencies-widget:not(:first-child), .btn-group-vertical > .backoffice-menu-button:not(:first-child),
+.btn-group-vertical > .btn:not(:first-child), .btn-group-vertical > .tag:not(:first-child), .btn-group-vertical > .supercategory:not(:first-child), .btn-group-vertical > .link-to-backoffice:not(:first-child), header .btn-group-vertical > div.link:not(:first-child), .btn-group-vertical > #currencies-widget:not(:first-child), .btn-group-vertical > .backoffice-menu-button:not(:first-child),
 .btn-group-vertical > .btn-group:not(:first-child) {
   margin-top: calc(var(--bs-border-width) * -1);
 }
-.btn-group-vertical > .btn:not(:last-child):not(.dropdown-toggle), .btn-group-vertical > .tag:not(:last-child):not(.dropdown-toggle), .btn-group-vertical > .supercategory:not(:last-child):not(.dropdown-toggle), .btn-group-vertical > .link-to-backoffice:not(:last-child):not(.dropdown-toggle), header .btn-group-vertical > a:not(:last-child):not(.dropdown-toggle), .btn-group-vertical > #currencies-widget:not(:last-child):not(.dropdown-toggle), .btn-group-vertical > .backoffice-menu-button:not(:last-child):not(.dropdown-toggle),
+.btn-group-vertical > .btn:not(:last-child):not(.dropdown-toggle), .btn-group-vertical > .tag:not(:last-child):not(.dropdown-toggle), .btn-group-vertical > .supercategory:not(:last-child):not(.dropdown-toggle), .btn-group-vertical > .link-to-backoffice:not(:last-child):not(.dropdown-toggle), header .btn-group-vertical > div.link:not(:last-child):not(.dropdown-toggle), .btn-group-vertical > #currencies-widget:not(:last-child):not(.dropdown-toggle), .btn-group-vertical > .backoffice-menu-button:not(:last-child):not(.dropdown-toggle),
 .btn-group-vertical > .btn-group:not(:last-child) > .btn,
 .btn-group-vertical > .btn-group:not(:last-child) > .tag,
 .btn-group-vertical > .btn-group:not(:last-child) > .supercategory,
 .btn-group-vertical > .btn-group:not(:last-child) > .link-to-backoffice,
-header .btn-group-vertical > .btn-group:not(:last-child) > a,
+header .btn-group-vertical > .btn-group:not(:last-child) > div.link,
 .btn-group-vertical > .btn-group:not(:last-child) > #currencies-widget,
 .btn-group-vertical > .btn-group:not(:last-child) > .backoffice-menu-button {
   border-bottom-right-radius: 0;
   border-bottom-left-radius: 0;
 }
-.btn-group-vertical > .btn ~ .btn, .btn-group-vertical > .tag ~ .btn, .btn-group-vertical > .btn ~ .tag, .btn-group-vertical > .tag ~ .tag, .btn-group-vertical > .supercategory ~ .btn, .btn-group-vertical > .supercategory ~ .tag, .btn-group-vertical > .btn ~ .supercategory, .btn-group-vertical > .tag ~ .supercategory, .btn-group-vertical > .supercategory ~ .supercategory, .btn-group-vertical > .link-to-backoffice ~ .btn, .btn-group-vertical > .link-to-backoffice ~ .tag, .btn-group-vertical > .link-to-backoffice ~ .supercategory, .btn-group-vertical > .btn ~ .link-to-backoffice, .btn-group-vertical > .tag ~ .link-to-backoffice, .btn-group-vertical > .supercategory ~ .link-to-backoffice, .btn-group-vertical > .link-to-backoffice ~ .link-to-backoffice, header .btn-group-vertical > a ~ .btn, header .btn-group-vertical > a ~ .tag, header .btn-group-vertical > a ~ .supercategory, header .btn-group-vertical > a ~ .link-to-backoffice, header .btn-group-vertical > .btn ~ a, header .btn-group-vertical > .tag ~ a, header .btn-group-vertical > .supercategory ~ a, header .btn-group-vertical > .link-to-backoffice ~ a, header .btn-group-vertical > a ~ a, .btn-group-vertical > #currencies-widget ~ .btn, .btn-group-vertical > #currencies-widget ~ .tag, .btn-group-vertical > #currencies-widget ~ .supercategory, .btn-group-vertical > #currencies-widget ~ .link-to-backoffice, header .btn-group-vertical > #currencies-widget ~ a, .btn-group-vertical > .btn ~ #currencies-widget, .btn-group-vertical > .tag ~ #currencies-widget, .btn-group-vertical > .supercategory ~ #currencies-widget, .btn-group-vertical > .link-to-backoffice ~ #currencies-widget, header .btn-group-vertical > a ~ #currencies-widget, .btn-group-vertical > #currencies-widget ~ #currencies-widget, .btn-group-vertical > .backoffice-menu-button ~ .btn, .btn-group-vertical > .backoffice-menu-button ~ .tag, .btn-group-vertical > .backoffice-menu-button ~ .supercategory, .btn-group-vertical > .backoffice-menu-button ~ .link-to-backoffice, header .btn-group-vertical > .backoffice-menu-button ~ a, .btn-group-vertical > .backoffice-menu-button ~ #currencies-widget, .btn-group-vertical > .btn ~ .backoffice-menu-button, .btn-group-vertical > .tag ~ .backoffice-menu-button, .btn-group-vertical > .supercategory ~ .backoffice-menu-button, .btn-group-vertical > .link-to-backoffice ~ .backoffice-menu-button, header .btn-group-vertical > a ~ .backoffice-menu-button, .btn-group-vertical > #currencies-widget ~ .backoffice-menu-button, .btn-group-vertical > .backoffice-menu-button ~ .backoffice-menu-button,
+.btn-group-vertical > .btn ~ .btn, .btn-group-vertical > .tag ~ .btn, .btn-group-vertical > .btn ~ .tag, .btn-group-vertical > .tag ~ .tag, .btn-group-vertical > .supercategory ~ .btn, .btn-group-vertical > .supercategory ~ .tag, .btn-group-vertical > .btn ~ .supercategory, .btn-group-vertical > .tag ~ .supercategory, .btn-group-vertical > .supercategory ~ .supercategory, .btn-group-vertical > .link-to-backoffice ~ .btn, .btn-group-vertical > .link-to-backoffice ~ .tag, .btn-group-vertical > .link-to-backoffice ~ .supercategory, .btn-group-vertical > .btn ~ .link-to-backoffice, .btn-group-vertical > .tag ~ .link-to-backoffice, .btn-group-vertical > .supercategory ~ .link-to-backoffice, .btn-group-vertical > .link-to-backoffice ~ .link-to-backoffice, header .btn-group-vertical > div.link ~ .btn, header .btn-group-vertical > div.link ~ .tag, header .btn-group-vertical > div.link ~ .supercategory, header .btn-group-vertical > div.link ~ .link-to-backoffice, header .btn-group-vertical > .btn ~ div.link, header .btn-group-vertical > .tag ~ div.link, header .btn-group-vertical > .supercategory ~ div.link, header .btn-group-vertical > .link-to-backoffice ~ div.link, header .btn-group-vertical > div.link ~ div.link, .btn-group-vertical > #currencies-widget ~ .btn, .btn-group-vertical > #currencies-widget ~ .tag, .btn-group-vertical > #currencies-widget ~ .supercategory, .btn-group-vertical > #currencies-widget ~ .link-to-backoffice, header .btn-group-vertical > #currencies-widget ~ div.link, .btn-group-vertical > .btn ~ #currencies-widget, .btn-group-vertical > .tag ~ #currencies-widget, .btn-group-vertical > .supercategory ~ #currencies-widget, .btn-group-vertical > .link-to-backoffice ~ #currencies-widget, header .btn-group-vertical > div.link ~ #currencies-widget, .btn-group-vertical > #currencies-widget ~ #currencies-widget, .btn-group-vertical > .backoffice-menu-button ~ .btn, .btn-group-vertical > .backoffice-menu-button ~ .tag, .btn-group-vertical > .backoffice-menu-button ~ .supercategory, .btn-group-vertical > .backoffice-menu-button ~ .link-to-backoffice, header .btn-group-vertical > .backoffice-menu-button ~ div.link, .btn-group-vertical > .backoffice-menu-button ~ #currencies-widget, .btn-group-vertical > .btn ~ .backoffice-menu-button, .btn-group-vertical > .tag ~ .backoffice-menu-button, .btn-group-vertical > .supercategory ~ .backoffice-menu-button, .btn-group-vertical > .link-to-backoffice ~ .backoffice-menu-button, header .btn-group-vertical > div.link ~ .backoffice-menu-button, .btn-group-vertical > #currencies-widget ~ .backoffice-menu-button, .btn-group-vertical > .backoffice-menu-button ~ .backoffice-menu-button,
 .btn-group-vertical > .btn-group:not(:first-child) > .btn,
 .btn-group-vertical > .btn-group:not(:first-child) > .tag,
 .btn-group-vertical > .btn-group:not(:first-child) > .supercategory,
 .btn-group-vertical > .btn-group:not(:first-child) > .link-to-backoffice,
-header .btn-group-vertical > .btn-group:not(:first-child) > a,
+header .btn-group-vertical > .btn-group:not(:first-child) > div.link,
 .btn-group-vertical > .btn-group:not(:first-child) > #currencies-widget,
 .btn-group-vertical > .btn-group:not(:first-child) > .backoffice-menu-button {
   border-top-left-radius: 0;
@@ -4886,7 +4886,7 @@ header .btn-group-vertical > .btn-group:not(:first-child) > a,
   display: none;
 }
 
-.btn .badge, .tag .badge, .supercategory .badge, .link-to-backoffice .badge, header a .badge, .btn .currencies-widget-currency, .tag .currencies-widget-currency, .supercategory .currencies-widget-currency, .link-to-backoffice .currencies-widget-currency, header a .currencies-widget-currency, #currencies-widget .badge, #currencies-widget .currencies-widget-currency, .backoffice-menu-button .badge, .backoffice-menu-button .currencies-widget-currency {
+.btn .badge, .tag .badge, .supercategory .badge, .link-to-backoffice .badge, header div.link .badge, .btn .currencies-widget-currency, .tag .currencies-widget-currency, .supercategory .currencies-widget-currency, .link-to-backoffice .currencies-widget-currency, header div.link .currencies-widget-currency, #currencies-widget .badge, #currencies-widget .currencies-widget-currency, .backoffice-menu-button .badge, .backoffice-menu-button .currencies-widget-currency {
   position: relative;
   top: -1px;
 }
@@ -6826,7 +6826,7 @@ header .btn-group-vertical > .btn-group:not(:first-child) > a,
   background-color: currentcolor;
   opacity: 0.5;
 }
-.placeholder.btn::before, .placeholder.tag::before, .placeholder.supercategory::before, .placeholder.link-to-backoffice::before, header a.placeholder::before, .placeholder#currencies-widget::before, .placeholder.backoffice-menu-button::before {
+.placeholder.btn::before, .placeholder.tag::before, .placeholder.supercategory::before, .placeholder.link-to-backoffice::before, header div.placeholder.link::before, .placeholder#currencies-widget::before, .placeholder.backoffice-menu-button::before {
   display: inline-block;
   content: "";
 }
@@ -12028,7 +12028,7 @@ body {
   font-weight: 350;
 }
 
-.btn-primary, header a.active, .backoffice-menu-button {
+.btn-primary, header div.link.active, .backoffice-menu-button {
   --bs-btn-color: #eceff1;
   --bs-btn-bg: #607d8b;
   --bs-btn-hover-color: #fff;
@@ -12110,12 +12110,12 @@ header div + div {
   padding-top: 0;
   padding-bottom: 7px;
 }
-header a {
+header div.link {
   padding: 2px 8px;
   text-transform: uppercase;
   font-size: 12px;
 }
-header a.active {
+header div.link.active {
   --bs-btn-active-color: #eceff1;
   --bs-btn-active-bg: #607d8b;
 }

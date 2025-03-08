@@ -30,3 +30,19 @@ func TestGetDefault(t *testing.T) {
 
 	assert.Equal(t, actual, expected)
 }
+
+func TestGetCode(t *testing.T) {
+	data := []struct {
+		currency currency.Currency
+		code     string
+	}{
+		{currency.UAH, "uah"},
+		{currency.USD, "usd"},
+		{currency.EUR, "eur"},
+		{0, "uah"},
+	}
+
+	for _, d := range data {
+		assert.Equal(t, currency.GetCode(d.currency), d.code)
+	}
+}

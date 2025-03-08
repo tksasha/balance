@@ -23,26 +23,24 @@ func (c *Component) Index(items item.Items) Node {
 }
 
 func (c *Component) item(item *item.Item) Node {
-	return c.Template(
-		Tr(
-			Td(Class("items-date"),
-				Text(date(item.Date)),
-			),
-			Td(Class("items-sum"),
-				Div(Class("text-primary"),
-					Text(c.Money(item.Sum)),
-					Style("cursor: pointer"),
-					htmx.Get(c.editPath(item.ID)),
-					htmx.Target("#modal-body"),
-					htmx.Trigger("click"),
-					Data("bs-toggle", "modal"),
-					Data("bs-target", "#modal"),
-				),
-			),
-			Td(Class("items-category"),
-				Text(item.CategoryName),
-			),
-			Td(c.Description(item.Description)),
+	return Tr(
+		Td(Class("items-date"),
+			Text(date(item.Date)),
 		),
+		Td(Class("items-sum"),
+			Div(Class("text-primary"),
+				Text(c.Money(item.Sum)),
+				Style("cursor: pointer"),
+				htmx.Get(c.editPath(item.ID)),
+				htmx.Target("#modal-body"),
+				htmx.Trigger("click"),
+				Data("bs-toggle", "modal"),
+				Data("bs-target", "#modal"),
+			),
+		),
+		Td(Class("items-category"),
+			Text(item.CategoryName),
+		),
+		Td(c.Description(item.Description)),
 	)
 }

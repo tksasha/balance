@@ -23,7 +23,7 @@ func (c *Component) Index(values url.Values) Node {
 					Type("image/x-icon"),
 					Href("/assets/hryvnia-c8a5df41852f327f0ad50d3dddf29acf85597d22.png"),
 				),
-				Link(Rel("stylesheet"), Href("/assets/application-a98def7283f33f69527a05b02b65a2f2c8b52d7d.css")),
+				Link(Rel("stylesheet"), Href("/assets/application-9b924437db8302708b7ea7926e7b92072fbaec11.css")),
 			},
 			Body: []Node{
 				If(true, c.header(values)),
@@ -37,7 +37,7 @@ func (c *Component) Index(values url.Values) Node {
 				Script(Src("/assets/jquery.min-5a9dcfbef655a2668e78baebeaa8dc6f41d8dabb.js")),
 				Script(Src("/assets/bootstrap-datepicker.min-cdff2c53b8ff6b44eb16e842bd4b86541a7853f6.js")),
 				Script(Src("/assets/bootstrap-datepicker.uk.min-d58d82ad3cc17da5ff61d0d8559c3b397c941638.js")),
-				Script(Src("/assets/application-bef598be8460b7c813bb8112210ec371635dedf3.js")),
+				Script(Src("/assets/application-78626bdbc287e76f7b6726c90a8b55de6458231d.js")),
 			},
 		},
 	)

@@ -21,3 +21,16 @@ func GetByCode(code string) Currency {
 		"eur": EUR,
 	}[strings.ToLower(code)]
 }
+
+func GetCode(currency Currency) string {
+	code, ok := map[Currency]string{
+		UAH: "uah",
+		USD: "usd",
+		EUR: "eur",
+	}[currency]
+	if ok {
+		return code
+	}
+
+	return GetCode(Default)
+}

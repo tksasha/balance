@@ -4,6 +4,7 @@ import (
 	"net/url"
 	"strconv"
 
+	"github.com/tksasha/balance/internal/common/component/path"
 	. "maragu.dev/gomponents" //nolint:stylecheck
 	htmx "maragu.dev/gomponents-htmx"
 	"maragu.dev/gomponents/components"
@@ -26,13 +27,16 @@ func (c *Component) year(year int, values url.Values) Node {
 
 	classes := components.Classes{
 		"active": current,
+		"link":   true,
 	}
 
-	return A(
+	number := strconv.Itoa(year)
+
+	return Div(
 		classes,
-		Href(c.ListItems(year, 0, values)),
 		Text(strconv.Itoa(year)),
-		htmx.Get(c.ListItems(year, 0, values)),
+		Data("number", number),
+		htmx.Get(path.Items(path.Params{"year": number}, values)),
 		htmx.Target("#items"),
 	)
 }

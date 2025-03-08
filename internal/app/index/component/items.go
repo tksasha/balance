@@ -1,8 +1,7 @@
 package component
 
 import (
-	"net/url"
-
+	"github.com/tksasha/balance/internal/common/component/path"
 	. "maragu.dev/gomponents" //nolint:stylecheck
 	htmx "maragu.dev/gomponents-htmx"
 	. "maragu.dev/gomponents/html" //nolint:stylecheck
@@ -14,7 +13,7 @@ func (c *Component) items() Node {
 			Div(Class("col"),
 				Div(Class("card items"),
 					Div(Class("card-body"), ID("items"),
-						htmx.Get(c.ListItems(0, 0, url.Values{})),
+						htmx.Get(path.Items(nil, nil)),
 						htmx.Trigger("load"),
 						Div(Class("spinner-border htmx-indicator"), ID("htmx-indicator")),
 					),
