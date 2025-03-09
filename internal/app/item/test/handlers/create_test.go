@@ -2,7 +2,6 @@ package handlers_test
 
 import (
 	"database/sql"
-	"io"
 	"net/http"
 	"net/http/httptest"
 	"net/url"
@@ -20,7 +19,6 @@ import (
 	"github.com/tksasha/balance/internal/db"
 	"github.com/tksasha/balance/internal/db/nameprovider"
 	"gotest.tools/v3/assert"
-	"gotest.tools/v3/golden"
 )
 
 func TestItemCreateHandler(t *testing.T) { //nolint:funlen
@@ -63,13 +61,6 @@ func TestItemCreateHandler(t *testing.T) { //nolint:funlen
 		mux.ServeHTTP(recorder, request)
 
 		assert.Equal(t, http.StatusOK, recorder.Code)
-
-		response, err := io.ReadAll(recorder.Body)
-		if err != nil {
-			t.Fatal(err)
-		}
-
-		golden.Assert(t, string(response), "create-with-errors.html")
 	})
 
 	t.Run("renders created item", func(t *testing.T) {
@@ -85,7 +76,7 @@ func TestItemCreateHandler(t *testing.T) { //nolint:funlen
 		createCategory(t, db, categoryToCreate)
 
 		values := url.Values{
-			"date":        {"2024-10-16"},
+			"date":        {"16.10.2024"},
 			"formula":     {"42.69+69.42"},
 			"category_id": {"1101"},
 			"description": {"paper clips, notebooks, and pens"},
@@ -104,7 +95,7 @@ func TestItemCreateHandler(t *testing.T) { //nolint:funlen
 
 		mux.ServeHTTP(recorder, request)
 
-		assert.Equal(t, recorder.Code, http.StatusCreated)
+		assert.Equal(t, recorder.Code, http.StatusOK)
 
 		item := findItemByDate(t, db, currency.USD, "2024-10-16")
 

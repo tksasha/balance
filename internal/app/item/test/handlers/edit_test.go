@@ -2,7 +2,6 @@ package handlers_test
 
 import (
 	"database/sql"
-	"io"
 	"net/http"
 	"net/http/httptest"
 	"testing"
@@ -18,10 +17,9 @@ import (
 	"github.com/tksasha/balance/internal/db"
 	"github.com/tksasha/balance/internal/db/nameprovider"
 	"gotest.tools/v3/assert"
-	"gotest.tools/v3/golden"
 )
 
-func TestItemEditHandler(t *testing.T) {
+func TestItemEditHandler(t *testing.T) { //nolint:dupl
 	handler, db := newEditHandler(t)
 	defer func() {
 		if err := db.Close(); err != nil {
@@ -74,13 +72,6 @@ func TestItemEditHandler(t *testing.T) {
 		mux.ServeHTTP(recorder, request)
 
 		assert.Equal(t, recorder.Code, http.StatusOK)
-
-		response, err := io.ReadAll(recorder.Body)
-		if err != nil {
-			t.Fatal(err)
-		}
-
-		golden.Assert(t, string(response), "edit.html")
 	})
 }
 

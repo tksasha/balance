@@ -69,7 +69,7 @@ func TestCreate(t *testing.T) { //nolint:funlen
 
 	t.Run("returns error when formula is blank", func(t *testing.T) {
 		request := item.CreateRequest{
-			Date:       "2025-01-23",
+			Date:       "23.01.2025",
 			Formula:    "",
 			CategoryID: "1318",
 		}
@@ -91,7 +91,7 @@ func TestCreate(t *testing.T) { //nolint:funlen
 
 	t.Run("returns error when formula is invalid", func(t *testing.T) {
 		request := item.CreateRequest{
-			Date:       "2025-01-23",
+			Date:       "23.01.2025",
 			Formula:    "abc",
 			CategoryID: "1315",
 		}
@@ -113,7 +113,7 @@ func TestCreate(t *testing.T) { //nolint:funlen
 
 	t.Run("returns error when category_id is blank", func(t *testing.T) {
 		request := item.CreateRequest{
-			Date:       "2025-01-23",
+			Date:       "23.01.2025",
 			Formula:    "42.69+69.42",
 			CategoryID: "",
 		}
@@ -125,7 +125,7 @@ func TestCreate(t *testing.T) { //nolint:funlen
 
 	t.Run("returns error when category_id is invalid", func(t *testing.T) {
 		request := item.CreateRequest{
-			Date:       "2025-01-23",
+			Date:       "23.01.2025",
 			Formula:    "42.69+69.42",
 			CategoryID: "abc",
 		}
@@ -137,7 +137,7 @@ func TestCreate(t *testing.T) { //nolint:funlen
 
 	t.Run("returns error when find by id failed", func(t *testing.T) {
 		request := item.CreateRequest{
-			Date:       "2025-01-23",
+			Date:       "23.01.2025",
 			Formula:    "42.69+69.42",
 			CategoryID: "1237",
 		}
@@ -154,7 +154,7 @@ func TestCreate(t *testing.T) { //nolint:funlen
 
 	t.Run("returns error when create failed", func(t *testing.T) {
 		request := item.CreateRequest{
-			Date:        "2025-01-23",
+			Date:        "23.01.2025",
 			Formula:     "42.69+69.42",
 			CategoryID:  "1244",
 			Description: "health, beauty & wellness",
@@ -193,7 +193,7 @@ func TestCreate(t *testing.T) { //nolint:funlen
 
 	t.Run("returns item when create succeeded", func(t *testing.T) {
 		request := item.CreateRequest{
-			Date:        "2025-01-23",
+			Date:        "23.01.2025",
 			Formula:     "42.69+69.42",
 			CategoryID:  "1307",
 			Description: "arts, crafts & hobbies",

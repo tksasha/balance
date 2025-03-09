@@ -1,13 +1,3 @@
-const BOOTSTRAP_DATEPICKER_DEFAULTS = {
-  format: "dd.mm.yyyy", autoclose: true, language: "uk", todayHighlight: true
-};
-
-const hideModal = (event) => {
-  bootstrap.Modal.getInstance("#modal").hide();
-};
-
-document.addEventListener("balance.cash.updated", hideModal);
-
 document.addEventListener("balance.item.updated", async (e) => {
   hideModal();
 
@@ -42,4 +32,25 @@ document.addEventListener("balance.items.shown", (e) => {
     if (child.dataset.number == year)
       child.classList.add("active");
   }
+});
+
+document.addEventListener("balance.item.create.error", (e) => {
+  const modal = bootstrap.Modal.getOrCreateInstance("#modal").show();
+
+  $("#modal .datepicker").datepicker(BOOTSTRAP_DATEPICKER_DEFAULTS);
+});
+
+document.addEventListener("balance.item.created", async (e) => {
+  hideModal();
+
+  $(".datepicker").datepicker(BOOTSTRAP_DATEPICKER_DEFAULTS);
+
+  if (Object.hasOwn(e.detail, "balancePath"))
+    await htmx.ajax("GET", e.detail.balancePath, { target: "#balance", swap: "outerHTML" });
+
+  if (Object.hasOwn(e.detail, "categoriesPath"))
+    await htmx.ajax("GET", e.detail.categoriesPath, { "target": "#categories", swap: "outerHTML" })
+
+  if (Object.hasOwn(e.detail, "itemsPath"))
+    await htmx.ajax("GET", e.detail.itemsPath, { "target": "#items", swap: "outerHTML" })
 });

@@ -50,3 +50,7 @@ func UpdateItem(id int) string {
 func NewItem() string {
 	return itemsPath + "/new"
 }
+
+func CreateItem() string {
+	return itemsPath
+}

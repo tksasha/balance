@@ -8,5 +8,5 @@ import (
 )
 
 func (c *Component) Edit(item *item.Item, categories category.Categories, errors validation.Errors) Node {
-	return c.form(item, categories, errors)
+	return c.Form(item, categories, errors)
 }

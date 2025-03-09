@@ -10,8 +10,8 @@ import (
 func (c *Component) form(node Node, cash *cash.Cash, errors validation.Errors) Node {
 	return Form(
 		node,
-		c.Input("Назва", "name", cash.Name, errors.Get("name")),
-		c.Input("Сума", "formula", cash.Formula, errors.Get("sum")),
+		c.Input("Назва", "name", cash.Name, nil, errors.Get("name")),
+		c.Input("Сума", "formula", cash.Formula, nil, errors.Get("sum")),
 		c.Submit(cash.ID),
 	)
 }

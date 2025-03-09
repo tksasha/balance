@@ -26,7 +26,7 @@ func (c *Component) Index(items item.Items) Node {
 func (c *Component) item(item *item.Item, children ...Node) Node {
 	return Tr(ID(c.itemID(item.ID)),
 		Td(Class("items-date"),
-			Text(date(item.Date)),
+			Text(c.date(item.Date)),
 		),
 		Td(Class("items-sum"),
 			Div(Class("link"),

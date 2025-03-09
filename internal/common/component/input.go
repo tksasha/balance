@@ -6,11 +6,13 @@ import (
 	. "maragu.dev/gomponents/html"       //nolint: stylecheck
 )
 
-func (c *Component) Input(label, name, value string, message *string) Node {
-	classes := Classes{
-		"form-control": true,
-		"is-invalid":   message != nil,
+func (c *Component) Input(label, name, value string, classes Classes, message *string) Node {
+	if classes == nil {
+		classes = make(Classes)
 	}
+
+	classes["form-control"] = true
+	classes["is-invalid"] = message != nil
 
 	return Div(Class("mb-3"),
 		Label(Class("form-label"), Text(label)),

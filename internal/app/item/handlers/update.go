@@ -82,7 +82,7 @@ func (h *UpdateHandler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 }
 
 func (h *UpdateHandler) header(month, year int) string {
-	values := map[string]map[string]string{
+	headers := map[string]map[string]string{
 		"balance.item.updated": {
 			"categoriesPath": path.Categories(
 				path.Params{
@@ -96,7 +96,7 @@ func (h *UpdateHandler) header(month, year int) string {
 
 	writer := bytes.NewBuffer([]byte{})
 
-	if err := json.NewEncoder(writer).Encode(values); err != nil {
+	if err := json.NewEncoder(writer).Encode(headers); err != nil {
 		slog.Error("failed to encode", "error", err)
 
 		return ""

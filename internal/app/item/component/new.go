@@ -2,12 +2,14 @@ package component
 
 import (
 	"github.com/tksasha/balance/internal/app/category"
-	. "maragu.dev/gomponents"      //nolint:stylecheck
+	"github.com/tksasha/balance/internal/common/component/path"
+	. "maragu.dev/gomponents" //nolint:stylecheck
+	htmx "maragu.dev/gomponents-htmx"
 	. "maragu.dev/gomponents/html" //nolint:stylecheck
 )
 
-func (c *Component) New(categories category.Categories) Node {
-	return Form(Class("new_item"),
+func (c *Component) New(categories category.Categories, children ...Node) Node {
+	return Form(Class("new_item"), htmx.Post(path.CreateItem()),
 		Div(Class("item-inline-form-date"),
 			Input(Class("form-control datepicker"), Placeholder("Дата"), Name("date")),
 		),
@@ -20,9 +22,9 @@ func (c *Component) New(categories category.Categories) Node {
 		Div(Class("item-inline-form-description"),
 			Input(Class("form-control"), Placeholder("Примітка"), Name("description")),
 		),
-		Div(
-			Class("float-right"),
+		Div(Class("float-right"),
 			Button(Class("btn btn-primary"), Text("Створити")),
 		),
+		c.Map(children),
 	)
 }

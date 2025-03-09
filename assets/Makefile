@@ -1,20 +1,13 @@
 DEST=../internal/server/routes/assets/
 
 .PHONY: build
-build: clean compile install
+build: clean install
 	@echo "done"
 
 @PHONY: clean
 clean:
 	@echo "clean"
 	@rm -f $(DEST)/*.js $(DEST)/*.css
-
-.PHONY: compile
-compile:
-	@echo "compile"
-	@sass --quiet \
-		--no-source-map \
-		stylesheets/application.scss:stylesheets/application.css
 
 .PHONY: install
 install: bootstrap datepicker htmx hryvnia jquery application
@@ -55,18 +48,28 @@ htmx:
 hryvnia:
 	@cp images/hryvnia.png $(DEST)/$(call hashname,images/hryvnia.png)
 
-
 .PHONY: jquery
 jquery:
-		@cp \
-			jquery/dist/jquery.min.js \
-			$(DEST)/$(call hashname,jquery/dist/jquery.min.js)
+	@cp \
+		jquery/dist/jquery.min.js \
+		$(DEST)/$(call hashname,jquery/dist/jquery.min.js)
+
+.PHONY: compile
+compile:
+	@sass --quiet \
+		--no-source-map \
+		stylesheets/application.scss:stylesheets/application.css
+	@cat \
+		javascripts/common.js \
+		javascripts/cashes.js \
+		javascripts/items.js \
+		> javascripts/application.js
 
 .PHONY: application
-application:
+application: compile
 	@mv \
 		stylesheets/application.css \
 		$(DEST)/$(call hashname,stylesheets/application.css)
-	@cp \
+	@mv \
 		javascripts/application.js \
 		$(DEST)/$(call hashname,javascripts/application.js)

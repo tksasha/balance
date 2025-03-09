@@ -1,11 +1,15 @@
 package component
 
-import "time"
+import (
+	"time"
 
-func date(date time.Time) string {
+	"github.com/tksasha/balance/internal/common"
+)
+
+func (c *Component) date(date time.Time) string {
 	if date.IsZero() {
 		return ""
 	}
 
-	return date.Format(time.DateOnly)
+	return date.Format(common.DateFormat)
 }

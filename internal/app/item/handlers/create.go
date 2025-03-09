@@ -1,12 +1,17 @@
 package handlers
 
 import (
+	"bytes"
+	"encoding/json"
 	"errors"
+	"log/slog"
 	"net/http"
+	"strconv"
 
 	"github.com/tksasha/balance/internal/app/item"
 	"github.com/tksasha/balance/internal/app/item/component"
 	"github.com/tksasha/balance/internal/common"
+	"github.com/tksasha/balance/internal/common/component/path"
 	"github.com/tksasha/balance/internal/common/handler"
 	"github.com/tksasha/validation"
 )
@@ -32,9 +37,17 @@ func NewCreateHandler(
 }
 
 func (h *CreateHandler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
-	resource, err := h.handle(r)
+	if err := r.ParseForm(); err != nil {
+		h.SetError(w, common.ErrParsingForm)
+
+		return
+	}
+
+	item, err := h.itemService.Create(r.Context(), h.parseRequest(r))
 	if err == nil {
-		w.WriteHeader(http.StatusCreated)
+		w.Header().Add("Hx-Trigger-After-Swap", h.header(int(item.Date.Month()), item.Date.Year()))
+
+		w.WriteHeader(http.StatusOK)
 
 		return
 	}
@@ -48,7 +61,9 @@ func (h *CreateHandler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 			return
 		}
 
-		err = h.component.Create(resource, categories, verrors).Render(w)
+		w.Header().Add("Hx-Trigger-After-Swap", "balance.item.create.error")
+
+		err = h.component.Create(item, categories, verrors).Render(w)
 
 		h.SetError(w, err)
 
@@ -58,17 +73,42 @@ func (h *CreateHandler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 	h.SetError(w, err)
 }
 
-func (h *CreateHandler) handle(r *http.Request) (*item.Item, error) {
-	if err := r.ParseForm(); err != nil {
-		return nil, common.ErrParsingForm
-	}
-
-	request := item.CreateRequest{
+func (h *CreateHandler) parseRequest(r *http.Request) item.CreateRequest {
+	return item.CreateRequest{
 		Date:        r.FormValue("date"),
 		Formula:     r.FormValue("formula"),
 		CategoryID:  r.FormValue("category_id"),
 		Description: r.FormValue("description"),
 	}
+}
 
-	return h.itemService.Create(r.Context(), request)
+func (h *CreateHandler) header(month, year int) string {
+	headers := map[string]map[string]string{
+		"balance.item.created": {
+			"itemsPath": path.Items(
+				path.Params{
+					"month": strconv.Itoa(month),
+					"year":  strconv.Itoa(year),
+				},
+				nil,
+			),
+			"categoriesPath": path.Categories(
+				path.Params{
+					"month": strconv.Itoa(month),
+					"year":  strconv.Itoa(year),
+				},
+			),
+			"balancePath": path.Balance(),
+		},
+	}
+
+	writer := bytes.NewBuffer([]byte{})
+
+	if err := json.NewEncoder(writer).Encode(headers); err != nil {
+		slog.Error("failed to encode", "error", err)
+
+		return ""
+	}
+
+	return writer.String()
 }

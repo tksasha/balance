@@ -24,8 +24,8 @@ func (c *Component) ModalDialog() Node {
 	)
 }
 
-func (c *Component) ModalBody(node Node) Node {
+func (c *Component) ModalBody(children ...Node) Node {
 	return Div(ID("modal-body"), Class("modal-body"),
-		Iff(node != nil, func() Node { return node }),
+		c.Map(children),
 	)
 }
