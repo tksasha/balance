@@ -14,7 +14,7 @@ import (
 )
 
 func (c *Component) form(item *item.Item, categories category.Categories, errors validation.Errors) Node {
-	return Form(
+	return Form(htmx.Patch(path.UpdateItem(item.ID)),
 		c.Input("Дата", "date", item.Date.Format(time.DateOnly), errors.Get("date")),
 		c.Input("Сума", "formula", item.Formula, errors.Get("sum")),
 		Div(Class("mb-3"),
@@ -22,7 +22,6 @@ func (c *Component) form(item *item.Item, categories category.Categories, errors
 		),
 		c.Input("Опис", "description", item.Description, errors.Get("description")),
 		c.Submit(item.ID),
-		htmx.Patch(path.UpdateItem(item.ID)),
 	)
 }
 

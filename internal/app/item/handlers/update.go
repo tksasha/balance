@@ -1,8 +1,10 @@
 package handlers
 
 import (
+	"bytes"
+	"encoding/json"
 	"errors"
-	"fmt"
+	"log/slog"
 	"net/http"
 	"strconv"
 
@@ -51,16 +53,7 @@ func (h *UpdateHandler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 
 	item, err := h.itemService.Update(r.Context(), request)
 	if err == nil {
-		w.Header().Add(
-			"Hx-Trigger-After-Swap",
-			fmt.Sprintf(
-				`{"balance.item.updated":{"categoriesPath":"%s"}}`,
-				path.Categories(path.Params{
-					"month": strconv.Itoa(int(item.Date.Month())),
-					"year":  strconv.Itoa(item.Date.Year()),
-				}),
-			),
-		)
+		w.Header().Add("Hx-Trigger-After-Swap", h.header(int(item.Date.Month()), item.Date.Year()))
 
 		err := h.component.Update(item).Render(w)
 
@@ -86,4 +79,28 @@ func (h *UpdateHandler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 	}
 
 	h.SetError(w, err)
+}
+
+func (h *UpdateHandler) header(month, year int) string {
+	values := map[string]map[string]string{
+		"balance.item.updated": {
+			"categoriesPath": path.Categories(
+				path.Params{
+					"month": strconv.Itoa(month),
+					"year":  strconv.Itoa(year),
+				},
+			),
+			"balancePath": path.Balance(),
+		},
+	}
+
+	writer := bytes.NewBuffer([]byte{})
+
+	if err := json.NewEncoder(writer).Encode(values); err != nil {
+		slog.Error("failed to encode", "error", err)
+
+		return ""
+	}
+
+	return writer.String()
 }

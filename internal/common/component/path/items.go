@@ -46,3 +46,7 @@ func EditItem(id int) string {
 func UpdateItem(id int) string {
 	return itemsPath + "/" + strconv.Itoa(id)
 }
+
+func NewItem() string {
+	return itemsPath + "/new"
+}
