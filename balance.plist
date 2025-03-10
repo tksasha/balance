@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+    <key>Label</key>
+    <string>balance</string>
+    <key>Program</key>
+    <string>/Users/tksasha/bin/balance</string>
+    <key>RunAtLoad</key>
+    <true/>
+    <key>KeepAlive</key>
+    <true/>
+    <key>EnvironmentVariables</key>
+    <dict>
+        <key>ADDRESS</key>
+        <string>localhost:8080</string>
+        <key>BALANCE_ENV</key>
+        <string>production</string>
+    </dict>
+</dict>
+</plist>
