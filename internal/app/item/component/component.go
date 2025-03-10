@@ -1,9 +1,12 @@
 package component
 
 import (
+	"regexp"
 	"strconv"
+	"time"
 
 	"github.com/tksasha/balance/internal/app/category"
+	"github.com/tksasha/balance/internal/common"
 	commoncomponent "github.com/tksasha/balance/internal/common/component"
 	. "maragu.dev/gomponents"      //nolint:stylecheck
 	. "maragu.dev/gomponents/html" //nolint:stylecheck
@@ -54,4 +57,22 @@ func (c *Component) category(category *category.Category, selected int) Node {
 		Text(category.Name),
 		If(category.ID == selected, Selected()),
 	)
+}
+
+// Description parse tags from description and makes it HTML
+// `[tag] description` -> `<div class="tag">tag</div> description`
+func (c *Component) Description(description string) Node {
+	mask := regexp.MustCompile(`\[([\p{L}\s\'\-\.]+)\]`)
+
+	description = mask.ReplaceAllString(description, `<div class="tag">$1</div>`)
+
+	return Raw(description)
+}
+
+func (c *Component) date(date time.Time) string {
+	if date.IsZero() {
+		return ""
+	}
+
+	return date.Format(common.DateFormat)
 }
