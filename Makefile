@@ -49,6 +49,11 @@ build:
 	@echo "go build"
 	@go build -o $(OUTPUT) $(MAIN)
 
+.PHONY: install
+install: build
+	@echo "install"
+	@mv $(OUTPUT) $(HOME)/bin
+
 .PHONY: clear
 clear:
 	@echo "go clear"
