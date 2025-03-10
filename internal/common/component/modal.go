@@ -6,26 +6,37 @@ import (
 )
 
 func (c *Component) Modal() Node {
-	return Div(
-		ID("modal"),
-		Class("modal modal-blur fade"),
+	return Div(ID("modal"), Class("modal modal-blur fade"),
 		Style("display: none"),
 		TabIndex("-1"),
-		c.ModalDialog(),
-	)
-}
-
-func (c *Component) ModalDialog() Node {
-	return Div(
-		Class("modal-dialog modal-lg modal-dialog-centered"),
-		Div(Class("modal-content"),
-			c.ModalBody(nil),
+		Div(Class("modal-dialog modal-lg modal-dialog-centered"),
+			Div(Class("modal-content"),
+				c.ModalBody(nil),
+			),
 		),
 	)
 }
 
 func (c *Component) ModalBody(children ...Node) Node {
 	return Div(ID("modal-body"), Class("modal-body"),
-		c.Map(children),
+		Group(children),
+	)
+}
+
+func (c *Component) BackofficeModal() Node {
+	return Div(ID("backoffice-modal"), Class("modal modal-blur fade"),
+		Style("display: none"),
+		TabIndex("-1"),
+		Div(Class("modal-dialog modal-xl modal-dialog-centered"),
+			Div(Class("modal-content"),
+				c.BackofficeModalBody(),
+			),
+		),
+	)
+}
+
+func (c *Component) BackofficeModalBody(children ...Node) Node {
+	return Div(ID("backoffice-modal-body"), Class("modal-body"),
+		Group(children),
 	)
 }

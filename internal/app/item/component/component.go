@@ -48,7 +48,7 @@ func (c *Component) categories(selected int, categories category.Categories, mes
 		nodes = append(nodes, Div(Class("invalid-feebback"), Text(*message)))
 	}
 
-	return c.Map(nodes)
+	return Group(nodes)
 }
 
 func (c *Component) category(category *category.Category, selected int) Node {

@@ -25,6 +25,6 @@ func (c *Component) New(categories category.Categories, children ...Node) Node {
 		Div(Class("float-right"),
 			Button(Class("btn btn-primary"), Text("Створити")),
 		),
-		c.Map(children),
+		Group(children),
 	)
 }

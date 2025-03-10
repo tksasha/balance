@@ -31,6 +31,7 @@ import (
 	backofficecategoryhandlers "github.com/tksasha/balance/internal/backoffice/category/handlers"
 	backofficecategoryrepository "github.com/tksasha/balance/internal/backoffice/category/repository"
 	backofficecategoryservice "github.com/tksasha/balance/internal/backoffice/category/service"
+	backofficeindexhandler "github.com/tksasha/balance/internal/backoffice/index/handler"
 	"github.com/tksasha/balance/internal/db"
 	"github.com/tksasha/balance/internal/db/nameprovider"
 	"github.com/tksasha/balance/internal/server"
@@ -56,6 +57,7 @@ func InitializeServer() *server.Server {
 		backofficecategoryhandlers.NewUpdateHandler,
 		backofficecategoryrepository.New,
 		backofficecategoryservice.New,
+		backofficeindexhandler.NewIndexHandler,
 		balancehandler.NewShowHandler,
 		balancerepository.New,
 		balanceservice.New,

@@ -8,7 +8,7 @@ package wire
 
 import (
 	"context"
-	"github.com/tksasha/balance/internal/app/balance/handler"
+	handler2 "github.com/tksasha/balance/internal/app/balance/handler"
 	repository3 "github.com/tksasha/balance/internal/app/balance/repository"
 	service3 "github.com/tksasha/balance/internal/app/balance/service"
 	handlers3 "github.com/tksasha/balance/internal/app/cash/handlers"
@@ -17,7 +17,7 @@ import (
 	handlers4 "github.com/tksasha/balance/internal/app/category/handlers"
 	repository5 "github.com/tksasha/balance/internal/app/category/repository"
 	service5 "github.com/tksasha/balance/internal/app/category/service"
-	handler2 "github.com/tksasha/balance/internal/app/index/handler"
+	handler3 "github.com/tksasha/balance/internal/app/index/handler"
 	handlers5 "github.com/tksasha/balance/internal/app/item/handlers"
 	repository6 "github.com/tksasha/balance/internal/app/item/repository"
 	service6 "github.com/tksasha/balance/internal/app/item/service"
@@ -27,6 +27,7 @@ import (
 	handlers2 "github.com/tksasha/balance/internal/backoffice/category/handlers"
 	repository2 "github.com/tksasha/balance/internal/backoffice/category/repository"
 	service2 "github.com/tksasha/balance/internal/backoffice/category/service"
+	"github.com/tksasha/balance/internal/backoffice/index/handler"
 	"github.com/tksasha/balance/internal/db"
 	"github.com/tksasha/balance/internal/db/nameprovider"
 	"github.com/tksasha/balance/internal/server"
@@ -57,27 +58,28 @@ func InitializeServer() *server.Server {
 	handlersEditHandler := handlers2.NewEditHandler(service7)
 	handlersListHandler := handlers2.NewListHandler(service7)
 	handlersUpdateHandler := handlers2.NewUpdateHandler(service7)
+	indexHandler := handler.NewIndexHandler()
 	repository8 := repository3.New(sqlDB)
 	service8 := service3.New(repository8)
-	showHandler := handler.NewShowHandler(service8)
+	showHandler := handler2.NewShowHandler(service8)
 	repository9 := repository4.New(sqlDB)
 	service9 := service4.New(repository9)
 	editHandler2 := handlers3.NewEditHandler(service9)
-	indexHandler := handlers3.NewIndexHandler(service9)
+	handlersIndexHandler := handlers3.NewIndexHandler(service9)
 	updateHandler2 := handlers3.NewUpdateHandler(service9)
 	repository10 := repository5.New(sqlDB)
 	service10 := service5.New(repository10)
-	handlersIndexHandler := handlers4.NewIndexHandler(service10)
-	handlerHandler := handler2.New()
+	indexHandler2 := handlers4.NewIndexHandler(service10)
+	handlerHandler := handler3.New()
 	repository11 := repository6.New(sqlDB)
 	service11 := service6.New(repository11, repository10)
 	createHandler2 := handlers5.NewCreateHandler(service11, service10)
 	deleteHandler2 := handlers5.NewDeleteHandler(service11)
 	editHandler3 := handlers5.NewEditHandler(service11, service10)
-	indexHandler2 := handlers5.NewIndexHandler(service11)
+	indexHandler3 := handlers5.NewIndexHandler(service11)
 	handlersNewHandler := handlers5.NewNewHandler(service10)
 	updateHandler3 := handlers5.NewUpdateHandler(service11, service10)
-	routesRoutes := routes.New(createHandler, deleteHandler, editHandler, listHandler, newHandler, updateHandler, handlersCreateHandler, handlersDeleteHandler, handlersEditHandler, handlersListHandler, handlersUpdateHandler, showHandler, editHandler2, indexHandler, updateHandler2, handlersIndexHandler, handlerHandler, createHandler2, deleteHandler2, editHandler3, indexHandler2, handlersNewHandler, updateHandler3)
+	routesRoutes := routes.New(createHandler, deleteHandler, editHandler, listHandler, newHandler, updateHandler, handlersCreateHandler, handlersDeleteHandler, handlersEditHandler, handlersListHandler, handlersUpdateHandler, indexHandler, showHandler, editHandler2, handlersIndexHandler, updateHandler2, indexHandler2, handlerHandler, createHandler2, deleteHandler2, editHandler3, indexHandler3, handlersNewHandler, updateHandler3)
 	v := middlewares.New()
 	serverServer := server.New(configConfig, routesRoutes, v)
 	return serverServer

@@ -20,7 +20,7 @@ func (c *Component) Index(cashes cash.Cashes) Node {
 		Div(Class("card cash"),
 			Div(Class("card-body"),
 				Table(Class("w-100 summarize"),
-					TBody(c.Map(nodes)),
+					TBody(Group(nodes)),
 				),
 			),
 		),
@@ -39,6 +39,6 @@ func (c *Component) cash(cash *cash.Cash, children ...Node) Node {
 				Text(c.Money(cash.Sum)),
 			),
 		),
-		c.Map(children),
+		Group(children),
 	)
 }

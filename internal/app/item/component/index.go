@@ -42,6 +42,6 @@ func (c *Component) item(item *item.Item, children ...Node) Node {
 			Text(item.CategoryName),
 		),
 		Td(c.Description(item.Description)),
-		c.Map(children),
+		Group(children),
 	)
 }

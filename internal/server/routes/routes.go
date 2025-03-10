@@ -12,6 +12,7 @@ import (
 	item "github.com/tksasha/balance/internal/app/item/handlers"
 	backofficecash "github.com/tksasha/balance/internal/backoffice/cash/handlers"
 	backofficecategory "github.com/tksasha/balance/internal/backoffice/category/handlers"
+	backofficeindex "github.com/tksasha/balance/internal/backoffice/index/handler"
 )
 
 //go:embed assets
@@ -33,6 +34,7 @@ func New( //nolint:funlen
 	backofficeCategoryEditHandler *backofficecategory.EditHandler,
 	backofficeCategoryListHandler *backofficecategory.ListHandler,
 	backofficeCategoryUpdateHandler *backofficecategory.UpdateHandler,
+	backofficeIndexHandler *backofficeindex.IndexHandler,
 	balanceShowHandler *balance.ShowHandler,
 	cashEditHandler *cash.EditHandler,
 	cashIndexHandler *cash.IndexHandler,
@@ -74,6 +76,8 @@ func New( //nolint:funlen
 	mux.Handle("GET /categories", categoryIndexHandler)
 
 	mux.Handle("GET /balance", balanceShowHandler)
+
+	mux.Handle("GET /backoffice", backofficeIndexHandler)
 
 	mux.Handle("GET /backoffice/cashes", backofficeCashListHandler)
 	mux.Handle("GET /backoffice/cashes/new", backofficeCashNewHandler)

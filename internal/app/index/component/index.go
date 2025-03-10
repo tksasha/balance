@@ -32,6 +32,7 @@ func (c *Component) Index(values url.Values) Node {
 				c.categories(),
 				c.items(),
 				c.Modal(),
+				c.BackofficeModal(),
 				c.linkToBackoffice(),
 				Script(Src("/assets/bootstrap-0f43271223c74d330702ce94a39ed70d04e8fd36.js")),
 				Script(Src("/assets/htmx.min-03a1ffdf83a11fab58acf6bcdf51233fdf14abd5.js")),

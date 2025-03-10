@@ -25,7 +25,7 @@ func (c *Component) Index(categories category.GroupedCategories) Node {
 
 	return Div(Class("container-fluid"), ID("categories"),
 		Div(Class("clearfix mt-4"),
-			c.Map(nodes),
+			Group(nodes),
 		),
 	)
 }
@@ -39,7 +39,7 @@ func (c *Component) entities(entities category.Categories) Node {
 		nodes = append(nodes, c.Summary(entities.Sum()))
 	}
 
-	return c.Map(nodes)
+	return Group(nodes)
 }
 
 func (c *Component) entity(entity *category.Category) Node {
