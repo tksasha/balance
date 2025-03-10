@@ -1,7 +1,8 @@
 package handlers_test
 
 import (
-	"database/sql"
+	"bytes"
+	"encoding/json"
 	"net/http"
 	"net/http/httptest"
 	"testing"
@@ -15,18 +16,35 @@ import (
 	"github.com/tksasha/balance/internal/common/currency"
 	"github.com/tksasha/balance/internal/db"
 	"github.com/tksasha/balance/internal/db/nameprovider"
+	"github.com/tksasha/balance/internal/server/middlewares"
 	"gotest.tools/v3/assert"
 )
 
-func TestDeleteItemHandler(t *testing.T) { //nolint:dupl
-	handler, db := newDeleteHandler(t)
+func TestDeleteItemHandler(t *testing.T) { //nolint:funlen
+	db := db.Open(t.Context(), nameprovider.NewTestProvider())
 	defer func() {
 		if err := db.Close(); err != nil {
 			t.Fatal(err)
 		}
 	}()
 
-	mux := mux(t, "DELETE /items/{id}", handler)
+	itemRepository := repository.New(db)
+
+	categoryRepository := categoryrepository.New(db)
+
+	itemService := service.New(itemRepository, categoryRepository)
+
+	handler := handlers.NewDeleteHandler(itemService)
+
+	mux := http.NewServeMux()
+
+	next := http.Handler(handler)
+
+	for _, middleware := range middlewares.New() {
+		next = middleware.Wrap(next)
+	}
+
+	mux.Handle("DELETE /items/{id}", next)
 
 	ctx := t.Context()
 
@@ -57,6 +75,7 @@ func TestDeleteItemHandler(t *testing.T) { //nolint:dupl
 			ID:         1045,
 			Currency:   currency.UAH,
 			CategoryID: 1047,
+			Date:       date(t, "2025-03-10"),
 		}
 
 		createItem(t, db, itemToCreate)
@@ -70,22 +89,25 @@ func TestDeleteItemHandler(t *testing.T) { //nolint:dupl
 
 		mux.ServeHTTP(recorder, request)
 
-		assert.Equal(t, recorder.Code, http.StatusNoContent)
+		headers := map[string]map[string]string{
+			"balance.item.deleted": map[string]string{
+				"itemsPath":      "/items?currency=uah\u0026month=3\u0026year=2025",
+				"balancePath":    "/balance",
+				"categoriesPath": "/categories?month=3\u0026year=2025",
+			},
+		}
+
+		w := bytes.NewBuffer([]byte{})
+
+		if err := json.NewEncoder(w).Encode(headers); err != nil {
+			t.Fatal(err)
+		}
+
+		headerExpected := w.String()
+
+		headerActual := recorder.Header().Get("Hx-Trigger-After-Swap")
+
+		assert.Equal(t, http.StatusOK, recorder.Code)
+		assert.Equal(t, headerExpected, headerActual)
 	})
-}
-
-func newDeleteHandler(t *testing.T) (*handlers.DeleteHandler, *sql.DB) {
-	t.Helper()
-
-	db := db.Open(t.Context(), nameprovider.NewTestProvider())
-
-	itemRepository := repository.New(db)
-
-	categoryRepository := categoryrepository.New(db)
-
-	itemService := service.New(itemRepository, categoryRepository)
-
-	handler := handlers.NewDeleteHandler(itemService)
-
-	return handler, db
 }

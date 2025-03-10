@@ -72,6 +72,7 @@ func InitializeServer() *server.Server {
 		db.Open,
 		indexhandler.New,
 		itemhandlers.NewCreateHandler,
+		itemhandlers.NewDeleteHandler,
 		itemhandlers.NewEditHandler,
 		itemhandlers.NewIndexHandler,
 		itemhandlers.NewNewHandler,

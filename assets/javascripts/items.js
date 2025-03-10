@@ -1,3 +1,7 @@
+document.addEventListener("balance.item.initialized", (e) => {
+  $(".datepicker").datepicker(BOOTSTRAP_DATEPICKER_DEFAULTS);
+});
+
 document.addEventListener("balance.item.updated", async (e) => {
   hideModal();
 
@@ -5,11 +9,7 @@ document.addEventListener("balance.item.updated", async (e) => {
     await htmx.ajax("GET", e.detail.balancePath, { target: "#balance", swap: "outerHTML" });
 
   if (Object.hasOwn(e.detail, "categoriesPath"))
-    await htmx.ajax("GET", e.detail.categoriesPath, { "target": "#categories", swap: "outerHTML" })
-});
-
-document.addEventListener("balance.item.initialized", (e) => {
-  $(".datepicker").datepicker(BOOTSTRAP_DATEPICKER_DEFAULTS);
+    await htmx.ajax("GET", e.detail.categoriesPath, { "target": "#categories", swap: "outerHTML" });
 });
 
 document.addEventListener("balance.items.shown", (e) => {
@@ -49,8 +49,21 @@ document.addEventListener("balance.item.created", async (e) => {
     await htmx.ajax("GET", e.detail.balancePath, { target: "#balance", swap: "outerHTML" });
 
   if (Object.hasOwn(e.detail, "categoriesPath"))
-    await htmx.ajax("GET", e.detail.categoriesPath, { "target": "#categories", swap: "outerHTML" })
+    await htmx.ajax("GET", e.detail.categoriesPath, { "target": "#categories", swap: "outerHTML" });
 
   if (Object.hasOwn(e.detail, "itemsPath"))
-    await htmx.ajax("GET", e.detail.itemsPath, { "target": "#items", swap: "outerHTML" })
+    await htmx.ajax("GET", e.detail.itemsPath, { "target": "#items" });
+});
+
+document.addEventListener("balance.item.deleted", async (e) => {
+  hideModal();
+
+  if (Object.hasOwn(e.detail, "balancePath"))
+    await htmx.ajax("GET", e.detail.balancePath, { target: "#balance", swap: "outerHTML" });
+
+  if (Object.hasOwn(e.detail, "categoriesPath"))
+    await htmx.ajax("GET", e.detail.categoriesPath, { "target": "#categories", swap: "outerHTML" });
+
+  if (Object.hasOwn(e.detail, "itemsPath"))
+    await htmx.ajax("GET", e.detail.itemsPath, { "target": "#items" });
 });

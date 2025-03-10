@@ -54,3 +54,7 @@ func NewItem() string {
 func CreateItem() string {
 	return itemsPath
 }
+
+func DeleteItem(id int) string {
+	return itemsPath + "/" + strconv.Itoa(id)
+}

@@ -19,7 +19,7 @@ import (
 	"gotest.tools/v3/assert"
 )
 
-func TestItemEditHandler(t *testing.T) { //nolint:dupl
+func TestItemEditHandler(t *testing.T) {
 	handler, db := newEditHandler(t)
 	defer func() {
 		if err := db.Close(); err != nil {

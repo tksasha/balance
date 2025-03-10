@@ -4,6 +4,7 @@ import (
 	"database/sql"
 	"net/http"
 	"testing"
+	"time"
 
 	"github.com/tksasha/balance/internal/app/category"
 	"github.com/tksasha/balance/internal/app/item"
@@ -124,4 +125,15 @@ func createItem(t *testing.T, db *sql.DB, item *item.Item) {
 	if id == 0 {
 		t.Fatal("failed to create item")
 	}
+}
+
+func date(t *testing.T, value string) time.Time {
+	t.Helper()
+
+	date, err := time.Parse(time.DateOnly, value)
+	if err != nil {
+		t.Fatal(err)
+	}
+
+	return date
 }

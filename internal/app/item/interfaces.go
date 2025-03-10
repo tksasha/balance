@@ -19,7 +19,7 @@ type Service interface {
 	List(ctx context.Context, request ListRequest) (Items, error)
 	Edit(ctx context.Context, input string) (*Item, error)
 	Update(ctx context.Context, request UpdateRequest) (*Item, error)
-	Delete(ctx context.Context, input string) error
+	Delete(ctx context.Context, input string) (*Item, error)
 }
 
 type CategoryRepository interface {

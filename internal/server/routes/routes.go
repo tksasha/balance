@@ -40,6 +40,7 @@ func New( //nolint:funlen
 	categoryIndexHandler *category.IndexHandler,
 	indexHandler *index.Handler,
 	itemCreateHandler *item.CreateHandler,
+	itemDeleteHandler *item.DeleteHandler,
 	itemEditHandler *item.EditHandler,
 	itemIndexHandler *item.IndexHandler,
 	itemNewHandler *item.NewHandler,
@@ -63,7 +64,8 @@ func New( //nolint:funlen
 	mux.Handle("POST /items", itemCreateHandler)
 	mux.Handle("GET /items", itemIndexHandler)
 	mux.Handle("GET /items/{id}/edit", itemEditHandler)
-	mux.Handle("PATCH /items/{id}", itemUpdateHandler)
+	// mux.Handle("PATCH /items/{id}", itemUpdateHandler)
+	mux.Handle("DELETE /items/{id}", itemDeleteHandler)
 
 	mux.Handle("GET /cashes", cashIndexHandler)
 	mux.Handle("GET /cashes/{id}/edit", cashEditHandler)

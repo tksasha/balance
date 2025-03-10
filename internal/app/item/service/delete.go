@@ -2,18 +2,19 @@ package service
 
 import (
 	"context"
-	"strconv"
 
-	"github.com/tksasha/balance/internal/common"
+	"github.com/tksasha/balance/internal/app/item"
 )
 
-func (s *Service) Delete(ctx context.Context, input string) error {
-	id, err := strconv.Atoi(input)
-	if err != nil || id < 1 {
-		return common.ErrResourceNotFound
+func (s *Service) Delete(ctx context.Context, input string) (*item.Item, error) {
+	item, err := s.findByID(ctx, input)
+	if err != nil {
+		return nil, err
 	}
 
-	return s.MapError(
-		s.itemRepository.Delete(ctx, id),
-	)
+	if err := s.itemRepository.Delete(ctx, item.ID); err != nil {
+		return nil, s.MapError(err)
+	}
+
+	return item, nil
 }

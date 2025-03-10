@@ -154,11 +154,12 @@ func (mr *MockServiceMockRecorder) Create(ctx, request any) *gomock.Call {
 }
 
 // Delete mocks base method.
-func (m *MockService) Delete(ctx context.Context, input string) error {
+func (m *MockService) Delete(ctx context.Context, input string) (*item.Item, error) {
 	m.ctrl.T.Helper()
 	ret := m.ctrl.Call(m, "Delete", ctx, input)
-	ret0, _ := ret[0].(error)
-	return ret0
+	ret0, _ := ret[0].(*item.Item)
+	ret1, _ := ret[1].(error)
+	return ret0, ret1
 }
 
 // Delete indicates an expected call of Delete.

@@ -1,9 +1,14 @@
 package handlers
 
 import (
+	"bytes"
+	"encoding/json"
+	"log/slog"
 	"net/http"
+	"strconv"
 
 	"github.com/tksasha/balance/internal/app/item"
+	"github.com/tksasha/balance/internal/common/component/path"
 	"github.com/tksasha/balance/internal/common/handler"
 )
 
@@ -23,15 +28,37 @@ func NewDeleteHandler(
 }
 
 func (h *DeleteHandler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
-	if err := h.handle(r); err != nil {
+	item, err := h.itemService.Delete(r.Context(), r.PathValue("id"))
+	if err != nil {
 		h.SetError(w, err)
 
 		return
 	}
 
-	w.WriteHeader(http.StatusNoContent)
+	w.Header().Add("Hx-Trigger-After-Swap", h.header(int(item.Date.Month()), item.Date.Year()))
+
+	w.WriteHeader(http.StatusOK)
 }
 
-func (h *DeleteHandler) handle(r *http.Request) error {
-	return h.itemService.Delete(r.Context(), r.PathValue("id"))
+func (h *DeleteHandler) header(month, year int) string {
+	params := path.Params{
+		"month": strconv.Itoa(month),
+		"year":  strconv.Itoa(year),
+	}
+
+	values := map[string]map[string]string{
+		"balance.item.deleted": {
+			"itemsPath":      path.Items(params, nil),
+			"balancePath":    path.Balance(),
+			"categoriesPath": path.Categories(params),
+		},
+	}
+
+	w := bytes.NewBuffer([]byte{})
+
+	if err := json.NewEncoder(w).Encode(values); err != nil {
+		slog.Error("failed to encode", "error", err)
+	}
+
+	return w.String()
 }
