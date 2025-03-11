@@ -6,10 +6,16 @@ const hideModal = (event) => {
   bootstrap.Modal.getInstance("#modal").hide();
 };
 
+const clearModalSize = () => {
+  document
+    .querySelector("#modal .modal-dialog")
+    .classList.remove("modal-lg", "modal-sm", "modal-xl");
+};
+
 const setModalSize = (size) => {
-  const dialog = document.querySelector("#modal .modal-dialog");
+  clearModalSize();
 
-  dialog.classList.remove("modal-lg", "modal-sm", "modal-xl");
-
-  dialog.classList.add(size);
+  document
+    .querySelector("#modal .modal-dialog")
+    .classList.add(size);
 };

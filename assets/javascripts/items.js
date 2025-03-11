@@ -2,6 +2,8 @@ document.addEventListener("balance.item.initialized", (e) => {
   $(".datepicker").datepicker(BOOTSTRAP_DATEPICKER_DEFAULTS);
 });
 
+document.addEventListener("balance.item.edit", clearModalSize);
+
 document.addEventListener("balance.item.updated", async (e) => {
   hideModal();
 

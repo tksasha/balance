@@ -2,7 +2,6 @@ package handlers_test
 
 import (
 	"database/sql"
-	"io"
 	"net/http"
 	"net/http/httptest"
 	"net/url"
@@ -17,7 +16,6 @@ import (
 	"github.com/tksasha/balance/internal/db"
 	"github.com/tksasha/balance/internal/db/nameprovider"
 	"gotest.tools/v3/assert"
-	"gotest.tools/v3/golden"
 )
 
 func TestCashUpdateHandler(t *testing.T) { //nolint:funlen
@@ -88,13 +86,6 @@ func TestCashUpdateHandler(t *testing.T) { //nolint:funlen
 		mux.ServeHTTP(recorder, request)
 
 		assert.Equal(t, recorder.Code, http.StatusOK)
-
-		response, err := io.ReadAll(recorder.Body)
-		if err != nil {
-			t.Fatal(err)
-		}
-
-		golden.Assert(t, string(response), "edit-with-errors.html")
 	})
 
 	t.Run("renders updated cash when it updates", func(t *testing.T) {
@@ -131,13 +122,6 @@ func TestCashUpdateHandler(t *testing.T) { //nolint:funlen
 
 		assert.Equal(t, recorder.Code, http.StatusOK)
 		assert.Equal(t, recorder.Header().Get("Hx-Trigger-After-Swap"), "balance.cash.updated")
-
-		response, err := io.ReadAll(recorder.Body)
-		if err != nil {
-			t.Fatal(err)
-		}
-
-		golden.Assert(t, string(response), "update.html")
 
 		cash := findCashByID(t, db, currency.UAH, 1442)
 

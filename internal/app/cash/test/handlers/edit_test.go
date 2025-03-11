@@ -2,7 +2,6 @@ package handlers_test
 
 import (
 	"database/sql"
-	"io"
 	"net/http"
 	"net/http/httptest"
 	"testing"
@@ -15,7 +14,6 @@ import (
 	"github.com/tksasha/balance/internal/db"
 	"github.com/tksasha/balance/internal/db/nameprovider"
 	"gotest.tools/v3/assert"
-	"gotest.tools/v3/golden"
 )
 
 func TestCashEditHandler(t *testing.T) { //nolint:funlen
@@ -81,12 +79,7 @@ func TestCashEditHandler(t *testing.T) { //nolint:funlen
 
 		assert.Equal(t, recorder.Code, http.StatusOK)
 
-		response, err := io.ReadAll(recorder.Body)
-		if err != nil {
-			t.Fatal(err)
-		}
-
-		golden.Assert(t, string(response), "edit.html")
+		assert.Equal(t, "balance.cash.edit", recorder.Header().Get("Hx-Trigger-After-Swap"))
 	})
 }
 

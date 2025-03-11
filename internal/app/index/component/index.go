@@ -18,12 +18,12 @@ func (c *Component) Index(values url.Values) Node {
 					Rel("stylesheet"),
 					Href("/assets/bootstrap-datepicker.min-cc8d75acca2a852e945170726a1ed804b63853ad.css"),
 				),
+				Link(Rel("stylesheet"), Href("/assets/application-9b924437db8302708b7ea7926e7b92072fbaec11.css")),
 				Link(
 					Rel("icon"),
 					Type("image/x-icon"),
 					Href("/assets/hryvnia-c8a5df41852f327f0ad50d3dddf29acf85597d22.png"),
 				),
-				Link(Rel("stylesheet"), Href("/assets/application-9b924437db8302708b7ea7926e7b92072fbaec11.css")),
 			},
 			Body: []Node{
 				c.header(values),
@@ -38,7 +38,7 @@ func (c *Component) Index(values url.Values) Node {
 				Script(Src("/assets/jquery.min-5a9dcfbef655a2668e78baebeaa8dc6f41d8dabb.js")),
 				Script(Src("/assets/bootstrap-datepicker.min-cdff2c53b8ff6b44eb16e842bd4b86541a7853f6.js")),
 				Script(Src("/assets/bootstrap-datepicker.uk.min-d58d82ad3cc17da5ff61d0d8559c3b397c941638.js")),
-				Script(Src("/assets/application-8c7345141f851b37fb18d18a4d6578222a6fc54d.js")),
+				Script(Src("/assets/application-99214da7179f4fe51e57d13dbc37f0d8712b5ef9.js")),
 			},
 		},
 	)

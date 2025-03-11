@@ -72,6 +72,8 @@ func TestItemEditHandler(t *testing.T) {
 		mux.ServeHTTP(recorder, request)
 
 		assert.Equal(t, recorder.Code, http.StatusOK)
+
+		assert.Equal(t, "balance.item.edit", recorder.Header().Get("Hx-Trigger-After-Swap"))
 	})
 }
 

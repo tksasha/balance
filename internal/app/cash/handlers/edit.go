@@ -26,18 +26,16 @@ func NewEditHandler(
 }
 
 func (h *EditHandler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
-	cash, err := h.handle(r)
+	cash, err := h.cashService.Edit(r.Context(), r.PathValue("id"))
 	if err != nil {
 		h.SetError(w, err)
 
 		return
 	}
 
+	w.Header().Add("Hx-Trigger-After-Swap", "balance.cash.edit")
+
 	err = h.component.Edit(cash, nil).Render(w)
 
 	h.SetError(w, err)
-}
-
-func (h *EditHandler) handle(r *http.Request) (*cash.Cash, error) {
-	return h.cashService.Edit(r.Context(), r.PathValue("id"))
 }
