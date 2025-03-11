@@ -120,8 +120,10 @@ func TestCashUpdateHandler(t *testing.T) { //nolint:funlen
 
 		mux.ServeHTTP(recorder, request)
 
+		expectedHeader := `{"balance.cash.updated":{"balancePath":"/balance"}}`
+
 		assert.Equal(t, recorder.Code, http.StatusOK)
-		assert.Equal(t, recorder.Header().Get("Hx-Trigger-After-Swap"), "balance.cash.updated")
+		assert.Equal(t, expectedHeader, strings.TrimSpace(recorder.Header().Get("Hx-Trigger-After-Swap")))
 
 		cash := findCashByID(t, db, currency.UAH, 1442)
 

@@ -1,12 +1,16 @@
 package handlers
 
 import (
+	"bytes"
+	"encoding/json"
 	"errors"
+	"log/slog"
 	"net/http"
 
 	"github.com/tksasha/balance/internal/app/cash"
 	"github.com/tksasha/balance/internal/app/cash/component"
 	"github.com/tksasha/balance/internal/common"
+	"github.com/tksasha/balance/internal/common/component/path"
 	"github.com/tksasha/balance/internal/common/handler"
 	"github.com/tksasha/validation"
 )
@@ -31,11 +35,7 @@ func NewUpdateHandler(
 func (h *UpdateHandler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 	cash, err := h.handle(r)
 	if err == nil {
-		w.Header().Add("Hx-Trigger-After-Swap", "balance.cash.updated")
-
-		err := h.component.Update(cash).Render(w)
-
-		h.SetError(w, err)
+		h.StatusOK(w, cash)
 
 		return
 	}
@@ -64,4 +64,24 @@ func (h *UpdateHandler) handle(r *http.Request) (*cash.Cash, error) {
 	}
 
 	return h.cashService.Update(r.Context(), request)
+}
+
+func (h *UpdateHandler) StatusOK(w http.ResponseWriter, cash *cash.Cash) {
+	writer := bytes.NewBuffer([]byte{})
+
+	values := map[string]map[string]string{
+		"balance.cash.updated": {
+			"balancePath": path.Balance(),
+		},
+	}
+
+	if err := json.NewEncoder(writer).Encode(values); err != nil {
+		slog.Error("failed to encode", "error", err)
+	}
+
+	w.Header().Add("Hx-Trigger-After-Swap", writer.String())
+
+	err := h.component.Update(cash).Render(w)
+
+	h.SetError(w, err)
 }
