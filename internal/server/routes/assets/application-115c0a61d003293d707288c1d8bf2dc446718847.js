@@ -24,7 +24,7 @@ document.addEventListener("backoffice.index.shown", (e) => {
 });
 
 document.addEventListener("backoffice.cashes.shown", (e) => {
-  setModalSize("modal-xl");
+  clearModalSize();
 });
 document.addEventListener("balance.cash.updated", hideModal);
 
