@@ -21,5 +21,8 @@ const setModalSize = (size) => {
 };
 
 document.getElementById("modal").addEventListener("shown.bs.modal", (e) => {
-  e.target.querySelector("[autofocus]").focus();
+  const input = e.target.querySelector("[autofocus]")
+
+  if (input)
+    input.focus();
 });

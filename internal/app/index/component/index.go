@@ -38,7 +38,7 @@ func (c *Component) Index(values url.Values) Node {
 				Script(Src("/assets/jquery.min-5a9dcfbef655a2668e78baebeaa8dc6f41d8dabb.js")),
 				Script(Src("/assets/bootstrap-datepicker.min-cdff2c53b8ff6b44eb16e842bd4b86541a7853f6.js")),
 				Script(Src("/assets/bootstrap-datepicker.uk.min-d58d82ad3cc17da5ff61d0d8559c3b397c941638.js")),
-				Script(Src("/assets/application-3d403429a1efb82d8ffed869370815178678978c.js")),
+				Script(Src("/assets/application-620a26389997f443bfd925e0a609854a78faa035.js")),
 			},
 		},
 	)
