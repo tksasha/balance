@@ -10,8 +10,6 @@ import (
 )
 
 func (r *Repository) FindByID(ctx context.Context, id int) (*cash.Cash, error) {
-	currency := r.GetCurrencyFromContext(ctx)
-
 	query := `
 		SELECT
 		    id,
@@ -24,12 +22,11 @@ func (r *Repository) FindByID(ctx context.Context, id int) (*cash.Cash, error) {
 		FROM
 		    cashes
 		WHERE
-		    currency = ?
-		    AND deleted_at IS NULL
+		    deleted_at IS NULL
 		    AND id = ?
 	`
 
-	row := r.db.QueryRowContext(ctx, query, currency, id)
+	row := r.db.QueryRowContext(ctx, query, id)
 
 	cash := &cash.Cash{}
 

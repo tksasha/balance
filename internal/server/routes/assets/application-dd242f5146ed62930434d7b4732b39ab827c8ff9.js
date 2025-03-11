@@ -26,6 +26,11 @@ document.addEventListener("backoffice.index.shown", (e) => {
 document.addEventListener("backoffice.cashes.shown", (e) => {
   clearModalSize();
 });
+
+document.addEventListener("backoffice.cash.updated", async (e) => {
+  if (Object.hasOwn(e.detail, "backofficeCashesPath"))
+    await htmx.ajax("GET", e.detail.backofficeCashesPath, { target: "#modal-body" });
+});
 document.addEventListener("balance.cash.updated", hideModal);
 
 document.addEventListener("balance.cash.edit", clearModalSize);

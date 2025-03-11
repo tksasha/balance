@@ -1,6 +1,8 @@
 package path
 
-import "strconv"
+import (
+	"strconv"
+)
 
 func Backoffice() string {
 	return "/backoffice"
@@ -10,8 +12,12 @@ func BackofficeCashes() string {
 	return Backoffice() + "/cashes"
 }
 
+func BackofficeCash(id int) string {
+	return BackofficeCashes() + "/" + strconv.Itoa(id)
+}
+
 func BackofficeEditCash(id int) string {
-	return Backoffice() + "/" + strconv.Itoa(id) + "/edit"
+	return BackofficeCash(id) + "/edit"
 }
 
 func BackofficeCategories() string {

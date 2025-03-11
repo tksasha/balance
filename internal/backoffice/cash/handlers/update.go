@@ -1,12 +1,16 @@
 package handlers
 
 import (
+	"bytes"
+	"encoding/json"
 	"errors"
+	"log/slog"
 	"net/http"
 
 	"github.com/tksasha/balance/internal/backoffice/cash"
 	"github.com/tksasha/balance/internal/backoffice/cash/component"
 	"github.com/tksasha/balance/internal/common"
+	"github.com/tksasha/balance/internal/common/component/path"
 	"github.com/tksasha/balance/internal/common/handler"
 	"github.com/tksasha/validation"
 )
@@ -31,7 +35,7 @@ func NewUpdateHandler(
 func (h *UpdateHandler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 	cash, err := h.handle(r)
 	if err == nil {
-		w.WriteHeader(http.StatusNoContent)
+		h.StatusOK(w)
 
 		return
 	}
@@ -62,4 +66,22 @@ func (h *UpdateHandler) handle(r *http.Request) (*cash.Cash, error) {
 	}
 
 	return h.cashService.Update(r.Context(), request)
+}
+
+func (h *UpdateHandler) StatusOK(w http.ResponseWriter) {
+	writer := bytes.NewBuffer([]byte{})
+
+	values := map[string]map[string]string{
+		"backoffice.cash.updated": {
+			"backofficeCashesPath": path.BackofficeCashes(),
+		},
+	}
+
+	if err := json.NewEncoder(writer).Encode(values); err != nil {
+		slog.Error("failed to encode", "error", err)
+	}
+
+	w.Header().Set("Hx-Trigger-After-Swap", writer.String())
+
+	w.WriteHeader(http.StatusOK)
 }

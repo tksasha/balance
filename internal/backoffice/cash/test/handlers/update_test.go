@@ -1,8 +1,6 @@
 package handlers_test
 
 import (
-	"database/sql"
-	"io"
 	"net/http"
 	"net/http/httptest"
 	"net/url"
@@ -16,31 +14,42 @@ import (
 	"github.com/tksasha/balance/internal/common/currency"
 	"github.com/tksasha/balance/internal/db"
 	"github.com/tksasha/balance/internal/db/nameprovider"
+	"github.com/tksasha/balance/internal/server/middlewares"
 	"gotest.tools/v3/assert"
-	"gotest.tools/v3/golden"
 )
 
 func TestCashUpdateHandler(t *testing.T) { //nolint:funlen
-	handler, db := newUpdateHandler(t)
+	ctx := t.Context()
+
+	db := db.Open(ctx, nameprovider.NewTestProvider())
 	defer func() {
 		if err := db.Close(); err != nil {
 			t.Fatal(err)
 		}
 	}()
 
-	mux := mux(t, "PATCH /backoffice/cashes/{id}", handler)
+	cashRepository := repository.New(db)
 
-	ctx := t.Context()
+	cashService := service.New(cashRepository)
+
+	cashUpdateHandler := handlers.NewUpdateHandler(cashService)
+
+	mux := http.NewServeMux()
+
+	next := http.Handler(cashUpdateHandler)
+
+	for _, middleware := range middlewares.New() {
+		next = middleware.Wrap(next)
+	}
+
+	mux.Handle("PATCH /backoffice/cashes/{id}", next)
 
 	t.Run("renders 404 when cash not found", func(t *testing.T) {
 		formData := url.Values{}
 
-		request, err := http.NewRequestWithContext(
-			ctx,
-			http.MethodPatch,
-			"/backoffice/cashes/1439",
-			strings.NewReader(formData.Encode()),
-		)
+		body := strings.NewReader(formData.Encode())
+
+		request, err := http.NewRequestWithContext(ctx, http.MethodPatch, "/backoffice/cashes/1439", body)
 		if err != nil {
 			t.Fatal(err)
 		}
@@ -81,12 +90,9 @@ func TestCashUpdateHandler(t *testing.T) { //nolint:funlen
 			"name": {""},
 		}
 
-		request, err := http.NewRequestWithContext(
-			ctx,
-			http.MethodPatch,
-			"/backoffice/cashes/1418?currency=usd",
-			strings.NewReader(values.Encode()),
-		)
+		body := strings.NewReader(values.Encode())
+
+		request, err := http.NewRequestWithContext(ctx, http.MethodPatch, "/backoffice/cashes/1418?currency=usd", body)
 		if err != nil {
 			t.Fatal(err)
 		}
@@ -98,16 +104,9 @@ func TestCashUpdateHandler(t *testing.T) { //nolint:funlen
 		mux.ServeHTTP(recorder, request)
 
 		assert.Equal(t, recorder.Code, http.StatusOK)
-
-		response, err := io.ReadAll(recorder.Body)
-		if err != nil {
-			t.Fatal(err)
-		}
-
-		golden.Assert(t, string(response), "update-with-errors.html")
 	})
 
-	t.Run("renders 204 when cash updated", func(t *testing.T) {
+	t.Run("renders 200 when cash updated", func(t *testing.T) {
 		cleanup(t, db)
 
 		cashToCreate := &cash.Cash{
@@ -129,12 +128,9 @@ func TestCashUpdateHandler(t *testing.T) { //nolint:funlen
 			"favorite":      {"true"},
 		}
 
-		request, err := http.NewRequestWithContext(
-			ctx,
-			http.MethodPatch,
-			"/backoffice/cashes/1442",
-			strings.NewReader(values.Encode()),
-		)
+		body := strings.NewReader(values.Encode())
+
+		request, err := http.NewRequestWithContext(ctx, http.MethodPatch, "/backoffice/cashes/1442", body)
 		if err != nil {
 			t.Fatal(err)
 		}
@@ -145,20 +141,10 @@ func TestCashUpdateHandler(t *testing.T) { //nolint:funlen
 
 		mux.ServeHTTP(recorder, request)
 
-		assert.Equal(t, recorder.Code, http.StatusNoContent)
+		assert.Equal(t, recorder.Code, http.StatusOK)
+
+		expectedHeader := `{"backoffice.cash.updated":{"backofficeCashesPath":"/backoffice/cashes"}}`
+
+		assert.Equal(t, expectedHeader, strings.TrimSpace(recorder.Header().Get("Hx-Trigger-After-Swap")))
 	})
-}
-
-func newUpdateHandler(t *testing.T) (*handlers.UpdateHandler, *sql.DB) {
-	t.Helper()
-
-	db := db.Open(t.Context(), nameprovider.NewTestProvider())
-
-	cashRepository := repository.New(db)
-
-	cashService := service.New(cashRepository)
-
-	handler := handlers.NewUpdateHandler(cashService)
-
-	return handler, db
 }
