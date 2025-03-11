@@ -61,6 +61,7 @@ compile:
 		stylesheets/application.scss:stylesheets/application.css
 	@cat \
 		javascripts/common.js \
+		javascripts/backoffice.js \
 		javascripts/cashes.js \
 		javascripts/items.js \
 		> javascripts/application.js

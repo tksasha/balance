@@ -10,10 +10,10 @@ import (
 func (c *Component) linkToBackoffice() Node {
 	return Div(Class("link-to-backoffice"), Title("backoffice"),
 		htmx.Get(path.Backoffice()),
-		htmx.Target("#backoffice-modal-body"),
+		htmx.Target("#modal-body"),
 		htmx.SwapOOB("true"),
 		Data("bs-toggle", "modal"),
-		Data("bs-target", "#backoffice-modal"),
+		Data("bs-target", "#modal"),
 		Text("B"),
 	)
 }

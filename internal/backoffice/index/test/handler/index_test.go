@@ -28,4 +28,6 @@ func TestIndexHandler(t *testing.T) {
 	mux.ServeHTTP(recorder, request)
 
 	assert.Equal(t, http.StatusOK, recorder.Code)
+
+	assert.Equal(t, "backoffice.index.shown", recorder.Header().Get("Hx-Trigger-After-Swap"))
 }

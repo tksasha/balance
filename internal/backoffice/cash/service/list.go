@@ -7,5 +7,5 @@ import (
 )
 
 func (s *Service) List(ctx context.Context) (cash.Cashes, error) {
-	return s.repository.List(ctx)
+	return s.repository.FindAll(ctx)
 }

@@ -8,36 +8,34 @@ import (
 	"github.com/tksasha/balance/internal/common/handler"
 )
 
-type ListHandler struct {
+type IndexHandler struct {
 	*handler.Handler
 
 	cashService cash.Service
 	component   *component.Component
 }
 
-func NewListHandler(
+func NewIndexHandler(
 	cashService cash.Service,
-) *ListHandler {
-	return &ListHandler{
+) *IndexHandler {
+	return &IndexHandler{
 		Handler:     handler.New(),
 		cashService: cashService,
 		component:   component.New(),
 	}
 }
 
-func (h *ListHandler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
-	cashes, err := h.handle(r)
+func (h *IndexHandler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
+	cashes, err := h.cashService.List(r.Context())
 	if err != nil {
 		h.SetError(w, err)
 
 		return
 	}
 
+	w.Header().Add("Hx-Trigger-After-Swap", "backoffice.cashes.shown")
+
 	err = h.component.List(cashes).Render(w)
 
 	h.SetError(w, err)
-}
-
-func (h *ListHandler) handle(r *http.Request) (cash.Cashes, error) {
-	return h.cashService.List(r.Context())
 }

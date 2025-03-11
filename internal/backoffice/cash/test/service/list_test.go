@@ -21,18 +21,18 @@ func TestList(t *testing.T) {
 
 	ctx := t.Context()
 
-	t.Run("returns error when list cashes returns error", func(t *testing.T) {
-		cashRepository.EXPECT().List(ctx).Return(nil, errors.New("list cashes error"))
+	t.Run("returns error when find all cashes returns error", func(t *testing.T) {
+		cashRepository.EXPECT().FindAll(ctx).Return(nil, errors.New("find all cashes error"))
 
 		_, err := service.List(ctx)
 
-		assert.Error(t, err, "list cashes error")
+		assert.Error(t, err, "find all cashes error")
 	})
 
-	t.Run("returns cashes when list cashes doesn't return error", func(t *testing.T) {
+	t.Run("returns cashes when find all cashes doesn't return error", func(t *testing.T) {
 		expected := cash.Cashes{}
 
-		cashRepository.EXPECT().List(ctx).Return(expected, nil)
+		cashRepository.EXPECT().FindAll(ctx).Return(expected, nil)
 
 		actual, err := service.List(ctx)
 

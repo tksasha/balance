@@ -8,19 +8,19 @@ import (
 )
 
 func (c *Component) Index() Node {
-	return c.BackofficeModalBody(
-		Div(
-			Div(Class("d-inline-flex me-3"),
-				Button(Class("btn btn-outline-primary btn-lg"),
+	return c.ModalBody(
+		Div(Class("row"),
+			Div(Class("col mb-3"),
+				Button(Class("btn btn-outline-primary btn-lg w-100"),
 					htmx.Get(path.BackofficeCashes()),
-					htmx.Target("#backoffice-modal"),
+					htmx.Target("#modal-body"),
 					Text("Залишки"),
 				),
 			),
-			Div(Class("d-inline-flex"),
-				Button(Class("btn btn-outline-primary btn-lg"),
+			Div(Class("col"),
+				Button(Class("btn btn-outline-primary btn-lg w-100"),
 					htmx.Get(path.BackofficeCategories()),
-					htmx.Target("#backoffice-modal"),
+					htmx.Target("#backoffice-modal-body"),
 					Text("Категорії"),
 				),
 			),

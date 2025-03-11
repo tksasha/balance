@@ -20,6 +20,8 @@ func NewIndexHandler() *IndexHandler {
 }
 
 func (h *IndexHandler) ServeHTTP(w http.ResponseWriter, _ *http.Request) {
+	w.Header().Set("Hx-Trigger-After-Swap", "backoffice.index.shown")
+
 	err := h.component.Index().Render(w)
 
 	h.SetError(w, err)

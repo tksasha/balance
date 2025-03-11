@@ -90,7 +90,7 @@ func TestDeleteItemHandler(t *testing.T) { //nolint:funlen
 		mux.ServeHTTP(recorder, request)
 
 		headers := map[string]map[string]string{
-			"balance.item.deleted": map[string]string{
+			"balance.item.deleted": {
 				"itemsPath":      "/items?currency=uah\u0026month=3\u0026year=2025",
 				"balancePath":    "/balance",
 				"categoriesPath": "/categories?month=3\u0026year=2025",

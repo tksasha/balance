@@ -5,6 +5,21 @@ const BOOTSTRAP_DATEPICKER_DEFAULTS = {
 const hideModal = (event) => {
   bootstrap.Modal.getInstance("#modal").hide();
 };
+
+const setModalSize = (size) => {
+  const dialog = document.querySelector("#modal .modal-dialog");
+
+  dialog.classList.remove("modal-lg", "modal-sm", "modal-xl");
+
+  dialog.classList.add(size);
+};
+document.addEventListener("backoffice.index.shown", (e) => {
+  setModalSize("modal-sm");
+});
+
+document.addEventListener("backoffice.cashes.shown", (e) => {
+  setModalSize("modal-xl");
+});
 document.addEventListener("balance.cash.updated", hideModal);
 document.addEventListener("balance.item.initialized", (e) => {
   $(".datepicker").datepicker(BOOTSTRAP_DATEPICKER_DEFAULTS);

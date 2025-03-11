@@ -26,7 +26,7 @@ func New( //nolint:funlen
 	backofficeCashCreateHandler *backofficecash.CreateHandler,
 	backofficeCashDeleteHandler *backofficecash.DeleteHandler,
 	backofficeCashEditHandler *backofficecash.EditHandler,
-	backofficeCashListHandler *backofficecash.ListHandler,
+	backofficeCashIndexHandler *backofficecash.IndexHandler,
 	backofficeCashNewHandler *backofficecash.NewHandler,
 	backofficeCashUpdateHandler *backofficecash.UpdateHandler,
 	backofficeCategoryCreateHandler *backofficecategory.CreateHandler,
@@ -66,7 +66,7 @@ func New( //nolint:funlen
 	mux.Handle("POST /items", itemCreateHandler)
 	mux.Handle("GET /items", itemIndexHandler)
 	mux.Handle("GET /items/{id}/edit", itemEditHandler)
-	// mux.Handle("PATCH /items/{id}", itemUpdateHandler)
+	mux.Handle("PATCH /items/{id}", itemUpdateHandler)
 	mux.Handle("DELETE /items/{id}", itemDeleteHandler)
 
 	mux.Handle("GET /cashes", cashIndexHandler)
@@ -79,7 +79,7 @@ func New( //nolint:funlen
 
 	mux.Handle("GET /backoffice", backofficeIndexHandler)
 
-	mux.Handle("GET /backoffice/cashes", backofficeCashListHandler)
+	mux.Handle("GET /backoffice/cashes", backofficeCashIndexHandler)
 	mux.Handle("GET /backoffice/cashes/new", backofficeCashNewHandler)
 	mux.Handle("POST /backoffice/cash", backofficeCashCreateHandler)
 	mux.Handle("DELETE /backoffice/cashes/{id}", backofficeCashDeleteHandler)

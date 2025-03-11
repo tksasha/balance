@@ -7,7 +7,7 @@ import (
 	"github.com/tksasha/balance/internal/backoffice/cash"
 )
 
-func (r *Repository) List(ctx context.Context) (cash.Cashes, error) {
+func (r *Repository) FindAll(ctx context.Context) (cash.Cashes, error) {
 	currency := r.GetCurrencyFromContext(ctx)
 
 	query := `
@@ -24,6 +24,8 @@ func (r *Repository) List(ctx context.Context) (cash.Cashes, error) {
 		WHERE
 			currency = ?
 			AND deleted_at IS NULL
+		ORDER BY
+			name ASC
 	`
 
 	rows, err := r.db.QueryContext(ctx, query, currency)
