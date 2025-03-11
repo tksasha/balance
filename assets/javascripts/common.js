@@ -19,3 +19,7 @@ const setModalSize = (size) => {
     .querySelector("#modal .modal-dialog")
     .classList.add(size);
 };
+
+document.getElementById("modal").addEventListener("shown.bs.modal", (e) => {
+  e.target.querySelector("[autofocus]").focus();
+});

@@ -6,7 +6,7 @@ import (
 	. "maragu.dev/gomponents/html"       //nolint: stylecheck
 )
 
-func (c *Component) Input(label, name, value string, classes Classes, message *string) Node {
+func (c *Component) Input(label, name, value string, classes Classes, message *string, children ...Node) Node {
 	if classes == nil {
 		classes = make(Classes)
 	}
@@ -16,7 +16,7 @@ func (c *Component) Input(label, name, value string, classes Classes, message *s
 
 	return Div(Class("mb-3"),
 		Label(Class("form-label"), Text(label)),
-		Input(classes, Name(name), Value(value)),
+		Input(classes, Name(name), Value(value), Group(children)),
 		Iff(message != nil, func() Node { return Div(Class("invalid-feedback"), Text(*message)) }),
 	)
 }

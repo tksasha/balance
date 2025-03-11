@@ -19,6 +19,10 @@ const setModalSize = (size) => {
     .querySelector("#modal .modal-dialog")
     .classList.add(size);
 };
+
+document.getElementById("modal").addEventListener("shown.bs.modal", (e) => {
+  e.target.querySelector("[autofocus]").focus();
+});
 document.addEventListener("backoffice.index.shown", (e) => {
   setModalSize("modal-sm");
 });

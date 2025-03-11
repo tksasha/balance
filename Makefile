@@ -53,6 +53,7 @@ build:
 install: build
 	@echo "install"
 	@mv $(OUTPUT) $(HOME)/bin
+	@launchctl stop balance && launchctl start balance
 
 .PHONY: clear
 clear:

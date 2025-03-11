@@ -16,7 +16,7 @@ func (c *Component) Form(item *item.Item, categories category.Categories, errors
 		If(item.ID == 0, htmx.Post(path.CreateItem())),
 		If(item.ID != 1, htmx.Patch(path.UpdateItem(item.ID))),
 		c.Input("Дата", "date", c.date(item.Date), Classes{"datepicker": true}, errors.Get("date")),
-		c.Input("Сума", "formula", item.Formula, nil, errors.Get("sum")),
+		c.Input("Сума", "formula", item.Formula, nil, errors.Get("sum"), AutoFocus()),
 		Div(Class("mb-3"),
 			c.categories(item.CategoryID, categories, errors.Get("category")),
 		),
