@@ -6,6 +6,7 @@ import (
 	"errors"
 	"log/slog"
 	"net/http"
+	"net/url"
 
 	"github.com/tksasha/balance/internal/app/cash"
 	"github.com/tksasha/balance/internal/app/cash/component"
@@ -35,7 +36,7 @@ func NewUpdateHandler(
 func (h *UpdateHandler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 	cash, err := h.handle(r)
 	if err == nil {
-		h.StatusOK(w, cash)
+		h.StatusOK(w, r.URL.Query(), cash)
 
 		return
 	}
@@ -66,16 +67,16 @@ func (h *UpdateHandler) handle(r *http.Request) (*cash.Cash, error) {
 	return h.cashService.Update(r.Context(), request)
 }
 
-func (h *UpdateHandler) StatusOK(w http.ResponseWriter, cash *cash.Cash) {
+func (h *UpdateHandler) StatusOK(w http.ResponseWriter, values url.Values, cash *cash.Cash) {
 	writer := bytes.NewBuffer([]byte{})
 
-	values := map[string]map[string]string{
+	header := map[string]map[string]string{
 		"balance.cash.updated": {
-			"balancePath": path.Balance(),
+			"balancePath": path.Balance(values),
 		},
 	}
 
-	if err := json.NewEncoder(writer).Encode(values); err != nil {
+	if err := json.NewEncoder(writer).Encode(header); err != nil {
 		slog.Error("failed to encode", "error", err)
 	}
 

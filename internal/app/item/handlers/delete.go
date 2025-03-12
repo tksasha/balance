@@ -5,6 +5,7 @@ import (
 	"encoding/json"
 	"log/slog"
 	"net/http"
+	"net/url"
 	"strconv"
 
 	"github.com/tksasha/balance/internal/app/item"
@@ -35,30 +36,30 @@ func (h *DeleteHandler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	w.Header().Add("Hx-Trigger-After-Swap", h.header(int(item.Date.Month()), item.Date.Year()))
-
-	w.WriteHeader(http.StatusOK)
+	h.StatusOK(w, r.URL.Query(), item)
 }
 
-func (h *DeleteHandler) header(month, year int) string {
+func (h *DeleteHandler) StatusOK(w http.ResponseWriter, values url.Values, item *item.Item) {
 	params := path.Params{
-		"month": strconv.Itoa(month),
-		"year":  strconv.Itoa(year),
+		"month": strconv.Itoa(int(item.Date.Month())),
+		"year":  strconv.Itoa(item.Date.Year()),
 	}
 
-	values := map[string]map[string]string{
+	header := map[string]map[string]string{
 		"balance.item.deleted": {
 			"itemsPath":      path.Items(params, nil),
-			"balancePath":    path.Balance(),
+			"balancePath":    path.Balance(values),
 			"categoriesPath": path.Categories(params),
 		},
 	}
 
-	w := bytes.NewBuffer([]byte{})
+	writer := bytes.NewBuffer([]byte{})
 
-	if err := json.NewEncoder(w).Encode(values); err != nil {
+	if err := json.NewEncoder(writer).Encode(header); err != nil {
 		slog.Error("failed to encode", "error", err)
 	}
 
-	return w.String()
+	w.Header().Add("Hx-Trigger-After-Swap", writer.String())
+
+	w.WriteHeader(http.StatusOK)
 }

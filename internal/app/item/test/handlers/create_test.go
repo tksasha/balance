@@ -19,6 +19,7 @@ import (
 	"github.com/tksasha/balance/internal/db"
 	"github.com/tksasha/balance/internal/db/nameprovider"
 	"gotest.tools/v3/assert"
+	"gotest.tools/v3/golden"
 )
 
 func TestItemCreateHandler(t *testing.T) { //nolint:funlen
@@ -96,6 +97,9 @@ func TestItemCreateHandler(t *testing.T) { //nolint:funlen
 		mux.ServeHTTP(recorder, request)
 
 		assert.Equal(t, recorder.Code, http.StatusOK)
+
+		golden.Assert(t, recorder.Header().Get("Hx-Trigger-After-Swap"),
+			"create-hx-trigger-after-swap-header.json")
 
 		item := findItemByDate(t, db, currency.USD, "2024-10-16")
 

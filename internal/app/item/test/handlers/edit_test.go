@@ -17,6 +17,7 @@ import (
 	"github.com/tksasha/balance/internal/db"
 	"github.com/tksasha/balance/internal/db/nameprovider"
 	"gotest.tools/v3/assert"
+	"gotest.tools/v3/golden"
 )
 
 func TestItemEditHandler(t *testing.T) {
@@ -73,7 +74,8 @@ func TestItemEditHandler(t *testing.T) {
 
 		assert.Equal(t, recorder.Code, http.StatusOK)
 
-		assert.Equal(t, "balance.item.edit", recorder.Header().Get("Hx-Trigger-After-Swap"))
+		golden.Assert(t, recorder.Header().Get("Hx-Trigger-After-Swap"),
+			"edit-hx-trigger-after-swap-header.json")
 	})
 }
 

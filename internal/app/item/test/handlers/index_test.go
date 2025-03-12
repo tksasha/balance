@@ -13,6 +13,7 @@ import (
 	"github.com/tksasha/balance/internal/db"
 	"github.com/tksasha/balance/internal/db/nameprovider"
 	"gotest.tools/v3/assert"
+	"gotest.tools/v3/golden"
 )
 
 func TestItemIndexHandler(t *testing.T) {
@@ -38,6 +39,9 @@ func TestItemIndexHandler(t *testing.T) {
 		mux.ServeHTTP(recorder, request)
 
 		assert.Equal(t, http.StatusOK, recorder.Code)
+
+		golden.Assert(t, recorder.Header().Get("Hx-Trigger-After-Swap"),
+			"index-hx-trigger-after-swap-header.json")
 	})
 }
 

@@ -12,7 +12,7 @@ func (c *Component) balance() Node {
 		Div(Class("row mt-4"),
 			Div(
 				htmx.Trigger("load"),
-				htmx.Get(path.Balance()),
+				htmx.Get(path.Balance(nil)),
 				htmx.Swap("outerHTML"),
 			),
 			Div(

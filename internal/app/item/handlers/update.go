@@ -6,6 +6,7 @@ import (
 	"errors"
 	"log/slog"
 	"net/http"
+	"net/url"
 	"strconv"
 
 	"github.com/tksasha/balance/internal/app/item"
@@ -53,11 +54,7 @@ func (h *UpdateHandler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 
 	item, err := h.itemService.Update(r.Context(), request)
 	if err == nil {
-		w.Header().Add("Hx-Trigger-After-Swap", h.header(int(item.Date.Month()), item.Date.Year()))
-
-		err := h.component.Update(item).Render(w)
-
-		h.SetError(w, err)
+		h.StatusOK(w, r.URL.Query(), item)
 
 		return
 	}
@@ -81,16 +78,16 @@ func (h *UpdateHandler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 	h.SetError(w, err)
 }
 
-func (h *UpdateHandler) header(month, year int) string {
+func (h *UpdateHandler) StatusOK(w http.ResponseWriter, values url.Values, item *item.Item) {
+	params := path.Params{
+		"month": strconv.Itoa(int(item.Date.Month())),
+		"year":  strconv.Itoa(item.Date.Year()),
+	}
+
 	headers := map[string]map[string]string{
 		"balance.item.updated": {
-			"categoriesPath": path.Categories(
-				path.Params{
-					"month": strconv.Itoa(month),
-					"year":  strconv.Itoa(year),
-				},
-			),
-			"balancePath": path.Balance(),
+			"categoriesPath": path.Categories(params),
+			"balancePath":    path.Balance(values),
 		},
 	}
 
@@ -98,9 +95,11 @@ func (h *UpdateHandler) header(month, year int) string {
 
 	if err := json.NewEncoder(writer).Encode(headers); err != nil {
 		slog.Error("failed to encode", "error", err)
-
-		return ""
 	}
 
-	return writer.String()
+	w.Header().Add("Hx-Trigger-After-Swap", writer.String())
+
+	err := h.component.Update(item).Render(w)
+
+	h.SetError(w, err)
 }

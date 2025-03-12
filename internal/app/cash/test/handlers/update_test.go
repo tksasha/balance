@@ -16,6 +16,7 @@ import (
 	"github.com/tksasha/balance/internal/db"
 	"github.com/tksasha/balance/internal/db/nameprovider"
 	"gotest.tools/v3/assert"
+	"gotest.tools/v3/golden"
 )
 
 func TestCashUpdateHandler(t *testing.T) { //nolint:funlen
@@ -120,10 +121,10 @@ func TestCashUpdateHandler(t *testing.T) { //nolint:funlen
 
 		mux.ServeHTTP(recorder, request)
 
-		expectedHeader := `{"balance.cash.updated":{"balancePath":"/balance"}}`
-
 		assert.Equal(t, recorder.Code, http.StatusOK)
-		assert.Equal(t, expectedHeader, strings.TrimSpace(recorder.Header().Get("Hx-Trigger-After-Swap")))
+
+		golden.Assert(t, recorder.Header().Get("Hx-Trigger-After-Swap"),
+			"update-hx-trigger-after-swap-header.json")
 
 		cash := findCashByID(t, db, currency.UAH, 1442)
 
