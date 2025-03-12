@@ -86,7 +86,7 @@ func (h *UpdateHandler) StatusOK(w http.ResponseWriter, values url.Values, item 
 
 	headers := map[string]map[string]string{
 		"balance.item.updated": {
-			"categoriesPath": path.Categories(params),
+			"categoriesPath": path.Categories(values, params),
 			"balancePath":    path.Balance(values),
 		},
 	}

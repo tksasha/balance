@@ -37,7 +37,7 @@ func (c *Component) Month(month month.Month, values url.Values) Node {
 		classes,
 		Text(month.Name),
 		Data("number", number),
-		htmx.Get(path.Items(path.Params{"month": number}, values)),
+		htmx.Get(path.Items(values, path.Params{"month": number})),
 		htmx.Target("#items"),
 	)
 }

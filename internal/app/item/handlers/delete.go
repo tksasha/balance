@@ -47,9 +47,9 @@ func (h *DeleteHandler) StatusOK(w http.ResponseWriter, values url.Values, item 
 
 	header := map[string]map[string]string{
 		"balance.item.deleted": {
-			"itemsPath":      path.Items(params, nil),
+			"itemsPath":      path.Items(values, params),
 			"balancePath":    path.Balance(values),
-			"categoriesPath": path.Categories(params),
+			"categoriesPath": path.Categories(values, params),
 		},
 	}
 

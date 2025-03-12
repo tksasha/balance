@@ -7,6 +7,8 @@ import (
 	"github.com/tksasha/balance/internal/app/balance"
 )
 
+const cents = 2
+
 func (s *Service) Balance(ctx context.Context) (*balance.Balance, error) {
 	atEnd, err := s.atEnd(ctx)
 	if err != nil {
@@ -39,9 +41,9 @@ func (s *Service) atEnd(ctx context.Context) (float64, error) {
 }
 
 func sub(l, r float64) float64 {
-	sub, _ := decimal.NewFromFloat(l).Sub(
-		decimal.NewFromFloat(r),
-	).Float64()
+	sub, _ := decimal.NewFromFloat(l).Round(cents).Sub(
+		decimal.NewFromFloat(r).Round(cents),
+	).Round(cents).Float64()
 
 	return sub
 }

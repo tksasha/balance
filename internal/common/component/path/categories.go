@@ -2,32 +2,19 @@ package path
 
 import (
 	"net/url"
-	"strconv"
-	"time"
 )
 
 const categoriesPath = "/categories"
 
-func Categories(params Params) string {
-	path := url.URL{Path: categoriesPath}
+func Categories(values url.Values, params Params) string {
+	values = setDefault(values)
 
-	values := url.Values{}
+	updateValues(values, params)
 
-	month, ok := params["month"]
-	if ok {
-		values.Add("month", month)
-	} else {
-		values.Add("month", strconv.Itoa(int(time.Now().Month())))
+	path := url.URL{
+		Path:     categoriesPath,
+		RawQuery: values.Encode(),
 	}
-
-	year, ok := params["year"]
-	if ok {
-		values.Add("year", year)
-	} else {
-		values.Add("year", strconv.Itoa(time.Now().Year()))
-	}
-
-	path.RawQuery = values.Encode()
 
 	return path.String()
 }

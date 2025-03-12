@@ -2,6 +2,7 @@ package path_test
 
 import (
 	"fmt"
+	"net/url"
 	"testing"
 	"time"
 
@@ -13,16 +14,48 @@ func TestCategories(t *testing.T) {
 	today := time.Now()
 
 	data := []struct {
+		values url.Values
 		params path.Params
 		path   string
 	}{
-		{nil, fmt.Sprintf("/categories?month=%d&year=%d", today.Month(), today.Year())},
-		{path.Params{"month": "12"}, fmt.Sprintf("/categories?month=12&year=%d", today.Year())},
-		{path.Params{"year": "2022"}, fmt.Sprintf("/categories?month=%d&year=2022", today.Month())},
-		{path.Params{"month": "12", "year": "2025"}, "/categories?month=12&year=2025"},
+		{
+			values: nil,
+			params: nil,
+			path:   fmt.Sprintf("/categories?currency=uah&month=%d&year=%d", today.Month(), today.Year()),
+		},
+		{
+			values: nil,
+			params: path.Params{"month": "12"},
+			path:   fmt.Sprintf("/categories?currency=uah&month=12&year=%d", today.Year()),
+		},
+		{
+			values: nil,
+			params: path.Params{"year": "2022"},
+			path:   fmt.Sprintf("/categories?currency=uah&month=%d&year=2022", today.Month()),
+		},
+		{
+			values: nil,
+			params: path.Params{"month": "12", "year": "2025"},
+			path:   "/categories?currency=uah&month=12&year=2025",
+		},
+		{
+			values: url.Values{"currency": []string{"uah"}},
+			params: path.Params{"month": "12", "year": "2025"},
+			path:   "/categories?currency=uah&month=12&year=2025",
+		},
+		{
+			values: url.Values{"currency": []string{"usd"}},
+			params: path.Params{"month": "12", "year": "2025"},
+			path:   "/categories?currency=usd&month=12&year=2025",
+		},
+		{
+			values: url.Values{"currency": []string{"eur"}},
+			params: path.Params{"month": "12", "year": "2025"},
+			path:   "/categories?currency=eur&month=12&year=2025",
+		},
 	}
 
 	for _, d := range data {
-		assert.Equal(t, path.Categories(d.params), d.path)
+		assert.Equal(t, path.Categories(d.values, d.params), d.path)
 	}
 }

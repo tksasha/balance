@@ -14,34 +14,38 @@ func TestItems(t *testing.T) {
 	today := time.Now()
 
 	data := []struct {
-		params path.Params
 		values url.Values
+		params path.Params
 		path   string
 	}{
-		{nil, nil, fmt.Sprintf("/items?currency=uah&month=%d&year=%d", today.Month(), today.Year())},
 		{
-			nil,
-			url.Values{"currency": {"eur"}, "month": {"1"}, "year": {"2025"}},
-			"/items?currency=eur&month=1&year=2025",
+			values: nil,
+			params: nil,
+			path:   fmt.Sprintf("/items?currency=uah&month=%d&year=%d", today.Month(), today.Year()),
 		},
 		{
-			map[string]string{"currency": "usd"},
-			url.Values{"currency": {"eur"}, "month": {"1"}, "year": {"2025"}},
-			"/items?currency=usd&month=1&year=2025",
+			values: url.Values{"currency": {"eur"}, "month": {"1"}, "year": {"2025"}},
+			params: nil,
+			path:   "/items?currency=eur&month=1&year=2025",
 		},
 		{
-			map[string]string{"month": "2"},
-			url.Values{"currency": {"eur"}, "month": {"1"}, "year": {"2025"}},
-			"/items?currency=eur&month=2&year=2025",
+			values: url.Values{"currency": {"eur"}, "month": {"1"}, "year": {"2025"}},
+			params: path.Params{"currency": "usd"},
+			path:   "/items?currency=usd&month=1&year=2025",
 		},
 		{
-			map[string]string{"year": "2022"},
-			url.Values{"currency": {"eur"}, "month": {"1"}, "year": {"2025"}},
-			"/items?currency=eur&month=1&year=2022",
+			values: url.Values{"currency": {"eur"}, "month": {"1"}, "year": {"2025"}},
+			params: path.Params{"month": "2"},
+			path:   "/items?currency=eur&month=2&year=2025",
+		},
+		{
+			values: url.Values{"currency": {"eur"}, "month": {"1"}, "year": {"2025"}},
+			params: path.Params{"year": "2022"},
+			path:   "/items?currency=eur&month=1&year=2022",
 		},
 	}
 
 	for _, d := range data {
-		assert.Equal(t, path.Items(d.params, d.values), d.path)
+		assert.Equal(t, path.Items(d.values, d.params), d.path)
 	}
 }

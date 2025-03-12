@@ -28,8 +28,8 @@ func (c *Component) Index(values url.Values) Node {
 			Body: []Node{
 				c.header(values),
 				c.form(),
-				c.balance(),
-				c.categories(),
+				c.balance(values),
+				c.categories(values),
 				c.items(),
 				c.Modal(),
 				c.linkToBackoffice(),

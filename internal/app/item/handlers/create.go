@@ -89,8 +89,8 @@ func (h *CreateHandler) StatusOK(w http.ResponseWriter, values url.Values, item 
 
 	header := map[string]map[string]string{
 		"balance.item.created": {
-			"itemsPath":      path.Items(params, values),
-			"categoriesPath": path.Categories(params),
+			"itemsPath":      path.Items(values, params),
+			"categoriesPath": path.Categories(values, params),
 			"balancePath":    path.Balance(values),
 		},
 	}

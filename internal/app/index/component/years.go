@@ -36,7 +36,7 @@ func (c *Component) year(year int, values url.Values) Node {
 		classes,
 		Text(strconv.Itoa(year)),
 		Data("number", number),
-		htmx.Get(path.Items(path.Params{"year": number}, values)),
+		htmx.Get(path.Items(values, path.Params{"year": number})),
 		htmx.Target("#items"),
 	)
 }

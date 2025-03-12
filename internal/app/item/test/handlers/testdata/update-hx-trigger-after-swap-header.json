@@ -1,1 +1,1 @@
-{"balance.item.updated":{"balancePath":"/balance?currency=eur","categoriesPath":"/categories?month=1\u0026year=2025"}}
+{"balance.item.updated":{"balancePath":"/balance?currency=eur","categoriesPath":"/categories?currency=eur\u0026month=1\u0026year=2025"}}
