@@ -60,7 +60,7 @@ compile:
 		--no-source-map \
 		stylesheets/application.scss:stylesheets/application.css
 	@cat \
-		javascripts/common.js \
+		javascripts/_common.js \
 		javascripts/backoffice.js \
 		javascripts/cashes.js \
 		javascripts/items.js \

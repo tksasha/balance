@@ -1,5 +1,5 @@
 const BOOTSTRAP_DATEPICKER_DEFAULTS = {
-  format: "dd.mm.yyyy", autoclose: true, language: "uk", todayHighlight: true
+  format: "dd.mm.yyyy", autohide: true, language: "uk", todayHighlight: true
 };
 
 const hideModal = (event) => {
