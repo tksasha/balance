@@ -36,14 +36,14 @@ func NewUpdateHandler(
 func (h *UpdateHandler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 	cash, err := h.handle(r)
 	if err == nil {
-		h.StatusOK(w, r.URL.Query(), cash)
+		h.ok(w, r.URL.Query(), cash)
 
 		return
 	}
 
 	var verrors validation.Errors
 	if errors.As(err, &verrors) {
-		err := h.component.Edit(cash, verrors).Render(w)
+		err := h.component.Edit(r.URL.Query(), cash, verrors).Render(w)
 
 		h.SetError(w, err)
 
@@ -67,7 +67,7 @@ func (h *UpdateHandler) handle(r *http.Request) (*cash.Cash, error) {
 	return h.cashService.Update(r.Context(), request)
 }
 
-func (h *UpdateHandler) StatusOK(w http.ResponseWriter, values url.Values, cash *cash.Cash) {
+func (h *UpdateHandler) ok(w http.ResponseWriter, values url.Values, cash *cash.Cash) {
 	writer := bytes.NewBuffer([]byte{})
 
 	header := map[string]map[string]string{
@@ -82,7 +82,7 @@ func (h *UpdateHandler) StatusOK(w http.ResponseWriter, values url.Values, cash 
 
 	w.Header().Add("Hx-Trigger-After-Swap", writer.String())
 
-	err := h.component.Update(cash).Render(w)
+	err := h.component.Update(values, cash).Render(w)
 
 	h.SetError(w, err)
 }

@@ -1,21 +1,22 @@
 package component
 
 import (
+	"net/url"
+
 	"github.com/tksasha/balance/internal/app/cash"
+	"github.com/tksasha/balance/internal/common/component/path"
 	"github.com/tksasha/validation"
 	. "maragu.dev/gomponents" //nolint:stylecheck
 	htmx "maragu.dev/gomponents-htmx"
 )
 
-func (c *Component) Edit(cash *cash.Cash, errors validation.Errors) Node {
-	nodes := []Node{
-		htmx.Patch(c.cashUpdatePath(cash.ID)),
-		htmx.Target("#modal-body"),
-		htmx.Swap("outerHTML"),
-	}
-
+func (c *Component) Edit(values url.Values, cash *cash.Cash, errors validation.Errors) Node {
 	return c.form(
-		Map(nodes, func(node Node) Node { return node }),
+		Group([]Node{
+			htmx.Patch(path.UpdateCashPath(values, cash.ID)),
+			htmx.Target("#modal-body"),
+			htmx.Swap("outerHTML"),
+		}),
 		cash,
 		errors,
 	)

@@ -35,7 +35,7 @@ func (h *EditHandler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 
 	w.Header().Add("Hx-Trigger-After-Swap", "balance.cash.edit")
 
-	err = h.component.Edit(cash, nil).Render(w)
+	err = h.component.Edit(r.URL.Query(), cash, nil).Render(w)
 
 	h.SetError(w, err)
 }
