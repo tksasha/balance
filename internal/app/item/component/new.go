@@ -1,6 +1,8 @@
 package component
 
 import (
+	"net/url"
+
 	"github.com/tksasha/balance/internal/app/category"
 	"github.com/tksasha/balance/internal/common/component/path"
 	. "maragu.dev/gomponents" //nolint:stylecheck
@@ -8,8 +10,8 @@ import (
 	. "maragu.dev/gomponents/html" //nolint:stylecheck
 )
 
-func (c *Component) New(categories category.Categories, children ...Node) Node {
-	return Form(Class("new_item"), htmx.Post(path.CreateItem()),
+func (c *Component) New(values url.Values, categories category.Categories, children ...Node) Node {
+	return Form(Class("new_item"), htmx.Post(path.CreateItem(values)),
 		Div(Class("item-inline-form-date"),
 			Input(Class("form-control datepicker"), Placeholder("Дата"), Name("date")),
 		),

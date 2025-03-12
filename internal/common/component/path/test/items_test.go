@@ -13,7 +13,7 @@ import (
 func TestItems(t *testing.T) {
 	today := time.Now()
 
-	data := []struct {
+	ds := []struct {
 		values url.Values
 		params path.Params
 		path   string
@@ -45,7 +45,129 @@ func TestItems(t *testing.T) {
 		},
 	}
 
-	for _, d := range data {
+	for _, d := range ds {
 		assert.Equal(t, path.Items(d.values, d.params), d.path)
+	}
+}
+
+func TestUpdateItem(t *testing.T) {
+	ds := []struct {
+		values url.Values
+		id     int
+		path   string
+	}{
+		{
+			values: nil,
+			id:     6,
+			path:   "/items/6?currency=uah",
+		},
+		{
+			values: url.Values{"currency": {"uah"}},
+			id:     6,
+			path:   "/items/6?currency=uah",
+		},
+		{
+			values: url.Values{"currency": {"usd"}},
+			id:     6,
+			path:   "/items/6?currency=usd",
+		},
+		{
+			values: url.Values{"currency": {"eur"}},
+			id:     6,
+			path:   "/items/6?currency=eur",
+		},
+	}
+
+	for _, d := range ds {
+		assert.Equal(t, d.path, path.UpdateItem(d.values, d.id))
+	}
+}
+
+func TestNewItem(t *testing.T) {
+	ds := []struct {
+		values url.Values
+		path   string
+	}{
+		{
+			values: nil,
+			path:   "/items/new?currency=uah",
+		},
+		{
+			values: url.Values{"currency": {"uah"}},
+			path:   "/items/new?currency=uah",
+		},
+		{
+			values: url.Values{"currency": {"usd"}},
+			path:   "/items/new?currency=usd",
+		},
+		{
+			values: url.Values{"currency": {"eur"}},
+			path:   "/items/new?currency=eur",
+		},
+	}
+
+	for _, d := range ds {
+		assert.Equal(t, d.path, path.NewItem(d.values))
+	}
+}
+
+func TestCreateItem(t *testing.T) {
+	ds := []struct {
+		values url.Values
+		path   string
+	}{
+		{
+			values: nil,
+			path:   "/items?currency=uah",
+		},
+		{
+			values: url.Values{"currency": {"uah"}},
+			path:   "/items?currency=uah",
+		},
+		{
+			values: url.Values{"currency": {"usd"}},
+			path:   "/items?currency=usd",
+		},
+		{
+			values: url.Values{"currency": {"eur"}},
+			path:   "/items?currency=eur",
+		},
+	}
+
+	for _, d := range ds {
+		assert.Equal(t, d.path, path.CreateItem(d.values))
+	}
+}
+
+func TestDeleteItem(t *testing.T) {
+	ds := []struct {
+		values url.Values
+		id     int
+		path   string
+	}{
+		{
+			values: nil,
+			id:     6,
+			path:   "/items/6?currency=uah",
+		},
+		{
+			values: url.Values{"currency": {"uah"}},
+			id:     6,
+			path:   "/items/6?currency=uah",
+		},
+		{
+			values: url.Values{"currency": {"usd"}},
+			id:     6,
+			path:   "/items/6?currency=usd",
+		},
+		{
+			values: url.Values{"currency": {"eur"}},
+			id:     6,
+			path:   "/items/6?currency=eur",
+		},
+	}
+
+	for _, d := range ds {
+		assert.Equal(t, d.path, path.DeleteItem(d.values, d.id))
 	}
 }

@@ -1,6 +1,8 @@
 package component
 
 import (
+	"net/url"
+
 	"github.com/tksasha/balance/internal/app/category"
 	"github.com/tksasha/balance/internal/app/item"
 	"github.com/tksasha/validation"
@@ -8,11 +10,17 @@ import (
 	htmx "maragu.dev/gomponents-htmx"
 )
 
-func (c *Component) Create(item *item.Item, categories category.Categories, errors validation.Errors) Node {
+func (c *Component) Create(
+	values url.Values,
+	item *item.Item,
+	categories category.Categories,
+	errors validation.Errors,
+) Node {
 	return c.New(
+		values,
 		categories,
 		c.ModalBody(
-			c.Form(item, categories, errors),
+			c.Form(values, item, categories, errors),
 			htmx.SwapOOB("true"),
 		),
 	)

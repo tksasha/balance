@@ -20,22 +20,47 @@ func Items(values url.Values, params Params) string {
 	return path.String()
 }
 
-func EditItem(id int) string {
-	return itemsPath + "/" + strconv.Itoa(id) + "/edit"
+func EditItem(values url.Values, id int) string {
+	path := url.URL{
+		Path:     itemsPath,
+		RawQuery: setDefault(values).Encode(),
+	}
+
+	return path.JoinPath(strconv.Itoa(id), "edit").String()
 }
 
-func UpdateItem(id int) string {
-	return itemsPath + "/" + strconv.Itoa(id)
+func UpdateItem(values url.Values, id int) string {
+	path := url.URL{
+		Path:     itemsPath,
+		RawQuery: setDefault(values).Encode(),
+	}
+
+	return path.JoinPath(strconv.Itoa(id)).String()
 }
 
-func NewItem() string {
-	return itemsPath + "/new"
+func NewItem(values url.Values) string {
+	path := url.URL{
+		Path:     itemsPath,
+		RawQuery: setDefault(values).Encode(),
+	}
+
+	return path.JoinPath("new").String()
 }
 
-func CreateItem() string {
-	return itemsPath
+func CreateItem(values url.Values) string {
+	path := url.URL{
+		Path:     itemsPath,
+		RawQuery: setDefault(values).Encode(),
+	}
+
+	return path.String()
 }
 
-func DeleteItem(id int) string {
-	return itemsPath + "/" + strconv.Itoa(id)
+func DeleteItem(values url.Values, id int) string {
+	path := url.URL{
+		Path:     itemsPath,
+		RawQuery: setDefault(values).Encode(),
+	}
+
+	return path.JoinPath(strconv.Itoa(id)).String()
 }

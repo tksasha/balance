@@ -62,7 +62,7 @@ func (h *CreateHandler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 
 		w.Header().Add("Hx-Trigger-After-Swap", "balance.item.create.error")
 
-		err = h.component.Create(item, categories, verrors).Render(w)
+		err = h.component.Create(r.URL.Query(), item, categories, verrors).Render(w)
 
 		h.SetError(w, err)
 

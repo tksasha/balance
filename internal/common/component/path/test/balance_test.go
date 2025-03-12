@@ -9,7 +9,7 @@ import (
 )
 
 func TestBalance(t *testing.T) {
-	data := []struct {
+	ds := []struct {
 		path   string
 		values url.Values
 	}{
@@ -19,7 +19,7 @@ func TestBalance(t *testing.T) {
 		{path: "/balance?currency=eur", values: url.Values{"currency": []string{"eur"}}},
 	}
 
-	for _, d := range data {
+	for _, d := range ds {
 		assert.Equal(t, d.path, path.Balance(d.values))
 	}
 }

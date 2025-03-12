@@ -43,7 +43,7 @@ func (h *IndexHandler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 		fmt.Sprintf(`{"balance.items.shown":{"month":"%s","year":"%s"}}`, month, year),
 	)
 
-	err = h.component.Index(items).Render(w)
+	err = h.component.Index(r.URL.Query(), items).Render(w)
 
 	h.SetError(w, err)
 }

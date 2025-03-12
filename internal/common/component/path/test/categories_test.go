@@ -13,7 +13,7 @@ import (
 func TestCategories(t *testing.T) {
 	today := time.Now()
 
-	data := []struct {
+	ds := []struct {
 		values url.Values
 		params path.Params
 		path   string
@@ -55,7 +55,7 @@ func TestCategories(t *testing.T) {
 		},
 	}
 
-	for _, d := range data {
+	for _, d := range ds {
 		assert.Equal(t, path.Categories(d.values, d.params), d.path)
 	}
 }

@@ -27,7 +27,7 @@ func (c *Component) Index(values url.Values) Node {
 			},
 			Body: []Node{
 				c.header(values),
-				c.form(),
+				c.form(values),
 				c.balance(values),
 				c.categories(values),
 				c.items(),

@@ -13,7 +13,7 @@ import (
 func (c *Component) Edit(values url.Values, cash *cash.Cash, errors validation.Errors) Node {
 	return c.form(
 		Group([]Node{
-			htmx.Patch(path.UpdateCashPath(values, cash.ID)),
+			htmx.Patch(path.UpdateCash(values, cash.ID)),
 			htmx.Target("#modal-body"),
 			htmx.Swap("outerHTML"),
 		}),

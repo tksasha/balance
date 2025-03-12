@@ -35,7 +35,7 @@ func (c *Component) cash(values url.Values, cash *cash.Cash, children ...Node) N
 		Td(Text(cash.Name)),
 		Td(Class("sum"),
 			Div(Class("link"),
-				htmx.Get(path.EditCashPath(values, cash.ID)),
+				htmx.Get(path.EditCash(values, cash.ID)),
 				htmx.Target("#modal-body"),
 				Data("bs-toggle", "modal"),
 				Data("bs-target", "#modal"),

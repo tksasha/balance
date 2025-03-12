@@ -16,7 +16,7 @@ func Cashes(values url.Values) string {
 	return path.String()
 }
 
-func EditCashPath(values url.Values, id int) string {
+func EditCash(values url.Values, id int) string {
 	path := url.URL{
 		Path:     cashesPath,
 		RawQuery: setDefault(values).Encode(),
@@ -25,7 +25,7 @@ func EditCashPath(values url.Values, id int) string {
 	return path.JoinPath(strconv.Itoa(id), "edit").String()
 }
 
-func UpdateCashPath(values url.Values, id int) string {
+func UpdateCash(values url.Values, id int) string {
 	path := url.URL{
 		Path:     cashesPath,
 		RawQuery: setDefault(values).Encode(),

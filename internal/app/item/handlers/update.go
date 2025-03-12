@@ -68,7 +68,7 @@ func (h *UpdateHandler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 			return
 		}
 
-		err = h.component.Edit(item, categories, verrors).Render(w)
+		err = h.component.Edit(r.URL.Query(), item, categories, verrors).Render(w)
 
 		h.SetError(w, err)
 
@@ -99,7 +99,7 @@ func (h *UpdateHandler) StatusOK(w http.ResponseWriter, values url.Values, item 
 
 	w.Header().Add("Hx-Trigger-After-Swap", writer.String())
 
-	err := h.component.Update(item).Render(w)
+	err := h.component.Update(values, item).Render(w)
 
 	h.SetError(w, err)
 }
