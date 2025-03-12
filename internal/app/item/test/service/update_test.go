@@ -108,7 +108,7 @@ func TestUpdate(t *testing.T) { //nolint:funlen
 	t.Run("returns error when formula is blank", func(t *testing.T) {
 		request := item.UpdateRequest{
 			ID:         "1051",
-			Date:       "2025-01-25",
+			Date:       "25.01.2025",
 			Formula:    "",
 			CategoryID: "1052",
 		}
@@ -132,7 +132,7 @@ func TestUpdate(t *testing.T) { //nolint:funlen
 	t.Run("returns error when formula is invalid", func(t *testing.T) {
 		request := item.UpdateRequest{
 			ID:         "1051",
-			Date:       "2025-01-25",
+			Date:       "25.01.2025",
 			Formula:    "abc",
 			CategoryID: "1052",
 		}
@@ -156,7 +156,7 @@ func TestUpdate(t *testing.T) { //nolint:funlen
 	t.Run("returns error when category_id is blank", func(t *testing.T) {
 		request := item.UpdateRequest{
 			ID:         "1051",
-			Date:       "2025-01-25",
+			Date:       "25.01.2025",
 			Formula:    "2+2",
 			CategoryID: "",
 		}
@@ -173,7 +173,7 @@ func TestUpdate(t *testing.T) { //nolint:funlen
 	t.Run("returns error when category_id is invalid", func(t *testing.T) {
 		request := item.UpdateRequest{
 			ID:         "1051",
-			Date:       "2025-01-25",
+			Date:       "25.01.2025",
 			Formula:    "2+2",
 			CategoryID: "abc",
 		}
@@ -190,7 +190,7 @@ func TestUpdate(t *testing.T) { //nolint:funlen
 	t.Run("returns error when find category by id failed", func(t *testing.T) {
 		request := item.UpdateRequest{
 			ID:         "1051",
-			Date:       "2025-01-25",
+			Date:       "25.01.2025",
 			Formula:    "2+2",
 			CategoryID: "1100",
 		}
@@ -209,7 +209,7 @@ func TestUpdate(t *testing.T) { //nolint:funlen
 	t.Run("returns error when update failed", func(t *testing.T) {
 		request := item.UpdateRequest{
 			ID:          "1051",
-			Date:        "2025-01-25",
+			Date:        "25.01.2025",
 			Formula:     "2+2",
 			CategoryID:  "1100",
 			Description: "food, wine and flowers",
@@ -250,7 +250,7 @@ func TestUpdate(t *testing.T) { //nolint:funlen
 	t.Run("returns nil when update succeeded", func(t *testing.T) {
 		request := item.UpdateRequest{
 			ID:          "1051",
-			Date:        "2025-01-25",
+			Date:        "25.01.2025",
 			Formula:     "2+2",
 			CategoryID:  "1100",
 			Description: "food, wine and flowers",

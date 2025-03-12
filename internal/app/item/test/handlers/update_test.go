@@ -128,7 +128,7 @@ func TestItemUpdateHandler(t *testing.T) { //nolint:funlen
 		createItem(t, db, itemToCreate)
 
 		values := url.Values{
-			"date":        {"2025-01-25"},
+			"date":        {"25.01.2025"},
 			"formula":     {"24 + 11 + 49"},
 			"category_id": {"1148"},
 			"description": {"pizza, ninja and disco"},

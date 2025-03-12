@@ -4,6 +4,7 @@ import (
 	"context"
 
 	"github.com/tksasha/balance/internal/app/item"
+	"github.com/tksasha/balance/internal/common"
 	"github.com/tksasha/validation"
 )
 
@@ -15,7 +16,7 @@ func (s *Service) Update(ctx context.Context, request item.UpdateRequest) (*item
 
 	validation := validation.New()
 
-	item.Date = validation.Date("date", request.Date)
+	item.Date = validation.Date("date", request.Date, common.DateFormat)
 
 	item.Formula, item.Sum = validation.Formula("sum", request.Formula)
 
