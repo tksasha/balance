@@ -73,7 +73,7 @@ func (h *UpdateHandler) StatusOK(w http.ResponseWriter) {
 
 	values := map[string]map[string]string{
 		"backoffice.cash.updated": {
-			"backofficeCashesPath": path.BackofficeCashes(),
+			"backofficeCashesPath": path.BackofficeCashes(nil),
 		},
 	}
 

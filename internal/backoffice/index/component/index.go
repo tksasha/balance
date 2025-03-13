@@ -12,7 +12,7 @@ func (c *Component) Index() Node {
 		Div(Class("row"),
 			Div(Class("col mb-3"),
 				Button(Class("btn btn-outline-primary btn-lg w-100"),
-					htmx.Get(path.BackofficeCashes()),
+					htmx.Get(path.BackofficeCashes(nil)),
 					htmx.Target("#modal-body"),
 					Text("Залишки"),
 				),

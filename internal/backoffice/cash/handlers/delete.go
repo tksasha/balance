@@ -1,9 +1,14 @@
 package handlers
 
 import (
+	"bytes"
+	"encoding/json"
+	"log/slog"
 	"net/http"
 
 	"github.com/tksasha/balance/internal/backoffice/cash"
+	"github.com/tksasha/balance/internal/common/component/path"
+	"github.com/tksasha/balance/internal/common/currency"
 	"github.com/tksasha/balance/internal/common/handler"
 )
 
@@ -27,9 +32,29 @@ func (h *DeleteHandler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	w.WriteHeader(http.StatusNoContent)
+	h.ok(w, currency.Default)
 }
 
 func (h *DeleteHandler) handle(r *http.Request) error {
 	return h.cashService.Delete(r.Context(), r.PathValue("id"))
+}
+
+func (h *DeleteHandler) ok(w http.ResponseWriter, currency currency.Currency) {
+	writer := bytes.NewBuffer([]byte{})
+
+	header := map[string]map[string]string{
+		"backoffice.cash.deleted": {
+			"backofficeCashesPath": path.BackofficeCashes(path.NewCurrency(currency)),
+		},
+	}
+
+	if err := json.NewEncoder(writer).Encode(header); err != nil {
+		slog.Error("failed to encode", "error", err)
+
+		writer.Reset()
+	}
+
+	w.Header().Add("Hx-Trigger-After-Swap", writer.String())
+
+	w.WriteHeader(http.StatusOK)
 }

@@ -1,23 +1,71 @@
 package path
 
 import (
+	"net/url"
 	"strconv"
 )
+
+const backofficePath = "/backoffice"
 
 func Backoffice() string {
 	return "/backoffice"
 }
 
-func BackofficeCashes() string {
-	return Backoffice() + "/cashes"
+func BackofficeCashes(params Params) string {
+	values := setDefault(nil)
+
+	updateCurrency(values, params)
+
+	path := url.URL{
+		Path:     backofficePath,
+		RawQuery: values.Encode(),
+	}
+
+	return path.JoinPath(cashesPath).String()
 }
 
-func BackofficeCash(id int) string {
-	return BackofficeCashes() + "/" + strconv.Itoa(id)
+func CreateBackofficeCash(params Params) string {
+	return BackofficeCashes(params)
 }
 
-func BackofficeEditCash(id int) string {
-	return BackofficeCash(id) + "/edit"
+func BackofficeCash(params Params, id int) string {
+	values := setDefault(nil)
+
+	updateCurrency(values, params)
+
+	path := url.URL{
+		Path: backofficePath,
+	}
+
+	path = *path.JoinPath(cashesPath, strconv.Itoa(id))
+
+	path.RawQuery = values.Encode()
+
+	return path.String()
+}
+
+func UpdateBackofficeCash(params Params, id int) string {
+	return BackofficeCash(params, id)
+}
+
+func DeleteBackofficeCash(params Params, id int) string {
+	return BackofficeCash(params, id)
+}
+
+func EditBackofficeCash(params Params, id int) string {
+	values := setDefault(nil)
+
+	updateCurrency(values, params)
+
+	path := url.URL{
+		Path: backofficePath,
+	}
+
+	path = *path.JoinPath(cashesPath, strconv.Itoa(id), "edit")
+
+	path.RawQuery = values.Encode()
+
+	return path.String()
 }
 
 func BackofficeCategories() string {

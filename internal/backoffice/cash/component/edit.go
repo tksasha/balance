@@ -13,7 +13,7 @@ func (c *Component) Edit(cash *cash.Cash) Node {
 		c.Breadcrumbs(
 			Li(Class("breadcrumb-item"),
 				Span(Class("link"),
-					htmx.Get(path.BackofficeCashes()),
+					htmx.Get(path.BackofficeCashes(nil)),
 					htmx.Target("#modal-body"),
 					Text("Залишки"),
 				),

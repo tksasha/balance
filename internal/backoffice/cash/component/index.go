@@ -18,12 +18,12 @@ func (c *Component) List(cashes cash.Cashes) Node {
 		),
 		Form(Class("mb-3"),
 			Select(Class("form-select form-select-sm"), Name("currency"),
-				htmx.Get(path.BackofficeCashes()),
+				htmx.Get("/backoffice/cashes"), // TODO: fix me
 				htmx.Target("#modal-body"),
 				Option(Text("UAH"), Value("uah")),
 				Option(Text("USD"), Value("usd")),
 				Option(Text("EUR"), Value("eur")),
-			),
+			), // TODO: move it to helper
 		),
 		Table(Class("table table-borderless"),
 			TBody(Div(Map(cashes, c.cash))),
@@ -36,7 +36,7 @@ func (c *Component) cash(cash *cash.Cash) Node {
 		Td(Text(cash.Name)),
 		Td(Class("text-end"),
 			Div(Class("link"),
-				htmx.Get(path.BackofficeEditCash(cash.ID)),
+				htmx.Get(path.EditBackofficeCash(path.NewCurrency(cash.Currency), cash.ID)),
 				htmx.Target("#modal-body"),
 				Text(c.Money(cash.Sum))),
 		),

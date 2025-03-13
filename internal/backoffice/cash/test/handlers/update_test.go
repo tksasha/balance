@@ -143,7 +143,7 @@ func TestCashUpdateHandler(t *testing.T) { //nolint:funlen
 
 		assert.Equal(t, recorder.Code, http.StatusOK)
 
-		expectedHeader := `{"backoffice.cash.updated":{"backofficeCashesPath":"/backoffice/cashes"}}`
+		expectedHeader := `{"backoffice.cash.updated":{"backofficeCashesPath":"/backoffice/cashes?currency=uah"}}`
 
 		assert.Equal(t, expectedHeader, strings.TrimSpace(recorder.Header().Get("Hx-Trigger-After-Swap")))
 	})
