@@ -5,6 +5,7 @@ import (
 
 	"github.com/tksasha/balance/internal/backoffice/cash"
 	"github.com/tksasha/balance/internal/common"
+	"github.com/tksasha/balance/internal/common/currency"
 	"github.com/tksasha/validation"
 )
 
@@ -15,8 +16,10 @@ func (s *Service) Create(ctx context.Context, request cash.CreateRequest) (*cash
 
 	cash.Name = validation.Presence("name", request.Name)
 
+	cash.Currency = currency.GetByCode(request.Currency)
+
 	if cash.Name != "" {
-		exists, err := s.repository.NameExists(ctx, cash.Name, 0)
+		exists, err := s.repository.NameExists(ctx, cash)
 		if err != nil {
 			return nil, err
 		}
@@ -26,11 +29,9 @@ func (s *Service) Create(ctx context.Context, request cash.CreateRequest) (*cash
 		}
 	}
 
-	cash.Formula, cash.Sum = validation.Formula("formula", request.Formula)
+	cash.Formula, cash.Sum = validation.Formula("sum", request.Formula)
 
 	cash.Supercategory = validation.Integer("supercategory", request.Supercategory)
-
-	cash.Favorite = validation.Boolean("favorite", request.Favorite)
 
 	if validation.Errors.Exists() {
 		return cash, validation.Errors

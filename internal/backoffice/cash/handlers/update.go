@@ -11,6 +11,7 @@ import (
 	"github.com/tksasha/balance/internal/backoffice/cash/component"
 	"github.com/tksasha/balance/internal/common"
 	"github.com/tksasha/balance/internal/common/component/path"
+	"github.com/tksasha/balance/internal/common/currency"
 	"github.com/tksasha/balance/internal/common/handler"
 	"github.com/tksasha/validation"
 )
@@ -35,7 +36,7 @@ func NewUpdateHandler(
 func (h *UpdateHandler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 	cash, err := h.handle(r)
 	if err == nil {
-		h.StatusOK(w)
+		h.ok(w, cash)
 
 		return
 	}
@@ -62,18 +63,22 @@ func (h *UpdateHandler) handle(r *http.Request) (*cash.Cash, error) {
 		Formula:       r.FormValue("formula"),
 		Name:          r.FormValue("name"),
 		Supercategory: r.FormValue("supercategory"),
-		Favorite:      r.FormValue("favorite"),
+		Currency:      r.FormValue("currency"),
 	}
 
 	return h.cashService.Update(r.Context(), request)
 }
 
-func (h *UpdateHandler) StatusOK(w http.ResponseWriter) {
+func (h *UpdateHandler) ok(w http.ResponseWriter, cash *cash.Cash) {
 	writer := bytes.NewBuffer([]byte{})
+
+	params := path.Params{
+		"currency": currency.GetCode(cash.Currency),
+	}
 
 	values := map[string]map[string]string{
 		"backoffice.cash.updated": {
-			"backofficeCashesPath": path.BackofficeCashes(nil),
+			"backofficeCashesPath": path.BackofficeCashes(params),
 		},
 	}
 

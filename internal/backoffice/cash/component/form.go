@@ -1,6 +1,8 @@
 package component
 
 import (
+	"strconv"
+
 	"github.com/tksasha/balance/internal/backoffice/cash"
 	"github.com/tksasha/balance/internal/common/component/path"
 	"github.com/tksasha/balance/internal/common/currency"
@@ -16,12 +18,12 @@ func (c *Component) form(cash *cash.Cash, errors validation.Errors) Node {
 		If(cash.ID != 0, htmx.Patch(path.UpdateBackofficeCash(nil, cash.ID))),
 		Div(Class("mb-3"),
 			Label(Class("form-label"), Text("Валюта")),
-			Input(Class("form-control"), Disabled(),
-				Value(currency.GetCode(cash.Currency)),
-				Style("text-transform: uppercase;")),
+			Select(Class("form-select"), Name("currency"),
+				c.currencyOptions(currency.GetCode(cash.Currency))),
 		),
 		c.Input("Назва", "name", cash.Name, nil, errors.Get("name")),
 		c.Input("Сума", "formula", cash.Formula, nil, errors.Get("sum")),
+		c.Input("Група", "supercategory", strconv.Itoa(cash.Supercategory), nil, errors.Get("supercategory")),
 		Div(Class("d-flex justify-content-between"),
 			c.Submit(cash.ID),
 			If(cash.ID != 0,

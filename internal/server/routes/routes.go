@@ -81,7 +81,7 @@ func New( //nolint:funlen
 
 	mux.Handle("GET /backoffice/cashes", backofficeCashIndexHandler)
 	mux.Handle("GET /backoffice/cashes/new", backofficeCashNewHandler)
-	mux.Handle("POST /backoffice/cash", backofficeCashCreateHandler)
+	mux.Handle("POST /backoffice/cashes", backofficeCashCreateHandler)
 	mux.Handle("DELETE /backoffice/cashes/{id}", backofficeCashDeleteHandler)
 	mux.Handle("GET /backoffice/cashes/{id}/edit", backofficeCashEditHandler)
 	mux.Handle("PATCH /backoffice/cashes/{id}", backofficeCashUpdateHandler)

@@ -68,6 +68,22 @@ func EditBackofficeCash(params Params, id int) string {
 	return path.String()
 }
 
+func NewBackofficeCash(params Params) string {
+	values := setDefault(nil)
+
+	updateCurrency(values, params)
+
+	path := url.URL{
+		Path: backofficePath,
+	}
+
+	path = *path.JoinPath(cashesPath, "new")
+
+	path.RawQuery = values.Encode()
+
+	return path.String()
+}
+
 func BackofficeCategories() string {
 	return Backoffice() + "/categories"
 }

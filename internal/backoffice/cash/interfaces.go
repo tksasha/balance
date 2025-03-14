@@ -6,7 +6,7 @@ import (
 
 type Repository interface {
 	FindAll(ctx context.Context) (Cashes, error)
-	NameExists(ctx context.Context, name string, id int) (bool, error)
+	NameExists(ctx context.Context, cash *Cash) (bool, error)
 	Create(ctx context.Context, cash *Cash) error
 	FindByID(ctx context.Context, id int) (*Cash, error)
 	Update(ctx context.Context, cash *Cash) error

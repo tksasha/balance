@@ -100,18 +100,18 @@ func (mr *MockRepositoryMockRecorder) FindByID(ctx, id any) *gomock.Call {
 }
 
 // NameExists mocks base method.
-func (m *MockRepository) NameExists(ctx context.Context, name string, id int) (bool, error) {
+func (m *MockRepository) NameExists(ctx context.Context, cash *cash.Cash) (bool, error) {
 	m.ctrl.T.Helper()
-	ret := m.ctrl.Call(m, "NameExists", ctx, name, id)
+	ret := m.ctrl.Call(m, "NameExists", ctx, cash)
 	ret0, _ := ret[0].(bool)
 	ret1, _ := ret[1].(error)
 	return ret0, ret1
 }
 
 // NameExists indicates an expected call of NameExists.
-func (mr *MockRepositoryMockRecorder) NameExists(ctx, name, id any) *gomock.Call {
+func (mr *MockRepositoryMockRecorder) NameExists(ctx, cash any) *gomock.Call {
 	mr.mock.ctrl.T.Helper()
-	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "NameExists", reflect.TypeOf((*MockRepository)(nil).NameExists), ctx, name, id)
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "NameExists", reflect.TypeOf((*MockRepository)(nil).NameExists), ctx, cash)
 }
 
 // Update mocks base method.

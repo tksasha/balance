@@ -4,11 +4,11 @@ import (
 	"context"
 	"database/sql"
 	"errors"
+
+	"github.com/tksasha/balance/internal/backoffice/cash"
 )
 
-func (r *Repository) NameExists(ctx context.Context, name string, id int) (bool, error) {
-	currency := r.GetCurrencyFromContext(ctx)
-
+func (r *Repository) NameExists(ctx context.Context, cash *cash.Cash) (bool, error) {
 	query := `
 		SELECT
 			1
@@ -21,7 +21,7 @@ func (r *Repository) NameExists(ctx context.Context, name string, id int) (bool,
 			AND id != ?
 	`
 
-	row := r.db.QueryRowContext(ctx, query, currency, name, id)
+	row := r.db.QueryRowContext(ctx, query, cash.Currency, cash.Name, cash.ID)
 
 	var exists int
 

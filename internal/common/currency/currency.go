@@ -12,24 +12,32 @@ const (
 
 type Currency int
 
+type Currencies map[Currency]string
+
 type ContextValue struct{}
 
+func All() Currencies {
+	return Currencies{
+		UAH: "UAH",
+		USD: "USD",
+		EUR: "EUR",
+	}
+}
+
 func GetByCode(code string) Currency {
-	return map[string]Currency{
-		"uah": UAH,
-		"usd": USD,
-		"eur": EUR,
-	}[strings.ToLower(code)]
+	for curr, currCode := range All() {
+		if strings.ToUpper(code) == currCode {
+			return curr
+		}
+	}
+
+	return Default
 }
 
 func GetCode(currency Currency) string {
-	code, ok := map[Currency]string{
-		UAH: "uah",
-		USD: "usd",
-		EUR: "eur",
-	}[currency]
+	code, ok := All()[currency]
 	if ok {
-		return code
+		return strings.ToLower(code)
 	}
 
 	return GetCode(Default)

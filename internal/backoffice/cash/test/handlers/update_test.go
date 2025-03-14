@@ -16,6 +16,7 @@ import (
 	"github.com/tksasha/balance/internal/db/nameprovider"
 	"github.com/tksasha/balance/internal/server/middlewares"
 	"gotest.tools/v3/assert"
+	"gotest.tools/v3/golden"
 )
 
 func TestCashUpdateHandler(t *testing.T) { //nolint:funlen
@@ -106,7 +107,7 @@ func TestCashUpdateHandler(t *testing.T) { //nolint:funlen
 		assert.Equal(t, recorder.Code, http.StatusOK)
 	})
 
-	t.Run("renders 200 when cash updated", func(t *testing.T) {
+	t.Run("when cash updated", func(t *testing.T) {
 		cleanup(t, db)
 
 		cashToCreate := &cash.Cash{
@@ -116,35 +117,55 @@ func TestCashUpdateHandler(t *testing.T) { //nolint:funlen
 			Sum:           5,
 			Name:          "Bonds",
 			Supercategory: 2,
-			Favorite:      false,
 		}
 
 		createCash(t, db, cashToCreate)
 
-		values := url.Values{
-			"formula":       {"3+4"},
-			"name":          {"Stocks"},
-			"supercategory": {"3"},
-			"favorite":      {"true"},
+		ds := []struct {
+			currencyCode string
+			currency     currency.Currency
+		}{
+			{"", currency.UAH},
+			{"abc", currency.UAH},
+			{"uah", currency.UAH},
+			{"usd", currency.USD},
+			{"eur", currency.EUR},
 		}
 
-		body := strings.NewReader(values.Encode())
+		for _, d := range ds {
+			values := url.Values{
+				"formula":       {"3+4"},
+				"name":          {"Stocks"},
+				"supercategory": {"3"},
+				"currency":      {d.currencyCode},
+			}
 
-		request, err := http.NewRequestWithContext(ctx, http.MethodPatch, "/backoffice/cashes/1442", body)
-		if err != nil {
-			t.Fatal(err)
+			body := strings.NewReader(values.Encode())
+
+			request, err := http.NewRequestWithContext(ctx, http.MethodPatch, "/backoffice/cashes/1442", body)
+			if err != nil {
+				t.Fatal(err)
+			}
+
+			request.Header.Add("Content-Type", "application/x-www-form-urlencoded")
+
+			recorder := httptest.NewRecorder()
+
+			mux.ServeHTTP(recorder, request)
+
+			assert.Equal(t, recorder.Code, http.StatusOK)
+
+			golden.Assert(t, recorder.Header().Get("Hx-Trigger-After-Swap"),
+				currency.GetCode(d.currency)+"-update-hx-trigger-after-swap-header.json")
+
+			cash := findCashByID(t, db, d.currency, 1442)
+
+			assert.Equal(t, cash.ID, 1442)
+			assert.Equal(t, cash.Name, "Stocks")
+			assert.Equal(t, cash.Formula, "3+4")
+			assert.Equal(t, cash.Sum, 7.0)
+			assert.Equal(t, cash.Currency, d.currency)
+			assert.Equal(t, cash.Supercategory, 3)
 		}
-
-		request.Header.Add("Content-Type", "application/x-www-form-urlencoded")
-
-		recorder := httptest.NewRecorder()
-
-		mux.ServeHTTP(recorder, request)
-
-		assert.Equal(t, recorder.Code, http.StatusOK)
-
-		expectedHeader := `{"backoffice.cash.updated":{"backofficeCashesPath":"/backoffice/cashes?currency=uah"}}`
-
-		assert.Equal(t, expectedHeader, strings.TrimSpace(recorder.Header().Get("Hx-Trigger-After-Swap")))
 	})
 }

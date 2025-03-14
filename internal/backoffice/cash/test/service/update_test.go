@@ -37,10 +37,7 @@ func TestUpdate(t *testing.T) { //nolint:funlen
 			ID: "1530",
 		}
 
-		cashRepository.
-			EXPECT().
-			FindByID(ctx, 1530).
-			Return(nil, common.ErrRecordNotFound)
+		cashRepository.EXPECT().FindByID(ctx, 1530).Return(nil, common.ErrRecordNotFound)
 
 		_, err := service.Update(ctx, request)
 
@@ -52,10 +49,7 @@ func TestUpdate(t *testing.T) { //nolint:funlen
 			ID: "1530",
 		}
 
-		cashRepository.
-			EXPECT().
-			FindByID(ctx, 1530).
-			Return(nil, errors.New("failed to find cash by id"))
+		cashRepository.EXPECT().FindByID(ctx, 1530).Return(nil, errors.New("failed to find cash by id"))
 
 		_, err := service.Update(ctx, request)
 
@@ -64,24 +58,25 @@ func TestUpdate(t *testing.T) { //nolint:funlen
 
 	t.Run("returns error when formula is blank", func(t *testing.T) {
 		request := cash.UpdateRequest{
-			ID:      "1540",
-			Formula: "",
-			Name:    "Bonds",
+			ID:       "1540",
+			Formula:  "",
+			Name:     "Bonds",
+			Currency: "eur",
 		}
 
-		cash := &cash.Cash{
+		cashToFind := &cash.Cash{
 			ID: 1540,
 		}
 
-		cashRepository.
-			EXPECT().
-			FindByID(ctx, 1540).
-			Return(cash, nil)
+		cashRepository.EXPECT().FindByID(ctx, 1540).Return(cashToFind, nil)
 
-		cashRepository.
-			EXPECT().
-			NameExists(ctx, "Bonds", 1540).
-			Return(false, nil)
+		cashToCheck := &cash.Cash{
+			ID:       1540,
+			Name:     "Bonds",
+			Currency: currency.EUR,
+		}
+
+		cashRepository.EXPECT().NameExists(ctx, cashToCheck).Return(false, nil)
 
 		_, err := service.Update(ctx, request)
 
@@ -90,24 +85,25 @@ func TestUpdate(t *testing.T) { //nolint:funlen
 
 	t.Run("returns error when formula is invalid", func(t *testing.T) {
 		request := cash.UpdateRequest{
-			ID:      "1540",
-			Formula: "abc",
-			Name:    "Bonds",
+			ID:       "1540",
+			Formula:  "abc",
+			Name:     "Bonds",
+			Currency: "eur",
 		}
 
-		cash := &cash.Cash{
+		cashToFind := &cash.Cash{
 			ID: 1540,
 		}
 
-		cashRepository.
-			EXPECT().
-			FindByID(ctx, 1540).
-			Return(cash, nil)
+		cashRepository.EXPECT().FindByID(ctx, 1540).Return(cashToFind, nil)
 
-		cashRepository.
-			EXPECT().
-			NameExists(ctx, "Bonds", 1540).
-			Return(false, nil)
+		cashToCheck := &cash.Cash{
+			ID:       1540,
+			Name:     "Bonds",
+			Currency: currency.EUR,
+		}
+
+		cashRepository.EXPECT().NameExists(ctx, cashToCheck).Return(false, nil)
 
 		_, err := service.Update(ctx, request)
 
@@ -121,14 +117,11 @@ func TestUpdate(t *testing.T) { //nolint:funlen
 			Name:    "",
 		}
 
-		cash := &cash.Cash{
+		cashToFind := &cash.Cash{
 			ID: 1540,
 		}
 
-		cashRepository.
-			EXPECT().
-			FindByID(ctx, 1540).
-			Return(cash, nil)
+		cashRepository.EXPECT().FindByID(ctx, 1540).Return(cashToFind, nil)
 
 		_, err := service.Update(ctx, request)
 
@@ -137,24 +130,25 @@ func TestUpdate(t *testing.T) { //nolint:funlen
 
 	t.Run("returns error when name already exists", func(t *testing.T) {
 		request := cash.UpdateRequest{
-			ID:      "1540",
-			Formula: "2+3",
-			Name:    "Bonds",
+			ID:       "1540",
+			Formula:  "2+3",
+			Name:     "Bonds",
+			Currency: "eur",
 		}
 
-		cash := &cash.Cash{
+		cashToFind := &cash.Cash{
 			ID: 1540,
 		}
 
-		cashRepository.
-			EXPECT().
-			FindByID(ctx, 1540).
-			Return(cash, nil)
+		cashRepository.EXPECT().FindByID(ctx, 1540).Return(cashToFind, nil)
 
-		cashRepository.
-			EXPECT().
-			NameExists(ctx, "Bonds", 1540).
-			Return(true, nil)
+		cashToCheck := &cash.Cash{
+			ID:       1540,
+			Name:     "Bonds",
+			Currency: currency.EUR,
+		}
+
+		cashRepository.EXPECT().NameExists(ctx, cashToCheck).Return(true, nil)
 
 		_, err := service.Update(ctx, request)
 
@@ -167,53 +161,26 @@ func TestUpdate(t *testing.T) { //nolint:funlen
 			Formula:       "2+3",
 			Name:          "Bonds",
 			Supercategory: "abc",
+			Currency:      "eur",
 		}
 
-		cash := &cash.Cash{
+		cashToFind := &cash.Cash{
 			ID: 1540,
 		}
 
-		cashRepository.
-			EXPECT().
-			FindByID(ctx, 1540).
-			Return(cash, nil)
+		cashRepository.EXPECT().FindByID(ctx, 1540).Return(cashToFind, nil)
 
-		cashRepository.
-			EXPECT().
-			NameExists(ctx, "Bonds", 1540).
-			Return(false, nil)
+		cashToCheck := &cash.Cash{
+			ID:       1540,
+			Name:     "Bonds",
+			Currency: currency.EUR,
+		}
+
+		cashRepository.EXPECT().NameExists(ctx, cashToCheck).Return(false, nil)
 
 		_, err := service.Update(ctx, request)
 
 		assert.Error(t, err, "supercategory: is invalid")
-	})
-
-	t.Run("returns error when favorite is invalid", func(t *testing.T) {
-		request := cash.UpdateRequest{
-			ID:            "1540",
-			Formula:       "2+3",
-			Name:          "Bonds",
-			Supercategory: "1548",
-			Favorite:      "abc",
-		}
-
-		cash := &cash.Cash{
-			ID: 1540,
-		}
-
-		cashRepository.
-			EXPECT().
-			FindByID(ctx, 1540).
-			Return(cash, nil)
-
-		cashRepository.
-			EXPECT().
-			NameExists(ctx, "Bonds", 1540).
-			Return(false, nil)
-
-		_, err := service.Update(ctx, request)
-
-		assert.Error(t, err, "favorite: is invalid")
 	})
 
 	t.Run("returns error when update failed", func(t *testing.T) {
@@ -222,27 +189,24 @@ func TestUpdate(t *testing.T) { //nolint:funlen
 			Formula:       "2+3",
 			Name:          "Bonds",
 			Supercategory: "1548",
-			Favorite:      "true",
+			Currency:      "eur",
 		}
 
-		cash := &cash.Cash{
+		cashToFind := &cash.Cash{
 			ID: 1540,
 		}
 
-		cashRepository.
-			EXPECT().
-			FindByID(ctx, 1540).
-			Return(cash, nil)
+		cashRepository.EXPECT().FindByID(ctx, 1540).Return(cashToFind, nil)
 
-		cashRepository.
-			EXPECT().
-			Update(ctx, cash).
-			Return(errors.New("failed to update cash"))
+		cashToCheck := &cash.Cash{
+			ID:       1540,
+			Name:     "Bonds",
+			Currency: currency.EUR,
+		}
 
-		cashRepository.
-			EXPECT().
-			NameExists(ctx, "Bonds", 1540).
-			Return(false, nil)
+		cashRepository.EXPECT().NameExists(ctx, cashToCheck).Return(false, nil)
+
+		cashRepository.EXPECT().Update(ctx, gomock.Any()).Return(errors.New("failed to update cash"))
 
 		_, err := service.Update(ctx, request)
 
@@ -250,44 +214,53 @@ func TestUpdate(t *testing.T) { //nolint:funlen
 	})
 
 	t.Run("returns updated cash when update succeeded", func(t *testing.T) {
-		request := cash.UpdateRequest{
-			ID:            "1540",
-			Formula:       "2+3",
-			Name:          "Bonds",
-			Supercategory: "1548",
-			Favorite:      "true",
+		ds := []struct {
+			currencyCode string
+			currency     currency.Currency
+		}{
+			{"", currency.UAH},
+			{"abc", currency.UAH},
+			{"uah", currency.UAH},
+			{"usd", currency.USD},
+			{"eur", currency.EUR},
 		}
 
-		cash := &cash.Cash{
-			ID:       1540,
-			Currency: currency.USD,
+		for _, d := range ds {
+			request := cash.UpdateRequest{
+				ID:            "1540",
+				Formula:       "2+3",
+				Name:          "Bonds",
+				Supercategory: "1548",
+				Currency:      d.currencyCode,
+			}
+
+			cashToFind := &cash.Cash{
+				ID:       1540,
+				Currency: d.currency,
+			}
+
+			cashRepository.EXPECT().FindByID(ctx, 1540).Return(cashToFind, nil)
+
+			cashToCheck := &cash.Cash{
+				ID:       1540,
+				Name:     "Bonds",
+				Currency: d.currency,
+			}
+
+			cashRepository.EXPECT().NameExists(ctx, cashToCheck).Return(false, nil)
+
+			cashRepository.EXPECT().Update(ctx, gomock.Any()).Return(nil)
+
+			cashUpdated, err := service.Update(ctx, request)
+
+			assert.NilError(t, err)
+
+			assert.Equal(t, cashUpdated.ID, 1540)
+			assert.Equal(t, cashUpdated.Currency, d.currency)
+			assert.Equal(t, cashUpdated.Formula, "2+3")
+			assert.Equal(t, cashUpdated.Sum, 5.0)
+			assert.Equal(t, cashUpdated.Name, "Bonds")
+			assert.Equal(t, cashUpdated.Supercategory, 1548)
 		}
-
-		cashRepository.
-			EXPECT().
-			FindByID(ctx, 1540).
-			Return(cash, nil)
-
-		cashRepository.
-			EXPECT().
-			Update(ctx, cash).
-			Return(nil)
-
-		cashRepository.
-			EXPECT().
-			NameExists(ctx, "Bonds", 1540).
-			Return(false, nil)
-
-		res, err := service.Update(ctx, request)
-
-		assert.NilError(t, err)
-
-		assert.Equal(t, res.ID, 1540)
-		assert.Equal(t, res.Currency, currency.USD)
-		assert.Equal(t, res.Formula, "2+3")
-		assert.Equal(t, res.Sum, 5.0)
-		assert.Equal(t, res.Name, "Bonds")
-		assert.Equal(t, res.Supercategory, 1548)
-		assert.Equal(t, res.Favorite, true)
 	})
 }

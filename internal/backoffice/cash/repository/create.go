@@ -7,8 +7,6 @@ import (
 )
 
 func (r *Repository) Create(ctx context.Context, cash *cash.Cash) error {
-	currency := r.GetCurrencyFromContext(ctx)
-
 	query := `
 		INSERT INTO
 		    cashes (
@@ -16,22 +14,20 @@ func (r *Repository) Create(ctx context.Context, cash *cash.Cash) error {
 		        formula,
 		        sum,
 		        name,
-		        supercategory,
-		        favorite
+		        supercategory
 		    )
 		VALUES
-		    (?, ?, ?, ?, ?, ?)
+		    (?, ?, ?, ?, ?)
 	`
 
 	result, err := r.db.ExecContext(
 		ctx,
 		query,
-		currency,
+		cash.Currency,
 		cash.Formula,
 		cash.Sum,
 		cash.Name,
 		cash.Supercategory,
-		cash.Favorite,
 	)
 	if err != nil {
 		return err

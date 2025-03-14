@@ -45,7 +45,6 @@ func findCashByName(t *testing.T, db *sql.DB, currency currency.Currency, name s
 			sum,
 			currency,
 			supercategory,
-			favorite,
 			deleted_at
 		FROM
 			cashes
@@ -65,7 +64,6 @@ func findCashByName(t *testing.T, db *sql.DB, currency currency.Currency, name s
 			&cash.Sum,
 			&cash.Currency,
 			&cash.Supercategory,
-			&cash.Favorite,
 			&cash.DeletedAt,
 		); err != nil {
 		t.Fatalf("failed to find cash by name: %v", err)
@@ -85,11 +83,10 @@ func createCash(t *testing.T, db *sql.DB, cash *cash.Cash) {
 		        formula,
 		        sum,
 		        name,
-		        supercategory,
-		        favorite
+		        supercategory
 		    )
 		VALUES
-		    (?, ?, ?, ?, ?, ?, ?)
+		    (?, ?, ?, ?, ?, ?)
 	`
 
 	if _, err := db.ExecContext(
@@ -101,7 +98,6 @@ func createCash(t *testing.T, db *sql.DB, cash *cash.Cash) {
 		cash.Sum,
 		cash.Name,
 		cash.Supercategory,
-		cash.Favorite,
 	); err != nil {
 		t.Fatalf("failed to create cash: %v", err)
 	}
@@ -118,7 +114,6 @@ func findCashByID(t *testing.T, db *sql.DB, currency currency.Currency, id int) 
 			sum,
 			name,
 			supercategory,
-			favorite,
 			deleted_at
 		FROM
 			cashes
@@ -138,7 +133,6 @@ func findCashByID(t *testing.T, db *sql.DB, currency currency.Currency, id int) 
 			&cash.Sum,
 			&cash.Name,
 			&cash.Supercategory,
-			&cash.Favorite,
 			&cash.DeletedAt,
 		); err != nil {
 		t.Fatalf("failed to find cash by id, error: %v", err)

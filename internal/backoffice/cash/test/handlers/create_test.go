@@ -15,6 +15,7 @@ import (
 	"github.com/tksasha/balance/internal/db"
 	"github.com/tksasha/balance/internal/db/nameprovider"
 	"gotest.tools/v3/assert"
+	"gotest.tools/v3/golden"
 )
 
 func TestCashCreateHandler(t *testing.T) { //nolint:funlen
@@ -62,44 +63,55 @@ func TestCashCreateHandler(t *testing.T) { //nolint:funlen
 		assert.Equal(t, recorder.Code, http.StatusOK)
 	})
 
-	t.Run("responds 201 when create succeeded", func(t *testing.T) {
-		cleanup(t, db)
+	ds := []struct {
+		currencyCode string
+		currency     currency.Currency
+	}{
+		{"", currency.UAH},
+		{"abc", currency.UAH},
+		{"uah", currency.UAH},
+		{"usd", currency.USD},
+		{"eur", currency.EUR},
+	}
 
-		formData := url.Values{
-			"name":          {"Bonds"},
-			"formula":       {"2+3"},
-			"supercategory": {"2"},
-			"favorite":      {"true"},
-		}
+	for _, d := range ds {
+		t.Run("when create cash", func(t *testing.T) {
+			cleanup(t, db)
 
-		request, err := http.NewRequestWithContext(
-			ctx,
-			http.MethodPost,
-			"/backoffice/cashes?currency=usd",
-			strings.NewReader(formData.Encode()),
-		)
-		if err != nil {
-			t.Fatal(err)
-		}
+			values := url.Values{
+				"name":          {"Bonds"},
+				"formula":       {"2+3"},
+				"supercategory": {"2"},
+				"currency":      {d.currencyCode},
+			}
 
-		request.Header.Add("Content-Type", "application/x-www-form-urlencoded")
+			body := strings.NewReader(values.Encode())
 
-		recorder := httptest.NewRecorder()
+			request, err := http.NewRequestWithContext(ctx, http.MethodPost, "/backoffice/cashes", body)
+			if err != nil {
+				t.Fatal(err)
+			}
 
-		mux.ServeHTTP(recorder, request)
+			request.Header.Add("Content-Type", "application/x-www-form-urlencoded")
 
-		assert.Equal(t, recorder.Code, http.StatusCreated)
+			recorder := httptest.NewRecorder()
 
-		cash := findCashByName(t, db, currency.USD, "Bonds")
+			mux.ServeHTTP(recorder, request)
 
-		assert.Equal(t, cash.ID, 1)
-		assert.Equal(t, cash.Name, "Bonds")
-		assert.Equal(t, cash.Formula, "2+3")
-		assert.Equal(t, cash.Sum, 5.0)
-		assert.Equal(t, cash.Currency, currency.USD)
-		assert.Equal(t, cash.Supercategory, 2)
-		assert.Equal(t, cash.Favorite, true)
-	})
+			assert.Equal(t, recorder.Code, http.StatusOK)
+
+			golden.Assert(t, recorder.Header().Get("Hx-Trigger-After-Swap"),
+				currency.GetCode(d.currency)+"-create-hx-trigger-after-swap-header.json")
+
+			cash := findCashByName(t, db, d.currency, "Bonds")
+
+			assert.Equal(t, cash.Name, "Bonds")
+			assert.Equal(t, cash.Formula, "2+3")
+			assert.Equal(t, cash.Sum, 5.0)
+			assert.Equal(t, cash.Currency, d.currency)
+			assert.Equal(t, cash.Supercategory, 2)
+		})
+	}
 }
 
 func newCreateHandler(t *testing.T) (*handlers.CreateHandler, *sql.DB) {

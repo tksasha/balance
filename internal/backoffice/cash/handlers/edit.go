@@ -5,6 +5,7 @@ import (
 
 	"github.com/tksasha/balance/internal/backoffice/cash"
 	"github.com/tksasha/balance/internal/backoffice/cash/component"
+	"github.com/tksasha/balance/internal/common/component/path"
 	"github.com/tksasha/balance/internal/common/handler"
 )
 
@@ -33,7 +34,9 @@ func (h *EditHandler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	err = h.component.Edit(cash).Render(w)
+	params := path.Params{"currency": r.URL.Query().Get("currency")}
+
+	err = h.component.Edit(params, cash).Render(w)
 
 	h.SetError(w, err)
 }

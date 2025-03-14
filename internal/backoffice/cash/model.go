@@ -13,7 +13,6 @@ type Cash struct {
 	Sum           float64
 	Name          string
 	Supercategory int
-	Favorite      bool
 	DeletedAt     sql.NullTime
 }
 

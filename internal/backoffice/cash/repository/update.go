@@ -8,8 +8,6 @@ import (
 )
 
 func (r *Repository) Update(ctx context.Context, cash *cash.Cash) error {
-	currency := r.GetCurrencyFromContext(ctx)
-
 	query := `
 		UPDATE cashes
 		SET
@@ -17,10 +15,9 @@ func (r *Repository) Update(ctx context.Context, cash *cash.Cash) error {
 		    sum = ?,
 		    name = ?,
 		    supercategory = ?,
-		    favorite = ?
+			currency = ?
 		WHERE
 		    id = ?
-		    AND currency = ?
 	`
 
 	result, err := r.db.ExecContext(
@@ -30,9 +27,8 @@ func (r *Repository) Update(ctx context.Context, cash *cash.Cash) error {
 		cash.Sum,
 		cash.Name,
 		cash.Supercategory,
-		cash.Favorite,
+		cash.Currency,
 		cash.ID,
-		currency,
 	)
 	if err != nil {
 		return err

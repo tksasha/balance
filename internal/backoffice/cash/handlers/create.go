@@ -1,12 +1,16 @@
 package handlers
 
 import (
+	"bytes"
+	"encoding/json"
 	"errors"
+	"log/slog"
 	"net/http"
 
 	"github.com/tksasha/balance/internal/backoffice/cash"
 	"github.com/tksasha/balance/internal/backoffice/cash/component"
 	"github.com/tksasha/balance/internal/common"
+	"github.com/tksasha/balance/internal/common/component/path"
 	"github.com/tksasha/balance/internal/common/handler"
 	"github.com/tksasha/validation"
 )
@@ -31,7 +35,7 @@ func NewCreateHandler(
 func (h *CreateHandler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 	cash, err := h.handle(r)
 	if err == nil {
-		w.WriteHeader(http.StatusCreated)
+		h.ok(w, cash)
 
 		return
 	}
@@ -57,8 +61,28 @@ func (h *CreateHandler) handle(r *http.Request) (*cash.Cash, error) {
 		Name:          r.FormValue("name"),
 		Formula:       r.FormValue("formula"),
 		Supercategory: r.FormValue("supercategory"),
-		Favorite:      r.FormValue("favorite"),
+		Currency:      r.FormValue("currency"),
 	}
 
 	return h.cashService.Create(r.Context(), request)
+}
+
+func (h *CreateHandler) ok(w http.ResponseWriter, cash *cash.Cash) {
+	writer := bytes.NewBuffer([]byte{})
+
+	header := map[string]map[string]string{
+		"backoffice.cash.created": {
+			"backofficeCashesPath": path.BackofficeCashes(path.NewCurrency(cash.Currency)),
+		},
+	}
+
+	if err := json.NewEncoder(writer).Encode(header); err != nil {
+		slog.Error("failed to encode", "error", err)
+
+		writer.Reset()
+	}
+
+	w.Header().Add("Hx-Trigger-After-Swap", writer.String())
+
+	w.WriteHeader(http.StatusOK)
 }

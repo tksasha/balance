@@ -8,12 +8,12 @@ import (
 	. "maragu.dev/gomponents/html" //nolint:stylecheck
 )
 
-func (c *Component) Edit(cash *cash.Cash) Node {
+func (c *Component) Edit(params path.Params, cash *cash.Cash) Node {
 	return Div(
 		c.Breadcrumbs(
 			Li(Class("breadcrumb-item"),
 				Span(Class("link"),
-					htmx.Get(path.BackofficeCashes(nil)),
+					htmx.Get(path.BackofficeCashes(params)),
 					htmx.Target("#modal-body"),
 					Text("Залишки"),
 				),

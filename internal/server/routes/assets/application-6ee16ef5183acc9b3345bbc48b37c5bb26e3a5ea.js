@@ -43,6 +43,11 @@ document.addEventListener("backoffice.cash.deleted", async (e) => {
   if (Object.hasOwn(e.detail, "backofficeCashesPath"))
     await htmx.ajax("GET", e.detail.backofficeCashesPath, { target: "#modal-body" });
 });
+
+document.addEventListener("backoffice.cash.created", async (e) => {
+  if (Object.hasOwn(e.detail, "backofficeCashesPath"))
+    await htmx.ajax("GET", e.detail.backofficeCashesPath, { target: "#modal-body" });
+});
 document.addEventListener("balance.cash.updated", async (e) => {
   hideModal();
 

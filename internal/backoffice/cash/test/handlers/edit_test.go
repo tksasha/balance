@@ -66,7 +66,6 @@ func TestCashEditHandler(t *testing.T) { //nolint:funlen
 			Sum:           5,
 			Name:          "Bonds",
 			Supercategory: 6,
-			Favorite:      true,
 		}
 
 		createCash(t, db, cashToCreate)

@@ -4,7 +4,7 @@ type CreateRequest struct {
 	Formula       string
 	Name          string
 	Supercategory string
-	Favorite      string
+	Currency      string
 }
 
 type UpdateRequest struct {
@@ -12,5 +12,5 @@ type UpdateRequest struct {
 	Formula       string
 	Name          string
 	Supercategory string
-	Favorite      string
+	Currency      string
 }

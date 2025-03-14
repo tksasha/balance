@@ -1,25 +1,38 @@
 package currency_test
 
 import (
+	"maps"
 	"testing"
 
 	"github.com/tksasha/balance/internal/common/currency"
 	"gotest.tools/v3/assert"
 )
 
-func TestGetByCode(t *testing.T) {
-	data := map[string]int{
-		"uah": 1,
-		"UAH": 1,
-		"usd": 2,
-		"USD": 2,
-		"eur": 3,
-		"EUR": 3,
-		"xxx": 0,
+func TestAll(t *testing.T) {
+	expected := currency.Currencies{
+		currency.UAH: "UAH",
+		currency.USD: "USD",
+		currency.EUR: "EUR",
 	}
 
-	for code, id := range data {
-		assert.Equal(t, currency.GetByCode(code), currency.Currency(id))
+	actual := currency.All()
+
+	assert.Assert(t, maps.Equal(expected, actual))
+}
+
+func TestGetByCode(t *testing.T) {
+	data := map[string]currency.Currency{
+		"uah": currency.UAH,
+		"UAH": currency.UAH,
+		"usd": currency.USD,
+		"USD": currency.USD,
+		"eur": currency.EUR,
+		"EUR": currency.EUR,
+		"xxx": currency.UAH,
+	}
+
+	for code, curr := range data {
+		assert.Equal(t, currency.GetByCode(code), curr)
 	}
 }
 

@@ -17,8 +17,7 @@ func (r *Repository) FindAll(ctx context.Context) (cash.Cashes, error) {
 			formula,
 			sum,
 			name,
-			supercategory,
-			favorite
+			supercategory
 		FROM
 			cashes
 		WHERE
@@ -55,7 +54,6 @@ func (r *Repository) FindAll(ctx context.Context) (cash.Cashes, error) {
 			&cash.Sum,
 			&cash.Name,
 			&cash.Supercategory,
-			&cash.Favorite,
 		); err != nil {
 			return nil, err
 		}
