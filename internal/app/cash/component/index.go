@@ -10,24 +10,32 @@ import (
 	. "maragu.dev/gomponents/html" //nolint:stylecheck
 )
 
-func (c *Component) Index(values url.Values, cashes cash.Cashes) Node {
-	var nodes []Node
+func (c *Component) Index(values url.Values, groupedCashes cash.GroupedCashes) Node {
+	groupedCashNodes := []Node{}
 
-	nodes = append(nodes, Map(cashes, func(cash *cash.Cash) Node { return c.cash(values, cash) }))
+	for _, key := range groupedCashes.Keys() {
+		cashes := groupedCashes[key]
 
-	if cashes.HasMoreThanOne() {
-		nodes = append(nodes, c.Summary(cashes.Sum()))
-	}
+		var nodes []Node
 
-	return Div(Class("col-3"),
-		Div(Class("card cash"),
-			Div(Class("card-body"),
-				Table(Class("w-100 summarize"),
-					TBody(Group(nodes)),
+		nodes = append(nodes, Map(cashes, func(cash *cash.Cash) Node { return c.cash(values, cash) }))
+
+		if cashes.HasMoreThanOne() {
+			nodes = append(nodes, c.Summary(cashes.Sum()))
+		}
+
+		groupedCashNodes = append(groupedCashNodes, Div(Class("col-3"),
+			Div(Class("card cash"),
+				Div(Class("card-body"),
+					Table(Class("w-100 summarize"),
+						TBody(Group(nodes)),
+					),
 				),
 			),
-		),
-	)
+		))
+	}
+
+	return Group(groupedCashNodes)
 }
 
 func (c *Component) cash(values url.Values, cash *cash.Cash, children ...Node) Node {

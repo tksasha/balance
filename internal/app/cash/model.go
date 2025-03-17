@@ -1,6 +1,9 @@
 package cash
 
 import (
+	"maps"
+	"slices"
+
 	"github.com/tksasha/balance/internal/common/currency"
 )
 
@@ -27,4 +30,14 @@ func (c Cashes) Sum() float64 {
 	}
 
 	return sum
+}
+
+type GroupedCashes map[int]Cashes
+
+func (c GroupedCashes) Keys() []int {
+	keys := slices.Collect(maps.Keys(c))
+
+	slices.Sort(keys)
+
+	return keys
 }

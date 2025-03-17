@@ -139,19 +139,19 @@ func (mr *MockServiceMockRecorder) Edit(ctx, id any) *gomock.Call {
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "Edit", reflect.TypeOf((*MockService)(nil).Edit), ctx, id)
 }
 
-// List mocks base method.
-func (m *MockService) List(ctx context.Context) (cash.Cashes, error) {
+// GroupedList mocks base method.
+func (m *MockService) GroupedList(ctx context.Context) (cash.GroupedCashes, error) {
 	m.ctrl.T.Helper()
-	ret := m.ctrl.Call(m, "List", ctx)
-	ret0, _ := ret[0].(cash.Cashes)
+	ret := m.ctrl.Call(m, "GroupedList", ctx)
+	ret0, _ := ret[0].(cash.GroupedCashes)
 	ret1, _ := ret[1].(error)
 	return ret0, ret1
 }
 
-// List indicates an expected call of List.
-func (mr *MockServiceMockRecorder) List(ctx any) *gomock.Call {
+// GroupedList indicates an expected call of GroupedList.
+func (mr *MockServiceMockRecorder) GroupedList(ctx any) *gomock.Call {
 	mr.mock.ctrl.T.Helper()
-	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "List", reflect.TypeOf((*MockService)(nil).List), ctx)
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "GroupedList", reflect.TypeOf((*MockService)(nil).GroupedList), ctx)
 }
 
 // Update mocks base method.

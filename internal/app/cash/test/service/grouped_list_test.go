@@ -24,19 +24,33 @@ func TestList(t *testing.T) {
 	t.Run("when repository returns error", func(t *testing.T) {
 		cashRepository.EXPECT().FindAll(ctx).Return(nil, errors.New("find all error"))
 
-		_, err := service.List(ctx)
+		_, err := service.GroupedList(ctx)
 
 		assert.Error(t, err, "find all error")
 	})
 
 	t.Run("when repository returns cashes", func(t *testing.T) {
-		expected := cash.Cashes{}
+		cashes := cash.Cashes{
+			{ID: 1, Name: "First", Supercategory: 3},
+			{ID: 2, Name: "Second", Supercategory: 2},
+			{ID: 3, Name: "Third", Supercategory: 0},
+			{ID: 4, Name: "Fourth", Supercategory: 2},
+			{ID: 5, Name: "Fifth", Supercategory: 3},
+		}
 
-		cashRepository.EXPECT().FindAll(ctx).Return(expected, nil)
+		expected := cash.GroupedCashes{
+			0: {cashes[2]},
+			2: {cashes[1], cashes[3]},
+			3: {cashes[0], cashes[4]},
+		}
 
-		actual, err := service.List(ctx)
+		cashRepository.EXPECT().FindAll(ctx).Return(cashes, nil)
+
+		actual, err := service.GroupedList(ctx)
 
 		assert.NilError(t, err)
-		assert.Assert(t, slices.Equal(actual, expected))
+		assert.Assert(t, slices.Equal(actual[0], expected[0]))
+		assert.Assert(t, slices.Equal(actual[2], expected[2]))
+		assert.Assert(t, slices.Equal(actual[3], expected[3]))
 	})
 }

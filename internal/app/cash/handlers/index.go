@@ -24,7 +24,7 @@ func NewIndexHandler(service cash.Service) *IndexHandler {
 }
 
 func (h *IndexHandler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
-	cashes, err := h.service.List(r.Context())
+	cashes, err := h.handle(r)
 	if err != nil {
 		h.SetError(w, err)
 
@@ -34,4 +34,8 @@ func (h *IndexHandler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 	err = h.component.Index(r.URL.Query(), cashes).Render(w)
 
 	h.SetError(w, err)
+}
+
+func (h *IndexHandler) handle(r *http.Request) (cash.GroupedCashes, error) {
+	return h.service.GroupedList(r.Context())
 }

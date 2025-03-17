@@ -14,7 +14,8 @@ func (r *Repository) FindAll(ctx context.Context) (cash.Cashes, error) {
 		SELECT
 			id,
 			name,
-			sum
+			sum,
+			supercategory
 		FROM
 			cashes
 		WHERE
@@ -38,7 +39,7 @@ func (r *Repository) FindAll(ctx context.Context) (cash.Cashes, error) {
 	for rows.Next() {
 		cash := &cash.Cash{}
 
-		if err := rows.Scan(&cash.ID, &cash.Name, &cash.Sum); err != nil {
+		if err := rows.Scan(&cash.ID, &cash.Name, &cash.Sum, &cash.Supercategory); err != nil {
 			return nil, err
 		}
 

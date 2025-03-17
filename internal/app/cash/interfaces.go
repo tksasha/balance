@@ -14,5 +14,5 @@ type Repository interface {
 type Service interface {
 	Edit(ctx context.Context, id string) (*Cash, error)
 	Update(ctx context.Context, request UpdateRequest) (*Cash, error)
-	List(ctx context.Context) (Cashes, error)
+	GroupedList(ctx context.Context) (GroupedCashes, error)
 }
