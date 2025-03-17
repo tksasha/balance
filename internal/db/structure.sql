@@ -33,10 +33,6 @@ CREATE TABLE IF NOT EXISTS "cashes"(
   "favorite" boolean DEFAULT 0,
   deleted_at DATETIME
 );
-CREATE UNIQUE INDEX "index_cashes_on_name_and_currency" ON "cashes"(
-  "name",
-  "currency"
-);
 CREATE TABLE IF NOT EXISTS "categories"(
   "id" integer NOT NULL PRIMARY KEY,
   "name" varchar DEFAULT NULL,
@@ -72,3 +68,7 @@ CREATE INDEX "index_balans_items_on_date_and_category_id" ON "items"(
   "category_id"
 );
 CREATE INDEX "index_balans_items_on_date" ON "items"("date");
+CREATE UNIQUE INDEX "unique_index_on_cashes_name_and_currency" ON "cashes"(
+  "name",
+  "currency"
+) WHERE deleted_at IS NULL;
