@@ -37,6 +37,8 @@ document.addEventListener("balance.items.shown", (e) => {
 });
 
 document.addEventListener("balance.item.create.error", (e) => {
+  clearModalSize();
+
   const modal = bootstrap.Modal.getOrCreateInstance("#modal").show();
 
   $("#modal .datepicker").datepicker(BOOTSTRAP_DATEPICKER_DEFAULTS);

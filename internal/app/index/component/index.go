@@ -24,6 +24,10 @@ func (c *Component) Index(values url.Values) Node {
 					Type("image/x-icon"),
 					Href("/assets/hryvnia-c8a5df41852f327f0ad50d3dddf29acf85597d22.png"),
 				),
+				Link(
+					Rel("apple-touch-icon"),
+					Href("/assets/hryvnia-c8a5df41852f327f0ad50d3dddf29acf85597d22.png"),
+				),
 			},
 			Body: []Node{
 				c.header(values),
@@ -38,7 +42,7 @@ func (c *Component) Index(values url.Values) Node {
 				Script(Src("/assets/jquery.min-5a9dcfbef655a2668e78baebeaa8dc6f41d8dabb.js")),
 				Script(Src("/assets/bootstrap-datepicker.min-cdff2c53b8ff6b44eb16e842bd4b86541a7853f6.js")),
 				Script(Src("/assets/bootstrap-datepicker.uk.min-d58d82ad3cc17da5ff61d0d8559c3b397c941638.js")),
-				Script(Src("/assets/application-6ee16ef5183acc9b3345bbc48b37c5bb26e3a5ea.js")),
+				Script(Src("/assets/application-a25c8524759fe11a080ebbba3e7a4737acdfae33.js")),
 			},
 		},
 	)
