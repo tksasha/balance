@@ -2,7 +2,6 @@ package handlers
 
 import (
 	"net/http"
-	"net/url"
 
 	"github.com/tksasha/balance/internal/backoffice/category"
 	"github.com/tksasha/balance/internal/backoffice/category/component"
@@ -35,19 +34,17 @@ func (h *EditHandler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	h.ok(w, r.URL.Query(), category)
+	h.ok(w, category)
 }
 
 func (h *EditHandler) handle(r *http.Request) (*category.Category, error) {
 	return h.categoryService.Edit(r.Context(), r.PathValue("id"))
 }
 
-func (h *EditHandler) ok(w http.ResponseWriter, values url.Values, category *category.Category) {
-	params := path.Params{
-		"currency": values.Get("currency"),
-	}
+func (h *EditHandler) ok(w http.ResponseWriter, category *category.Category) {
+	params := path.NewCurrency(category.Currency)
 
-	err := h.component.Edit(params, category).Render(w)
+	err := h.component.Edit(params, category, nil).Render(w)
 
 	h.SetError(w, err)
 }

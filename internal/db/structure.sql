@@ -42,7 +42,8 @@ CREATE TABLE IF NOT EXISTS "categories"(
   "supercategory" integer DEFAULT 1 NOT NULL,
   "deleted_at" datetime
   ,
-  slug VARCHAR
+  slug VARCHAR,
+  number INTEGER DEFAULT 100
 );
 CREATE UNIQUE INDEX "index_categories_on_name_and_currency" ON "categories"(
   "name",

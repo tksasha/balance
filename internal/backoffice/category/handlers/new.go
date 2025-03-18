@@ -39,7 +39,7 @@ func (h *NewHandler) ok(w http.ResponseWriter, values url.Values, category *cate
 		"currency": values.Get("currency"),
 	}
 
-	err := h.component.New(params, category).Render(w)
+	err := h.component.New(params, category, nil).Render(w)
 
 	h.SetError(w, err)
 }

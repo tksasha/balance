@@ -5,6 +5,7 @@ type CreateRequest struct {
 	Income        string
 	Visible       string
 	Supercategory string
+	Number        string
 }
 
 type UpdateRequest struct {
@@ -13,4 +14,5 @@ type UpdateRequest struct {
 	Income        string
 	Visible       string
 	Supercategory string
+	Number        string
 }

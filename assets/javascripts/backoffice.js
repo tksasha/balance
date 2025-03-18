@@ -22,5 +22,10 @@ document.addEventListener("backoffice.cash.created", async (e) => {
 });
 
 document.addEventListener("backoffice.categories.shown", (e) => {
-  clearModalSize();
+  setModalSize("modal-lg");
+});
+
+document.addEventListener("backoffice.category.updated", async (e) => {
+  if (Object.hasOwn(e.detail, "backofficeCategoriesPath"))
+    await htmx.ajax("GET", e.detail.backofficeCategoriesPath, { target: "#modal-body" });
 });

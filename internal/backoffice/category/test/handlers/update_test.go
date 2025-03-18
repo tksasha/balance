@@ -16,6 +16,7 @@ import (
 	"github.com/tksasha/balance/internal/db"
 	"github.com/tksasha/balance/internal/db/nameprovider"
 	"gotest.tools/v3/assert"
+	"gotest.tools/v3/golden"
 )
 
 func TestCategoryUpdateHandler(t *testing.T) { //nolint:funlen
@@ -100,7 +101,7 @@ func TestCategoryUpdateHandler(t *testing.T) { //nolint:funlen
 		assert.Equal(t, recorder.Code, http.StatusOK)
 	})
 
-	t.Run("responds 204 when category updated", func(t *testing.T) {
+	t.Run("responds 200 when category updated", func(t *testing.T) {
 		cleanup(t, db)
 
 		categoryToCreate := &category.Category{
@@ -139,7 +140,9 @@ func TestCategoryUpdateHandler(t *testing.T) { //nolint:funlen
 
 		mux.ServeHTTP(recorder, request)
 
-		assert.Equal(t, recorder.Code, http.StatusNoContent)
+		assert.Equal(t, recorder.Code, http.StatusOK)
+
+		golden.Assert(t, recorder.Header().Get("Hx-Trigger-After-Swap"), "update-hx-trigger-after-swap-header.json")
 
 		category := findCategoryByID(t, db, currency.USD, 1208)
 

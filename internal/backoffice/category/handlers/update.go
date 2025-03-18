@@ -1,12 +1,17 @@
 package handlers
 
 import (
+	"bytes"
+	"encoding/json"
 	"errors"
+	"log/slog"
 	"net/http"
 
 	"github.com/tksasha/balance/internal/backoffice/category"
 	"github.com/tksasha/balance/internal/backoffice/category/component"
 	"github.com/tksasha/balance/internal/common"
+	"github.com/tksasha/balance/internal/common/component/path"
+	"github.com/tksasha/balance/internal/common/currency"
 	"github.com/tksasha/balance/internal/common/handler"
 	"github.com/tksasha/validation"
 )
@@ -31,7 +36,7 @@ func NewUpdateHandler(
 func (h *UpdateHandler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 	category, err := h.handle(r)
 	if err == nil {
-		w.WriteHeader(http.StatusNoContent)
+		h.ok(w, category.Currency)
 
 		return
 	}
@@ -41,6 +46,8 @@ func (h *UpdateHandler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 		err := h.component.Update(category, verrors).Render(w)
 
 		h.SetError(w, err)
+
+		return
 	}
 
 	h.SetError(w, err)
@@ -57,7 +64,30 @@ func (h *UpdateHandler) handle(r *http.Request) (*category.Category, error) {
 		Income:        r.FormValue("income"),
 		Visible:       r.FormValue("visible"),
 		Supercategory: r.FormValue("supercategory"),
+		Number:        r.FormValue("number"),
 	}
 
 	return h.categoryService.Update(r.Context(), request)
+}
+
+func (h *UpdateHandler) ok(w http.ResponseWriter, currency currency.Currency) {
+	params := path.NewCurrency(currency)
+
+	header := map[string]map[string]string{
+		"backoffice.category.updated": {
+			"backofficeCategoriesPath": path.BackofficeCategories(params),
+		},
+	}
+
+	writer := bytes.NewBuffer([]byte{})
+
+	if err := json.NewEncoder(writer).Encode(header); err != nil {
+		slog.Error("failed to encode", "error", err)
+
+		writer.Reset()
+	}
+
+	w.Header().Add("Hx-Trigger-After-Swap", writer.String())
+
+	w.WriteHeader(http.StatusOK)
 }

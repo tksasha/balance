@@ -29,6 +29,8 @@ func (s *Service) Create(ctx context.Context, request category.CreateRequest) (*
 
 	category.Visible = validation.Boolean("visible", request.Visible)
 
+	category.Number = validation.Integer("number", request.Number) // TODO: test me
+
 	if validation.Errors.Exists() {
 		return category, validation.Errors
 	}

@@ -15,6 +15,7 @@ type Category struct {
 	Currency      currency.Currency
 	Supercategory int
 	DeletedAt     sql.NullTime
+	Number        int
 }
 
 type Categories []*Category

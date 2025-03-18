@@ -30,6 +30,8 @@ func (s *Service) Update(ctx context.Context, request category.UpdateRequest) (*
 
 	category.Supercategory = validation.Integer("supercategory", request.Supercategory)
 
+	category.Number = validation.Integer("number", request.Number) // TODO: test me
+
 	if validation.Errors.Exists() {
 		return category, validation.Errors
 	}

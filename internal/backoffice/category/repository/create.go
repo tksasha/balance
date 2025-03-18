@@ -11,9 +11,9 @@ func (r *Repository) Create(ctx context.Context, category *category.Category) er
 
 	query := `
 		INSERT INTO
-		    categories (name, slug, income, visible, currency, supercategory)
+		    categories (name, slug, income, visible, currency, supercategory, number)
 		VALUES
-		    (?, ?, ?, ?, ?, ?)
+		    (?, ?, ?, ?, ?, ?, ?)
 	`
 
 	result, err := r.db.ExecContext(
@@ -25,6 +25,7 @@ func (r *Repository) Create(ctx context.Context, category *category.Category) er
 		category.Visible,
 		currency,
 		category.Supercategory,
+		category.Number,
 	)
 	if err != nil {
 		return err

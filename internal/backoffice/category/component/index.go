@@ -1,6 +1,8 @@
 package component
 
 import (
+	"strconv"
+
 	"github.com/tksasha/balance/internal/backoffice/category"
 	"github.com/tksasha/balance/internal/common/component/path"
 	. "maragu.dev/gomponents" //nolint:stylecheck
@@ -29,9 +31,10 @@ func (c *Component) Index(params path.Params, categories category.Categories) No
 		),
 		Table(Class("table table-borderless table-hover"),
 			THead(Tr(
+				Th(),
 				Th(Text("Назва")),
-				Th(Class("text-center"), Text("Надходження")),
 				Th(Class("text-center"), Text("Відображається")),
+				Th(Class("text-center"), Text("Надходження")),
 			)),
 			TBody(Div(Map(categories, c.category))),
 		),
@@ -40,18 +43,20 @@ func (c *Component) Index(params path.Params, categories category.Categories) No
 
 func (c *Component) category(category *category.Category) Node {
 	return Tr(
+		Td(Class("text-end text-light"),
+			Text(strconv.Itoa(category.Number))),
 		Td(
 			Div(Class("link"), Text(category.Name)),
 			htmx.Get(path.EditBackofficeCategory(path.NewCurrency(category.Currency), category.ID)),
 			htmx.Target("#modal-body"),
 		),
 		Td(Class("text-center"),
-			If(category.Income, c.Yes()),
-			If(!category.Income, c.No()),
-		),
-		Td(Class("text-center"),
 			If(category.Visible, c.Yes()),
 			If(!category.Visible, c.No()),
+		),
+		Td(Class("text-center"),
+			If(category.Income, c.Yes()),
+			If(!category.Income, c.No()),
 		),
 	)
 }
