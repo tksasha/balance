@@ -34,7 +34,7 @@ func (c *Component) Index(values url.Values) Node {
 				c.form(values),
 				c.balance(values),
 				c.categories(values),
-				c.items(),
+				c.items(values),
 				c.Modal(),
 				c.linkToBackoffice(),
 				Script(Src("/assets/bootstrap-0f43271223c74d330702ce94a39ed70d04e8fd36.js")),
