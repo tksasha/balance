@@ -30,6 +30,7 @@ func (c *Component) Index(params path.Params, categories category.Categories) No
 		Table(Class("table table-borderless table-hover"),
 			THead(Tr(
 				Th(Text("Назва")),
+				Th(Class("text-center"), Text("Надходження")),
 				Th(Class("text-center"), Text("Відображається")),
 			)),
 			TBody(Div(Map(categories, c.category))),
@@ -43,6 +44,10 @@ func (c *Component) category(category *category.Category) Node {
 			Div(Class("link"), Text(category.Name)),
 			htmx.Get(path.EditBackofficeCategory(path.NewCurrency(category.Currency), category.ID)),
 			htmx.Target("#modal-body"),
+		),
+		Td(Class("text-center"),
+			If(category.Income, c.Yes()),
+			If(!category.Income, c.No()),
 		),
 		Td(Class("text-center"),
 			If(category.Visible, c.Yes()),

@@ -1,6 +1,8 @@
 package component
 
 import (
+	"strconv"
+
 	"github.com/tksasha/balance/internal/backoffice/category"
 	"github.com/tksasha/balance/internal/common/component/path"
 	"github.com/tksasha/balance/internal/common/currency"
@@ -20,16 +22,9 @@ func (c *Component) form(category *category.Category, _ validation.Errors) Node 
 				c.CurrencyOptions(currency.GetCode(category.Currency))),
 		),
 		c.Input("Назва", "name", category.Name, nil, nil, AutoFocus()),
-		Div(Class("mb-3"),
-			Div(Class("form-check"),
-				Input(Class("form-check-input"), Type("checkbox"), ID("is-category-visible"),
-					If(category.Visible, Checked()),
-				),
-				Label(Class("form-check-label"), For("is-category-visible"),
-					Text("Відображається"),
-				),
-			),
-		),
+		c.CheckBox("Надходження", "is-category-income", category.Income),
+		c.CheckBox("Відображається", "is-category-visible", category.Visible),
+		c.Input("Група", "supercategory", strconv.Itoa(category.Supercategory), nil, nil),
 		c.Submit(category.ID),
 	)
 }
