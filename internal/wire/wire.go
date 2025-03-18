@@ -53,7 +53,7 @@ func InitializeServer() *server.Server {
 		backofficecategoryhandlers.NewCreateHandler,
 		backofficecategoryhandlers.NewDeleteHandler,
 		backofficecategoryhandlers.NewEditHandler,
-		backofficecategoryhandlers.NewListHandler,
+		backofficecategoryhandlers.NewIndexHandler,
 		backofficecategoryhandlers.NewUpdateHandler,
 		backofficecategoryrepository.New,
 		backofficecategoryservice.New,

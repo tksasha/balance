@@ -14,11 +14,15 @@ func (r *Repository) FindAll(ctx context.Context) (category.Categories, error) {
 		SELECT
 			id,
 			currency,
-			name
+			name,
+			supercategory,
+			visible
 		FROM
 			categories
 		WHERE
 			currency = ?
+		ORDER BY
+			name
 	`
 
 	rows, err := r.db.QueryContext(ctx, query, currency)
@@ -37,7 +41,13 @@ func (r *Repository) FindAll(ctx context.Context) (category.Categories, error) {
 	for rows.Next() {
 		category := &category.Category{}
 
-		if err := rows.Scan(&category.ID, &category.Currency, &category.Name); err != nil {
+		if err := rows.Scan(
+			&category.ID,
+			&category.Currency,
+			&category.Name,
+			&category.Supercategory,
+			&category.Visible,
+		); err != nil {
 			return nil, err
 		}
 

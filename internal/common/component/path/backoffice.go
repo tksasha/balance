@@ -87,3 +87,35 @@ func NewBackofficeCash(params Params) string {
 func BackofficeCategories() string {
 	return Backoffice() + "/categories"
 }
+
+func NewBackofficeCategory(params Params) string {
+	values := setDefault(nil)
+
+	updateCurrency(values, params)
+
+	path := url.URL{
+		Path: backofficePath,
+	}
+
+	path = *path.JoinPath(categoriesPath, "new")
+
+	path.RawQuery = values.Encode()
+
+	return path.String()
+}
+
+func EditBackofficeCategory(params Params, id int) string {
+	values := setDefault(nil)
+
+	updateCurrency(values, params)
+
+	path := url.URL{
+		Path: backofficePath,
+	}
+
+	path = *path.JoinPath(categoriesPath, strconv.Itoa(id), "edit")
+
+	path.RawQuery = values.Encode()
+
+	return path.String()
+}

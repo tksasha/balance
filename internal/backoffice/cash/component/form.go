@@ -19,7 +19,7 @@ func (c *Component) form(cash *cash.Cash, errors validation.Errors) Node {
 		Div(Class("mb-3"),
 			Label(Class("form-label"), Text("Валюта")),
 			Select(Class("form-select"), Name("currency"),
-				c.currencyOptions(currency.GetCode(cash.Currency))),
+				c.CurrencyOptions(currency.GetCode(cash.Currency))),
 		),
 		c.Input("Назва", "name", cash.Name, nil, errors.Get("name")),
 		c.Input("Сума", "formula", cash.Formula, nil, errors.Get("sum")),

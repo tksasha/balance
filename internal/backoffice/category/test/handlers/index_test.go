@@ -1,7 +1,6 @@
 package handlers_test
 
 import (
-	"database/sql"
 	"net/http"
 	"net/http/httptest"
 	"testing"
@@ -15,16 +14,22 @@ import (
 )
 
 func TestListCategories(t *testing.T) {
-	handler, db := newListHandler(t)
+	ctx := t.Context()
+
+	db := db.Open(ctx, nameprovider.NewTestProvider())
 	defer func() {
 		if err := db.Close(); err != nil {
 			t.Fatal(err)
 		}
 	}()
 
-	mux := mux(t, "GET /backoffice/categories", handler)
+	categoryRepository := repository.New(db)
 
-	ctx := t.Context()
+	categoryService := service.New(categoryRepository)
+
+	handler := handlers.NewIndexHandler(categoryService)
+
+	mux := mux(t, "GET /backoffice/categories", handler)
 
 	t.Run("responds with 200 when there no errors", func(t *testing.T) {
 		request, err := http.NewRequestWithContext(ctx, http.MethodGet, "/backoffice/categories", nil)
@@ -37,19 +42,7 @@ func TestListCategories(t *testing.T) {
 		mux.ServeHTTP(recorder, request)
 
 		assert.Equal(t, recorder.Code, http.StatusOK)
+
+		assert.Equal(t, "backoffice.categories.shown", recorder.Header().Get("Hx-Trigger-After-Swap"))
 	})
-}
-
-func newListHandler(t *testing.T) (*handlers.ListHandler, *sql.DB) {
-	t.Helper()
-
-	db := db.Open(t.Context(), nameprovider.NewTestProvider())
-
-	categoryRepository := repository.New(db)
-
-	categoryService := service.New(categoryRepository)
-
-	handler := handlers.NewListHandler(categoryService)
-
-	return handler, db
 }

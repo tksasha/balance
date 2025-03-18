@@ -24,7 +24,7 @@ func (c *Component) Index(params path.Params, cashes cash.Cashes) Node {
 			Select(Class("form-select form-select-sm"), Name("currency"),
 				htmx.Get("/backoffice/cashes"), // TODO: fix me
 				htmx.Target("#modal-body"),
-				c.currencyOptions(params["currency"]),
+				c.CurrencyOptions(params["currency"]),
 			),
 		),
 		Table(Class("table table-borderless"),
