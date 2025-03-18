@@ -19,7 +19,7 @@ func (c *Component) Index() Node {
 			),
 			Div(Class("col"),
 				Button(Class("btn btn-outline-primary btn-lg w-100"),
-					htmx.Get(path.BackofficeCategories()),
+					htmx.Get(path.BackofficeCategories(nil)),
 					htmx.Target("#modal-body"),
 					Text("Категорії"),
 				),

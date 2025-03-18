@@ -33,6 +33,7 @@ func New( //nolint:funlen
 	backofficeCategoryDeleteHandler *backofficecategory.DeleteHandler,
 	backofficeCategoryEditHandler *backofficecategory.EditHandler,
 	backofficeCategoryIndexHandler *backofficecategory.IndexHandler,
+	backofficeCategoryNewHandler *backofficecategory.NewHandler,
 	backofficeCategoryUpdateHandler *backofficecategory.UpdateHandler,
 	backofficeIndexHandler *backofficeindex.IndexHandler,
 	balanceShowHandler *balance.ShowHandler,
@@ -91,6 +92,7 @@ func New( //nolint:funlen
 	mux.Handle("DELETE /backoffice/categories/{id}", backofficeCategoryDeleteHandler)
 	mux.Handle("GET /backoffice/categories/{id}/edit", backofficeCategoryEditHandler)
 	mux.Handle("PATCH /backoffice/categories/{id}", backofficeCategoryUpdateHandler)
+	mux.Handle("GET /backoffice/categories/new", backofficeCategoryNewHandler)
 
 	return &Routes{
 		Mux: mux,

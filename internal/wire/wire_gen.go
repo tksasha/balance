@@ -2,7 +2,6 @@
 
 //go:generate go run -mod=mod github.com/google/wire/cmd/wire
 //go:build !wireinject
-// +build !wireinject
 
 package wire
 
@@ -57,6 +56,7 @@ func InitializeServer() *server.Server {
 	handlersDeleteHandler := handlers2.NewDeleteHandler(service7)
 	handlersEditHandler := handlers2.NewEditHandler(service7)
 	handlersIndexHandler := handlers2.NewIndexHandler(service7)
+	handlersNewHandler := handlers2.NewNewHandler()
 	handlersUpdateHandler := handlers2.NewUpdateHandler(service7)
 	handlerIndexHandler := handler.NewIndexHandler()
 	repository8 := repository3.New(sqlDB)
@@ -77,9 +77,9 @@ func InitializeServer() *server.Server {
 	deleteHandler2 := handlers5.NewDeleteHandler(service11)
 	editHandler3 := handlers5.NewEditHandler(service11, service10)
 	indexHandler4 := handlers5.NewIndexHandler(service11)
-	handlersNewHandler := handlers5.NewNewHandler(service10)
+	newHandler2 := handlers5.NewNewHandler(service10)
 	updateHandler3 := handlers5.NewUpdateHandler(service11, service10)
-	routesRoutes := routes.New(createHandler, deleteHandler, editHandler, indexHandler, newHandler, updateHandler, handlersCreateHandler, handlersDeleteHandler, handlersEditHandler, handlersIndexHandler, handlersUpdateHandler, handlerIndexHandler, showHandler, editHandler2, indexHandler2, updateHandler2, indexHandler3, handlerHandler, createHandler2, deleteHandler2, editHandler3, indexHandler4, handlersNewHandler, updateHandler3)
+	routesRoutes := routes.New(createHandler, deleteHandler, editHandler, indexHandler, newHandler, updateHandler, handlersCreateHandler, handlersDeleteHandler, handlersEditHandler, handlersIndexHandler, handlersNewHandler, handlersUpdateHandler, handlerIndexHandler, showHandler, editHandler2, indexHandler2, updateHandler2, indexHandler3, handlerHandler, createHandler2, deleteHandler2, editHandler3, indexHandler4, newHandler2, updateHandler3)
 	v := middlewares.New()
 	serverServer := server.New(configConfig, routesRoutes, v)
 	return serverServer

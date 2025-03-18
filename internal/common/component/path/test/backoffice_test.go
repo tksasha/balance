@@ -222,3 +222,64 @@ func TestEditBackofficeCategory(t *testing.T) {
 		assert.Equal(t, d.path, path.EditBackofficeCategory(d.params, d.id))
 	}
 }
+
+func TestCreateBackofficeCategory(t *testing.T) {
+	ds := []struct {
+		params path.Params
+		path   string
+	}{
+		{
+			params: nil,
+			path:   "/backoffice/categories?currency=uah",
+		},
+		{
+			params: path.Params{"currency": "uah"},
+			path:   "/backoffice/categories?currency=uah",
+		},
+		{
+			params: path.Params{"currency": "usd"},
+			path:   "/backoffice/categories?currency=usd",
+		},
+		{
+			params: path.Params{"currency": "eur"},
+			path:   "/backoffice/categories?currency=eur",
+		},
+	}
+
+	for _, d := range ds {
+		assert.Equal(t, d.path, path.CreateBackofficeCategory(d.params))
+	}
+}
+
+func TestUpdateBackofficeCategory(t *testing.T) {
+	ds := []struct {
+		params path.Params
+		id     int
+		path   string
+	}{
+		{
+			params: nil,
+			id:     1,
+			path:   "/backoffice/categories/1?currency=uah",
+		},
+		{
+			params: path.Params{"currency": "uah"},
+			id:     2,
+			path:   "/backoffice/categories/2?currency=uah",
+		},
+		{
+			params: path.Params{"currency": "usd"},
+			id:     3,
+			path:   "/backoffice/categories/3?currency=usd",
+		},
+		{
+			params: path.Params{"currency": "eur"},
+			id:     4,
+			path:   "/backoffice/categories/4?currency=eur",
+		},
+	}
+
+	for _, d := range ds {
+		assert.Equal(t, d.path, path.UpdateBackofficeCategory(d.params, d.id))
+	}
+}

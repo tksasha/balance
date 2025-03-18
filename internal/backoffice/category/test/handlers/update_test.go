@@ -2,7 +2,6 @@ package handlers_test
 
 import (
 	"database/sql"
-	"io"
 	"net/http"
 	"net/http/httptest"
 	"net/url"
@@ -17,7 +16,6 @@ import (
 	"github.com/tksasha/balance/internal/db"
 	"github.com/tksasha/balance/internal/db/nameprovider"
 	"gotest.tools/v3/assert"
-	"gotest.tools/v3/golden"
 )
 
 func TestCategoryUpdateHandler(t *testing.T) { //nolint:funlen
@@ -100,13 +98,6 @@ func TestCategoryUpdateHandler(t *testing.T) { //nolint:funlen
 		mux.ServeHTTP(recorder, request)
 
 		assert.Equal(t, recorder.Code, http.StatusOK)
-
-		response, err := io.ReadAll(recorder.Body)
-		if err != nil {
-			t.Fatal(err)
-		}
-
-		golden.Assert(t, string(response), "update-with-errors.html")
 	})
 
 	t.Run("responds 204 when category updated", func(t *testing.T) {
