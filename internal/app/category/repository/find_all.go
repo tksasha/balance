@@ -20,9 +20,9 @@ func (r *Repository) FindAll(ctx context.Context) (category.Categories, error) {
 		    categories
 		WHERE
 		    visible = true
-		    AND categories.currency = ?
+		    AND currency = ?
 		ORDER BY
-		    categories.name ASC
+			number
 	`
 
 	rows, err := r.db.QueryContext(ctx, query, currency)
