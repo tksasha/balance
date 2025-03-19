@@ -26,13 +26,3 @@ document.getElementById("modal").addEventListener("shown.bs.modal", (e) => {
   if (input)
     input.focus();
 });
-
-htmx.on("balance.month.changed", (e) => {
-  if (Object.hasOwn(e.detail, "balanceCategoriesPath"))
-    htmx.ajax("GET", e.detail.balanceCategoriesPath, { target: "#categories" });
-});
-
-htmx.on("balance.year.changed", (e) => {
-  if (Object.hasOwn(e.detail, "balanceCategoriesPath"))
-    htmx.ajax("GET", e.detail.balanceCategoriesPath, { target: "#categories" });
-});

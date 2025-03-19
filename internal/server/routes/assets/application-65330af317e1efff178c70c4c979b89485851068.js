@@ -26,16 +26,6 @@ document.getElementById("modal").addEventListener("shown.bs.modal", (e) => {
   if (input)
     input.focus();
 });
-
-htmx.on("balance.month.changed", (e) => {
-  if (Object.hasOwn(e.detail, "balanceCategoriesPath"))
-    htmx.ajax("GET", e.detail.balanceCategoriesPath, { target: "#categories" });
-});
-
-htmx.on("balance.year.changed", (e) => {
-  if (Object.hasOwn(e.detail, "balanceCategoriesPath"))
-    htmx.ajax("GET", e.detail.balanceCategoriesPath, { target: "#categories" });
-});
 document.addEventListener("backoffice.index.shown", (e) => {
   setModalSize("modal-sm");
 });
@@ -75,6 +65,15 @@ document.addEventListener("balance.cash.updated", async (e) => {
 });
 
 document.addEventListener("balance.cash.edit", clearModalSize);
+htmx.on("balance.month.changed", (e) => {
+  if (Object.hasOwn(e.detail, "balanceCategoriesPath"))
+    htmx.ajax("GET", e.detail.balanceCategoriesPath, { target: "#categories", swap: "outerHTML" });
+});
+
+htmx.on("balance.year.changed", (e) => {
+  if (Object.hasOwn(e.detail, "balanceCategoriesPath"))
+    htmx.ajax("GET", e.detail.balanceCategoriesPath, { target: "#categories", swap: "outerHTML" });
+});
 document.addEventListener("balance.item.initialized", (e) => {
   $(".datepicker").datepicker(BOOTSTRAP_DATEPICKER_DEFAULTS);
 });

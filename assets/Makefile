@@ -63,6 +63,7 @@ compile:
 		javascripts/_common.js \
 		javascripts/backoffice.js \
 		javascripts/cashes.js \
+		javascripts/categories.js \
 		javascripts/items.js \
 		> javascripts/application.js
 
