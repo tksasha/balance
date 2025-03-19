@@ -96,7 +96,7 @@ mockgen:
 wire:
 	@go tool -modfile go.tool.mod wire internal/wire/wire.go
 
-.PHONY: migration # to create new migration
+.PHONY: migration # to create new migration `make migration name=add_table_column_name`
 migration:
 	@if [ -z "$(name)" ]; then echo "name is required"; exit 1; fi
 	touch "internal/db/migrations/$(shell date "+%Y%m%d%H%M%S")_$(name).sql"
@@ -105,11 +105,12 @@ migration:
 prepare:
 	@if [ ! -f go.mod ]; then go mod init $(MODULE); go mod tidy; fi
 	@if [ ! -f go.tool.mod ]; then go mod init -modfile go.tool.mod $(MODULE); go mod tidy -modfile go.tool.mod; fi
-	go get -tool -modfile go.tool.mod github.com/air-verse/air@latest
-	go get -tool -modfile go.tool.mod github.com/golangci/golangci-lint/cmd/golangci-lint@latest
-	go get -tool -modfile go.tool.mod github.com/google/wire/cmd/wire@latest
-	go get -tool -modfile go.tool.mod go.uber.org/mock/mockgen@latest
-	go get -tool -modfile go.tool.mod mvdan.cc/gofumpt@latest
+	go get -u ./...
+	go get -modfile go.tool.mod tool github.com/air-verse/air@latest
+	go get -modfile go.tool.mod tool github.com/golangci/golangci-lint/cmd/golangci-lint@latest
+	go get -modfile go.tool.mod tool github.com/google/wire/cmd/wire@latest
+	go get -modfile go.tool.mod tool go.uber.org/mock/mockgen@latest
+	go get -modfile go.tool.mod tool mvdan.cc/gofumpt@latest
 
 .PHONY: structure
 structure:
