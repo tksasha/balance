@@ -74,7 +74,6 @@ func TestItemUpdateHandler(t *testing.T) { //nolint:funlen
 			ID:       1157,
 			Currency: currency.UAH,
 			Name:     "Food",
-			Slug:     "food",
 		}
 
 		createCategory(t, db, categoryToCreate)
@@ -84,7 +83,6 @@ func TestItemUpdateHandler(t *testing.T) { //nolint:funlen
 			Currency:     currency.UAH,
 			CategoryID:   1157,
 			CategoryName: "Food",
-			CategorySlug: "food",
 		}
 
 		createItem(t, db, itemToCreate)
@@ -113,7 +111,6 @@ func TestItemUpdateHandler(t *testing.T) { //nolint:funlen
 		categoryToCreate := &category.Category{
 			ID:       1148,
 			Name:     "Pharmaceutical",
-			Slug:     "pharmaceutical",
 			Currency: currency.EUR,
 		}
 
@@ -161,7 +158,6 @@ func TestItemUpdateHandler(t *testing.T) { //nolint:funlen
 		assert.Equal(t, item.Sum, 84.0)
 		assert.Equal(t, item.CategoryID, 1148)
 		assert.Equal(t, item.CategoryName, "Pharmaceutical")
-		assert.Equal(t, item.CategorySlug, "pharmaceutical")
 		assert.Equal(t, item.Description, "pizza, ninja and disco")
 	})
 }

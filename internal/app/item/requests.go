@@ -16,6 +16,7 @@ type UpdateRequest struct {
 }
 
 type ListRequest struct {
-	Year  string
-	Month string
+	Year     string
+	Month    string
+	Category string
 }

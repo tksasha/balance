@@ -13,7 +13,6 @@ type Item struct {
 	Sum          float64
 	CategoryID   int
 	CategoryName string
-	CategorySlug string
 	Description  string
 	Currency     currency.Currency
 }

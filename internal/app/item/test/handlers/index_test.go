@@ -1,7 +1,6 @@
 package handlers_test
 
 import (
-	"database/sql"
 	"net/http"
 	"net/http/httptest"
 	"testing"
@@ -17,19 +16,27 @@ import (
 )
 
 func TestItemIndexHandler(t *testing.T) {
-	handler, db := newIndexHandler(t)
+	ctx := t.Context()
+
+	db := db.Open(ctx, nameprovider.NewTestProvider())
 	defer func() {
 		if err := db.Close(); err != nil {
 			t.Fatal(err)
 		}
 	}()
 
+	itemRepository := repository.New(db)
+
+	categoryRepository := categoryrepository.New(db)
+
+	itemService := service.New(itemRepository, categoryRepository)
+
+	handler := handlers.NewIndexHandler(itemService)
+
 	mux := mux(t, "GET /items", handler)
 
-	ctx := t.Context()
-
 	t.Run("responds 200 on items found", func(t *testing.T) {
-		request, err := http.NewRequestWithContext(ctx, http.MethodGet, "/items?currency=eur", nil)
+		request, err := http.NewRequestWithContext(ctx, http.MethodGet, "/items?currency=eur&month=12&year=2025", nil)
 		if err != nil {
 			t.Fatal(err)
 		}
@@ -43,20 +50,4 @@ func TestItemIndexHandler(t *testing.T) {
 		golden.Assert(t, recorder.Header().Get("Hx-Trigger-After-Swap"),
 			"index-hx-trigger-after-swap-header.json")
 	})
-}
-
-func newIndexHandler(t *testing.T) (*handlers.IndexHandler, *sql.DB) {
-	t.Helper()
-
-	db := db.Open(t.Context(), nameprovider.NewTestProvider())
-
-	itemRepository := repository.New(db)
-
-	categoryRepository := categoryrepository.New(db)
-
-	itemService := service.New(itemRepository, categoryRepository)
-
-	handler := handlers.NewIndexHandler(itemService)
-
-	return handler, db
 }

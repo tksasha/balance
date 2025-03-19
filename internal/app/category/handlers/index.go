@@ -34,7 +34,7 @@ func (h *IndexHandler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 		h.SetError(w, err)
 	}
 
-	err = h.component.Index(entities).Render(w)
+	err = h.component.Index(entities, r.URL.Query()).Render(w)
 
 	h.SetError(w, err)
 }

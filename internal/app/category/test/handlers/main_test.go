@@ -21,7 +21,7 @@ func cleanup(t *testing.T, db *sql.DB) {
 func createCategory(t *testing.T, db *sql.DB, category *category.Category) {
 	t.Helper()
 
-	query := `INSERT INTO categories(currency, id, name, slug, income) VALUES(?, ?, ?, ?, ?)`
+	query := `INSERT INTO categories(currency, id, name, income) VALUES(?, ?, ?, ?)`
 
 	result, err := db.ExecContext(
 		t.Context(),
@@ -29,7 +29,6 @@ func createCategory(t *testing.T, db *sql.DB, category *category.Category) {
 		currency.Default,
 		category.ID,
 		category.Name,
-		category.Slug,
 		category.Income,
 	)
 	if err != nil {
@@ -49,13 +48,11 @@ func createCategory(t *testing.T, db *sql.DB, category *category.Category) {
 func findCategoryByID(t *testing.T, db *sql.DB, id int) *category.Category {
 	t.Helper()
 
-	query := `SELECT id, name, slug FROM categories WHERE id = ?`
+	query := `SELECT id, name FROM categories WHERE id = ?`
 
 	category := &category.Category{}
 
-	if err := db.QueryRowContext(t.Context(), query, id).Scan(
-		&category.ID, &category.Name, &category.Slug,
-	); err != nil {
+	if err := db.QueryRowContext(t.Context(), query, id).Scan(&category.ID, &category.Name); err != nil {
 		t.Fatal(err)
 	}
 
@@ -69,12 +66,12 @@ func createItem(t *testing.T, db *sql.DB, item *item.Item) {
 
 	query := `
 		INSERT INTO
-			items(currency, date, sum, category_id, category_name, category_slug)
-		VALUES(?, ?, ?, ?, ?, ?)
+			items(currency, date, sum, category_id, category_name)
+		VALUES(?, ?, ?, ?, ?)
 	`
 
 	result, err := db.ExecContext(t.Context(), query,
-		currency.Default, item.Date, item.Sum, item.CategoryID, category.Name, category.Slug,
+		currency.Default, item.Date, item.Sum, item.CategoryID, category.Name,
 	)
 	if err != nil {
 		t.Fatal(err)

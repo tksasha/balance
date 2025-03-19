@@ -45,4 +45,8 @@ func updateValues(values url.Values, params Params) {
 	if _, ok := values["year"]; !ok {
 		values.Set("year", strconv.Itoa(time.Now().Year()))
 	}
+
+	if category, ok := params["category"]; ok {
+		values.Set("category", category)
+	}
 }

@@ -224,7 +224,6 @@ func TestUpdate(t *testing.T) { //nolint:funlen
 		category := &category.Category{
 			ID:   1100,
 			Name: "Beverages",
-			Slug: "beverages",
 		}
 
 		categoryRepository.EXPECT().FindByID(ctx, 1100).Return(category, nil)
@@ -236,7 +235,6 @@ func TestUpdate(t *testing.T) { //nolint:funlen
 			Sum:          4,
 			CategoryID:   1100,
 			CategoryName: "Beverages",
-			CategorySlug: "beverages",
 			Description:  "food, wine and flowers",
 		}
 
@@ -265,7 +263,6 @@ func TestUpdate(t *testing.T) { //nolint:funlen
 		category := &category.Category{
 			ID:   1100,
 			Name: "Beverages",
-			Slug: "beverages",
 		}
 
 		categoryRepository.EXPECT().FindByID(ctx, 1100).Return(category, nil)
@@ -277,7 +274,6 @@ func TestUpdate(t *testing.T) { //nolint:funlen
 			Sum:          4,
 			CategoryID:   1100,
 			CategoryName: "Beverages",
-			CategorySlug: "beverages",
 			Description:  "food, wine and flowers",
 		}
 

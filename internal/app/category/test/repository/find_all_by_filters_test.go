@@ -26,10 +26,10 @@ func TestGroup(t *testing.T) {
 	t.Run("return filtered categories", func(t *testing.T) {
 		cleanup(t, db)
 
-		createCategory(t, db, &category.Category{ID: 1, Name: "Food", Slug: "food", Supercategory: 1})
-		createCategory(t, db, &category.Category{ID: 2, Name: "Beverages", Slug: "beverages", Supercategory: 1})
-		createCategory(t, db, &category.Category{ID: 3, Name: "Salary", Slug: "salary", Income: true})
-		createCategory(t, db, &category.Category{ID: 4, Name: "AFU", Slug: "afu", Supercategory: 2})
+		createCategory(t, db, &category.Category{ID: 1, Name: "Food", Supercategory: 1})
+		createCategory(t, db, &category.Category{ID: 2, Name: "Beverages", Supercategory: 1})
+		createCategory(t, db, &category.Category{ID: 3, Name: "Salary", Income: true})
+		createCategory(t, db, &category.Category{ID: 4, Name: "AFU", Supercategory: 2})
 
 		createItem(t, db, &item.Item{Date: date(t, "2024-02-01"), CategoryID: 1, Sum: 11.11})
 		createItem(t, db, &item.Item{Date: date(t, "2024-02-02"), CategoryID: 2, Sum: 22.22})
@@ -46,10 +46,10 @@ func TestGroup(t *testing.T) {
 		actual, err := repository.FindAllByFilters(ctx, filters)
 
 		expected := category.Categories{
-			{Name: "Food", Slug: "food", Sum: 11.11, Supercategory: 1},
-			{Name: "Beverages", Slug: "beverages", Sum: 55.55, Supercategory: 1},
-			{Name: "Salary", Slug: "salary", Sum: 44.44, Supercategory: 0},
-			{Name: "AFU", Slug: "afu", Sum: 55.55, Supercategory: 2},
+			{ID: 1, Name: "Food", Sum: 11.11, Supercategory: 1},
+			{ID: 2, Name: "Beverages", Sum: 55.55, Supercategory: 1},
+			{ID: 3, Name: "Salary", Sum: 44.44, Supercategory: 0},
+			{ID: 4, Name: "AFU", Sum: 55.55, Supercategory: 2},
 		}
 
 		assert.NilError(t, err)

@@ -43,6 +43,11 @@ func TestItems(t *testing.T) {
 			params: path.Params{"year": "2022"},
 			path:   "/items?currency=eur&month=1&year=2022",
 		},
+		{
+			values: url.Values{"currency": {"eur"}, "month": {"12"}, "year": {"2025"}},
+			params: path.Params{"category": "16"},
+			path:   "/items?category=16&currency=eur&month=12&year=2025",
+		},
 	}
 
 	for _, d := range ds {

@@ -19,7 +19,6 @@ func (r *Repository) Update(ctx context.Context, item *item.Item) error {
 		    sum = ?,
 		    category_id = ?,
 		    category_name = ?,
-		    category_slug = ?,
 		    description = ?
 		WHERE
 		    id = ?
@@ -33,7 +32,6 @@ func (r *Repository) Update(ctx context.Context, item *item.Item) error {
 		item.Sum,
 		item.CategoryID,
 		item.CategoryName,
-		item.CategorySlug,
 		item.Description,
 		item.ID,
 		currency,

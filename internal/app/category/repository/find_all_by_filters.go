@@ -12,8 +12,8 @@ func (r *Repository) FindAllByFilters(ctx context.Context, filters category.Filt
 
 	query := `
 		SELECT
+			items.category_id,
 			items.category_name,
-			items.category_slug,
 			SUM(items.sum),
 			IIF(categories.income, 0, categories.supercategory) AS supercategory
 		FROM
@@ -46,8 +46,8 @@ func (r *Repository) FindAllByFilters(ctx context.Context, filters category.Filt
 		category := &category.Category{}
 
 		if err := rows.Scan(
+			&category.ID,
 			&category.Name,
-			&category.Slug,
 			&category.Sum,
 			&category.Supercategory,
 		); err != nil {

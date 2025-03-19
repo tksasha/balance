@@ -61,7 +61,6 @@ CREATE TABLE IF NOT EXISTS "items"(
   "deleted_at" time DEFAULT NULL,
   "currency" integer DEFAULT 0,
   category_name VARCHAR NOT NULL,
-  category_slug VARCHAR NOT NULL,
   CONSTRAINT "fk_rails_89fb86dc8b" FOREIGN KEY("category_id") REFERENCES "categories"("id")
 );
 CREATE INDEX "index_balans_items_on_date_and_category_id" ON "items"(

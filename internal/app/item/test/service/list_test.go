@@ -24,13 +24,15 @@ func TestList(t *testing.T) {
 	ctx := t.Context()
 
 	request := item.ListRequest{
-		Year:  "2024",
-		Month: "02",
+		Year:     "2024",
+		Month:    "02",
+		Category: "30",
 	}
 
 	filters := item.Filters{
-		From: "2024-02-01",
-		To:   "2024-02-29",
+		From:     "2024-02-01",
+		To:       "2024-02-29",
+		Category: 30,
 	}
 
 	t.Run("returns error when find all by month fails", func(t *testing.T) {
@@ -50,5 +52,21 @@ func TestList(t *testing.T) {
 
 		assert.NilError(t, err)
 		assert.Assert(t, slices.Equal(items, foundItems))
+	})
+
+	t.Run("when category is invalid use 0 instead", func(t *testing.T) {
+		request := request
+
+		request.Category = "abc"
+
+		filters := filters
+
+		filters.Category = 0
+
+		itemRepository.EXPECT().FindAll(ctx, filters).Return(item.Items{}, nil)
+
+		_, err := service.List(ctx, request)
+
+		assert.NilError(t, err)
 	})
 }

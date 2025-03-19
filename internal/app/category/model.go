@@ -11,7 +11,6 @@ type Category struct {
 	ID            int
 	Currency      currency.Currency
 	Name          string
-	Slug          string
 	Income        bool
 	Supercategory int
 	Sum           float64

@@ -16,7 +16,6 @@ func (r *Repository) FindByID(ctx context.Context, id int) (*category.Category, 
 		SELECT
 			id,
 			name,
-			slug,
 			income,
 			currency
 		FROM
@@ -33,7 +32,6 @@ func (r *Repository) FindByID(ctx context.Context, id int) (*category.Category, 
 	if err := row.Scan(
 		&category.ID,
 		&category.Name,
-		&category.Slug,
 		&category.Income,
 		&category.Currency,
 	); err != nil {

@@ -45,9 +45,9 @@ func TestIndexHandler(t *testing.T) {
 	t.Run("render index.html", func(t *testing.T) {
 		cleanup(t, db)
 
-		createCategory(t, db, &category.Category{ID: 1, Name: "Food", Slug: "food"})
-		createCategory(t, db, &category.Category{ID: 2, Name: "Beverages", Slug: "beverages"})
-		createCategory(t, db, &category.Category{ID: 3, Name: "Salary", Slug: "salary", Income: true})
+		createCategory(t, db, &category.Category{ID: 1, Name: "Food"})
+		createCategory(t, db, &category.Category{ID: 2, Name: "Beverages"})
+		createCategory(t, db, &category.Category{ID: 3, Name: "Salary", Income: true})
 
 		createItem(t, db, &item.Item{Date: date(t, "2025-03-01"), Sum: 11.11, CategoryID: 1})
 		createItem(t, db, &item.Item{Date: date(t, "2025-03-02"), Sum: 22.22, CategoryID: 2})

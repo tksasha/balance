@@ -40,12 +40,12 @@ func TestReport(t *testing.T) { //nolint:funlen
 
 	t.Run("when repository returns entities", func(t *testing.T) {
 		categories := category.Categories{
-			{Name: "Food", Slug: "food", Sum: 11.11, Supercategory: 1},
-			{Name: "Beverages", Slug: "beverages", Sum: 22.22, Supercategory: 1},
-			{Name: "Rent", Slug: "rent", Sum: 33.33, Supercategory: 2},
-			{Name: "Salary", Slug: "salary", Sum: 44.44, Supercategory: 0},
-			{Name: "Stocks", Slug: "stocks", Sum: 55.55, Supercategory: 0},
-			{Name: "Bonds", Slug: "bonds", Sum: 66.66, Supercategory: 0},
+			{Name: "Food", Sum: 11.11, Supercategory: 1},
+			{Name: "Beverages", Sum: 22.22, Supercategory: 1},
+			{Name: "Rent", Sum: 33.33, Supercategory: 2},
+			{Name: "Salary", Sum: 44.44, Supercategory: 0},
+			{Name: "Stocks", Sum: 55.55, Supercategory: 0},
+			{Name: "Bonds", Sum: 66.66, Supercategory: 0},
 		}
 
 		repository.EXPECT().FindAllByFilters(ctx, filters).Return(categories, nil)
@@ -54,16 +54,16 @@ func TestReport(t *testing.T) { //nolint:funlen
 
 		expected := category.GroupedCategories{
 			0: {
-				{Name: "Salary", Slug: "salary", Sum: 44.44, Supercategory: 0},
-				{Name: "Stocks", Slug: "stocks", Sum: 55.55, Supercategory: 0},
-				{Name: "Bonds", Slug: "bonds", Sum: 66.66, Supercategory: 0},
+				{Name: "Salary", Sum: 44.44, Supercategory: 0},
+				{Name: "Stocks", Sum: 55.55, Supercategory: 0},
+				{Name: "Bonds", Sum: 66.66, Supercategory: 0},
 			},
 			1: {
-				{Name: "Food", Slug: "food", Sum: 11.11, Supercategory: 1},
-				{Name: "Beverages", Slug: "beverages", Sum: 22.22, Supercategory: 1},
+				{Name: "Food", Sum: 11.11, Supercategory: 1},
+				{Name: "Beverages", Sum: 22.22, Supercategory: 1},
 			},
 			2: {
-				{Name: "Rent", Slug: "rent", Sum: 33.33, Supercategory: 2},
+				{Name: "Rent", Sum: 33.33, Supercategory: 2},
 			},
 		}
 

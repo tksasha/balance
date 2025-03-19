@@ -13,14 +13,13 @@ import (
 func createCategory(t *testing.T, db *sql.DB, category *category.Category) {
 	t.Helper()
 
-	query := `INSERT INTO categories(id, name, slug, income, supercategory) VALUES(?, ?, ?, ?, ?)`
+	query := `INSERT INTO categories(id, name, income, supercategory) VALUES(?, ?, ?, ?)`
 
 	result, err := db.ExecContext(
 		t.Context(),
 		query,
 		category.ID,
 		category.Name,
-		category.Slug,
 		category.Income,
 		category.Supercategory,
 	)
@@ -41,14 +40,11 @@ func createCategory(t *testing.T, db *sql.DB, category *category.Category) {
 func findCategoryByID(t *testing.T, db *sql.DB, id int) *category.Category {
 	t.Helper()
 
-	query := `SELECT name, slug FROM categories WHERE id = ?`
+	query := `SELECT name FROM categories WHERE id = ?`
 
 	category := &category.Category{}
 
-	if err := db.QueryRowContext(t.Context(), query, id).Scan(
-		&category.Name,
-		&category.Slug,
-	); err != nil {
+	if err := db.QueryRowContext(t.Context(), query, id).Scan(&category.Name); err != nil {
 		t.Fatal(err)
 	}
 
@@ -62,8 +58,8 @@ func createItem(t *testing.T, db *sql.DB, item *item.Item) {
 
 	query := `
 		INSERT INTO
-			items(currency, date, category_id, category_name, category_slug, sum)
-		VALUES(?, ?, ?, ?, ?, ?)
+			items(currency, date, category_id, category_name, sum)
+		VALUES(?, ?, ?, ?, ?)
 	`
 
 	result, err := db.ExecContext(
@@ -73,7 +69,6 @@ func createItem(t *testing.T, db *sql.DB, item *item.Item) {
 		item.Date,
 		item.CategoryID,
 		category.Name,
-		category.Slug,
 		item.Sum,
 	)
 	if err != nil {

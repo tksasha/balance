@@ -47,8 +47,6 @@ func (s *Service) setCategory(
 
 	item.CategoryName = category.Name
 
-	item.CategorySlug = category.Slug
-
 	return nil
 }
 

@@ -1,0 +1,5 @@
+BEGIN TRANSACTION;
+
+ALTER TABLE items DROP COLUMN category_slug;
+
+COMMIT;

@@ -27,8 +27,8 @@ func (r *Repository) FindAll(ctx context.Context, filters item.Filters) (item.It
 
 	args := []any{currency, filters.From, filters.To}
 
-	if filters.Category != nil {
-		query += ` AND items.category_slug = ?`
+	if filters.Category != 0 {
+		query += ` AND items.category_id = ?`
 
 		args = append(args, filters.Category)
 	}
