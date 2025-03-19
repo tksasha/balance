@@ -30,7 +30,6 @@ func New( //nolint:funlen
 	backofficeCashNewHandler *backofficecash.NewHandler,
 	backofficeCashUpdateHandler *backofficecash.UpdateHandler,
 	backofficeCategoryCreateHandler *backofficecategory.CreateHandler,
-	backofficeCategoryDeleteHandler *backofficecategory.DeleteHandler,
 	backofficeCategoryEditHandler *backofficecategory.EditHandler,
 	backofficeCategoryIndexHandler *backofficecategory.IndexHandler,
 	backofficeCategoryNewHandler *backofficecategory.NewHandler,
@@ -89,7 +88,6 @@ func New( //nolint:funlen
 
 	mux.Handle("GET /backoffice/categories", backofficeCategoryIndexHandler)
 	mux.Handle("POST /backoffice/categories", backofficeCategoryCreateHandler)
-	mux.Handle("DELETE /backoffice/categories/{id}", backofficeCategoryDeleteHandler)
 	mux.Handle("GET /backoffice/categories/{id}/edit", backofficeCategoryEditHandler)
 	mux.Handle("PATCH /backoffice/categories/{id}", backofficeCategoryUpdateHandler)
 	mux.Handle("GET /backoffice/categories/new", backofficeCategoryNewHandler)

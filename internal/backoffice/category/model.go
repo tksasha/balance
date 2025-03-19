@@ -1,8 +1,6 @@
 package category
 
 import (
-	"database/sql"
-
 	"github.com/tksasha/balance/internal/common/currency"
 )
 
@@ -14,7 +12,6 @@ type Category struct {
 	Visible       bool
 	Currency      currency.Currency
 	Supercategory int
-	DeletedAt     sql.NullTime
 	Number        int
 }
 

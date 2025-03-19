@@ -79,8 +79,7 @@ func findCategoryByID(t *testing.T, db *sql.DB, currency currency.Currency, id i
 			income,
 			visible,
 			currency,
-			supercategory,
-			deleted_at
+			supercategory
 		FROM
 			categories
 		WHERE
@@ -100,7 +99,6 @@ func findCategoryByID(t *testing.T, db *sql.DB, currency currency.Currency, id i
 			&category.Visible,
 			&category.Currency,
 			&category.Supercategory,
-			&category.DeletedAt,
 		); err != nil {
 		t.Fatalf("failed to find category by id, error: %v", err)
 	}
@@ -119,8 +117,7 @@ func findCategoryByName(t *testing.T, db *sql.DB, currency currency.Currency, na
 			income,
 			visible,
 			currency,
-			supercategory,
-			deleted_at
+			supercategory
 		FROM
 			categories
 		WHERE
@@ -140,7 +137,6 @@ func findCategoryByName(t *testing.T, db *sql.DB, currency currency.Currency, na
 			&category.Visible,
 			&category.Currency,
 			&category.Supercategory,
-			&category.DeletedAt,
 		); err != nil {
 		t.Fatalf("failed to find category by name, error: %v", err)
 	}

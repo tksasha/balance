@@ -51,7 +51,6 @@ func InitializeServer() *server.Server {
 		backofficecashrepository.New,
 		backofficecashservice.New,
 		backofficecategoryhandlers.NewCreateHandler,
-		backofficecategoryhandlers.NewDeleteHandler,
 		backofficecategoryhandlers.NewEditHandler,
 		backofficecategoryhandlers.NewIndexHandler,
 		backofficecategoryhandlers.NewNewHandler,
