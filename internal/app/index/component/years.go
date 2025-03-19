@@ -1,6 +1,7 @@
 package component
 
 import (
+	"fmt"
 	"net/url"
 	"strconv"
 
@@ -32,11 +33,17 @@ func (c *Component) year(year int, values url.Values) Node {
 
 	number := strconv.Itoa(year)
 
+	params := path.Params{"year": number}
+
+	callback := fmt.Sprintf("htmx.trigger('body', 'balance.year.changed', {balanceCategoriesPath: '%s'})",
+		path.Categories(values, params))
+
 	return Div(
 		classes,
 		Text(strconv.Itoa(year)),
 		Data("number", number),
-		htmx.Get(path.Items(values, path.Params{"year": number})),
+		htmx.Get(path.Items(values, params)),
 		htmx.Target("#items"),
+		htmx.On(":after-request", callback),
 	)
 }
