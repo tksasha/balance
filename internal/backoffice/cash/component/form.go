@@ -4,8 +4,8 @@ import (
 	"strconv"
 
 	"github.com/tksasha/balance/internal/backoffice/cash"
-	"github.com/tksasha/balance/internal/common/component/path"
 	"github.com/tksasha/balance/internal/common/currency"
+	"github.com/tksasha/balance/internal/common/paths"
 	"github.com/tksasha/validation"
 	. "maragu.dev/gomponents" //nolint:stylecheck
 	htmx "maragu.dev/gomponents-htmx"
@@ -14,8 +14,8 @@ import (
 
 func (c *Component) form(cash *cash.Cash, errors validation.Errors) Node {
 	return Form(
-		If(cash.ID == 0, htmx.Post(path.CreateBackofficeCash(nil))),
-		If(cash.ID != 0, htmx.Patch(path.UpdateBackofficeCash(nil, cash.ID))),
+		If(cash.ID == 0, htmx.Post(paths.CreateBackofficeCash())),
+		If(cash.ID != 0, htmx.Patch(paths.UpdateBackofficeCash(cash.ID))),
 		Div(Class("mb-3"),
 			Label(Class("form-label"), Text("Валюта")),
 			Select(Class("form-select"), Name("currency"),
@@ -28,7 +28,7 @@ func (c *Component) form(cash *cash.Cash, errors validation.Errors) Node {
 			c.Submit(cash.ID),
 			If(cash.ID != 0,
 				Button(Class("btn btn-outline-danger"),
-					htmx.Delete(path.DeleteBackofficeCash(path.NewCurrency(cash.Currency), cash.ID)),
+					htmx.Delete(paths.DeleteBackofficeCash(cash.ID)),
 					htmx.Confirm("Are you sure?"),
 					Text("Видалити"),
 				),

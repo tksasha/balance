@@ -1,17 +1,15 @@
 package component
 
 import (
-	"net/url"
-	"strconv"
-
 	"github.com/tksasha/balance/internal/app/category"
-	"github.com/tksasha/balance/internal/common/component/path"
+	"github.com/tksasha/balance/internal/common/paths"
+	"github.com/tksasha/balance/internal/common/paths/params"
 	. "maragu.dev/gomponents" //nolint:stylecheck
 	htmx "maragu.dev/gomponents-htmx"
 	. "maragu.dev/gomponents/html" //nolint:stylecheck
 )
 
-func (c *Component) Index(categories category.GroupedCategories, values url.Values) Node {
+func (c *Component) Index(categories category.GroupedCategories, params params.Params) Node {
 	nodes := []Node{}
 
 	for _, key := range categories.Keys() {
@@ -19,7 +17,7 @@ func (c *Component) Index(categories category.GroupedCategories, values url.Valu
 			Div(Class("card-body"),
 				Div(Class("card-text"),
 					Table(
-						TBody(c.categories(categories[key], values)),
+						TBody(c.categories(categories[key], params)),
 					),
 				),
 			),
@@ -35,11 +33,11 @@ func (c *Component) Index(categories category.GroupedCategories, values url.Valu
 	)
 }
 
-func (c *Component) categories(categories category.Categories, values url.Values) Node {
+func (c *Component) categories(categories category.Categories, params params.Params) Node {
 	var nodes []Node
 
 	nodes = append(nodes, Map(categories, func(category *category.Category) Node {
-		return c.category(category, values)
+		return c.category(category, params)
 	}))
 
 	if categories.HasMoreThanOne() {
@@ -49,10 +47,8 @@ func (c *Component) categories(categories category.Categories, values url.Values
 	return Group(nodes)
 }
 
-func (c *Component) category(category *category.Category, values url.Values) Node {
-	params := path.Params{
-		"category": strconv.Itoa(category.ID),
-	}
+func (c *Component) category(category *category.Category, params params.Params) Node {
+	params.SetCategory(category.ID)
 
 	return Tr(
 		Td(Class("name"),
@@ -60,7 +56,7 @@ func (c *Component) category(category *category.Category, values url.Values) Nod
 		),
 		Td(Class("sum"),
 			Div(Class("link"),
-				htmx.Get(path.Items(values, params)),
+				htmx.Get(paths.Items(params)),
 				htmx.Target("#items"),
 				Text(c.Money(category.Sum)),
 			),

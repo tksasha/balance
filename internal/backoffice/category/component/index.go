@@ -4,20 +4,21 @@ import (
 	"strconv"
 
 	"github.com/tksasha/balance/internal/backoffice/category"
-	"github.com/tksasha/balance/internal/common/component/path"
+	"github.com/tksasha/balance/internal/common/paths"
+	"github.com/tksasha/balance/internal/common/paths/params"
 	. "maragu.dev/gomponents" //nolint:stylecheck
 	htmx "maragu.dev/gomponents-htmx"
 	. "maragu.dev/gomponents/html" //nolint:stylecheck
 )
 
-func (c *Component) Index(params path.Params, categories category.Categories) Node {
+func (c *Component) Index(params params.Params, categories category.Categories) Node {
 	return Div(
 		Div(Class("d-flex justify-content-between"),
 			c.Breadcrumbs(Li(Class("breadcrumb-item active"), Text("Категорії"))),
 			Div(
 				Button(Class("btn btn-outline-primary btn-sm"),
 					Text("Додати"),
-					htmx.Get(path.NewBackofficeCategory(params)),
+					htmx.Get(paths.NewBackofficeCategory(params)),
 					htmx.Target("#modal-body"),
 				),
 			),
@@ -26,7 +27,7 @@ func (c *Component) Index(params path.Params, categories category.Categories) No
 			Select(Class("form-select form-select-sm"), Name("currency"),
 				htmx.Get("/backoffice/categories"), // TODO: fix me
 				htmx.Target("#modal-body"),
-				c.CurrencyOptions(params["currency"]),
+				c.CurrencyOptions(params.Get("currency")),
 			),
 		),
 		Table(Class("table table-borderless table-hover"),
@@ -47,7 +48,7 @@ func (c *Component) category(category *category.Category) Node {
 			Text(strconv.Itoa(category.Number))),
 		Td(
 			Div(Class("link"), Text(category.Name)),
-			htmx.Get(path.EditBackofficeCategory(path.NewCurrency(category.Currency), category.ID)),
+			htmx.Get(paths.EditBackofficeCategory(category.ID)),
 			htmx.Target("#modal-body"),
 		),
 		Td(Class("text-center"),

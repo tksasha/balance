@@ -7,9 +7,10 @@ import (
 	"net/http"
 
 	"github.com/tksasha/balance/internal/backoffice/cash"
-	"github.com/tksasha/balance/internal/common/component/path"
 	"github.com/tksasha/balance/internal/common/currency"
 	"github.com/tksasha/balance/internal/common/handler"
+	"github.com/tksasha/balance/internal/common/paths"
+	"github.com/tksasha/balance/internal/common/paths/params"
 )
 
 type DeleteHandler struct {
@@ -32,19 +33,21 @@ func (h *DeleteHandler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	h.ok(w, currency.Default)
+	params := params.New().SetCurrency(currency.Default)
+
+	h.ok(w, params)
 }
 
 func (h *DeleteHandler) handle(r *http.Request) error {
 	return h.cashService.Delete(r.Context(), r.PathValue("id"))
 }
 
-func (h *DeleteHandler) ok(w http.ResponseWriter, currency currency.Currency) {
+func (h *DeleteHandler) ok(w http.ResponseWriter, params params.Params) {
 	writer := bytes.NewBuffer([]byte{})
 
 	header := map[string]map[string]string{
 		"backoffice.cash.deleted": {
-			"backofficeCashesPath": path.BackofficeCashes(path.NewCurrency(currency)),
+			"backofficeCashesPath": paths.BackofficeCashes(params),
 		},
 	}
 

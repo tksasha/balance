@@ -26,7 +26,7 @@ func All() Currencies {
 
 func GetByCode(code string) Currency {
 	for curr, currCode := range All() {
-		if strings.ToUpper(code) == currCode {
+		if Code(code) == Code(currCode) {
 			return curr
 		}
 	}
@@ -37,8 +37,12 @@ func GetByCode(code string) Currency {
 func GetCode(currency Currency) string {
 	code, ok := All()[currency]
 	if ok {
-		return strings.ToLower(code)
+		return Code(code)
 	}
 
 	return GetCode(Default)
+}
+
+func Code(code string) string {
+	return strings.ToLower(code)
 }

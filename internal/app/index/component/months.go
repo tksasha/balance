@@ -2,10 +2,10 @@ package component
 
 import (
 	"fmt"
-	"net/url"
 	"strconv"
 
-	"github.com/tksasha/balance/internal/common/component/path"
+	"github.com/tksasha/balance/internal/common/paths"
+	"github.com/tksasha/balance/internal/common/paths/params"
 	"github.com/tksasha/month"
 	. "maragu.dev/gomponents" //nolint:stylecheck
 	htmx "maragu.dev/gomponents-htmx"
@@ -13,18 +13,18 @@ import (
 	. "maragu.dev/gomponents/html" //nolint:stylecheck
 )
 
-func (c *Component) Months(values url.Values) Node {
+func (c *Component) Months(params params.Params) Node {
 	return Div(
 		ID("months"),
 		htmx.SwapOOB("true"),
 		Map(month.All(), func(month month.Month) Node {
-			return c.Month(month, values)
+			return c.Month(month, params)
 		}),
 	)
 }
 
-func (c *Component) Month(month month.Month, values url.Values) Node {
-	val, err := strconv.Atoi(values.Get("month"))
+func (c *Component) Month(month month.Month, params params.Params) Node {
+	val, err := strconv.Atoi(params.Get("month"))
 	current := err == nil && month.Number == val
 
 	classes := components.Classes{
@@ -32,18 +32,16 @@ func (c *Component) Month(month month.Month, values url.Values) Node {
 		"link":   true,
 	}
 
-	number := strconv.Itoa(month.Number)
-
-	params := path.Params{"month": number}
+	params.SetMonth(month.Number)
 
 	callback := fmt.Sprintf("htmx.trigger('body', 'balance.month.changed', {balanceCategoriesPath: '%s'})",
-		path.Categories(values, params))
+		paths.Categories(params))
 
 	return Div(
 		classes,
 		Text(month.Name),
-		Data("number", number),
-		htmx.Get(path.Items(values, params)),
+		Data("number", strconv.Itoa(month.Number)),
+		htmx.Get(paths.Items(params)),
 		htmx.Target("#items"),
 		htmx.On(":after-request", callback),
 	)

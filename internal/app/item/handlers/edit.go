@@ -6,6 +6,7 @@ import (
 	"github.com/tksasha/balance/internal/app/item"
 	"github.com/tksasha/balance/internal/app/item/component"
 	"github.com/tksasha/balance/internal/common/handler"
+	"github.com/tksasha/balance/internal/common/paths/params"
 )
 
 type EditHandler struct {
@@ -45,7 +46,9 @@ func (h *EditHandler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 
 	w.Header().Add("Hx-Trigger-After-Swap", "balance.item.edit")
 
-	err = h.component.Edit(r.URL.Query(), item, categories, nil).Render(w)
+	params := params.New(r.URL.Query())
+
+	err = h.component.Edit(params, item, categories, nil).Render(w)
 
 	h.SetError(w, err)
 }

@@ -5,12 +5,11 @@ import (
 	"encoding/json"
 	"log/slog"
 	"net/http"
-	"net/url"
-	"strconv"
 
 	"github.com/tksasha/balance/internal/app/item"
-	"github.com/tksasha/balance/internal/common/component/path"
 	"github.com/tksasha/balance/internal/common/handler"
+	"github.com/tksasha/balance/internal/common/paths"
+	"github.com/tksasha/balance/internal/common/paths/params"
 )
 
 type DeleteHandler struct {
@@ -36,20 +35,21 @@ func (h *DeleteHandler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	h.StatusOK(w, r.URL.Query(), item)
+	params := params.New(r.URL.Query())
+
+	h.StatusOK(w, params, item)
 }
 
-func (h *DeleteHandler) StatusOK(w http.ResponseWriter, values url.Values, item *item.Item) {
-	params := path.Params{
-		"month": strconv.Itoa(int(item.Date.Month())),
-		"year":  strconv.Itoa(item.Date.Year()),
-	}
+func (h *DeleteHandler) StatusOK(w http.ResponseWriter, params params.Params, item *item.Item) {
+	month, year := int(item.Date.Month()), item.Date.Year()
+
+	params.SetMonth(month).SetYear(year)
 
 	header := map[string]map[string]string{
 		"balance.item.deleted": {
-			"itemsPath":      path.Items(values, params),
-			"balancePath":    path.Balance(values),
-			"categoriesPath": path.Categories(values, params),
+			"itemsPath":      paths.Items(params),
+			"balancePath":    paths.Balance(params),
+			"categoriesPath": paths.Categories(params),
 		},
 	}
 

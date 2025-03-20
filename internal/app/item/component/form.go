@@ -1,11 +1,10 @@
 package component
 
 import (
-	"net/url"
-
 	"github.com/tksasha/balance/internal/app/category"
 	"github.com/tksasha/balance/internal/app/item"
-	"github.com/tksasha/balance/internal/common/component/path"
+	"github.com/tksasha/balance/internal/common/paths"
+	"github.com/tksasha/balance/internal/common/paths/params"
 	"github.com/tksasha/validation"
 	. "maragu.dev/gomponents" //nolint:stylecheck
 	htmx "maragu.dev/gomponents-htmx"
@@ -14,14 +13,14 @@ import (
 )
 
 func (c *Component) Form(
-	values url.Values,
+	params params.Params,
 	item *item.Item,
 	categories category.Categories,
 	errors validation.Errors,
 ) Node {
 	return Form(
-		If(item.ID == 0, htmx.Post(path.CreateItem(values))),
-		If(item.ID != 1, htmx.Patch(path.UpdateItem(values, item.ID))),
+		If(item.ID == 0, htmx.Post(paths.CreateItem(params))),
+		If(item.ID != 1, htmx.Patch(paths.UpdateItem(params, item.ID))),
 		c.Input("Дата", "date", c.date(item.Date), Classes{"datepicker": true}, errors.Get("date")),
 		c.Input("Сума", "formula", item.Formula, nil, errors.Get("sum"), AutoFocus()),
 		Div(Class("mb-3"),
@@ -38,7 +37,7 @@ func (c *Component) Form(
 			If(item.ID != 0,
 				Div(Class("float-end"),
 					Button(Class("btn btn-outline-danger"),
-						htmx.Delete(path.DeleteItem(values, item.ID)),
+						htmx.Delete(paths.DeleteItem(params, item.ID)),
 						htmx.Confirm("Are you sure?"),
 						Text("Видалити"),
 					),

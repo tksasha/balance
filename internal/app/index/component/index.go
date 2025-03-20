@@ -1,14 +1,13 @@
 package component
 
 import (
-	"net/url"
-
+	"github.com/tksasha/balance/internal/common/paths/params"
 	. "maragu.dev/gomponents"            //nolint:stylecheck
 	. "maragu.dev/gomponents/components" //nolint:stylecheck
 	. "maragu.dev/gomponents/html"       //nolint:stylecheck
 )
 
-func (c *Component) Index(values url.Values) Node {
+func (c *Component) Index(params params.Params) Node {
 	return HTML5(
 		HTML5Props{
 			Title:    "Balance",
@@ -30,11 +29,11 @@ func (c *Component) Index(values url.Values) Node {
 				),
 			},
 			Body: []Node{
-				c.header(values),
-				c.form(values),
-				c.balance(values),
-				c.categories(values),
-				c.items(values),
+				c.header(params),
+				c.form(params),
+				c.balance(params),
+				c.categories(params),
+				c.items(params),
 				c.Modal(),
 				c.linkToBackoffice(),
 				Script(Src("/assets/bootstrap-0f43271223c74d330702ce94a39ed70d04e8fd36.js")),

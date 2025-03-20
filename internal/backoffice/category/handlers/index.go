@@ -2,12 +2,11 @@ package handlers
 
 import (
 	"net/http"
-	"net/url"
 
 	"github.com/tksasha/balance/internal/backoffice/category"
 	"github.com/tksasha/balance/internal/backoffice/category/component"
-	"github.com/tksasha/balance/internal/common/component/path"
 	"github.com/tksasha/balance/internal/common/handler"
+	"github.com/tksasha/balance/internal/common/paths/params"
 )
 
 type IndexHandler struct {
@@ -35,18 +34,16 @@ func (h *IndexHandler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	h.ok(w, r.URL.Query(), categories)
+	params := params.New(r.URL.Query())
+
+	h.ok(w, params, categories)
 }
 
 func (h *IndexHandler) handle(r *http.Request) (category.Categories, error) {
 	return h.service.List(r.Context())
 }
 
-func (h *IndexHandler) ok(w http.ResponseWriter, values url.Values, categories category.Categories) {
-	params := path.Params{
-		"currency": values.Get("currency"),
-	}
-
+func (h *IndexHandler) ok(w http.ResponseWriter, params params.Params, categories category.Categories) {
 	w.Header().Add("Hx-Trigger-After-Swap", "backoffice.categories.shown")
 
 	err := h.component.Index(params, categories).Render(w)

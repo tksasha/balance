@@ -1,34 +1,36 @@
-package path
+package paths
 
 import (
 	"net/url"
 	"strconv"
+
+	"github.com/tksasha/balance/internal/common/paths/params"
 )
 
 const cashesPath = "/cashes"
 
-func Cashes(values url.Values) string {
+func Cashes(params params.Params) string {
 	path := url.URL{
 		Path:     cashesPath,
-		RawQuery: setDefault(values).Encode(),
+		RawQuery: params.String(),
 	}
 
 	return path.String()
 }
 
-func EditCash(values url.Values, id int) string {
+func EditCash(params params.Params, id int) string {
 	path := url.URL{
 		Path:     cashesPath,
-		RawQuery: setDefault(values).Encode(),
+		RawQuery: params.String(),
 	}
 
 	return path.JoinPath(strconv.Itoa(id), "edit").String()
 }
 
-func UpdateCash(values url.Values, id int) string {
+func UpdateCash(params params.Params, id int) string {
 	path := url.URL{
 		Path:     cashesPath,
-		RawQuery: setDefault(values).Encode(),
+		RawQuery: params.String(),
 	}
 
 	return path.JoinPath(strconv.Itoa(id)).String()

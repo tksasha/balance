@@ -1,21 +1,20 @@
 package component
 
 import (
-	"net/url"
-
-	"github.com/tksasha/balance/internal/common/component/path"
+	"github.com/tksasha/balance/internal/common/paths"
+	"github.com/tksasha/balance/internal/common/paths/params"
 	. "maragu.dev/gomponents" //nolint:stylecheck
 	htmx "maragu.dev/gomponents-htmx"
 	. "maragu.dev/gomponents/html" //nolint:stylecheck
 )
 
-func (c *Component) items(values url.Values) Node {
+func (c *Component) items(params params.Params) Node {
 	return Div(Class("container"),
 		Div(Class("row mt-4 mb-5"),
 			Div(Class("col"),
 				Div(Class("card items"),
 					Div(Class("card-body"), ID("items"),
-						htmx.Get(path.Items(values, nil)),
+						htmx.Get(paths.Items(params)),
 						htmx.Trigger("load"),
 						Div(Class("spinner-border htmx-indicator"), ID("htmx-indicator")),
 					),

@@ -10,9 +10,9 @@ import (
 	"github.com/tksasha/balance/internal/backoffice/category"
 	"github.com/tksasha/balance/internal/backoffice/category/component"
 	"github.com/tksasha/balance/internal/common"
-	"github.com/tksasha/balance/internal/common/component/path"
-	"github.com/tksasha/balance/internal/common/currency"
 	"github.com/tksasha/balance/internal/common/handler"
+	"github.com/tksasha/balance/internal/common/paths"
+	"github.com/tksasha/balance/internal/common/paths/params"
 	"github.com/tksasha/validation"
 )
 
@@ -41,7 +41,9 @@ func (h *CreateHandler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	h.ok(w, category.Currency)
+	params := params.New().SetCurrency(category.Currency)
+
+	h.ok(w, params)
 }
 
 func (h *CreateHandler) handle(r *http.Request) (*category.Category, error) {
@@ -60,12 +62,12 @@ func (h *CreateHandler) handle(r *http.Request) (*category.Category, error) {
 	return h.categoryService.Create(r.Context(), request)
 }
 
-func (h *CreateHandler) ok(w http.ResponseWriter, currency currency.Currency) {
+func (h *CreateHandler) ok(w http.ResponseWriter, params params.Params) {
 	writer := bytes.NewBuffer([]byte{})
 
 	header := map[string]map[string]string{
 		"backoffice.category.created": {
-			"backofficeCategoriesPath": path.BackofficeCategories(path.NewCurrency(currency)),
+			"backofficeCategoriesPath": paths.BackofficeCategories(params),
 		},
 	}
 

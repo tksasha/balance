@@ -1,16 +1,15 @@
 package component
 
 import (
-	"net/url"
-
 	"github.com/tksasha/balance/internal/app/cash"
-	"github.com/tksasha/balance/internal/common/component/path"
+	"github.com/tksasha/balance/internal/common/paths"
+	"github.com/tksasha/balance/internal/common/paths/params"
 	. "maragu.dev/gomponents" //nolint:stylecheck
 	htmx "maragu.dev/gomponents-htmx"
 	. "maragu.dev/gomponents/html" //nolint:stylecheck
 )
 
-func (c *Component) Index(values url.Values, groupedCashes cash.GroupedCashes) Node {
+func (c *Component) Index(params params.Params, groupedCashes cash.GroupedCashes) Node {
 	groupedCashNodes := []Node{}
 
 	for _, key := range groupedCashes.Keys() {
@@ -18,7 +17,7 @@ func (c *Component) Index(values url.Values, groupedCashes cash.GroupedCashes) N
 
 		var nodes []Node
 
-		nodes = append(nodes, Map(cashes, func(cash *cash.Cash) Node { return c.cash(values, cash) }))
+		nodes = append(nodes, Map(cashes, func(cash *cash.Cash) Node { return c.cash(params, cash) }))
 
 		if cashes.HasMoreThanOne() {
 			nodes = append(nodes, c.Summary(cashes.Sum()))
@@ -38,12 +37,12 @@ func (c *Component) Index(values url.Values, groupedCashes cash.GroupedCashes) N
 	return Group(groupedCashNodes)
 }
 
-func (c *Component) cash(values url.Values, cash *cash.Cash, children ...Node) Node {
+func (c *Component) cash(params params.Params, cash *cash.Cash, children ...Node) Node {
 	return Tr(ID(c.cashID(cash.ID)),
 		Td(Text(cash.Name)),
 		Td(Class("sum"),
 			Div(Class("link"),
-				htmx.Get(path.EditCash(values, cash.ID)),
+				htmx.Get(paths.EditCash(params, cash.ID)),
 				htmx.Target("#modal-body"),
 				Data("bs-toggle", "modal"),
 				Data("bs-target", "#modal"),

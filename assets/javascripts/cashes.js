@@ -1,8 +1,16 @@
-document.addEventListener("balance.cash.updated", async (e) => {
+htmx.on("balance.cash.updated", (e) => {
   hideModal();
 
   if (Object.hasOwn(e.detail, "balancePath"))
-    await htmx.ajax("GET", e.detail.balancePath, { target: "#balance", swap: "outerHTML" });
+    htmx.ajax("GET", e.detail.balancePath, { target: "#balance", swap: "outerHTML" });
 });
 
-document.addEventListener("balance.cash.edit", clearModalSize);
+htmx.on("balance.cash.edit", clearModalSize);
+
+htmx.on("backoffice.cash.updated", (e) => {
+  if (Object.hasOwn(e.detail, "balancePath"))
+    htmx.ajax("GET", e.detail.balancePath, { target: "#balance" });
+
+  if (Object.hasOwn(e.detail, "balanceCashesPath"))
+    htmx.ajax("GET", e.detail.balanceCashesPath, { target: "#cashes" });
+});

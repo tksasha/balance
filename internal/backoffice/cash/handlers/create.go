@@ -10,8 +10,9 @@ import (
 	"github.com/tksasha/balance/internal/backoffice/cash"
 	"github.com/tksasha/balance/internal/backoffice/cash/component"
 	"github.com/tksasha/balance/internal/common"
-	"github.com/tksasha/balance/internal/common/component/path"
 	"github.com/tksasha/balance/internal/common/handler"
+	"github.com/tksasha/balance/internal/common/paths"
+	"github.com/tksasha/balance/internal/common/paths/params"
 	"github.com/tksasha/validation"
 )
 
@@ -35,7 +36,9 @@ func NewCreateHandler(
 func (h *CreateHandler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 	cash, err := h.handle(r)
 	if err == nil {
-		h.ok(w, cash)
+		params := params.New().SetCurrency(cash.Currency)
+
+		h.ok(w, params)
 
 		return
 	}
@@ -67,12 +70,12 @@ func (h *CreateHandler) handle(r *http.Request) (*cash.Cash, error) {
 	return h.cashService.Create(r.Context(), request)
 }
 
-func (h *CreateHandler) ok(w http.ResponseWriter, cash *cash.Cash) {
+func (h *CreateHandler) ok(w http.ResponseWriter, params params.Params) {
 	writer := bytes.NewBuffer([]byte{})
 
 	header := map[string]map[string]string{
 		"backoffice.cash.created": {
-			"backofficeCashesPath": path.BackofficeCashes(path.NewCurrency(cash.Currency)),
+			"backofficeCashesPath": paths.BackofficeCashes(params),
 		},
 	}
 

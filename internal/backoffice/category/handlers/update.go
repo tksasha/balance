@@ -10,9 +10,9 @@ import (
 	"github.com/tksasha/balance/internal/backoffice/category"
 	"github.com/tksasha/balance/internal/backoffice/category/component"
 	"github.com/tksasha/balance/internal/common"
-	"github.com/tksasha/balance/internal/common/component/path"
-	"github.com/tksasha/balance/internal/common/currency"
 	"github.com/tksasha/balance/internal/common/handler"
+	"github.com/tksasha/balance/internal/common/paths"
+	"github.com/tksasha/balance/internal/common/paths/params"
 	"github.com/tksasha/validation"
 )
 
@@ -36,7 +36,9 @@ func NewUpdateHandler(
 func (h *UpdateHandler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 	category, err := h.handle(r)
 	if err == nil {
-		h.ok(w, category.Currency)
+		params := params.New().SetCurrency(category.Currency)
+
+		h.ok(w, params)
 
 		return
 	}
@@ -70,12 +72,10 @@ func (h *UpdateHandler) handle(r *http.Request) (*category.Category, error) {
 	return h.categoryService.Update(r.Context(), request)
 }
 
-func (h *UpdateHandler) ok(w http.ResponseWriter, currency currency.Currency) {
-	params := path.NewCurrency(currency)
-
+func (h *UpdateHandler) ok(w http.ResponseWriter, params params.Params) {
 	header := map[string]map[string]string{
 		"backoffice.category.updated": {
-			"backofficeCategoriesPath": path.BackofficeCategories(params),
+			"backofficeCategoriesPath": paths.BackofficeCategories(params),
 		},
 	}
 

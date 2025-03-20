@@ -6,14 +6,13 @@ import (
 	"errors"
 	"log/slog"
 	"net/http"
-	"net/url"
-	"strconv"
 
 	"github.com/tksasha/balance/internal/app/item"
 	"github.com/tksasha/balance/internal/app/item/component"
 	"github.com/tksasha/balance/internal/common"
-	"github.com/tksasha/balance/internal/common/component/path"
 	"github.com/tksasha/balance/internal/common/handler"
+	"github.com/tksasha/balance/internal/common/paths"
+	"github.com/tksasha/balance/internal/common/paths/params"
 	"github.com/tksasha/validation"
 )
 
@@ -38,6 +37,8 @@ func NewUpdateHandler(
 }
 
 func (h *UpdateHandler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
+	params := params.New(r.URL.Query())
+
 	if err := r.ParseForm(); err != nil {
 		h.SetError(w, common.ErrParsingForm)
 
@@ -54,7 +55,7 @@ func (h *UpdateHandler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 
 	item, err := h.itemService.Update(r.Context(), request)
 	if err == nil {
-		h.StatusOK(w, r.URL.Query(), item)
+		h.ok(w, params, item)
 
 		return
 	}
@@ -68,7 +69,7 @@ func (h *UpdateHandler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 			return
 		}
 
-		err = h.component.Edit(r.URL.Query(), item, categories, verrors).Render(w)
+		err = h.component.Edit(params, item, categories, verrors).Render(w)
 
 		h.SetError(w, err)
 
@@ -78,16 +79,15 @@ func (h *UpdateHandler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 	h.SetError(w, err)
 }
 
-func (h *UpdateHandler) StatusOK(w http.ResponseWriter, values url.Values, item *item.Item) {
-	params := path.Params{
-		"month": strconv.Itoa(int(item.Date.Month())),
-		"year":  strconv.Itoa(item.Date.Year()),
-	}
+func (h *UpdateHandler) ok(w http.ResponseWriter, params params.Params, item *item.Item) {
+	month, year := int(item.Date.Month()), item.Date.Year()
+
+	params.SetMonth(month).SetYear(year)
 
 	headers := map[string]map[string]string{
 		"balance.item.updated": {
-			"categoriesPath": path.Categories(values, params),
-			"balancePath":    path.Balance(values),
+			"categoriesPath": paths.Categories(params),
+			"balancePath":    paths.Balance(params),
 		},
 	}
 
@@ -99,7 +99,7 @@ func (h *UpdateHandler) StatusOK(w http.ResponseWriter, values url.Values, item 
 
 	w.Header().Add("Hx-Trigger-After-Swap", writer.String())
 
-	err := h.component.Update(values, item).Render(w)
+	err := h.component.Update(params, item).Render(w)
 
 	h.SetError(w, err)
 }

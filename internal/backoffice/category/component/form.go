@@ -4,8 +4,8 @@ import (
 	"strconv"
 
 	"github.com/tksasha/balance/internal/backoffice/category"
-	"github.com/tksasha/balance/internal/common/component/path"
 	"github.com/tksasha/balance/internal/common/currency"
+	"github.com/tksasha/balance/internal/common/paths"
 	"github.com/tksasha/validation"
 	. "maragu.dev/gomponents" //nolint: stylecheck
 	htmx "maragu.dev/gomponents-htmx"
@@ -14,8 +14,8 @@ import (
 
 func (c *Component) form(category *category.Category, errors validation.Errors) Node {
 	return Form(
-		If(category.ID == 0, htmx.Post(path.CreateBackofficeCategory(nil))),
-		If(category.ID != 0, htmx.Patch(path.UpdateBackofficeCategory(nil, category.ID))),
+		If(category.ID == 0, htmx.Post(paths.CreateBackofficeCategory())),
+		If(category.ID != 0, htmx.Patch(paths.UpdateBackofficeCategory(category.ID))),
 		Div(Class("mb-3"),
 			Label(Class("form-label"), Text("Валюта")),
 			Select(Class("form-select"), Name("currency"),

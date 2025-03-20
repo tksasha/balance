@@ -6,6 +6,7 @@ import (
 	"github.com/tksasha/balance/internal/app/item"
 	"github.com/tksasha/balance/internal/app/item/component"
 	commonhandler "github.com/tksasha/balance/internal/common/handler"
+	"github.com/tksasha/balance/internal/common/paths/params"
 )
 
 type NewHandler struct {
@@ -33,7 +34,9 @@ func (h *NewHandler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 
 	w.Header().Set("Hx-Trigger-After-Swap", "balance.item.initialized")
 
-	if err := h.component.New(r.URL.Query(), categories).Render(w); err != nil {
+	params := params.New(r.URL.Query())
+
+	if err := h.component.New(params, categories).Render(w); err != nil {
 		h.SetError(w, err)
 
 		return

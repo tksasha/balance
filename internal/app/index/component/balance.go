@@ -1,25 +1,24 @@
 package component
 
 import (
-	"net/url"
-
-	"github.com/tksasha/balance/internal/common/component/path"
+	"github.com/tksasha/balance/internal/common/paths"
+	"github.com/tksasha/balance/internal/common/paths/params"
 	. "maragu.dev/gomponents" //nolint:stylecheck
 	htmx "maragu.dev/gomponents-htmx"
 	. "maragu.dev/gomponents/html" //nolint:stylecheck
 )
 
-func (c *Component) balance(values url.Values) Node {
+func (c *Component) balance(params params.Params) Node {
 	return Div(Class("container-fluid"),
 		Div(Class("row mt-4"),
 			Div(
 				htmx.Trigger("load"),
-				htmx.Get(path.Balance(values)),
+				htmx.Get(paths.Balance(params)),
 				htmx.Swap("outerHTML"),
 			),
 			Div(
 				htmx.Trigger("load"),
-				htmx.Get(path.Cashes(values)),
+				htmx.Get(paths.Cashes(params)),
 				htmx.Swap("outerHTML"),
 			),
 		),

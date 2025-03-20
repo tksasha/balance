@@ -14,7 +14,6 @@ import (
 	"github.com/tksasha/balance/internal/common/currency"
 	"github.com/tksasha/balance/internal/db"
 	"github.com/tksasha/balance/internal/db/nameprovider"
-	"github.com/tksasha/balance/internal/server/middlewares"
 	"gotest.tools/v3/assert"
 	"gotest.tools/v3/golden"
 )
@@ -35,15 +34,7 @@ func TestCashUpdateHandler(t *testing.T) { //nolint:funlen
 
 	cashUpdateHandler := handlers.NewUpdateHandler(cashService)
 
-	mux := http.NewServeMux()
-
-	next := http.Handler(cashUpdateHandler)
-
-	for _, middleware := range middlewares.New() {
-		next = middleware.Wrap(next)
-	}
-
-	mux.Handle("PATCH /backoffice/cashes/{id}", next)
+	mux := mux(t, "PATCH /backoffice/cashes/{id}", cashUpdateHandler)
 
 	t.Run("renders 404 when cash not found", func(t *testing.T) {
 		formData := url.Values{}

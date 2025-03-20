@@ -6,6 +6,7 @@ import (
 	"github.com/tksasha/balance/internal/app/cash"
 	"github.com/tksasha/balance/internal/app/cash/component"
 	"github.com/tksasha/balance/internal/common/handler"
+	"github.com/tksasha/balance/internal/common/paths/params"
 )
 
 type EditHandler struct {
@@ -26,16 +27,24 @@ func NewEditHandler(
 }
 
 func (h *EditHandler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
-	cash, err := h.cashService.Edit(r.Context(), r.PathValue("id"))
+	cash, err := h.handle(r)
 	if err != nil {
 		h.SetError(w, err)
 
 		return
 	}
 
+	h.ok(w, cash, params.New(r.URL.Query()))
+}
+
+func (h *EditHandler) handle(r *http.Request) (*cash.Cash, error) {
+	return h.cashService.Edit(r.Context(), r.PathValue("id"))
+}
+
+func (h *EditHandler) ok(w http.ResponseWriter, cash *cash.Cash, params params.Params) {
 	w.Header().Add("Hx-Trigger-After-Swap", "balance.cash.edit")
 
-	err = h.component.Edit(r.URL.Query(), cash, nil).Render(w)
-
-	h.SetError(w, err)
+	if err := h.component.Edit(params, cash, nil).Render(w); err != nil {
+		h.SetError(w, err)
+	}
 }

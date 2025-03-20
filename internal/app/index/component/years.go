@@ -2,28 +2,28 @@ package component
 
 import (
 	"fmt"
-	"net/url"
 	"strconv"
 
-	"github.com/tksasha/balance/internal/common/component/path"
+	"github.com/tksasha/balance/internal/common/paths"
+	"github.com/tksasha/balance/internal/common/paths/params"
 	. "maragu.dev/gomponents" //nolint:stylecheck
 	htmx "maragu.dev/gomponents-htmx"
 	"maragu.dev/gomponents/components"
 	. "maragu.dev/gomponents/html" //nolint:stylecheck
 )
 
-func (c *Component) Years(values url.Values) Node {
+func (c *Component) Years(params params.Params) Node {
 	return Div(
 		ID("years"),
 		htmx.SwapOOB("true"),
 		Map(c.years, func(year int) Node {
-			return c.year(year, values)
+			return c.year(year, params)
 		}),
 	)
 }
 
-func (c *Component) year(year int, values url.Values) Node {
-	val, err := strconv.Atoi(values.Get("year"))
+func (c *Component) year(year int, params params.Params) Node {
+	val, err := strconv.Atoi(params.Get("year"))
 	current := err == nil && year == val
 
 	classes := components.Classes{
@@ -31,18 +31,18 @@ func (c *Component) year(year int, values url.Values) Node {
 		"link":   true,
 	}
 
-	number := strconv.Itoa(year)
-
-	params := path.Params{"year": number}
+	params.SetYear(year)
 
 	callback := fmt.Sprintf("htmx.trigger('body', 'balance.year.changed', {balanceCategoriesPath: '%s'})",
-		path.Categories(values, params))
+		paths.Categories(params))
+
+	value := strconv.Itoa(year)
 
 	return Div(
 		classes,
-		Text(strconv.Itoa(year)),
-		Data("number", number),
-		htmx.Get(path.Items(values, params)),
+		Text(value),
+		Data("number", value),
+		htmx.Get(paths.Items(params)),
 		htmx.Target("#items"),
 		htmx.On(":after-request", callback),
 	)

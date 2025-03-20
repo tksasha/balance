@@ -6,13 +6,13 @@ import (
 	"errors"
 	"log/slog"
 	"net/http"
-	"net/url"
 
 	"github.com/tksasha/balance/internal/app/cash"
 	"github.com/tksasha/balance/internal/app/cash/component"
 	"github.com/tksasha/balance/internal/common"
-	"github.com/tksasha/balance/internal/common/component/path"
 	"github.com/tksasha/balance/internal/common/handler"
+	"github.com/tksasha/balance/internal/common/paths"
+	"github.com/tksasha/balance/internal/common/paths/params"
 	"github.com/tksasha/validation"
 )
 
@@ -34,16 +34,18 @@ func NewUpdateHandler(
 }
 
 func (h *UpdateHandler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
+	params := params.New(r.URL.Query())
+
 	cash, err := h.handle(r)
 	if err == nil {
-		h.ok(w, r.URL.Query(), cash)
+		h.ok(w, params, cash)
 
 		return
 	}
 
 	var verrors validation.Errors
 	if errors.As(err, &verrors) {
-		err := h.component.Edit(r.URL.Query(), cash, verrors).Render(w)
+		err := h.component.Edit(params, cash, verrors).Render(w)
 
 		h.SetError(w, err)
 
@@ -67,12 +69,12 @@ func (h *UpdateHandler) handle(r *http.Request) (*cash.Cash, error) {
 	return h.cashService.Update(r.Context(), request)
 }
 
-func (h *UpdateHandler) ok(w http.ResponseWriter, values url.Values, cash *cash.Cash) {
+func (h *UpdateHandler) ok(w http.ResponseWriter, params params.Params, cash *cash.Cash) {
 	writer := bytes.NewBuffer([]byte{})
 
 	header := map[string]map[string]string{
 		"balance.cash.updated": {
-			"balancePath": path.Balance(values),
+			"balancePath": paths.Balance(params),
 		},
 	}
 
@@ -82,7 +84,7 @@ func (h *UpdateHandler) ok(w http.ResponseWriter, values url.Values, cash *cash.
 
 	w.Header().Add("Hx-Trigger-After-Swap", writer.String())
 
-	err := h.component.Update(values, cash).Render(w)
+	err := h.component.Update(params, cash).Render(w)
 
 	h.SetError(w, err)
 }

@@ -5,9 +5,9 @@ import (
 
 	"github.com/tksasha/balance/internal/backoffice/cash"
 	"github.com/tksasha/balance/internal/backoffice/cash/component"
-	"github.com/tksasha/balance/internal/common/component/path"
 	"github.com/tksasha/balance/internal/common/currency"
 	"github.com/tksasha/balance/internal/common/handler"
+	"github.com/tksasha/balance/internal/common/paths/params"
 )
 
 type NewHandler struct {
@@ -24,13 +24,9 @@ func NewNewHandler() *NewHandler {
 }
 
 func (h *NewHandler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
-	currencyCode := r.URL.Query().Get("currency")
+	params := params.New(r.URL.Query())
 
-	params := path.Params{
-		"currency": currencyCode,
-	}
-
-	currency := currency.GetByCode(currencyCode)
+	currency := currency.GetByCode(params.Get("currency"))
 
 	cash := &cash.Cash{
 		Currency: currency,

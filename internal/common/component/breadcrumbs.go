@@ -1,7 +1,7 @@
 package component
 
 import (
-	"github.com/tksasha/balance/internal/common/component/path"
+	"github.com/tksasha/balance/internal/common/paths"
 	. "maragu.dev/gomponents" //nolint:stylecheck
 	htmx "maragu.dev/gomponents-htmx"
 	. "maragu.dev/gomponents/html" //nolint:stylecheck
@@ -12,7 +12,7 @@ func (c *Component) Breadcrumbs(children ...Node) Node {
 		Ol(Class("breadcrumb"),
 			Li(Class("breadcrumb-item"),
 				Span(Class("link"), Text("Backoffice"),
-					htmx.Get(path.Backoffice()),
+					htmx.Get(paths.Backoffice()),
 					htmx.Target("#modal-body"),
 				),
 			),

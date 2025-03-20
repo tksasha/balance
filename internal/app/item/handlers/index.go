@@ -5,11 +5,11 @@ import (
 	"encoding/json"
 	"log/slog"
 	"net/http"
-	"net/url"
 
 	"github.com/tksasha/balance/internal/app/item"
 	"github.com/tksasha/balance/internal/app/item/component"
 	"github.com/tksasha/balance/internal/common/handler"
+	"github.com/tksasha/balance/internal/common/paths/params"
 )
 
 type IndexHandler struct {
@@ -31,13 +31,15 @@ func NewIndexHandler(
 
 func (h *IndexHandler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 	items, err := h.handle(r)
-	if err == nil {
-		h.ok(w, r.URL.Query(), items)
+	if err != nil {
+		h.SetError(w, err)
 
 		return
 	}
 
-	h.SetError(w, err)
+	params := params.New(r.URL.Query())
+
+	h.ok(w, params, items)
 }
 
 func (h *IndexHandler) handle(r *http.Request) (item.Items, error) {
@@ -50,8 +52,8 @@ func (h *IndexHandler) handle(r *http.Request) (item.Items, error) {
 	return h.itemService.List(r.Context(), request)
 }
 
-func (h *IndexHandler) ok(w http.ResponseWriter, values url.Values, items item.Items) {
-	month, year := values.Get("month"), values.Get("year")
+func (h *IndexHandler) ok(w http.ResponseWriter, params params.Params, items item.Items) {
+	month, year := params.Get("month"), params.Get("year")
 
 	header := map[string]map[string]string{
 		"balance.items.shown": {
@@ -70,7 +72,7 @@ func (h *IndexHandler) ok(w http.ResponseWriter, values url.Values, items item.I
 
 	w.Header().Add("Hx-Trigger-After-Swap", writer.String())
 
-	err := h.component.Index(values, items).Render(w)
+	err := h.component.Index(params, items).Render(w)
 
 	h.SetError(w, err)
 }

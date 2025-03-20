@@ -6,15 +6,14 @@ import (
 	"errors"
 	"log/slog"
 	"net/http"
-	"net/url"
-	"strconv"
 
 	"github.com/tksasha/balance/internal/app/category"
 	"github.com/tksasha/balance/internal/app/item"
 	"github.com/tksasha/balance/internal/app/item/component"
 	"github.com/tksasha/balance/internal/common"
-	"github.com/tksasha/balance/internal/common/component/path"
 	"github.com/tksasha/balance/internal/common/handler"
+	"github.com/tksasha/balance/internal/common/paths"
+	"github.com/tksasha/balance/internal/common/paths/params"
 	"github.com/tksasha/validation"
 )
 
@@ -46,14 +45,16 @@ func (h *CreateHandler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
+	params := params.New(r.URL.Query())
+
 	item, err := h.handle(r)
 	if err != nil {
-		h.errors(w, r.URL.Query(), item, categories, err)
+		h.errors(w, params, item, categories, err)
 
 		return
 	}
 
-	h.ok(w, r.URL.Query(), item, categories)
+	h.ok(w, params, item, categories)
 }
 
 func (h *CreateHandler) handle(r *http.Request) (*item.Item, error) {
@@ -71,17 +72,21 @@ func (h *CreateHandler) handle(r *http.Request) (*item.Item, error) {
 	return h.itemService.Create(r.Context(), request)
 }
 
-func (h *CreateHandler) ok(w http.ResponseWriter, values url.Values, item *item.Item, categories category.Categories) {
-	params := path.Params{
-		"month": strconv.Itoa(int(item.Date.Month())),
-		"year":  strconv.Itoa(item.Date.Year()),
-	}
+func (h *CreateHandler) ok(
+	w http.ResponseWriter,
+	params params.Params,
+	item *item.Item,
+	categories category.Categories,
+) {
+	month, year := int(item.Date.Month()), item.Date.Year()
+
+	params.SetMonth(month).SetYear(year)
 
 	header := map[string]map[string]string{
 		"balance.item.created": {
-			"itemsPath":      path.Items(values, params),
-			"categoriesPath": path.Categories(values, params),
-			"balancePath":    path.Balance(values),
+			"itemsPath":      paths.Items(params),
+			"categoriesPath": paths.Categories(params),
+			"balancePath":    paths.Balance(params),
 		},
 	}
 
@@ -97,14 +102,14 @@ func (h *CreateHandler) ok(w http.ResponseWriter, values url.Values, item *item.
 
 	w.WriteHeader(http.StatusOK)
 
-	if err := h.component.New(values, categories).Render(w); err != nil {
+	if err := h.component.New(params, categories).Render(w); err != nil {
 		h.SetError(w, err)
 	}
 }
 
 func (h *CreateHandler) errors(
 	w http.ResponseWriter,
-	values url.Values,
+	params params.Params,
 	item *item.Item,
 	categories category.Categories,
 	err error,
@@ -115,7 +120,7 @@ func (h *CreateHandler) errors(
 
 		w.Header().Add("Hx-Retarget", "#modal-body")
 
-		err = h.component.Create(values, item, categories, verrors).Render(w)
+		err = h.component.Create(params, item, categories, verrors).Render(w)
 
 		h.SetError(w, err)
 

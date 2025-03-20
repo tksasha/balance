@@ -1,25 +1,26 @@
 package component
 
 import (
-	"github.com/tksasha/balance/internal/common/component/path"
+	"github.com/tksasha/balance/internal/common/paths"
+	"github.com/tksasha/balance/internal/common/paths/params"
 	. "maragu.dev/gomponents" //nolint:stylecheck
 	htmx "maragu.dev/gomponents-htmx"
 	. "maragu.dev/gomponents/html" //nolint:stylecheck
 )
 
-func (c *Component) Index() Node {
+func (c *Component) Index(params params.Params) Node {
 	return c.ModalBody(
 		Div(Class("row"),
 			Div(Class("col mb-3"),
 				Button(Class("btn btn-outline-primary btn-lg w-100"),
-					htmx.Get(path.BackofficeCashes(nil)),
+					htmx.Get(paths.BackofficeCashes(params)),
 					htmx.Target("#modal-body"),
 					Text("Залишки"),
 				),
 			),
 			Div(Class("col"),
 				Button(Class("btn btn-outline-primary btn-lg w-100"),
-					htmx.Get(path.BackofficeCategories(nil)),
+					htmx.Get(paths.BackofficeCategories(params)),
 					htmx.Target("#modal-body"),
 					Text("Категорії"),
 				),

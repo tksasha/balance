@@ -5,8 +5,8 @@ import (
 
 	"github.com/tksasha/balance/internal/backoffice/category"
 	"github.com/tksasha/balance/internal/backoffice/category/component"
-	"github.com/tksasha/balance/internal/common/component/path"
 	"github.com/tksasha/balance/internal/common/handler"
+	"github.com/tksasha/balance/internal/common/paths/params"
 )
 
 type EditHandler struct {
@@ -42,7 +42,7 @@ func (h *EditHandler) handle(r *http.Request) (*category.Category, error) {
 }
 
 func (h *EditHandler) ok(w http.ResponseWriter, category *category.Category) {
-	params := path.NewCurrency(category.Currency)
+	params := params.New().SetCurrency(category.Currency)
 
 	err := h.component.Edit(params, category, nil).Render(w)
 

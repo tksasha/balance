@@ -2,10 +2,10 @@ package component_test
 
 import (
 	"bytes"
-	"net/url"
 	"testing"
 
 	"github.com/tksasha/balance/internal/app/index/component"
+	"github.com/tksasha/balance/internal/common/paths/params"
 	"gotest.tools/v3/golden"
 )
 
@@ -22,13 +22,9 @@ func TestYears(t *testing.T) {
 	for currency, filename := range testdata {
 		w := bytes.NewBuffer([]byte{})
 
-		values := url.Values{}
+		params := params.New().SetCurrencyCode(currency)
 
-		if currency != "" {
-			values.Add("currency", currency)
-		}
-
-		if err := component.Years(values).Render(w); err != nil {
+		if err := component.Years(params).Render(w); err != nil {
 			t.Fatal(err)
 		}
 

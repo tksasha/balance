@@ -5,6 +5,7 @@ import (
 
 	"github.com/tksasha/balance/internal/app/index/component"
 	commonhandler "github.com/tksasha/balance/internal/common/handler"
+	"github.com/tksasha/balance/internal/common/paths/params"
 )
 
 type Handler struct {
@@ -21,7 +22,9 @@ func New() *Handler {
 }
 
 func (h *Handler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
-	err := h.component.Index(r.URL.Query()).Render(w)
+	params := params.New(r.URL.Query())
+
+	err := h.component.Index(params).Render(w)
 
 	h.SetError(w, err)
 }

@@ -2,10 +2,10 @@ package component_test
 
 import (
 	"bytes"
-	"net/url"
 	"testing"
 
 	"github.com/tksasha/balance/internal/app/index/component"
+	"github.com/tksasha/balance/internal/common/paths/params"
 	"gotest.tools/v3/golden"
 )
 
@@ -22,13 +22,9 @@ func TestMonths(t *testing.T) {
 	for currency, filename := range testdata {
 		writer := bytes.NewBuffer([]byte{})
 
-		values := url.Values{}
+		params := params.New().SetCurrencyCode(currency)
 
-		if currency != "" {
-			values.Add("currency", currency)
-		}
-
-		if err := component.Months(values).Render(writer); err != nil {
+		if err := component.Months(params).Render(writer); err != nil {
 			t.Fatalf("failed to render months: %v", err)
 		}
 

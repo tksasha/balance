@@ -1,26 +1,25 @@
 package component
 
 import (
-	"net/url"
-
 	"github.com/tksasha/balance/internal/app/category"
 	"github.com/tksasha/balance/internal/app/item"
+	"github.com/tksasha/balance/internal/common/paths/params"
 	"github.com/tksasha/validation"
 	. "maragu.dev/gomponents" //nolint:stylecheck
 	htmx "maragu.dev/gomponents-htmx"
 )
 
 func (c *Component) Create(
-	values url.Values,
+	params params.Params,
 	item *item.Item,
 	categories category.Categories,
 	errors validation.Errors,
 ) Node {
 	return c.New(
-		values,
+		params,
 		categories,
 		c.ModalBody(
-			c.Form(values, item, categories, errors),
+			c.Form(params, item, categories, errors),
 			htmx.SwapOOB("true"),
 		),
 	)

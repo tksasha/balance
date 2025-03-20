@@ -10,9 +10,9 @@ import (
 	"github.com/tksasha/balance/internal/backoffice/cash"
 	"github.com/tksasha/balance/internal/backoffice/cash/component"
 	"github.com/tksasha/balance/internal/common"
-	"github.com/tksasha/balance/internal/common/component/path"
-	"github.com/tksasha/balance/internal/common/currency"
 	"github.com/tksasha/balance/internal/common/handler"
+	"github.com/tksasha/balance/internal/common/paths"
+	"github.com/tksasha/balance/internal/common/paths/params"
 	"github.com/tksasha/validation"
 )
 
@@ -36,7 +36,9 @@ func NewUpdateHandler(
 func (h *UpdateHandler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 	cash, err := h.handle(r)
 	if err == nil {
-		h.ok(w, cash)
+		params := params.New().SetCurrency(cash.Currency)
+
+		h.ok(w, params)
 
 		return
 	}
@@ -69,21 +71,20 @@ func (h *UpdateHandler) handle(r *http.Request) (*cash.Cash, error) {
 	return h.cashService.Update(r.Context(), request)
 }
 
-func (h *UpdateHandler) ok(w http.ResponseWriter, cash *cash.Cash) {
+func (h *UpdateHandler) ok(w http.ResponseWriter, params params.Params) {
 	writer := bytes.NewBuffer([]byte{})
 
-	params := path.Params{
-		"currency": currency.GetCode(cash.Currency),
-	}
-
-	values := map[string]map[string]string{
+	header := map[string]map[string]string{
 		"backoffice.cash.updated": {
-			"backofficeCashesPath": path.BackofficeCashes(params),
+			"backofficeCashesPath": paths.BackofficeCashes(params),
+			"balancePath":          paths.Balance(params),
 		},
 	}
 
-	if err := json.NewEncoder(writer).Encode(values); err != nil {
+	if err := json.NewEncoder(writer).Encode(header); err != nil {
 		slog.Error("failed to encode", "error", err)
+
+		writer.Reset()
 	}
 
 	w.Header().Set("Hx-Trigger-After-Swap", writer.String())

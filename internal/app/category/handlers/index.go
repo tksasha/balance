@@ -6,6 +6,7 @@ import (
 	"github.com/tksasha/balance/internal/app/category"
 	"github.com/tksasha/balance/internal/app/category/component"
 	commonhandler "github.com/tksasha/balance/internal/common/handler"
+	"github.com/tksasha/balance/internal/common/paths/params"
 )
 
 type IndexHandler struct {
@@ -34,7 +35,9 @@ func (h *IndexHandler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 		h.SetError(w, err)
 	}
 
-	err = h.component.Index(entities, r.URL.Query()).Render(w)
+	params := params.New(r.URL.Query())
+
+	err = h.component.Index(entities, params).Render(w)
 
 	h.SetError(w, err)
 }
