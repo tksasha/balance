@@ -283,3 +283,31 @@ func TestUpdateBackofficeCategory(t *testing.T) {
 		assert.Equal(t, d.path, path.UpdateBackofficeCategory(d.params, d.id))
 	}
 }
+
+func TestBackofficeCategories(t *testing.T) {
+	ds := []struct {
+		params path.Params
+		path   string
+	}{
+		{
+			params: nil,
+			path:   "/backoffice/categories?currency=uah",
+		},
+		{
+			params: path.Params{"currency": "uah"},
+			path:   "/backoffice/categories?currency=uah",
+		},
+		{
+			params: path.Params{"currency": "usd"},
+			path:   "/backoffice/categories?currency=usd",
+		},
+		{
+			params: path.Params{"currency": "eur"},
+			path:   "/backoffice/categories?currency=eur",
+		},
+	}
+
+	for _, d := range ds {
+		assert.Equal(t, d.path, path.BackofficeCategories(d.params))
+	}
+}

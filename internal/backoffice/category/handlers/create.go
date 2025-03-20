@@ -1,12 +1,17 @@
 package handlers
 
 import (
+	"bytes"
+	"encoding/json"
 	"errors"
+	"log/slog"
 	"net/http"
 
 	"github.com/tksasha/balance/internal/backoffice/category"
 	"github.com/tksasha/balance/internal/backoffice/category/component"
 	"github.com/tksasha/balance/internal/common"
+	"github.com/tksasha/balance/internal/common/component/path"
+	"github.com/tksasha/balance/internal/common/currency"
 	"github.com/tksasha/balance/internal/common/handler"
 	"github.com/tksasha/validation"
 )
@@ -30,22 +35,13 @@ func NewCreateHandler(
 
 func (h *CreateHandler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 	category, err := h.handle(r)
-	if err == nil {
-		w.WriteHeader(http.StatusCreated)
+	if err != nil {
+		h.errors(w, category, err)
 
 		return
 	}
 
-	var verrors validation.Errors
-	if errors.As(err, &verrors) {
-		err := h.component.Create(category, verrors).Render(w)
-
-		h.SetError(w, err)
-
-		return
-	}
-
-	h.SetError(w, err)
+	h.ok(w, category.Currency)
 }
 
 func (h *CreateHandler) handle(r *http.Request) (*category.Category, error) {
@@ -62,4 +58,37 @@ func (h *CreateHandler) handle(r *http.Request) (*category.Category, error) {
 	}
 
 	return h.categoryService.Create(r.Context(), request)
+}
+
+func (h *CreateHandler) ok(w http.ResponseWriter, currency currency.Currency) {
+	writer := bytes.NewBuffer([]byte{})
+
+	header := map[string]map[string]string{
+		"backoffice.category.created": {
+			"backofficeCategoriesPath": path.BackofficeCategories(path.NewCurrency(currency)),
+		},
+	}
+
+	if err := json.NewEncoder(writer).Encode(header); err != nil {
+		slog.Error("failed to encode", "error", err)
+
+		writer.Reset()
+	}
+
+	w.Header().Add("Hx-Trigger-After-Swap", writer.String())
+
+	w.WriteHeader(http.StatusOK)
+}
+
+func (h *CreateHandler) errors(w http.ResponseWriter, category *category.Category, err error) {
+	var verrors validation.Errors
+	if errors.As(err, &verrors) {
+		err := h.component.Create(category, verrors).Render(w)
+
+		h.SetError(w, err)
+
+		return
+	}
+
+	h.SetError(w, err)
 }

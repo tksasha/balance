@@ -1,7 +1,6 @@
 package handlers_test
 
 import (
-	"database/sql"
 	"net/http"
 	"net/http/httptest"
 	"net/url"
@@ -15,15 +14,22 @@ import (
 	"github.com/tksasha/balance/internal/db"
 	"github.com/tksasha/balance/internal/db/nameprovider"
 	"gotest.tools/v3/assert"
+	"gotest.tools/v3/golden"
 )
 
 func TestCategoryCreateHandler(t *testing.T) { //nolint:funlen
-	handler, db := newCreateHandler(t)
+	db := db.Open(t.Context(), nameprovider.NewTestProvider())
 	defer func() {
 		if err := db.Close(); err != nil {
 			t.Fatal(err)
 		}
 	}()
+
+	categoryRepository := repository.New(db)
+
+	categoryService := service.New(categoryRepository)
+
+	handler := handlers.NewCreateHandler(categoryService)
 
 	mux := mux(t, "POST /backoffice/categories", handler)
 
@@ -61,7 +67,7 @@ func TestCategoryCreateHandler(t *testing.T) { //nolint:funlen
 		assert.Equal(t, recorder.Code, http.StatusOK)
 	})
 
-	t.Run("responds 201 on successful create", func(t *testing.T) {
+	t.Run("responds 200 on successful create", func(t *testing.T) {
 		cleanup(t, db)
 
 		formData := url.Values{
@@ -84,7 +90,10 @@ func TestCategoryCreateHandler(t *testing.T) { //nolint:funlen
 
 		mux.ServeHTTP(recorder, request)
 
-		assert.Equal(t, recorder.Code, http.StatusCreated)
+		assert.Equal(t, recorder.Code, http.StatusOK)
+
+		golden.Assert(t, recorder.Header().Get("Hx-Trigger-After-Swap"),
+			"create-hx-trigger-after-swap-header.json")
 
 		category := findCategoryByName(t, db, currency.EUR, "Miscellaneous")
 
@@ -95,18 +104,4 @@ func TestCategoryCreateHandler(t *testing.T) { //nolint:funlen
 		assert.Equal(t, category.Currency, currency.EUR)
 		assert.Equal(t, category.Supercategory, 3)
 	})
-}
-
-func newCreateHandler(t *testing.T) (*handlers.CreateHandler, *sql.DB) {
-	t.Helper()
-
-	db := db.Open(t.Context(), nameprovider.NewTestProvider())
-
-	categoryRepository := repository.New(db)
-
-	categoryService := service.New(categoryRepository)
-
-	handler := handlers.NewCreateHandler(categoryService)
-
-	return handler, db
 }

@@ -55,15 +55,6 @@ document.addEventListener("backoffice.cash.created", async (e) => {
   if (Object.hasOwn(e.detail, "backofficeCashesPath"))
     await htmx.ajax("GET", e.detail.backofficeCashesPath, { target: "#modal-body" });
 });
-
-document.addEventListener("backoffice.categories.shown", (e) => {
-  setModalSize("modal-lg");
-});
-
-document.addEventListener("backoffice.category.updated", async (e) => {
-  if (Object.hasOwn(e.detail, "backofficeCategoriesPath"))
-    await htmx.ajax("GET", e.detail.backofficeCategoriesPath, { target: "#modal-body" });
-});
 document.addEventListener("balance.cash.updated", async (e) => {
   hideModal();
 
@@ -80,6 +71,20 @@ htmx.on("balance.month.changed", (e) => {
 htmx.on("balance.year.changed", (e) => {
   if (Object.hasOwn(e.detail, "balanceCategoriesPath"))
     htmx.ajax("GET", e.detail.balanceCategoriesPath, { target: "#categories", swap: "outerHTML" });
+});
+
+htmx.on("backoffice.category.created", (e) => {
+  if (Object.hasOwn(e.detail, "backofficeCategoriesPath"))
+    htmx.ajax("GET", e.detail.backofficeCategoriesPath, { target: "#modal-body" });
+});
+
+htmx.on("backoffice.categories.shown", (e) => {
+  setModalSize("modal-lg");
+});
+
+htmx.on("backoffice.category.updated", (e) => {
+  if (Object.hasOwn(e.detail, "backofficeCategoriesPath"))
+    htmx.ajax("GET", e.detail.backofficeCategoriesPath, { target: "#modal-body" });
 });
 document.addEventListener("balance.item.initialized", (e) => {
   $(".datepicker").datepicker(BOOTSTRAP_DATEPICKER_DEFAULTS);
