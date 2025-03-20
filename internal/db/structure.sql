@@ -40,8 +40,6 @@ CREATE TABLE IF NOT EXISTS "categories"(
   "visible" boolean DEFAULT 1,
   "currency" integer DEFAULT 0,
   "supercategory" integer DEFAULT 1 NOT NULL,
-  "deleted_at" datetime
-  ,
   slug VARCHAR,
   number INTEGER DEFAULT 100
 );

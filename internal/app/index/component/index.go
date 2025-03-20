@@ -42,7 +42,7 @@ func (c *Component) Index(values url.Values) Node {
 				Script(Src("/assets/jquery.min-5a9dcfbef655a2668e78baebeaa8dc6f41d8dabb.js")),
 				Script(Src("/assets/bootstrap-datepicker.min-cdff2c53b8ff6b44eb16e842bd4b86541a7853f6.js")),
 				Script(Src("/assets/bootstrap-datepicker.uk.min-d58d82ad3cc17da5ff61d0d8559c3b397c941638.js")),
-				Script(Src("/assets/application-e1ea6d5434eca15fac5fb5701626e1aa573c48e5.js")),
+				Script(Src("/assets/application-e97c579e3423a82046eabc43129937fc0de44e1b.js")),
 			},
 		},
 	)

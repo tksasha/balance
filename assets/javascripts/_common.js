@@ -3,7 +3,14 @@ const BOOTSTRAP_DATEPICKER_DEFAULTS = {
 };
 
 const hideModal = (event) => {
-  bootstrap.Modal.getInstance("#modal").hide();
+  const modal = bootstrap.Modal.getInstance("#modal");
+
+  if (modal)
+    modal.hide();
+};
+
+const showModal = () => {
+  bootstrap.Modal.getOrCreateInstance("#modal").show();
 };
 
 const clearModalSize = () => {

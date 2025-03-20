@@ -62,6 +62,8 @@ func TestItemCreateHandler(t *testing.T) { //nolint:funlen
 		mux.ServeHTTP(recorder, request)
 
 		assert.Equal(t, http.StatusOK, recorder.Code)
+
+		assert.Equal(t, recorder.Header().Get("Hx-Retarget"), "#modal-body")
 	})
 
 	t.Run("renders created item", func(t *testing.T) {

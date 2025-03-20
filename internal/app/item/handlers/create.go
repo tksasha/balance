@@ -9,6 +9,7 @@ import (
 	"net/url"
 	"strconv"
 
+	"github.com/tksasha/balance/internal/app/category"
 	"github.com/tksasha/balance/internal/app/item"
 	"github.com/tksasha/balance/internal/app/item/component"
 	"github.com/tksasha/balance/internal/common"
@@ -38,50 +39,39 @@ func NewCreateHandler(
 }
 
 func (h *CreateHandler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
-	if err := r.ParseForm(); err != nil {
-		h.SetError(w, common.ErrParsingForm)
-
-		return
-	}
-
-	item, err := h.itemService.Create(r.Context(), h.parseRequest(r))
-	if err == nil {
-		h.StatusOK(w, r.URL.Query(), item)
-
-		return
-	}
-
-	var verrors validation.Errors
-	if errors.As(err, &verrors) {
-		categories, err := h.categoryService.List(r.Context())
-		if err != nil {
-			h.SetError(w, err)
-
-			return
-		}
-
-		w.Header().Add("Hx-Trigger-After-Swap", "balance.item.create.error")
-
-		err = h.component.Create(r.URL.Query(), item, categories, verrors).Render(w)
-
+	categories, err := h.categoryService.List(r.Context())
+	if err != nil {
 		h.SetError(w, err)
 
 		return
 	}
 
-	h.SetError(w, err)
+	item, err := h.handle(r)
+	if err != nil {
+		h.errors(w, r.URL.Query(), item, categories, err)
+
+		return
+	}
+
+	h.ok(w, r.URL.Query(), item, categories)
 }
 
-func (h *CreateHandler) parseRequest(r *http.Request) item.CreateRequest {
-	return item.CreateRequest{
+func (h *CreateHandler) handle(r *http.Request) (*item.Item, error) {
+	if err := r.ParseForm(); err != nil {
+		return nil, common.ErrParsingForm
+	}
+
+	request := item.CreateRequest{
 		Date:        r.FormValue("date"),
 		Formula:     r.FormValue("formula"),
 		CategoryID:  r.FormValue("category_id"),
 		Description: r.FormValue("description"),
 	}
+
+	return h.itemService.Create(r.Context(), request)
 }
 
-func (h *CreateHandler) StatusOK(w http.ResponseWriter, values url.Values, item *item.Item) {
+func (h *CreateHandler) ok(w http.ResponseWriter, values url.Values, item *item.Item, categories category.Categories) {
 	params := path.Params{
 		"month": strconv.Itoa(int(item.Date.Month())),
 		"year":  strconv.Itoa(item.Date.Year()),
@@ -99,9 +89,38 @@ func (h *CreateHandler) StatusOK(w http.ResponseWriter, values url.Values, item 
 
 	if err := json.NewEncoder(writer).Encode(header); err != nil {
 		slog.Error("failed to encode", "error", err)
+
+		writer.Reset()
 	}
 
 	w.Header().Add("Hx-Trigger-After-Swap", writer.String())
 
 	w.WriteHeader(http.StatusOK)
+
+	if err := h.component.New(values, categories).Render(w); err != nil {
+		h.SetError(w, err)
+	}
+}
+
+func (h *CreateHandler) errors(
+	w http.ResponseWriter,
+	values url.Values,
+	item *item.Item,
+	categories category.Categories,
+	err error,
+) {
+	var verrors validation.Errors
+	if errors.As(err, &verrors) {
+		w.Header().Add("Hx-Trigger-After-Swap", "balance.item.create.error")
+
+		w.Header().Add("Hx-Retarget", "#modal-body")
+
+		err = h.component.Create(values, item, categories, verrors).Render(w)
+
+		h.SetError(w, err)
+
+		return
+	}
+
+	h.SetError(w, err)
 }

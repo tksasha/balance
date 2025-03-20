@@ -54,6 +54,8 @@ document.addEventListener("balance.items.shown", (e) => {
 });
 
 document.addEventListener("balance.item.create.error", (e) => {
+  showModal();
+
   clearModalSize();
 
   const modal = bootstrap.Modal.getOrCreateInstance("#modal").show();
