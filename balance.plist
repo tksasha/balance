@@ -8,8 +8,6 @@
     <string>/Users/tksasha/bin/balance</string>
     <key>RunAtLoad</key>
     <true/>
-    <key>KeepAlive</key>
-    <true/>
     <key>EnvironmentVariables</key>
     <dict>
         <key>ADDRESS</key>
