@@ -9,7 +9,7 @@ import (
 )
 
 func (c *Component) items(params params.Params) Node {
-	return Div(Class("container-fluid"),
+	return Div(Class("container"),
 		Div(Class("row mt-4 mb-5"),
 			Div(Class("col"),
 				Div(Class("card items"),
