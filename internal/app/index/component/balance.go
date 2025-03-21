@@ -9,7 +9,7 @@ import (
 )
 
 func (c *Component) balance(params params.Params) Node {
-	return Div(Class("container-fluid"),
+	return Div(Class("container"),
 		Div(Class("row mt-4"), ID("balance-and-cashes-row"),
 			Div(
 				htmx.Trigger("load"),

@@ -26,7 +26,7 @@ func (c *Component) Index(categories category.GroupedCategories, params params.P
 		nodes = append(nodes, node)
 	}
 
-	return Div(Class("container-fluid"), ID("categories"),
+	return Div(Class("container"), ID("categories"),
 		Div(Class("clearfix mt-4"),
 			Group(nodes),
 		),
