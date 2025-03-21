@@ -21,7 +21,7 @@ func (c *Component) form(cash *cash.Cash, errors validation.Errors) Node {
 			Select(Class("form-select"), Name("currency"),
 				c.CurrencyOptions(currency.GetCode(cash.Currency))),
 		),
-		c.Input("Назва", "name", cash.Name, nil, errors.Get("name")),
+		c.Input("Назва", "name", cash.Name, nil, errors.Get("name"), AutoFocus()),
 		c.Input("Сума", "formula", cash.Formula, nil, errors.Get("sum")),
 		c.Input("Група", "supercategory", strconv.Itoa(cash.Supercategory), nil, errors.Get("supercategory")),
 		Div(Class("d-flex justify-content-between"),

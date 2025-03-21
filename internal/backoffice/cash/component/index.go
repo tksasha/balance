@@ -36,12 +36,11 @@ func (c *Component) Index(params params.Params, cashes cash.Cashes) Node {
 
 func (c *Component) cash(cash *cash.Cash) Node {
 	return Tr(
-		Td(Text(cash.Name)),
-		Td(Class("text-end"),
-			Div(Class("link"),
-				htmx.Get(paths.EditBackofficeCash(cash.ID)),
-				htmx.Target("#modal-body"),
-				Text(c.Money(cash.Sum))),
+		Td(Div(Class("link"),
+			htmx.Get(paths.EditBackofficeCash(cash.ID)),
+			htmx.Target("#modal-body"),
+			Text(cash.Name)),
 		),
+		Td(Class("text-end"), Text(c.Money(cash.Sum))),
 	)
 }
