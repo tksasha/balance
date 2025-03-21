@@ -2,7 +2,6 @@ package params_test
 
 import (
 	"net/url"
-	"strings"
 	"testing"
 
 	"github.com/tksasha/balance/internal/common/currency"
@@ -14,7 +13,7 @@ func TestNew(t *testing.T) {
 	t.Run("by default", func(t *testing.T) {
 		params := params.New()
 
-		assert.Equal(t, "uah", params.Get("currency"))
+		assert.Equal(t, params.Get("currency"), "uah")
 	})
 
 	t.Run("when currency is set", func(t *testing.T) {
@@ -27,41 +26,51 @@ func TestNew(t *testing.T) {
 		for code, values := range ds {
 			params := params.New(values)
 
-			assert.Equal(t, code, params.Get("currency"))
+			assert.Equal(t, params.Get("currency"), code)
 		}
 	})
 }
 
-func TestSetCurrency(t *testing.T) {
-	params := params.New()
+func TestWithCurrency(t *testing.T) {
+	original := params.New()
 
-	for currency, code := range currency.All() {
-		params.SetCurrency(currency)
+	for curr, code := range currency.All() {
+		updated := original.WithCurrency(curr)
 
-		assert.Equal(t, strings.ToLower(code), params.Get("currency"))
+		assert.Equal(t, original.Get("currency"), "uah")
+		assert.Equal(t, updated.Get("currency"), currency.Code(code))
 	}
-}
-
-func TestSetCurrencyCode(t *testing.T) {
-	params := params.New()
-
-	for _, code := range currency.All() {
-		params.SetCurrencyCode(code)
-
-		assert.Equal(t, currency.Code(code), params.Get("currency"))
-	}
-
-	t.Run("set default currency if it not found or invalid", func(t *testing.T) {
-		for _, code := range []string{"", "abc"} {
-			params.SetCurrencyCode(code)
-
-			assert.Equal(t, currency.Code("uah"), params.Get("currency"))
-		}
-	})
 }
 
 func TestString(t *testing.T) {
 	params := params.New()
 
-	assert.Equal(t, "currency=uah", params.String())
+	assert.Equal(t, params.String(), "currency=uah")
+}
+
+func TestWithMonth(t *testing.T) {
+	original := params.New()
+
+	updated := original.WithMonth(12)
+
+	assert.Equal(t, original.Get("month"), "")
+	assert.Equal(t, updated.Get("month"), "12")
+}
+
+func TestWithYear(t *testing.T) {
+	original := params.New()
+
+	updated := original.WithYear(2025)
+
+	assert.Equal(t, original.Get("year"), "")
+	assert.Equal(t, updated.Get("year"), "2025")
+}
+
+func TestWithCategory(t *testing.T) {
+	original := params.New()
+
+	updated := original.WithCategory(17)
+
+	assert.Equal(t, original.Get("category"), "")
+	assert.Equal(t, updated.Get("category"), "17")
 }

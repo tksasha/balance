@@ -34,7 +34,7 @@ func (h *EditHandler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	params := params.New().SetCurrency(cash.Currency)
+	params := params.New().WithCurrency(cash.Currency)
 
 	err = h.component.Edit(params, cash).Render(w)
 

@@ -42,7 +42,7 @@ func (h *EditHandler) handle(r *http.Request) (*category.Category, error) {
 }
 
 func (h *EditHandler) ok(w http.ResponseWriter, category *category.Category) {
-	params := params.New().SetCurrency(category.Currency)
+	params := params.New().WithCurrency(category.Currency)
 
 	err := h.component.Edit(params, category, nil).Render(w)
 

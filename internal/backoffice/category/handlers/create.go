@@ -41,7 +41,7 @@ func (h *CreateHandler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	params := params.New().SetCurrency(category.Currency)
+	params := params.New().WithCurrency(category.Currency)
 
 	h.ok(w, params)
 }

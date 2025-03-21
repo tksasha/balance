@@ -33,7 +33,7 @@ func (h *DeleteHandler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	params := params.New().SetCurrency(currency.Default)
+	params := params.New().WithCurrency(currency.Default)
 
 	h.ok(w, params)
 }

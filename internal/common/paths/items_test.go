@@ -5,6 +5,7 @@ import (
 	"testing"
 	"time"
 
+	"github.com/tksasha/balance/internal/common/currency"
 	"github.com/tksasha/balance/internal/common/paths"
 	"github.com/tksasha/balance/internal/common/paths/params"
 	"gotest.tools/v3/assert"
@@ -23,19 +24,19 @@ func TestItems(t *testing.T) {
 		},
 		{
 			path:   fmt.Sprintf("/items?currency=eur&month=%d&year=%d", month, year),
-			params: params.New().SetCurrencyCode("eur"),
+			params: params.New().WithCurrency(currency.EUR),
 		},
 		{
 			path:   fmt.Sprintf("/items?currency=usd&month=1&year=%d", year),
-			params: params.New().SetCurrencyCode("usd").SetMonth(1),
+			params: params.New().WithCurrency(currency.USD).WithMonth(1),
 		},
 		{
 			path:   "/items?currency=eur&month=12&year=2022",
-			params: params.New().SetCurrencyCode("eur").SetMonth(12).SetYear(2022),
+			params: params.New().WithCurrency(currency.EUR).WithMonth(12).WithYear(2022),
 		},
 		{
 			path:   "/items?category=16&currency=eur&month=12&year=2022",
-			params: params.New().SetCurrencyCode("eur").SetMonth(12).SetYear(2022).SetCategory(16),
+			params: params.New().WithCurrency(currency.EUR).WithMonth(12).WithYear(2022).WithCategory(16),
 		},
 	}
 
@@ -51,9 +52,9 @@ func TestUpdateItem(t *testing.T) {
 		params params.Params
 	}{
 		{id: 6, path: "/items/6?currency=uah", params: params.New()},
-		{id: 6, path: "/items/6?currency=uah", params: params.New().SetCurrencyCode("uah")},
-		{id: 6, path: "/items/6?currency=usd", params: params.New().SetCurrencyCode("usd")},
-		{id: 6, path: "/items/6?currency=eur", params: params.New().SetCurrencyCode("eur")},
+		{id: 6, path: "/items/6?currency=uah", params: params.New().WithCurrency(currency.UAH)},
+		{id: 6, path: "/items/6?currency=usd", params: params.New().WithCurrency(currency.USD)},
+		{id: 6, path: "/items/6?currency=eur", params: params.New().WithCurrency(currency.EUR)},
 	}
 
 	for _, d := range ds {
@@ -67,9 +68,9 @@ func TestNewItem(t *testing.T) {
 		params params.Params
 	}{
 		{path: "/items/new?currency=uah", params: params.New()},
-		{path: "/items/new?currency=uah", params: params.New().SetCurrencyCode("uah")},
-		{path: "/items/new?currency=usd", params: params.New().SetCurrencyCode("usd")},
-		{path: "/items/new?currency=eur", params: params.New().SetCurrencyCode("eur")},
+		{path: "/items/new?currency=uah", params: params.New().WithCurrency(currency.UAH)},
+		{path: "/items/new?currency=usd", params: params.New().WithCurrency(currency.USD)},
+		{path: "/items/new?currency=eur", params: params.New().WithCurrency(currency.EUR)},
 	}
 
 	for _, d := range ds {
@@ -83,9 +84,9 @@ func TestCreateItem(t *testing.T) {
 		params params.Params
 	}{
 		{path: "/items?currency=uah", params: params.New()},
-		{path: "/items?currency=uah", params: params.New().SetCurrencyCode("uah")},
-		{path: "/items?currency=usd", params: params.New().SetCurrencyCode("usd")},
-		{path: "/items?currency=eur", params: params.New().SetCurrencyCode("eur")},
+		{path: "/items?currency=uah", params: params.New().WithCurrency(currency.UAH)},
+		{path: "/items?currency=usd", params: params.New().WithCurrency(currency.USD)},
+		{path: "/items?currency=eur", params: params.New().WithCurrency(currency.EUR)},
 	}
 
 	for _, d := range ds {
@@ -100,9 +101,9 @@ func TestDeleteItem(t *testing.T) {
 		params params.Params
 	}{
 		{id: 6, path: "/items/6?currency=uah", params: params.New()},
-		{id: 6, path: "/items/6?currency=uah", params: params.New().SetCurrencyCode("uah")},
-		{id: 6, path: "/items/6?currency=usd", params: params.New().SetCurrencyCode("usd")},
-		{id: 6, path: "/items/6?currency=eur", params: params.New().SetCurrencyCode("eur")},
+		{id: 6, path: "/items/6?currency=uah", params: params.New().WithCurrency(currency.UAH)},
+		{id: 6, path: "/items/6?currency=usd", params: params.New().WithCurrency(currency.USD)},
+		{id: 6, path: "/items/6?currency=eur", params: params.New().WithCurrency(currency.EUR)},
 	}
 
 	for _, d := range ds {
@@ -117,9 +118,9 @@ func TestEditItem(t *testing.T) {
 		params params.Params
 	}{
 		{id: 6, path: "/items/6/edit?currency=uah", params: params.New()},
-		{id: 6, path: "/items/6/edit?currency=uah", params: params.New().SetCurrencyCode("uah")},
-		{id: 6, path: "/items/6/edit?currency=usd", params: params.New().SetCurrencyCode("usd")},
-		{id: 6, path: "/items/6/edit?currency=eur", params: params.New().SetCurrencyCode("eur")},
+		{id: 6, path: "/items/6/edit?currency=uah", params: params.New().WithCurrency(currency.UAH)},
+		{id: 6, path: "/items/6/edit?currency=usd", params: params.New().WithCurrency(currency.USD)},
+		{id: 6, path: "/items/6/edit?currency=eur", params: params.New().WithCurrency(currency.EUR)},
 	}
 
 	for _, d := range ds {

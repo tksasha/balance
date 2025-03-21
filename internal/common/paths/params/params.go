@@ -1,6 +1,7 @@
 package params
 
 import (
+	"maps"
 	"net/url"
 	"strconv"
 
@@ -35,40 +36,30 @@ func (p Params) Has(key string) bool {
 	return p.values.Has(key)
 }
 
-func (p Params) Set(key, value string) {
-	p.values.Set(key, value)
+func (p Params) With(key, value string) Params {
+	values := maps.Clone(p.values)
+
+	values.Set(key, value)
+
+	return Params{values}
 }
 
 func (p Params) String() string {
 	return p.values.Encode()
 }
 
-func (p Params) SetCurrency(cid currency.Currency) Params {
-	p.values.Set("currency", currency.GetCode(cid))
-
-	return p
+func (p Params) WithCurrency(cid currency.Currency) Params {
+	return p.With("currency", currency.GetCode(cid))
 }
 
-func (p Params) SetCurrencyCode(code string) Params {
-	p.SetCurrency(currency.GetByCode(code))
-
-	return p
+func (p Params) WithMonth(month int) Params {
+	return p.With("month", strconv.Itoa(month))
 }
 
-func (p Params) SetMonth(month int) Params {
-	p.values.Set("month", strconv.Itoa(month))
-
-	return p
+func (p Params) WithYear(year int) Params {
+	return p.With("year", strconv.Itoa(year))
 }
 
-func (p Params) SetYear(year int) Params {
-	p.values.Set("year", strconv.Itoa(year))
-
-	return p
-}
-
-func (p Params) SetCategory(category int) Params {
-	p.values.Set("category", strconv.Itoa(category))
-
-	return p
+func (p Params) WithCategory(category int) Params {
+	return p.With("category", strconv.Itoa(category))
 }

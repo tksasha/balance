@@ -3,6 +3,7 @@ package paths_test
 import (
 	"testing"
 
+	"github.com/tksasha/balance/internal/common/currency"
 	"github.com/tksasha/balance/internal/common/paths"
 	"github.com/tksasha/balance/internal/common/paths/params"
 	"gotest.tools/v3/assert"
@@ -14,9 +15,9 @@ func TestBackofficeCashes(t *testing.T) {
 		params params.Params
 	}{
 		{path: "/backoffice/cashes?currency=uah", params: params.New()},
-		{path: "/backoffice/cashes?currency=uah", params: params.New().SetCurrencyCode("uah")},
-		{path: "/backoffice/cashes?currency=usd", params: params.New().SetCurrencyCode("usd")},
-		{path: "/backoffice/cashes?currency=eur", params: params.New().SetCurrencyCode("eur")},
+		{path: "/backoffice/cashes?currency=uah", params: params.New().WithCurrency(currency.UAH)},
+		{path: "/backoffice/cashes?currency=usd", params: params.New().WithCurrency(currency.USD)},
+		{path: "/backoffice/cashes?currency=eur", params: params.New().WithCurrency(currency.EUR)},
 	}
 
 	for _, d := range ds {
@@ -42,9 +43,9 @@ func TestNewBackofficeCash(t *testing.T) {
 		params params.Params
 	}{
 		{path: "/backoffice/cashes/new?currency=uah", params: params.New()},
-		{path: "/backoffice/cashes/new?currency=uah", params: params.New().SetCurrencyCode("uah")},
-		{path: "/backoffice/cashes/new?currency=usd", params: params.New().SetCurrencyCode("usd")},
-		{path: "/backoffice/cashes/new?currency=eur", params: params.New().SetCurrencyCode("eur")},
+		{path: "/backoffice/cashes/new?currency=uah", params: params.New().WithCurrency(currency.UAH)},
+		{path: "/backoffice/cashes/new?currency=usd", params: params.New().WithCurrency(currency.USD)},
+		{path: "/backoffice/cashes/new?currency=eur", params: params.New().WithCurrency(currency.EUR)},
 	}
 
 	for _, d := range ds {
@@ -62,9 +63,9 @@ func TestBackofficeCategories(t *testing.T) {
 		params params.Params
 	}{
 		{path: "/backoffice/categories?currency=uah", params: params.New()},
-		{path: "/backoffice/categories?currency=uah", params: params.New().SetCurrencyCode("uah")},
-		{path: "/backoffice/categories?currency=usd", params: params.New().SetCurrencyCode("usd")},
-		{path: "/backoffice/categories?currency=eur", params: params.New().SetCurrencyCode("eur")},
+		{path: "/backoffice/categories?currency=uah", params: params.New().WithCurrency(currency.UAH)},
+		{path: "/backoffice/categories?currency=usd", params: params.New().WithCurrency(currency.USD)},
+		{path: "/backoffice/categories?currency=eur", params: params.New().WithCurrency(currency.EUR)},
 	}
 
 	for _, d := range ds {
@@ -78,9 +79,9 @@ func TestNewBackofficeCategory(t *testing.T) {
 		params params.Params
 	}{
 		{path: "/backoffice/categories/new?currency=uah", params: params.New()},
-		{path: "/backoffice/categories/new?currency=uah", params: params.New().SetCurrencyCode("uah")},
-		{path: "/backoffice/categories/new?currency=usd", params: params.New().SetCurrencyCode("usd")},
-		{path: "/backoffice/categories/new?currency=eur", params: params.New().SetCurrencyCode("eur")},
+		{path: "/backoffice/categories/new?currency=uah", params: params.New().WithCurrency(currency.UAH)},
+		{path: "/backoffice/categories/new?currency=usd", params: params.New().WithCurrency(currency.USD)},
+		{path: "/backoffice/categories/new?currency=eur", params: params.New().WithCurrency(currency.EUR)},
 	}
 
 	for _, d := range ds {

@@ -43,7 +43,7 @@ func (h *DeleteHandler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 func (h *DeleteHandler) StatusOK(w http.ResponseWriter, params params.Params, item *item.Item) {
 	month, year := int(item.Date.Month()), item.Date.Year()
 
-	params.SetMonth(month).SetYear(year)
+	params = params.WithMonth(month).WithYear(year)
 
 	header := map[string]map[string]string{
 		"balance.item.deleted": {

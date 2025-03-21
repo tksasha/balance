@@ -82,7 +82,7 @@ func (h *UpdateHandler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 func (h *UpdateHandler) ok(w http.ResponseWriter, params params.Params, item *item.Item) {
 	month, year := int(item.Date.Month()), item.Date.Year()
 
-	params.SetMonth(month).SetYear(year)
+	params = params.WithMonth(month).WithYear(year)
 
 	headers := map[string]map[string]string{
 		"balance.item.updated": {

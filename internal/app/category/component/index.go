@@ -48,7 +48,7 @@ func (c *Component) categories(categories category.Categories, params params.Par
 }
 
 func (c *Component) category(category *category.Category, params params.Params) Node {
-	params.SetCategory(category.ID)
+	params = params.WithCategory(category.ID)
 
 	return Tr(
 		Td(Class("name"),

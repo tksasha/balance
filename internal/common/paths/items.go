@@ -14,11 +14,11 @@ func Items(params params.Params) string {
 	if !params.Has("month") {
 		month := int(time.Now().Month())
 
-		params.Set("month", strconv.Itoa(month))
+		params = params.With("month", strconv.Itoa(month))
 	}
 
 	if !params.Has("year") {
-		params.Set("year", strconv.Itoa(time.Now().Year()))
+		params = params.With("year", strconv.Itoa(time.Now().Year()))
 	}
 
 	path := url.URL{

@@ -36,7 +36,7 @@ func NewUpdateHandler(
 func (h *UpdateHandler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 	category, err := h.handle(r)
 	if err == nil {
-		params := params.New().SetCurrency(category.Currency)
+		params := params.New().WithCurrency(category.Currency)
 
 		h.ok(w, params)
 

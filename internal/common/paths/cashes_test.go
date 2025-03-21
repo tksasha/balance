@@ -3,6 +3,7 @@ package paths_test
 import (
 	"testing"
 
+	"github.com/tksasha/balance/internal/common/currency"
 	"github.com/tksasha/balance/internal/common/paths"
 	"github.com/tksasha/balance/internal/common/paths/params"
 	"gotest.tools/v3/assert"
@@ -14,9 +15,9 @@ func TestCashes(t *testing.T) {
 		params params.Params
 	}{
 		{path: "/cashes?currency=uah", params: params.New()},
-		{path: "/cashes?currency=uah", params: params.New().SetCurrencyCode("uah")},
-		{path: "/cashes?currency=usd", params: params.New().SetCurrencyCode("usd")},
-		{path: "/cashes?currency=eur", params: params.New().SetCurrencyCode("eur")},
+		{path: "/cashes?currency=uah", params: params.New().WithCurrency(currency.UAH)},
+		{path: "/cashes?currency=usd", params: params.New().WithCurrency(currency.USD)},
+		{path: "/cashes?currency=eur", params: params.New().WithCurrency(currency.EUR)},
 	}
 
 	for _, d := range ds {
@@ -31,9 +32,9 @@ func TestEditCash(t *testing.T) {
 		params params.Params
 	}{
 		{id: 9, path: "/cashes/9/edit?currency=uah", params: params.New()},
-		{id: 9, path: "/cashes/9/edit?currency=uah", params: params.New().SetCurrencyCode("uah")},
-		{id: 9, path: "/cashes/9/edit?currency=usd", params: params.New().SetCurrencyCode("usd")},
-		{id: 9, path: "/cashes/9/edit?currency=eur", params: params.New().SetCurrencyCode("eur")},
+		{id: 9, path: "/cashes/9/edit?currency=uah", params: params.New().WithCurrency(currency.UAH)},
+		{id: 9, path: "/cashes/9/edit?currency=usd", params: params.New().WithCurrency(currency.USD)},
+		{id: 9, path: "/cashes/9/edit?currency=eur", params: params.New().WithCurrency(currency.EUR)},
 	}
 
 	for _, d := range ds {
@@ -48,9 +49,9 @@ func TestUpdateCash(t *testing.T) {
 		params params.Params
 	}{
 		{id: 9, path: "/cashes/9?currency=uah", params: params.New()},
-		{id: 9, path: "/cashes/9?currency=uah", params: params.New().SetCurrencyCode("uah")},
-		{id: 9, path: "/cashes/9?currency=usd", params: params.New().SetCurrencyCode("usd")},
-		{id: 9, path: "/cashes/9?currency=eur", params: params.New().SetCurrencyCode("eur")},
+		{id: 9, path: "/cashes/9?currency=uah", params: params.New().WithCurrency(currency.UAH)},
+		{id: 9, path: "/cashes/9?currency=usd", params: params.New().WithCurrency(currency.USD)},
+		{id: 9, path: "/cashes/9?currency=eur", params: params.New().WithCurrency(currency.EUR)},
 	}
 
 	for _, d := range ds {

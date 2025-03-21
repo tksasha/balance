@@ -32,7 +32,7 @@ func (c *Component) Month(month month.Month, params params.Params) Node {
 		"link":   true,
 	}
 
-	params.SetMonth(month.Number)
+	params = params.WithMonth(month.Number)
 
 	callback := fmt.Sprintf("htmx.trigger('body', 'balance.month.changed', {balanceCategoriesPath: '%s'})",
 		paths.Categories(params))

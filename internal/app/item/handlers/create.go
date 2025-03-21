@@ -80,7 +80,7 @@ func (h *CreateHandler) ok(
 ) {
 	month, year := int(item.Date.Month()), item.Date.Year()
 
-	params.SetMonth(month).SetYear(year)
+	params = params.WithMonth(month).WithYear(year)
 
 	header := map[string]map[string]string{
 		"balance.item.created": {
