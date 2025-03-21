@@ -12,6 +12,7 @@ func (c *Component) Balance(balance *balance.Balance) Node {
 		"sum":          true,
 		"text-danger":  balance.Balance < 0,
 		"text-success": balance.Balance > 0,
+		"fw-medium":    balance.Balance != 0,
 	}
 
 	return Div(Class("col-3"), ID("balance"),

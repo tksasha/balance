@@ -20,7 +20,7 @@ func (c *Component) Form(
 ) Node {
 	return Form(
 		If(item.ID == 0, htmx.Post(paths.CreateItem(params))),
-		If(item.ID != 1, htmx.Patch(paths.UpdateItem(params, item.ID))),
+		If(item.ID != 0, htmx.Patch(paths.UpdateItem(params, item.ID))),
 		c.Input("Дата", "date", c.date(item.Date), Classes{"datepicker": true}, errors.Get("date")),
 		c.Input("Сума", "formula", item.Formula, nil, errors.Get("sum"), AutoFocus()),
 		Div(Class("mb-3"),
