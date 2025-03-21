@@ -1,1 +1,1 @@
-{"backoffice.cash.updated":{"backofficeCashesPath":"/backoffice/cashes?currency=eur","balancePath":"/balance?currency=eur"}}
+{"backoffice.cash.updated":{"backofficeCashesPath":"/backoffice/cashes?currency=eur","balancePath":"/balance?currency=eur","cashesPath":"/cashes?currency=eur"}}

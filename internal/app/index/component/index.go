@@ -41,7 +41,7 @@ func (c *Component) Index(params params.Params) Node {
 				Script(Src("/assets/jquery.min-5a9dcfbef655a2668e78baebeaa8dc6f41d8dabb.js")),
 				Script(Src("/assets/bootstrap-datepicker.min-cdff2c53b8ff6b44eb16e842bd4b86541a7853f6.js")),
 				Script(Src("/assets/bootstrap-datepicker.uk.min-d58d82ad3cc17da5ff61d0d8559c3b397c941638.js")),
-				Script(Src("/assets/application-25b9de78474a650dc832e6306fc9dd48a423236a.js")),
+				Script(Src("/assets/application-89a5eb026fbed807fc657de0661eafb71720a399.js")),
 			},
 		},
 	)

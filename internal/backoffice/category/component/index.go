@@ -37,7 +37,7 @@ func (c *Component) Index(params params.Params, categories category.Categories) 
 				Th(Class("text-center"), Text("Відображається")),
 				Th(Class("text-center"), Text("Надходження")),
 			)),
-			TBody(Div(Map(categories, c.category))),
+			TBody(Map(categories, c.category)),
 		),
 	)
 }

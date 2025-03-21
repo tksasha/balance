@@ -35,24 +35,15 @@ func NewUpdateHandler(
 
 func (h *UpdateHandler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 	cash, err := h.handle(r)
-	if err == nil {
-		params := params.New().WithCurrency(cash.Currency)
-
-		h.ok(w, params)
+	if err != nil {
+		h.errors(w, cash, err)
 
 		return
 	}
 
-	var verrors validation.Errors
-	if errors.As(err, &verrors) {
-		err := h.component.Update(cash, verrors).Render(w)
+	params := params.New().WithCurrency(cash.Currency)
 
-		h.SetError(w, err)
-
-		return
-	}
-
-	h.SetError(w, err)
+	h.ok(w, params)
 }
 
 func (h *UpdateHandler) handle(r *http.Request) (*cash.Cash, error) {
@@ -78,6 +69,7 @@ func (h *UpdateHandler) ok(w http.ResponseWriter, params params.Params) {
 		"backoffice.cash.updated": {
 			"backofficeCashesPath": paths.BackofficeCashes(params),
 			"balancePath":          paths.Balance(params),
+			"cashesPath":           paths.Cashes(params),
 		},
 	}
 
@@ -90,4 +82,17 @@ func (h *UpdateHandler) ok(w http.ResponseWriter, params params.Params) {
 	w.Header().Set("Hx-Trigger-After-Swap", writer.String())
 
 	w.WriteHeader(http.StatusOK)
+}
+
+func (h *UpdateHandler) errors(w http.ResponseWriter, cash *cash.Cash, err error) {
+	var verrors validation.Errors
+	if errors.As(err, &verrors) {
+		err := h.component.Update(cash, verrors).Render(w)
+
+		h.SetError(w, err)
+
+		return
+	}
+
+	h.SetError(w, err)
 }

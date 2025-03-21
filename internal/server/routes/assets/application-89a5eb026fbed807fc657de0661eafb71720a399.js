@@ -41,11 +41,6 @@ document.addEventListener("backoffice.cashes.shown", (e) => {
   clearModalSize();
 });
 
-document.addEventListener("backoffice.cash.updated", async (e) => {
-  if (Object.hasOwn(e.detail, "backofficeCashesPath"))
-    await htmx.ajax("GET", e.detail.backofficeCashesPath, { target: "#modal-body" });
-});
-
 document.addEventListener("backoffice.cash.deleted", async (e) => {
   if (Object.hasOwn(e.detail, "backofficeCashesPath"))
     await htmx.ajax("GET", e.detail.backofficeCashesPath, { target: "#modal-body" });
@@ -55,14 +50,25 @@ document.addEventListener("backoffice.cash.created", async (e) => {
   if (Object.hasOwn(e.detail, "backofficeCashesPath"))
     await htmx.ajax("GET", e.detail.backofficeCashesPath, { target: "#modal-body" });
 });
-document.addEventListener("balance.cash.updated", async (e) => {
+htmx.on("balance.cash.updated", async (e) => {
   hideModal();
 
   if (Object.hasOwn(e.detail, "balancePath"))
     await htmx.ajax("GET", e.detail.balancePath, { target: "#balance", swap: "outerHTML" });
 });
 
-document.addEventListener("balance.cash.edit", clearModalSize);
+htmx.on("balance.cash.edit", clearModalSize);
+
+htmx.on("backoffice.cash.updated", async (e) => {
+  if (Object.hasOwn(e.detail, "backofficeCashesPath"))
+    await htmx.ajax("GET", e.detail.backofficeCashesPath, { target: "#modal-body" });
+
+  if (Object.hasOwn(e.detail, "balancePath"))
+    await htmx.ajax("GET", e.detail.balancePath, { target: "#balance-and-cashes-row" });
+
+  if (Object.hasOwn(e.detail, "cashesPath"))
+    await htmx.ajax("GET", e.detail.cashesPath, { target: "#balance-and-cashes-row", swap: "beforeend" });
+});
 htmx.on("balance.month.changed", (e) => {
   if (Object.hasOwn(e.detail, "balanceCategoriesPath"))
     htmx.ajax("GET", e.detail.balanceCategoriesPath, { target: "#categories", swap: "outerHTML" });
