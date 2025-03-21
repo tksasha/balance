@@ -29,6 +29,13 @@ func (c *Component) Index(params params.Params, cashes cash.Cashes) Node {
 			),
 		),
 		Table(Class("table table-borderless"),
+			THead(
+				Tr(
+					Th(Text("Назва")),
+					Th(Class("text-end"), Text("Сума")),
+					Th(Class("text-end"), Text("Група")),
+				),
+			),
 			TBody(Div(Map(cashes, c.cash))),
 		),
 	)
@@ -42,5 +49,6 @@ func (c *Component) cash(cash *cash.Cash) Node {
 			Text(cash.Name)),
 		),
 		Td(Class("text-end"), Text(c.Money(cash.Sum))),
+		Td(Class("text-end text-secondary"), c.Text(cash.Supercategory)),
 	)
 }
