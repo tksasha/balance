@@ -37,7 +37,7 @@ func (c *Component) Index(params params.Params) Node {
 				c.Modal(),
 				c.linkToBackoffice(),
 				Script(Src("/assets/bootstrap-0f43271223c74d330702ce94a39ed70d04e8fd36.js")),
-				Script(Src("/assets/htmx.min-03a1ffdf83a11fab58acf6bcdf51233fdf14abd5.js")),
+				Script(Src("/assets/htmx.min-13dcd355b9ee9b169ddc7afea6683877be30920c.js")),
 				Script(Src("/assets/jquery.min-5a9dcfbef655a2668e78baebeaa8dc6f41d8dabb.js")),
 				Script(Src("/assets/bootstrap-datepicker.min-cdff2c53b8ff6b44eb16e842bd4b86541a7853f6.js")),
 				Script(Src("/assets/bootstrap-datepicker.uk.min-d58d82ad3cc17da5ff61d0d8559c3b397c941638.js")),
