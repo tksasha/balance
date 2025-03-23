@@ -31,19 +31,26 @@
 @import "tag";
 @import "text-right";
 
-.datepicker-cell.selected {
-    background: $primary;
+:root {
+    --primary-color: #607d8b;
+    --light-color:  #eceff1;
+
+    --semibold: 600;
+}
+
+.datepicker-cell.selected,
+.datepicker-cell.day.today.focused,
+    .datepicker-cell.day.today.selected.focused {
+    background: var(--primary-color);
+    color: var(--light-color);
 
     &:hover {
-        background: $primary;
+        background: var(--primary-color);
     }
 }
 
-.datepicker-cell.day.today,
-.datepicker-cell.day.today.focused {
-    @extend .fw-semibold;
-
-    background: $light;
-    color: $primary !important;
-    border-color: $primary;
+.datepicker-cell.day.today {
+    background: var(--light-color);
+    border-color: var(--primary-color);
+    font-weight: var(--semibold);
 }

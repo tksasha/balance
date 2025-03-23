@@ -8404,8 +8404,7 @@ header .btn-group-vertical > .btn-group:not(:first-child) > div.link,
   font-weight: 500 !important;
 }
 
-.fw-semibold, .datepicker-cell.day.today,
-.datepicker-cell.day.today.focused {
+.fw-semibold {
   font-weight: 600 !important;
 }
 
@@ -12220,16 +12219,26 @@ header div.link.active {
   font-size: 0.75rem;
 }
 
-.datepicker-cell.selected {
-  background: #607d8b;
-}
-.datepicker-cell.selected:hover {
-  background: #607d8b;
+:root {
+  --primary-color: #607d8b;
+  --light-color: #eceff1;
+  --semibold: 600;
 }
 
-.datepicker-cell.day.today,
-.datepicker-cell.day.today.focused {
-  background: #eceff1;
-  color: #607d8b !important;
-  border-color: #607d8b;
+.datepicker-cell.selected,
+.datepicker-cell.day.today.focused,
+.datepicker-cell.day.today.selected.focused {
+  background: var(--primary-color);
+  color: var(--light-color);
+}
+.datepicker-cell.selected:hover,
+.datepicker-cell.day.today.focused:hover,
+.datepicker-cell.day.today.selected.focused:hover {
+  background: var(--primary-color);
+}
+
+.datepicker-cell.day.today {
+  background: var(--light-color);
+  border-color: var(--primary-color);
+  font-weight: var(--semibold);
 }
