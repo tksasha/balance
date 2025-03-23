@@ -10,7 +10,7 @@ clean:
 	@rm -f $(DEST)/*.js $(DEST)/*.css
 
 .PHONY: install
-install: bootstrap datepicker htmx hryvnia jquery application
+install: bootstrap datepicker htmx hryvnia application
 	@echo "install"
 
 define hashname
@@ -29,14 +29,17 @@ bootstrap:
 .PHONY: datepicker
 datepicker:
 	@cp \
-		bootstrap-datepicker/dist/css/bootstrap-datepicker.min.css \
-		$(DEST)/$(call hashname,bootstrap-datepicker/dist/css/bootstrap-datepicker.min.css)
+		datepicker/dist/css/datepicker.min.css \
+		$(DEST)/$(call hashname,datepicker/dist/css/datepicker.min.css)
 	@cp \
-		bootstrap-datepicker/dist/js/bootstrap-datepicker.min.js \
-		$(DEST)/$(call hashname,bootstrap-datepicker/dist/js/bootstrap-datepicker.min.js)
+		datepicker/dist/css/datepicker-bs5.min.css \
+		$(DEST)/$(call hashname,datepicker/dist/css/datepicker-bs5.min.css)
 	@cp \
-		bootstrap-datepicker/dist/locales/bootstrap-datepicker.uk.min.js \
-		$(DEST)/$(call hashname,bootstrap-datepicker/dist/locales/bootstrap-datepicker.uk.min.js)
+		datepicker/dist/js/datepicker.min.js \
+		$(DEST)/$(call hashname,datepicker/dist/js/datepicker.min.js)
+	@cp \
+		datepicker/dist/js/locales/uk.js \
+		$(DEST)/$(call hashname,datepicker/dist/js/locales/uk.js)
 
 .PHONY: htmx
 htmx:
@@ -47,12 +50,6 @@ htmx:
 .PHONY: hryvnia
 hryvnia:
 	@cp images/hryvnia.png $(DEST)/$(call hashname,images/hryvnia.png)
-
-.PHONY: jquery
-jquery:
-	@cp \
-		jquery/dist/jquery.min.js \
-		$(DEST)/$(call hashname,jquery/dist/jquery.min.js)
 
 .PHONY: compile
 compile:

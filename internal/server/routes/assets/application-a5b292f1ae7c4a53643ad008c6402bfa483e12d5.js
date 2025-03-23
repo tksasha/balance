@@ -1,5 +1,5 @@
 const BOOTSTRAP_DATEPICKER_DEFAULTS = {
-  format: "dd.mm.yyyy", autoclose: true, language: "uk", todayHighlight: true
+  format: "dd.mm.yyyy", autohide: true, language: "uk", todayHighlight: true
 };
 
 const hideModal = (event) => {
@@ -93,10 +93,18 @@ htmx.on("backoffice.category.updated", (e) => {
     htmx.ajax("GET", e.detail.backofficeCategoriesPath, { target: "#modal-body" });
 });
 document.addEventListener("balance.item.initialized", (e) => {
-  $(".datepicker").datepicker(BOOTSTRAP_DATEPICKER_DEFAULTS);
+  const element = document.querySelector("input[name=date]");
+
+  const datepicker = new Datepicker(element, BOOTSTRAP_DATEPICKER_DEFAULTS);
 });
 
-document.addEventListener("balance.item.edit", clearModalSize);
+document.addEventListener("balance.item.edit", (e) => {
+  clearModalSize();
+
+  const element = document.querySelector(".modal input[name=date]");
+
+  const datepicker = new Datepicker(element, BOOTSTRAP_DATEPICKER_DEFAULTS);
+});
 
 document.addEventListener("balance.item.updated", async (e) => {
   hideModal();

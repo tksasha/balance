@@ -8404,7 +8404,8 @@ header .btn-group-vertical > .btn-group:not(:first-child) > div.link,
   font-weight: 500 !important;
 }
 
-.fw-semibold {
+.fw-semibold, .datepicker-cell.day.today,
+.datepicker-cell.day.today.focused {
   font-weight: 600 !important;
 }
 
@@ -11967,7 +11968,6 @@ header .btn-group-vertical > .btn-group:not(:first-child) > div.link,
     display: none !important;
   }
 }
-/* @import "bootstrap-datepicker"; */
 a {
   text-decoration: none;
 }
@@ -12218,4 +12218,18 @@ header div.link.active {
 
 .tag {
   font-size: 0.75rem;
+}
+
+.datepicker-cell.selected {
+  background: #607d8b;
+}
+.datepicker-cell.selected:hover {
+  background: #607d8b;
+}
+
+.datepicker-cell.day.today,
+.datepicker-cell.day.today.focused {
+  background: #eceff1;
+  color: #607d8b !important;
+  border-color: #607d8b;
 }

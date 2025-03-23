@@ -1,8 +1,16 @@
 document.addEventListener("balance.item.initialized", (e) => {
-  $(".datepicker").datepicker(BOOTSTRAP_DATEPICKER_DEFAULTS);
+  const element = document.querySelector("input[name=date]");
+
+  const datepicker = new Datepicker(element, BOOTSTRAP_DATEPICKER_DEFAULTS);
 });
 
-document.addEventListener("balance.item.edit", clearModalSize);
+document.addEventListener("balance.item.edit", (e) => {
+  clearModalSize();
+
+  const element = document.querySelector(".modal input[name=date]");
+
+  const datepicker = new Datepicker(element, BOOTSTRAP_DATEPICKER_DEFAULTS);
+});
 
 document.addEventListener("balance.item.updated", async (e) => {
   hideModal();

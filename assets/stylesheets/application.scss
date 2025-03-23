@@ -1,7 +1,6 @@
 @import "bootstrap-variables";
 
 @import "../bootstrap/scss/bootstrap";
-/* @import "bootstrap-datepicker"; */
 
 @import "colors";
 
@@ -31,3 +30,20 @@
 @import "table";
 @import "tag";
 @import "text-right";
+
+.datepicker-cell.selected {
+    background: $primary;
+
+    &:hover {
+        background: $primary;
+    }
+}
+
+.datepicker-cell.day.today,
+.datepicker-cell.day.today.focused {
+    @extend .fw-semibold;
+
+    background: $light;
+    color: $primary !important;
+    border-color: $primary;
+}

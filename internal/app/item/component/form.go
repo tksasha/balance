@@ -8,8 +8,7 @@ import (
 	"github.com/tksasha/validation"
 	. "maragu.dev/gomponents" //nolint:stylecheck
 	htmx "maragu.dev/gomponents-htmx"
-	. "maragu.dev/gomponents/components" //nolint:stylecheck
-	. "maragu.dev/gomponents/html"       //nolint:stylecheck
+	. "maragu.dev/gomponents/html" //nolint:stylecheck
 )
 
 func (c *Component) Form(
@@ -21,7 +20,7 @@ func (c *Component) Form(
 	return Form(
 		If(item.ID == 0, htmx.Post(paths.CreateItem(params))),
 		If(item.ID != 0, htmx.Patch(paths.UpdateItem(params, item.ID))),
-		c.Input("Дата", "date", c.date(item.Date), Classes{"datepicker": true}, errors.Get("date")),
+		c.Input("Дата", "date", c.date(item.Date), nil, errors.Get("date")),
 		c.Input("Сума", "formula", item.Formula, nil, errors.Get("sum"), AutoFocus()),
 		Div(Class("mb-3"),
 			c.categories(item.CategoryID, categories, errors.Get("category")),

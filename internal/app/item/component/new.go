@@ -12,7 +12,7 @@ import (
 func (c *Component) New(params params.Params, categories category.Categories, children ...Node) Node {
 	return Form(Class("new_item"), htmx.Post(paths.CreateItem(params)),
 		Div(Class("item-inline-form-date"),
-			Input(Class("form-control datepicker"), Placeholder("Дата"), Name("date")),
+			Input(Class("form-control"), Placeholder("Дата"), Name("date")),
 		),
 		Div(Class("item-inline-form-formula"),
 			Input(Class("form-control"), Placeholder("Сума"), Name("formula")),
