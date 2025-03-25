@@ -74,7 +74,9 @@ document.addEventListener("balance.item.create.error", (e) => {
 document.addEventListener("balance.item.created", async (e) => {
   hideModal();
 
-  $(".datepicker").datepicker(BOOTSTRAP_DATEPICKER_DEFAULTS);
+  const element = document.querySelector("input[name=date]");
+
+  const datepicker = new Datepicker(element, BOOTSTRAP_DATEPICKER_DEFAULTS);
 
   if (Object.hasOwn(e.detail, "balancePath"))
     await htmx.ajax("GET", e.detail.balancePath, { target: "#balance", swap: "outerHTML" });

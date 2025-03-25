@@ -42,7 +42,7 @@ func (c *Component) Index(params params.Params) Node {
 				Script(Src("/assets/htmx.min-13dcd355b9ee9b169ddc7afea6683877be30920c.js")),
 				Script(Src("/assets/datepicker.min-c069e98468d2389c7735d150d4ec164f51033dd4.js")),
 				Script(Src("/assets/uk-d6c0243c25dfa563bf0621a4fc80d2a0b8d2d9f9.js")),
-				Script(Src("/assets/application-a5b292f1ae7c4a53643ad008c6402bfa483e12d5.js")),
+				Script(Src("/assets/application-a6c4ced2a2192e91178a734211c8035f6dc629a3.js")),
 			},
 		},
 	)
