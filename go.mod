@@ -10,7 +10,7 @@ require (
 	github.com/tksasha/month v0.0.8
 	github.com/tksasha/validation v0.0.7
 	github.com/tksasha/xstrings v0.0.6
-	go.uber.org/mock v0.5.1
+	go.uber.org/mock v0.5.2
 	golang.org/x/text v0.24.0
 	gotest.tools/v3 v3.5.2
 	maragu.dev/gomponents v1.1.0

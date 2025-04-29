@@ -87,17 +87,17 @@ func (mr *MockRepositoryMockRecorder) NameExists(ctx, name, id any) *gomock.Call
 }
 
 // Update mocks base method.
-func (m *MockRepository) Update(ctx context.Context, cash *cash.Cash) error {
+func (m *MockRepository) Update(ctx context.Context, arg1 *cash.Cash) error {
 	m.ctrl.T.Helper()
-	ret := m.ctrl.Call(m, "Update", ctx, cash)
+	ret := m.ctrl.Call(m, "Update", ctx, arg1)
 	ret0, _ := ret[0].(error)
 	return ret0
 }
 
 // Update indicates an expected call of Update.
-func (mr *MockRepositoryMockRecorder) Update(ctx, cash any) *gomock.Call {
+func (mr *MockRepositoryMockRecorder) Update(ctx, arg1 any) *gomock.Call {
 	mr.mock.ctrl.T.Helper()
-	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "Update", reflect.TypeOf((*MockRepository)(nil).Update), ctx, cash)
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "Update", reflect.TypeOf((*MockRepository)(nil).Update), ctx, arg1)
 }
 
 // MockService is a mock of Service interface.
