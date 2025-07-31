@@ -25,8 +25,6 @@ export class Header {
 
     params.set("year", this.#year());
 
-    console.log(params.toString());
-
     htmx.ajax("GET", "/items?" + params.toString(), "#items");
   }
 

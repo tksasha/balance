@@ -6,8 +6,20 @@
     language: "uk",
     todayHighlight: true
   };
+  var hideModal = (event) => {
+    const modal = bootstrap.Modal.getInstance("#modal");
+    if (modal)
+      modal.hide();
+  };
+  var showModal = () => {
+    bootstrap.Modal.getOrCreateInstance("#modal").show();
+  };
   var clearModalSize = () => {
     document.querySelector("#modal .modal-dialog").classList.remove("modal-lg", "modal-sm", "modal-xl");
+  };
+  var setModalSize = (size) => {
+    clearModalSize();
+    document.querySelector("#modal .modal-dialog").classList.add(size);
   };
   document.getElementById("modal").addEventListener("shown.bs.modal", (e) => {
     const input = e.target.querySelector("[autofocus]");
@@ -2564,7 +2576,6 @@
       const params = new URLSearchParams(window.location.search);
       params.set("month", this.#month());
       params.set("year", this.#year());
-      console.log(params.toString());
       htmx.ajax("GET", "/items?" + params.toString(), "#items");
     }
     static #month() {

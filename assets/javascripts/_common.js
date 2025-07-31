@@ -2,14 +2,14 @@ export const BOOTSTRAP_DATEPICKER_DEFAULTS = {
   format: "dd.mm.yyyy", autohide: true, language: "uk", todayHighlight: true
 };
 
-const hideModal = (event) => {
+export const hideModal = (event) => {
   const modal = bootstrap.Modal.getInstance("#modal");
 
   if (modal)
     modal.hide();
 };
 
-const showModal = () => {
+export const showModal = () => {
   bootstrap.Modal.getOrCreateInstance("#modal").show();
 };
 
@@ -19,7 +19,7 @@ export const clearModalSize = () => {
     .classList.remove("modal-lg", "modal-sm", "modal-xl");
 };
 
-const setModalSize = (size) => {
+export const setModalSize = (size) => {
   clearModalSize();
 
   document

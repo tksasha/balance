@@ -42,7 +42,8 @@ func (c *Component) Index(params params.Params) Node {
 				Script(Src("/assets/htmx.min-13dcd355b9ee9b169ddc7afea6683877be30920c.js")),
 				Script(Src("/assets/datepicker.min-c069e98468d2389c7735d150d4ec164f51033dd4.js")),
 				Script(Src("/assets/uk-d6c0243c25dfa563bf0621a4fc80d2a0b8d2d9f9.js")),
-				Script(Src("/assets/application-4ee12fb4bf7b00a44b192554e0a7c4a77ef6b15f.js")),
+				Script(Src("/assets/application-b21bddf27de1f81b56c096e88954293e581955f4.js")),
+				// Script(Src("/assets/application.js?" + strconv.Itoa(int(time.Now().Unix())))),
 			},
 		},
 	)

@@ -1,4 +1,4 @@
-import { clearModalSize } from "./_common";
+import { clearModalSize, hideModal } from "./_common";
 
 htmx.on("balance.cash.updated", async (e) => {
   hideModal();

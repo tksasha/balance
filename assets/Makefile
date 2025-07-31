@@ -68,4 +68,8 @@ application: compile
 		$(DEST)/$(call hashname,stylesheets/application.css)
 	@mv \
 		$(DEST)/application.js \
-		$(DEST)/$(call hashname,javascripts/application.js)
+		$(DEST)/$(call hashname,$(DEST)/application.js)
+
+.PHONY: run
+run:
+	@esbuild --watch --bundle javascripts/application.js --outdir=$(DEST)
