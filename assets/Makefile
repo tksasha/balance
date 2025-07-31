@@ -7,7 +7,7 @@ build: clean install
 @PHONY: clean
 clean:
 	@echo "clean"
-	@rm -f $(DEST)/*.js $(DEST)/*.css
+	@rm -f $(DEST)/*.js $(DEST)/*.css $(DEST)/*.map $(DEST)/*.png
 
 .PHONY: install
 install: bootstrap datepicker htmx hryvnia application
@@ -56,13 +56,10 @@ compile:
 	@sass --quiet \
 		--no-source-map \
 		stylesheets/application.scss:stylesheets/application.css
-	@cat \
-		javascripts/_common.js \
-		javascripts/backoffice.js \
-		javascripts/cashes.js \
-		javascripts/categories.js \
-		javascripts/items.js \
-		> javascripts/application.js
+	@esbuild --bundle \
+		--log-level=silent \
+		--outdir=$(DEST) \
+		javascripts/application.js
 
 .PHONY: application
 application: compile
@@ -70,5 +67,5 @@ application: compile
 		stylesheets/application.css \
 		$(DEST)/$(call hashname,stylesheets/application.css)
 	@mv \
-		javascripts/application.js \
+		$(DEST)/application.js \
 		$(DEST)/$(call hashname,javascripts/application.js)

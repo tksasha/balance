@@ -1,3 +1,6 @@
+import { clearModalSize, BOOTSTRAP_DATEPICKER_DEFAULTS } from "./_common";
+import Datepicker from "../datepicker/js/Datepicker";
+
 document.addEventListener("balance.item.initialized", (e) => {
   const element = document.querySelector("input[name=date]");
 

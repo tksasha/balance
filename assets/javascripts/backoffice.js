@@ -1,3 +1,5 @@
+import { clearModalSize } from "./_common";
+
 document.addEventListener("backoffice.index.shown", (e) => {
   setModalSize("modal-sm");
 });
