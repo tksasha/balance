@@ -10,6 +10,10 @@ import (
 )
 
 func (c *Component) Index(params params.Params, items item.Items) Node {
+	if len(items) == 0 {
+		return Div(Class("text-success text-center p-2"), Text("Нічого не знайдено"))
+	}
+
 	return Table(
 		Class("table table-hover table-borderless"),
 		THead(
