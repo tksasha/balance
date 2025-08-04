@@ -2636,10 +2636,25 @@
     }
   };
 
+  // javascripts/currencies.js
+  var Currencies = class {
+    constructor() {
+      const el = document.querySelector("#currencies-widget");
+      bootstrap.Popover.getOrCreateInstance(el, {
+        placement: "bottom",
+        html: true,
+        content: function() {
+          return document.querySelector("#currencies-widget-content").innerHTML;
+        }
+      });
+    }
+  };
+
   // javascripts/application.js
   document.addEventListener("DOMContentLoaded", () => {
     new Months();
     new Years();
+    new Currencies();
     Header.refresh();
   });
 })();

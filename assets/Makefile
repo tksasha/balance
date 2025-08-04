@@ -25,6 +25,9 @@ bootstrap:
 	@cp \
 		bootstrap/dist/js/bootstrap.js.map \
 		$(DEST)
+	@cp \
+		javascripts/popper.js \
+		$(DEST)/$(call hashname,javascripts/popper.js)
 
 .PHONY: datepicker
 datepicker:
