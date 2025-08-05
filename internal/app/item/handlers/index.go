@@ -34,7 +34,7 @@ func (h *IndexHandler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	h.ok(w, items)
+	h.ok(w, items, params.New(r.URL.Query()))
 }
 
 func (h *IndexHandler) handle(r *http.Request) (item.Items, error) {
@@ -47,8 +47,8 @@ func (h *IndexHandler) handle(r *http.Request) (item.Items, error) {
 	return h.itemService.List(r.Context(), request)
 }
 
-func (h *IndexHandler) ok(w http.ResponseWriter, items item.Items) {
-	err := h.component.Index(params.New(), items).Render(w)
+func (h *IndexHandler) ok(w http.ResponseWriter, items item.Items, params params.Params) {
+	err := h.component.Index(params, items).Render(w)
 
 	h.SetError(w, err)
 }
