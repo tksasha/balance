@@ -15,5 +15,9 @@
         <key>BALANCE_ENV</key>
         <string>production</string>
     </dict>
+    <!-- <key>StandardOutPath</key>
+    <string>/Users/tksasha/balance.errors.log</string>
+    <key>StandardErrorPath</key>
+    <string>/Users/tksasha/balance.errors.log</string> -->
 </dict>
 </plist>
