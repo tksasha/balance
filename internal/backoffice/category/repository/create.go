@@ -7,8 +7,6 @@ import (
 )
 
 func (r *Repository) Create(ctx context.Context, category *category.Category) error {
-	currency := r.GetCurrencyFromContext(ctx)
-
 	query := `
 		INSERT INTO
 		    categories (name, slug, income, visible, currency, supercategory, number)
@@ -23,7 +21,7 @@ func (r *Repository) Create(ctx context.Context, category *category.Category) er
 		category.Slug,
 		category.Income,
 		category.Visible,
-		currency,
+		category.Currency,
 		category.Supercategory,
 		category.Number,
 	)

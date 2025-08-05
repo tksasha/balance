@@ -6,6 +6,7 @@ type CreateRequest struct {
 	Visible       string
 	Supercategory string
 	Number        string
+	Currency      string
 }
 
 type UpdateRequest struct {
@@ -15,4 +16,5 @@ type UpdateRequest struct {
 	Visible       string
 	Supercategory string
 	Number        string
+	Currency      string
 }

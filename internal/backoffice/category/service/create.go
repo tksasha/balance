@@ -4,6 +4,7 @@ import (
 	"context"
 
 	"github.com/tksasha/balance/internal/backoffice/category"
+	"github.com/tksasha/balance/internal/common/currency"
 	"github.com/tksasha/validation"
 	"github.com/tksasha/xstrings"
 )
@@ -30,6 +31,8 @@ func (s *Service) Create(ctx context.Context, request category.CreateRequest) (*
 	category.Visible = validation.Boolean("visible", request.Visible)
 
 	category.Number = validation.Integer("number", request.Number) // TODO: test me
+
+	category.Currency = currency.GetByCode(request.Currency)
 
 	if validation.Errors.Exists() {
 		return category, validation.Errors

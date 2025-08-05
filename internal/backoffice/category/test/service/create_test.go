@@ -8,6 +8,7 @@ import (
 	"github.com/tksasha/balance/internal/backoffice/category/service"
 	"github.com/tksasha/balance/internal/backoffice/category/test/mocks"
 	"github.com/tksasha/balance/internal/common"
+	"github.com/tksasha/balance/internal/common/currency"
 	"go.uber.org/mock/gomock"
 	"gotest.tools/v3/assert"
 )
@@ -88,12 +89,14 @@ func TestCreate(t *testing.T) { //nolint:funlen
 		request := category.CreateRequest{
 			Name:          "Confectionery",
 			Supercategory: "58",
+			Currency:      "eur",
 		}
 
 		categoryToCreate := &category.Category{
 			Name:          "Confectionery",
 			Slug:          "confectionery",
 			Supercategory: 58,
+			Currency:      currency.EUR,
 		}
 
 		repository.
@@ -117,6 +120,7 @@ func TestCreate(t *testing.T) { //nolint:funlen
 			Income:        "true",
 			Visible:       "true",
 			Supercategory: "23",
+			Currency:      "usd",
 		}
 
 		categoryToCreate := &category.Category{
@@ -125,6 +129,7 @@ func TestCreate(t *testing.T) { //nolint:funlen
 			Income:        true,
 			Visible:       true,
 			Supercategory: 23,
+			Currency:      currency.USD,
 		}
 
 		repository.

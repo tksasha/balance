@@ -57,6 +57,7 @@ func (h *CreateHandler) handle(r *http.Request) (*category.Category, error) {
 		Visible:       r.FormValue("visible"),
 		Supercategory: r.FormValue("supercategory"),
 		Number:        r.FormValue("number"),
+		Currency:      r.FormValue("currency"),
 	}
 
 	return h.categoryService.Create(r.Context(), request)

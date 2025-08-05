@@ -4,6 +4,7 @@ import (
 	"context"
 
 	"github.com/tksasha/balance/internal/backoffice/category"
+	"github.com/tksasha/balance/internal/common/currency"
 	"github.com/tksasha/validation"
 	"github.com/tksasha/xstrings"
 )
@@ -31,6 +32,8 @@ func (s *Service) Update(ctx context.Context, request category.UpdateRequest) (*
 	category.Supercategory = validation.Integer("supercategory", request.Supercategory)
 
 	category.Number = validation.Integer("number", request.Number) // TODO: test me
+
+	category.Currency = currency.GetByCode(request.Currency) // TODO: test me
 
 	if validation.Errors.Exists() {
 		return category, validation.Errors

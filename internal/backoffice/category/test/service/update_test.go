@@ -8,6 +8,7 @@ import (
 	"github.com/tksasha/balance/internal/backoffice/category/service"
 	"github.com/tksasha/balance/internal/backoffice/category/test/mocks"
 	"github.com/tksasha/balance/internal/common"
+	"github.com/tksasha/balance/internal/common/currency"
 	"go.uber.org/mock/gomock"
 	"gotest.tools/v3/assert"
 )
@@ -139,8 +140,9 @@ func TestUpdate(t *testing.T) { //nolint:funlen
 
 	t.Run("returns error when update category failed", func(t *testing.T) {
 		request := category.UpdateRequest{
-			ID:   "1524",
-			Name: "Miscellaneous",
+			ID:       "1524",
+			Name:     "Miscellaneous",
+			Currency: "eur",
 		}
 
 		categoryFound := &category.Category{
@@ -158,9 +160,10 @@ func TestUpdate(t *testing.T) { //nolint:funlen
 			Return(nil, common.ErrRecordNotFound)
 
 		categoryToUpdate := &category.Category{
-			ID:   1524,
-			Name: "Miscellaneous",
-			Slug: "miscellaneous",
+			ID:       1524,
+			Name:     "Miscellaneous",
+			Slug:     "miscellaneous",
+			Currency: currency.EUR,
 		}
 
 		repository.
@@ -180,6 +183,7 @@ func TestUpdate(t *testing.T) { //nolint:funlen
 			Income:        "true",
 			Visible:       "true",
 			Supercategory: "3",
+			Currency:      "usd",
 		}
 
 		categoryFound := &category.Category{
@@ -207,6 +211,7 @@ func TestUpdate(t *testing.T) { //nolint:funlen
 			Income:        true,
 			Visible:       true,
 			Supercategory: 3,
+			Currency:      currency.USD,
 		}
 
 		repository.
