@@ -2488,6 +2488,32 @@
   };
 
   // javascripts/items.js
+  document.addEventListener("DOMContentLoaded", () => {
+    Datepicker.locales.uk = {
+      days: ["\u041D\u0435\u0434\u0456\u043B\u044F", "\u041F\u043E\u043D\u0435\u0434\u0456\u043B\u043E\u043A", "\u0412\u0456\u0432\u0442\u043E\u0440\u043E\u043A", "\u0421\u0435\u0440\u0435\u0434\u0430", "\u0427\u0435\u0442\u0432\u0435\u0440", "\u041F'\u044F\u0442\u043D\u0438\u0446\u044F", "\u0421\u0443\u0431\u043E\u0442\u0430"],
+      daysShort: ["\u041D\u0435\u0434", "\u041F\u043D\u0434", "\u0412\u0442\u0440", "\u0421\u0440\u0434", "\u0427\u0442\u0432", "\u041F\u0442\u043D", "\u0421\u0443\u0431"],
+      daysMin: ["\u041D\u0434", "\u041F\u043D", "\u0412\u0442", "\u0421\u0440", "\u0427\u0442", "\u041F\u0442", "\u0421\u0431"],
+      months: [
+        "\u0421\u0456\u0447\u0435\u043D\u044C",
+        "\u041B\u044E\u0442\u0438\u0439",
+        "\u0411\u0435\u0440\u0435\u0437\u0435\u043D\u044C",
+        "\u041A\u0432\u0456\u0442\u0435\u043D\u044C",
+        "\u0422\u0440\u0430\u0432\u0435\u043D\u044C",
+        "\u0427\u0435\u0440\u0432\u0435\u043D\u044C",
+        "\u041B\u0438\u043F\u0435\u043D\u044C",
+        "\u0421\u0435\u0440\u043F\u0435\u043D\u044C",
+        "\u0412\u0435\u0440\u0435\u0441\u0435\u043D\u044C",
+        "\u0416\u043E\u0432\u0442\u0435\u043D\u044C",
+        "\u041B\u0438\u0441\u0442\u043E\u043F\u0430\u0434",
+        "\u0413\u0440\u0443\u0434\u0435\u043D\u044C"
+      ],
+      monthsShort: ["\u0421\u0456\u0447", "\u041B\u044E\u0442", "\u0411\u0435\u0440", "\u041A\u0432\u0456", "\u0422\u0440\u0430", "\u0427\u0435\u0440", "\u041B\u0438\u043F", "\u0421\u0435\u0440", "\u0412\u0435\u0440", "\u0416\u043E\u0432", "\u041B\u0438\u0441", "\u0413\u0440\u0443"],
+      today: "\u0421\u044C\u043E\u0433\u043E\u0434\u043D\u0456",
+      clear: "\u041E\u0447\u0438\u0441\u0442\u0438\u0442\u0438",
+      format: "dd.mm.yyyy",
+      weekStart: 1
+    };
+  });
   document.addEventListener("balance.item.initialized", (e) => {
     const element = document.querySelector("input[name=date]");
     const datepicker = new Datepicker(element, BOOTSTRAP_DATEPICKER_DEFAULTS);
@@ -2499,10 +2525,12 @@
   });
   document.addEventListener("balance.item.updated", async (e) => {
     hideModal();
-    if (Object.hasOwn(e.detail, "balancePath"))
+    if (Object.hasOwn(e.detail, "balancePath")) {
       await htmx.ajax("GET", e.detail.balancePath, { target: "#balance", swap: "outerHTML" });
-    if (Object.hasOwn(e.detail, "categoriesPath"))
-      await htmx.ajax("GET", e.detail.categoriesPath, { "target": "#categories", swap: "outerHTML" });
+    }
+    if (Object.hasOwn(e.detail, "categoriesPath")) {
+      await htmx.ajax("GET", e.detail.categoriesPath, { target: "#categories", swap: "outerHTML" });
+    }
   });
   document.addEventListener("balance.items.shown", (e) => {
     const month = e.detail.month;
@@ -2510,8 +2538,9 @@
     const months = document.getElementById("months");
     for (const child of months.children) {
       child.classList.remove("active");
-      if (child.dataset.number == month)
+      if (child.dataset.number == month) {
         child.classList.add("active");
+      }
       let url = new URL(child.getAttribute("hx-get"), window.location.origin);
       url.searchParams.set("year", year);
       child.setAttribute("hx-get", url.toString());
@@ -2520,8 +2549,9 @@
     const years = document.getElementById("years");
     for (const child of years.children) {
       child.classList.remove("active");
-      if (child.dataset.number == year)
+      if (child.dataset.number == year) {
         child.classList.add("active");
+      }
       let url = new URL(child.getAttribute("hx-get"), window.location.origin);
       url.searchParams.set("month", month);
       child.setAttribute("hx-get", url.toString());
@@ -2538,21 +2568,27 @@
     hideModal();
     const element = document.querySelector("input[name=date]");
     const datepicker = new Datepicker(element, BOOTSTRAP_DATEPICKER_DEFAULTS);
-    if (Object.hasOwn(e.detail, "balancePath"))
+    if (Object.hasOwn(e.detail, "balancePath")) {
       await htmx.ajax("GET", e.detail.balancePath, { target: "#balance", swap: "outerHTML" });
-    if (Object.hasOwn(e.detail, "categoriesPath"))
-      await htmx.ajax("GET", e.detail.categoriesPath, { "target": "#categories", swap: "outerHTML" });
-    if (Object.hasOwn(e.detail, "itemsPath"))
-      await htmx.ajax("GET", e.detail.itemsPath, { "target": "#items" });
+    }
+    if (Object.hasOwn(e.detail, "categoriesPath")) {
+      await htmx.ajax("GET", e.detail.categoriesPath, { target: "#categories", swap: "outerHTML" });
+    }
+    if (Object.hasOwn(e.detail, "itemsPath")) {
+      await htmx.ajax("GET", e.detail.itemsPath, { target: "#items" });
+    }
   });
   document.addEventListener("balance.item.deleted", async (e) => {
     hideModal();
-    if (Object.hasOwn(e.detail, "balancePath"))
+    if (Object.hasOwn(e.detail, "balancePath")) {
       await htmx.ajax("GET", e.detail.balancePath, { target: "#balance", swap: "outerHTML" });
-    if (Object.hasOwn(e.detail, "categoriesPath"))
-      await htmx.ajax("GET", e.detail.categoriesPath, { "target": "#categories", swap: "outerHTML" });
-    if (Object.hasOwn(e.detail, "itemsPath"))
-      await htmx.ajax("GET", e.detail.itemsPath, { "target": "#items" });
+    }
+    if (Object.hasOwn(e.detail, "categoriesPath")) {
+      await htmx.ajax("GET", e.detail.categoriesPath, { target: "#categories", swap: "outerHTML" });
+    }
+    if (Object.hasOwn(e.detail, "itemsPath")) {
+      await htmx.ajax("GET", e.detail.itemsPath, { target: "#items" });
+    }
   });
 
   // javascripts/header.js
