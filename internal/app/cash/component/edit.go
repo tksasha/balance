@@ -14,7 +14,6 @@ func (c *Component) Edit(params params.Params, cash *cash.Cash, errors validatio
 		Group([]Node{
 			htmx.Patch(paths.UpdateCash(params, cash.ID)),
 			htmx.Target("#modal-body"),
-			htmx.Swap("outerHTML"),
 		}),
 		cash,
 		errors,
