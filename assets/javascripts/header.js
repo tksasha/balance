@@ -26,6 +26,8 @@ export class Header {
     params.set("year", this.#year());
 
     htmx.ajax("GET", "/items?" + params.toString(), "#items");
+
+    htmx.ajax("GET", "/categories?" + params.toString(), { target: "#categories", swap: "outerHTML" });
   }
 
   static #month() {

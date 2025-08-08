@@ -1,10 +1,8 @@
 package component
 
 import (
-	"fmt"
 	"strconv"
 
-	"github.com/tksasha/balance/internal/common/paths"
 	"github.com/tksasha/balance/internal/common/paths/params"
 	. "maragu.dev/gomponents" //nolint:stylecheck
 	htmx "maragu.dev/gomponents-htmx"
@@ -31,19 +29,11 @@ func (c *Component) year(year int, params params.Params) Node {
 		"link":   true,
 	}
 
-	params = params.WithYear(year)
-
-	callback := fmt.Sprintf("htmx.trigger('body', 'balance.year.changed', {balanceCategoriesPath: '%s'})",
-		paths.Categories(params))
-
 	value := strconv.Itoa(year)
 
 	return Div(
 		classes,
 		Text(value),
 		Data("number", value),
-		htmx.Get(paths.Items(params)),
-		htmx.Target("#items"),
-		htmx.On(":after-request", callback),
 	)
 }

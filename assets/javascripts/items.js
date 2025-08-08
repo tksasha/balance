@@ -54,47 +54,6 @@ document.addEventListener("balance.item.updated", async (e) => {
   }
 });
 
-document.addEventListener("balance.items.shown", (e) => {
-  const month = e.detail.month;
-  const year = e.detail.year;
-
-  const months = document.getElementById("months");
-
-  for (const child of months.children) {
-    child.classList.remove("active");
-
-    if (child.dataset.number == month) {
-      child.classList.add("active");
-    }
-
-    let url = new URL(child.getAttribute("hx-get"), window.location.origin);
-
-    url.searchParams.set("year", year);
-
-    child.setAttribute("hx-get", url.toString());
-
-    htmx.process(child);
-  }
-
-  const years = document.getElementById("years");
-
-  for (const child of years.children) {
-    child.classList.remove("active");
-
-    if (child.dataset.number == year) {
-      child.classList.add("active");
-    }
-
-    let url = new URL(child.getAttribute("hx-get"), window.location.origin);
-
-    url.searchParams.set("month", month);
-
-    child.setAttribute("hx-get", url.toString());
-
-    htmx.process(child);
-  }
-});
-
 document.addEventListener("balance.item.create.error", (e) => {
   showModal();
 

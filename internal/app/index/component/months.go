@@ -1,10 +1,8 @@
 package component
 
 import (
-	"fmt"
 	"strconv"
 
-	"github.com/tksasha/balance/internal/common/paths"
 	"github.com/tksasha/balance/internal/common/paths/params"
 	"github.com/tksasha/month"
 	. "maragu.dev/gomponents" //nolint:stylecheck
@@ -32,17 +30,9 @@ func (c *Component) Month(month month.Month, params params.Params) Node {
 		"link":   true,
 	}
 
-	params = params.WithMonth(month.Number)
-
-	callback := fmt.Sprintf("htmx.trigger('body', 'balance.month.changed', {balanceCategoriesPath: '%s'})",
-		paths.Categories(params))
-
 	return Div(
 		classes,
 		Text(month.Name),
 		Data("number", strconv.Itoa(month.Number)),
-		htmx.Get(paths.Items(params)),
-		htmx.Target("#items"),
-		htmx.On(":after-request", callback),
 	)
 }
