@@ -25,5 +25,11 @@ header {
       @extend .text-light;
       @extend .rounded;
     }
+
+    &.today {
+        @extend .border;
+        @extend .border-primary-subtle;
+        @extend .rounded;
+    }
   }
 }

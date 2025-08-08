@@ -21,7 +21,7 @@ func (c *Component) Index(params params.Params) Node {
 					Href("/assets/datepicker-bs5.min-f2c1cb83e2274f112ab4841abeb7303ea290a018.css")),
 				Link(
 					Rel("stylesheet"),
-					Href("/assets/application-26eb1260657e8b37e8a5de9e77b593bc47fdd748.css")),
+					Href("/assets/application-bbcc6fe36ca4ad1626d7ce3d631f91487b5fef80.css")),
 				Link(
 					Rel("icon"),
 					Type("image/x-icon"),

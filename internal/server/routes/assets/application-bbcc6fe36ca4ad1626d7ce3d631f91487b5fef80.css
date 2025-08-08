@@ -7472,7 +7472,7 @@ textarea.form-control-lg {
   transform: translateY(-50%) !important;
 }
 
-.border {
+.border, header div.link.today {
   border: var(--bs-border-width) var(--bs-border-style) var(--bs-border-color) !important;
 }
 
@@ -7562,7 +7562,7 @@ textarea.form-control-lg {
   border-color: rgba(var(--bs-white-rgb), var(--bs-border-opacity)) !important;
 }
 
-.border-primary-subtle {
+.border-primary-subtle, header div.link.today {
   border-color: var(--bs-primary-border-subtle) !important;
 }
 
@@ -8904,7 +8904,7 @@ textarea.form-control-lg {
   pointer-events: auto !important;
 }
 
-.rounded, header div.link.active {
+.rounded, header div.link.today, header div.link.active {
   border-radius: var(--bs-border-radius) !important;
 }
 
