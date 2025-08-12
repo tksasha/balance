@@ -6,6 +6,7 @@ import (
 	"github.com/tksasha/balance/internal/app/index/component"
 	commonhandler "github.com/tksasha/balance/internal/common/handler"
 	"github.com/tksasha/balance/internal/common/paths/params"
+	"github.com/tksasha/balance/pkg/timeprovider"
 )
 
 type Handler struct {
@@ -17,7 +18,7 @@ type Handler struct {
 func New() *Handler {
 	return &Handler{
 		Handler:   commonhandler.New(),
-		component: component.New(),
+		component: component.New(timeprovider.New()),
 	}
 }
 

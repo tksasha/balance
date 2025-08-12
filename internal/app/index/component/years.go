@@ -2,7 +2,6 @@ package component
 
 import (
 	"strconv"
-	"time"
 
 	"github.com/tksasha/balance/internal/common/paths/params"
 	. "maragu.dev/gomponents" //nolint:stylecheck
@@ -28,7 +27,7 @@ func (c *Component) year(year int, params params.Params) Node {
 	classes := components.Classes{
 		"active": current,
 		"link":   true,
-		"today":  time.Now().Year() == year,
+		"today":  c.timeProvider.IsCurrentYear(year),
 	}
 
 	value := strconv.Itoa(year)

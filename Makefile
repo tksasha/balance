@@ -91,6 +91,10 @@ mockgen:
 		-source internal/app/balance/interfaces.go \
 		-package mocks \
 		-destination internal/app/balance/test/mocks/interfaces.mock.go
+	@go tool -modfile go.tool.mod mockgen \
+		-source pkg/timeprovider/interfaces.go \
+		-package mocks \
+		-destination internal/app/index/test/mocks/interfaces.mock.go
 
 .PHONY: wire
 wire:

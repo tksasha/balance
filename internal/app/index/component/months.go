@@ -2,7 +2,6 @@ package component
 
 import (
 	"strconv"
-	"time"
 
 	"github.com/tksasha/balance/internal/common/paths/params"
 	"github.com/tksasha/month"
@@ -29,7 +28,7 @@ func (c *Component) Month(month month.Month, params params.Params) Node {
 	classes := components.Classes{
 		"active": current,
 		"link":   true,
-		"today":  int(time.Now().Month()) == month.Number,
+		"today":  c.timeProvider.IsCurrentMonth(month.Number),
 	}
 
 	return Div(

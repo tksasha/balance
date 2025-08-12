@@ -1,11 +1,10 @@
 package component
 
 import (
-	"time"
-
 	balancecomponent "github.com/tksasha/balance/internal/app/balance/component"
 	cashcomponent "github.com/tksasha/balance/internal/app/cash/component"
 	"github.com/tksasha/balance/internal/common/component"
+	"github.com/tksasha/balance/pkg/timeprovider"
 )
 
 const yearFrom = 2015
@@ -16,12 +15,15 @@ type Component struct {
 	balanceComponent *balancecomponent.Component
 	cashComponent    *cashcomponent.Component
 	years            []int
+	timeProvider     timeprovider.TimeProvider
 }
 
-func New() *Component {
+func New(timeProvider timeprovider.TimeProvider) *Component {
 	var years []int
 
-	for year := yearFrom; year <= time.Now().Year(); year++ {
+	currentYear := timeProvider.CurrentYear()
+
+	for year := yearFrom; year <= currentYear; year++ {
 		years = append(years, year)
 	}
 
@@ -30,5 +32,6 @@ func New() *Component {
 		balanceComponent: balancecomponent.New(),
 		cashComponent:    cashcomponent.New(),
 		years:            years,
+		timeProvider:     timeProvider,
 	}
 }
