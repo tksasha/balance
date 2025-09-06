@@ -6,5 +6,5 @@ import (
 )
 
 func (c *Component) categories() Node {
-	return Div(ID("categories"))
+	return Div(Class("container-fluid"), ID("categories"))
 }
