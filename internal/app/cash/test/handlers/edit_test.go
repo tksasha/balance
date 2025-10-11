@@ -18,6 +18,7 @@ import (
 
 func TestCashEditHandler(t *testing.T) { //nolint:funlen
 	handler, db := newEditHandler(t)
+
 	defer func() {
 		if err := db.Close(); err != nil {
 			t.Fatal(err)

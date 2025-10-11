@@ -44,6 +44,7 @@ func createCategory(t *testing.T, db *sql.DB, category *category.Category) {
 func cleanup(t *testing.T, db *sql.DB) {
 	t.Helper()
 
+	//nolint:noctx
 	if _, err := db.Exec(`DELETE FROM items; DELETE FROM categories`); err != nil {
 		t.Fatal(err)
 	}
@@ -71,6 +72,7 @@ func findItemByDate(t *testing.T, db *sql.DB, currency currency.Currency, date s
 
 	item := &item.Item{}
 
+	//nolint:noctx
 	if err := db.QueryRow(query, date, currency).Scan(
 		&item.ID,
 		&item.Currency,

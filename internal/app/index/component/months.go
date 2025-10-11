@@ -5,10 +5,10 @@ import (
 
 	"github.com/tksasha/balance/internal/common/paths/params"
 	"github.com/tksasha/month"
-	. "maragu.dev/gomponents" //nolint:stylecheck
+	. "maragu.dev/gomponents" //nolint:staticcheck
 	htmx "maragu.dev/gomponents-htmx"
 	"maragu.dev/gomponents/components"
-	. "maragu.dev/gomponents/html" //nolint:stylecheck
+	. "maragu.dev/gomponents/html" //nolint:staticcheck
 )
 
 func (c *Component) Months(params params.Params) Node {

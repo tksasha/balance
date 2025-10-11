@@ -3,9 +3,9 @@ package component
 import (
 	"github.com/tksasha/balance/internal/common/paths"
 	"github.com/tksasha/balance/internal/common/paths/params"
-	. "maragu.dev/gomponents" //nolint:stylecheck
+	. "maragu.dev/gomponents" //nolint:staticcheck
 	htmx "maragu.dev/gomponents-htmx"
-	. "maragu.dev/gomponents/html" //nolint:stylecheck
+	. "maragu.dev/gomponents/html" //nolint:staticcheck
 )
 
 func (c *Component) balance(params params.Params) Node {

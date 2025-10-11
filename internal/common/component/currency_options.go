@@ -6,8 +6,8 @@ import (
 	"strings"
 
 	"github.com/tksasha/balance/internal/common/currency"
-	. "maragu.dev/gomponents"      //nolint:stylecheck
-	. "maragu.dev/gomponents/html" //nolint:stylecheck
+	. "maragu.dev/gomponents"      //nolint:staticcheck
+	. "maragu.dev/gomponents/html" //nolint:staticcheck
 )
 
 func (c *Component) CurrencyOptions(selected string) Node {

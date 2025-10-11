@@ -4,9 +4,9 @@ import (
 	"github.com/tksasha/balance/internal/app/category"
 	"github.com/tksasha/balance/internal/common/paths"
 	"github.com/tksasha/balance/internal/common/paths/params"
-	. "maragu.dev/gomponents" //nolint:stylecheck
+	. "maragu.dev/gomponents" //nolint:staticcheck
 	htmx "maragu.dev/gomponents-htmx"
-	. "maragu.dev/gomponents/html" //nolint:stylecheck
+	. "maragu.dev/gomponents/html" //nolint:staticcheck
 )
 
 func (c *Component) Index(categories category.GroupedCategories, params params.Params) Node {

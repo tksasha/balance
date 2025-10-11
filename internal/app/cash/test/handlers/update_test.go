@@ -21,6 +21,7 @@ import (
 
 func TestCashUpdateHandler(t *testing.T) { //nolint:funlen
 	handler, db := newUpdateHandler(t)
+
 	defer func() {
 		if err := db.Close(); err != nil {
 			t.Fatal(err)

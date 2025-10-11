@@ -1,7 +1,7 @@
 package component
 
 import (
-	. "maragu.dev/gomponents" //nolint:stylecheck
+	. "maragu.dev/gomponents" //nolint:staticcheck
 )
 
 func (c *Component) Template(children ...Node) Node {

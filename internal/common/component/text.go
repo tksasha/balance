@@ -3,7 +3,7 @@ package component
 import (
 	"strconv"
 
-	. "maragu.dev/gomponents" //nolint:stylecheck
+	. "maragu.dev/gomponents" //nolint:staticcheck
 )
 
 func (c *Component) Text(el any) Node {

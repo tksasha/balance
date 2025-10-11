@@ -31,9 +31,9 @@ test:
 	@echo "go test"
 	@go test ./... -count=1
 
-.PHONY: update
-update:
-	@go test ./... -update
+# .PHONY: update
+# update:
+# 	@go test ./... -update
 
 .PHONY: air
 air:
@@ -105,16 +105,18 @@ migration:
 	@if [ -z "$(name)" ]; then echo "name is required"; exit 1; fi
 	touch "internal/db/migrations/$(shell date "+%Y%m%d%H%M%S")_$(name).sql"
 
-.PHONY: prepare
-prepare:
+.PHONY: update
+update:
 	@if [ ! -f go.mod ]; then go mod init $(MODULE); go mod tidy; fi
 	@if [ ! -f go.tool.mod ]; then go mod init -modfile go.tool.mod $(MODULE); go mod tidy -modfile go.tool.mod; fi
 	go get -u ./...
-	go get -modfile go.tool.mod tool github.com/air-verse/air@latest
-	go get -modfile go.tool.mod tool github.com/golangci/golangci-lint/cmd/golangci-lint@latest
-	go get -modfile go.tool.mod tool github.com/google/wire/cmd/wire@latest
-	go get -modfile go.tool.mod tool go.uber.org/mock/mockgen@latest
-	go get -modfile go.tool.mod tool mvdan.cc/gofumpt@latest
+	go get -tool -modfile=go.tool.mod github.com/air-verse/air@latest
+	go get -tool -modfile=go.tool.mod github.com/golangci/golangci-lint/v2/cmd/golangci-lint@v2.4
+	go get -tool -modfile=go.tool.mod github.com/google/wire/cmd/wire@latest
+	go get -tool -modfile=go.tool.mod go.uber.org/mock/mockgen@latest
+	go get -tool -modfile=go.tool.mod mvdan.cc/gofumpt@latest
+	go mod tidy
+	go mod tidy -modfile go.tool.mod
 
 .PHONY: structure
 structure:

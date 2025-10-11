@@ -1,19 +1,10 @@
----
-linters-settings:
-  funlen:
-    ignore-comments: true
-  revive:
-    rules:
-      - name: exported
-        disabled: true
-  stylecheck:
-    checks: ["all", "-ST1000"]
+version: "2"
 linters:
-  enable-all: true
+  default: all
   disable:
     ### deprecated, archived or obsolette by authors
     - paralleltest
-    - tenv
+    - wsl
     ### disabled by me
     - depguard
     - exhaustruct
@@ -22,11 +13,39 @@ linters:
     - ireturn
     - varnamelen
     - wrapcheck
-issues:
-  exclude-use-default: false
-  exclude-rules:
-    - path: _test\.go
-      linters:
-        - err113
-  exclude-files:
-    - debug.go
+    - noinlineerr
+  settings:
+    funlen:
+      ignore-comments: true
+    revive:
+      rules:
+        - name: exported
+          disabled: true
+    staticcheck:
+      checks:
+        - all
+        - -ST1000
+  exclusions:
+    generated: lax
+    rules:
+      - linters:
+          - err113
+        path: _test\.go
+    paths:
+      - debug.go
+      - third_party$
+      - builtin$
+      - examples$
+formatters:
+  enable:
+    - gci
+    - gofmt
+    - gofumpt
+    - goimports
+  exclusions:
+    generated: lax
+    paths:
+      - debug.go
+      - third_party$
+      - builtin$
+      - examples$

@@ -6,8 +6,8 @@ import (
 
 	"github.com/tksasha/balance/internal/common/currency"
 	"github.com/tksasha/balance/internal/common/paths/params"
-	. "maragu.dev/gomponents"      //nolint:stylecheck
-	. "maragu.dev/gomponents/html" //nolint:stylecheck
+	. "maragu.dev/gomponents"      //nolint:staticcheck
+	. "maragu.dev/gomponents/html" //nolint:staticcheck
 )
 
 func (c *Component) currenciesWidget(params params.Params) Node {

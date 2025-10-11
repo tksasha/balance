@@ -17,6 +17,7 @@ import (
 
 func TestCashListHandler(t *testing.T) {
 	db := db.Open(t.Context(), nameprovider.NewTestProvider())
+
 	defer func() {
 		if err := db.Close(); err != nil {
 			t.Fatal(err)

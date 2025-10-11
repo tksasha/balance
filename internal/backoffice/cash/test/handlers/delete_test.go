@@ -19,6 +19,7 @@ import (
 
 func TestCashDeleteHandler(t *testing.T) {
 	handler, db := newDeleteHandler(t)
+
 	defer func() {
 		if err := db.Close(); err != nil {
 			t.Fatal(err)

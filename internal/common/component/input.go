@@ -1,9 +1,9 @@
 package component
 
 import (
-	. "maragu.dev/gomponents"            //nolint: stylecheck
-	. "maragu.dev/gomponents/components" //nolint: stylecheck
-	. "maragu.dev/gomponents/html"       //nolint: stylecheck
+	. "maragu.dev/gomponents"            //nolint: staticcheck
+	. "maragu.dev/gomponents/components" //nolint: staticcheck
+	. "maragu.dev/gomponents/html"       //nolint: staticcheck
 )
 
 func (c *Component) Input(label, name, value string, classes Classes, message *string, children ...Node) Node {

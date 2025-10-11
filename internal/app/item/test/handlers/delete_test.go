@@ -21,6 +21,7 @@ import (
 
 func TestDeleteItemHandler(t *testing.T) { //nolint:funlen
 	db := db.Open(t.Context(), nameprovider.NewTestProvider())
+
 	defer func() {
 		if err := db.Close(); err != nil {
 			t.Fatal(err)

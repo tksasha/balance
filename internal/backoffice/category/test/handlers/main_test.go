@@ -28,6 +28,7 @@ func cleanup(t *testing.T, db *sql.DB) {
 	t.Helper()
 
 	t.Cleanup(func() {
+		//nolint:noctx
 		_, err := db.Exec(`DELETE FROM items; DELETE FROM categories;`)
 		if err != nil {
 			t.Fatal(err)

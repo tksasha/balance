@@ -2,9 +2,9 @@ package component
 
 import (
 	"github.com/tksasha/balance/internal/app/balance"
-	. "maragu.dev/gomponents"            //nolint:stylecheck
-	. "maragu.dev/gomponents/components" //nolint:stylecheck
-	. "maragu.dev/gomponents/html"       //nolint:stylecheck
+	. "maragu.dev/gomponents"            //nolint:staticcheck
+	. "maragu.dev/gomponents/components" //nolint:staticcheck
+	. "maragu.dev/gomponents/html"       //nolint:staticcheck
 )
 
 func (c *Component) Balance(balance *balance.Balance) Node {

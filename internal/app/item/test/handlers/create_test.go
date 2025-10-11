@@ -24,6 +24,7 @@ import (
 
 func TestItemCreateHandler(t *testing.T) { //nolint:funlen
 	handler, db := newCreateHandler(t)
+
 	defer func() {
 		if err := db.Close(); err != nil {
 			t.Fatal(err)

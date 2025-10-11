@@ -18,6 +18,7 @@ import (
 
 func TestCategoryEditHandler(t *testing.T) {
 	handler, db := newEditHandler(t)
+
 	defer func() {
 		if err := db.Close(); err != nil {
 			t.Fatal(err)

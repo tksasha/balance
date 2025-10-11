@@ -7,9 +7,9 @@ import (
 	"github.com/tksasha/balance/internal/common/currency"
 	"github.com/tksasha/balance/internal/common/paths"
 	"github.com/tksasha/validation"
-	. "maragu.dev/gomponents" //nolint:stylecheck
+	. "maragu.dev/gomponents" //nolint:staticcheck
 	htmx "maragu.dev/gomponents-htmx"
-	. "maragu.dev/gomponents/html" //nolint:stylecheck
+	. "maragu.dev/gomponents/html" //nolint:staticcheck
 )
 
 func (c *Component) form(cash *cash.Cash, errors validation.Errors) Node {

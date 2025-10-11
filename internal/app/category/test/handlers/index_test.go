@@ -20,6 +20,7 @@ func TestIndexHandler(t *testing.T) {
 	ctx := t.Context()
 
 	db := db.Open(ctx, nameprovider.NewTestProvider())
+
 	defer func() {
 		if err := db.Close(); err != nil {
 			t.Logf("failed to close db: %v", err)
