@@ -111,7 +111,7 @@ update:
 	@if [ ! -f go.tool.mod ]; then go mod init -modfile go.tool.mod $(MODULE); go mod tidy -modfile go.tool.mod; fi
 	go get -u ./...
 	go get -tool -modfile=go.tool.mod github.com/air-verse/air@latest
-	go get -tool -modfile=go.tool.mod github.com/golangci/golangci-lint/v2/cmd/golangci-lint@v2.5
+	go get -tool -modfile=go.tool.mod github.com/golangci/golangci-lint/v2/cmd/golangci-lint@latest
 	go get -tool -modfile=go.tool.mod github.com/google/wire/cmd/wire@latest
 	go get -tool -modfile=go.tool.mod go.uber.org/mock/mockgen@latest
 	go get -tool -modfile=go.tool.mod mvdan.cc/gofumpt@latest
