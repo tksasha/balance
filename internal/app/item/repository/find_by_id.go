@@ -49,5 +49,35 @@ func (r *Repository) FindByID(ctx context.Context, id int) (*item.Item, error) {
 		return nil, err
 	}
 
+	if categoryVisible, err := r.getCategoryVisible(ctx, item.CategoryID); err != nil {
+		return nil, err
+	} else {
+		item.CategoryVisible = categoryVisible
+	}
+
 	return item, nil
+}
+
+func (r *Repository) getCategoryVisible(ctx context.Context, categoryID int) (bool, error) {
+	currency := r.GetCurrencyFromContext(ctx)
+
+	query := `
+		SELECT
+		    visible
+		FROM
+		    categories
+		WHERE
+		    id = ?
+		    AND currency = ?
+	`
+
+	categoryVisible := false
+
+	if err := r.db.
+		QueryRowContext(ctx, query, categoryID, currency).
+		Scan(&categoryVisible); err != nil {
+		return categoryVisible, err
+	}
+
+	return categoryVisible, nil
 }
