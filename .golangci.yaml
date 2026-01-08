@@ -14,6 +14,7 @@ linters:
     - varnamelen
     - wrapcheck
     - noinlineerr
+    - prealloc # they do not recomment using this linter before doing performance profiling.
   settings:
     funlen:
       ignore-comments: true
