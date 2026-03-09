@@ -16,6 +16,8 @@ import (
 	"github.com/tksasha/validation"
 )
 
+const maxBodySize = 1024 * 1024 // 1MB
+
 type UpdateHandler struct {
 	*handler.Handler
 
@@ -37,6 +39,8 @@ func NewUpdateHandler(
 }
 
 func (h *UpdateHandler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
+	r.Body = http.MaxBytesReader(w, r.Body, maxBodySize)
+
 	params := params.New(r.URL.Query())
 
 	if err := r.ParseForm(); err != nil {
@@ -60,8 +64,7 @@ func (h *UpdateHandler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	var verrors validation.Errors
-	if errors.As(err, &verrors) {
+	if verrors, ok := errors.AsType[validation.Errors](err); ok {
 		categories, err := h.categoryService.List(r.Context())
 		if err != nil {
 			h.SetError(w, err)

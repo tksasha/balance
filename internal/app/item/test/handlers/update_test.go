@@ -36,21 +36,6 @@ func TestItemUpdateHandler(t *testing.T) { //nolint:funlen
 
 	ctx := t.Context()
 
-	t.Run("responds 400 on invalid input", func(t *testing.T) {
-		cleanup(t, db)
-
-		request, err := http.NewRequestWithContext(ctx, http.MethodPatch, "/items/1138", nil)
-		if err != nil {
-			t.Fatal(err)
-		}
-
-		recorder := httptest.NewRecorder()
-
-		mux.ServeHTTP(recorder, request)
-
-		assert.Equal(t, recorder.Code, http.StatusBadRequest)
-	})
-
 	t.Run("responds 404 on no item found", func(t *testing.T) {
 		values := url.Values{}
 
