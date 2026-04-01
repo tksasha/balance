@@ -31,17 +31,9 @@ test:
 	@echo "go test"
 	@go test ./... -count=1
 
-# .PHONY: update
-# update:
-# 	@go test ./... -update
-
-.PHONY: air
-air:
-	@go tool -modfile go.tool.mod air
-
 .PHONY: run
 run:
-	@echo "go run (without live reloading)"
+	@echo "go run"
 	@go run github.com/tksasha/balance/cmd/balance
 
 .PHONY: build
@@ -110,7 +102,6 @@ update:
 	@if [ ! -f go.mod ]; then go mod init $(MODULE); go mod tidy; fi
 	@if [ ! -f go.tool.mod ]; then go mod init -modfile go.tool.mod $(MODULE); go mod tidy -modfile go.tool.mod; fi
 	go get -u ./...
-	go get -tool -modfile=go.tool.mod github.com/air-verse/air@latest
 	go get -tool -modfile=go.tool.mod github.com/golangci/golangci-lint/v2/cmd/golangci-lint@latest
 	go get -tool -modfile=go.tool.mod github.com/google/wire/cmd/wire@latest
 	go get -tool -modfile=go.tool.mod go.uber.org/mock/mockgen@latest

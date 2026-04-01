@@ -1,6 +1,6 @@
 module github.com/tksasha/balance
 
-go 1.26
+go 1.26.1
 
 require (
 	github.com/google/wire v0.7.0
