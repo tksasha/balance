@@ -67,9 +67,9 @@ func (h *UpdateHandler) ok(w http.ResponseWriter, params params.Params) {
 
 	header := map[string]map[string]string{
 		"backoffice.cash.updated": {
-			"backofficeCashesPath": paths.BackofficeCashes(params),
-			"balancePath":          paths.Balance(params),
-			"cashesPath":           paths.Cashes(params),
+			paths.BackofficeCashesPathKey: paths.BackofficeCashes(params),
+			paths.BalancePathKey:          paths.Balance(params),
+			paths.CashesPathKey:           paths.Cashes(params),
 		},
 	}
 

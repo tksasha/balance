@@ -84,9 +84,9 @@ func (h *CreateHandler) ok(
 
 	header := map[string]map[string]string{
 		"balance.item.created": {
-			"itemsPath":      paths.Items(params),
-			"categoriesPath": paths.Categories(params),
-			"balancePath":    paths.Balance(params),
+			paths.ItemsPathKey:      paths.Items(params),
+			paths.CategoriesPathKey: paths.Categories(params),
+			paths.BalancePathKey:    paths.Balance(params),
 		},
 	}
 

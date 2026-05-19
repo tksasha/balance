@@ -29,12 +29,16 @@ func (c *Component) Index(params params.Params, items item.Items) Node {
 }
 
 func (c *Component) item(params params.Params, item *item.Item, children ...Node) Node {
-	return Tr(ID(c.itemID(item.ID)),
-		Td(Class("items-date"),
+	return Tr(
+		ID(c.itemID(item.ID)),
+		Td(
+			Class("items-date"),
 			Text(c.date(item.Date)),
 		),
-		Td(Class("items-sum"),
-			Div(Class("link"),
+		Td(
+			Class("items-sum"),
+			Div(
+				Class("link"),
 				Text(c.Money(item.Sum)),
 				htmx.Get(paths.EditItem(params, item.ID)),
 				htmx.Target("#modal-body"),
@@ -43,7 +47,8 @@ func (c *Component) item(params params.Params, item *item.Item, children ...Node
 				Data("bs-target", "#modal"),
 			),
 		),
-		Td(Class("items-category"),
+		Td(
+			Class("items-category"),
 			Text(item.CategoryName),
 		),
 		Td(c.Description(item.Description)),

@@ -15,24 +15,32 @@ func (c *Component) Balance(balance *balance.Balance) Node {
 		"fw-medium":    balance.Balance != 0,
 	}
 
-	return Div(Class("col-3"), ID("balance"),
-		Div(Class("card cash"),
-			Div(Class("card-body"),
-				Table(Class("w-100"),
+	return Div(
+		Class("col-3"), ID("balance"),
+		Div(
+			Class("card cash"),
+			Div(
+				Class("card-body"),
+				Table(
+					Class("w-100"),
 					TBody(
-						Tr(Class("at_end"),
+						Tr(
+							Class("at_end"),
 							Td(
 								Text("Залишок на кінець"),
 							),
-							Td(Class("sum"),
+							Td(
+								Class("sum"),
 								Text(c.Money(balance.AtEnd)),
 							),
 						),
-						Tr(Class("balance"),
+						Tr(
+							Class("balance"),
 							Td(
 								Text("Баланс"),
 							),
-							Td(classes,
+							Td(
+								classes,
 								Text(c.Money(balance.Balance)),
 							),
 						),

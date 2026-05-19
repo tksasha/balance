@@ -15,20 +15,25 @@ func (c *Component) Index(params params.Params) Node {
 			Head: []Node{
 				Link(
 					Rel("stylesheet"),
-					Href("/assets/datepicker.min-1b98f51332bc364984c9fc3291cc6e20188fefb0.css")),
+					Href("/assets/datepicker.min-1b98f51332bc364984c9fc3291cc6e20188fefb0.css"),
+				),
 				Link(
 					Rel("stylesheet"),
-					Href("/assets/datepicker-bs5.min-f2c1cb83e2274f112ab4841abeb7303ea290a018.css")),
+					Href("/assets/datepicker-bs5.min-f2c1cb83e2274f112ab4841abeb7303ea290a018.css"),
+				),
 				Link(
 					Rel("stylesheet"),
-					Href("/assets/application-b44b837c3726dc95ae4d9623c003a266c0ddb47d.css")),
+					Href("/assets/application-b44b837c3726dc95ae4d9623c003a266c0ddb47d.css"),
+				),
 				Link(
 					Rel("icon"),
 					Type("image/x-icon"),
-					Href("/assets/hryvnia-c8a5df41852f327f0ad50d3dddf29acf85597d22.png")),
+					Href("/assets/hryvnia-c8a5df41852f327f0ad50d3dddf29acf85597d22.png"),
+				),
 				Link(
 					Rel("apple-touch-icon"),
-					Href("/assets/hryvnia-c8a5df41852f327f0ad50d3dddf29acf85597d22.png")),
+					Href("/assets/hryvnia-c8a5df41852f327f0ad50d3dddf29acf85597d22.png"),
+				),
 			},
 			Body: []Node{
 				c.header(params),

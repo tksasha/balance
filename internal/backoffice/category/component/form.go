@@ -16,7 +16,8 @@ func (c *Component) form(category *category.Category, errors validation.Errors) 
 	return Form(
 		If(category.ID == 0, htmx.Post(paths.CreateBackofficeCategory())),
 		If(category.ID != 0, htmx.Patch(paths.UpdateBackofficeCategory(category.ID))),
-		Div(Class("mb-3"),
+		Div(
+			Class("mb-3"),
 			Label(Class("form-label"), Text("Валюта")),
 			Select(Class("form-select"), Name("currency"),
 				c.CurrencyOptions(currency.GetCode(category.Currency))),

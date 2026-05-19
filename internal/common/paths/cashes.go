@@ -7,7 +7,11 @@ import (
 	"github.com/tksasha/balance/internal/common/paths/params"
 )
 
-const cashesPath = "/cashes"
+const (
+	cashesPath = "/cashes"
+
+	CashesPathKey = "cashesPath"
+)
 
 func Cashes(params params.Params) string {
 	path := url.URL{

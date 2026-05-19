@@ -31,9 +31,12 @@ func (c *Component) currenciesWidgetContent(params params.Params) Node {
 
 	currencies := slices.Collect(maps.Values(currency.All()))
 
-	return Div(ID("currencies-widget-content"),
-		Div(Class("container"),
-			Div(Class("row"),
+	return Div(
+		ID("currencies-widget-content"),
+		Div(
+			Class("container"),
+			Div(
+				Class("row"),
 				Map(currencies, func(curr string) Node {
 					curr = currency.Code(curr)
 
@@ -41,8 +44,10 @@ func (c *Component) currenciesWidgetContent(params params.Params) Node {
 						return nil
 					}
 
-					return Div(Class("col"),
-						Div(Class("text-center text-uppercase"),
+					return Div(
+						Class("col"),
+						Div(
+							Class("text-center text-uppercase"),
 							A(Class("currencies-widget-currency"), Href("/?currency="+curr), Text(curr)),
 						),
 					)

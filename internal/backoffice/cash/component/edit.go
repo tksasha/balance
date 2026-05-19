@@ -12,8 +12,10 @@ import (
 func (c *Component) Edit(params params.Params, cash *cash.Cash) Node {
 	return Div(
 		c.Breadcrumbs(
-			Li(Class("breadcrumb-item"),
-				Span(Class("link"),
+			Li(
+				Class("breadcrumb-item"),
+				Span(
+					Class("link"),
 					htmx.Get(paths.BackofficeCashes(params)),
 					htmx.Target("#modal-body"),
 					Text("Залишки"),

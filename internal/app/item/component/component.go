@@ -41,13 +41,16 @@ func (c *Component) categories(selected int, categories category.Categories, mes
 
 	nodes = append(
 		nodes,
-		Select(Class("form-select"), Name("category_id"),
-			OptGroup(LabelAttr("Видатки"),
+		Select(
+			Class("form-select"), Name("category_id"),
+			OptGroup(
+				LabelAttr("Видатки"),
 				Map(categories.Expense(), func(category *category.Category) Node {
 					return c.category(category, selected)
 				}),
 			),
-			OptGroup(LabelAttr("Надходження"),
+			OptGroup(
+				LabelAttr("Надходження"),
 				Map(categories.Income(), func(category *category.Category) Node {
 					return c.category(category, selected)
 				}),

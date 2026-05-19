@@ -5,6 +5,7 @@ linters:
     ### deprecated, archived or obsolette by authors
     - paralleltest
     - wsl
+    - gomodguard
     ### disabled by me
     - depguard
     - exhaustruct
@@ -31,6 +32,7 @@ linters:
     rules:
       - linters:
           - err113
+          - goconst
         path: _test\.go
     paths:
       - debug.go

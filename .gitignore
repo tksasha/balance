@@ -2,3 +2,5 @@
 tmp/
 debug.go
 TODO.md
+.vscode/
+.DS_Store

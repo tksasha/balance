@@ -7,7 +7,10 @@ import (
 	"github.com/tksasha/balance/internal/common/paths/params"
 )
 
-const backofficePath = "/backoffice"
+const (
+	backofficePath          = "/backoffice"
+	BackofficeCashesPathKey = "backofficeCashesPath"
+)
 
 func Backoffice() string {
 	return "/backoffice"

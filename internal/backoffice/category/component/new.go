@@ -13,8 +13,10 @@ import (
 func (c *Component) New(params params.Params, category *category.Category, errors validation.Errors) Node {
 	return Div(
 		c.Breadcrumbs(
-			Li(Class("breadcrumb-item"),
-				Span(Class("link"),
+			Li(
+				Class("breadcrumb-item"),
+				Span(
+					Class("link"),
 					htmx.Get(paths.BackofficeCategories(params)),
 					htmx.Target("#modal-body"),
 					Text("Категорія"),

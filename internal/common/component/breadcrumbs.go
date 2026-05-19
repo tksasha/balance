@@ -8,10 +8,14 @@ import (
 )
 
 func (c *Component) Breadcrumbs(children ...Node) Node {
-	return Nav(Class("mb-4"),
-		Ol(Class("breadcrumb"),
-			Li(Class("breadcrumb-item"),
-				Span(Class("link"), Text("Backoffice"),
+	return Nav(
+		Class("mb-4"),
+		Ol(
+			Class("breadcrumb"),
+			Li(
+				Class("breadcrumb-item"),
+				Span(
+					Class("link"), Text("Backoffice"),
 					htmx.Get(paths.Backoffice()),
 					htmx.Target("#modal-body"),
 				),

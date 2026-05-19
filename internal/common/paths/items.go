@@ -8,7 +8,11 @@ import (
 	"github.com/tksasha/balance/internal/common/paths/params"
 )
 
-const itemsPath = "/items"
+const (
+	itemsPath = "/items"
+
+	ItemsPathKey = "itemsPath"
+)
 
 func Items(params params.Params) string {
 	if !params.Has("month") {

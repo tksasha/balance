@@ -13,9 +13,12 @@ func (c *Component) Index(categories category.GroupedCategories, params params.P
 	nodes := []Node{}
 
 	for _, key := range categories.Keys() {
-		node := Div(Class("card consolidation"),
-			Div(Class("card-body"),
-				Div(Class("card-text"),
+		node := Div(
+			Class("card consolidation"),
+			Div(
+				Class("card-body"),
+				Div(
+					Class("card-text"),
 					Table(
 						TBody(c.categories(categories[key], params)),
 					),
@@ -26,8 +29,10 @@ func (c *Component) Index(categories category.GroupedCategories, params params.P
 		nodes = append(nodes, node)
 	}
 
-	return Div(Class("container-fluid"), ID("categories"),
-		Div(Class("clearfix mt-4"),
+	return Div(
+		Class("container-fluid"), ID("categories"),
+		Div(
+			Class("clearfix mt-4"),
 			Group(nodes),
 		),
 	)
@@ -51,11 +56,14 @@ func (c *Component) category(category *category.Category, params params.Params) 
 	params = params.WithCategory(category.ID)
 
 	return Tr(
-		Td(Class("name"),
+		Td(
+			Class("name"),
 			Text(category.Name),
 		),
-		Td(Class("sum"),
-			Div(Class("link"),
+		Td(
+			Class("sum"),
+			Div(
+				Class("link"),
 				htmx.Get(paths.Items(params)),
 				htmx.Target("#items"),
 				Text(c.Money(category.Sum)),

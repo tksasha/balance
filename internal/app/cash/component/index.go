@@ -23,10 +23,14 @@ func (c *Component) Index(params params.Params, groupedCashes cash.GroupedCashes
 			nodes = append(nodes, c.Summary(cashes.Sum()))
 		}
 
-		groupedCashNodes = append(groupedCashNodes, Div(Class("col-3"),
-			Div(Class("card cash"),
-				Div(Class("card-body"),
-					Table(Class("w-100 summarize"),
+		groupedCashNodes = append(groupedCashNodes, Div(
+			Class("col-3"),
+			Div(
+				Class("card cash"),
+				Div(
+					Class("card-body"),
+					Table(
+						Class("w-100 summarize"),
 						TBody(Group(nodes)),
 					),
 				),
@@ -38,10 +42,13 @@ func (c *Component) Index(params params.Params, groupedCashes cash.GroupedCashes
 }
 
 func (c *Component) cash(params params.Params, cash *cash.Cash, children ...Node) Node {
-	return Tr(ID(c.cashID(cash.ID)),
+	return Tr(
+		ID(c.cashID(cash.ID)),
 		Td(Text(cash.Name)),
-		Td(Class("sum"),
-			Div(Class("link"),
+		Td(
+			Class("sum"),
+			Div(
+				Class("link"),
 				htmx.Get(paths.EditCash(params, cash.ID)),
 				htmx.Target("#modal-body"),
 				Data("bs-toggle", "modal"),

@@ -9,11 +9,16 @@ import (
 )
 
 func (c *Component) form(params params.Params) Node {
-	return Div(Class("container mt-4"),
-		Div(Class("row"),
-			Div(Class("col"),
-				Div(Class("card"), ID("item-inline-form"),
-					Div(Class("card-body"),
+	return Div(
+		Class("container mt-4"),
+		Div(
+			Class("row"),
+			Div(
+				Class("col"),
+				Div(
+					Class("card"), ID("item-inline-form"),
+					Div(
+						Class("card-body"),
 						htmx.Get(paths.NewItem(params)),
 						htmx.Trigger("load"),
 					),

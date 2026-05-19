@@ -70,7 +70,8 @@ func createItem(t *testing.T, db *sql.DB, item *item.Item) {
 		VALUES(?, ?, ?, ?, ?)
 	`
 
-	result, err := db.ExecContext(t.Context(), query,
+	result, err := db.ExecContext(
+		t.Context(), query,
 		currency.Default, item.Date, item.Sum, item.CategoryID, category.Name,
 	)
 	if err != nil {

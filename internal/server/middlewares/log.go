@@ -23,7 +23,7 @@ func (m *logMiddleware) Wrap(next http.Handler) http.Handler {
 
 		next.ServeHTTP(wrapper, r)
 
-		slog.Info( //nolint:gosec
+		slog.Info(
 			"request",
 			"method", r.Method,
 			"url", r.URL.String(),

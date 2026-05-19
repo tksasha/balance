@@ -8,7 +8,8 @@ import (
 )
 
 func (c *Component) linkToBackoffice() Node {
-	return Div(Class("link-to-backoffice"), Title("backoffice"),
+	return Div(
+		Class("link-to-backoffice"), Title("backoffice"),
 		htmx.Get(paths.Backoffice()),
 		htmx.Target("#modal-body"),
 		htmx.SwapOOB("true"),

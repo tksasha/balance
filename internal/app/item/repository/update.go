@@ -26,7 +26,8 @@ func (r *Repository) Update(ctx context.Context, item *item.Item) error {
 		    AND currency = ?
 	`
 
-	result, err := r.db.ExecContext(ctx, query,
+	result, err := r.db.ExecContext(
+		ctx, query,
 		item.Date.Format(time.DateOnly),
 		item.Formula,
 		item.Sum,
