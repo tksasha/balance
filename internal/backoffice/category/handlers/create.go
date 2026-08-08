@@ -84,8 +84,7 @@ func (h *CreateHandler) ok(w http.ResponseWriter, params params.Params) {
 }
 
 func (h *CreateHandler) errors(w http.ResponseWriter, category *category.Category, err error) {
-	var verrors validation.Errors
-	if errors.As(err, &verrors) {
+	if verrors, ok := errors.AsType[validation.Errors](err); ok {
 		err := h.component.Create(category, verrors).Render(w)
 
 		h.SetError(w, err)

@@ -95,7 +95,7 @@ func (m migration) migrations() (map[string]string, error) {
 }
 
 func (m migration) version(input string) (string, error) {
-	version := strings.Split(input, "_")[0]
+	version, _, _ := strings.Cut(input, "_")
 
 	match, err := regexp.MatchString(`\d{14}`, version)
 	if err != nil {

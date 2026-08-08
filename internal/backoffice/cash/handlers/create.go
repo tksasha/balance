@@ -43,8 +43,7 @@ func (h *CreateHandler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	var verrors validation.Errors
-	if errors.As(err, &verrors) {
+	if verrors, ok := errors.AsType[validation.Errors](err); ok {
 		err := h.component.Create(cash, verrors).Render(w)
 
 		h.SetError(w, err)

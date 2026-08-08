@@ -114,8 +114,7 @@ func (h *CreateHandler) errors(
 	categories category.Categories,
 	err error,
 ) {
-	var verrors validation.Errors
-	if errors.As(err, &verrors) {
+	if verrors, ok := errors.AsType[validation.Errors](err); ok {
 		w.Header().Add("Hx-Trigger-After-Swap", "balance.item.create.error")
 
 		w.Header().Add("Hx-Retarget", "#modal-body")

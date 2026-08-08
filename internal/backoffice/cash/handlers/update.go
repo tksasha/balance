@@ -85,8 +85,7 @@ func (h *UpdateHandler) ok(w http.ResponseWriter, params params.Params) {
 }
 
 func (h *UpdateHandler) errors(w http.ResponseWriter, cash *cash.Cash, err error) {
-	var verrors validation.Errors
-	if errors.As(err, &verrors) {
+	if verrors, ok := errors.AsType[validation.Errors](err); ok {
 		err := h.component.Update(cash, verrors).Render(w)
 
 		h.SetError(w, err)
