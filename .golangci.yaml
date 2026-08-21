@@ -6,9 +6,9 @@ linters:
     - paralleltest
     - wsl
     - gomodguard
+    - exhaustruct
     ### disabled by me
     - depguard
-    - exhaustruct
     - godot
     - godox
     - ireturn
@@ -27,6 +27,8 @@ linters:
       checks:
         - all
         - -ST1000
+    exhaustruct_v5:
+      explicit-mode: true
   exclusions:
     generated: lax
     rules:
