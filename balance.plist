@@ -11,7 +11,7 @@
     <key>EnvironmentVariables</key>
     <dict>
         <key>ADDRESS</key>
-        <string>localhost:8080</string>
+        <string>localhost:8081</string>
         <key>BALANCE_ENV</key>
         <string>production</string>
     </dict>
